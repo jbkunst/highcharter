@@ -4,7 +4,7 @@
 \alias{highchart}
 \title{<Add Title>}
 \usage{
-highchart(hc, width = NULL, height = NULL)
+highchart(hc_opts = list(), width = NULL, height = NULL, debug = FALSE)
 }
 \description{
 <Add Description>

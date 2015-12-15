@@ -13,12 +13,13 @@ HTMLWidgets.widget({
   },
 
   renderValue: function(el, x, instance) {
-
-    console.log(x.hc);
     
-    console.log(el.id);
+    if(x.debug) {
+      console.log(el);
+      console.log(x);
+    }
     
-     $("#" + el.id).highcharts(x.hc);
+    $("#" + el.id).highcharts(x.hc_opts);
     
   },
 

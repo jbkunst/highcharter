@@ -10,4 +10,5 @@ License: What license is it under?
 RoxygenNote: 5.0.1
 Imports:
     magrittr,
-    htmlwidgets
+    htmlwidgets,
+    purrr
