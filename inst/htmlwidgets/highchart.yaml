@@ -1,7 +1,21 @@
-# (uncomment to add a dependency)
-# dependencies:
-#  - name:
-#    version:
-#    src:
-#    script:
-#    stylesheet:
+dependencies:
+  - name: jquery
+    version: 1.11.1
+    src: "htmlwidgets/lib/jquery"
+    script: jquery.min.js
+  - name: highcharts
+    version: 4.1.10
+    src: "htmlwidgets/lib/highcharts"
+    script: highcharts.js
+  - name: highcharts-3d
+    version: 4.2.0
+    src: "htmlwidgets/lib/highcharts"
+    script: "highcharts-3d.js"
+  - name: highcharts-3d
+    version: 4.2.0
+    src: "htmlwidgets/lib/highcharts"
+    script: "highcharts-3d.js"
+  - name: highcharts-exporting
+    version: 4.2.0
+    src: "htmlwidgets/lib/highcharts"
+    script: "exporting.js"

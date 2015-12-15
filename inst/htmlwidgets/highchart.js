@@ -14,8 +14,12 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, instance) {
 
-    el.innerText = x.message;
-
+    console.log(x.hc);
+    
+    console.log(el.id);
+    
+     $("#" + el.id).highcharts(x.hc);
+    
   },
 
   resize: function(el, width, height, instance) {

@@ -12,3 +12,7 @@
 vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
+
+# Some htmls and pubs
+test/*.html
+test/rsconnect/*

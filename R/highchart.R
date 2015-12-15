@@ -1,3 +1,5 @@
+
+
 #' <Add Title>
 #'
 #' <Add Description>
@@ -5,11 +7,11 @@
 #' @import htmlwidgets
 #'
 #' @export
-highchart <- function(message, width = NULL, height = NULL) {
+highchart <- function(hc, width = NULL, height = NULL) {
 
   # forward options using x
   x = list(
-    message = message
+    hc = hc
   )
 
   # create widget
