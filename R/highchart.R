@@ -6,7 +6,6 @@
 #' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
-
 hc_chart <- function(hc, ...) {
   hc$x$hc_opts$chart <- list(...)
   hc
@@ -50,7 +49,6 @@ hc_legend <- function(hc, ...) {
   hc$x$hc_opts$legend <- list(...)
   hc
 }
-
 
 #' Adding titles options to highchart object
 #'
@@ -167,11 +165,14 @@ hc_rm_serie <- function(hc, name = NULL) {
   hc
 }
 
-#' <Add Title>
+#' Create a Highcharts chart widget
 #'
-#' <Add Description>
+#' This function creates a Highchart chart using \pkg{htmlwidgets}. The
+#' widget can be rendered on HTML pages generated from R Markdown, Shiny, or
+#' other applications.
 #'
-#' @param hc_opts A options defined as \url{http://api.highcharts.com/highcharts}.
+#' @param hc_opts A \code{list} object containing options defined as 
+#'    \url{http://api.highcharts.com/highcharts}.
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param debug A boolean value if you want to print in the browser console the 

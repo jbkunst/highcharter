@@ -2,12 +2,13 @@
 % Please edit documentation in R/highchart.R
 \name{highchart}
 \alias{highchart}
-\title{<Add Title>}
+\title{Create a Highcharts chart widget}
 \usage{
 highchart(hc_opts = list(), width = NULL, height = NULL, debug = FALSE)
 }
 \arguments{
-\item{hc_opts}{A options defined as \url{http://api.highcharts.com/highcharts}.}
+\item{hc_opts}{A \code{list} object containing options defined as 
+\url{http://api.highcharts.com/highcharts}.}
 
 \item{width}{A numeric input in pixels.}
 
@@ -17,6 +18,8 @@ highchart(hc_opts = list(), width = NULL, height = NULL, debug = FALSE)
 parameters given to \code{highchart}.}
 }
 \description{
-<Add Description>
+This function creates a Highchart chart using \pkg{htmlwidgets}. The
+widget can be rendered on HTML pages generated from R Markdown, Shiny, or
+other applications.
 }
 
