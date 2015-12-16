@@ -4,6 +4,12 @@ os:
  - linux
  - osx
 
+r_github_packages:
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'library(covr);codecov()'
+
 warnings_are_errors: false
 
 sudo: required
