@@ -17,4 +17,6 @@ Basically is write the json parameter in via R and get similar funcionalities th
 
 ## WIP
 
-See some examples in http://rpubs.com/jbkunst/highcharter-test-01
+See some examples in:
+ - http://rpubs.com/jbkunst/highcharter
+ - http://rpubs.com/jbkunst/highcharter-test-01
