@@ -1,14 +1,17 @@
 Package: highcharter
+Version: 0.1
 Type: Package
-Title: What the package does (short line)
+Title: A wrapper for the highcharts javascript library
+Description: A wrapper for the highcharts javascript library including
+  shortcut and utils functions to plot R objects.
 Version: 0.1
 Date: 2015-12-11
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Joshua Kunst <jbkunst@gmail.com>
+Maintainer: Joshua Kunst <jbkunst@gmail.com>
+License: MIT + file LICENSE
+URL: https://github.com/jbkunst/highcharter
+BugReports: https://github.com/jbkunst/highcharter/issues
 RoxygenNote: 5.0.1
 Imports:
-    magrittr,
     htmlwidgets,
     purrr

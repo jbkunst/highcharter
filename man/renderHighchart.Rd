@@ -6,6 +6,13 @@
 \usage{
 renderHighchart(expr, env = parent.frame(), quoted = FALSE)
 }
+\arguments{
+\item{expr}{A highchart expression.}
+
+\item{env}{A enviorment.}
+
+\item{quoted}{A boolean value.}
+}
 \description{
 Widget render function for use in Shiny
 }

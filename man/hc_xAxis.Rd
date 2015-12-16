@@ -6,6 +6,11 @@
 \usage{
 hc_xAxis(hc, ...)
 }
+\arguments{
+\item{hc}{A \code{highchart} \code{htmlwidget} object.}
+
+\item{...}{Arguments defided in \url{http://api.highcharts.com/highcharts}.}
+}
 \description{
 Arguments are defined in \url{http://api.highcharts.com/highcharts#xAxis}
 }

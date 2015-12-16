@@ -6,6 +6,11 @@
 \usage{
 hc_rm_serie(hc, name = NULL)
 }
+\arguments{
+\item{hc}{A \code{highchart} \code{htmlwidget} object.}
+
+\item{name}{The serie's name to delete.}
+}
 \description{
 Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 }

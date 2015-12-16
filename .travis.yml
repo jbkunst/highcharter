@@ -1,0 +1,13 @@
+language: r
+
+os:
+ - linux
+ - osx
+
+warnings_are_errors: false
+
+sudo: required
+
+notifications:
+ email:
+  on_failure: change

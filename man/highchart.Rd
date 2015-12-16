@@ -6,6 +6,16 @@
 \usage{
 highchart(hc_opts = list(), width = NULL, height = NULL, debug = FALSE)
 }
+\arguments{
+\item{hc_opts}{A options defined as \url{http://api.highcharts.com/highcharts}.}
+
+\item{width}{A numeric input in pixels.}
+
+\item{height}{A numeric input in pixels.}
+
+\item{debug}{A boolean value if you want to print in the browser console the 
+parameters given to \code{highchart}.}
+}
 \description{
 <Add Description>
 }

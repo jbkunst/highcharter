@@ -6,6 +6,13 @@
 \usage{
 highchartOutput(outputId, width = "100\%", height = "400px")
 }
+\arguments{
+\item{outputId}{The name of the input.}
+
+\item{width}{A numeric input in pixels.}
+
+\item{height}{A numeric input in pixels.}
+}
 \description{
 Widget output function for use in Shiny
 }
