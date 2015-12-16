@@ -1,4 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-test/
+tests/
+no_build/
 ^\.travis\.yml$
+
