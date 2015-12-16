@@ -3,7 +3,7 @@
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_chart <- function(hc, ...) {
@@ -16,7 +16,7 @@ hc_chart <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#credits}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_credits <- function(hc, ...) {
@@ -29,7 +29,7 @@ hc_credits <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#exporting}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_exporting <- function(hc, ...) {
@@ -42,7 +42,7 @@ hc_exporting <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_legend <- function(hc, ...) {
@@ -55,7 +55,7 @@ hc_legend <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#title}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_title <- function(hc, ...) {
@@ -68,7 +68,7 @@ hc_title <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#subtitle}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_subtitle <- function(hc, ...) {
@@ -81,7 +81,7 @@ hc_subtitle <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_tooltip <- function(hc, ...) {
@@ -94,7 +94,7 @@ hc_tooltip <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#xAxis}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_xAxis  <- function(hc, ...) {
@@ -107,7 +107,7 @@ hc_xAxis  <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#yAxis}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_yAxis  <- function(hc, ...) {
@@ -120,7 +120,7 @@ hc_yAxis  <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_plotOptions  <- function(hc, ...) {
@@ -133,7 +133,7 @@ hc_plotOptions  <- function(hc, ...) {
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defided in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
 #'
 #' @export
 hc_add_serie <- function(hc, ...) {
