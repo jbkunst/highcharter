@@ -1,6 +1,10 @@
 # highcharter
 Another R wrapper for highchartsjs
 
+[![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
+[![version](http://www.r-pkg.org/badges/version/highcharter)](http://www.r-pkg.org/pkg/highcharter)
+[![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
+
 ## Motivation
 We know there exist:
  - The orignal one and good `rCharts` 
