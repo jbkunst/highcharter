@@ -85,7 +85,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 
 ##' # Introduction ####
 #' 
-#' This is just another wrapper for [higcharts](www.higcharts.com) javascript library for R. 
+#' This is just another wrapper for [highcharts](www.higcharts.com) javascript library for R. 
 #' The mainly motivation to this packages is get a the all the power from HCs API *with no 
 #'  restrictions*.
 #' 
@@ -118,11 +118,11 @@ hc <- highchart() %>%
 
 hc
 
-#' With the implemented API you can modify the previous chart in a simply way so we'll do 
-#' some changes:
+#' With the implemented API you can modify the previous chart in a easy way. Let's do some
+#' changes:
 #' 
-#' - Change the title
-#' - Add a subtitle with some style
+#' - Change the title.
+#' - Add a subtitle with some style.
 #' - Add another data (in HC this is call a serie) with some customizations.
 #' 
 hc <- hc %>% 
@@ -158,7 +158,7 @@ hc
 
 
 
-#' Easy right?
+#' Easy right? Well, it's just the Highcharts API. Thanks to the HC team.
 #' 
 #' # API
 #' *Premise*: There's not default arguments. All arguments need to be named.

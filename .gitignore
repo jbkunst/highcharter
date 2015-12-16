@@ -15,4 +15,4 @@ vignettes/*.pdf
 
 # Some htmls and pubs
 test/*.html
-test/rscinnect/*
+test/rsconnect/

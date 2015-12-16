@@ -181,21 +181,22 @@ hc_rm_serie <- function(hc, name = NULL) {
 #' @import htmlwidgets
 #'
 #' @export
-highchart <- function(hc_opts = list(), width = NULL, height = NULL, debug = FALSE) {
+highchart <- function(hc_opts = list(), width = NULL,
+                      height = NULL, debug = FALSE) {
 
   # forward options using x
-  x = list(
+  x <- list(
     hc_opts = hc_opts,
     debug = debug
   )
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'highchart',
+    name = "highchart",
     x,
     width = width,
     height = height,
-    package = 'highcharter'
+    package = "highcharter"
   )
 }
 
@@ -206,8 +207,9 @@ highchart <- function(hc_opts = list(), width = NULL, height = NULL, debug = FAL
 #' @param height  A numeric input in pixels. 
 #'
 #' @export
-highchartOutput <- function(outputId, width = '100%', height = '400px'){
-  shinyWidgetOutput(outputId, 'highchart', width, height, package = 'highcharter')
+highchartOutput <- function(outputId, width = "100%", height = "400px"){
+  shinyWidgetOutput(outputId, "highchart", width, height,
+                    package = "highcharter")
 }
 
 #' Widget render function for use in Shiny
@@ -218,6 +220,8 @@ highchartOutput <- function(outputId, width = '100%', height = '400px'){
 #'
 #' @export
 renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
+  if (!quoted) {
+    expr <- substitute(expr)
+    } # force quoted
   shinyRenderWidget(expr, highchartOutput, env, quoted = TRUE)
 }
