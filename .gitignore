@@ -14,5 +14,5 @@ vignettes/*.pdf
 .Rproj.user
 
 # Some htmls and pubs
-*.html
-*.dcf
+test/*.html
+test/rscinnect/*
