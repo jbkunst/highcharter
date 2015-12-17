@@ -33,11 +33,11 @@
 #' </script>
 #' <style>
 #'     h1, h2, h3, h4, .TOC > li {
-#'       color: #1A237E;
+#'       color: #1FA67A;
 #'     } 
 #'   
 #'   a {
-#'     color: #1A237E;
+#'     color: #1FA67A;
 #'   }
 #'   
 #'   .level2 {
@@ -51,7 +51,7 @@
 #'     right: 0px;
 #'     text-decoration: none;
 #'     color : white;
-#'     background-color : #1A237E;
+#'     background-color : #1FA67A;
 #'     font-size: 12px;
 #'     padding: 1em;
 #'     display: none;
@@ -88,7 +88,9 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 #' 
 #' This is just another wrapper for [highcharts](www.higcharts.com) javascript library for R. 
 #' The mainly motivation to this packages is get a the all the power from HCs API *with no 
-#'  restrictions*.
+#' restrictions* and write the plots using the pipe operator just like 
+#' [metricsgraphics](https://github.com/hrbrmstr/metricsgraphics) and 
+#' [dygraphs](http://rstudio.github.io/dygraphs/).
 #' 
 #' Highcharts is very mature javascript charting library and it has a great and powerful API
 #' to get a very style of charts and highly customized (see http://www.highcharts.com/demo).
@@ -98,12 +100,14 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 #' you can create your chart manually with all the requiriments what you need. That's the
 #' package offer.
 #' 
+
 ##' # Installation ####
 #' 
 #' You can install the package via devtools: `devtools::install_github("jbkunst/rchess")`.
 #' 
-#' # Quick Demo
-#' Let's start doing a simple column chart (for HC a bar plot is a colum chart with a `cord_flip`).
+
+##' # Quick Demo ####
+#' Let's start doing a simple column chart:
 #' 
 library("highcharter")
 library("magrittr")
@@ -113,9 +117,8 @@ hc <- highchart() %>%
   hc_chart(type = "column") %>% 
   hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) %>% 
-  hc_add_serie(name = "some data",
-               data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                       26.5, 23.3, 18.3, 13.9, 9.6))
+  hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                        26.5, 23.3, 18.3, 13.9, 9.6))
 
 hc
 
@@ -130,7 +133,7 @@ hc <- hc %>%
   hc_title(text = "I like this new title") %>% 
   hc_subtitle(text = "I want to add a subtitle too with style",
               style = list(color = "#B71C1C", fontWeight = "bold")) %>% 
-  hc_add_serie(name = "A another data", type = "line", color = "#1A237E",
+  hc_add_serie(name = "A another data", type = "line", color = "#1FA67A",
                dataLabels = list(align = "center", enabled = TRUE),
                data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
                         17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
@@ -157,11 +160,102 @@ hc <- hc %>%
 
 hc
 
-
-
 #' Easy right? Well, it's just the Highcharts API. Thanks to the HC team.
 #' 
-#' # API
+
+##' # Function to work with HC API ####
+#' 
 #' *Premise*: There's not default arguments. All arguments need to be named.
 #' 
+#' Let's use a simple plot to show how do with the differentes funcions from the package.
+#' 
+data(citytemp)
+
+citytemp
+
+hc <- highchart() %>% 
+  hc_xAxis(categories = citytemp$month) %>% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+  hc_add_serie(name = "London", data = citytemp$london)
+
+hc
+
+##' ## hc_chart ####
+
+#' With `hc_chart` you can define general chart options.
+
+hc %>% 
+  hc_chart(type = "column",
+           borderColor = '#EBBA95',
+           borderRadius = 10,
+           borderWidth = 2,
+           backgroundColor = list(
+             linearGradient = c(0, 0, 500, 500),
+             stops = list(
+               list(0, 'rgb(255, 255, 255)'),
+               list(1, 'rgb(200, 200, 255)')
+             )))
+
+hc %>% 
+  hc_chart(type = "column",
+           options3d = list(enabled = TRUE, beta = 15, alpha = 15))
+
+##' ## hc_legend ####
+
+hc 
+
+##' ## hc_title and hc_subtitle ####
+
+#' Options to add the chart's main title and subtitle.
+
+hc %>% 
+  hc_title(text = "This is a title with <i>margin</i> at <b>bottom</b>",
+           useHTML = TRUE,
+           margin = 50,
+           align = "left",
+           style = list(color = "#90ed7d")) %>% 
+  hc_subtitle(text = "A detailed description",
+              align = "right",
+              style = list(color = "#2b908f", fontWeight = "bold"))
+
+##' ## hc_tooltip ####
+
+hc 
+
+##' ## hc_xAxis and hc_yAxis ####
+
+hc 
+
+##' ## hc_plotOptions ####
+
+hc %>%
+  hc_plotOptions(series = list(stacking = "normal"))
+
+##' ## hc_add_serie and hc_rm_serie ####
+
+hc
+
+##' ## hc_exporting ####
+
+hc 
+
+##' ## hc_credits ####
+
+hc
+
+#' 
+#' # Demos
+
+##' ## Scatter plot ####
+
+##' ## Column and Bar ####
+
+##' ## Time Series ####
+
+#' 
 #' # Shorcuts & Utils
+
+
+
+#' 
+#' # Using highcharts without the highcharter functions

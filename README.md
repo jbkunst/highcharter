@@ -12,9 +12,10 @@ We know there exist:
  - https://github.com/jcizel/highchartR
  - https://github.com/metagraf/rHighcharts
 
-Anyway, I want to try to get all the HC API funcionalities in this package. That is: Every chart in http://www.highcharts.com/demo you can do it in R (may be there will be some exceptions like [this](http://www.highcharts.com/demo/combo-timeline)).
+Anyway, I want to try to:
 
-Basically is write the json parameter in via R and get similar funcionalities that exists in https://github.com/hrbrmstr/metricsgraphics
+ - Get all the HC API funcionalities in this package. That is: Every chart in http://www.highcharts.com/demo you can do it in R (may be there will be some exceptions like [this](http://www.highcharts.com/demo/combo-timeline)).
+ - Get similar funcionalities that exists in [metricsgraphics](https://github.com/hrbrmstr/metricsgraphics) and [dygraphs](http://rstudio.github.io/dygraphs/) using [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
 
 ## WIP
 
