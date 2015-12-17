@@ -9,7 +9,7 @@
 citytemp
 }
 \description{
-This data comes from the \url{http://www.highcharts.com/}  examples.
+This data comes from the \url{http://www.highcharts.com/} examples.
 }
 \section{Variables}{
 

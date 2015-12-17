@@ -125,12 +125,12 @@ hc
 #' With the implemented API you can modify the previous chart in a easy way. Let's do some
 #' changes:
 #' 
-#' - Change the title.
+#' - Edit style the title.
 #' - Add a subtitle with some style.
 #' - Add another data (in HC this is call a serie) with some customizations.
 #' 
 hc <- hc %>% 
-  hc_title(text = "I like this new title") %>% 
+  hc_title(style = list(color = "red")) %>% 
   hc_subtitle(text = "I want to add a subtitle too with style",
               style = list(color = "#B71C1C", fontWeight = "bold")) %>% 
   hc_add_serie(name = "A another data", type = "line", color = "#1FA67A",
@@ -185,8 +185,7 @@ hc
 #' With `hc_chart` you can define general chart options.
 
 hc %>% 
-  hc_chart(type = "column",
-           borderColor = '#EBBA95',
+  hc_chart(borderColor = '#EBBA95',
            borderRadius = 10,
            borderWidth = 2,
            backgroundColor = list(
@@ -196,9 +195,19 @@ hc %>%
                list(1, 'rgb(200, 200, 255)')
              )))
 
-hc %>% 
+#' Now change type to colum and add 3d effect.
+
+hc <- hc %>% 
   hc_chart(type = "column",
            options3d = list(enabled = TRUE, beta = 15, alpha = 15))
+
+hc
+
+#' Now remove 3deffect and add the original type
+
+hc <- hc %>% hc_chart(type = "line", options3d = list(enabled = FALSE))
+
+hc
 
 ##' ## hc_legend ####
 
@@ -210,13 +219,13 @@ hc
 
 hc %>% 
   hc_title(text = "This is a title with <i>margin</i> at <b>bottom</b>",
-           useHTML = TRUE,
-           margin = 50,
-           align = "left",
-           style = list(color = "#90ed7d")) %>% 
+           useHTML = TRUE) %>% 
   hc_subtitle(text = "A detailed description",
               align = "right",
-              style = list(color = "#2b908f", fontWeight = "bold"))
+              style = list(color = "#2b908f", fontWeight = "bold")) %>% 
+  hc_title(margin = 50,
+           align = "left",
+           style = list(color = "#90ed7d"))
 
 ##' ## hc_tooltip ####
 

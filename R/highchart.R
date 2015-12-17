@@ -1,3 +1,19 @@
+#' @import rlist
+.hc_opt <- function(hc, name, ...) {
+  
+  if (is.null(hc$x$hc_opts[[name]])) {
+    
+    hc$x$hc_opts[[name]] <- list(...)
+    
+  } else {
+    
+    hc$x$hc_opts[[name]] <- list.merge(hc$x$hc_opts[[name]], list(...))
+    
+  }
+  
+  hc
+}
+
 #' Adding chart options to highchart object
 #'
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
@@ -7,8 +23,9 @@
 #'
 #' @export
 hc_chart <- function(hc, ...) {
-  hc$x$hc_opts$chart <- list(...)
-  hc
+  
+  .hc_opt(hc, "chart", ...)
+  
 }
 
 #' Adding credits options to highchart object
@@ -20,8 +37,9 @@ hc_chart <- function(hc, ...) {
 #'
 #' @export
 hc_credits <- function(hc, ...) {
-  hc$x$hc_opts$credits <- list(...)
-  hc
+  
+  .hc_opt(hc, "credits", ...)
+  
 }
 
 #' Adding exporting options to highchart object
@@ -33,8 +51,9 @@ hc_credits <- function(hc, ...) {
 #'
 #' @export
 hc_exporting <- function(hc, ...) {
-  hc$x$hc_opts$exporting <- list(...)
-  hc
+  
+  .hc_opt(hc, "exporting", ...)
+  
 }
 
 #' Adding legend options to highchart object
@@ -46,8 +65,9 @@ hc_exporting <- function(hc, ...) {
 #'
 #' @export
 hc_legend <- function(hc, ...) {
-  hc$x$hc_opts$legend <- list(...)
-  hc
+  
+  .hc_opt(hc, "legend", ...)
+  
 }
 
 #' Adding titles options to highchart object
@@ -59,8 +79,9 @@ hc_legend <- function(hc, ...) {
 #'
 #' @export
 hc_title <- function(hc, ...) {
-  hc$x$hc_opts$title <- list(...)
-  hc
+  
+  .hc_opt(hc, "title", ...)
+  
 }
 
 #' Adding subtitles options to highchart object
@@ -72,8 +93,9 @@ hc_title <- function(hc, ...) {
 #'
 #' @export
 hc_subtitle <- function(hc, ...) {
-  hc$x$hc_opts$subtitle <- list(...)
-  hc
+  
+  .hc_opt(hc, "subtitle", ...)
+  
 }
 
 #' Adding tooltip options to highchart object
@@ -85,8 +107,9 @@ hc_subtitle <- function(hc, ...) {
 #'
 #' @export
 hc_tooltip <- function(hc, ...) {
-  hc$x$hc_opts$tooltip <- list(...)
-  hc
+  
+  .hc_opt(hc, "tooltip", ...)
+  
 }
 
 #' Adding xAxis options to highchart object
@@ -98,8 +121,9 @@ hc_tooltip <- function(hc, ...) {
 #'
 #' @export
 hc_xAxis  <- function(hc, ...) {
-  hc$x$hc_opts$xAxis <- list(...)
-  hc
+  
+  .hc_opt(hc, "xAxis", ...)
+  
 }
 
 #' Adding yAxis options to highchart object
@@ -111,8 +135,9 @@ hc_xAxis  <- function(hc, ...) {
 #'
 #' @export
 hc_yAxis  <- function(hc, ...) {
-  hc$x$hc_opts$yAxis <- list(...)
-  hc
+  
+  .hc_opt(hc, "yAxis", ...)
+  
 }
 
 #' Adding plot options to highchart object
@@ -124,8 +149,9 @@ hc_yAxis  <- function(hc, ...) {
 #'
 #' @export
 hc_plotOptions  <- function(hc, ...) {
-  hc$x$hc_opts$plotOptions <- list(...)
-  hc
+  
+  .hc_opt(hc, "plotOptions", ...)
+  
 }
 
 #' Adding series to highchart object
@@ -137,8 +163,11 @@ hc_plotOptions  <- function(hc, ...) {
 #'
 #' @export
 hc_add_serie <- function(hc, ...) {
+  
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
+  
   hc
+  
 }
 
 #' Removing series to highchart object
@@ -158,11 +187,13 @@ hc_rm_serie <- function(hc, name = NULL) {
   positions <- hc$x$hc_opts$series %>%
     map("name") %>%
     unlist()
+  
   position <- which(positions == name)
   
   hc$x$hc_opts$series[position] <- NULL
   
   hc
+  
 }
 
 #' Create a Highcharts chart widget
