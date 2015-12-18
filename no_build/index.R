@@ -205,7 +205,8 @@ hc
 
 #' Now remove 3deffect and add the original type
 
-hc <- hc %>% hc_chart(type = "line", options3d = list(enabled = FALSE))
+hc <- hc %>%
+  hc_chart(type = "line", options3d = list(enabled = FALSE))
 
 hc
 
@@ -237,8 +238,7 @@ hc
 
 ##' ## hc_plotOptions ####
 
-hc %>%
-  hc_plotOptions(series = list(stacking = "normal"))
+hc
 
 ##' ## hc_add_serie and hc_rm_serie ####
 
@@ -263,7 +263,6 @@ hc
 
 #' 
 #' # Shorcuts & Utils
-
 
 
 #' 

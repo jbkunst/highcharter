@@ -1,0 +1,1 @@
+shiny-ex    Using hichart widget on a shiny app
