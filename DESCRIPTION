@@ -15,4 +15,5 @@ RoxygenNote: 5.0.1
 Imports:
     htmlwidgets,
     purrr,
-    rlist
+    rlist,
+    assertthat

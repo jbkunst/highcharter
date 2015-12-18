@@ -1,5 +1,7 @@
-#' @import rlist
+#' @import rlist assertthat
 .hc_opt <- function(hc, name, ...) {
+  
+  assert_that(.is_highchart(hc))
   
   if (is.null(hc$x$hc_opts[[name]])) {
     
