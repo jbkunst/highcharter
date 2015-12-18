@@ -6,16 +6,8 @@ dependencies:
   - name: highcharts
     version: 4.1.10
     src: "htmlwidgets/lib/highcharts"
-    script: highcharts.js
-  - name: highcharts-3d
-    version: 4.2.0
-    src: "htmlwidgets/lib/highcharts"
-    script: "highcharts-3d.js"
-  - name: highcharts-3d
-    version: 4.2.0
-    src: "htmlwidgets/lib/highcharts"
-    script: "highcharts-3d.js"
-  - name: highcharts-exporting
-    version: 4.2.0
-    src: "htmlwidgets/lib/highcharts"
-    script: "exporting.js"
+    script:
+    - highcharts.js
+    - highcharts-3d.js
+    - modules/exporting.js
+    - modules/offline-exporting.js

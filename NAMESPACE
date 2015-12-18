@@ -3,7 +3,6 @@
 export(hc_add_serie)
 export(hc_chart)
 export(hc_credits)
-export(hc_exporting)
 export(hc_legend)
 export(hc_plotOptions)
 export(hc_rm_serie)
