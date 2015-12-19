@@ -112,7 +112,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 library("highcharter")
 library("magrittr")
 
-hc <- highchart() %>% 
+hc <- highchart(debug = TRUE) %>% 
   hc_title(text = "A nice chart") %>% 
   hc_chart(type = "column") %>% 
   hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -138,7 +138,6 @@ hc <- hc %>%
                data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
                         17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
 
-hc
 
 #' And finally:
 #' 
@@ -243,10 +242,6 @@ hc
 ##' ## hc_add_serie and hc_rm_serie ####
 
 hc
-
-##' ## hc_exporting ####
-
-hc 
 
 ##' ## hc_credits ####
 
