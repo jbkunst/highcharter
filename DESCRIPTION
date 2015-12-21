@@ -16,4 +16,6 @@ Imports:
     htmlwidgets,
     purrr,
     rlist,
-    assertthat
+    assertthat,
+    dplyr,
+    zoo

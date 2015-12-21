@@ -1,4 +1,3 @@
-
 #' Create a Highcharts chart widget
 #'
 #' This function creates a Highchart chart using \pkg{htmlwidgets}. The

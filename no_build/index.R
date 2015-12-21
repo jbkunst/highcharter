@@ -173,7 +173,7 @@ data(citytemp)
 
 citytemp
 
-hc <- highchart() %>% 
+hc <- highchart(debug = TRUE) %>% 
   hc_xAxis(categories = citytemp$month) %>% 
   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
   hc_add_serie(name = "London", data = citytemp$london)
@@ -249,17 +249,27 @@ hc
 hc
 
 #' 
-#' # Demos
+
+#' # Shorcuts
+
+##' ## Time Series ####
+
+highchart() %>%
+  hc_add_serie_ts(AirPassengers, name = "passengers") %>% 
+  hc_chart(zoomType = "xy") %>% 
+  hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
+  hc_subtitle(text = "The classic Box & Jenkins airline data")
+ 
+ 
+highchart() %>% 
+  hc_add_serie_ts(fdeaths, name = "Female") %>%
+  hc_add_serie_ts(mdeaths, name = "Male") %>% 
+  hc_chart(zoomType = "xy") %>% 
+  hc_title(text = "Monthly Deaths from Lung Diseases in the UK")
 
 ##' ## Scatter plot ####
 
 ##' ## Column and Bar ####
 
-##' ## Time Series ####
+##' ## Drilldown ####
 
-#' 
-#' # Shorcuts & Utils
-
-
-#' 
-#' # Using highcharts without the highcharter functions
