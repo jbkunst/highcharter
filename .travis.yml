@@ -6,9 +6,10 @@ os:
 
 r_packages:
   - covr
+  - testthat
 
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - if [ $TRAVIS_OS_NAME == "linux" ]; then Rscript -e 'covr::codecov()'; fi
 
 warnings_are_errors: false
 
