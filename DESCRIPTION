@@ -17,4 +17,5 @@ Imports:
     purrr,
     rlist,
     assertthat,
-    zoo
+    zoo,
+    dplyr

@@ -163,7 +163,7 @@ hc
 #' Easy right? Well, it's just the Highcharts API. Thanks to the HC team.
 #' 
 
-##' # Function to work with HC API ####
+##' # Functions to work with HC API ####
 #' 
 #' *Premise*: There's not default arguments. All arguments need to be named.
 #' 
@@ -255,18 +255,27 @@ hc
 ##' ## Time Series ####
 
 highchart() %>% 
-  hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
-  hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
-  hc_add_serie_ts(AirPassengers, name = "passengers") %>% 
-  hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y} passengers')
+  hc_add_serie_ts(AirPassengers)
 
 highchart() %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
+  hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
   hc_add_serie_ts(fdeaths, name = "Female") %>%
-  hc_add_serie_ts(mdeaths, name = "Male") %>% 
-  hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y} deaths')
+  hc_add_serie_ts(mdeaths, name = "Male")
 
 ##' ## Scatter plot ####
+
+highchart() %>% 
+  hc_add_serie_scatter(cars$speed, cars$dist)
+  
+highchart() %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
+  hc_chart(zoomType = "xy") %>% 
+  hc_title(text = "Motor Trend Car Road Tests") %>% 
+  hc_xAxis(title = list(text = "Weight")) %>% 
+  hc_yAxis(title = list(text = "Miles/gallon")) %>% 
+  hc_tooltip(headerFormat = '<b>{series.name} cylinders</b><br>',
+             pointFormat = '{point.x} (lb/1000), {point.y} (miles/gallon)')
 
 ##' ## Column and Bar ####
 
