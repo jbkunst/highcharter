@@ -10,4 +10,3 @@ list.parse2 <- function(df) {
   setNames(apply(df, 1, function(r) as.list(as.vector(r))), NULL)
   
 }
-list.parse

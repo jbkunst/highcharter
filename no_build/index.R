@@ -210,11 +210,7 @@ hc <- hc %>%
 
 hc
 
-##' ## hc_legend ####
-
-hc 
-
-##' ## hc_title and hc_subtitle ####
+##' ## hc_title, hc_tooltip, hc_subtitle, hc_credits and hc_legend ####
 
 #' Options to add the chart's main title and subtitle.
 
@@ -228,10 +224,6 @@ hc %>%
            align = "left",
            style = list(color = "#90ed7d"))
 
-##' ## hc_tooltip ####
-
-hc 
-
 ##' ## hc_xAxis and hc_yAxis ####
 
 hc 
@@ -244,13 +236,7 @@ hc
 
 hc
 
-##' ## hc_credits ####
-
-hc
-
-#' 
-
-#' # Shorcuts
+##' # Shorcuts ####
 
 ##' ## Time Series ####
 
@@ -272,10 +258,10 @@ highchart() %>%
   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
   hc_chart(zoomType = "xy") %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
-  hc_xAxis(title = list(text = "Weight")) %>% 
+  hc_xAxis(title = list(text = "Weight"), minorTickInterval = "auto") %>% 
   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
-  hc_tooltip(headerFormat = '<b>{series.name} cylinders</b><br>',
-             pointFormat = '{point.x} (lb/1000), {point.y} (miles/gallon)')
+  hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
+             pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
 
 ##' ## Column and Bar ####
 
