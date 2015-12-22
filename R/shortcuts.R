@@ -8,18 +8,23 @@
 #' 
 #' @examples 
 #' 
+#' \dontrun{
+#' 
 #' library("magrittr")
 #' 
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
 #'   hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
-#'   hc_add_serie_ts(AirPassengers, name = "passengers")
+#'   hc_add_serie_ts(AirPassengers, name = "passengers") %>% 
+#'   hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y} passengers')
 #'   
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
 #'   hc_add_serie_ts(fdeaths, name = "Female") %>%
 #'   hc_add_serie_ts(mdeaths, name = "Male") %>% 
-#'   hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y:.2f} m')
+#'   hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y} deaths')
+#' 
+#' }
 #' 
 #' @import zoo
 #' 
@@ -30,9 +35,12 @@ hc_add_serie_ts <- function(hc, ts, ...) {
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
   timestamps <- time(ts) %>% 
-    zoo::as.Date() %>% 
+    zoo::as.Date() %>%
     as.POSIXct() %>% 
     as.numeric()
+  
+  # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts  
+  timestamps <- 1000 * timestamps
   
   values <- as.vector(ts)
   

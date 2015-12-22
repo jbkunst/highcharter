@@ -254,18 +254,17 @@ hc
 
 ##' ## Time Series ####
 
-highchart() %>%
-  hc_add_serie_ts(AirPassengers, name = "passengers") %>% 
-  hc_chart(zoomType = "xy") %>% 
-  hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
-  hc_subtitle(text = "The classic Box & Jenkins airline data")
- 
- 
 highchart() %>% 
+  hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
+  hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
+  hc_add_serie_ts(AirPassengers, name = "passengers") %>% 
+  hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y} passengers')
+
+highchart() %>% 
+  hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_add_serie_ts(fdeaths, name = "Female") %>%
   hc_add_serie_ts(mdeaths, name = "Male") %>% 
-  hc_chart(zoomType = "xy") %>% 
-  hc_title(text = "Monthly Deaths from Lung Diseases in the UK")
+  hc_tooltip(pointFormat =  '{point.x:%e. %b %Y}: {point.y} deaths')
 
 ##' ## Scatter plot ####
 
