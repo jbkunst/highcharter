@@ -19,6 +19,10 @@ HTMLWidgets.widget({
       console.log(x);
     }
     
+    if(x.theme !== null) {
+      Highcharts.setOptions(x.theme);
+    }
+    
     $("#" + el.id).highcharts(x.hc_opts);
     
   },

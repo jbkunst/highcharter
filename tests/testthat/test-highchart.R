@@ -14,11 +14,8 @@ test_that("highchartOutput  return a function", {
   
 })
 
-
 test_that("renderHighchart return a function", {
   
   expect_true(is.function(renderHighchart(highchart())))
   
 })
-
-
