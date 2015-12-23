@@ -267,3 +267,5 @@ highchart() %>%
 
 ##' ## Drilldown ####
 
+##' # Themes ####
+

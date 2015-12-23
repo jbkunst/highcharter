@@ -17,7 +17,7 @@
 highchart <- function(hc_opts = list(), theme = NULL,
                       width = NULL, height = NULL,
                       debug = FALSE) {
-
+  
   # forward options using x
   x <- list(
     hc_opts = hc_opts,

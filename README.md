@@ -17,6 +17,13 @@ Anyway, I want to try to:
  - Get all the HC API funcionalities in this package. That is: Every chart in http://www.highcharts.com/demo you can do it in R (may be there will be some exceptions like [this](http://www.highcharts.com/demo/combo-timeline)).
  - Get similar funcionalities that exists in [metricsgraphics](https://github.com/hrbrmstr/metricsgraphics) and [dygraphs](http://rstudio.github.io/dygraphs/) using [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
 
+## Licence 
+
+http://shop.highsoft.com/highcharts.html
+
+Highcharts is free for personal or non profit projects under the 
+[Creative Commons Attribution-NonCommercial 3.0 License](http://creativecommons.org/licenses/by-nc/3.0/).
+
 ## WIP
 
 See some examples in:

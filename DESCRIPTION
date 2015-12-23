@@ -18,4 +18,5 @@ Imports:
     rlist,
     assertthat,
     zoo,
-    dplyr
+    dplyr,
+    stringr
