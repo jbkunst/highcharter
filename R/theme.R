@@ -95,3 +95,23 @@ hc_theme <- function(...){
   fonts
   
 }
+
+#' Merge themes
+#' 
+#' Function to combine hc_theme objects.
+#' 
+#' @param ... \code{hc_theme} objects
+#' 
+#' 
+#' @export
+hc_theme_merge <- function(...){
+  
+  themes <- list(...)
+  
+  assert_that(unique(unlist(purrr::map(themes, class))) == "hc_theme")
+  
+  theme <- structure(list.merge(...), class = "hc_theme")
+  
+  theme
+  
+}

@@ -31,6 +31,15 @@
 #'     
 #'   });
 #' </script>
+#' <script>
+#' (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+#' (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+#' m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+#' })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+#' 
+#' ga('create', 'UA-17670833-9', 'auto');
+#' ga('send', 'pageview');
+#' </script>
 #' <style>
 #'     h1, h2, h3, h4, .TOC > li {
 #'       color: #1FA67A;
@@ -304,7 +313,8 @@ hc %>% hc_add_theme(hc_theme_chalk())
 thm <- hc_theme(
   colors = c('red', 'green', 'blue'),
   chart = list(
-    backgroundColor = "#15C0DE"
+    backgroundColor = NULL,
+    divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
   ),
   title = list(
     style = list(
@@ -326,6 +336,26 @@ thm <- hc_theme(
     itemHoverStyle = list(
       color = 'gray'
     )   
+  )
+)
+
+hc %>% hc_add_theme(thm)
+
+##' ## Merge Themes ####
+
+thm <- hc_theme_merge(
+  hc_theme_darkunica(),
+  hc_theme(
+    chart = list(
+      backgroundColor = "transparent",
+      divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
+    ),
+    title = list(
+      style = list(
+        color = 'white',
+        fontFamily = "Erica One"
+      )
+    )
   )
 )
 

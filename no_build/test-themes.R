@@ -24,7 +24,8 @@ hc %>% hc_add_theme(hc_theme_chalk())
 thm <- hc_theme(
   colors = c('red', 'green', 'blue'),
   chart = list(
-    backgroundColor = "#15C0DE"
+    backgroundColor = NULL,
+    divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
   ),
   title = list(
     style = list(
@@ -52,5 +53,21 @@ thm <- hc_theme(
 hc %>% hc_add_theme(thm)
 
 
-(hc %>% hc_add_theme(hc_theme_sandsignika()))$x$fonts
-(hc %>% hc_add_theme(thm))$x$fonts
+thm <- hc_theme_merge(
+  hc_theme_darkunica(),
+  hc_theme(
+    chart = list(
+      backgroundColor = "transparent",
+      divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
+      ),
+    title = list(
+      style = list(
+        color = 'white',
+        fontFamily = "Erica One"
+        )
+      )
+    )
+  )
+
+hc %>% hc_add_theme(thm)
+
