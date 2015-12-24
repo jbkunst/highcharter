@@ -14,7 +14,7 @@
   }
   
   # adding fonts
-  hc$x$fonts <- list(unique(c(unlist(hc$x$fonts), .hc_get_fonts(hc$x$hc_opts))))
+  hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc$x$hc_opts)))
   
   hc
 }

@@ -1,3 +1,7 @@
+#' Chalk theme for highchart
+#' 
+#' Inspirated by https://www.amcharts.com/inspiration/chalk/
+#' 
 #' @export
 hc_theme_chalk <- function(){
   

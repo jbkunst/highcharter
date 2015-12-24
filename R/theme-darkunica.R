@@ -1,3 +1,5 @@
+#' Dark Unica theme for highchart
+#' 
 #' @export
 hc_theme_darkunica <- function(){
   

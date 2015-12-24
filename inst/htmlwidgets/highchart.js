@@ -20,8 +20,10 @@ HTMLWidgets.widget({
     }
 
     if(x.fonts !== undefined) {
+      
+      x.fonts = ((typeof(x.fonts) == "string") ? [x.fonts] : x.fonts);
     
-      x['fonts'].forEach(function(s){
+      x.fonts.forEach(function(s){
         Highcharts.createElement('link', {
         href: 'https://fonts.googleapis.com/css?family=' + s,
         rel: 'stylesheet',
@@ -33,7 +35,9 @@ HTMLWidgets.widget({
     }
     
     if(x.theme !== null) {
-      ResetOptions();
+      
+      ResetHighchartsOptions();
+      
       Highcharts.setOptions(x.theme);
       
       if(x.theme.chart.divBackgroundImage !== null){

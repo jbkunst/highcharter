@@ -1,10 +1,17 @@
+#' Add themes to a highchart object
+#' 
+#' Add highcharts themes to a highchart object.
+#' 
+#' @param hc A highchart object
+#' @param hc_thm A highchart theme object (\code{"hc_theme"} class)
+#' 
 #' @export
 hc_add_theme <- function(hc, hc_thm){
   
   assert_that(.is_highchart(hc),
               .is_hc_theme(hc_thm))
   
-  hc$x$fonts <- list(unique(c(unlist(hc$x$fonts), .hc_get_fonts(hc_thm))))
+  hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc_thm)))
   
   hc$x$theme <- hc_thm
   
@@ -12,6 +19,60 @@ hc_add_theme <- function(hc, hc_thm){
   
 }
 
+#' Highchart theme constructor
+#' 
+#' Function to create highcharts themes.
+#' 
+#' @param ... Usually named list
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' hc <- highchart(debug = TRUE) %>% 
+#'   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
+#'   hc_chart(zoomType = "xy") %>% 
+#'   hc_title(text = "Motor Trend Car Road Tests") %>% 
+#'   hc_subtitle(text = "Motor Trend Car Road Tests") %>% 
+#'   hc_xAxis(title = list(text = "Weight")) %>% 
+#'   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
+#'   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
+#'              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+#' 
+#' hc
+#' 
+#' thm <- hc_theme(
+#'  colors = c('red', 'green', 'blue'),
+#'  chart = list(
+#'  backgroundColor = "#15C0DE"
+#'  ),
+#'  title = list(
+#'    style = list(
+#'      color = '#333333',
+#'      fontFamily = "Erica One"
+#'    )
+#'  ),
+#'  subtitle = list(
+#'    style = list(
+#'      color = '#666666',
+#'      fontFamily = "Shadows Into Light"
+#'    )
+#'  ),
+#'  legend = list(
+#'    itemStyle = list(
+#'      fontFamily = 'Tangerine',
+#'      color = 'black'
+#'    ),
+#'    itemHoverStyle = list(
+#'      color = 'gray'
+#'    )   
+#'   )
+#' )
+#' 
+#' hc %>% hc_add_theme(thm)
+#' 
+#' }
+#' 
 #' @export
 hc_theme <- function(...){
   

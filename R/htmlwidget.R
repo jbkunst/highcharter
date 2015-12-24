@@ -6,6 +6,7 @@
 #'
 #' @param hc_opts A \code{list} object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
+#' @param theme A \code{hc_theme} class object
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param debug A boolean value if you want to print in the browser console the 

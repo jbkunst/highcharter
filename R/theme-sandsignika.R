@@ -1,3 +1,5 @@
+#' Sand Signika theme for highchart
+#' 
 #' @export
 hc_theme_sandsignika <- function(){
   

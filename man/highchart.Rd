@@ -11,6 +11,8 @@ highchart(hc_opts = list(), theme = NULL, width = NULL, height = NULL,
 \item{hc_opts}{A \code{list} object containing options defined as 
 \url{http://api.highcharts.com/highcharts}.}
 
+\item{theme}{A \code{hc_theme} class object}
+
 \item{width}{A numeric input in pixels.}
 
 \item{height}{A numeric input in pixels.}

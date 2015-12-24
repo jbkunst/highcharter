@@ -1,3 +1,5 @@
+#' Grid Light theme for highchart
+#' 
 #' @export
 hc_theme_gridlight <- function(){
   

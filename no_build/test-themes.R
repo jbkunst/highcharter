@@ -22,31 +22,22 @@ hc %>% hc_add_theme(hc_theme_sandsignika())
 hc %>% hc_add_theme(hc_theme_chalk())
 
 thm <- hc_theme(
-  colors = c('#3498db', '#2ecc71', '#f1c40f', '#f39c12','#9b59b6', '#c0392b',
-             '#1abc9c', '#d35400', '#bdc3c7', '#34495e', '#7f8c8d', '#16a085',
-             '#27ae60', '#e74c3c', '#8e44ad','#2980b9', '#95a5a6', '#2c3e50'),
+  colors = c('red', 'green', 'blue'),
   chart = list(
-    backgroundColor = list(
-      linearGradient = c(0, 0, 500, 500),
-      stops = list(
-        list(0, '#fff'),
-        list(1, '#fff')
-      )
-    )
+    backgroundColor = "#15C0DE"
   ),
   title = list(
     style = list(
       color = '#333333',
-      fontFamily = 'Press Start 2P'
+      fontFamily = "Erica One"
     )
   ),
   subtitle = list(
     style = list(
       color = '#666666',
-      fontFamily = 'Yanone Kaffeesatz'
+      fontFamily = "Shadows Into Light"
     )
   ),
-  
   legend = list(
     itemStyle = list(
       fontFamily = 'Tangerine',
@@ -61,4 +52,5 @@ thm <- hc_theme(
 hc %>% hc_add_theme(thm)
 
 
-
+(hc %>% hc_add_theme(hc_theme_sandsignika()))$x$fonts
+(hc %>% hc_add_theme(thm))$x$fonts

@@ -1,6 +1,6 @@
 var HCDefaults = $.extend(true, {}, Highcharts.getOptions(), {});
 
-function ResetOptions() {
+function ResetHighchartsOptions() {
     // Fortunately, Highcharts returns the reference to defaultOptions itself
     // We can manipulate this and delete all the properties
     var defaultOptions = Highcharts.getOptions();
