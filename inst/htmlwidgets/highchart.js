@@ -16,7 +16,9 @@ HTMLWidgets.widget({
     
     if(x.debug) {
       console.log(el);
-      console.log(x);
+      console.log("hc_opts", x.hc_opts);
+      console.log("theme", x.theme);
+      console.log("conf_opts", x.conf_opts);
     }
 
     if(x.fonts !== undefined) {
@@ -45,11 +47,14 @@ HTMLWidgets.widget({
         Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
           proceed.call(this);
           $("#" + el.id).css('background-image', 'url(' + x.theme.chart.divBackgroundImage + ')');
+          
         });
         
       }
       
     }
+    
+    Highcharts.setOptions(x.conf_opts);
     
     $("#" + el.id).highcharts(x.hc_opts);
     

@@ -4,7 +4,7 @@ library("highcharter")
 rm(list = ls())
 library("magrittr")
 
-hc <- highchart() %>%
+hc <- highchart(debug = TRUE) %>%
   hc_title(text = "Fruit Consumtion") %>% 
   hc_subtitle(text = "This is Legen-Wait For It... DARY! LEGENDARY!") %>% 
   hc_chart(type = "column") %>% 

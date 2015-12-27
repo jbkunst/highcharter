@@ -19,10 +19,18 @@ highchart <- function(hc_opts = list(), theme = NULL,
                       width = NULL, height = NULL,
                       debug = FALSE) {
   
+  opts <- getOption("highcharter.options", list())
+
+  if(identical(hc_opts, list()))
+    hc_opts <- opts$chart
+  
+  opts$chart <- NULL
+  
   # forward options using x
   x <- list(
     hc_opts = hc_opts,
     theme = theme,
+    conf_opts = opts,
     debug = debug
   )
 
