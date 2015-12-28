@@ -266,9 +266,8 @@ highchart() %>%
   
 highchart() %>% 
   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
-  hc_chart(zoomType = "xy") %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
-  hc_xAxis(title = list(text = "Weight"), minorTickInterval = "auto") %>% 
+  hc_xAxis(title = list(text = "Weight")) %>% 
   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
@@ -279,26 +278,23 @@ data(favorite_bars)
 
 favorite_bars
 
-hc %>% 
-  hc_chart(type = "pie") %>%
+highchart() %>% 
   hc_title(text = "My favorite Bars") %>%
   hc_subtitle(text = "(In percentage of awesomeness)") %>% 
-  hc_tooltip(pointFormat= '{point.percentage:.1f}%') %>% 
+  hc_tooltip(pointFormat = "{point.percentage:.1f}%") %>% 
   hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
-                             colorByPoint = TRUE) %>% 
+                             colorByPoint = TRUE, type = "pie") %>% 
   hc_legend(enabled = FALSE)
 
 data(favorite_pies)
 
-favorite_pies
-
-hc %>% 
-  hc_chart(type = "column") %>% 
-  hc_title(text = "My favorite Pie") %>% 
+highchart() %>%
+  hc_title(text = "My favorite Pies") %>% 
   hc_subtitle(text = "(In percentage of tastiness)") %>% 
-  hc_tooltip(pointFormat= '{point.y:.1f}%') %>% 
+  hc_tooltip(pointFormat = "{point.y:.1f}%") %>% 
   hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
-                             colorByPoint = TRUE) %>% 
+                             colorByPoint = TRUE, type = "column") %>% 
+  hc_xAxis(categories = favorite_pies$pie) %>% 
   hc_legend(enabled = FALSE)
 
 ##' ## Drilldown ####

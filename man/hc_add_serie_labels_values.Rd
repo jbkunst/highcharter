@@ -16,7 +16,7 @@ hc_add_serie_labels_values(hc, labels, values, ...)
 \item{...}{Other parameters for data series.}
 }
 \description{
-This function delete the actual series in the object and change the \code{chart}
+This function add label value delete the actual series in the object and change the \code{chart}
 type to \code{scatter}.
 }
 \examples{
@@ -25,24 +25,23 @@ type to \code{scatter}.
 
 data(favorite_bars)
 
-hc \%>\% 
-  hc_chart(type = "pie") \%>\%
+highchart() \%>\% 
   hc_title(text = "My favorite Bars") \%>\%
   hc_subtitle(text = "(In percentage of awesomeness)") \%>\% 
-  hc_tooltip(pointFormat= '{point.percentage:.1f}\%') \%>\% 
+  hc_tooltip(pointFormat = "{point.percentage:.1f}\%") \%>\% 
   hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
-                             colorByPoint = TRUE) \%>\% 
+                             colorByPoint = TRUE, type = "pie") \%>\% 
   hc_legend(enabled = FALSE)
 
 data(favorite_pies)
 
-hc \%>\%
-  hc_chart(type = "column") \%>\%  
-  hc_title(text = "My favorite Pie") \%>\% 
+highchart() \%>\%
+  hc_title(text = "My favorite Pies") \%>\% 
   hc_subtitle(text = "(In percentage of tastiness)") \%>\% 
-  hc_tooltip(pointFormat= '{point.y:.1f}\%') \%>\% 
+  hc_tooltip(pointFormat = "{point.y:.1f}\%") \%>\% 
   hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
-                             colorByPoint = TRUE) \%>\% 
+                             colorByPoint = TRUE, type = "column") \%>\% 
+  hc_xAxis(categories = favorite_pies$pie) \%>\% 
   hc_legend(enabled = FALSE)
 
 }

@@ -73,9 +73,8 @@ hc_add_serie_ts <- function(hc, ts, ...) {
 #'    
 #' highchart() %>% 
 #'   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
-#'   hc_chart(zoomType = "xy") %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
-#'   hc_xAxis(title = list(text = "Weight"), minorTickInterval = "auto") %>% 
+#'   hc_xAxis(title = list(text = "Weight")) %>% 
 #'   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
 #'   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
 #'              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
@@ -101,27 +100,28 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
       mutate(group = group) %>% 
       group_by(group) %>% 
       do(
+        type = "scatter",
         data = list.parse2(data_frame(.$x, .$y)),
         name = unique(as.character(.$group))
       ) %>% select(-group)
     
-    hc$x$hc_opts$series <- list.parse2(dss)
+    hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list.parse2(dss))
     
   } else {
     
     dss <- list.parse2(df)
     
-    hc$x$hc_opts$series <- list(list(data = dss, ...))
+    hc$x$hc_opts$series <- list(list(data = dss, type = "scatter"))
     
   }
   
-  hc %>% hc_chart(type = "scatter") 
+  hc 
   
 }
 
 #' Shorcut to add series for pie, bar and column charts
 #'
-#' This function delete the actual series in the object and change the \code{chart}
+#' This function add label value delete the actual series in the object and change the \code{chart}
 #' type to \code{scatter}.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -135,24 +135,23 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
 #' 
 #' data(favorite_bars)
 #' 
-#' hc %>% 
-#'   hc_chart(type = "pie") %>%
+#' highchart() %>% 
 #'   hc_title(text = "My favorite Bars") %>%
 #'   hc_subtitle(text = "(In percentage of awesomeness)") %>% 
-#'   hc_tooltip(pointFormat= '{point.percentage:.1f}%') %>% 
+#'   hc_tooltip(pointFormat = "{point.percentage:.1f}%") %>% 
 #'   hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
-#'                              colorByPoint = TRUE) %>% 
+#'                              colorByPoint = TRUE, type = "pie") %>% 
 #'   hc_legend(enabled = FALSE)
 #' 
 #' data(favorite_pies)
 #' 
-#' hc %>%
-#'   hc_chart(type = "column") %>%  
-#'   hc_title(text = "My favorite Pie") %>% 
+#' highchart() %>%
+#'   hc_title(text = "My favorite Pies") %>% 
 #'   hc_subtitle(text = "(In percentage of tastiness)") %>% 
-#'   hc_tooltip(pointFormat= '{point.y:.1f}%') %>% 
+#'   hc_tooltip(pointFormat = "{point.y:.1f}%") %>% 
 #'   hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
-#'                              colorByPoint = TRUE) %>% 
+#'                              colorByPoint = TRUE, type = "column") %>% 
+#'   hc_xAxis(categories = favorite_pies$pie) %>% 
 #'   hc_legend(enabled = FALSE)
 #' 
 #' }
@@ -160,21 +159,13 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
 #' @export
 hc_add_serie_labels_values <- function(hc, labels, values, ...) {
   
-  assert_that(!is.numeric(labels),
-              is.numeric(values),
-              length(labels) == length(values))
-
-  # data(favorite_bars)
-  # labels <- favorite_bars$bar
-  # values <- favorite_bars$percent
+  assert_that(is.numeric(values), length(labels) == length(values))
 
   df <- data_frame(name = labels, y = values)
   
   ds <- setNames(rlist::list.parse(df), NULL)
   
-  hc$x$hc_opts$series <- list(list(data = ds, ... ))
-  
-  hc <- hc %>% hc_xAxis(categories = labels)
+  hc <- hc %>% hc_add_serie(data = ds, ...)
   
   hc
                       

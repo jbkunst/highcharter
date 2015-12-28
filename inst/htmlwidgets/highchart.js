@@ -15,10 +15,12 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
     
     if(x.debug) {
+      
       console.log(el);
       console.log("hc_opts", x.hc_opts);
       console.log("theme", x.theme);
       console.log("conf_opts", x.conf_opts);
+      
     }
 
     if(x.fonts !== undefined) {
@@ -36,9 +38,9 @@ HTMLWidgets.widget({
       
     }
     
+    ResetHighchartsOptions();
+    
     if(x.theme !== null) {
-      
-      ResetHighchartsOptions();
       
       Highcharts.setOptions(x.theme);
       
