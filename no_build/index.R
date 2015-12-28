@@ -91,6 +91,7 @@
 
 #+ echo=FALSE
 options(digits = 3, knitr.table.format = "markdown")
+library("printr")
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 
 ##' # Introduction ####
@@ -272,7 +273,33 @@ highchart() %>%
   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
 
-##' ## Column and Bar ####
+##' ## Labels/Values ####
+
+data(favorite_bars)
+
+favorite_bars
+
+hc %>% 
+  hc_chart(type = "pie") %>%
+  hc_title(text = "My favorite Bars") %>%
+  hc_subtitle(text = "(In percentage of awesomeness)") %>% 
+  hc_tooltip(pointFormat= '{point.percentage:.1f}%') %>% 
+  hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
+                             colorByPoint = TRUE) %>% 
+  hc_legend(enabled = FALSE)
+
+data(favorite_pies)
+
+favorite_pies
+
+hc %>% 
+  hc_chart(type = "column") %>% 
+  hc_title(text = "My favorite Pie") %>% 
+  hc_subtitle(text = "(In percentage of tastiness)") %>% 
+  hc_tooltip(pointFormat= '{point.y:.1f}%') %>% 
+  hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
+                             colorByPoint = TRUE) %>% 
+  hc_legend(enabled = FALSE)
 
 ##' ## Drilldown ####
 

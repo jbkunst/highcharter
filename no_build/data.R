@@ -7,3 +7,20 @@ citytemp <- data_frame(
   london = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
 
 save(citytemp, file = "data/citytemp.rda")
+
+
+favorite_bars <- data_frame(
+  bar = c("Mclaren's", "McGee's", "P & G",
+          "White Horse Tavern", "King Cole Bar"),
+  percent = c(30, 28, 27, 12, 3)
+  )
+
+save(favorite_bars, file = "data/favorite_bars.rda")
+
+favorite_pies <- data_frame(
+  pie = c("Strawberry Rhubarb", "Pumpkin", "Lemon Meringue",
+          "Blueberry", "Key Lime"),
+  percent = c(85, 64, 75, 100, 57)
+  )
+
+save(favorite_pies, file = "data/favorite_pies.rda")

@@ -56,8 +56,7 @@ hc_add_serie_ts <- function(hc, ts, ...) {
 
 #' Shorcut for create scatter plots
 #'
-#' This function delete the actual series in the object and change the \code{chart}
-#' type to \code{scatter}.
+#' This function helps to create scatter plot from two numerics vectors.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A numeric vector. 
@@ -118,4 +117,65 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
   
   hc %>% hc_chart(type = "scatter") 
   
+}
+
+#' Shorcut to add series for pie, bar and column charts
+#'
+#' This function delete the actual series in the object and change the \code{chart}
+#' type to \code{scatter}.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param labels A vector of labels. 
+#' @param values A numeric vector. Same length of \code{labels}.
+#' @param ... Other parameters for data series.
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' data(favorite_bars)
+#' 
+#' hc %>% 
+#'   hc_chart(type = "pie") %>%
+#'   hc_title(text = "My favorite Bars") %>%
+#'   hc_subtitle(text = "(In percentage of awesomeness)") %>% 
+#'   hc_tooltip(pointFormat= '{point.percentage:.1f}%') %>% 
+#'   hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
+#'                              colorByPoint = TRUE) %>% 
+#'   hc_legend(enabled = FALSE)
+#' 
+#' data(favorite_pies)
+#' 
+#' hc %>%
+#'   hc_chart(type = "column") %>%  
+#'   hc_title(text = "My favorite Pie") %>% 
+#'   hc_subtitle(text = "(In percentage of tastiness)") %>% 
+#'   hc_tooltip(pointFormat= '{point.y:.1f}%') %>% 
+#'   hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
+#'                              colorByPoint = TRUE) %>% 
+#'   hc_legend(enabled = FALSE)
+#' 
+#' }
+#' 
+#' @export
+hc_add_serie_labels_values <- function(hc, labels, values, ...) {
+  
+  assert_that(!is.numeric(labels),
+              is.numeric(values),
+              length(labels) == length(values))
+
+  # data(favorite_bars)
+  # labels <- favorite_bars$bar
+  # values <- favorite_bars$percent
+
+  df <- data_frame(name = labels, y = values)
+  
+  ds <- setNames(rlist::list.parse(df), NULL)
+  
+  hc$x$hc_opts$series <- list(list(data = ds, ... ))
+  
+  hc <- hc %>% hc_xAxis(categories = labels)
+  
+  hc
+                      
 }

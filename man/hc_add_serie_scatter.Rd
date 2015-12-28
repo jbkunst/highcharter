@@ -18,8 +18,7 @@ hc_add_serie_scatter(hc, x, y, group = NULL, ...)
 \item{...}{Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This function delete the actual series in the object and change the \code{chart}
-type to \code{scatter}.
+This function helps to create scatter plot from two numerics vectors.
 }
 \examples{
 
