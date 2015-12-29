@@ -251,13 +251,13 @@ hc
 ##' ## Time Series ####
 
 highchart() %>% 
-  hc_add_serie_ts(AirPassengers)
+  hc_add_serie_ts2(AirPassengers)
 
 highchart() %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
-  hc_add_serie_ts(fdeaths, name = "Female") %>%
-  hc_add_serie_ts(mdeaths, name = "Male")
+  hc_add_serie_ts2(fdeaths, name = "Female") %>%
+  hc_add_serie_ts2(mdeaths, name = "Male")
 
 ##' ## Scatter plot ####
 

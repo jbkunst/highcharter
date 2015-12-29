@@ -1,7 +1,8 @@
 . <- NULL
-#' Shorcut for create/add time series charts
+#' Shorcut for create/add time series charts from a ts object
 #'
-#' This function add a time series to a \code{highchart} object. 
+#' This function add a time series to a \code{highchart} object
+#' from a \code{ts} object. 
 #' 
 #' This function \bold{modify} the type of \code{chart} to \code{datetime}
 #'  
@@ -31,12 +32,48 @@
 #' @import zoo
 #' 
 #' @export 
-hc_add_serie_ts <- function(hc, ts, ...) {
+hc_add_serie_ts2 <- function(hc, ts, ...) {
   
   assert_that(is.ts(ts))
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
-  timestamps <- time(ts) %>% 
+  dates <- time(ts) %>% 
+    zoo::as.Date()
+  
+  values <- as.vector(ts)
+  
+  hc %>% hc_add_serie_ts(values, dates)
+    
+}
+
+#' Shorcut for create/add time series from values and dates
+#'
+#' This function add a time series to a \code{highchart} object. 
+#' 
+#' This function \bold{modify} the type of \code{chart} to \code{datetime}
+#'  
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param values A numeric vector
+#' @param dates  A date vector (same length as \code{values})
+#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' library("magrittr")
+#' 
+#' 
+#' }
+#' 
+#' @import zoo
+#' 
+#' @export 
+hc_add_serie_ts <- function(hc, values, dates, ...) {
+  
+  assert_that(is.numeric(values), is.date(dates))
+  
+  timestamps <- dates %>% 
     zoo::as.Date() %>%
     as.POSIXct() %>% 
     as.numeric()
@@ -44,14 +81,12 @@ hc_add_serie_ts <- function(hc, ts, ...) {
   # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts  
   timestamps <- 1000 * timestamps
   
-  values <- as.vector(ts)
-  
   data_series <- list.parse2(data.frame(timestamps, values))
-
+  
   hc %>% 
     hc_xAxis(type = "datetime") %>% 
     hc_add_serie(..., data = data_series)
-    
+  
 }
 
 #' Shorcut for create scatter plots

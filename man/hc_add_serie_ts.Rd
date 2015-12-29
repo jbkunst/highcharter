@@ -2,14 +2,16 @@
 % Please edit documentation in R/shortcuts.R
 \name{hc_add_serie_ts}
 \alias{hc_add_serie_ts}
-\title{Shorcut for create/add time series charts}
+\title{Shorcut for create/add time series from values and dates}
 \usage{
-hc_add_serie_ts(hc, ts, ...)
+hc_add_serie_ts(hc, values, dates, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{ts}{A time series object.}
+\item{values}{A numeric vector}
+
+\item{dates}{A date vector (same length as \code{values})}
 
 \item{...}{Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
 }
@@ -25,16 +27,6 @@ This function \bold{modify} the type of \code{chart} to \code{datetime}
 
 library("magrittr")
 
-highchart() \%>\% 
-  hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") \%>\% 
-  hc_subtitle(text = "The classic Box and Jenkins airline data") \%>\% 
-  hc_add_serie_ts(AirPassengers, name = "passengers") \%>\%
-  hc_tooltip(pointFormat =  '{point.y} passengers')
-
-highchart() \%>\% 
-  hc_title(text = "Monthly Deaths from Lung Diseases in the UK") \%>\% 
-  hc_add_serie_ts(fdeaths, name = "Female") \%>\%
-  hc_add_serie_ts(mdeaths, name = "Male")
 
 }
 
