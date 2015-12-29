@@ -21,7 +21,7 @@ highchart <- function(hc_opts = list(), theme = NULL,
   
   opts <- getOption("highcharter.options", list())
 
-  if(identical(hc_opts, list()))
+  if (identical(hc_opts, list()))
     hc_opts <- opts$chart
   
   opts$chart <- NULL
@@ -31,9 +31,11 @@ highchart <- function(hc_opts = list(), theme = NULL,
     hc_opts = hc_opts,
     theme = theme,
     conf_opts = opts,
-    debug = debug
+    debug = debug,
+    fonts = unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
   )
-
+  
+  
   # create widget
   htmlwidgets::createWidget(
     name = "highchart",

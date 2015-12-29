@@ -379,3 +379,99 @@ thm <- hc_theme_merge(
 )
 
 hc %>% hc_add_theme(thm)
+
+##' # More Examples ####
+
+##' ## Highcharts home page example ####
+
+#' Example in http://www.highcharts.com/
+
+rainfall <- c(49.9, 71.5, 106.4, 129.2, 144, 176,
+              135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
+
+temperature <- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
+                 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
+
+col1 <- hc_get_colors()[3]
+col2 <- hc_get_colors()[2]
+
+highchart(debug = TRUE) %>% 
+  hc_title(text = "Tokyo Climate") %>% 
+  hc_legend(enabled = FALSE) %>% 
+  hc_xAxis(categories = month.abb) %>% 
+  hc_yAxis(
+    list(
+      title = list(text = "Temperature"),
+      align = "left",
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = "{value} &#176;C", useHTML = TRUE)
+    ),
+    list(
+      title = list(text = "Rainfall"),
+      align = "right",
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = "{value} mm"),
+      opposite = TRUE
+    )
+  ) %>% 
+  #
+  hc_tooltip(formatter = htmlwidgets::JS("function(){
+                              if('Sunshine' == this.series.name){
+                                return  '<b>' + this.point.name + ': </b>' + this.y
+                              } else {
+                                unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
+                                return (this.x + ': ' + this.y + ' ' + unts)
+                              }
+                            }"),
+             useHTML = TRUE) %>% 
+  hc_add_serie(name = "Rainfall", type = "column",
+               data = rainfall, yAxis = 1) %>% 
+  hc_add_serie(name = "Temperature", type = "spline",
+               data = temperature) %>% 
+  hc_add_serie(name = "Sunshine", type = "pie",
+               data = list(list(y = 2020, name = "Sunshine hours",
+                                sliced = TRUE, color = col1),
+                           list(y = 6740, name = "Non sunshine hours (including night)",
+                                color = col2,
+                                dataLabels = list(enabled = FALSE))),
+               center = c('20%', 45),
+               size = 80)
+
+##' ## Creating a chart from a list of parameters ####
+
+#' Similar input like chordEx1 example in http://yihui.name/recharts/
+#' 
+
+##' ### Example 1 ####
+hc_opts <- list()
+hc_opts$title <- list(text = "This is a title", x = -20)
+hc_opts$xAxis <- list(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+hc_opts$series <- list(list(name = "Tokyo",
+                            data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)))
+
+hc_opts$series <- append(hc_opts$series,
+                         list(list(name = "New York",
+                                   type = "spline",
+                                   lineWidth = 5,
+                                   data = c(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
+                                   dataLabels = list(align = "left", enabled = TRUE))))
+
+highchart(hc_opts, debug = TRUE)
+
+##' ### Example 2 ####
+
+hc_opts <- list()
+hc_opts$chart <- list(type = "bar")
+hc_opts$title <- list(title = "Stacked bar")
+hc_opts$xAxis <- list(categories = c('Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'))
+hc_opts$yAxis <- list(min = 0, title = list(text = 'Total Fruit Consumtion'))
+hc_opts$legend <- list(reversed = TRUE)
+hc_opts$series <- list(list(name = "John", data = c(5, 3, 4, 7, 2)),
+                       list(name = "Jane", data = c(2, 2, 3, 2, 1)),
+                       list(name = "Joe", data = c(3, 4, 4, 2, 5)))
+
+highchart(hc_opts, theme = hc_theme_darkunica())
+
