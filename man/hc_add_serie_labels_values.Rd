@@ -4,7 +4,7 @@
 \alias{hc_add_serie_labels_values}
 \title{Shorcut to add series for pie, bar and column charts}
 \usage{
-hc_add_serie_labels_values(hc, labels, values, ...)
+hc_add_serie_labels_values(hc, labels, values, colors = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
@@ -12,6 +12,8 @@ hc_add_serie_labels_values(hc, labels, values, ...)
 \item{labels}{A vector of labels.}
 
 \item{values}{A numeric vector. Same length of \code{labels}.}
+
+\item{colors}{A not required color vector (hexadecimal format). Same length of \code{labels}.}
 
 \item{...}{Other parameters for data series.}
 }
@@ -22,27 +24,25 @@ type to \code{scatter}.
 \examples{
 
 \dontrun{
-
-data(favorite_bars)
+ 
+data("favorite_bars")
+data("favorite_pies")
 
 highchart() \%>\% 
-  hc_title(text = "My favorite Bars") \%>\%
-  hc_subtitle(text = "(In percentage of awesomeness)") \%>\% 
-  hc_tooltip(pointFormat = "{point.percentage:.1f}\%") \%>\% 
-  hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
-                             colorByPoint = TRUE, type = "pie") \%>\% 
-  hc_legend(enabled = FALSE)
-
-data(favorite_pies)
-
-highchart() \%>\%
-  hc_title(text = "My favorite Pies") \%>\% 
-  hc_subtitle(text = "(In percentage of tastiness)") \%>\% 
-  hc_tooltip(pointFormat = "{point.y:.1f}\%") \%>\% 
-  hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
+  hc_title(text = "This is a bar graph describing my favorite pies
+                   including a pie chart describing my favorite bars") \%>\%
+  hc_subtitle(text = "In percentage of tastiness and awesomeness") \%>\% 
+  hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
                              colorByPoint = TRUE, type = "column") \%>\% 
+  hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
+                             colors = substr(terrain.colors(5), 0 , 7), type = "pie",
+                             name = "Bar", colorByPoint = TRUE, center = c('35\%', '10\%'),
+                             size = 100, dataLabels = list(enabled = FALSE)) \%>\% 
+  hc_yAxis(title = list(text = "percentage of tastiness"),
+           labels = list(format = "{value}\%"), max = 100) \%>\% 
   hc_xAxis(categories = favorite_pies$pie) \%>\% 
-  hc_legend(enabled = FALSE)
+  hc_legend(enabled = FALSE) \%>\% 
+  hc_tooltip(pointFormat = "{point.y}\%")
 
 }
 

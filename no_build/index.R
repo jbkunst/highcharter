@@ -76,7 +76,7 @@
 #'   }
 #'   
 #'   .main-container {
-#'     max-width: 700px;
+#'     max-width: 850px;
 #'     margin-left: auto;
 #'     margin-right: auto;
 #'   }
@@ -274,28 +274,24 @@ highchart() %>%
 
 ##' ## Labels/Values ####
 
-data(favorite_bars)
-
-favorite_bars
+data("favorite_bars")
+data("favorite_pies")
 
 highchart() %>% 
-  hc_title(text = "My favorite Bars") %>%
-  hc_subtitle(text = "(In percentage of awesomeness)") %>% 
-  hc_tooltip(pointFormat = "{point.percentage:.1f}%") %>% 
-  hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
-                             colorByPoint = TRUE, type = "pie") %>% 
-  hc_legend(enabled = FALSE)
-
-data(favorite_pies)
-
-highchart() %>%
-  hc_title(text = "My favorite Pies") %>% 
-  hc_subtitle(text = "(In percentage of tastiness)") %>% 
-  hc_tooltip(pointFormat = "{point.y:.1f}%") %>% 
-  hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent,
+  hc_title(text = "This is a bar graph describing my favorite pies
+                   including a pie chart describing my favorite bars") %>%
+  hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
+  hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
                              colorByPoint = TRUE, type = "column") %>% 
+  hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
+                             colors = substr(terrain.colors(5), 0 , 7), type = "pie",
+                             name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
+                             size = 100, dataLabels = list(enabled = FALSE)) %>% 
+  hc_yAxis(title = list(text = "percentage of tastiness"),
+           labels = list(format = "{value}%"), max = 100) %>% 
   hc_xAxis(categories = favorite_pies$pie) %>% 
-  hc_legend(enabled = FALSE)
+  hc_legend(enabled = FALSE) %>% 
+  hc_tooltip(pointFormat = "{point.y}%")
 
 ##' ## Drilldown ####
 
