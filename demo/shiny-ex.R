@@ -1,28 +1,4 @@
-library("shiny")
-library("highcharter")
-library("magrittr")
-rm(list = ls())
-data(citytemp)
 
-
-ui = shinyUI(
-  fluidPage(
-    tags$link(rel = "stylesheet", type = "text/css", href = "https://bootswatch.com/paper/bootstrap.css"),
-    fluidRow(
-      column(width = 3, class = "panel",
-             selectInput("type", label = "Type", choices = c("line", "column", "bar", "spline")),
-             selectInput("stacked", label = "Stacked", choices = c(FALSE, "normal", "percent")),
-             selectInput("ena", label = "3d enabled", choices = c(FALSE, TRUE)),
-             sliderInput("alpha", "Alpha Angle", min = 0, max = 45, value = 15),
-             sliderInput("beta", "Beta Angle", min = 0, max = 45, value = 15)
-      ),
-      column(width = 9,
-             highchartOutput("hcontainer", width = "80%", height = "600px")
-             )
-      )
-    )
-  ) 
-  
 
 server = function(input, output) {
   
@@ -38,6 +14,17 @@ server = function(input, output) {
     if(input$ena) hc <- hc %>% hc_chart(options3d = list(enabled = TRUE, beta = input$beta, alpha = input$alpha))
     
     if(input$stacked != FALSE) hc <- hc %>% hc_plotOptions(series = list(stacking = input$stacked))
+    
+    if(input$theme != FALSE) {
+      theme <- switch (input$theme,
+        darkunica = hc_theme_darkunica(),
+        gridlight = hc_theme_gridlight(),
+        sandsignika = hc_theme_sandsignika()
+      )
+      
+      hc <- hc %>% hc_add_theme(theme)
+      
+    }
       
     hc
     
