@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^cran-comments\.md$
 tests/
 no_build/
 ^\.travis\.yml$

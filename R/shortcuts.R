@@ -24,8 +24,8 @@
 #' 
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
-#'   hc_add_serie_ts(fdeaths, name = "Female") %>%
-#'   hc_add_serie_ts(mdeaths, name = "Male")
+#'   hc_add_serie_ts2(fdeaths, name = "Female") %>%
+#'   hc_add_serie_ts2(mdeaths, name = "Male")
 #' 
 #' }
 #' 
@@ -42,7 +42,7 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
   
   values <- as.vector(ts)
   
-  hc %>% hc_add_serie_ts(values, dates)
+  hc %>% hc_add_serie_ts(values, dates, ...)
     
 }
 

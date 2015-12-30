@@ -11,7 +11,6 @@ list.parse2 <- function(df) {
   
 }
 
-
 #' Get default colors for Highcharts theme
 #'
 #' Get color used in highcharts charts.
