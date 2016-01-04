@@ -122,13 +122,20 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 library("highcharter")
 library("magrittr")
 
-hc <- highchart(debug = TRUE) %>% 
+hc <- highchart() %>% 
   hc_title(text = "A nice chart") %>% 
-  hc_chart(type = "column") %>% 
-  hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) %>% 
   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
                         26.5, 23.3, 18.3, 13.9, 9.6))
+
+hc
+
+#' If you are not familiar with the magrittr pipe operator (%>%),
+#' here is the equivalent without using pipes:
+
+hc <- highchart()
+hc <- hc_title(hc, text = "A nice chart")
+hc <- hc_add_serie(hc, data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 
+                                26.5, 23.3, 18.3, 13.9, 9.6))
 
 hc
 
@@ -137,43 +144,37 @@ hc
 #' 
 #' - Edit style the title.
 #' - Add a subtitle with some style.
+#' - Add xAxis categories
 #' - Add another data (in HC this is call a serie) with some customizations.
-#' 
+#' - Put a shared tooltip.
+#' - Put some bands inspired in http://www.highcharts.com/demo/spline-plot-bands.
+
+ 
 hc <- hc %>% 
   hc_title(style = list(color = "red")) %>% 
   hc_subtitle(text = "I want to add a subtitle too with style",
               style = list(color = "#B71C1C", fontWeight = "bold")) %>% 
-  hc_add_serie(name = "A another data", type = "line", color = "#1FA67A",
+  hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) %>% 
+  hc_add_serie(name = "A another data", type = "column", color = "#1FA67A",
                dataLabels = list(align = "center", enabled = TRUE),
                data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
-                        17.0, 16.6, 14.2, 10.3, 6.6, 4.8))
-
-hc 
-
-#' And finally:
-#' 
-#' - Put a shared tooltip ([reference](http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/tooltip/shared-x-crosshair/)).
-#' - Put some bands inspired in http://www.highcharts.com/demo/spline-plot-bands.
-#' 
-
-hc <- hc %>% 
+                        17.0, 16.6, 14.2, 10.3, 6.6, 4.8)) %>% 
   hc_tooltip(crosshairs = TRUE, shared = TRUE) %>% 
   hc_yAxis(minorGridLineWidth = 0, gridLineWidth = 0,
            plotBands = list(
-             list(from = 10, to = 20, color = "rgba(68, 170, 213, 0.1)",
-                  label = list(text = "A low band")),
-             list(from = 20, to = 25, color = "rgba(0, 0, 0, 0.1)",
-                  label = list(text = "A medium band")),
-             list(from = 25, to = 30, color = "rgba(68, 170, 213, 0.1)",
-                  label = list(text = "A high band"))
+             list(from = 20, to = 30, color = "rgba(68, 170, 213, 0.1)",
+                  label = list(text = "A band from 20 to 30")),
+             list(from = 10, to = 20, color = "rgba(0, 0, 0, 0.1)",
+                  label = list(text = "Another band"))
              ))
 
 hc
 
-#' Easy right? Well, it's just the Highcharts API. Thanks to the HC team.
+#' Easy right? Well, it's just the Highcharts API. Thanks to the http://www.highcharts.com/ team.
 #' 
 
-##' # Functions to work with HC API ####
+##' # The higcharts API (and this wrapper) ####
 #' 
 #' *Premise*: There's not default arguments. All arguments need to be named.
 #' 
@@ -273,7 +274,7 @@ hc
 
 hc
 
-##' # Shorcuts ####
+##' # Shorcuts for add Data (data series) ####
 
 ##' ## Time Series ####
 
@@ -298,6 +299,19 @@ highchart() %>%
   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+
+
+#' Or we can add one by one.
+hc <- highchart()
+
+for (cyl in unique(mtcars$cyl)) {
+  hc <- hc %>%
+    hc_add_serie_scatter(mtcars$wt[mtcars$cyl == cyl], mtcars$mpg[mtcars$cyl == cyl],
+                         name = sprintf("cyl %s", cyl))
+}
+
+hc
+
 
 ##' ## Labels/Values ####
 

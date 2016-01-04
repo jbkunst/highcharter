@@ -148,7 +148,8 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
     
     dss <- list.parse2(df)
     
-    hc$x$hc_opts$series <- list(list(data = dss, type = "scatter"))
+    # hc$x$hc_opts$series <- list(list(data = dss, type = "scatter"))
+    hc <- hc %>% hc_add_serie(data = dss, type = "scatter", ...)
     
   }
   
