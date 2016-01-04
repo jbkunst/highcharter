@@ -31,6 +31,8 @@
 #' 
 #' @import zoo
 #' 
+#' @importFrom stats is.ts time
+#' 
 #' @export 
 hc_add_serie_ts2 <- function(hc, ts, ...) {
   
@@ -81,11 +83,11 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
   # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts  
   timestamps <- 1000 * timestamps
   
-  data_series <- list.parse2(data.frame(timestamps, values))
+  ds <- list.parse2(data.frame(timestamps, values))
   
   hc %>% 
     hc_xAxis(type = "datetime") %>% 
-    hc_add_serie(..., data = data_series)
+    hc_add_serie(marker = list(enabled = FALSE), data = ds, ...)
   
 }
 

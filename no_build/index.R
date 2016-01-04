@@ -113,7 +113,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 
 ##' # Installation ####
 #' 
-#' You can install the package via devtools: `devtools::install_github("jbkunst/rchess")`.
+#' You can install the package via devtools: `devtools::install_github("jbkunst/highcharter")`.
 #' 
 
 ##' # Quick Demo ####
@@ -186,7 +186,9 @@ citytemp
 hc <- highchart(debug = TRUE) %>% 
   hc_xAxis(categories = citytemp$month) %>% 
   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-  hc_add_serie(name = "London", data = citytemp$london)
+  hc_add_serie(name = "London", data = citytemp$london) %>% 
+  hc_add_serie(name = "Other city",
+               data = (citytemp$tokyo + citytemp$london)/2)
 
 hc
 
@@ -213,30 +215,55 @@ hc <- hc %>%
 
 hc
 
-#' Now remove 3deffect and add the original type
+#' Now remove 3deffect and add the original type to work with the next examples.
 
-hc <- hc %>%
-  hc_chart(type = "line", options3d = list(enabled = FALSE))
+hc <- hc_chart(hc, type = "line", options3d = list(enabled = FALSE))
 
-hc
+##' ## hc_title, hc_subtitle, hc_credits and hc_legend, hc_tooltip ####
 
-##' ## hc_title, hc_tooltip, hc_subtitle, hc_credits and hc_legend ####
-
-#' Options to add the chart's main title and subtitle.
+#' Functions to modify the chart's main title, subtitle, credits, legend and tooltip.
 
 hc %>% 
-  hc_title(text = "This is a title with <i>margin</i> at <b>bottom</b>",
-           useHTML = TRUE) %>% 
+  hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
+           margin = 20, align = "left",
+           style = list(color = "#90ed7d", useHTML = TRUE)) %>% 
   hc_subtitle(text = "A detailed description",
-              align = "right",
+              align = "left",
               style = list(color = "#2b908f", fontWeight = "bold")) %>% 
-  hc_title(margin = 50,
-           align = "left",
-           style = list(color = "#90ed7d"))
+  hc_credits(enabled = TRUE,
+             text = "www.lonk.tomy.site",
+             href = "http://jkunst.com") %>% 
+  hc_legend(align = "left", verticalAlign = "top",
+            layout = "vertical", x = 0, y = 100) %>%
+  hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
+             shared = TRUE, borderWidth = 5)
 
 ##' ## hc_xAxis and hc_yAxis ####
 
-hc 
+#' This functions allow between other things:
+#' 
+#' - Modify the gridlines.
+#' - Add plotBands or plotLines to remark some information.
+#' - Show in the opposite side the axis.
+#' 
+
+hc %>% 
+  hc_xAxis(title = list(text = "Month in x Axis"),
+           opposite = TRUE,
+           plotLines = list(
+             list(label = list(text = "Mid year in a plotLine"),
+                  color = "#FF0000",
+                  width = 2,
+                  value = 5.5))) %>% 
+  hc_yAxis(title = list(text = "Temperature in y Axis"),
+           opposite = TRUE,
+           minorTickInterval = "auto",
+           minorGridLineDashStyle = "LongDashDotDot",
+           showFirstLabel = FALSE,
+           showLastLabel = FALSE,
+           plotBands = list(
+             list(from = 25, to = htmlwidgets::JS("Infinity"), color = "rgba(100, 0, 0, 0.1)",
+                  label = list(text = "So hot here in the plotBand")))) 
 
 ##' ## hc_plotOptions ####
 
@@ -301,11 +328,13 @@ hc <- highchart(debug = TRUE) %>%
   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
   hc_chart(zoomType = "xy") %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
-  hc_subtitle(text = "Motor Trend Car Road Tests") %>% 
+  hc_subtitle(text = "Source: 1974 Motor Trend US magazine") %>% 
   hc_xAxis(title = list(text = "Weight")) %>% 
   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+
+##' ## Default ####
 
 hc
 
@@ -438,6 +467,40 @@ highchart(debug = TRUE) %>%
                                 dataLabels = list(enabled = FALSE))),
                center = c('20%', 45),
                size = 80)
+
+##' ## Heatmap ####
+
+nyears <- 5
+
+df <- expand.grid(seq(12)-1, seq(nyears) - 1)
+df$value <- seq(nrow(df)) + 10 * rnorm(nrow(df))
+df$value <- round(df$value, 2)
+ds <- setNames(list.parse2(df), NULL)
+
+highchart() %>% 
+  hc_chart(type = "heatmap") %>% 
+  hc_title(text = "Simulated values by years and months") %>% 
+  hc_xAxis(categories = month.abb) %>% 
+  hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
+  hc_colorAxis(min = 0,  minColor = "#FFFFFF", maxColor = "#434348") %>% 
+  hc_add_serie(name = "value", data = ds)
+
+##' ## Treemap ####
+
+library("ggplot2")
+
+data(diamonds)
+
+df <- dplyr::count(diamonds, cut)
+
+df
+
+df <- setNames(df, c("name", "value"))
+ds <- setNames(rlist::list.parse(df), NULL)
+
+highchart() %>% 
+  hc_title(text = "A simple Treemap") %>% 
+  hc_add_serie(data = ds, type = "treemap", colorByPoint = TRUE) 
 
 ##' ## Creating a chart from a list of parameters ####
 

@@ -145,6 +145,20 @@ hc_plotOptions  <- function(hc, ...) {
   
 }
 
+#' Adding Color Axis options to highchart object
+#'
+#' Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
+#'
+#' @export
+hc_colorAxis  <- function(hc, ...) {
+  
+  .hc_opt(hc, "colorAxis", ...)
+  
+}
+
 #' Adding series to highchart object
 #'
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}

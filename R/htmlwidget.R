@@ -16,7 +16,7 @@
 #'
 #' @export
 highchart <- function(hc_opts = list(), theme = NULL,
-                      width = NULL, height = NULL,
+                      width = "100%", height = "100%",
                       debug = FALSE) {
   
   opts <- getOption("highcharter.options", list())

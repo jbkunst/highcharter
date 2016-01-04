@@ -1,9 +1,9 @@
 Package: highcharter
 Version: 0.1
 Type: Package
-Title: A wrapper for the highcharts javascript library
-Description: A wrapper for the highcharts javascript library including
-  shortcut and utils functions to plot R objects.
+Title: A Wrapper for the 'Highcharts' Library
+Description: A wrapper for the 'highcharts' library including
+  shortcut functions to plot R objects.
 Version: 0.1
 Date: 2015-12-11
 Author: Joshua Kunst <jbkunst@gmail.com>

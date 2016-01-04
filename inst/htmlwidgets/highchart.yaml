@@ -12,4 +12,6 @@ dependencies:
     - highcharts-3d.js
     - modules/exporting.js
     - modules/drilldown.js
+    - modules/heatmap.js
+    - modules/treemap.js
     - modules/reset.js
