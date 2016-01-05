@@ -312,6 +312,36 @@ for (cyl in unique(mtcars$cyl)) {
 
 hc
 
+##' ## Treemaps ####
+#'
+#' Here we use the `treemap` package to create a treemap object and then
+#' we create the same treemap via highcharts ;).
+
+library("treemap")
+library("viridis")
+
+data(GNI2010)
+head(GNI2010)
+
+set.seed(123)
+# we reduce the data. 
+GNI20102 <- dplyr::sample_n(GNI2010, 100)
+
+tm <- treemap(GNI20102,
+              index = c("continent", "country"), 
+              vSize = "population",
+              palette = rev(viridis(5)))
+
+#' Get similar result because the functions use different algorithm to
+#' make the 
+
+highchart() %>% 
+  hc_add_serie_treemap(tm, allowDrillToNode = TRUE) %>% 
+  hc_title(text = "GNI World Data") %>% 
+  hc_subtitle(text = "Gross national income in dollars per country in 2010") %>% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+             Population {point.value:,.1f}")
+
 ##' ## Labels/Values ####
 
 data("favorite_bars")

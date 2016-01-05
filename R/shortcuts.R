@@ -36,7 +36,8 @@
 #' @export 
 hc_add_serie_ts2 <- function(hc, ts, ...) {
   
-  assert_that(is.ts(ts))
+  assert_that(is.ts(ts),
+              .is_highchart(hc))
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
   dates <- time(ts) %>% 
@@ -73,7 +74,9 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #' @export 
 hc_add_serie_ts <- function(hc, values, dates, ...) {
   
-  assert_that(is.numeric(values), is.date(dates))
+  assert_that(.is_highchart(hc), 
+              is.numeric(values),
+              is.date(dates))
   
   timestamps <- dates %>% 
     zoo::as.Date() %>%
@@ -123,7 +126,8 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' @export 
 hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
   
-  assert_that(is.numeric(x),
+  assert_that(.is_highchart(hc),
+              is.numeric(x),
               is.numeric(y),
               length(x) == length(y))
   
@@ -196,7 +200,9 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
 #' @export
 hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
   
-  assert_that(is.numeric(values), length(labels) == length(values))
+  assert_that(.is_highchart(hc),
+              is.numeric(values),
+              length(labels) == length(values))
 
   df <- data_frame(name = labels, y = values)
   
@@ -213,4 +219,81 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
   
   hc
                       
+}
+
+#' Shorcut for create treemaps
+#'
+#' This function helps to create hicharts treemaps from \code{treemap} objects
+#' from the package \code{treemap}.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param tm A \code{treemap} object
+#' @param ... Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' library("treemap")
+#' 
+#' data("business")
+#' tm <- treemap(business, 
+#'              index = c("NACE1", "NACE2"), 
+#'              vSize = "turnover", 
+#'              type = "index")
+#'              
+#' highchart() %>% 
+#'  hc_add_serie_treemap(tm, allowDrillToNode = TRUE) %>% 
+#'  hc_title(text = "Fictitious Business Statistics Data")
+#' 
+#' }
+#' 
+#' 
+#' @importFrom dplyr filter_ mutate_ rename_ select_ tbl_df
+#' @importFrom plyr ldply
+#' 
+#' @export 
+hc_add_serie_treemap <- function(hc, tm, ...) {
+  
+  assert_that(.is_highchart(hc),
+              is.list(tm))
+  
+  df <- tm$tm %>% 
+    tbl_df() %>% 
+    select_("-x0", "-y0", "-w", "-h", "-stdErr", "-vColorValue") %>% 
+    rename_("value" = "vSize", "valuecolor" = "vColor") %>% 
+    purrr::map_if(is.factor, as.character)
+  
+  ndepth <- which(names(df) == "value") - 1
+  
+  ds <- ldply(seq(ndepth), function(lvl){ # lvl <- sample(size = 1, seq(ndepth))
+    
+    df2 <- df %>% 
+      filter_(sprintf("level == %s", lvl)) %>% 
+      rename_("name" = names(df)[lvl]) %>% 
+      mutate_("id" = "highcharter::str_to_id(name)")
+    
+    if (lvl > 1) {
+      df2 <- df2 %>% 
+        mutate_("parent" = names(df)[lvl - 1],
+                "parent" = "highcharter::str_to_id(parent)")
+    } else {
+      df2 <- df2 %>% 
+        mutate_("parent" = NA)
+    }
+    
+    df2 
+    
+  })
+  
+  ds <- setNames(rlist::list.parse(ds), NULL)
+  
+  ds <- purrr::map(ds, function(x){
+    if (is.na(x$parent))
+      x$parent <- NULL
+    x
+  })
+  
+  hc %>% hc_add_serie(data = ds, type = "treemap", ...)
+  
 }
