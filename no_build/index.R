@@ -312,7 +312,6 @@ for (cyl in unique(mtcars$cyl)) {
 
 hc
 
-
 ##' ## Labels/Values ####
 
 data("favorite_bars")

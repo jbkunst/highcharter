@@ -13,6 +13,28 @@ list.parse2 <- function(df) {
   
 }
 
+
+#' String to 'id' format
+#' 
+#' Turn a string to \code{id} format used in treemaps.
+#' 
+#' @param x A vector string.
+#' 
+#' @importFrom stringr str_to_lower str_replace_all
+#' 
+#' @export
+str_to_id <- function(x) {
+  
+  assert_that(is.character(x))
+  
+  x %>% 
+    str_trim() %>%
+    str_to_lower() %>% 
+    str_replace_all("\\s+", "_") %>% 
+    iconv("latin1", "ASCII", sub="")
+  
+}
+
 #' Get default colors for Highcharts theme
 #'
 #' Get color used in highcharts charts.

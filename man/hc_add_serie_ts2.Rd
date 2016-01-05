@@ -29,7 +29,7 @@ library("magrittr")
 highchart() \%>\% 
   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") \%>\% 
   hc_subtitle(text = "The classic Box and Jenkins airline data") \%>\% 
-  hc_add_serie_ts(AirPassengers, name = "passengers") \%>\%
+  hc_add_serie_ts2(AirPassengers, name = "passengers") \%>\%
   hc_tooltip(pointFormat =  '{point.y} passengers')
 
 highchart() \%>\% 
