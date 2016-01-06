@@ -81,6 +81,12 @@
 #'     margin-right: auto;
 #'   }
 #'   
+#'   .table {
+#'      width: auto;
+#'      margin-left:auto; 
+#'      margin-right:auto;
+#'   }
+#'   
 #' </style>
 #' <a href="#" class="back-to-top">Back to Top</a>
 #' <a href="https://github.com/jbkunst/highcharter" class="github-corner"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
@@ -149,7 +155,6 @@ hc
 #' - Put a shared tooltip.
 #' - Put some bands inspired in http://www.highcharts.com/demo/spline-plot-bands.
 
- 
 hc <- hc %>% 
   hc_title(style = list(color = "red")) %>% 
   hc_subtitle(text = "I want to add a subtitle too with style",
@@ -184,7 +189,7 @@ data(citytemp)
 
 citytemp
 
-hc <- highchart(debug = TRUE) %>% 
+hc <- highchart() %>% 
   hc_xAxis(categories = citytemp$month) %>% 
   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
   hc_add_serie(name = "London", data = citytemp$london) %>% 
@@ -278,8 +283,16 @@ hc
 
 ##' ## Time Series ####
 
+data(economics, package = "ggplot2")
+
 highchart() %>% 
-  hc_add_serie_ts2(AirPassengers)
+  hc_add_serie_ts(economics$psavert, economics$date,
+                  name = "Personal Savings Rate")
+
+#' There's a `hc_add_serie_ts2` which recieve a `ts`object.
+
+highchart() %>% 
+  hc_add_serie_ts2(AirPassengers, color = "#26838E")
 
 highchart() %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
@@ -322,38 +335,32 @@ library("viridis")
 
 data(GNI2010)
 
-tm <- treemap(GNI2010,
-              index=c("continent", "iso3"),
-              vSize="population",
-              vColor="GNI",
-              type="value",
-              palette = viridis(6))
+tm <- treemap(GNI2010, index = c("continent", "iso3"),
+              vSize = "population", vColor = "GNI",
+              type = "value", palette = viridis(6))
 
-
-highchart(height = 800) %>% 
-  hc_add_serie_treemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
+hc_tm <- highchart(height = 800) %>% 
+  hc_add_serie_treemap(tm, allowDrillToNode = TRUE,
+                       layoutAlgorithm = "squarified",
+                       name = "tmdata") %>% 
   hc_title(text = "Gross National Income World Data") %>% 
   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
-             Pop: {point.value:,.1f}<br>
-             GNI: {point.valuecolor}")
+             Pop: {point.value:,.0f}<br>
+             GNI: {point.valuecolor:,.0f}")
+
+hc_tm
+
+hc_tm <- hc_rm_serie(hc_tm, name = "tmdata")
 
 #' Change the type parameter.
 
-tm <- treemap(GNI2010,
-              index=c("continent", "iso3"),
-              vSize="population",
-              vColor="GNI",
-              type="comp",
-              palette = viridis(6))
+tm <- treemap(GNI2010, index = c("continent", "iso3"),
+              vSize = "population", vColor = "GNI",
+              type = "comp", palette = rev(viridis(6)))
 
-
-highchart(height = 800) %>% 
-  hc_add_serie_treemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
-  hc_title(text = "Gross National Income World Data") %>% 
-  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
-             Pop: {point.value:,.1f}<br>
-             GNI: {point.valuecolor}")
-
+hc_tm %>% 
+  hc_add_serie_treemap(tm, allowDrillToNode = TRUE,
+                       layoutAlgorithm = "squarified")
 
 ##' ## Labels & Values ####
 
@@ -378,7 +385,7 @@ highchart() %>%
 
 ##' # Themes ####
 
-hc <- highchart(debug = TRUE) %>% 
+hc <- highchart() %>% 
   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
   hc_chart(zoomType = "xy") %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
@@ -478,7 +485,7 @@ temperature <- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
 col1 <- hc_get_colors()[3]
 col2 <- hc_get_colors()[2]
 
-highchart(debug = TRUE) %>% 
+highchart() %>% 
   hc_title(text = "Tokyo Climate") %>% 
   hc_legend(enabled = FALSE) %>% 
   hc_xAxis(categories = month.abb) %>% 
@@ -526,7 +533,7 @@ highchart(debug = TRUE) %>%
 
 nyears <- 5
 
-df <- expand.grid(seq(12)-1, seq(nyears) - 1)
+df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
 df$value <- seq(nrow(df)) + 10 * rnorm(nrow(df))
 df$value <- round(df$value, 2)
 ds <- setNames(list.parse2(df), NULL)
@@ -541,12 +548,9 @@ highchart() %>%
 
 ##' ## Treemap ####
 
-library("ggplot2")
-
-data(diamonds)
+data(diamonds, package = "ggplot2")
 
 df <- dplyr::count(diamonds, cut)
-
 df
 
 df <- setNames(df, c("name", "value"))
@@ -576,7 +580,7 @@ hc_opts$series <- append(hc_opts$series,
                                    data = c(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
                                    dataLabels = list(align = "left", enabled = TRUE))))
 
-highchart(hc_opts, debug = TRUE)
+highchart(hc_opts, )
 
 ##' ### Example 2 ####
 
@@ -591,4 +595,3 @@ hc_opts$series <- list(list(name = "John", data = c(5, 3, 4, 7, 2)),
                        list(name = "Joe", data = c(3, 4, 4, 2, 5)))
 
 highchart(hc_opts, theme = hc_theme_darkunica())
-
