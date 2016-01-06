@@ -2,7 +2,7 @@
 % Please edit documentation in R/shortcuts.R
 \name{hc_add_serie_treemap}
 \alias{hc_add_serie_treemap}
-\title{Shorcut for create treemaps}
+\title{Shorcut for create treemaps ####}
 \usage{
 hc_add_serie_treemap(hc, tm, ...)
 }
@@ -22,16 +22,24 @@ from the package \code{treemap}.
 \dontrun{
 
 library("treemap")
+library("magrittr")
+library("viridis")
 
-data("business")
-tm <- treemap(business, 
-             index = c("NACE1", "NACE2"), 
-             vSize = "turnover", 
-             type = "index")
-             
-highchart() \%>\% 
- hc_add_serie_treemap(tm, allowDrillToNode = TRUE) \%>\% 
- hc_title(text = "Fictitious Business Statistics Data")
+data(GNI2010)
+head(GNI2010)
+
+tm <- treemap(GNI2010,
+              index = c("continent", "country"),
+              vSize = "population",
+              palette = viridis(6))
+              
+# Get similar results
+
+highchart(height = 800) \%>\%
+  hc_add_serie_treemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") \%>\% 
+  hc_title(text = "Population World Data") \%>\% 
+  hc_subtitle(text = "Population per country in 2010") \%>\% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br> Population {point.value:,.1f}")
 
 }
 

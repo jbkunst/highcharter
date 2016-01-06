@@ -2,7 +2,7 @@
 % Please edit documentation in R/shortcuts.R
 \name{hc_add_serie_labels_values}
 \alias{hc_add_serie_labels_values}
-\title{Shorcut to add series for pie, bar and column charts}
+\title{Shorcut for add series for pie, bar and column charts}
 \usage{
 hc_add_serie_labels_values(hc, labels, values, colors = NULL, ...)
 }

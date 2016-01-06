@@ -321,28 +321,41 @@ library("treemap")
 library("viridis")
 
 data(GNI2010)
-head(GNI2010)
 
-set.seed(123)
-# we reduce the data. 
-GNI20102 <- dplyr::sample_n(GNI2010, 100)
+tm <- treemap(GNI2010,
+              index=c("continent", "iso3"),
+              vSize="population",
+              vColor="GNI",
+              type="value",
+              palette = viridis(6))
 
-tm <- treemap(GNI20102,
-              index = c("continent", "country"), 
-              vSize = "population",
-              palette = rev(viridis(5)))
 
-#' Get similar result because the functions use different algorithm to
-#' make the 
-
-highchart() %>% 
-  hc_add_serie_treemap(tm, allowDrillToNode = TRUE) %>% 
-  hc_title(text = "GNI World Data") %>% 
-  hc_subtitle(text = "Gross national income in dollars per country in 2010") %>% 
+highchart(height = 800) %>% 
+  hc_add_serie_treemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
+  hc_title(text = "Gross National Income World Data") %>% 
   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
-             Population {point.value:,.1f}")
+             Pop: {point.value:,.1f}<br>
+             GNI: {point.valuecolor}")
 
-##' ## Labels/Values ####
+#' Change the type parameter.
+
+tm <- treemap(GNI2010,
+              index=c("continent", "iso3"),
+              vSize="population",
+              vColor="GNI",
+              type="comp",
+              palette = viridis(6))
+
+
+highchart(height = 800) %>% 
+  hc_add_serie_treemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
+  hc_title(text = "Gross National Income World Data") %>% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+             Pop: {point.value:,.1f}<br>
+             GNI: {point.valuecolor}")
+
+
+##' ## Labels & Values ####
 
 data("favorite_bars")
 data("favorite_pies")
@@ -362,8 +375,6 @@ highchart() %>%
   hc_xAxis(categories = favorite_pies$pie) %>% 
   hc_legend(enabled = FALSE) %>% 
   hc_tooltip(pointFormat = "{point.y}%")
-
-##' ## Drilldown ####
 
 ##' # Themes ####
 
