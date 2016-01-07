@@ -104,7 +104,8 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A numeric vector. 
 #' @param y A numeric vector. Same length of \code{x}.
-#' @param group A vector to split the (x,y) pairs (similiar to fill/color in ggplot).
+#' @param color A vector to color the points. If is \code{color} is not numeric then split the (x,y) pairs
+#'   (similiar to fill/color in ggplot) y is numeric it's create a gradient between the .
 #' @param ... Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
@@ -115,7 +116,7 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #'   hc_add_serie_scatter(cars$speed, cars$dist)
 #'    
 #' highchart() %>% 
-#'   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
+#'   hc_add_serie_scatter(mtcars$wt, y = mtcars$mpg, color = mtcars$cyl) %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
 #'   hc_xAxis(title = list(text = "Weight")) %>% 
 #'   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
@@ -127,7 +128,12 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' @importFrom dplyr mutate group_by do select data_frame
 #' 
 #' @export 
-hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
+hc_add_serie_scatter <- function(hc, x, y, color = NULL, ...) {
+  
+  # x <- mtcars$wt; y <- mtchast$mpg; color <- mtcars$hp 
+  # x <- mtcars$wt; y <- mtchast$mpg; color <- as.characer(mtcars$cyl) 
+  # x <- mtcars$wt; y <- mtchast$mpg; color <- NULL
+  # hc <- highchart()
   
   assert_that(.is_highchart(hc),
               is.numeric(x),
@@ -136,26 +142,31 @@ hc_add_serie_scatter <- function(hc, x, y, group = NULL, ...) {
   
   df <- data_frame(x, y)
   
-  if (!is.null(group)) {
+  if (!is.null(color)) {
     
     assert_that(length(x) == length(group))
     
-    dss <- df %>%
-      mutate(group = group) %>% 
-      group_by(group) %>% 
-      do(
-        type = "scatter",
-        data = list.parse2(data_frame(.$x, .$y)),
-        name = unique(as.character(.$group))
-      ) %>% select(-group)
-    
-    hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list.parse2(dss))
+    if (is.numeric(color)) {
+      
+    } else {
+      
+      dss <- df %>%
+        mutate(group = group) %>% 
+        group_by(group) %>% 
+        do(
+          type = "scatter",
+          data = list.parse2(data_frame(.$x, .$y)),
+          name = unique(as.character(.$group))
+        ) %>% select(-group)
+      
+      hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list.parse2(dss))
+      
+    }
     
   } else {
     
     dss <- list.parse2(df)
     
-    # hc$x$hc_opts$series <- list(list(data = dss, type = "scatter"))
     hc <- hc %>% hc_add_serie(data = dss, type = "scatter", ...)
     
   }
