@@ -303,24 +303,51 @@ highchart() %>%
 ##' ## Scatter plot ####
 
 highchart() %>% 
-  hc_add_serie_scatter(cars$speed, cars$dist)
-  
+  hc_title(text = "Simple scatter chart") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg)
+
 highchart() %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
-  hc_title(text = "Motor Trend Car Road Tests") %>% 
-  hc_xAxis(title = list(text = "Weight")) %>% 
-  hc_yAxis(title = list(text = "Miles/gallon")) %>% 
-  hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
-             pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+  hc_title(text = "Scatter chart with size") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+                       mtcars$drat)
 
+highchart() %>% 
+  hc_title(text = "Scatter chart with size and color") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+                       mtcars$drat, mtcars$hp)
 
-#' Or we can add one by one.
+highchart() %>% 
+  hc_title(text = "Scatter chart with color and no size") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+                       color = mtcars$hp)
+
+highchart(height = 500) %>% 
+  hc_title(text = "A complete example for Scatter") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+                       mtcars$drat, mtcars$hp,
+                       rownames(mtcars),
+                       dataLabels = list(
+                         enabled = TRUE,
+                         format = "{point.label}"
+                       )) %>% 
+  hc_chart(zoomType = "xy") %>% 
+  hc_tooltip(useHTML = TRUE,
+             headerFormat = "<table>",
+             pointFormat = paste("<tr><th colspan=\"1\"><b>{point.label}</b></th></tr>",
+                                 "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
+                                 "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
+                                 "<tr><th>Drat</th><td>{point.z} </td></tr>",
+                                 "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
+             footerFormat = "</table>")
+
+# or We can add series one by one.
 hc <- highchart()
-
 for (cyl in unique(mtcars$cyl)) {
   hc <- hc %>%
-    hc_add_serie_scatter(mtcars$wt[mtcars$cyl == cyl], mtcars$mpg[mtcars$cyl == cyl],
-                         name = sprintf("cyl %s", cyl))
+    hc_add_serie_scatter(mtcars$wt[mtcars$cyl == cyl],
+                         mtcars$mpg[mtcars$cyl == cyl],
+                         name = sprintf("Cyl %s", cyl),
+                         showInLegend = TRUE)
 }
 
 hc
@@ -331,7 +358,7 @@ hc
 #' we create the same treemap via highcharts ;).
 
 library("treemap")
-library("viridis")
+library("viridisLite")
 
 data(GNI2010)
 
@@ -386,14 +413,26 @@ highchart() %>%
 ##' # Themes ####
 
 hc <- highchart() %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
-  hc_chart(zoomType = "xy") %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
   hc_subtitle(text = "Source: 1974 Motor Trend US magazine") %>% 
   hc_xAxis(title = list(text = "Weight")) %>% 
   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
-  hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
-             pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+  hc_chart(zoomType = "xy") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+                       mtcars$drat, mtcars$hp,
+                       rownames(mtcars),
+                       dataLabels = list(
+                         enabled = TRUE,
+                         format = "{point.label}"
+                       )) %>% 
+  hc_tooltip(useHTML = TRUE,
+             headerFormat = "<table>",
+             pointFormat = paste("<tr><th colspan=\"1\"><b>{point.label}</b></th></tr>",
+                                 "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
+                                 "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
+                                 "<tr><th>Drat</th><td>{point.z} </td></tr>",
+                                 "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
+             footerFormat = "</table>")
 
 ##' ## Default ####
 

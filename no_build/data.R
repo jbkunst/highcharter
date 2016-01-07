@@ -8,7 +8,6 @@ citytemp <- data_frame(
 
 save(citytemp, file = "data/citytemp.rda")
 
-
 favorite_bars <- data_frame(
   bar = c("Mclaren's", "McGee's", "P & G",
           "White Horse Tavern", "King Cole Bar"),

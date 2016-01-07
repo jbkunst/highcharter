@@ -4,7 +4,8 @@
 \alias{hc_add_serie_scatter}
 \title{Shorcut for create scatter plots}
 \usage{
-hc_add_serie_scatter(hc, x, y, group = NULL, ...)
+hc_add_serie_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
+  showInLegend = FALSE, viridis.option = "D", ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
@@ -13,9 +14,19 @@ hc_add_serie_scatter(hc, x, y, group = NULL, ...)
 
 \item{y}{A numeric vector. Same length of \code{x}.}
 
-\item{group}{A vector to split the (x,y) pairs (similiar to fill/color in ggplot).}
+\item{z}{A numeric vector for size. Same length of \code{x}.}
 
-\item{...}{Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
+\item{color}{A vector to color the points.}
+
+\item{label}{A vector to put names in the dots if you enable the datalabels.}
+
+\item{showInLegend}{This series should be}
+
+\item{viridis.option}{Palette to use in case the \code{color} argument is not 
+null. Options are A, B, C, D.}
+
+\item{...}{Aditional shared arguments for the data series 
+(\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
 This function helps to create scatter plot from two numerics vectors.
@@ -24,16 +35,35 @@ This function helps to create scatter plot from two numerics vectors.
 
 \dontrun{
 
-highchart() \%>\% 
-  hc_add_serie_scatter(cars$speed, cars$dist)
-   
-highchart() \%>\% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) \%>\% 
+hc <- highchart() \%>\% 
   hc_title(text = "Motor Trend Car Road Tests") \%>\% 
   hc_xAxis(title = list(text = "Weight")) \%>\% 
-  hc_yAxis(title = list(text = "Miles/gallon")) \%>\% 
-  hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
-             pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+  hc_yAxis(title = list(text = "Miles/gallon"))
+   
+hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg)
+
+hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+                     mtcars$drat)
+                     
+hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+                     mtcars$drat, mtcars$hp)
+                     
+hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+                     mtcars$drat, mtcars$hp,
+                     rownames(mtcars),
+                     dataLabels = list(
+                       enabled = TRUE,
+                       format = "{point.label}"
+                       )) \%>\% 
+hc_chart(zoomType = "xy") \%>\% 
+hc_tooltip(useHTML = TRUE,
+           headerFormat = "<table>",
+           pointFormat = paste("<tr><th colspan=\\"2\\"><h3>{point.label}</h3></th></tr>",
+                               "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
+                               "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
+                               "<tr><th>Drat</th><td>{point.z} </td></tr>",
+                               "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
+           footerFormat = "</table>")
 
 }
 

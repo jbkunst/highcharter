@@ -104,74 +104,92 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A numeric vector. 
 #' @param y A numeric vector. Same length of \code{x}.
-#' @param color A vector to color the points. If is \code{color} is not numeric then split the (x,y) pairs
-#'   (similiar to fill/color in ggplot) y is numeric it's create a gradient between the .
-#' @param ... Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' @param z A numeric vector for size. Same length of \code{x}.
+#' @param color A vector to color the points.
+#' @param label A vector to put names in the dots if you enable the datalabels.
+#' @param showInLegend This series should be
+#' @param viridis.option Palette to use in case the \code{color} argument is not 
+#'   null. Options are A, B, C, D.
+#' @param ... Aditional shared arguments for the data series 
+#'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
 #' 
 #' \dontrun{
 #' 
-#' highchart() %>% 
-#'   hc_add_serie_scatter(cars$speed, cars$dist)
-#'    
-#' highchart() %>% 
-#'   hc_add_serie_scatter(mtcars$wt, y = mtcars$mpg, color = mtcars$cyl) %>% 
+#' hc <- highchart() %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
 #'   hc_xAxis(title = list(text = "Weight")) %>% 
-#'   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
-#'   hc_tooltip(headerFormat = "<b>{series.name} cylinders</b><br>",
-#'              pointFormat = "{point.x} (lb/1000), {point.y} (miles/gallon)")
+#'   hc_yAxis(title = list(text = "Miles/gallon"))
+#'    
+#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg)
+#' 
+#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+#'                      mtcars$drat)
+#'                      
+#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+#'                      mtcars$drat, mtcars$hp)
+#'                      
+#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+#'                      mtcars$drat, mtcars$hp,
+#'                      rownames(mtcars),
+#'                      dataLabels = list(
+#'                        enabled = TRUE,
+#'                        format = "{point.label}"
+#'                        )) %>% 
+#' hc_chart(zoomType = "xy") %>% 
+#' hc_tooltip(useHTML = TRUE,
+#'            headerFormat = "<table>",
+#'            pointFormat = paste("<tr><th colspan=\"2\"><h3>{point.label}</h3></th></tr>",
+#'                                "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
+#'                                "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
+#'                                "<tr><th>Drat</th><td>{point.z} </td></tr>",
+#'                                "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
+#'            footerFormat = "</table>")
 #' 
 #' }
 #' 
 #' @importFrom dplyr mutate group_by do select data_frame
+#' @importFrom viridisLite viridis
 #' 
 #' @export 
-hc_add_serie_scatter <- function(hc, x, y, color = NULL, ...) {
+hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
+                                 showInLegend = FALSE, viridis.option = "D", ...) {
   
-  # x <- mtcars$wt; y <- mtchast$mpg; color <- mtcars$hp 
-  # x <- mtcars$wt; y <- mtchast$mpg; color <- as.characer(mtcars$cyl) 
-  # x <- mtcars$wt; y <- mtchast$mpg; color <- NULL
-  # hc <- highchart()
-  
-  assert_that(.is_highchart(hc),
-              is.numeric(x),
-              is.numeric(y),
-              length(x) == length(y))
+  assert_that(.is_highchart(hc), length(x) == length(y),
+              is.numeric(x), is.numeric(y))
   
   df <- data_frame(x, y)
   
-  if (!is.null(color)) {
-    
-    assert_that(length(x) == length(group))
-    
-    if (is.numeric(color)) {
-      
-    } else {
-      
-      dss <- df %>%
-        mutate(group = group) %>% 
-        group_by(group) %>% 
-        do(
-          type = "scatter",
-          data = list.parse2(data_frame(.$x, .$y)),
-          name = unique(as.character(.$group))
-        ) %>% select(-group)
-      
-      hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list.parse2(dss))
-      
-    }
-    
-  } else {
-    
-    dss <- list.parse2(df)
-    
-    hc <- hc %>% hc_add_serie(data = dss, type = "scatter", ...)
-    
+  if (!is.null(z)) {
+    assert_that(length(x) == length(z))
+    df <- df %>% mutate(z = z)
   }
   
-  hc 
+  if (!is.null(color)) {
+    
+    assert_that(is.numeric(color), length(x) == length(color))
+    assert_that(viridis.option %in% c("A", "B", "C", "D"))
+    
+    cols <- viridisLite::viridis(1000, option = viridis.option)[round(ecdf(color)(color)*1000)]
+    
+    if (is.null(z))
+      cols <- substr(cols, 0, 7)
+    
+    df <- df %>% mutate(valuecolor = color,
+                        color = cols)
+  }
+  
+  if (!is.null(label)) {
+    assert_that(length(x) == length(label))
+    df <- df %>% mutate(label = label)
+  }
+  
+  ds <- setNames(rlist::list.parse(df), NULL)
+  
+  type <- ifelse(!is.null(z), "bubble", "scatter")
+  
+  hc %>% hc_add_serie(data = ds, type = type, showInLegend = showInLegend, ...)
   
 }
 

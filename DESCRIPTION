@@ -20,4 +20,5 @@ Imports:
     zoo,
     dplyr,
     stringr,
-    plyr
+    plyr,
+    viridisLite

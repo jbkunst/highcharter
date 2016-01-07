@@ -51,7 +51,7 @@ hc_theme_sandsignika <- function(){
     ),
     plotOptions = list(
       series = list(
-        shadow = TRUE
+        shadow = FALSE
       ),
       candlestick = list(
         lineColor = "#404048"
