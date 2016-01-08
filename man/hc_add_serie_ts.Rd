@@ -25,12 +25,12 @@ This function \bold{modify} the type of \code{chart} to \code{datetime}
 
 \dontrun{
 
+require("ggplot2")
 data(economics, package = "ggplot2")
 
 hc_add_serie_ts(highchart(),
                 economics$psavert, economics$date,
                 name = "Personal Savings Rate")
- 
 }
 
 }

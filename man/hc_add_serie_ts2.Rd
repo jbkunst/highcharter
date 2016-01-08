@@ -22,9 +22,7 @@ This function \bold{modify} the type of \code{chart} to \code{datetime}
 }
 \examples{
 
-\dontrun{
-
-library("magrittr")
+require("dplyr")
 
 highchart() \%>\% 
   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") \%>\% 
@@ -36,8 +34,6 @@ highchart() \%>\%
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") \%>\% 
   hc_add_serie_ts2(fdeaths, name = "Female") \%>\%
   hc_add_serie_ts2(mdeaths, name = "Male")
-
-}
-
+  
 }
 

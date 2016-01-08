@@ -12,6 +12,7 @@ hc_chart(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
 }
 \description{
+Options regarding the chart area and plot area as well as general chart options. 
 Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 }
 

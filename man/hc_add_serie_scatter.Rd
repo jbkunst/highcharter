@@ -33,7 +33,7 @@ This function helps to create scatter plot from two numerics vectors.
 }
 \examples{
 
-\dontrun{
+require("dplyr")
 
 hc <- highchart() \%>\% 
   hc_title(text = "Motor Trend Car Road Tests") \%>\% 
@@ -46,7 +46,7 @@ hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
                      mtcars$drat)
                      
 hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
-                     mtcars$drat, mtcars$hp)
+                     mtcars$drat, mtcars$cyl)
                      
 hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
                      mtcars$drat, mtcars$hp,
@@ -64,8 +64,6 @@ hc_tooltip(useHTML = TRUE,
                                "<tr><th>Drat</th><td>{point.z} </td></tr>",
                                "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
            footerFormat = "</table>")
-
-}
 
 }
 

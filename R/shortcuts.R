@@ -1,4 +1,3 @@
-. <- NULL
 #' Shorcut for create/add time series charts from a ts object
 #'
 #' This function add a time series to a \code{highchart} object
@@ -12,9 +11,7 @@
 #' 
 #' @examples 
 #' 
-#' \dontrun{
-#' 
-#' library("magrittr")
+#' require("dplyr")
 #' 
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
@@ -26,9 +23,7 @@
 #'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
 #'   hc_add_serie_ts2(fdeaths, name = "Female") %>%
 #'   hc_add_serie_ts2(mdeaths, name = "Male")
-#' 
-#' }
-#' 
+#'   
 #' @import zoo
 #' 
 #' @importFrom stats is.ts time
@@ -64,12 +59,12 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #' 
 #' \dontrun{
 #' 
+#' require("ggplot2")
 #' data(economics, package = "ggplot2")
 #' 
 #' hc_add_serie_ts(highchart(),
 #'                 economics$psavert, economics$date,
 #'                 name = "Personal Savings Rate")
-#'  
 #' }
 #' 
 #' @import zoo
@@ -115,7 +110,7 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' 
 #' @examples 
 #' 
-#' \dontrun{
+#' require("dplyr")
 #' 
 #' hc <- highchart() %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
@@ -128,7 +123,7 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #'                      mtcars$drat)
 #'                      
 #' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
-#'                      mtcars$drat, mtcars$hp)
+#'                      mtcars$drat, mtcars$cyl)
 #'                      
 #' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
 #'                      mtcars$drat, mtcars$hp,
@@ -147,10 +142,9 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #'                                "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
 #'            footerFormat = "</table>")
 #' 
-#' }
-#' 
 #' @importFrom dplyr mutate group_by do select data_frame
 #' @importFrom viridisLite viridis
+#' @importFrom stats ecdf
 #' 
 #' @export 
 hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
@@ -168,10 +162,15 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
   
   if (!is.null(color)) {
     
-    assert_that(is.numeric(color), length(x) == length(color))
+    assert_that(length(x) == length(color))
     assert_that(viridis.option %in% c("A", "B", "C", "D"))
     
-    cols <- viridisLite::viridis(1000, option = viridis.option)[round(ecdf(color)(color)*1000)]
+    colorvar <- color
+    
+    if (!is.numeric(colorvar))
+      colorvar <- as.numeric(as.factor(colorvar))
+    
+    cols <- viridisLite::viridis(1000, option = viridis.option)[round(ecdf(colorvar)(colorvar)*1000)]
     
     if (is.null(z))
       cols <- substr(cols, 0, 7)
@@ -206,8 +205,8 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
 #' 
 #' @examples 
 #' 
-#' \dontrun{
-#'  
+#' require("dplyr")
+#' 
 #' data("favorite_bars")
 #' data("favorite_pies")
 #' 
@@ -227,7 +226,6 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
 #'   hc_legend(enabled = FALSE) %>% 
 #'   hc_tooltip(pointFormat = "{point.y}%")
 #' 
-#' }
 #' 
 #' @export
 hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
@@ -260,14 +258,14 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param tm A \code{treemap} object
-#' @param ... Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' @param ... Aditional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
 #' 
 #' \dontrun{
 #' 
 #' library("treemap")
-#' library("magrittr")
 #' library("viridis")
 #' 
 #' data(GNI2010)
@@ -287,7 +285,6 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
 #'                              GNI: {point.valuecolor:,.0f}")
 #' 
 #' }
-#' 
 #' 
 #' @importFrom dplyr filter_ mutate_ rename_ select_ tbl_df
 #' @importFrom plyr ldply

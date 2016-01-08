@@ -23,8 +23,8 @@ type to \code{scatter}.
 }
 \examples{
 
-\dontrun{
- 
+require("dplyr")
+
 data("favorite_bars")
 data("favorite_pies")
 
@@ -44,7 +44,6 @@ highchart() \%>\%
   hc_legend(enabled = FALSE) \%>\% 
   hc_tooltip(pointFormat = "{point.y}\%")
 
-}
 
 }
 

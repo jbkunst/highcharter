@@ -11,7 +11,8 @@ hc_add_serie_treemap(hc, tm, ...)
 
 \item{tm}{A \code{treemap} object}
 
-\item{...}{Aditional shared arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
+\item{...}{Aditional shared arguments for the data series
+(\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
 This function helps to create hicharts treemaps from \code{treemap} objects
@@ -22,7 +23,6 @@ from the package \code{treemap}.
 \dontrun{
 
 library("treemap")
-library("magrittr")
 library("viridis")
 
 data(GNI2010)
@@ -42,7 +42,6 @@ highchart(height = 800) \%>\%
                              GNI: {point.valuecolor:,.0f}")
 
 }
-
 
 }
 

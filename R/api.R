@@ -20,7 +20,8 @@
 }
 
 #' Adding chart options to highchart object
-#'
+#' 
+#' Options regarding the chart area and plot area as well as general chart options. 
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
