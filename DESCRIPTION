@@ -9,7 +9,7 @@ Date: 2015-12-11
 Author: Joshua Kunst <jbkunst@gmail.com>
 Maintainer: Joshua Kunst <jbkunst@gmail.com>
 License: MIT + file LICENSE
-URL: https://github.com/jbkunst/highcharter
+URL: https://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 RoxygenNote: 5.0.1
 Imports:

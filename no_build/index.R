@@ -112,9 +112,21 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 #' to get a very style of charts and highly customized (see http://www.highcharts.com/demo).
 #' 
 #' In the package there's some partial implementation of the HC API in R like `hc_title`, 
-#' `hc_add_serie`, `hc_xAxis`, and some shorcuts to made simples chart in R by if you want 
+#' `hc_add_serie`, `hc_xAxis`, and some shorcuts to made simples chart in R like 
+#' `hc_add_serie_scatter`, `hc_add_serie_scatter` by if you want 
 #' you can create your chart manually with all the requiriments what you need. That's the
 #' package offer.
+#' 
+#' ## Why another?
+#' 
+#' - The main reasons is have a wrapper to chart data using piping style.
+#' - Include other HC funcionalities like *themes* and *options*.
+#' - Generate shortcuts to plots some R objects like *time series* or *treemaps*.
+#' 
+#' ## Next steps
+#' 
+#' - Add highmaps and highstocks funcionalities.
+#' - Add more functions to plot most used R objects.
 #' 
 
 ##' # Installation ####
