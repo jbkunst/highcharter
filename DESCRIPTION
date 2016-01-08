@@ -6,7 +6,6 @@ Description: A wrapper for the 'Highcharts' library including
   shortcut functions to plot R objects. 'Highcharts' 
   <http://www.highcharts.com/> is a charting library offering
   numerous chart types with a simple configuration syntax.
-Version: 0.1.0
 Date: 2015-12-11
 Author: Joshua Kunst <jbkunst@gmail.com>
 Maintainer: Joshua Kunst <jbkunst@gmail.com>
