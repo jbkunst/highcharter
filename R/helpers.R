@@ -6,13 +6,13 @@
 #' 
 #' @importFrom stats setNames
 #' 
+#' @rdname helpers
 #' @export
 list.parse2 <- function(df) {
   
   setNames(apply(df, 1, function(r) as.list(as.vector(r))), NULL)
   
 }
-
 
 #' String to 'id' format
 #' 
@@ -21,7 +21,7 @@ list.parse2 <- function(df) {
 #' @param x A vector string.
 #' 
 #' @importFrom stringr str_to_lower str_replace_all
-#' 
+#' @rdname helpers
 #' @export
 str_to_id <- function(x) {
   
@@ -39,7 +39,7 @@ str_to_id <- function(x) {
 #'
 #' Get color used in highcharts charts.
 #' 
-#' 
+#' @rdname helpers
 #' @export
 hc_get_colors <- function() {
   
@@ -52,7 +52,7 @@ hc_get_colors <- function() {
 #'
 #' Get dash style to use on hichartrs objects.
 #' 
-#' 
+#' @rdname helpers
 #' @export
 hc_get_dash_styles <- function() {
   
@@ -60,4 +60,3 @@ hc_get_dash_styles <- function() {
     "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
   
 }
-

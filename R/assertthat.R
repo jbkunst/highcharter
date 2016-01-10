@@ -4,7 +4,7 @@
 
 assertthat::on_failure(.is_highchart) <- function(call, env) {
   
-  "The parameter is not a highchart object"
+  "The parameter used is not a highchart object"
   
 }
 
@@ -14,6 +14,6 @@ assertthat::on_failure(.is_highchart) <- function(call, env) {
 
 assertthat::on_failure(.is_highchart) <- function(call, env) {
   
-  "The hc_theme is not a hc_theme object"
+  "The theme used is not a hc_theme object"
   
 }

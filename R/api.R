@@ -19,14 +19,40 @@
   hc
 }
 
-#' Adding chart options to highchart object
+#' Adding chart options to highchart objects
 #' 
 #' Options regarding the chart area and plot area as well as general chart options. 
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
-#'
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' data(citytemp)
+#' 
+#' hc <- highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london)
+#' 
+#' hc %>% 
+#'   hc_chart(type = "column",
+#'            options3d = list(enabled = TRUE, beta = 15, alpha = 15))
+#' 
+#' 
+#' hc %>% 
+#'   hc_chart(borderColor = '#EBBA95',
+#'            borderRadius = 10,
+#'            borderWidth = 2,
+#'            backgroundColor = list(
+#'              linearGradient = c(0, 0, 500, 500),
+#'              stops = list(
+#'                list(0, 'rgb(255, 255, 255)'),
+#'                list(1, 'rgb(200, 200, 255)')
+#'              )))
+#' 
 #' @export
 hc_chart <- function(hc, ...) {
   
@@ -34,40 +60,73 @@ hc_chart <- function(hc, ...) {
   
 }
 
-#' Adding credits options to highchart object
+#' Adding axis options to highchart objects
 #'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#credits}
+#' Change axis labels or style. Add lines or band to charts.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
-#'
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#xAxis}. 
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' highchart() %>% 
+#'   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'                         26.5, 23.3, 18.3, 13.9, 9.6),
+#'                         type = "spline") %>% 
+#'   hc_xAxis(title = list(text = "x Axis at top"),
+#'          opposite = TRUE,
+#'          plotLines = list(
+#'            list(label = list(text = "This is a plotLine"),
+#'                 color = "#'FF0000",
+#'                 width = 2,
+#'                 value = 5.5))) %>% 
+#'   hc_yAxis(title = list(text = "y Axis at right"),
+#'            opposite = TRUE,
+#'            minorTickInterval = "auto",
+#'            minorGridLineDashStyle = "LongDashDotDot",
+#'            showFirstLabel = FALSE,
+#'            showLastLabel = FALSE,
+#'            plotBands = list(
+#'              list(from = 25, to = 80, color = "rgba(100, 0, 0, 0.1)",
+#'                   label = list(text = "This is a plotBand")))) 
+#'                   
 #' @export
-hc_credits <- function(hc, ...) {
+hc_xAxis  <- function(hc, ...) {
   
-  .hc_opt(hc, "credits", ...)
+  .hc_opt(hc, "xAxis", ...)
   
 }
 
-#' Adding legend options to highchart object
-#'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
-#'
+#' @rdname hc_xAxis
 #' @export
-hc_legend <- function(hc, ...) {
+hc_yAxis  <- function(hc, ...) {
   
-  .hc_opt(hc, "legend", ...)
+  .hc_opt(hc, "yAxis", ...)
   
 }
 
-#' Adding titles options to highchart object
+#' Adding title and subtitle options to highchart objects
 #'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#title}
+#' Function to add and change title and subtitle'a style.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#title}. 
+#'
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' highchart() %>% 
+#'   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'                         26.5, 23.3, 18.3, 13.9, 9.6),
+#'                         type = "column") %>% 
+#'   hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
+#'            margin = 20, align = "left",
+#'            style = list(color = "#90ed7d", useHTML = TRUE)) %>%
+#'   hc_subtitle(text = "And this is a subtitle with more information",
+#'               align = "left", style = list(color = "#2b908f", fontWeight = "bold")) 
 #'
 #' @export
 hc_title <- function(hc, ...) {
@@ -76,13 +135,7 @@ hc_title <- function(hc, ...) {
   
 }
 
-#' Adding subtitles options to highchart object
-#'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#subtitle}
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
-#'
+#' @rdname hc_title
 #' @export
 hc_subtitle <- function(hc, ...) {
   
@@ -90,12 +143,53 @@ hc_subtitle <- function(hc, ...) {
   
 }
 
-#' Adding tooltip options to highchart object
+#' Adding legend options to highchart objects
 #'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}
+#' Function to modify styles for the box containing the symbol, name and color for
+#' each item or point item in the chart.
 #' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' data(citytemp)
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london) %>%
+#'   hc_legend(align = "left", verticalAlign = "top",
+#'             layout = "vertical", x = 0, y = 100) 
+#'             
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}. 
+#'
+#' @export
+hc_legend <- function(hc, ...) {
+  
+  .hc_opt(hc, "legend", ...)
+  
+}
+
+#' Adding tooltip options to highchart objects
+#'
+#' Options for the tooltip that appears when the user hovers over a series or point.
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' data(citytemp)
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london) %>% 
+#'   hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
+#'              shared = TRUE, borderWidth = 5)
+#'              
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}. 
 #'
 #' @export
 hc_tooltip <- function(hc, ...) {
@@ -104,40 +198,17 @@ hc_tooltip <- function(hc, ...) {
   
 }
 
-#' Adding xAxis options to highchart object
+#' Adding plot options to highchart objects
 #'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#xAxis}
+#' The plotOptions is a wrapper object for config objects for each series type. The config 
+#' objects for each series can also be overridden for each series item as given in the series array.
+#' 
+#' Configuration options for the series are given in three levels. Options for all series in a chart are given in the 
+#' plotOptions object. Then options for all series of a specific type are given in the plotOptions of that type, for example 
+#' \code{hc_plotOptions(line = list(...))}. Next, options for one single series are given in the series array.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
-#'
-#' @export
-hc_xAxis  <- function(hc, ...) {
-  
-  .hc_opt(hc, "xAxis", ...)
-  
-}
-
-#' Adding yAxis options to highchart object
-#'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#yAxis}
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
-#'
-#' @export
-hc_yAxis  <- function(hc, ...) {
-  
-  .hc_opt(hc, "yAxis", ...)
-  
-}
-
-#' Adding plot options to highchart object
-#'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}. 
 #'
 #' @export
 hc_plotOptions  <- function(hc, ...) {
@@ -146,12 +217,12 @@ hc_plotOptions  <- function(hc, ...) {
   
 }
 
-#' Adding Color Axis options to highchart object
+#' Adding Color Axis options to highchart objects
 #'
-#' Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}
+#' 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}. 
 #'
 #' @export
 hc_colorAxis  <- function(hc, ...) {
@@ -160,7 +231,22 @@ hc_colorAxis  <- function(hc, ...) {
   
 }
 
-#' Adding series to highchart object
+#' Adding credits options to highchart objects
+#'
+#' \code{highcarter} by default don't put credits label. You can add credits
+#' using these options.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#credits}. 
+#'
+#' @export
+hc_credits <- function(hc, ...) {
+  
+  .hc_opt(hc, "credits", ...)
+  
+}
+
+#' Adding series to highchart objects
 #'
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 #' 
@@ -176,15 +262,13 @@ hc_add_serie <- function(hc, ...) {
   
 }
 
-#' Removing series to highchart object
+#' Removing series to highchart objects
 #'
 #' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
 #'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param name The serie's name to delete.
 #'
-#' @import purrr
-#' 
 #' @export
 hc_rm_serie <- function(hc, name = NULL) {
   

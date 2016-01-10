@@ -24,15 +24,12 @@
 #'   hc_add_serie_ts2(fdeaths, name = "Female") %>%
 #'   hc_add_serie_ts2(mdeaths, name = "Male")
 #'   
-#' @import zoo
-#' 
 #' @importFrom stats is.ts time
 #' 
 #' @export 
 hc_add_serie_ts2 <- function(hc, ts, ...) {
   
-  assert_that(is.ts(ts),
-              .is_highchart(hc))
+  assert_that(is.ts(ts), .is_highchart(hc))
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
   dates <- time(ts) %>% 
@@ -67,14 +64,12 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #'                 name = "Personal Savings Rate")
 #' }
 #' 
-#' @import zoo
+#' @importFrom zoo as.Date
 #' 
 #' @export 
 hc_add_serie_ts <- function(hc, values, dates, ...) {
   
-  assert_that(.is_highchart(hc), 
-              is.numeric(values),
-              is.date(dates))
+  assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
   
   timestamps <- dates %>% 
     zoo::as.Date() %>%
@@ -94,7 +89,8 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 
 #' Shorcut for create scatter plots
 #'
-#' This function helps to create scatter plot from two numerics vectors.
+#' This function helps to create scatter plot from two numerics vectors. Options
+#' argumets like size, color and label for points are added. 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A numeric vector. 
@@ -102,9 +98,10 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' @param z A numeric vector for size. Same length of \code{x}.
 #' @param color A vector to color the points.
 #' @param label A vector to put names in the dots if you enable the datalabels.
-#' @param showInLegend This series should be
-#' @param viridis.option Palette to use in case the \code{color} argument is not 
-#'   null. Options are A, B, C, D.
+#' @param showInLegend Logical value to show or not the data in the legend box.
+#' @param viridis.option Palette to use in case the \code{color}. Argument can not
+#'   be \code{NULL} in the case of use \code{color} argument.
+#'  Options are A, B, C, D.
 #' @param ... Aditional shared arguments for the data series 
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
@@ -143,6 +140,7 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #'            footerFormat = "</table>")
 #' 
 #' @importFrom dplyr mutate group_by do select data_frame
+#' @import magrittr
 #' @importFrom viridisLite viridis
 #' @importFrom stats ecdf
 #' 
@@ -194,14 +192,14 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
 
 #' Shorcut for add series for pie, bar and column charts
 #'
-#' This function add label value delete the actual series in the object and change the \code{chart}
-#' type to \code{scatter}.
+#' This function add data to plot pie, bar and column charts.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param labels A vector of labels. 
 #' @param values A numeric vector. Same length of \code{labels}.
 #' @param colors A not required color vector (hexadecimal format). Same length of \code{labels}.
-#' @param ... Other parameters for data series.
+#' @param ... Aditional shared arguments for the data series 
+#'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
 #' 
@@ -251,13 +249,13 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
                       
 }
 
-#' Shorcut for create treemaps ####
+#' Shorcut for create treemaps
 #'
 #' This function helps to create hicharts treemaps from \code{treemap} objects
 #' from the package \code{treemap}.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param tm A \code{treemap} object
+#' @param tm A \code{treemap} object from the treemap package.
 #' @param ... Aditional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
@@ -288,6 +286,7 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
 #' 
 #' @importFrom dplyr filter_ mutate_ rename_ select_ tbl_df
 #' @importFrom plyr ldply
+#' @importFrom purrr map_if map
 #' 
 #' @export 
 hc_add_serie_treemap <- function(hc, tm, ...) {
@@ -299,7 +298,7 @@ hc_add_serie_treemap <- function(hc, tm, ...) {
     tbl_df() %>% 
     select_("-x0", "-y0", "-w", "-h", "-stdErr", "-vColorValue") %>% 
     rename_("value" = "vSize", "valuecolor" = "vColor") %>% 
-    purrr::map_if(is.factor, as.character)
+    map_if(is.factor, as.character)
   
   ndepth <- which(names(df) == "value") - 1
   
@@ -325,7 +324,7 @@ hc_add_serie_treemap <- function(hc, tm, ...) {
   
   ds <- setNames(rlist::list.parse(ds), NULL)
   
-  ds <- purrr::map(ds, function(x){
+  ds <- map(ds, function(x){
     if (is.na(x$parent))
       x$parent <- NULL
     x

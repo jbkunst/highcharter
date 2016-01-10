@@ -2,17 +2,44 @@
 % Please edit documentation in R/api.R
 \name{hc_chart}
 \alias{hc_chart}
-\title{Adding chart options to highchart object}
+\title{Adding chart options to highchart objects}
 \usage{
 hc_chart(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 }
 \description{
-Options regarding the chart area and plot area as well as general chart options. 
-Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
+Options regarding the chart area and plot area as well as general chart options.
+}
+\examples{
+
+require("dplyr")
+
+data(citytemp)
+
+hc <- highchart() \%>\% 
+  hc_xAxis(categories = citytemp$month) \%>\% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_serie(name = "London", data = citytemp$london)
+
+hc \%>\% 
+  hc_chart(type = "column",
+           options3d = list(enabled = TRUE, beta = 15, alpha = 15))
+
+
+hc \%>\% 
+  hc_chart(borderColor = '#EBBA95',
+           borderRadius = 10,
+           borderWidth = 2,
+           backgroundColor = list(
+             linearGradient = c(0, 0, 500, 500),
+             stops = list(
+               list(0, 'rgb(255, 255, 255)'),
+               list(1, 'rgb(200, 200, 255)')
+             )))
+
 }
 

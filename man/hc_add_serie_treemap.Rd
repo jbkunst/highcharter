@@ -2,14 +2,14 @@
 % Please edit documentation in R/shortcuts.R
 \name{hc_add_serie_treemap}
 \alias{hc_add_serie_treemap}
-\title{Shorcut for create treemaps ####}
+\title{Shorcut for create treemaps}
 \usage{
 hc_add_serie_treemap(hc, tm, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{tm}{A \code{treemap} object}
+\item{tm}{A \code{treemap} object from the treemap package.}
 
 \item{...}{Aditional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}

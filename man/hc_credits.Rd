@@ -2,16 +2,17 @@
 % Please edit documentation in R/api.R
 \name{hc_credits}
 \alias{hc_credits}
-\title{Adding credits options to highchart object}
+\title{Adding credits options to highchart objects}
 \usage{
 hc_credits(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#credits}.}
 }
 \description{
-Arguments are defined in \url{http://api.highcharts.com/highcharts#credits}
+\code{highcarter} by default don't put credits label. You can add credits
+using these options.
 }
 

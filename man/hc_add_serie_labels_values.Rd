@@ -15,11 +15,11 @@ hc_add_serie_labels_values(hc, labels, values, colors = NULL, ...)
 
 \item{colors}{A not required color vector (hexadecimal format). Same length of \code{labels}.}
 
-\item{...}{Other parameters for data series.}
+\item{...}{Aditional shared arguments for the data series 
+(\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This function add label value delete the actual series in the object and change the \code{chart}
-type to \code{scatter}.
+This function add data to plot pie, bar and column charts.
 }
 \examples{
 

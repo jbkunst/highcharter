@@ -2,7 +2,7 @@
 % Please edit documentation in R/api.R
 \name{hc_rm_serie}
 \alias{hc_rm_serie}
-\title{Removing series to highchart object}
+\title{Removing series to highchart objects}
 \usage{
 hc_rm_serie(hc, name = NULL)
 }

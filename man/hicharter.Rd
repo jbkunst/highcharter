@@ -5,10 +5,10 @@
 \alias{hicharter}
 \alias{hicharter-package}
 \title{An \code{htmlwidget} interface to the
-\href{http://www.highcarts.com/}{Highcarts} javascript chart library}
+\href{http://www.highcharts.com/}{Highcharts} javascript chart library}
 \description{
 An \code{htmlwidget} interface to the
-\href{http://www.highcarts.com/}{Highcarts} javascript chart library
+\href{http://www.highcharts.com/}{Highcharts} javascript chart library
 }
 \author{
 Joshua Kunst (@jbkunst)

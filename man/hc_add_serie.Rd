@@ -2,7 +2,7 @@
 % Please edit documentation in R/api.R
 \name{hc_add_serie}
 \alias{hc_add_serie}
-\title{Adding series to highchart object}
+\title{Adding series to highchart objects}
 \usage{
 hc_add_serie(hc, ...)
 }

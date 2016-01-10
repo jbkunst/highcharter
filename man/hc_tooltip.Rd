@@ -2,16 +2,30 @@
 % Please edit documentation in R/api.R
 \name{hc_tooltip}
 \alias{hc_tooltip}
-\title{Adding tooltip options to highchart object}
+\title{Adding tooltip options to highchart objects}
 \usage{
 hc_tooltip(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}.}
 }
 \description{
-Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}
+Options for the tooltip that appears when the user hovers over a series or point.
+}
+\examples{
+
+require("dplyr")
+
+data(citytemp)
+
+highchart() \%>\% 
+  hc_xAxis(categories = citytemp$month) \%>\% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_serie(name = "London", data = citytemp$london) \%>\% 
+  hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
+             shared = TRUE, borderWidth = 5)
+             
 }
 

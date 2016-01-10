@@ -1,5 +1,5 @@
 #' An \code{htmlwidget} interface to the
-#' \href{http://www.highcarts.com/}{Highcarts} javascript chart library
+#' \href{http://www.highcharts.com/}{Highcharts} javascript chart library
 #' @name hicharter
 #' @docType package
 #' @author Joshua Kunst (@@jbkunst)

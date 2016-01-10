@@ -2,16 +2,16 @@
 % Please edit documentation in R/api.R
 \name{hc_colorAxis}
 \alias{hc_colorAxis}
-\title{Adding Color Axis options to highchart object}
+\title{Adding Color Axis options to highchart objects}
 \usage{
 hc_colorAxis(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}.}
 }
 \description{
-Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}
+Adding Color Axis options to highchart objects
 }
 

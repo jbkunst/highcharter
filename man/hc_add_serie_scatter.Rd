@@ -20,16 +20,18 @@ hc_add_serie_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
 
 \item{label}{A vector to put names in the dots if you enable the datalabels.}
 
-\item{showInLegend}{This series should be}
+\item{showInLegend}{Logical value to show or not the data in the legend box.}
 
-\item{viridis.option}{Palette to use in case the \code{color} argument is not 
-null. Options are A, B, C, D.}
+\item{viridis.option}{Palette to use in case the \code{color}. Argument can not
+ be \code{NULL} in the case of use \code{color} argument.
+Options are A, B, C, D.}
 
 \item{...}{Aditional shared arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This function helps to create scatter plot from two numerics vectors.
+This function helps to create scatter plot from two numerics vectors. Options
+argumets like size, color and label for points are added.
 }
 \examples{
 

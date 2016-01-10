@@ -2,16 +2,22 @@
 % Please edit documentation in R/api.R
 \name{hc_plotOptions}
 \alias{hc_plotOptions}
-\title{Adding plot options to highchart object}
+\title{Adding plot options to highchart objects}
 \usage{
 hc_plotOptions(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.}
 }
 \description{
-Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}
+The plotOptions is a wrapper object for config objects for each series type. The config 
+objects for each series can also be overridden for each series item as given in the series array.
+}
+\details{
+Configuration options for the series are given in three levels. Options for all series in a chart are given in the 
+plotOptions object. Then options for all series of a specific type are given in the plotOptions of that type, for example 
+\code{hc_plotOptions(line = list(...))}. Next, options for one single series are given in the series array.
 }
 

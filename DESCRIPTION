@@ -19,6 +19,7 @@ Imports:
     rlist,
     assertthat,
     zoo,
+    magrittr,
     dplyr,
     stringr,
     plyr,

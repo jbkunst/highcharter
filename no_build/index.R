@@ -245,7 +245,7 @@ hc %>%
   hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
            margin = 20, align = "left",
            style = list(color = "#90ed7d", useHTML = TRUE)) %>% 
-  hc_subtitle(text = "A detailed description",
+  hc_subtitle(text = "And this is a subtitle with more information",
               align = "left",
               style = list(color = "#2b908f", fontWeight = "bold")) %>% 
   hc_credits(enabled = TRUE,

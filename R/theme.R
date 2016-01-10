@@ -4,7 +4,6 @@
 #' 
 #' @param hc A highchart object
 #' @param hc_thm A highchart theme object (\code{"hc_theme"} class)
-#' 
 #' @export
 hc_add_theme <- function(hc, hc_thm){
   
@@ -101,7 +100,6 @@ hc_theme <- function(...){
 #' Function to combine hc_theme objects.
 #' 
 #' @param ... \code{hc_theme} objects
-#' 
 #' 
 #' @export
 hc_theme_merge <- function(...){

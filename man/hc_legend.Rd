@@ -2,16 +2,31 @@
 % Please edit documentation in R/api.R
 \name{hc_legend}
 \alias{hc_legend}
-\title{Adding legend options to highchart object}
+\title{Adding legend options to highchart objects}
 \usage{
 hc_legend(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}.}
 }
 \description{
-Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}
+Function to modify styles for the box containing the symbol, name and color for
+each item or point item in the chart.
+}
+\examples{
+
+require("dplyr")
+
+data(citytemp)
+
+highchart() \%>\% 
+  hc_xAxis(categories = citytemp$month) \%>\% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_serie(name = "London", data = citytemp$london) \%>\%
+  hc_legend(align = "left", verticalAlign = "top",
+            layout = "vertical", x = 0, y = 100) 
+            
 }
 
