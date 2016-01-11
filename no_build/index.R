@@ -293,30 +293,16 @@ hc
 
 ##' # Shorcuts for add Data (data series) ####
 
-##' ## Time Series ####
-
-data(economics, package = "ggplot2")
-
-highchart() %>% 
-  hc_add_serie_ts(economics$psavert, economics$date,
-                  name = "Personal Savings Rate")
-
-#' There's a `hc_add_serie_ts2` which recieve a `ts`object.
-
-highchart() %>% 
-  hc_add_serie_ts2(AirPassengers, color = "#26838E")
-
-highchart() %>% 
-  hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
-  hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
-  hc_add_serie_ts2(fdeaths, name = "Female") %>%
-  hc_add_serie_ts2(mdeaths, name = "Male")
-
-##' ## Scatter plot ####
+##' ## Scatter ####
 
 highchart() %>% 
   hc_title(text = "Simple scatter chart") %>% 
   hc_add_serie_scatter(mtcars$wt, mtcars$mpg)
+
+highchart() %>% 
+  hc_title(text = "Scatter chart with color") %>% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+                       color = mtcars$hp)
 
 highchart() %>% 
   hc_title(text = "Scatter chart with size") %>% 
@@ -327,11 +313,6 @@ highchart() %>%
   hc_title(text = "Scatter chart with size and color") %>% 
   hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
                        mtcars$drat, mtcars$hp)
-
-highchart() %>% 
-  hc_title(text = "Scatter chart with color and no size") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
-                       color = mtcars$hp)
 
 highchart(height = 500) %>% 
   hc_title(text = "A complete example for Scatter") %>% 
@@ -352,7 +333,7 @@ highchart(height = 500) %>%
                                  "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
              footerFormat = "</table>")
 
-# or We can add series one by one.
+#' Or we can add series one by one.
 hc <- highchart()
 for (cyl in unique(mtcars$cyl)) {
   hc <- hc %>%
@@ -363,6 +344,25 @@ for (cyl in unique(mtcars$cyl)) {
 }
 
 hc
+
+##' ## Time Series ####
+
+data(economics, package = "ggplot2")
+
+highchart() %>% 
+  hc_add_serie_ts(economics$psavert, economics$date,
+                  name = "Personal Savings Rate")
+
+#' There's a `hc_add_serie_ts2` which recieve a `ts`object.
+
+highchart() %>% 
+  hc_add_serie_ts2(AirPassengers, color = "#26838E")
+
+highchart() %>% 
+  hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
+  hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
+  hc_add_serie_ts2(fdeaths, name = "Female") %>%
+  hc_add_serie_ts2(mdeaths, name = "Male")
 
 ##' ## Treemaps ####
 #'

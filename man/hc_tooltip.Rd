@@ -25,6 +25,7 @@ highchart() \%>\%
   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
   hc_add_serie(name = "London", data = citytemp$london) \%>\% 
   hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
+             headerFormat = "This is a custom header<br>",
              shared = TRUE, borderWidth = 5)
              
 }

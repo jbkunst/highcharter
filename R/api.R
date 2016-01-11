@@ -186,6 +186,7 @@ hc_legend <- function(hc, ...) {
 #'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
 #'   hc_add_serie(name = "London", data = citytemp$london) %>% 
 #'   hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
+#'              headerFormat = "This is a custom header<br>",
 #'              shared = TRUE, borderWidth = 5)
 #'              
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -208,7 +209,34 @@ hc_tooltip <- function(hc, ...) {
 #' \code{hc_plotOptions(line = list(...))}. Next, options for one single series are given in the series array.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' data(citytemp)
+#' 
+#' hc <- highchart() %>% 
+#'   hc_plotOptions(line = list(color = "blue",
+#'                              marker = list(
+#'                                fillColor = "white",
+#'                                lineWidth = 2,
+#'                                lineColor = NULL
+#'                                )
+#'   )) %>%  
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london,
+#'                marker = list(fillColor = "black"))
+#' 
+#' 
+#' hc
+#' 
+#' #' override the `blue` option with the explicit parameter
+#' hc %>% 
+#'   hc_add_serie(name = "London",
+#'                data = citytemp$new_york,
+#'                color = "red")
 #'
 #' @export
 hc_plotOptions  <- function(hc, ...) {
@@ -219,7 +247,7 @@ hc_plotOptions  <- function(hc, ...) {
 
 #' Adding Color Axis options to highchart objects
 #'
-#' 
+#' Function to set the axis color to highcharts objects.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}. 

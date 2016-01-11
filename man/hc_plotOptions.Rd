@@ -20,4 +20,32 @@ Configuration options for the series are given in three levels. Options for all 
 plotOptions object. Then options for all series of a specific type are given in the plotOptions of that type, for example 
 \code{hc_plotOptions(line = list(...))}. Next, options for one single series are given in the series array.
 }
+\examples{
+
+require("dplyr")
+
+data(citytemp)
+
+hc <- highchart() \%>\% 
+  hc_plotOptions(line = list(color = "blue",
+                             marker = list(
+                               fillColor = "white",
+                               lineWidth = 2,
+                               lineColor = NULL
+                               )
+  )) \%>\%  
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_serie(name = "London", data = citytemp$london,
+               marker = list(fillColor = "black"))
+
+
+hc
+
+#' override the `blue` option with the explicit parameter
+hc \%>\% 
+  hc_add_serie(name = "London",
+               data = citytemp$new_york,
+               color = "red")
+
+}
 

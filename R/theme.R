@@ -1,35 +1,15 @@
-#' Add themes to a highchart object
-#' 
-#' Add highcharts themes to a highchart object.
-#' 
-#' @param hc A highchart object
-#' @param hc_thm A highchart theme object (\code{"hc_theme"} class)
-#' @export
-hc_add_theme <- function(hc, hc_thm){
-  
-  assert_that(.is_highchart(hc),
-              .is_hc_theme(hc_thm))
-  
-  hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc_thm)))
-  
-  hc$x$theme <- hc_thm
-  
-  hc
-  
-}
-
 #' Highchart theme constructor
 #' 
 #' Function to create highcharts themes.
 #' 
-#' @param ... Usually named list
+#' @param ... A named list with the parameters.
 #' 
 #' @examples 
 #' 
-#' \dontrun{
+#' require("dplyr")
 #' 
 #' hc <- highchart(debug = TRUE) %>% 
-#'   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
+#'   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, color = mtcars$cyl) %>% 
 #'   hc_chart(zoomType = "xy") %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
 #'   hc_subtitle(text = "Motor Trend Car Road Tests") %>% 
@@ -70,12 +50,50 @@ hc_add_theme <- function(hc, hc_thm){
 #' 
 #' hc %>% hc_add_theme(thm)
 #' 
-#' }
-#' 
 #' @export
 hc_theme <- function(...){
   
   structure(list(...), class = "hc_theme")
+  
+}
+
+#' Add themes to a highchart object
+#' 
+#' Add highcharts themes to a highchart object.
+#' 
+#' @param hc A highchart object
+#' @param hc_thm A highchart theme object (\code{"hc_theme"} class)
+#' 
+#' @export
+hc_add_theme <- function(hc, hc_thm){
+  
+  assert_that(.is_highchart(hc),
+              .is_hc_theme(hc_thm))
+  
+  hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc_thm)))
+  
+  hc$x$theme <- hc_thm
+  
+  hc
+  
+}
+
+#' Merge themes
+#' 
+#' Function to combine hc_theme objects.
+#' 
+#' @param ... A \code{hc_theme} objects.
+#' 
+#' @export
+hc_theme_merge <- function(...){
+  
+  themes <- list(...)
+  
+  assert_that(unique(unlist(purrr::map(themes, class))) == "hc_theme")
+  
+  theme <- structure(list.merge(...), class = "hc_theme")
+  
+  theme
   
 }
 
@@ -92,24 +110,5 @@ hc_theme <- function(...){
     unlist()
   
   fonts
-  
-}
-
-#' Merge themes
-#' 
-#' Function to combine hc_theme objects.
-#' 
-#' @param ... \code{hc_theme} objects
-#' 
-#' @export
-hc_theme_merge <- function(...){
-  
-  themes <- list(...)
-  
-  assert_that(unique(unlist(purrr::map(themes, class))) == "hc_theme")
-  
-  theme <- structure(list.merge(...), class = "hc_theme")
-  
-  theme
   
 }

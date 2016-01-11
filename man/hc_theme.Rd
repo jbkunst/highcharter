@@ -7,17 +7,17 @@
 hc_theme(...)
 }
 \arguments{
-\item{...}{Usually named list}
+\item{...}{A named list with the parameters.}
 }
 \description{
 Function to create highcharts themes.
 }
 \examples{
 
-\dontrun{
+require("dplyr")
 
 hc <- highchart(debug = TRUE) \%>\% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) \%>\% 
+  hc_add_serie_scatter(mtcars$wt, mtcars$mpg, color = mtcars$cyl) \%>\% 
   hc_chart(zoomType = "xy") \%>\% 
   hc_title(text = "Motor Trend Car Road Tests") \%>\% 
   hc_subtitle(text = "Motor Trend Car Road Tests") \%>\% 
@@ -57,8 +57,6 @@ thm <- hc_theme(
 )
 
 hc \%>\% hc_add_theme(thm)
-
-}
 
 }
 

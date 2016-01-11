@@ -298,11 +298,13 @@ hc_add_serie_treemap <- function(hc, tm, ...) {
     tbl_df() %>% 
     select_("-x0", "-y0", "-w", "-h", "-stdErr", "-vColorValue") %>% 
     rename_("value" = "vSize", "valuecolor" = "vColor") %>% 
-    map_if(is.factor, as.character)
+    purrr::map_if(is.factor, as.character) %>% 
+    data.frame(stringsAsFactors = FALSE) %>% 
+    tbl_df()
   
   ndepth <- which(names(df) == "value") - 1
   
-  ds <- ldply(seq(ndepth), function(lvl){ # lvl <- sample(size = 1, seq(ndepth))
+  ds <- ldply(seq(ndepth), function(lvl){ # lvl <- sample(seq(ndepth), size = 1)
     
     df2 <- df %>% 
       filter_(sprintf("level == %s", lvl)) %>% 

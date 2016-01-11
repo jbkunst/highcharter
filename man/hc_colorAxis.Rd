@@ -12,6 +12,6 @@ hc_colorAxis(hc, ...)
 \item{...}{Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}.}
 }
 \description{
-Adding Color Axis options to highchart objects
+Function to set the axis color to highcharts objects.
 }
 
