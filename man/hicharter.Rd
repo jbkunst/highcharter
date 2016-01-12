@@ -5,10 +5,11 @@
 \alias{hicharter}
 \alias{hicharter-package}
 \title{An \code{htmlwidget} interface to the
-\href{http://www.highcharts.com/}{Highcharts} javascript chart library}
+Highcharts javascript chart library}
 \description{
-An \code{htmlwidget} interface to the
-\href{http://www.highcharts.com/}{Highcharts} javascript chart library
+Highcarts \url{http://www.highcharts.com/} is a mature javascript
+charting library. Highcharts provide a various type of charts, from
+scatters to heatmaps or treemaps.
 }
 \author{
 Joshua Kunst (@jbkunst)

@@ -1,8 +1,9 @@
 ## Resubmission
 
-This is a resubmission. In this version I have:
+This is a resubmission. In this version I fix/have:
 
-* Description of highcharts library
-* Adding import from stat package: ecdf
+* More dateiled descriptions in manual pages.
+* Adding examples for every exported function (whithout \dontrun).
+* Adding "<>" to link highcharts.com in the description.
 
-Regards,
+Thanks. Regards,

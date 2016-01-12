@@ -29,7 +29,7 @@
 #' @export 
 hc_add_serie_ts2 <- function(hc, ts, ...) {
   
-  assert_that(is.ts(ts), .is_highchart(hc))
+  assertthat::assert_that(is.ts(ts), .is_highchart(hc))
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
   dates <- time(ts) %>% 
@@ -59,8 +59,8 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #' require("ggplot2")
 #' data(economics, package = "ggplot2")
 #' 
-#' hc_add_serie_ts(highchart(),
-#'                 economics$psavert, economics$date,
+#' hc_add_serie_ts(hc = highchart(),
+#'                 values = economics$psavert, dates = economics$date,
 #'                 name = "Personal Savings Rate")
 #' }
 #' 
@@ -69,7 +69,7 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #' @export 
 hc_add_serie_ts <- function(hc, values, dates, ...) {
   
-  assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
+  assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
   
   timestamps <- dates %>% 
     zoo::as.Date() %>%
@@ -148,8 +148,8 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
                                  showInLegend = FALSE, viridis.option = "D", ...) {
   
-  assert_that(.is_highchart(hc), length(x) == length(y),
-              is.numeric(x), is.numeric(y))
+  assertthat::assert_that(.is_highchart(hc), length(x) == length(y),
+                          is.numeric(x), is.numeric(y))
   
   df <- data_frame(x, y)
   
@@ -228,9 +228,9 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
 #' @export
 hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
   
-  assert_that(.is_highchart(hc),
-              is.numeric(values),
-              length(labels) == length(values))
+  assertthat::assert_that(.is_highchart(hc),
+                          is.numeric(values),
+                          length(labels) == length(values))
 
   df <- data_frame(name = labels, y = values)
   
@@ -292,8 +292,8 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
 #' @export 
 hc_add_serie_treemap <- function(hc, tm, ...) {
   
-  assert_that(.is_highchart(hc),
-              is.list(tm))
+  assertthat::assert_that(.is_highchart(hc),
+                          is.list(tm))
   
   df <- tm$tm %>% 
     tbl_df() %>% 

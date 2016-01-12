@@ -36,6 +36,9 @@
       ),
       credits = list(
         enabled = FALSE
+      ),
+      exporting = list(
+        enabled = FALSE
       )
     )
   ))

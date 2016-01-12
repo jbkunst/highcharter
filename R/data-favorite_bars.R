@@ -15,7 +15,6 @@
 #' @name favorite_bars
 #' @usage favorite_bars
 #' @format A \code{data frame} with 5 observations and 2 variables.
-#' @rdname data
 #' @examples
 #' data(favorite_bars)
 #' favorite_bars

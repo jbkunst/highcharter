@@ -25,14 +25,8 @@ highchart() \%>\%
   hc_xAxis(categories = citytemp$month) \%>\% 
   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
   hc_add_serie(name = "London", data = citytemp$london) \%>\% 
-  hc_exporting(enabled = FALSE)
-
-
-highchart() \%>\% 
-  hc_xAxis(categories = citytemp$month) \%>\% 
-  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
-  hc_add_serie(name = "London", data = citytemp$london) \%>\% 
-  hc_exporting(filename = "custom-file-name")
+  hc_exporting(enabled = TRUE,
+               filename = "custom-file-name")
 
 }
 

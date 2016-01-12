@@ -14,4 +14,39 @@ hc_colorAxis(hc, ...)
 \description{
 Function to set the axis color to highcharts objects.
 }
+\examples{
+
+require("dplyr")
+
+nyears <- 5
+
+df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
+df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
+df$value <- round(df$value, 2)
+ds <- setNames(list.parse2(df), NULL)
+
+
+hc <- highchart() \%>\% 
+  hc_chart(type = "heatmap") \%>\% 
+  hc_title(text = "Simulated values by years and months") \%>\% 
+  hc_xAxis(categories = month.abb) \%>\% 
+  hc_yAxis(categories = 2016 - nyears + seq(nyears)) \%>\% 
+  hc_add_serie(name = "value", data = ds)
+
+hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
+
+hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348",
+             type = "logarithmic") 
+
+
+require("viridisLite")
+
+n <- 4
+stops <- data_frame(q = 0:n/n,
+                    c = substring(viridis(n + 1), 0, 7))
+stops <- list.parse2(stops)
+
+hc_colorAxis(hc, stops = stops, max = 75) 
+
+}
 

@@ -1,7 +1,7 @@
-#' @import rlist assertthat
+#' @import rlist
 .hc_opt <- function(hc, name, ...) {
   
-  assert_that(.is_highchart(hc))
+  assertthat::assert_that(.is_highchart(hc))
   
   if (is.null(hc$x$hc_opts[[name]])) {
     
@@ -204,9 +204,10 @@ hc_tooltip <- function(hc, ...) {
 #' The plotOptions is a wrapper object for config objects for each series type. The config 
 #' objects for each series can also be overridden for each series item as given in the series array.
 #' 
-#' Configuration options for the series are given in three levels. Options for all series in a chart are given in the 
-#' plotOptions object. Then options for all series of a specific type are given in the plotOptions of that type, for example 
-#' \code{hc_plotOptions(line = list(...))}. Next, options for one single series are given in the series array.
+#' Configuration options for the series are given in three levels. Options for all series in a 
+#' chart are given with the \code{hc_plotOptions} function. Then options for all series of a specific
+#' type are given in the plotOptions of that type, for example  \code{hc_plotOptions(line = list(...))}.
+#' Next, options for one single series are given in the series array.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.
@@ -232,7 +233,7 @@ hc_tooltip <- function(hc, ...) {
 #' 
 #' hc
 #' 
-#' #' override the `blue` option with the explicit parameter
+#' # override the `blue` option with the explicit parameter
 #' hc %>% 
 #'   hc_add_serie(name = "London",
 #'                data = citytemp$new_york,
@@ -247,12 +248,24 @@ hc_plotOptions  <- function(hc, ...) {
 
 #' Adding credits options to highchart objects
 #'
-#' \code{highcarter} by default don't put credits label. You can add credits
-#' using these options.
+#' \code{highcarter} by default don't put credits in the chart.
+#' You can add credits using these options.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#credits}. 
-#'
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' data("citytemp")
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo, type = "bar") %>% 
+#'   hc_credits(enabled = TRUE, text = "htmlwidgets.org",
+#'              href = "http://www.htmlwidgets.org/")
+#'              
 #' @export
 hc_credits <- function(hc, ...) {
   
@@ -266,7 +279,41 @@ hc_credits <- function(hc, ...) {
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}. 
-#'
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' nyears <- 5
+#' 
+#' df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
+#' df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
+#' df$value <- round(df$value, 2)
+#' ds <- setNames(list.parse2(df), NULL)
+#' 
+#' 
+#' hc <- highchart() %>% 
+#'   hc_chart(type = "heatmap") %>% 
+#'   hc_title(text = "Simulated values by years and months") %>% 
+#'   hc_xAxis(categories = month.abb) %>% 
+#'   hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
+#'   hc_add_serie(name = "value", data = ds)
+#' 
+#' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
+#' 
+#' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348",
+#'              type = "logarithmic") 
+#' 
+#' 
+#' require("viridisLite")
+#' 
+#' n <- 4
+#' stops <- data_frame(q = 0:n/n,
+#'                     c = substring(viridis(n + 1), 0, 7))
+#' stops <- list.parse2(stops)
+#' 
+#' hc_colorAxis(hc, stops = stops, max = 75) 
+#' 
 #' @export
 hc_colorAxis  <- function(hc, ...) {
   
@@ -292,14 +339,8 @@ hc_colorAxis  <- function(hc, ...) {
 #'   hc_xAxis(categories = citytemp$month) %>% 
 #'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
 #'   hc_add_serie(name = "London", data = citytemp$london) %>% 
-#'   hc_exporting(enabled = FALSE)
-#' 
-#' 
-#' highchart() %>% 
-#'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london) %>% 
-#'   hc_exporting(filename = "custom-file-name")
+#'   hc_exporting(enabled = TRUE,
+#'                filename = "custom-file-name")
 #' 
 #' @export
 hc_exporting  <- function(hc, ...) {
@@ -341,11 +382,9 @@ hc_add_serie <- function(hc, ...) {
 
 #' Removing series to highchart objects
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param name The serie's name to delete.
 #' 
 #' @rdname hc_add_serie
-#'
 #' @export
 hc_rm_serie <- function(hc, name = NULL) {
   

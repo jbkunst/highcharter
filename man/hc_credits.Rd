@@ -12,7 +12,20 @@ hc_credits(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#credits}.}
 }
 \description{
-\code{highcarter} by default don't put credits label. You can add credits
-using these options.
+\code{highcarter} by default don't put credits in the chart.
+You can add credits using these options.
+}
+\examples{
+
+require("dplyr")
+
+data("citytemp")
+
+highchart() \%>\% 
+  hc_xAxis(categories = citytemp$month) \%>\% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo, type = "bar") \%>\% 
+  hc_credits(enabled = TRUE, text = "htmlwidgets.org",
+             href = "http://www.htmlwidgets.org/")
+             
 }
 

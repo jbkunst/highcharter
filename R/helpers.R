@@ -2,13 +2,19 @@
 #'
 #' This function is similiar to \code{rlist::list.parse} but this removes names. 
 #' 
-#' @param df A data frame to 
+#' @param df A data frame to parse to list
+#' 
+#' @examples 
+#' 
+#' x <- data.frame(a=1:3,type=c('A','C','B'))
+#' 
+#' list.parse2(x)
 #' 
 #' @importFrom stats setNames
-#' 
-#' @rdname helpers
 #' @export
 list.parse2 <- function(df) {
+  
+  assertthat::assert_that(is.data.frame(df))
   
   setNames(apply(df, 1, function(r) as.list(as.vector(r))), NULL)
   
@@ -20,18 +26,22 @@ list.parse2 <- function(df) {
 #' 
 #' @param x A vector string.
 #' 
+#' @examples 
+#' 
+#' str_to_id(" A string _ with    Underscores   ")
+#' 
 #' @importFrom stringr str_to_lower str_replace_all
-#' @rdname helpers
 #' @export
 str_to_id <- function(x) {
   
-  assert_that(is.character(x))
+  assertthat::assert_that(is.character(x))
   
   x %>% 
     str_trim() %>%
     str_to_lower() %>% 
     str_replace_all("\\s+", "_") %>% 
-    iconv("latin1", "ASCII", sub="")
+    str_replace_all("_+", "_") %>% 
+    iconv("latin1", "ASCII", sub = "")
   
 }
 
@@ -39,7 +49,10 @@ str_to_id <- function(x) {
 #'
 #' Get color used in highcharts charts.
 #' 
-#' @rdname helpers
+#' @examples 
+#' 
+#' hc_get_colors()[1:5]
+#' 
 #' @export
 hc_get_colors <- function() {
   
@@ -50,13 +63,16 @@ hc_get_colors <- function() {
 
 #' Get dash styles
 #'
-#' Get dash style to use on hichartrs objects.
+#' Get dash style to use on highcharts objects.
 #' 
-#' @rdname helpers
+#' @examples 
+#' 
+#' hc_get_dash_styles()[1:5]
+#' 
 #' @export
 hc_get_dash_styles <- function() {
   
-  c("Solid", "ShortDash", "ShortDot", "ShortDashDot", "ShortDashDotDot", "Dot",
-    "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
+  c("Solid", "ShortDash", "ShortDot", "ShortDashDot", "ShortDashDotDot",
+    "Dot", "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
   
 }

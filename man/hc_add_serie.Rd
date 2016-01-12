@@ -15,8 +15,6 @@ hc_rm_serie(hc, name = NULL)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 
 \item{name}{The serie's name to delete.}
-
-\item{hc}{A \code{highchart} \code{htmlwidget} object.}
 }
 \description{
 Adding and removing series from highchart objects

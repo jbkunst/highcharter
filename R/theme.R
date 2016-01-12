@@ -2,6 +2,8 @@
 #' 
 #' Function to create highcharts themes.
 #' 
+#' More examples are in http://www.highcharts.com/docs/chart-design-and-style/themes.
+#' 
 #' @param ... A named list with the parameters.
 #' 
 #' @examples 
@@ -64,6 +66,16 @@ hc_theme <- function(...){
 #' @param hc A highchart object
 #' @param hc_thm A highchart theme object (\code{"hc_theme"} class)
 #' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' 
+#' highchart() %>% 
+#'   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'                         26.5, 23.3, 18.3, 13.9, 9.6),
+#'                         type = "column") %>% 
+#'   hc_add_theme(hc_theme_sandsignika())
+#'   
 #' @export
 hc_add_theme <- function(hc, hc_thm){
   
@@ -83,6 +95,24 @@ hc_add_theme <- function(hc, hc_thm){
 #' Function to combine hc_theme objects.
 #' 
 #' @param ... A \code{hc_theme} objects.
+#' 
+#' @examples 
+#' 
+#' thm <- hc_theme_merge(
+#'   hc_theme_darkunica(),
+#'   hc_theme(
+#'     chart = list(
+#'       backgroundColor = "transparent",
+#'       divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
+#'     ),
+#'     title = list(
+#'       style = list(
+#'         color = 'white',
+#'         fontFamily = "Erica One"
+#'       )
+#'     )
+#'   )
+#' )
 #' 
 #' @export
 hc_theme_merge <- function(...){

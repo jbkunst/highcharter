@@ -16,9 +16,10 @@ The plotOptions is a wrapper object for config objects for each series type. The
 objects for each series can also be overridden for each series item as given in the series array.
 }
 \details{
-Configuration options for the series are given in three levels. Options for all series in a chart are given in the 
-plotOptions object. Then options for all series of a specific type are given in the plotOptions of that type, for example 
-\code{hc_plotOptions(line = list(...))}. Next, options for one single series are given in the series array.
+Configuration options for the series are given in three levels. Options for all series in a 
+chart are given with the \code{hc_plotOptions} function. Then options for all series of a specific
+type are given in the plotOptions of that type, for example  \code{hc_plotOptions(line = list(...))}.
+Next, options for one single series are given in the series array.
 }
 \examples{
 
@@ -41,7 +42,7 @@ hc <- highchart() \%>\%
 
 hc
 
-#' override the `blue` option with the explicit parameter
+# override the `blue` option with the explicit parameter
 hc \%>\% 
   hc_add_serie(name = "London",
                data = citytemp$new_york,

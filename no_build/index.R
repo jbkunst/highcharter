@@ -1,5 +1,7 @@
 #' ---
 #' title: "highcharter: Just another Highcharts wrapper for R"
+#' author: Joshua Kunst
+#' date: false
 #' output:
 #'   html_document:
 #'     theme: journal
@@ -250,7 +252,7 @@ hc %>%
   hc_xAxis(title = list(text = "Month in x Axis"),
            opposite = TRUE,
            plotLines = list(
-             list(label = list(text = "Mid year in a plotLine"),
+             list(label = list(text = "This is a plotLine"),
                   color = "#FF0000",
                   width = 2,
                   value = 5.5))) %>% 
@@ -262,7 +264,7 @@ hc %>%
            showLastLabel = FALSE,
            plotBands = list(
              list(from = 25, to = htmlwidgets::JS("Infinity"), color = "rgba(100, 0, 0, 0.1)",
-                  label = list(text = "So hot here in the plotBand")))) 
+                  label = list(text = "This is a plotBand")))) 
 
 ##' ## hc_add_serie and hc_rm_serie ####
 
@@ -276,7 +278,6 @@ hc
 hc %>% 
   hc_add_serie(name = "London", data = citytemp$london, type = "area") %>% 
   hc_rm_serie(name = "New York")
-
 
 ##' ## hc_title, hc_subtitle, hc_credits and hc_legend, hc_tooltip, hc_exporting ####
 
@@ -296,7 +297,7 @@ hc %>%
             layout = "vertical", x = 0, y = 100) %>%
   hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
              shared = TRUE, borderWidth = 5) %>% 
-  hc_exporting(enabled = FALSE) # disable exporting option
+  hc_exporting(enabled = TRUE) # enable exporting option
 
 ##' # Shorcuts for add Data (data series) ####
 
@@ -592,17 +593,28 @@ highchart() %>%
 nyears <- 5
 
 df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
-df$value <- seq(nrow(df)) + 10 * rnorm(nrow(df))
+df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
 df$value <- round(df$value, 2)
 ds <- setNames(list.parse2(df), NULL)
 
-highchart() %>% 
+
+hc <- highchart() %>% 
   hc_chart(type = "heatmap") %>% 
   hc_title(text = "Simulated values by years and months") %>% 
   hc_xAxis(categories = month.abb) %>% 
   hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
-  hc_colorAxis(min = 0,  minColor = "#FFFFFF", maxColor = "#434348") %>% 
   hc_add_serie(name = "value", data = ds)
+
+hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
+
+require("viridisLite")
+
+n <- 4
+stops <- data_frame(q = 0:n/n,
+                    c = substring(viridis(n + 1), 0, 7))
+stops <- list.parse2(stops)
+
+hc_colorAxis(hc, stops = stops, max = 75) 
 
 ##' ## Treemap ####
 
