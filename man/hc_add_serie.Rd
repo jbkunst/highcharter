@@ -2,16 +2,43 @@
 % Please edit documentation in R/api.R
 \name{hc_add_serie}
 \alias{hc_add_serie}
-\title{Adding series to highchart objects}
+\alias{hc_rm_serie}
+\title{Adding and removing series from highchart objects}
 \usage{
 hc_add_serie(hc, ...)
+
+hc_rm_serie(hc, name = NULL)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
+
+\item{name}{The serie's name to delete.}
+
+\item{hc}{A \code{highchart} \code{htmlwidget} object.}
 }
 \description{
-Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
+Adding and removing series from highchart objects
+
+Removing series to highchart objects
+}
+\examples{
+
+require("dplyr")
+
+data("citytemp")
+
+hc <- highchart() \%>\% 
+  hc_xAxis(categories = citytemp$month) \%>\% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_serie(name = "New York", data = citytemp$new_york) 
+
+hc 
+
+hc \%>\% 
+  hc_add_serie(name = "London", data = citytemp$london, type = "area") \%>\% 
+  hc_rm_serie(name = "New York")
+
 }
 

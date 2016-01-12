@@ -30,7 +30,8 @@ head(GNI2010)
 
 tm <- treemap(GNI2010, index = c("continent", "iso3"),
               vSize = "population", vColor = "GNI",
-              type = "comp", palette = rev(viridis(6)))
+              type = "comp", palette = rev(viridis(6)),
+              draw = FALSE)
 
 highchart(height = 800) \%>\% 
   hc_add_serie_treemap(tm, allowDrillToNode = TRUE,

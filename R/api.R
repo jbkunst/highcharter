@@ -245,20 +245,6 @@ hc_plotOptions  <- function(hc, ...) {
   
 }
 
-#' Adding Color Axis options to highchart objects
-#'
-#' Function to set the axis color to highcharts objects.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}. 
-#'
-#' @export
-hc_colorAxis  <- function(hc, ...) {
-  
-  .hc_opt(hc, "colorAxis", ...)
-  
-}
-
 #' Adding credits options to highchart objects
 #'
 #' \code{highcarter} by default don't put credits label. You can add credits
@@ -274,12 +260,75 @@ hc_credits <- function(hc, ...) {
   
 }
 
-#' Adding series to highchart objects
+#' Adding Color Axis options to highchart objects
 #'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
+#' Function to set the axis color to highcharts objects.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts}. 
+#' @param ... Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}. 
+#'
+#' @export
+hc_colorAxis  <- function(hc, ...) {
+  
+  .hc_opt(hc, "colorAxis", ...)
+  
+}
+
+#' Exporting options for higcharts objects
+#'
+#' Exporting options for higcharts objects. You can define the file's name
+#' or the output format.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#exporting}. 
+#' 
+#' @examples
+#' 
+#' require("dplyr")
+#' 
+#' data("citytemp")
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london) %>% 
+#'   hc_exporting(enabled = FALSE)
+#' 
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london) %>% 
+#'   hc_exporting(filename = "custom-file-name")
+#' 
+#' @export
+hc_exporting  <- function(hc, ...) {
+  
+  .hc_opt(hc, "exporting", ...)
+  
+}
+
+#' Adding and removing series from highchart objects
+#'
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#'
+#' @examples
+#' 
+#' require("dplyr")
+#' 
+#' data("citytemp")
+#' 
+#' hc <- highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_serie(name = "New York", data = citytemp$new_york) 
+#' 
+#' hc 
+#' 
+#' hc %>% 
+#'   hc_add_serie(name = "London", data = citytemp$london, type = "area") %>% 
+#'   hc_rm_serie(name = "New York")
 #'
 #' @export
 hc_add_serie <- function(hc, ...) {
@@ -292,10 +341,10 @@ hc_add_serie <- function(hc, ...) {
 
 #' Removing series to highchart objects
 #'
-#' Arguments are defined in \url{http://api.highcharts.com/highcharts#chart}
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param name The serie's name to delete.
+#' 
+#' @rdname hc_add_serie
 #'
 #' @export
 hc_rm_serie <- function(hc, name = NULL) {

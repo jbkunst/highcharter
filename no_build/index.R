@@ -237,25 +237,6 @@ hc
 
 hc <- hc_chart(hc, type = "line", options3d = list(enabled = FALSE))
 
-##' ## hc_title, hc_subtitle, hc_credits and hc_legend, hc_tooltip ####
-
-#' Functions to modify the chart's main title, subtitle, credits, legend and tooltip.
-
-hc %>% 
-  hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
-           margin = 20, align = "left",
-           style = list(color = "#90ed7d", useHTML = TRUE)) %>% 
-  hc_subtitle(text = "And this is a subtitle with more information",
-              align = "left",
-              style = list(color = "#2b908f", fontWeight = "bold")) %>% 
-  hc_credits(enabled = TRUE,
-             text = "www.lonk.tomy.site",
-             href = "http://jkunst.com") %>% 
-  hc_legend(align = "left", verticalAlign = "top",
-            layout = "vertical", x = 0, y = 100) %>%
-  hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
-             shared = TRUE, borderWidth = 5)
-
 ##' ## hc_xAxis and hc_yAxis ####
 
 #' This functions allow between other things:
@@ -283,13 +264,39 @@ hc %>%
              list(from = 25, to = htmlwidgets::JS("Infinity"), color = "rgba(100, 0, 0, 0.1)",
                   label = list(text = "So hot here in the plotBand")))) 
 
-##' ## hc_plotOptions ####
-
-hc
-
 ##' ## hc_add_serie and hc_rm_serie ####
 
-hc
+hc <- highchart() %>% 
+  hc_xAxis(categories = citytemp$month) %>% 
+  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
+  hc_add_serie(name = "New York", data = citytemp$new_york) 
+
+hc 
+
+hc %>% 
+  hc_add_serie(name = "London", data = citytemp$london, type = "area") %>% 
+  hc_rm_serie(name = "New York")
+
+
+##' ## hc_title, hc_subtitle, hc_credits and hc_legend, hc_tooltip, hc_exporting ####
+
+#' Functions to modify the chart's main title, subtitle, credits, legend and tooltip.
+
+hc %>% 
+  hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
+           margin = 20, align = "left",
+           style = list(color = "#90ed7d", useHTML = TRUE)) %>% 
+  hc_subtitle(text = "And this is a subtitle with more information",
+              align = "left",
+              style = list(color = "#2b908f", fontWeight = "bold")) %>% 
+  hc_credits(enabled = TRUE, # add credits
+             text = "www.lonk.tomy.site",
+             href = "http://jkunst.com") %>% 
+  hc_legend(align = "left", verticalAlign = "top",
+            layout = "vertical", x = 0, y = 100) %>%
+  hc_tooltip(crosshairs = TRUE, backgroundColor = "#FCFFC5",
+             shared = TRUE, borderWidth = 5) %>% 
+  hc_exporting(enabled = FALSE) # disable exporting option
 
 ##' # Shorcuts for add Data (data series) ####
 
