@@ -610,7 +610,7 @@ hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
 require("viridisLite")
 
 n <- 4
-stops <- data_frame(q = 0:n/n,
+stops <- data.frame(q = 0:n/n,
                     c = substring(viridis(n + 1), 0, 7))
 stops <- list.parse2(stops)
 
@@ -650,7 +650,7 @@ hc_opts$series <- append(hc_opts$series,
                                    data = c(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
                                    dataLabels = list(align = "left", enabled = TRUE))))
 
-highchart(hc_opts, )
+highchart(hc_opts)
 
 ##' ### Example 2 ####
 
