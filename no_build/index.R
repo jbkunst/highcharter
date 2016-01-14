@@ -133,7 +133,9 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 
 ##' # Installation ####
 #' 
-#' You can install the package via devtools: `devtools::install_github("jbkunst/highcharter")`.
+#' You can install the package with the usual `install.packages("highcarter")`
+#' or if you want to try new features before the updates: via devtools 
+#' `devtools::install_github("jbkunst/highcharter")`.
 #' 
 
 ##' # Quick Demo ####
