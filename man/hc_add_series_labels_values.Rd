@@ -23,7 +23,6 @@ This function add data to plot pie, bar and column charts.
 }
 \examples{
 
-require("dplyr")
 
 data("favorite_bars")
 data("favorite_pies")

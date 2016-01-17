@@ -23,7 +23,6 @@ Next, options for one single series are given in the series array.
 }
 \examples{
 
-require("dplyr")
 
 data(citytemp)
 

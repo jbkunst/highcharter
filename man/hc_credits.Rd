@@ -17,7 +17,6 @@ You can add credits using these options.
 }
 \examples{
 
-require("dplyr")
 
 data("citytemp")
 

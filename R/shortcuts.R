@@ -11,8 +11,6 @@
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
-#' 
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
 #'   hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
@@ -107,8 +105,6 @@ hc_add_series_ts <- function(hc, values, dates, ...) {
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
-#' 
 #' hc <- highchart() %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
 #'   hc_xAxis(title = list(text = "Weight")) %>% 
@@ -140,7 +136,6 @@ hc_add_series_ts <- function(hc, values, dates, ...) {
 #'            footerFormat = "</table>")
 #' 
 #' @importFrom dplyr mutate group_by do select data_frame
-#' @import magrittr
 #' @importFrom viridisLite viridis
 #' @importFrom stats ecdf
 #' 
@@ -203,7 +198,6 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
 #' 
 #' data("favorite_bars")
 #' data("favorite_pies")

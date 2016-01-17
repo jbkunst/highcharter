@@ -16,7 +16,6 @@ Function to set the axis color to highcharts objects.
 }
 \examples{
 
-require("dplyr")
 
 nyears <- 5
 
@@ -42,8 +41,9 @@ hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348",
 require("viridisLite")
 
 n <- 4
-stops <- data_frame(q = 0:n/n,
-                    c = substring(viridis(n + 1), 0, 7))
+stops <- data.frame(q = 0:n/n,
+                    c = substring(viridis(n + 1), 0, 7),
+                    stringsAsFactors = FALSE)
 stops <- list.parse2(stops)
 
 hc_colorAxis(hc, stops = stops, max = 75) 

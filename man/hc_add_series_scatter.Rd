@@ -35,8 +35,6 @@ argumets like size, color and label for points are added.
 }
 \examples{
 
-require("dplyr")
-
 hc <- highchart() \%>\% 
   hc_title(text = "Motor Trend Car Road Tests") \%>\% 
   hc_xAxis(title = list(text = "Weight")) \%>\% 

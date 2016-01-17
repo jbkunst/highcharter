@@ -28,8 +28,6 @@
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
-#' 
 #' data(citytemp)
 #' 
 #' hc <- highchart() %>% 
@@ -68,8 +66,6 @@ hc_chart <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#xAxis}. 
 #' 
 #' @examples 
-#' 
-#' require("dplyr")
 #' 
 #' highchart() %>% 
 #'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
@@ -116,8 +112,6 @@ hc_yAxis  <- function(hc, ...) {
 #'
 #' @examples 
 #' 
-#' require("dplyr")
-#' 
 #' highchart() %>% 
 #'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
@@ -150,7 +144,6 @@ hc_subtitle <- function(hc, ...) {
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
 #' 
 #' data(citytemp)
 #' 
@@ -177,7 +170,6 @@ hc_legend <- function(hc, ...) {
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
 #' 
 #' data(citytemp)
 #' 
@@ -214,7 +206,6 @@ hc_tooltip <- function(hc, ...) {
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
 #' 
 #' data(citytemp)
 #' 
@@ -256,7 +247,6 @@ hc_plotOptions  <- function(hc, ...) {
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
 #' 
 #' data("citytemp")
 #' 
@@ -282,7 +272,6 @@ hc_credits <- function(hc, ...) {
 #' 
 #' @examples 
 #' 
-#' require("dplyr")
 #' 
 #' nyears <- 5
 #' 
@@ -308,8 +297,9 @@ hc_credits <- function(hc, ...) {
 #' require("viridisLite")
 #' 
 #' n <- 4
-#' stops <- data_frame(q = 0:n/n,
-#'                     c = substring(viridis(n + 1), 0, 7))
+#' stops <- data.frame(q = 0:n/n,
+#'                     c = substring(viridis(n + 1), 0, 7),
+#'                     stringsAsFactors = FALSE)
 #' stops <- list.parse2(stops)
 #' 
 #' hc_colorAxis(hc, stops = stops, max = 75) 

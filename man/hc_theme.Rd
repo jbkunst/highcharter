@@ -17,8 +17,6 @@ More examples are in http://www.highcharts.com/docs/chart-design-and-style/theme
 }
 \examples{
 
-require("dplyr")
-
 hc <- highchart(debug = TRUE) \%>\% 
   hc_add_series_scatter(mtcars$wt, mtcars$mpg, color = mtcars$cyl) \%>\% 
   hc_chart(zoomType = "xy") \%>\% 

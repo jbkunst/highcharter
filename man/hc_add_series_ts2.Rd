@@ -22,8 +22,6 @@ This function \bold{modify} the type of \code{chart} to \code{datetime}
 }
 \examples{
 
-require("dplyr")
-
 highchart() \%>\% 
   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") \%>\% 
   hc_subtitle(text = "The classic Box and Jenkins airline data") \%>\% 

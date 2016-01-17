@@ -17,7 +17,6 @@ each item or point item in the chart.
 }
 \examples{
 
-require("dplyr")
 
 data(citytemp)
 
