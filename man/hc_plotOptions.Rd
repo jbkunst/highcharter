@@ -35,8 +35,8 @@ hc <- highchart() \%>\%
                                lineColor = NULL
                                )
   )) \%>\%  
-  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
-  hc_add_serie(name = "London", data = citytemp$london,
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_series(name = "London", data = citytemp$london,
                marker = list(fillColor = "black"))
 
 
@@ -44,7 +44,7 @@ hc
 
 # override the `blue` option with the explicit parameter
 hc \%>\% 
-  hc_add_serie(name = "London",
+  hc_add_series(name = "London",
                data = citytemp$new_york,
                color = "red")
 

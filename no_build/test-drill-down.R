@@ -12,7 +12,7 @@
 #' @import dplyr
 #' 
 #' @export
-hc_add_serie_drilldown <- function(hc, df, percent = FALSE) {
+hc_add_series_drilldown <- function(hc, df, percent = FALSE) {
   
   # df <- sample(letters[1:5], prob = 1:5/sum(1:5), replace = TRUE, size = 20)
   if (is.character(df) | is.factor(df)) df <- data_frame(df)
@@ -42,7 +42,7 @@ hc_add_serie_drilldown <- function(hc, df, percent = FALSE) {
   
   # hc <- highchart()
   hc <- hc %>%
-    hc_add_serie(
+    hc_add_series(
       name = names(df)[1],
       colorByPoint =  TRUE,
       data = setNames(list.parse(ds), NULL)

@@ -14,7 +14,7 @@ tm <- treemap(GNI2010,
         palette = rev(viridis::viridis(5)))
 
 highchart() %>% 
-  hc_add_serie_treemap(tm, allowDrillToNode = TRUE) %>% 
+  hc_add_series_treemap(tm, allowDrillToNode = TRUE) %>% 
   hc_title(text = "GNI World Data") %>% 
   hc_subtitle(text = "Gross national income in dollars per country in 2010") %>% 
   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>

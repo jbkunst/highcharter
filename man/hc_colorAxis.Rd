@@ -31,7 +31,7 @@ hc <- highchart() \%>\%
   hc_title(text = "Simulated values by years and months") \%>\% 
   hc_xAxis(categories = month.abb) \%>\% 
   hc_yAxis(categories = 2016 - nyears + seq(nyears)) \%>\% 
-  hc_add_serie(name = "value", data = ds)
+  hc_add_series(name = "value", data = ds)
 
 hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
 

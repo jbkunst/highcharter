@@ -34,8 +34,8 @@
 #' 
 #' hc <- highchart() %>% 
 #'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london)
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london)
 #' 
 #' hc %>% 
 #'   hc_chart(type = "column",
@@ -72,7 +72,7 @@ hc_chart <- function(hc, ...) {
 #' require("dplyr")
 #' 
 #' highchart() %>% 
-#'   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
 #'                         type = "spline") %>% 
 #'   hc_xAxis(title = list(text = "x Axis at top"),
@@ -119,7 +119,7 @@ hc_yAxis  <- function(hc, ...) {
 #' require("dplyr")
 #' 
 #' highchart() %>% 
-#'   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
 #'                         type = "column") %>% 
 #'   hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
@@ -156,8 +156,8 @@ hc_subtitle <- function(hc, ...) {
 #' 
 #' highchart() %>% 
 #'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london) %>%
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london) %>%
 #'   hc_legend(align = "left", verticalAlign = "top",
 #'             layout = "vertical", x = 0, y = 100) 
 #'             
@@ -183,8 +183,8 @@ hc_legend <- function(hc, ...) {
 #' 
 #' highchart() %>% 
 #'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london) %>% 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london) %>% 
 #'   hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
 #'              headerFormat = "This is a custom header<br>",
 #'              shared = TRUE, borderWidth = 5)
@@ -226,8 +226,8 @@ hc_tooltip <- function(hc, ...) {
 #'                                lineColor = NULL
 #'                                )
 #'   )) %>%  
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london,
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london,
 #'                marker = list(fillColor = "black"))
 #' 
 #' 
@@ -235,7 +235,7 @@ hc_tooltip <- function(hc, ...) {
 #' 
 #' # override the `blue` option with the explicit parameter
 #' hc %>% 
-#'   hc_add_serie(name = "London",
+#'   hc_add_series(name = "London",
 #'                data = citytemp$new_york,
 #'                color = "red")
 #'
@@ -262,7 +262,7 @@ hc_plotOptions  <- function(hc, ...) {
 #' 
 #' highchart() %>% 
 #'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo, type = "bar") %>% 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo, type = "bar") %>% 
 #'   hc_credits(enabled = TRUE, text = "htmlwidgets.org",
 #'              href = "http://www.htmlwidgets.org/")
 #'              
@@ -297,7 +297,7 @@ hc_credits <- function(hc, ...) {
 #'   hc_title(text = "Simulated values by years and months") %>% 
 #'   hc_xAxis(categories = month.abb) %>% 
 #'   hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
-#'   hc_add_serie(name = "value", data = ds)
+#'   hc_add_series(name = "value", data = ds)
 #' 
 #' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
 #' 
@@ -337,8 +337,8 @@ hc_colorAxis  <- function(hc, ...) {
 #' 
 #' highchart() %>% 
 #'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london) %>% 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london) %>% 
 #'   hc_exporting(enabled = TRUE,
 #'                filename = "custom-file-name")
 #' 
@@ -362,17 +362,17 @@ hc_exporting  <- function(hc, ...) {
 #' 
 #' hc <- highchart() %>% 
 #'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_serie(name = "New York", data = citytemp$new_york) 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "New York", data = citytemp$new_york) 
 #' 
 #' hc 
 #' 
 #' hc %>% 
-#'   hc_add_serie(name = "London", data = citytemp$london, type = "area") %>% 
-#'   hc_rm_serie(name = "New York")
+#'   hc_add_series(name = "London", data = citytemp$london, type = "area") %>% 
+#'   hc_rm_series(name = "New York")
 #'
 #' @export
-hc_add_serie <- function(hc, ...) {
+hc_add_series <- function(hc, ...) {
   
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
   
@@ -384,9 +384,9 @@ hc_add_serie <- function(hc, ...) {
 #'
 #' @param name The serie's name to delete.
 #' 
-#' @rdname hc_add_serie
+#' @rdname hc_add_series
 #' @export
-hc_rm_serie <- function(hc, name = NULL) {
+hc_rm_series <- function(hc, name = NULL) {
   
   stopifnot(!is.null(name))
   

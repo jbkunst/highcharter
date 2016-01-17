@@ -114,8 +114,8 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 #' to get a very style of charts and highly customized (see http://www.highcharts.com/demo).
 #' 
 #' In the package there's some partial implementation of the HC API in R like `hc_title`, 
-#' `hc_add_serie`, `hc_xAxis`, and some shorcuts to made simples chart in R like 
-#' `hc_add_serie_scatter`, `hc_add_serie_scatter` by if you want 
+#' `hc_add_series`, `hc_xAxis`, and some shorcuts to made simples chart in R like 
+#' `hc_add_series_scatter`, `hc_add_series_scatter` by if you want 
 #' you can create your chart manually with all the requiriments what you need. That's the
 #' package offer.
 #' 
@@ -146,7 +146,7 @@ library("magrittr")
 
 hc <- highchart() %>% 
   hc_title(text = "A nice chart") %>% 
-  hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+  hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
                         26.5, 23.3, 18.3, 13.9, 9.6))
 
 hc
@@ -156,7 +156,7 @@ hc
 
 hc <- highchart()
 hc <- hc_title(hc, text = "A nice chart")
-hc <- hc_add_serie(hc, data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 
+hc <- hc_add_series(hc, data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 
                                 26.5, 23.3, 18.3, 13.9, 9.6))
 
 hc
@@ -177,7 +177,7 @@ hc <- hc %>%
               style = list(color = "#B71C1C", fontWeight = "bold")) %>% 
   hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) %>% 
-  hc_add_serie(name = "A another data", type = "column", color = "#1FA67A",
+  hc_add_series(name = "A another data", type = "column", color = "#1FA67A",
                dataLabels = list(align = "center", enabled = TRUE),
                data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
                         17.0, 16.6, 14.2, 10.3, 6.6, 4.8)) %>% 
@@ -207,9 +207,9 @@ citytemp
 
 hc <- highchart() %>% 
   hc_xAxis(categories = citytemp$month) %>% 
-  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-  hc_add_serie(name = "London", data = citytemp$london) %>% 
-  hc_add_serie(name = "Other city",
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+  hc_add_series(name = "London", data = citytemp$london) %>% 
+  hc_add_series(name = "Other city",
                data = (citytemp$tokyo + citytemp$london)/2)
 
 hc
@@ -268,18 +268,18 @@ hc %>%
              list(from = 25, to = htmlwidgets::JS("Infinity"), color = "rgba(100, 0, 0, 0.1)",
                   label = list(text = "This is a plotBand")))) 
 
-##' ## hc_add_serie and hc_rm_serie ####
+##' ## hc_add_series and hc_rm_series ####
 
 hc <- highchart() %>% 
   hc_xAxis(categories = citytemp$month) %>% 
-  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) %>% 
-  hc_add_serie(name = "New York", data = citytemp$new_york) 
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+  hc_add_series(name = "New York", data = citytemp$new_york) 
 
 hc 
 
 hc %>% 
-  hc_add_serie(name = "London", data = citytemp$london, type = "area") %>% 
-  hc_rm_serie(name = "New York")
+  hc_add_series(name = "London", data = citytemp$london, type = "area") %>% 
+  hc_rm_series(name = "New York")
 
 ##' ## hc_title, hc_subtitle, hc_credits and hc_legend, hc_tooltip, hc_exporting ####
 
@@ -307,26 +307,26 @@ hc %>%
 
 highchart() %>% 
   hc_title(text = "Simple scatter chart") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg)
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg)
 
 highchart() %>% 
   hc_title(text = "Scatter chart with color") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
                        color = mtcars$hp)
 
 highchart() %>% 
   hc_title(text = "Scatter chart with size") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
                        mtcars$drat)
 
 highchart() %>% 
   hc_title(text = "Scatter chart with size and color") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
                        mtcars$drat, mtcars$hp)
 
 highchart(height = 500) %>% 
   hc_title(text = "A complete example for Scatter") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
                        mtcars$drat, mtcars$hp,
                        rownames(mtcars),
                        dataLabels = list(
@@ -347,7 +347,7 @@ highchart(height = 500) %>%
 hc <- highchart()
 for (cyl in unique(mtcars$cyl)) {
   hc <- hc %>%
-    hc_add_serie_scatter(mtcars$wt[mtcars$cyl == cyl],
+    hc_add_series_scatter(mtcars$wt[mtcars$cyl == cyl],
                          mtcars$mpg[mtcars$cyl == cyl],
                          name = sprintf("Cyl %s", cyl),
                          showInLegend = TRUE)
@@ -360,19 +360,19 @@ hc
 data(economics, package = "ggplot2")
 
 highchart() %>% 
-  hc_add_serie_ts(economics$psavert, economics$date,
+  hc_add_series_ts(economics$psavert, economics$date,
                   name = "Personal Savings Rate")
 
-#' There's a `hc_add_serie_ts2` which recieve a `ts`object.
+#' There's a `hc_add_series_ts2` which recieve a `ts`object.
 
 highchart() %>% 
-  hc_add_serie_ts2(AirPassengers, color = "#26838E")
+  hc_add_series_ts2(AirPassengers, color = "#26838E")
 
 highchart() %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
-  hc_add_serie_ts2(fdeaths, name = "Female") %>%
-  hc_add_serie_ts2(mdeaths, name = "Male")
+  hc_add_series_ts2(fdeaths, name = "Female") %>%
+  hc_add_series_ts2(mdeaths, name = "Male")
 
 ##' ## Treemaps ####
 #'
@@ -389,7 +389,7 @@ tm <- treemap(GNI2010, index = c("continent", "iso3"),
               type = "value", palette = viridis(6))
 
 hc_tm <- highchart(height = 800) %>% 
-  hc_add_serie_treemap(tm, allowDrillToNode = TRUE,
+  hc_add_series_treemap(tm, allowDrillToNode = TRUE,
                        layoutAlgorithm = "squarified",
                        name = "tmdata") %>% 
   hc_title(text = "Gross National Income World Data") %>% 
@@ -399,7 +399,7 @@ hc_tm <- highchart(height = 800) %>%
 
 hc_tm
 
-hc_tm <- hc_rm_serie(hc_tm, name = "tmdata")
+hc_tm <- hc_rm_series(hc_tm, name = "tmdata")
 
 #' Change the type parameter.
 
@@ -408,7 +408,7 @@ tm <- treemap(GNI2010, index = c("continent", "iso3"),
               type = "comp", palette = rev(viridis(6)))
 
 hc_tm %>% 
-  hc_add_serie_treemap(tm, allowDrillToNode = TRUE,
+  hc_add_series_treemap(tm, allowDrillToNode = TRUE,
                        layoutAlgorithm = "squarified")
 
 ##' ## Labels & Values ####
@@ -420,9 +420,9 @@ highchart() %>%
   hc_title(text = "This is a bar graph describing my favorite pies
                    including a pie chart describing my favorite bars") %>%
   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
-  hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
+  hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
                              colorByPoint = TRUE, type = "column") %>% 
-  hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
+  hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
                              name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
                              size = 100, dataLabels = list(enabled = FALSE)) %>% 
@@ -440,7 +440,7 @@ hc <- highchart() %>%
   hc_xAxis(title = list(text = "Weight")) %>% 
   hc_yAxis(title = list(text = "Miles/gallon")) %>% 
   hc_chart(zoomType = "xy") %>% 
-  hc_add_serie_scatter(mtcars$wt, mtcars$mpg,
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
                        mtcars$drat, mtcars$hp,
                        rownames(mtcars),
                        dataLabels = list(
@@ -577,11 +577,11 @@ highchart() %>%
                               }
                             }"),
              useHTML = TRUE) %>% 
-  hc_add_serie(name = "Rainfall", type = "column",
+  hc_add_series(name = "Rainfall", type = "column",
                data = rainfall, yAxis = 1) %>% 
-  hc_add_serie(name = "Temperature", type = "spline",
+  hc_add_series(name = "Temperature", type = "spline",
                data = temperature) %>% 
-  hc_add_serie(name = "Sunshine", type = "pie",
+  hc_add_series(name = "Sunshine", type = "pie",
                data = list(list(y = 2020, name = "Sunshine hours",
                                 sliced = TRUE, color = col1),
                            list(y = 6740, name = "Non sunshine hours (including night)",
@@ -605,7 +605,7 @@ hc <- highchart() %>%
   hc_title(text = "Simulated values by years and months") %>% 
   hc_xAxis(categories = month.abb) %>% 
   hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
-  hc_add_serie(name = "value", data = ds)
+  hc_add_series(name = "value", data = ds)
 
 hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
 
@@ -630,7 +630,7 @@ ds <- setNames(rlist::list.parse(df), NULL)
 
 highchart() %>% 
   hc_title(text = "A simple Treemap") %>% 
-  hc_add_serie(data = ds, type = "treemap", colorByPoint = TRUE) 
+  hc_add_series(data = ds, type = "treemap", colorByPoint = TRUE) 
 
 ##' ## Creating a chart from a list of parameters ####
 
