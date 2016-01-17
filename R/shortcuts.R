@@ -16,18 +16,18 @@
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
 #'   hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
-#'   hc_add_serie_ts2(AirPassengers, name = "passengers") %>%
+#'   hc_add_series_ts2(AirPassengers, name = "passengers") %>%
 #'   hc_tooltip(pointFormat =  '{point.y} passengers')
 #' 
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
-#'   hc_add_serie_ts2(fdeaths, name = "Female") %>%
-#'   hc_add_serie_ts2(mdeaths, name = "Male")
+#'   hc_add_series_ts2(fdeaths, name = "Female") %>%
+#'   hc_add_series_ts2(mdeaths, name = "Male")
 #'   
 #' @importFrom stats is.ts time
 #' 
 #' @export 
-hc_add_serie_ts2 <- function(hc, ts, ...) {
+hc_add_series_ts2 <- function(hc, ts, ...) {
   
   assertthat::assert_that(is.ts(ts), .is_highchart(hc))
   
@@ -37,7 +37,7 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
   
   values <- as.vector(ts)
   
-  hc %>% hc_add_serie_ts(values, dates, ...)
+  hc %>% hc_add_series_ts(values, dates, ...)
     
 }
 
@@ -59,7 +59,7 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #' require("ggplot2")
 #' data(economics, package = "ggplot2")
 #' 
-#' hc_add_serie_ts(hc = highchart(),
+#' hc_add_series_ts(hc = highchart(),
 #'                 values = economics$psavert, dates = economics$date,
 #'                 name = "Personal Savings Rate")
 #' }
@@ -67,7 +67,7 @@ hc_add_serie_ts2 <- function(hc, ts, ...) {
 #' @importFrom zoo as.Date
 #' 
 #' @export 
-hc_add_serie_ts <- function(hc, values, dates, ...) {
+hc_add_series_ts <- function(hc, values, dates, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
   
@@ -83,7 +83,7 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
   
   hc %>% 
     hc_xAxis(type = "datetime") %>% 
-    hc_add_serie(marker = list(enabled = FALSE), data = ds, ...)
+    hc_add_series(marker = list(enabled = FALSE), data = ds, ...)
   
 }
 
@@ -114,15 +114,15 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #'   hc_xAxis(title = list(text = "Weight")) %>% 
 #'   hc_yAxis(title = list(text = "Miles/gallon"))
 #'    
-#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg)
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
 #' 
-#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
 #'                      mtcars$drat)
 #'                      
-#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
 #'                      mtcars$drat, mtcars$cyl)
 #'                      
-#' hc_add_serie_scatter(hc, mtcars$wt, mtcars$mpg,
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
 #'                      mtcars$drat, mtcars$hp,
 #'                      rownames(mtcars),
 #'                      dataLabels = list(
@@ -145,7 +145,7 @@ hc_add_serie_ts <- function(hc, values, dates, ...) {
 #' @importFrom stats ecdf
 #' 
 #' @export 
-hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
+hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
                                  showInLegend = FALSE, viridis.option = "D", ...) {
   
   assertthat::assert_that(.is_highchart(hc), length(x) == length(y),
@@ -186,7 +186,7 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
   
   type <- ifelse(!is.null(z), "bubble", "scatter")
   
-  hc %>% hc_add_serie(data = ds, type = type, showInLegend = showInLegend, ...)
+  hc %>% hc_add_series(data = ds, type = type, showInLegend = showInLegend, ...)
   
 }
 
@@ -212,9 +212,9 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
 #'   hc_title(text = "This is a bar graph describing my favorite pies
 #'                    including a pie chart describing my favorite bars") %>%
 #'   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
-#'   hc_add_serie_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
+#'   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
 #'                              colorByPoint = TRUE, type = "column") %>% 
-#'   hc_add_serie_labels_values(favorite_bars$bar, favorite_bars$percent,
+#'   hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
 #'                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
 #'                              name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
 #'                              size = 100, dataLabels = list(enabled = FALSE)) %>% 
@@ -226,7 +226,7 @@ hc_add_serie_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
 #' 
 #' 
 #' @export
-hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
+hc_add_series_labels_values <- function(hc, labels, values, colors = NULL, ...) {
   
   assertthat::assert_that(.is_highchart(hc),
                           is.numeric(values),
@@ -243,7 +243,7 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
   
   ds <- setNames(rlist::list.parse(df), NULL)
   
-  hc <- hc %>% hc_add_serie(data = ds, ...)
+  hc <- hc %>% hc_add_series(data = ds, ...)
   
   hc
                       
@@ -275,7 +275,7 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
 #'               draw = FALSE)
 #' 
 #' highchart(height = 800) %>% 
-#'   hc_add_serie_treemap(tm, allowDrillToNode = TRUE,
+#'   hc_add_series_treemap(tm, allowDrillToNode = TRUE,
 #'                        layoutAlgorithm = "squarified",
 #'                        name = "tmdata") %>% 
 #'    hc_title(text = "Gross National Income World Data") %>% 
@@ -290,7 +290,7 @@ hc_add_serie_labels_values <- function(hc, labels, values, colors = NULL, ...) {
 #' @importFrom purrr map_if map
 #' 
 #' @export 
-hc_add_serie_treemap <- function(hc, tm, ...) {
+hc_add_series_treemap <- function(hc, tm, ...) {
   
   assertthat::assert_that(.is_highchart(hc),
                           is.list(tm))
@@ -333,6 +333,6 @@ hc_add_serie_treemap <- function(hc, tm, ...) {
     x
   })
   
-  hc %>% hc_add_serie(data = ds, type = "treemap", ...)
+  hc %>% hc_add_series(data = ds, type = "treemap", ...)
   
 }

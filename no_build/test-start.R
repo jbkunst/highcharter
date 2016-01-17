@@ -9,14 +9,14 @@ hc <- highchart(debug = TRUE) %>%
   hc_subtitle(text = "This is Legen-Wait For It... DARY! LEGENDARY!") %>% 
   hc_chart(type = "column") %>% 
   hc_xAxis(categories = c("Apples", "Oranges", "Pears", "Grapes", "Bananas")) %>% 
-  hc_add_serie(name = "Ted Mosby", data = c(3, 4, 4, 2, 5))
+  hc_add_series(name = "Ted Mosby", data = c(3, 4, 4, 2, 5))
 
 hc
 
 hc <- hc %>% 
-  hc_add_serie(name = "Barney Stinson", data = c(5, 3, 4, 7, 2),
+  hc_add_series(name = "Barney Stinson", data = c(5, 3, 4, 7, 2),
                dataLabels = list(align = "center", enabled = TRUE)) %>% 
-  hc_add_serie(name = "Marshall Eriksen", data = c(2, 2, 3, 2, 1))
+  hc_add_series(name = "Marshall Eriksen", data = c(2, 2, 3, 2, 1))
 
 hc
 

@@ -22,8 +22,8 @@ data(citytemp)
 
 highchart() \%>\% 
   hc_xAxis(categories = citytemp$month) \%>\% 
-  hc_add_serie(name = "Tokyo", data = citytemp$tokyo) \%>\% 
-  hc_add_serie(name = "London", data = citytemp$london) \%>\% 
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) \%>\% 
+  hc_add_series(name = "London", data = citytemp$london) \%>\% 
   hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
              headerFormat = "This is a custom header<br>",
              shared = TRUE, borderWidth = 5)

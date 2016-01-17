@@ -11,7 +11,7 @@
 #' require("dplyr")
 #' 
 #' hc <- highchart(debug = TRUE) %>% 
-#'   hc_add_serie_scatter(mtcars$wt, mtcars$mpg, color = mtcars$cyl) %>% 
+#'   hc_add_series_scatter(mtcars$wt, mtcars$mpg, color = mtcars$cyl) %>% 
 #'   hc_chart(zoomType = "xy") %>% 
 #'   hc_title(text = "Motor Trend Car Road Tests") %>% 
 #'   hc_subtitle(text = "Motor Trend Car Road Tests") %>% 
@@ -71,7 +71,7 @@ hc_theme <- function(...){
 #' require("dplyr")
 #' 
 #' highchart() %>% 
-#'   hc_add_serie(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
 #'                         type = "column") %>% 
 #'   hc_add_theme(hc_theme_sandsignika())
