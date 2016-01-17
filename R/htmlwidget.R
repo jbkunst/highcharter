@@ -16,7 +16,7 @@
 #'
 #' @export
 highchart <- function(hc_opts = list(), theme = NULL,
-                      width = "100%", height = "100%",
+                      width = NULL, height = NULL,
                       debug = FALSE) {
   
   opts <- getOption("highcharter.options", list())
@@ -42,7 +42,11 @@ highchart <- function(hc_opts = list(), theme = NULL,
     x,
     width = width,
     height = height,
-    package = "highcharter"
+    package = "highcharter",
+    sizingPolicy = htmlwidgets::sizingPolicy(defaultWidth = "100%",
+                                             knitr.figure = FALSE,
+                                             knitr.defaultWidth = "100%",
+                                             browser.fill = TRUE)
   )
 }
 
