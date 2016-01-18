@@ -391,3 +391,23 @@ hc_rm_series <- function(hc, name = NULL) {
   hc
   
 }
+
+#' @rdname hc_add_series
+#' @export
+hc_add_serie <- function(hc, ...) {
+
+  .Deprecated("hc_add_series")
+  
+  hc_add_series(hc, ...)
+  
+}
+
+#' @rdname hc_add_series
+#' @export
+hc_rm_serie <- function(hc, ...) {
+  
+  .Deprecated("hc_add_series")
+  
+  hc_rm_series(hc, ...)
+  
+}

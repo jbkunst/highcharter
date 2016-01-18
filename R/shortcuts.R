@@ -1,44 +1,3 @@
-#' Shorcut for create/add time series charts from a ts object
-#'
-#' This function add a time series to a \code{highchart} object
-#' from a \code{ts} object. 
-#' 
-#' This function \bold{modify} the type of \code{chart} to \code{datetime}
-#'  
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ts A time series object.
-#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
-#' 
-#' @examples 
-#' 
-#' highchart() %>% 
-#'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
-#'   hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
-#'   hc_add_series_ts2(AirPassengers, name = "passengers") %>%
-#'   hc_tooltip(pointFormat =  '{point.y} passengers')
-#' 
-#' highchart() %>% 
-#'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
-#'   hc_add_series_ts2(fdeaths, name = "Female") %>%
-#'   hc_add_series_ts2(mdeaths, name = "Male")
-#'   
-#' @importFrom stats is.ts time
-#' 
-#' @export 
-hc_add_series_ts2 <- function(hc, ts, ...) {
-  
-  assertthat::assert_that(is.ts(ts), .is_highchart(hc))
-  
-  # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
-  dates <- time(ts) %>% 
-    zoo::as.Date()
-  
-  values <- as.vector(ts)
-  
-  hc %>% hc_add_series_ts(values, dates, ...)
-    
-}
-
 #' Shorcut for create/add time series from values and dates
 #'
 #' This function add a time series to a \code{highchart} object. 
@@ -82,6 +41,67 @@ hc_add_series_ts <- function(hc, values, dates, ...) {
   hc %>% 
     hc_xAxis(type = "datetime") %>% 
     hc_add_series(marker = list(enabled = FALSE), data = ds, ...)
+  
+}
+
+#' @rdname hc_add_series_ts
+#' @export
+hc_add_serie_ts <- function(hc, ...) {
+  
+  .Deprecated("hc_add_series_ts")
+  
+  hc_add_series_ts(hc, ...)
+  
+}
+
+#' Shorcut for create/add time series charts from a ts object
+#'
+#' This function add a time series to a \code{highchart} object
+#' from a \code{ts} object. 
+#' 
+#' This function \bold{modify} the type of \code{chart} to \code{datetime}
+#'  
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ts A time series object.
+#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' 
+#' @examples 
+#' 
+#' highchart() %>% 
+#'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
+#'   hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
+#'   hc_add_series_ts2(AirPassengers, name = "passengers") %>%
+#'   hc_tooltip(pointFormat =  '{point.y} passengers')
+#' 
+#' highchart() %>% 
+#'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
+#'   hc_add_series_ts2(fdeaths, name = "Female") %>%
+#'   hc_add_series_ts2(mdeaths, name = "Male")
+#'   
+#' @importFrom stats is.ts time
+#' 
+#' @export 
+hc_add_series_ts2 <- function(hc, ts, ...) {
+  
+  assertthat::assert_that(is.ts(ts), .is_highchart(hc))
+  
+  # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
+  dates <- time(ts) %>% 
+    zoo::as.Date()
+  
+  values <- as.vector(ts)
+  
+  hc %>% hc_add_series_ts(values, dates, ...)
+  
+}
+
+#' @rdname hc_add_series_ts2
+#' @export
+hc_add_serie_ts2 <- function(hc, ...) {
+  
+  .Deprecated("hc_add_series_ts2")
+  
+  hc_add_series_ts2(hc, ...)
   
 }
 
@@ -185,6 +205,16 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
   
 }
 
+#' @rdname hc_add_series_scatter
+#' @export
+hc_add_serie_scatter <- function(hc, ...) {
+  
+  .Deprecated("hc_add_series_scatter")
+  
+  hc_add_series_scatter(hc, ...)
+  
+}
+
 #' Shorcut for add series for pie, bar and column charts
 #'
 #' This function add data to plot pie, bar and column charts.
@@ -241,6 +271,16 @@ hc_add_series_labels_values <- function(hc, labels, values, colors = NULL, ...) 
   
   hc
                       
+}
+
+#' @rdname hc_add_series_labels_values
+#' @export
+hc_add_serie_labels_values <- function(hc, ...) {
+  
+  .Deprecated("hc_add_series_labels_values")
+  
+  hc_add_series_labels_values(hc, ...)
+  
 }
 
 #' Shorcut for create treemaps
@@ -328,5 +368,15 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   })
   
   hc %>% hc_add_series(data = ds, type = "treemap", ...)
+  
+}
+
+#' @rdname hc_add_series_treemap
+#' @export
+hc_add_serie_treemap <- function(hc, ...) {
+  
+  .Deprecated("hc_add_series_treemap")
+  
+  hc_add_series_treemap(hc, ...)
   
 }
