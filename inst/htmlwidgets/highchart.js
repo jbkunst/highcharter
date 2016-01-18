@@ -28,11 +28,14 @@ HTMLWidgets.widget({
       x.fonts = ((typeof(x.fonts) == "string") ? [x.fonts] : x.fonts);
     
       x.fonts.forEach(function(s){
-        Highcharts.createElement('link', {
-        href: 'https://fonts.googleapis.com/css?family=' + s,
-        rel: 'stylesheet',
-        type: 'text/css'
-        }, null, document.getElementsByTagName('head')[0]);
+        
+        var urlfont = 'https://fonts.googleapis.com/css?family=' + s;
+        
+        /* http://stackoverflow.com/questions/4724606 */
+        if (!$("link[href='" + urlfont + "']").length) {
+          $('<link href="' + urlfont + '" rel="stylesheet" type="">').appendTo("head");
+          
+        }
         
       });
       

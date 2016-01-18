@@ -142,7 +142,6 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
 #' Let's start doing a simple column chart:
 #' 
 library("highcharter")
-library("magrittr")
 
 hc <- highchart() %>% 
   hc_title(text = "A nice chart") %>% 
