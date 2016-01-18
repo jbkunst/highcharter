@@ -39,6 +39,11 @@
       ),
       exporting = list(
         enabled = FALSE
+      ),
+      plotOptions = list(
+        series = list(
+          turboThreshold = 0
+        )
       )
     )
   ))

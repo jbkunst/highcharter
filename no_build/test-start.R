@@ -2,8 +2,6 @@ library("highcharter")
 
 #### ex 0 ####
 rm(list = ls())
-library("magrittr")
-
 hc <- highchart(debug = TRUE) %>%
   hc_title(text = "Fruit Consumtion") %>% 
   hc_subtitle(text = "This is Legen-Wait For It... DARY! LEGENDARY!") %>% 
