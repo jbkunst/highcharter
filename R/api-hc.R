@@ -411,3 +411,38 @@ hc_rm_serie <- function(hc, ...) {
   hc_rm_series(hc, ...)
   
 }
+
+#' Adding scrollbar options to highstock objects
+#' 
+#' Options regarding the scrollbar which is a means of panning 
+#' over the X axis of a chart.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#scrollbar}. 
+#' 
+#' @export
+
+hc_scrollbar  <- function(hc, ...) {
+  
+  .hc_opt(hc, "scrollbar", ...)
+  
+}
+
+#' Adding scrollbar options to highstock objects
+#' 
+#' Options to edit the range selector which is The range selector is a tool 
+#' for selecting ranges to display within the chart. It provides buttons 
+#' to select preconfigured ranges in the chart, like 1 day, 1 week, 1 month 
+#' etc. It also provides input boxes where min and max dates can be manually
+#' input.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#rangeSelector}. 
+#' 
+#' @export
+hc_rangeSelector <- function(hc, ...) {
+  
+  .hc_opt(hc, "rangeSelector", ...)
+  
+}
+

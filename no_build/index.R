@@ -101,6 +101,10 @@
 options(digits = 3, knitr.table.format = "markdown")
 library("printr")
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
+#' 
+#' **This page could contain development features**. Please be careful
+#' and check what version you are using. Thanks.
+#' 
 
 ##' # Introduction ####
 #' 
@@ -354,7 +358,12 @@ for (cyl in unique(mtcars$cyl)) {
 
 hc
 
-##' ## Time Series ####
+##' ## Time Series & Highstock ####
+#' 
+#' If you use time series object with Hicharts you can
+#' enabled the Highstock which include sophisticated navigation
+#' options like a small navigator series, preset date ranges, 
+#' date picker, scrolling and panning.
 
 data(economics, package = "ggplot2")
 
@@ -362,14 +371,20 @@ highchart() %>%
   hc_add_series_ts(economics$psavert, economics$date,
                   name = "Personal Savings Rate")
 
+highchart(highstock = TRUE) %>% 
+  hc_tooltip(valueDecimals = 2) %>% 
+  hc_add_series_ts(economics$psavert, economics$date,
+                   name = "Personal Savings Rate")
+
 #' There's a `hc_add_series_ts2` which recieve a `ts`object.
 
-highchart() %>% 
-  hc_add_series_ts2(AirPassengers, color = "#26838E")
+highchart() %>%
+  hc_add_series_ts2(AirPassengers, color = "#26838E") 
 
-highchart() %>% 
+highchart(highstock = TRUE) %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
+  hc_rangeSelector(inputEnabled = FALSE) %>% 
   hc_add_series_ts2(fdeaths, name = "Female") %>%
   hc_add_series_ts2(mdeaths, name = "Male")
 

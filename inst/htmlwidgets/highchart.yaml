@@ -7,7 +7,7 @@ dependencies:
     version: 4.2.1
     src: "htmlwidgets/lib/highcharts-4.2.1"
     script:
-    - highcharts.js
+    - highstock.js
     - highcharts-more.js
     - highcharts-3d.js
     - modules/exporting.js

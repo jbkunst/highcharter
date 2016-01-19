@@ -75,8 +75,7 @@ hc_theme <- function(...){
 #' @export
 hc_add_theme <- function(hc, hc_thm){
   
-  assert_that(.is_highchart(hc),
-              .is_hc_theme(hc_thm))
+  assert_that(.is_highchart(hc), .is_hc_theme(hc_thm))
   
   hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc_thm)))
   

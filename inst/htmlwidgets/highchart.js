@@ -15,7 +15,6 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
     
     if(x.debug) {
-      
       console.log(el);
       console.log("hc_opts", x.hc_opts);
       console.log("theme", x.theme);
@@ -61,7 +60,11 @@ HTMLWidgets.widget({
     
     Highcharts.setOptions(x.conf_opts);
     
-    $("#" + el.id).highcharts(x.hc_opts);
+    if(x.highstock) {
+      $("#" + el.id).highcharts('StockChart', x.hc_opts);  
+    } else {
+      $("#" + el.id).highcharts(x.hc_opts);
+    }
     
   },
 

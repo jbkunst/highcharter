@@ -7,6 +7,8 @@
 #' @param hc_opts A \code{list} object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
 #' @param theme A \code{hc_theme} class object
+#' @param highstock A boolean value to set if use Highstock instead of
+#'    Highcharts.
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param debug A boolean value if you want to print in the browser console the 
@@ -16,6 +18,7 @@
 #'
 #' @export
 highchart <- function(hc_opts = list(), theme = NULL,
+                      highstock = FALSE,
                       width = NULL, height = NULL,
                       debug = FALSE) {
   
@@ -24,6 +27,8 @@ highchart <- function(hc_opts = list(), theme = NULL,
   if (identical(hc_opts, list()))
     hc_opts <- opts$chart
   
+  unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme))) 
+  
   opts$chart <- NULL
   
   # forward options using x
@@ -31,10 +36,11 @@ highchart <- function(hc_opts = list(), theme = NULL,
     hc_opts = hc_opts,
     theme = theme,
     conf_opts = opts,
-    debug = debug,
-    fonts = unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
+    highstock = highstock,
+    fonts = unfonts,
+    debug = debug
+    
   )
-  
   
   # create widget
   htmlwidgets::createWidget(
