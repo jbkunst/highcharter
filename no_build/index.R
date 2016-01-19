@@ -367,14 +367,22 @@ hc
 
 data(economics, package = "ggplot2")
 
+#' Example just using highcharts.
+#' 
+
 highchart() %>% 
   hc_add_series_ts(economics$psavert, economics$date,
                   name = "Personal Savings Rate")
 
+#' Same data but using highstock instead of highcharts. 
+
 highchart(highstock = TRUE) %>% 
+  hc_title(text = "US economic time series") %>% 
+  hc_subtitle(text = "This dataset was produced from US economic time series data available") %>% 
   hc_tooltip(valueDecimals = 2) %>% 
-  hc_add_series_ts(economics$psavert, economics$date,
-                   name = "Personal Savings Rate")
+  hc_add_series_ts(economics$psavert, economics$date, name = "Personal savings rate") %>% 
+  hc_add_series_ts(economics$uempmed, economics$date, name = "Median duration of unemployment") %>% 
+  hc_add_theme(hc_theme_sandsignika()) # see more about themes below.
 
 #' There's a `hc_add_series_ts2` which recieve a `ts`object.
 
