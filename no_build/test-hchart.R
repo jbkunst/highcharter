@@ -18,6 +18,17 @@ x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
 x <- diamonds$cut
 
 
+x <- acf(AirPassengers)
+class(x)
+
+x <- dist(mtcars)
+class(x)
+dsm <- as.data.frame(as.matrix(x))
+dsm <- cbind(e1 = names(dsm), dsm)
+dsm <- dsm %>% tidyr::gather(e1, dist)
+head(dsm)
+
+
 
 #' ## Multivariate Time Series
 x <- cbind(mdeaths, fdeaths)
