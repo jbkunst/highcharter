@@ -47,23 +47,22 @@ str_to_id <- function(x) {
 
 #' Date to Timesstamps
 #' 
-#' Turn a date vector to \code{timestamp} format
+#' Turn a date time vector to \code{timestamp} format
 #' 
-#' @param x Dates vector
+#' @param dt Date or datetime vector
 #' 
 #' @examples 
 #' 
-#' date_to_timestamp(as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d"))
+#' datetime_to_timestamp(dt = as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d"))
 #' 
 #' @export
-date_to_timestamp <- function(x) {
+datetime_to_timestamp <- function(dt) {
   
   # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts 
-  assertthat::assert_that(assertthat::is.date(x))
+  assertthat::assert_that(assertthat::is.date(dt) | assertthat::is.time(dt))
   
-  tmstmp <- x %>% 
-    zoo::as.Date() %>% 
-    as.POSIXct() %>% 
+  tmstmp <- dt %>% 
+    as.POSIXct(dt) %>% 
     as.numeric() 
   
   tmstmp <- 1000 * tmstmp

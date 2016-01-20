@@ -396,9 +396,8 @@ highchart() %>%
 highchart(highstock = TRUE) %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
-  hc_rangeSelector(inputEnabled = FALSE) %>% 
   hc_add_series_ts2(fdeaths, name = "Female") %>%
-  hc_add_series_ts2(mdeaths, name = "Male")
+  hc_add_series_xts(as.xts(mdeaths), name = "Male")
 
 
 ##' ### `xts` objects and `quantmod` package ####
@@ -413,8 +412,8 @@ highchart() %>%
   hc_add_series_ohlc(y)
 
 
-usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
-eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
+usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
+eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
 
 
 hc <- highchart(highstock = TRUE) %>% 
@@ -423,8 +422,7 @@ hc <- highchart(highstock = TRUE) %>%
 
 hc
 
-dates <- as.Date(c("2015-05-08", "2015-09-12"),
-                 format = "%Y-%m-%d")
+dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
 
 hc %>% 
   hc_add_series_flags(dates,
@@ -432,6 +430,8 @@ hc %>%
                       text = c("This is event 1",
                                "This is the event 2"),
                       id = "usdjpy") %>% 
+  hc_rangeSelector(inputEnabled = FALSE) %>% 
+  hc_scrollbar(enabled = FALSE) %>% 
   hc_add_theme(hc_theme_gridlight())
 
 ##' ## Treemaps ####

@@ -28,7 +28,7 @@ hc_add_series_ts <- function(hc, values, dates, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
   
-  timestamps <- date_to_timestamp(dates)
+  timestamps <- datetime_to_timestamp(dates)
   
   ds <- list.parse2(data.frame(timestamps, values))
   
@@ -388,7 +388,9 @@ hc_add_serie_treemap <- function(hc, ...) {
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples   
-#'   
+#'
+#' \dontrun{
+#'    
 #' library("quantmod")
 #'
 #' x <- getSymbols("AAPL", auto.assign = FALSE)
@@ -397,7 +399,8 @@ hc_add_serie_treemap <- function(hc, ...) {
 #' highchart() %>% 
 #'   hc_add_series_ohlc(x) %>% 
 #'   hc_add_series_ohlc(y)
-#'
+#'   
+#' }
 #'   
 #' @importFrom quantmod is.OHLC
 #' @importFrom stringr str_extract
@@ -408,7 +411,7 @@ hc_add_series_ohlc <- function(hc, x, ...){
   
   hc$x$highstock <- TRUE
   
-  time <- date_to_timestamp(time(x))
+  time <- datetime_to_timestamp(time(x))
   
   xdf <- cbind(time, as.data.frame(x))
   
@@ -449,6 +452,8 @@ hc_add_series_ohlc <- function(hc, x, ...){
 hc_add_series_xts <- function(hc, x, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.xts(x))
+  
+  hc$x$highstock <- TRUE
   
   hc %>% hc_add_series_ts2(ts = x,
                            name = str_replace(names(x), "\\.", " to "),
@@ -493,7 +498,7 @@ hc_add_series_flags <- function(hc, dates,
   
   assertthat::assert_that(.is_highchart(hc), is.date(dates))
   
-  dfflags <- data_frame(x = date_to_timestamp(dates),
+  dfflags <- data_frame(x = datetime_to_timestamp(dates),
                         title = title, text = text)
   
   dsflags <- setNames(rlist::list.parse(dfflags), NULL)

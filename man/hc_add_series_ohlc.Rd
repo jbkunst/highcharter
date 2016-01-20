@@ -20,7 +20,9 @@ obtaining by \code{getSymbols} function from the  \pkg{quantmod}.
 }
 \examples{
   
-  
+
+\dontrun{
+   
 library("quantmod")
 
 x <- getSymbols("AAPL", auto.assign = FALSE)
@@ -29,7 +31,8 @@ y <- getSymbols("SPY", auto.assign = FALSE)
 highchart() \%>\% 
   hc_add_series_ohlc(x) \%>\% 
   hc_add_series_ohlc(y)
-
+  
+}
   
 }
 
