@@ -23,4 +23,6 @@ Imports:
     dplyr,
     stringr,
     plyr,
-    viridisLite
+    viridisLite,
+    xts,
+    quantmod

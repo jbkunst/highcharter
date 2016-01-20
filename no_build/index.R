@@ -100,7 +100,7 @@
 #+ echo=FALSE
 options(digits = 3, knitr.table.format = "markdown")
 library("printr")
-knitr::opts_chunk$set(collapse = TRUE, warning = FALSE)
+knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 #' 
 #' **This page could contain development features**. Please be careful
 #' and check what version you are using. Thanks.
@@ -358,7 +358,7 @@ for (cyl in unique(mtcars$cyl)) {
 
 hc
 
-##' ## Time Series & Highstock ####
+##' ## Time Series ####
 #' 
 #' If you use time series object with Hicharts you can
 #' enabled the Highstock which include sophisticated navigation
@@ -367,7 +367,11 @@ hc
 
 data(economics, package = "ggplot2")
 
-#' Example just using highcharts.
+#' Example just using highcharts:
+#' 
+#' - `hc_add_series_ts` needs to arguments, a vector of values
+#'   and a dates
+#' - `hc_add_series_ts2` needs only a ts object.
 #' 
 
 highchart() %>% 
@@ -395,6 +399,40 @@ highchart(highstock = TRUE) %>%
   hc_rangeSelector(inputEnabled = FALSE) %>% 
   hc_add_series_ts2(fdeaths, name = "Female") %>%
   hc_add_series_ts2(mdeaths, name = "Male")
+
+
+##' ### `xts` objects and `quantmod` package ####
+
+require("quantmod")
+
+x <- getSymbols("AAPL", auto.assign = FALSE)
+y <- getSymbols("SPY", auto.assign = FALSE)
+
+highchart() %>% 
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y)
+
+
+usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
+
+
+hc <- highchart(highstock = TRUE) %>% 
+  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+  hc_add_series_xts(eurkpw, id = "eurkpw")
+
+hc
+
+dates <- as.Date(c("2015-05-08", "2015-09-12"),
+                 format = "%Y-%m-%d")
+
+hc %>% 
+  hc_add_series_flags(dates,
+                      title = c("E1", "E2"), 
+                      text = c("This is event 1",
+                               "This is the event 2"),
+                      id = "usdjpy") %>% 
+  hc_add_theme(hc_theme_gridlight())
 
 ##' ## Treemaps ####
 #'

@@ -28,13 +28,7 @@ hc_add_series_ts <- function(hc, values, dates, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
   
-  timestamps <- dates %>% 
-    zoo::as.Date() %>%
-    as.POSIXct() %>% 
-    as.numeric()
-  
-  # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts  
-  timestamps <- 1000 * timestamps
+  timestamps <- date_to_timestamp(dates)
   
   ds <- list.parse2(data.frame(timestamps, values))
   
@@ -79,11 +73,12 @@ hc_add_serie_ts <- function(hc, ...) {
 #'   hc_add_series_ts2(mdeaths, name = "Male")
 #'   
 #' @importFrom stats is.ts time
+#' @importFrom xts is.xts
 #' 
 #' @export 
 hc_add_series_ts2 <- function(hc, ts, ...) {
   
-  assertthat::assert_that(is.ts(ts), .is_highchart(hc))
+  assertthat::assert_that(is.ts(ts) | is.xts(ts), .is_highchart(hc))
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
   dates <- time(ts) %>% 
@@ -285,7 +280,7 @@ hc_add_serie_labels_values <- function(hc, ...) {
 
 #' Shorcut for create treemaps
 #'
-#' This function helps to create hicharts treemaps from \code{treemap} objects
+#' This function helps to create higcharts treemaps from \code{treemap} objects
 #' from the package \code{treemap}.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -380,3 +375,130 @@ hc_add_serie_treemap <- function(hc, ...) {
   hc_add_series_treemap(hc, ...)
   
 }
+
+#' Shorcut for create candlestick charts
+#'
+#' This function helps to create candlestick from \code{xts} objects
+#' obtaining by \code{getSymbols} function from the  \pkg{quantmod}.
+#' 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param x A \code{OHLC} object from the \pkg{quantmod} package.
+#' @param ... Aditional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   
+#' @examples   
+#'   
+#' library("quantmod")
+#'
+#' x <- getSymbols("AAPL", auto.assign = FALSE)
+#' y <- getSymbols("SPY", auto.assign = FALSE)
+#' 
+#' highchart() %>% 
+#'   hc_add_series_ohlc(x) %>% 
+#'   hc_add_series_ohlc(y)
+#'
+#'   
+#' @importFrom quantmod is.OHLC
+#' @importFrom stringr str_extract
+#' @export
+hc_add_series_ohlc <- function(hc, x, ...){
+  
+  assertthat::assert_that(.is_highchart(hc), is.OHLC(x))
+  
+  hc$x$highstock <- TRUE
+  
+  time <- date_to_timestamp(time(x))
+  
+  xdf <- cbind(time, as.data.frame(x))
+  
+  xds <- list.parse2(xdf)
+  
+  hc <- hc %>% hc_add_series(data = xds,
+                             name = str_extract(names(x)[1], "^[A-Za-z]+"),
+                             type = "candlestick")
+  
+  hc
+  
+}
+
+#' Shorcut for create highstock chart from \code{xts} object
+#'
+#' This function helps to create highstock charts from \code{xts} objects
+#' obtaining by \code{getSymbols} function from the  \pkg{quantmod}.
+#' 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param x A \code{xts} object from the \pkg{quantmod} package.
+#' @param ... Aditional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   
+#' @examples 
+#' 
+#' library("quantmod")
+#' 
+#' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+#' eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
+#' 
+#' highchart(highstock = TRUE) %>% 
+#'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+#'   hc_add_series_xts(eurkpw, id = "eurkpw")
+#' 
+#' @importFrom xts is.xts
+#' @export
+hc_add_series_xts <- function(hc, x, ...) {
+  
+  assertthat::assert_that(.is_highchart(hc), is.xts(x))
+  
+  hc %>% hc_add_series_ts2(ts = x,
+                           name = str_replace(names(x), "\\.", " to "),
+                           ...)
+  
+}
+
+#' Shorcut for add flags to highstock chart
+#'
+#' This function helps to add flags highstock charts created from \code{xts} objects.
+#' 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param dates Date vector.
+#' @param title A character vector with titles.
+#' @param text A character vector with the description.
+#' @param id The name of the series to add the flags. A previous series
+#'   must be added whith this \code{id}. 
+#' @param ... Aditional shared arguments for the *flags* data series
+#'   (\url{http://api.highcharts.com/highstock#plotOptions.flags})
+#'   
+#' @examples
+#' 
+#' library("quantmod")
+#' 
+#' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+#' 
+#' dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
+# 
+#' highchart(highstock = TRUE) %>% 
+#'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+#'   hc_add_series_flags(dates,
+#'                       title = c("E1", "E2"), 
+#'                       text = c("This is event 1", "This is the event 2"),
+#'                       id = "usdjpy") 
+#'                       
+#' @export
+hc_add_series_flags <- function(hc, dates,
+                                title = LETTERS[seq(length(dates))],
+                                text = title,
+                                id = NULL, ...) {
+  
+  assertthat::assert_that(.is_highchart(hc), is.date(dates))
+  
+  dfflags <- data_frame(x = date_to_timestamp(dates),
+                        title = title, text = text)
+  
+  dsflags <- setNames(rlist::list.parse(dfflags), NULL)
+  
+  hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags")
+  
+}
+

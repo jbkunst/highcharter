@@ -45,6 +45,33 @@ str_to_id <- function(x) {
   
 }
 
+#' Date to Timesstamps
+#' 
+#' Turn a date vector to \code{timestamp} format
+#' 
+#' @param x Dates vector
+#' 
+#' @examples 
+#' 
+#' date_to_timestamp(as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d"))
+#' 
+#' @export
+date_to_timestamp <- function(x) {
+  
+  # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts 
+  assertthat::assert_that(assertthat::is.date(x))
+  
+  tmstmp <- x %>% 
+    zoo::as.Date() %>% 
+    as.POSIXct() %>% 
+    as.numeric() 
+  
+  tmstmp <- 1000 * tmstmp
+  
+  tmstmp
+  
+}
+
 #' Get default colors for Highcharts theme
 #'
 #' Get color used in highcharts charts.

@@ -18,7 +18,7 @@ hc_add_serie_treemap(hc, ...)
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This function helps to create hicharts treemaps from \code{treemap} objects
+This function helps to create higcharts treemaps from \code{treemap} objects
 from the package \code{treemap}.
 }
 \examples{

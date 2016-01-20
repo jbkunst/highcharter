@@ -428,6 +428,22 @@ hc_scrollbar  <- function(hc, ...) {
   
 }
 
+#' Adding navigator  options to highstock objects
+#' 
+#' Options regarding the navigator: The miniseries below chart 
+#' in a highstock chart.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#navigator}. 
+#' 
+#' @export
+
+hc_navigator   <- function(hc, ...) {
+  
+  .hc_opt(hc, "navigator", ...)
+  
+}
+
 #' Adding scrollbar options to highstock objects
 #' 
 #' Options to edit the range selector which is The range selector is a tool 

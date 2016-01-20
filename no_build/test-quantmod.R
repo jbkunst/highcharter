@@ -1,29 +1,31 @@
 rm(list = ls())
 require("quantmod")
 
-getSymbols("SPY", src = "google")
 
-time <- time(SPY) %>% 
-  zoo::as.Date() %>% 
-  as.POSIXct() %>% 
-  as.numeric() %>% 
-  { 1000 * . }
+x <- getSymbols("AAPL", auto.assign = FALSE)
+y <- getSymbols("SPY", auto.assign = FALSE)
 
-spy <- SPY[,-5] %>% 
-  as.data.frame() %>% 
-  {cbind(time, .)} %>% 
-  list.parse2()
-
-highchart(highstock = TRUE) %>% 
-  hc_add_series(type = "candlestick",
-                data = spy,
-                name = "SPY",
-                dataGrouping = list(
-                  units = list(
-                    list("week", 1),
-                    list("month", c(1,2,3,4,6))
-                  )
-                )
-  )
+highchart() %>% 
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y)
 
 
+usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
+
+
+hc <- highchart(highstock = TRUE) %>% 
+  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+  hc_add_series_xts(eurkpw, id = "eurkpw")
+
+hc
+
+dates <- as.Date(c("2015-05-08", "2015-09-12"),
+                 format = "%Y-%m-%d")
+
+hc %>% 
+  hc_add_series_flags(dates,
+                      title = c("E1", "E2"), 
+                      text = c("This is event 1", "This is the event 2"),
+                      id = "usdjpy") %>% 
+  hc_add_theme(hc_theme_gridlight())
