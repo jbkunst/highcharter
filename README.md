@@ -12,6 +12,7 @@ Another R wrapper for highchartsjs
 - [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - [Piping styling](http://jkunst.com/highcharter/#quick-demo).
 - Support [Highstock charts](http://jkunst.com/highcharter/#xts-objects-and-quantmod-package). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
+- <3 to Highcharts.com
 
 ## Future Work
 
