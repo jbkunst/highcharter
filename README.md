@@ -11,13 +11,13 @@ Another R wrapper for highchartsjs
 - [Various](http://jkunst.com/highcharter/#shorcuts-for-add-data-data-series) chart type with the same style (scatters, time series, heatmaps, treemap, more coming soon).
 - [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - [Piping styling](http://jkunst.com/highcharter/#quick-demo).
+- Support [Highstock charts](http://jkunst.com/highcharter/#xts-objects-and-quantmod-package). Add you can chart quickly `xts` from the quantmod package.
 
 ## Future Work
 
 - Add highmaps as htmlwidget.
-- Add highstock as htmlwidget.
 - Add [*ggfortify*-like](https://github.com/sinhrks/ggfortify) funcionalities. This is plot a lot
-of **R** objects with `hcplot(x)`.
+of **R** objects with `hchart(x)`.
 
 ## Licence 
 
@@ -27,8 +27,4 @@ their own terms. Highcharts is free for personal or non profit projects under th
 
 ## WIP
 
-See some examples in:
-
- - http://jkunst.com/highcharter/ 
- - http://rpubs.com/jbkunst/highcharter
- - http://rpubs.com/jbkunst/highcharter-test-01
+See examples http://jkunst.com/highcharter/ 
