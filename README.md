@@ -11,7 +11,7 @@ Another R wrapper for highchartsjs
 - [Various](http://jkunst.com/highcharter/#shorcuts-for-add-data-data-series) chart type with the same style (scatters, time series, heatmaps, treemap, more coming soon).
 - [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - [Piping styling](http://jkunst.com/highcharter/#quick-demo).
-- Support [Highstock charts](http://jkunst.com/highcharter/#xts-objects-and-quantmod-package). Add you can chart quickly `xts` from the quantmod package.
+- Support [Highstock charts](http://jkunst.com/highcharter/#xts-objects-and-quantmod-package). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 
 ## Future Work
 
