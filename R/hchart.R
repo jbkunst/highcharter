@@ -25,14 +25,14 @@ hchart <- function(x, ...){
 }
 
 #' @importFrom dplyr count_
-hchart.character <- function(x, ...) {
+hchart.character <- function(x, type = "column", ...) {
   
   cnts <- count_(data_frame(variable = x), "variable")
   
   highchart() %>% 
     hc_add_series_labels_values(cnts[["variable"]], 
                                 cnts[["n"]],
-                                type = "column") %>% 
+                                type = type, ...) %>% 
     hc_xAxis(categories = cnts[["variable"]])
 }
 

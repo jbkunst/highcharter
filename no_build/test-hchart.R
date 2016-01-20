@@ -27,6 +27,8 @@ x <- diamonds$cut
 class(x)
 plot(x)
 hchart(x)
+hchart(x, type = "pie", name = "cut")
+
 
 x <- cbind(mdeaths, fdeaths)
 class(x)
