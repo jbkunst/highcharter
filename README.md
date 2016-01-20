@@ -13,12 +13,13 @@ Another R wrapper for highchartsjs
 - [Piping styling](http://jkunst.com/highcharter/#quick-demo).
 - Support [Highstock charts](http://jkunst.com/highcharter/#xts-objects-and-quantmod-package). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - <3 to Highcharts.com
+- Have [*ggfortify*-like](https://github.com/sinhrks/ggfortify) funcionalities. This is plot a lot
+of **R** objects with `hchart(x)`.
 
 ## Future Work
 
 - Add highmaps as htmlwidget.
-- Add [*ggfortify*-like](https://github.com/sinhrks/ggfortify) funcionalities. This is plot a lot
-of **R** objects with `hchart(x)`.
+
 
 ## Licence 
 
