@@ -25,4 +25,5 @@ Imports:
     plyr,
     viridisLite,
     xts,
-    quantmod
+    quantmod,
+    methods

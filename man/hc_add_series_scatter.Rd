@@ -8,7 +8,8 @@
 hc_add_series_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
   showInLegend = FALSE, viridis.option = "D", ...)
 
-hc_add_serie_scatter(hc, ...)
+hc_add_serie_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
+  showInLegend = FALSE, viridis.option = "D", ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

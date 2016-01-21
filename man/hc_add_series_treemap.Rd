@@ -7,7 +7,7 @@
 \usage{
 hc_add_series_treemap(hc, tm, ...)
 
-hc_add_serie_treemap(hc, ...)
+hc_add_serie_treemap(hc, tm, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

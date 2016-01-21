@@ -7,7 +7,7 @@
 \usage{
 hc_add_series_labels_values(hc, labels, values, colors = NULL, ...)
 
-hc_add_serie_labels_values(hc, ...)
+hc_add_serie_labels_values(hc, labels, values, colors = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

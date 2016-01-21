@@ -397,19 +397,32 @@ highchart(highstock = TRUE) %>%
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
   hc_add_series_ts2(fdeaths, name = "Female") %>%
-  hc_add_series_xts(as.xts(mdeaths), name = "Male")
+  hc_add_series_ts2(mdeaths, name = "Male")
 
 
 ##' ### `xts` objects and `quantmod` package ####
 
-require("quantmod")
+library("xts")
 
-x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("SPY", auto.assign = FALSE)
+data(sample_matrix)
+
+matrix_xts <- as.xts(sample_matrix, dateFormat = "Date")
+
+head(matrix_xts)
+
+class(matrix_xts)
 
 highchart() %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y)
+  hc_add_series_ohlc(matrix_xts)
+
+require("quantmod")
+
+# x <- getSymbols("AAPL", auto.assign = FALSE)
+# y <- getSymbols("SPY", auto.assign = FALSE)
+# 
+# highchart() %>% 
+#   hc_add_series_ohlc(x) %>% 
+#   hc_add_series_ohlc(y)
 
 
 usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
