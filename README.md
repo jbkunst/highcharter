@@ -6,6 +6,10 @@ Another R wrapper for highchartsjs
 [![version](http://www.r-pkg.org/badges/version/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 
+
+**highcharter is in active development**. So there functions in the package can be renamed,
+modified , or deleted. I will ensure have the minimum impact.
+
 ## Why highcharter?
 
 - [Various](http://jkunst.com/highcharter/#shorcuts-for-add-data-data-series) chart type with the same style (scatters, time series, heatmaps, treemap, more coming soon).
