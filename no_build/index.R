@@ -397,7 +397,7 @@ highchart(highstock = TRUE) %>%
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
   hc_add_series_ts2(fdeaths, name = "Female") %>%
-  hc_add_series_xts(as.xts(mdeaths), name = "Male")
+  hc_add_series_ts2(mdeaths, name = "Male")
 
 
 ##' ### `xts` objects and `quantmod` package ####
