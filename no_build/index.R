@@ -584,6 +584,10 @@ hc %>% hc_add_theme(hc_theme_sandsignika())
 
 hc %>% hc_add_theme(hc_theme_chalk())
 
+##' ## Null ####
+
+hc %>% hc_add_theme(hc_theme_null())
+
 ##' ## Customs ####
 
 thm <- hc_theme(
@@ -749,13 +753,15 @@ hc_opts$title <- list(text = "This is a title", x = -20)
 hc_opts$xAxis <- list(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
 hc_opts$series <- list(list(name = "Tokyo",
-                            data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)))
+                            data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5,
+                                     25.2, 26.5, 23.3, 18.3, 13.9, 9.6)))
 
 hc_opts$series <- append(hc_opts$series,
                          list(list(name = "New York",
                                    type = "spline",
                                    lineWidth = 5,
-                                   data = c(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
+                                   data = c(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0,
+                                            24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
                                    dataLabels = list(align = "left", enabled = TRUE))))
 
 highchart(hc_opts)
