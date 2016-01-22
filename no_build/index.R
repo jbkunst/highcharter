@@ -129,11 +129,6 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 #' - Include other HC funcionalities like *themes* and *options*.
 #' - Generate shortcuts to plots some R objects like *time series* or *treemaps*.
 #' 
-#' ## Next steps
-#' 
-#' - Add highmaps and highstocks funcionalities.
-#' - Add more functions to plot most used R objects.
-#' 
 #' ## Installation ####
 #' 
 #' You can install the package with the usual `install.packages("highcarter")`
