@@ -26,4 +26,5 @@ Imports:
     viridisLite,
     xts,
     quantmod,
-    methods
+    methods,
+    tidyr

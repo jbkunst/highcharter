@@ -11,25 +11,25 @@
 #' @export
 hchart <- function(x, ...){
   
-  if (identical(class(x), "dist"))
-    return(hchart.dist(x, ...))
-  
   if (any(class(x) %in% c("character", "factor")))
     return(hchart.character(x, ...))
   
-  if (identical(sort(class(x)), sort(c("mts", "ts", "matrix"))))
-    return(hchart.mts(x, ...))
+  if (identical(class(x), "dist"))
+    return(hchart.dist(x, ...))
   
-  if (any(class(x) %in% c("xts", "zoo", "ts")))
+  if (is.OHLC(x))
+    return(hchart.ohlc(x, ...))
+  
+  if (any(class(x) %in% c("xts")))
     return(hchart.xts(x, ...))
   
-  
+  if (identical(sort(class(x)), sort(c("mts", "ts", "matrix"))))
+    return(hchart.mts(x, ...))
   
   message("x have a class not supported yet")
   invisible()
 }
 
-#' @importFrom tidyr gather
 hchart.character <- function(x, type = "column", ...) {
   
   cnts <- count_(data_frame(variable = x), "variable")
@@ -41,41 +41,54 @@ hchart.character <- function(x, type = "column", ...) {
     hc_xAxis(categories = cnts[["variable"]])
 }
 
-#' @importFrom dplyr count_
+#' @importFrom tidyr gather
+#' @importFrom dplyr count_ left_join select_
 hchart.dist <- function(x, ...) {
   
   df <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
   
-  ordr <- names(df)
+  y <- names(df)
   
-  df <- tbl_df(cbind(x = names(df), df)) %>% 
+  df <- tbl_df(cbind(x = y, df)) %>% 
     gather(y, dist, -x) %>% 
     mutate(x = as.character(x),
            y = as.character(y)) %>% 
-    left_join(data_frame(x = ordr,
-                         xid = seq(length(ordr)) - 1), by = "x") %>% 
-    left_join(data_frame(y = ordr,
-                         yid = seq(length(ordr)) - 1), by = "y")
+    left_join(data_frame(x = y,
+                         xid = seq(length(y)) - 1), by = "x") %>% 
+    left_join(data_frame(y = y,
+                         yid = seq(length(y)) - 1), by = "y")
   
   ds <- df %>% 
-    select(xid, yid, dist) %>% 
+    select_("xid", "yid", "dist") %>% 
     list.parse2()
+  
+  fntltp <- JS("function(){
+                  return this.series.xAxis.categories[this.point.x] + '<br>' +
+                         this.series.yAxis.categories[this.point.y] + '<br>' +
+                         Highcharts.numberFormat(this.point.value, 2);
+               ; }")
   
   highchart() %>% 
     hc_chart(type = "heatmap") %>% 
-    hc_xAxis(categories = ordr) %>% 
-    hc_yAxis(categories = ordr) %>% 
+    hc_xAxis(categories = y, title = NULL) %>% 
+    hc_yAxis(categories = y, title = NULL) %>% 
     hc_add_series(data = ds) %>% 
+    hc_tooltip(formatter = fntltp) %>% 
+    hc_legend(align = "right", layout = "vertical",
+              margin = 0, verticalAlign = "top",
+              y = 25, symbolHeight = 280) %>% 
     hc_colorAxis(arg  = "")
 }
 
-
-
-#' @importFrom xts as.xts
 hchart.xts <- function(x, ...) {
-  hc_add_series_xts(highchart(highstock = TRUE), as.xts(x), ...)
+  hc_add_series_xts(highchart(highstock = TRUE), x, ...)
 }
 
+hchart.ohlc <- function(x, ...) {
+  hc_add_series_ohlc(highchart(highstock = TRUE), x, ...)
+}
+
+#' @importFrom xts as.xts
 hchart.mts <- function(x, ...) {
   hc <- highchart(highstock = TRUE)
   for (i in seq(dim(x)[2])) {

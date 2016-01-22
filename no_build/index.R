@@ -134,12 +134,27 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 #' - Add highmaps and highstocks funcionalities.
 #' - Add more functions to plot most used R objects.
 #' 
-
-##' # Installation ####
+#' ## Installation ####
 #' 
 #' You can install the package with the usual `install.packages("highcarter")`
 #' or if you want to try new features before the updates: via devtools 
 #' `devtools::install_github("jbkunst/highcharter")`.
+#' 
+#' ## 4 Key parts of the package
+#' 
+#' I think there are 4 key parts to work with this package:
+#' 
+#' - The implementation of Highcharts API. You can chart almost every type
+#' using the api. You need to *translate* the R objects to (json|list)-like
+#' paramter. So **it is a must** know how highcharts works to take advantage of 
+#' this package.
+#' - The shortcuts functions: Functions to add in a simple way some R objects like
+#' xts, ohlc, heatmaps (and more comming soon).
+#' - The `hchart()` function. This funnction can chart various R objects on the fly
+#' with one line of code. The resulting chart is a `highchart` object so you can
+#' keep modifying with the API.
+#' - Themes. Highcharts is super really flexible to add and  create theme. So
+#' why dont implement?
 #' 
 
 ##' # Quick Demo ####
@@ -364,19 +379,15 @@ hc
 #' enabled the Highstock which include sophisticated navigation
 #' options like a small navigator series, preset date ranges, 
 #' date picker, scrolling and panning.
+#' 
+#' ### From times and values
+#' 
 
 data(economics, package = "ggplot2")
 
-#' Example just using highcharts:
-#' 
-#' - `hc_add_series_ts` needs to arguments, a vector of values
-#'   and a dates
-#' - `hc_add_series_ts2` needs only a ts object.
-#' 
-
 highchart() %>% 
-  hc_add_series_ts(economics$psavert, economics$date,
-                  name = "Personal Savings Rate")
+  hc_add_series_times_values(economics$psavert, economics$date,
+                             name = "Personal Savings Rate")
 
 #' Same data but using highstock instead of highcharts. 
 
@@ -384,68 +395,57 @@ highchart(highstock = TRUE) %>%
   hc_title(text = "US economic time series") %>% 
   hc_subtitle(text = "This dataset was produced from US economic time series data available") %>% 
   hc_tooltip(valueDecimals = 2) %>% 
-  hc_add_series_ts(economics$psavert, economics$date, name = "Personal savings rate") %>% 
-  hc_add_series_ts(economics$uempmed, economics$date, name = "Median duration of unemployment") %>% 
+  hc_add_series_times_values(economics$psavert,
+                             economics$date,
+                             name = "Personal savings rate") %>% 
+  hc_add_series_times_values(economics$uempmed,
+                             economics$date,name = "Median duration of unemployment") %>% 
   hc_add_theme(hc_theme_sandsignika()) # see more about themes below.
 
-#' There's a `hc_add_series_ts2` which recieve a `ts`object.
+#' ### From `ts` objects
+#'
+#' There's a `hc_add_series_ts` which recieve a `ts` object.
 
 highchart() %>%
-  hc_add_series_ts2(AirPassengers, color = "#26838E") 
+  hc_add_series_ts(AirPassengers, color = "#26838E") 
 
 highchart(highstock = TRUE) %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
-  hc_add_series_ts2(fdeaths, name = "Female") %>%
-  hc_add_series_ts2(mdeaths, name = "Male")
+  hc_add_series_ts(fdeaths, name = "Female") %>%
+  hc_add_series_ts(mdeaths, name = "Male")
 
+#' ### From `xts` objects
+#' 
+#' Support `ohlc` series  from the  `quantmod` package.
+#' You can also add markes or flag with `hc_add_series_flags`: 
 
-##' ### `xts` objects and `quantmod` package ####
+library("quantmod")
 
-library("xts")
-
-data(sample_matrix)
-
-matrix_xts <- as.xts(sample_matrix, dateFormat = "Date")
-
-head(matrix_xts)
-
-class(matrix_xts)
+x <- getSymbols("AAPL", auto.assign = FALSE)
+y <- getSymbols("SPY", auto.assign = FALSE)
 
 highchart() %>% 
-  hc_add_series_ohlc(matrix_xts)
-
-require("quantmod")
-
-# x <- getSymbols("AAPL", auto.assign = FALSE)
-# y <- getSymbols("SPY", auto.assign = FALSE)
-# 
-# highchart() %>% 
-#   hc_add_series_ohlc(x) %>% 
-#   hc_add_series_ohlc(y)
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y)
 
 
 usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
 eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
 
-
-hc <- highchart(highstock = TRUE) %>% 
-  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
-  hc_add_series_xts(eurkpw, id = "eurkpw")
-
-hc
-
 dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
 
-hc %>% 
-  hc_add_series_flags(dates,
-                      title = c("E1", "E2"), 
+highchart(highstock = TRUE) %>% 
+  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+  hc_add_series_xts(eurkpw, id = "eurkpw") %>% 
+  hc_add_series_flags(dates, title = c("E1", "E2"), 
                       text = c("This is event 1",
                                "This is the event 2"),
                       id = "usdjpy") %>% 
   hc_rangeSelector(inputEnabled = FALSE) %>% 
   hc_scrollbar(enabled = FALSE) %>% 
-  hc_add_theme(hc_theme_gridlight())
+  hc_add_theme(hc_theme_gridlight()) 
+  
 
 ##' ## Treemaps ####
 #'
@@ -505,8 +505,41 @@ highchart() %>%
   hc_legend(enabled = FALSE) %>% 
   hc_tooltip(pointFormat = "{point.y}%")
 
-##' # Themes ####
+##' # `hchart()` function
+#'
+#' Right now there are some R object to plot wiht this generic function. 
+#' 
+#' Think like *ggplot*. The resulting chart is a `highchart` object so
+#' you can modify attributes like titles, tootlips or add themes. 
 
+data(diamonds, package = "ggplot2")
+
+#' ### Character, Factor
+x <- diamonds$cut
+class(x)
+plot(x)
+hchart(x)
+hchart(x, type = "pie")
+
+#' ### Distance matrix 
+x <- dist(mtcars[ order(mtcars$hp),])
+class(x)
+plot(x)
+hchart(x)
+
+#' ### Univariate quantmod package
+x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
+class(x)
+plot(x)
+hchart(x)
+
+#' ### OHLC series
+x <- getSymbols("AAPL", src = "yahoo", auto.assign = FALSE)
+class(x)
+plot(x)
+hchart(x)
+
+##' # Themes ####
 hc <- highchart() %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
   hc_subtitle(text = "Source: 1974 Motor Trend US magazine") %>% 

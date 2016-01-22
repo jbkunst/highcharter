@@ -1,4 +1,4 @@
-#' Shorcut for create/add time series from values and dates
+#' Shorcut for create/add time series from times and values
 #'
 #' This function add a time series to a \code{highchart} object. 
 #' 
@@ -16,7 +16,7 @@
 #' require("ggplot2")
 #' data(economics, package = "ggplot2")
 #' 
-#' hc_add_series_ts(hc = highchart(),
+#' hc_add_series_times_values(hc = highchart(),
 #'                 values = economics$psavert, dates = economics$date,
 #'                 name = "Personal Savings Rate")
 #' }
@@ -24,7 +24,7 @@
 #' @importFrom zoo as.Date
 #' 
 #' @export 
-hc_add_series_ts <- function(hc, values, dates, ...) {
+hc_add_series_times_values <- function(hc, values, dates, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
   
@@ -38,9 +38,9 @@ hc_add_series_ts <- function(hc, values, dates, ...) {
   
 }
 
-#' @rdname hc_add_series_ts
+#' @rdname hc_add_series_times_values
 #' @export
-hc_add_serie_ts <- hc_add_series_ts
+hc_add_serie_times_values <- hc_add_series_times_values
 
 #' Shorcut for create/add time series charts from a ts object
 #'
@@ -58,21 +58,21 @@ hc_add_serie_ts <- hc_add_series_ts
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Airline Passenger Numbers 1949-1960") %>% 
 #'   hc_subtitle(text = "The classic Box and Jenkins airline data") %>% 
-#'   hc_add_series_ts2(AirPassengers, name = "passengers") %>%
+#'   hc_add_series_ts(AirPassengers, name = "passengers") %>%
 #'   hc_tooltip(pointFormat =  '{point.y} passengers')
 #' 
 #' highchart() %>% 
 #'   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
-#'   hc_add_series_ts2(fdeaths, name = "Female") %>%
-#'   hc_add_series_ts2(mdeaths, name = "Male")
+#'   hc_add_series_ts(fdeaths, name = "Female") %>%
+#'   hc_add_series_ts(mdeaths, name = "Male")
 #'   
 #' @importFrom stats is.ts time
 #' @importFrom xts is.xts
 #' 
 #' @export 
-hc_add_series_ts2 <- function(hc, ts, ...) {
+hc_add_series_ts <- function(hc, ts, ...) {
   
-  assertthat::assert_that(is.ts(ts) | is.xts(ts), .is_highchart(hc))
+  assertthat::assert_that(is.ts(ts), .is_highchart(hc))
   
   # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
   dates <- time(ts) %>% 
@@ -80,13 +80,13 @@ hc_add_series_ts2 <- function(hc, ts, ...) {
   
   values <- as.vector(ts)
   
-  hc %>% hc_add_series_ts(values, dates, ...)
+  hc %>% hc_add_serie_times_values(values, dates, ...)
   
 }
 
-#' @rdname hc_add_series_ts2
+#' @rdname hc_add_series_ts
 #' @export
-hc_add_serie_ts2 <- hc_add_series_ts2
+hc_add_serie_ts <- hc_add_series_ts
 
 #' Shorcut for create highstock chart from \code{xts} object
 #'

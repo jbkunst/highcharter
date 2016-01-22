@@ -26,7 +26,6 @@ This function add data to plot pie, bar and column charts.
 }
 \examples{
 
-
 data("favorite_bars")
 data("favorite_pies")
 

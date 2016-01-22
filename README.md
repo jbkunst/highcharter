@@ -7,7 +7,7 @@ Another R wrapper for highchartsjs
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 
 
-**highcharter is in active development**. So there functions in the package can be renamed,
+**highcharter is in active development**. The functions in the package can be renamed,
 modified , or deleted. I will ensure have the minimum impact.
 
 ## Why highcharter?

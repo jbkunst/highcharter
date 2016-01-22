@@ -115,7 +115,6 @@ hc_add_serie_scatter <- hc_add_series_scatter
 #' 
 #' @examples 
 #' 
-#' 
 #' data("favorite_bars")
 #' data("favorite_pies")
 #' 

@@ -14,7 +14,7 @@
 #' @param debug A boolean value if you want to print in the browser console the 
 #'    parameters given to \code{highchart}.
 #'      
-#' @import htmlwidgets
+#' @importFrom htmlwidgets createWidget sizingPolicy
 #'
 #' @export
 highchart <- function(hc_opts = list(), theme = NULL,
@@ -62,6 +62,7 @@ highchart <- function(hc_opts = list(), theme = NULL,
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels. 
 #'
+#' @importFrom htmlwidgets shinyWidgetOutput 
 #' @export
 highchartOutput <- function(outputId, width = "100%", height = "400px"){
   shinyWidgetOutput(outputId, "highchart", width, height,
@@ -73,7 +74,8 @@ highchartOutput <- function(outputId, width = "100%", height = "400px"){
 #' @param expr A highchart expression. 
 #' @param env A enviorment.
 #' @param quoted  A boolean value.
-#'
+#' 
+#' @importFrom htmlwidgets shinyRenderWidget
 #' @export
 renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) {

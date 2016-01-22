@@ -5,29 +5,29 @@
 #' charting library. Highcharts provide a various type of charts, from
 #' scatters to heatmaps or treemaps. 
 #' 
-#' @name hicharter
+#' @name higcharter
 #' @docType package
 #' @author Joshua Kunst (@@jbkunst)
 NULL
 
-#' highcharter exported operators
-#'
+#' highcharter exported operators and S3 methods
+#' 
 #' The following functions are imported and then re-exported
-#' from the taucharts package to enable use of the magrittr
-#' pipe operator with no additional library calls
-#'
-#' @name highcharter-exports
+#' from the highcarter package to avoid listing the magrittr
+#' as Depends of highcarters.
+#' 
+#' @name highcarter-exports
 NULL
 
-# #' @importFrom magrittr %>%
-# #' @name %>%
-# #' @export
-# #' @rdname highcharter-exports
-# NULL
+#' @importFrom magrittr %>%
+#' @name %>%
+#' @export
+#' @rdname highcarter-exports
+NULL
 
-# #' @importFrom htmlwidgets JS
-# #' @name JS
-# #' @export
-# #' @rdname highcharter-exports
-# NULL
-# 
+#' @importFrom htmlwidgets JS
+#' @name JS
+#' @export
+#' @rdname highcarter-exports
+NULL
+
