@@ -28,7 +28,7 @@ library("quantmod")
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
 eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
 
-highchart(highstock = TRUE) \%>\% 
+highchart(type = "stock") \%>\% 
   hc_add_series_xts(usdjpy, id = "usdjpy") \%>\% 
   hc_add_series_xts(eurkpw, id = "eurkpw")
 

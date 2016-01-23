@@ -36,7 +36,7 @@ library("quantmod")
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
 
 dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "\%Y-\%m-\%d")
-highchart(highstock = TRUE) \%>\% 
+highchart(type = "stock") \%>\% 
   hc_add_series_xts(usdjpy, id = "usdjpy") \%>\% 
   hc_add_series_flags(dates,
                       title = c("E1", "E2"), 

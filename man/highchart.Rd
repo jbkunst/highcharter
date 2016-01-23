@@ -4,8 +4,8 @@
 \alias{highchart}
 \title{Create a Highcharts chart widget}
 \usage{
-highchart(hc_opts = list(), theme = NULL, highstock = FALSE,
-  width = NULL, height = NULL, debug = FALSE)
+highchart(hc_opts = list(), theme = NULL, type = "chart", width = NULL,
+  height = NULL, debug = FALSE)
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as 
@@ -13,7 +13,7 @@ highchart(hc_opts = list(), theme = NULL, highstock = FALSE,
 
 \item{theme}{A \code{hc_theme} class object}
 
-\item{highstock}{A boolean value to set if use Highstock instead of
+\item{type}{A character value to set if use Highstock instead of
 Highcharts.}
 
 \item{width}{A numeric input in pixels.}
