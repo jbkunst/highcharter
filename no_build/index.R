@@ -386,7 +386,7 @@ highchart() %>%
 
 #' Same data but using highstock instead of highcharts. 
 
-highchart(highstock = TRUE) %>% 
+highchart(type = "stock") %>% 
   hc_title(text = "US economic time series") %>% 
   hc_subtitle(text = "This dataset was produced from US economic time series data available") %>% 
   hc_tooltip(valueDecimals = 2) %>% 
@@ -404,7 +404,7 @@ highchart(highstock = TRUE) %>%
 highchart() %>%
   hc_add_series_ts(AirPassengers, color = "#26838E") 
 
-highchart(highstock = TRUE) %>% 
+highchart(type = "stock") %>% 
   hc_title(text = "Monthly Deaths from Lung Diseases in the UK") %>% 
   hc_subtitle(text = "Deaths from bronchitis, emphysema and asthma") %>% 
   hc_add_series_ts(fdeaths, name = "Female") %>%
@@ -430,7 +430,7 @@ eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
 
 dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
 
-highchart(highstock = TRUE) %>% 
+highchart(type = "stock") %>% 
   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
   hc_add_series_xts(eurkpw, id = "eurkpw") %>% 
   hc_add_series_flags(dates, title = c("E1", "E2"), 

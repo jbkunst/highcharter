@@ -106,7 +106,7 @@ hc_add_serie_ts <- hc_add_series_ts
 #' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
 #' eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
 #' 
-#' highchart(highstock = TRUE) %>% 
+#' highchart(type = "stock") %>% 
 #'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
 #'   hc_add_series_xts(eurkpw, id = "eurkpw")
 #' 
@@ -116,7 +116,7 @@ hc_add_series_xts <- function(hc, x, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.xts(x))
   
-  hc$x$highstock <- TRUE
+  hc$x$type = "stock"
   
   timestamps <- datetime_to_timestamp(time(x))
   
@@ -177,7 +177,7 @@ hc_add_series_ohlc <- function(hc, x, ...){
   
   assertthat::assert_that(.is_highchart(hc), is.xts(x), is.OHLC(x))
   
-  hc$x$highstock <- TRUE
+  hc$x$type = "stock"
   
   time <- datetime_to_timestamp(time(x))
   
@@ -225,7 +225,7 @@ hc_add_serie_ohlc <- hc_add_series_ohlc
 #' 
 #' dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
 # 
-#' highchart(highstock = TRUE) %>% 
+#' highchart(type = "stock") %>% 
 #'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
 #'   hc_add_series_flags(dates,
 #'                       title = c("E1", "E2"), 

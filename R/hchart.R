@@ -81,16 +81,16 @@ hchart.dist <- function(x, ...) {
 }
 
 hchart.xts <- function(x, ...) {
-  hc_add_series_xts(highchart(highstock = TRUE), x, ...)
+  hc_add_series_xts(highchart(type = "stock"), x, ...)
 }
 
 hchart.ohlc <- function(x, ...) {
-  hc_add_series_ohlc(highchart(highstock = TRUE), x, ...)
+  hc_add_series_ohlc(highchart(type = "stock"), x, ...)
 }
 
 #' @importFrom xts as.xts
 hchart.mts <- function(x, ...) {
-  hc <- highchart(highstock = TRUE)
+  hc <- highchart(type = "stock")
   for (i in seq(dim(x)[2])) {
     nm <- attr(x, "dimnames")[[2]][i]
     hc <- hc %>% hc_add_series_xts(as.xts(x[, i]), name = nm, ...)

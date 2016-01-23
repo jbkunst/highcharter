@@ -14,5 +14,6 @@ dependencies:
     - modules/exporting.js
     - modules/drilldown.js
     - modules/heatmap.js
+    - modules/map.js
     - modules/treemap.js
     - modules/reset.js

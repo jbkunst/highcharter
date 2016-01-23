@@ -18,7 +18,7 @@
 #'
 #' @export
 highchart <- function(hc_opts = list(), theme = NULL,
-                      highstock = FALSE,
+                      type = "chart",
                       width = NULL, height = NULL,
                       debug = FALSE) {
   
@@ -36,7 +36,7 @@ highchart <- function(hc_opts = list(), theme = NULL,
     hc_opts = hc_opts,
     theme = theme,
     conf_opts = opts,
-    highstock = highstock,
+    type = type,
     fonts = unfonts,
     debug = debug
     
