@@ -15,11 +15,11 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
     
     if(x.debug) {
+      window.x = x;
       console.log(el);
       console.log("hc_opts", x.hc_opts);
       console.log("theme", x.theme);
       console.log("conf_opts", x.conf_opts);
-      
     }
 
     if(x.fonts !== undefined) {

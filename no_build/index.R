@@ -131,7 +131,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 #' 
 #' ## Installation ####
 #' 
-#' You can install the package with the usual `install.packages("highcarter")`
+#' You can install the package with the usual `install.packages("highcharter")`
 #' or if you want to try new features before the updates: via devtools 
 #' `devtools::install_github("jbkunst/highcharter")`.
 #' 
@@ -145,7 +145,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 #' this package.
 #' - The shortcuts functions: Functions to add in a simple way some R objects like
 #' xts, ohlc, heatmaps (and more comming soon).
-#' - The `hchart()` function. This funnction can chart various R objects on the fly
+#' - The `hchart()` function. This function can chart various R objects on the fly
 #' with one line of code. The resulting chart is a `highchart` object so you can
 #' keep modifying with the API.
 #' - Themes. Highcharts is super really flexible to add and  create theme. So

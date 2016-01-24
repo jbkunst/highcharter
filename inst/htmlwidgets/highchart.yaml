@@ -10,7 +10,7 @@ dependencies:
     - highstock.js
     - highcharts-more.js
     - highcharts-3d.js
-    - modules/boost.src.js
+#    - modules/boost.src.js
     - modules/exporting.js
     - modules/drilldown.js
     - modules/heatmap.js
