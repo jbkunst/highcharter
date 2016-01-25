@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_navigator}
 \alias{hc_navigator}
-\title{Adding navigator  options to highstock objects}
+\title{Adding navigator options to highstock charts}
 \usage{
 hc_navigator(hc, ...)
 }

@@ -421,14 +421,13 @@ hc_rm_serie <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#scrollbar}. 
 #' 
 #' @export
-
 hc_scrollbar  <- function(hc, ...) {
   
   .hc_opt(hc, "scrollbar", ...)
   
 }
 
-#' Adding navigator  options to highstock objects
+#' Adding navigator options to highstock charts
 #' 
 #' Options regarding the navigator: The miniseries below chart 
 #' in a highstock chart.
@@ -437,14 +436,13 @@ hc_scrollbar  <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#navigator}. 
 #' 
 #' @export
-
-hc_navigator   <- function(hc, ...) {
+hc_navigator <- function(hc, ...) {
   
   .hc_opt(hc, "navigator", ...)
   
 }
 
-#' Adding scrollbar options to highstock objects
+#' Adding scrollbar options to highstock charts
 #' 
 #' Options to edit the range selector which is The range selector is a tool 
 #' for selecting ranges to display within the chart. It provides buttons 
@@ -461,4 +459,21 @@ hc_rangeSelector <- function(hc, ...) {
   .hc_opt(hc, "rangeSelector", ...)
   
 }
+
+#' Adding mapNavigation options to highstock charts
+#' 
+#' Options regarding the mapNavigation: A collection of options for zooming 
+#' and panning in a map.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highmaps#mapNavigation}. 
+#' 
+#' @export
+hc_mapNavigation <- function(hc, ...) {
+  
+  .hc_opt(hc, "mapNavigation", ...)
+  
+}
+
+
 

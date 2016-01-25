@@ -152,7 +152,11 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 #' why dont implement?
 #' 
 
-##' # Quick Demo ####
+##' # Demo ####
+
+#' ## Highcharts #### 
+#' 
+#' 
 #' Let's start doing a simple column chart:
 #' 
 library("highcharter")
@@ -207,6 +211,45 @@ hc
 
 #' Easy right? Well, it's just the Highcharts API. Thanks to the http://www.highcharts.com/ team.
 #' 
+
+##' ## Highstocks ####
+
+library("quantmod")
+
+x <- getSymbols("AAPL", auto.assign = FALSE)
+y <- getSymbols("SPY", auto.assign = FALSE)
+
+highchart() %>% 
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y)
+
+
+##' ## Highmaps #### 
+
+library("dplyr")
+library("rlist")
+
+data(hcworld)
+data(GNI2010, package = "treemap")
+
+head(GNI2010)
+
+ddta <- GNI2010 %>% 
+  select(iso3, value = GNI) %>% 
+  list.parse() %>% 
+  setNames(NULL)
+
+head(ddta, 3)
+
+highchart(type = "map", debug = TRUE) %>% 
+  hc_title(text = "Gross national income") %>% 
+  hc_colorAxis(min = 0, minColor = "#440154", maxColor = "#FDE725") %>% 
+  hc_mapNavigation(enabled = TRUE) %>% 
+  hc_add_series(mapData = hcworld, data = ddta,
+                joinBy = c("iso-a3", "iso3"), name = "GNI",
+                states = list(hover = list(color = "#BADA55")),
+                dataLabels = list(enabled = TRUE,
+                                  format = "{point.name}"))
 
 ##' # The higcharts API (and this wrapper) ####
 #' 

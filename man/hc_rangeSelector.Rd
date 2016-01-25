@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_rangeSelector}
 \alias{hc_rangeSelector}
-\title{Adding scrollbar options to highstock objects}
+\title{Adding scrollbar options to highstock charts}
 \usage{
 hc_rangeSelector(hc, ...)
 }
