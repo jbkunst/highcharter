@@ -5,16 +5,16 @@
 \alias{hc_add_series_times_values}
 \title{Shorcut for create/add time series from times and values}
 \usage{
-hc_add_series_times_values(hc, values, dates, ...)
+hc_add_series_times_values(hc, dates, values, ...)
 
-hc_add_serie_times_values(hc, values, dates, ...)
+hc_add_serie_times_values(hc, dates, values, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{values}{A numeric vector}
-
 \item{dates}{A date vector (same length as \code{values})}
+
+\item{values}{A numeric vector}
 
 \item{...}{Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
 }
@@ -32,8 +32,9 @@ require("ggplot2")
 data(economics, package = "ggplot2")
 
 hc_add_series_times_values(hc = highchart(),
-                values = economics$psavert, dates = economics$date,
-                name = "Personal Savings Rate")
+                           dates = economics$date,
+                           values = economics$psavert, 
+                           name = "Personal Savings Rate")
 }
 
 }

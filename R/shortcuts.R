@@ -253,4 +253,48 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 
 #' @rdname hc_add_series_treemap
 #' @export
-hc_add_serie_treemap <-   hc_add_series_treemap
+hc_add_serie_treemap <- hc_add_series_treemap
+
+#' Shorcut for create map
+#'
+#' This function helps to create higcharts treemaps from \code{treemap} objects
+#' from the package \code{treemap}.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param map A \code{list} object loaded from a geojson file.
+#' @param df A \code{data.frame} object with data to chart. Code region and value are
+#'   required.
+#' @param value A string value with the name of the column to chart.
+#' @param joinBy What property to join the  \code{map} and \code{df}
+#' @param ... Aditional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   
+#' @export
+hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
+  
+  assertthat::assert_that(.is_highchart(hc),
+                          is.list(map),
+                          is.data.frame(df),
+                          value %in% names(df),
+                          tail(joinBy, 1) %in% names(df))
+  
+  joindf <- tail(joinBy, 1)
+  
+  ddta <- data_frame(value = df[[value]],
+                     code = df[[joindf]]) %>% 
+    rlist::list.parse() %>% 
+    setNames(NULL)
+  
+  hc$x$type <- "map"
+  
+  hc %>% 
+    hc_add_series(mapData = map, data = ddta,
+                  joinBy = c(joinBy[1], "code"),
+                  ...) %>% 
+    hc_colorAxis(min = 0)
+  
+}
+
+#' @rdname hc_add_series_map
+#' @export
+hc_add_serie_map <- hc_add_series_map
