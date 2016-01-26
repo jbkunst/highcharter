@@ -15,22 +15,22 @@ highchart() %>%
 
 #### EX 0 ####
 data(unemployment)
-head(unemployment)
-
 data(uscountygeojson)
-uscountygeojson$features[[1]]$properties
 
 require("viridisLite")
 dclass <- data_frame(from = seq(0, 10, by = 2),
                      to = c(seq(2, 10, by = 2), 50),
-                     color = substring(viridis(length(from), option = "B"), 0, 7))
-dclass <- setNames(rlist::list.parse(dclass), NULL)
+                     color = substring(viridis(length(from), option = "C"), 0, 7))
+dclass <- list.parse3(dclass)
 
 
 highchart() %>% 
   hc_add_series_map(uscountygeojson, unemployment,
                     value = "value", joinBy = "code") %>% 
-  hc_colorAxis(dataClasses = dclass)
+  hc_colorAxis(dataClasses = dclass) %>% 
+  hc_tooltip(layout = "vertical", align = "right",
+             floating = TRUE, valueDecimals = 0,
+             valueSuffix = "%")
 
 #### EX 1 ####
 library("purrr")
@@ -111,7 +111,6 @@ highchart(type = "map", debug = TRUE) %>%
                 joinBy = c("hc-key", "code"), name = "Unemployment rate",
                 borderWidth = 0.5, tootlip = list(valueSuffix = "%"),
                 states = list(hover = list(color = "#BADA55"))) %>% 
-  
   hc_legend(layout = "vertical", align = "right",
             valueDecimals = 0, valueSuffix = "%")
 

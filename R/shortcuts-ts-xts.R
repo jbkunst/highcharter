@@ -244,7 +244,7 @@ hc_add_series_flags <- function(hc, dates,
   dfflags <- data_frame(x = datetime_to_timestamp(dates),
                         title = title, text = text)
   
-  dsflags <- setNames(rlist::list.parse(dfflags), NULL)
+  dsflags <- list.parse3(dfflags)
   
   hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags")
   

@@ -6,9 +6,11 @@
 #' 
 #' @examples 
 #' 
-#' x <- data.frame(a=1:3,type=c('A','C','B'))
+#' x <- data.frame(a=1:3,type=c('A','C','B'), stringsAsFactors = FALSE)
 #' 
 #' list.parse2(x)
+#' 
+#' list.parse3(x)
 #' 
 #' @importFrom stats setNames
 #' @export
@@ -17,6 +19,16 @@ list.parse2 <- function(df) {
   assertthat::assert_that(is.data.frame(df))
   
   setNames(apply(df, 1, function(r) as.list(as.vector(r))), NULL)
+  
+}
+
+#' @rdname list.parse2  
+#' @export 
+list.parse3 <- function(df) {
+  
+  assertthat::assert_that(is.data.frame(df))
+  
+  setNames(rlist::list.parse(df), NULL)
   
 }
 

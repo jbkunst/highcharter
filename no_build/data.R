@@ -1,3 +1,5 @@
+library("purrr")
+
 #### citytemp ####
 library("dplyr")
 citytemp <- data_frame(
@@ -77,13 +79,15 @@ uscountygeojson$features <- map(uscountygeojson$features, function(x){
   x$properties <- x$properties[!grepl("hc", names(x$properties))]
   names(x$properties) <- gsub("-", "", names(x$properties))
   names(x$properties) <- gsub("isoa", "iso", names(x$properties))
-  x$properties <- map(x$properties, function(x){ ifelse(is.null(x), NA, iconv(x, to = "UTF-8")) })
+  x$properties$name <- ifelse(x$properties$code == "us-nm-013", "Dona Ana", x$properties$name)
   x
 })
 
-map_df(uscountygeojson$features, function(x){
+counties <- map_df(uscountygeojson$features, function(x){
   as.data.frame(x$properties, stringsAsFactors = FALSE)
-}) %>% View()
+})
+
+counties
 
 save(uscountygeojson, file = "data/uscountygeojson.rda", compress = "xz")
 

@@ -154,7 +154,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 
 ##' # Demo ####
 
-#' ## Highcharts #### 
+##' ## Highcharts #### 
 #' 
 #' 
 #' Let's start doing a simple column chart:
@@ -223,33 +223,27 @@ highchart() %>%
   hc_add_series_ohlc(x) %>% 
   hc_add_series_ohlc(y)
 
-
 ##' ## Highmaps #### 
 
+library("viridisLite")
 library("dplyr")
-library("rlist")
+data(unemployment)
+data(uscountygeojson)
 
-data(hcworld)
-data(GNI2010, package = "treemap")
+dclass <- data_frame(from = seq(0, 10, by = 2),
+                     to = c(seq(2, 10, by = 2), 50),
+                     color = substring(viridis(length(from), option = "C"), 0, 7))
+dclass <- list.parse3(dclass)
 
-head(GNI2010)
-
-ddta <- GNI2010 %>% 
-  select(iso3, value = GNI) %>% 
-  list.parse() %>% 
-  setNames(NULL)
-
-head(ddta, 3)
-
-highchart(type = "map", debug = TRUE) %>% 
-  hc_title(text = "Gross national income") %>% 
-  hc_colorAxis(min = 0, minColor = "#440154", maxColor = "#FDE725") %>% 
-  hc_mapNavigation(enabled = TRUE) %>% 
-  hc_add_series(mapData = hcworld, data = ddta,
-                joinBy = c("iso-a3", "iso3"), name = "GNI",
-                states = list(hover = list(color = "#BADA55")),
-                dataLabels = list(enabled = TRUE,
-                                  format = "{point.name}"))
+highchart() %>% 
+  hc_title(text = "US Counties unemployment rates, April 2015") %>% 
+  hc_add_series_map(uscountygeojson, unemployment,
+                    value = "value", joinBy = "code") %>% 
+  hc_colorAxis(dataClasses = dclass) %>% 
+  hc_legend(layout = "vertical", align = "right",
+             floating = TRUE, valueDecimals = 0,
+             valueSuffix = "%") %>% 
+  hc_mapNavigation(enabled = TRUE)
 
 ##' # The higcharts API (and this wrapper) ####
 #' 
@@ -424,7 +418,7 @@ hc
 data(economics, package = "ggplot2")
 
 highchart() %>% 
-  hc_add_series_times_values(economics$psavert, economics$date,
+  hc_add_series_times_values(economics$date, economics$psavert, 
                              name = "Personal Savings Rate")
 
 #' Same data but using highstock instead of highcharts. 
@@ -433,11 +427,12 @@ highchart(type = "stock") %>%
   hc_title(text = "US economic time series") %>% 
   hc_subtitle(text = "This dataset was produced from US economic time series data available") %>% 
   hc_tooltip(valueDecimals = 2) %>% 
-  hc_add_series_times_values(economics$psavert,
-                             economics$date,
+  hc_add_series_times_values(economics$date,
+                             economics$psavert,
                              name = "Personal savings rate") %>% 
-  hc_add_series_times_values(economics$uempmed,
-                             economics$date,name = "Median duration of unemployment") %>% 
+  hc_add_series_times_values(economics$date,
+                             economics$uempmed,
+                             name = "Median duration of unemployment") %>% 
   hc_add_theme(hc_theme_sandsignika()) # see more about themes below.
 
 #' ### From `ts` objects
@@ -576,6 +571,17 @@ x <- getSymbols("AAPL", src = "yahoo", auto.assign = FALSE)
 class(x)
 plot(x)
 hchart(x)
+
+##' ## geojson ####
+
+data(worldgeojson)
+data(GNI2010, package = "treemap")
+
+head(GNI2010)
+
+highchart() %>% 
+  hc_add_series_map(worldgeojson, GNI2010,
+                    value = "GNI", joinBy = "iso3")
 
 ##' # Themes ####
 hc <- highchart() %>% 
@@ -745,8 +751,7 @@ nyears <- 5
 df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
 df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
 df$value <- round(df$value, 2)
-ds <- setNames(list.parse2(df), NULL)
-
+ds <- list.parse2(df)
 
 hc <- highchart() %>% 
   hc_chart(type = "heatmap") %>% 
@@ -774,7 +779,7 @@ df <- dplyr::count(diamonds, cut)
 df
 
 df <- setNames(df, c("name", "value"))
-ds <- setNames(rlist::list.parse(df), NULL)
+ds <- list.parse3(df)
 
 highchart() %>% 
   hc_title(text = "A simple Treemap") %>% 

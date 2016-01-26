@@ -90,7 +90,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
     df <- df %>% mutate(label = label)
   }
   
-  ds <- setNames(rlist::list.parse(df), NULL)
+  ds <- list.parse3(df)
   
   type <- ifelse(!is.null(z), "bubble", "scatter")
   
@@ -151,7 +151,7 @@ hc_add_series_labels_values <- function(hc, labels, values, colors = NULL, ...) 
     
   }
   
-  ds <- setNames(rlist::list.parse(df), NULL)
+  ds <- list.parse3(df)
   
   hc <- hc %>% hc_add_series(data = ds, ...)
   
@@ -239,7 +239,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
     
   })
   
-  ds <- setNames(rlist::list.parse(ds), NULL)
+  ds <- list.parse3(ds)
   
   ds <- map(ds, function(x){
     if (is.na(x$parent))
@@ -282,8 +282,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
   ddta <- data_frame(value = df[[value]],
                      code = df[[joindf]]) %>% 
-    rlist::list.parse() %>% 
-    setNames(NULL)
+    list.parse3()
   
   hc$x$type <- "map"
   
