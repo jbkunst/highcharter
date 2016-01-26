@@ -11,8 +11,6 @@ highchart() %>%
   hc_add_series_map(worldgeojson, GNI2010,
                     value = "GNI", joinBy = "iso3")
 
-
-
 #### EX 0 ####
 data(unemployment)
 data(uscountygeojson)
@@ -36,7 +34,6 @@ highchart() %>%
 library("purrr")
 library("dplyr")
 
-data(worldgeojson)
 data(GNI2010, package = "treemap")
 
 head(GNI2010)
@@ -45,19 +42,18 @@ url <- "https://code.highcharts.com/mapdata/custom/world.js"
 tmpfile <- tempfile(fileext = ".json")
 download.file(url, tmpfile)
 
-world <- readLines(tmpfile)
+world <- geojson_read(tmpfile)
 world <- gsub(".* = ", "", world)
 
-map <- jsonlite::fromJSON(world, simplifyVector = FALSE)
-
+map <- geo
+# map <- jsonlite::fromJSON(world, simplifyVector = FALSE)
 
 
 head(GNI2010)
 
 ddta <- GNI2010 %>% 
   select(iso3, value = GNI) %>% 
-  rlist::list.parse() %>% 
-  setNames(NULL)
+  list.parse3()
 
 head(ddta)
 
@@ -114,11 +110,7 @@ highchart(type = "map", debug = TRUE) %>%
   hc_legend(layout = "vertical", align = "right",
             valueDecimals = 0, valueSuffix = "%")
 
-
-
-
 #### EX 2 ####
-
 url <- "https://code.highcharts.com/mapdata/countries/us/us-all.js"
 tmpfile <- tempfile(fileext = ".json")
 download.file(url, tmpfile)
@@ -132,17 +124,16 @@ highchart(type = "map", debug = TRUE) %>%
                 mapData = map)
 
 #### EX 3 ####
-
 library("geojsonio")
-url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
+url <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
 tmpfile <- tempfile(fileext = ".json")
 download.file(url, tmpfile)
-california <- geojson_read(tmpfile)
-
+world <- geojson_read(tmpfile)
 
 highchart(type = "map", debug = TRUE) %>% 
-  hc_add_series(name = 'Basemap',
-                mapData = california)
+  hc_add_series(name = "worldgeojson", mapData = world)
+
+
 
 
 

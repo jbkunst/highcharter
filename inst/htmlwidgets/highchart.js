@@ -15,7 +15,7 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
     
     if(x.debug) {
-      window.x = x;
+      window.xclone = JSON.parse(JSON.stringify(x));
       console.log(el);
       console.log("hc_opts", x.hc_opts);
       console.log("theme", x.theme);
@@ -68,6 +68,14 @@ HTMLWidgets.widget({
       $("#" + el.id).highcharts('StockChart', x.hc_opts);  
     } else if (x.type == "map"){
       if(x.debug) console.log("charting MAP");
+      
+      x.hc_opts.series = _.each(x.hc_opts.series, function(e){
+        if(!(e.type === undefined)) {
+          e.data = Highcharts.geojson(e.data, e.type);
+        }
+        return e;
+      })
+      
       $("#" + el.id).highcharts('Map', x.hc_opts);  
     }
     
