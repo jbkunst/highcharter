@@ -570,7 +570,7 @@ volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&
 
 highchart(type = "map", debug = TRUE) %>% 
   hc_add_series(mapData = world, showInLegend = FALSE) %>% 
-  hc_add_series(data = marine, type = "mapline",
+  hc_add_series(data = marine, type = "mapline",  lineWidth = 2,
                 name = "Marine currents", color = 'rgba(0, 0, 80, 0.75)',
                 states = list(hover = list(color = "#BADA55")),
                 tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
@@ -589,10 +589,16 @@ highchart(type = "map", debug = TRUE) %>%
 #' 
 #' Think like *ggplot*. The resulting chart is a `highchart` object so
 #' you can modify attributes like titles, tootlips or add themes. 
-
-data(diamonds, package = "ggplot2")
+#' 
+#' ### Numeric
+x <- rgamma(400, 10, 5)
+class(x)
+hist(x)
+hchart(x)
 
 #' ### Character, Factor
+data(diamonds, package = "ggplot2")
+
 x <- diamonds$cut
 class(x)
 plot(x)

@@ -11,6 +11,9 @@
 #' @export
 hchart <- function(x, ...){
   
+  if (any(class(x) == "numeric"))
+    return(hchart.numeric(x, ...))
+  
   if (any(class(x) %in% c("character", "factor")))
     return(hchart.character(x, ...))
   
@@ -28,6 +31,25 @@ hchart <- function(x, ...){
   
   message("x have a class not supported yet")
   invisible()
+}
+
+hchart.numeric <- function(x, ...) {
+  
+  h <- hist(x, plot = FALSE)
+
+  d <- unique(diff(h$breaks))
+  
+  ds <- data_frame(x = h$mids,
+                   y = h$counts, 
+                   name = sprintf("(%s, %s]",x - d/2, x + d/2)) %>% 
+    list.parse3()
+  
+  highchart() %>% 
+    hc_tooltip(formatter = JS("function() { return  this.point.name + '<br/>' + this.y; }")) %>% 
+    hc_add_series(data = ds, type = "column",
+                  pointRange = d, groupPadding = 0,
+                  pointPadding =  0, borderWidth = 0, ...)
+  
 }
 
 hchart.character <- function(x, type = "column", ...) {

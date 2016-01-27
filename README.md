@@ -12,12 +12,12 @@ modified , or deleted. I will ensure have the minimum impact.
 ## Why highcharter?
 
 - [Various](http://jkunst.com/highcharter/#shorcuts-for-add-data-data-series) chart type with the same style (scatters, time series, heatmaps, treemap, more coming soon).
-- [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - [Piping styling](http://jkunst.com/highcharter/#quick-demo).
 - Support [Highstock charts](http://jkunst.com/highcharter/#highstocks). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
-- Support [Highmaps charts](http://jkunst.com/highcharter/#highmaps). 
+- Support [Highmaps charts](http://jkunst.com/highcharter/#highmaps). It's easy to create choropleths or add information in geojson format.
 - Have [*ggfortify*-like](https://github.com/sinhrks/ggfortify) funcionalities. This is chart a lot
-of **R** objects with `hchart(x)`. character, factors, ts, mts, xts, ohlc, dist are supported.
+of **R** objects with `hchart(x)`. nuermic, character, factors, ts, mts, xts, ohlc, dist are supported.
+- [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - <3 to Highcharts.com
 
 ## Licence 

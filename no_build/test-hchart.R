@@ -12,6 +12,13 @@ library("quantmod")
 library("xts")
 data(diamonds, package = "ggplot2")
 
+
+#' ### Numeric
+x <- rgamma(400, 10, 5)
+class(x)
+hist(x)
+hchart(x)
+
 #' ### Character, Factor
 x <- diamonds$cut
 class(x)
