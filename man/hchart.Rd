@@ -2,19 +2,22 @@
 % Please edit documentation in R/hchart.R
 \name{hchart}
 \alias{hchart}
-\title{Function to chart R objects}
+\title{Create a highchart object from a particular data type}
 \usage{
-hchart(x, ...)
+hchart(object, ...)
 }
 \arguments{
-\item{x}{A R object.}
+\item{object}{A R object.}
 
 \item{...}{Aditional arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This is a generic function to plot various object including
-character, factors, time series (\code{xts}, \code{ts} 
-and \code{mts}).
+\code{hchart} uses \code{highchart} to draw a particular plot for an 
+object of a particular class in a single command. This defines the S3 
+generic that other classes and packages can extend.
+}
+\details{
+Run \code{methods(hchart)} to see what objects are supported.
 }
 

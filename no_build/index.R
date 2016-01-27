@@ -8,7 +8,7 @@
 #'     toc: yes
 #' ---
 
-#' <!-- index.html is generated from ibdex.R -->
+#' <!-- index.html is generated from index.R -->
 #+ echo=FALSE
 ## Styles page ####
 #' <script>
@@ -519,13 +519,19 @@ hc_tm %>%
 
 ##' ## Labels & Values ####
 
+data("favorite_bars")
 data("favorite_pies")
 
 highchart() %>% 
-  hc_title(text = "This is a bar graph describing my favorite pies") %>%
+  hc_title(text = "This is a bar graph describing my favorite pies
+           including a pie chart describing my favorite bars") %>%
   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
-                             colorByPoint = TRUE, type = "column") %>% 
+                              colorByPoint = TRUE, type = "column") %>% 
+  hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
+                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
+                              name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
+                              size = 100, dataLabels = list(enabled = FALSE)) %>% 
   hc_yAxis(title = list(text = "percentage of tastiness"),
            labels = list(format = "{value}%"), max = 100) %>% 
   hc_xAxis(categories = favorite_pies$pie) %>% 
@@ -571,7 +577,7 @@ volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&
 highchart(type = "map", debug = TRUE) %>% 
   hc_add_series(mapData = world, showInLegend = FALSE) %>% 
   hc_add_series(data = marine, type = "mapline",  lineWidth = 2,
-                name = "Marine currents", color = 'rgba(0, 0, 80, 0.75)',
+                name = "Marine currents", color = 'rgba(0, 0, 80, 0.5)',
                 states = list(hover = list(color = "#BADA55")),
                 tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
   hc_add_series(data = plates, type = "mapline",
@@ -591,33 +597,58 @@ highchart(type = "map", debug = TRUE) %>%
 #' you can modify attributes like titles, tootlips or add themes. 
 #' 
 #' ### Numeric
-x <- rgamma(400, 10, 5)
+x <- c(rnorm(500), rnorm(500, 6, 2))
 class(x)
-hist(x)
+hist(x, breaks = "FD") # by default hchart use *Freedman-Diaconis* rule 
+hchart(x)
+
+#' ### Histogram
+x <- hist(rbeta(300, 0.2, 4), plot = FALSE)
+class(x)
+plot(x) # by default hchart use *Freedman-Diaconis* rule 
 hchart(x)
 
 #' ### Character, Factor
 data(diamonds, package = "ggplot2")
-
 x <- diamonds$cut
 class(x)
 plot(x)
 hchart(x)
+hchart(as.character(x), type = "pie")
 
-#' ### Distance matrix 
-x <- dist(mtcars[ order(mtcars$hp),])
+#' ### ts
+x <- LakeHuron
 class(x)
 plot(x)
 hchart(x)
 
-#' ### Univariate quantmod package
+#' ### xts quantmod package
+library("quantmod")
 x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
+class(x)
+plot(x)
+hchart(x)
+
+#' ### acf(s)
+x <- acf(diff(AirPassengers), plot = FALSE)
+class(x)
+plot(x)
+hchart(x)
+
+#' ### Multivariate Time series
+x <- cbind(mdeaths, fdeaths)
 class(x)
 plot(x)
 hchart(x)
 
 #' ### OHLC series
 x <- getSymbols("AAPL", src = "yahoo", auto.assign = FALSE)
+class(x)
+plot(x)
+hchart(x)
+
+#' ### Distance matrix 
+x <- dist(mtcars[ order(mtcars$hp),])
 class(x)
 plot(x)
 hchart(x)
@@ -727,6 +758,60 @@ hc %>% hc_add_theme(thm)
 ##' # More Examples ####
 
 ##' ## Highcharts home page example ####
+
+#' Example in http://www.highcharts.com/
+
+rainfall <- c(49.9, 71.5, 106.4, 129.2, 144, 176,
+              135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
+
+temperature <- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
+                 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
+
+col1 <- hc_get_colors()[3]
+col2 <- hc_get_colors()[2]
+
+highchart() %>% 
+  hc_title(text = "Tokyo Climate") %>% 
+  hc_legend(enabled = FALSE) %>% 
+  hc_xAxis(categories = month.abb) %>% 
+  hc_yAxis(
+    list(
+      title = list(text = "Temperature"),
+      align = "left",
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = "{value} &#176;C", useHTML = TRUE)
+    ),
+    list(
+      title = list(text = "Rainfall"),
+      align = "right",
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = "{value} mm"),
+      opposite = TRUE
+    )
+  ) %>% 
+  #
+  hc_tooltip(formatter = htmlwidgets::JS("function(){
+                                         if('Sunshine' == this.series.name){
+                                         return  '<b>' + this.point.name + ': </b>' + this.y
+                                         } else {
+                                         unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
+                                         return (this.x + ': ' + this.y + ' ' + unts)
+                                         }}"),
+             useHTML = TRUE) %>% 
+  hc_add_series(name = "Rainfall", type = "column",
+                data = rainfall, yAxis = 1) %>% 
+  hc_add_series(name = "Temperature", type = "spline",
+                data = temperature) %>% 
+  hc_add_series(name = "Sunshine", type = "pie",
+                data = list(list(y = 2020, name = "Sunshine hours",
+                                 sliced = TRUE, color = col1),
+                            list(y = 6740, name = "Non sunshine hours (including night)",
+                                 color = col2,
+                                 dataLabels = list(enabled = FALSE))),
+                center = c('20%', 45),
+                size = 80)
 
 ##' ## Heatmap ####
 
