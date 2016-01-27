@@ -396,9 +396,9 @@ hc_rm_series <- function(hc, name = NULL) {
   
 }
 
-#' @rdname hc_add_series
+#' @rdname hc_rm_series
 #' @export
-hc_rm_serie <- hc_add_series
+hc_rm_serie <- hc_rm_series
 
 #' Adding scrollbar options to highstock objects
 #' 
