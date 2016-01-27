@@ -376,9 +376,9 @@ hc_add_serie <- hc_add_series
 
 #' Removing series to highchart objects
 #'
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param name The serie's name to delete.
 #' 
-#' @rdname hc_add_series
 #' @export
 hc_rm_series <- function(hc, name = NULL) {
   

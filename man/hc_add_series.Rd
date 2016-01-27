@@ -3,29 +3,19 @@
 \name{hc_add_series}
 \alias{hc_add_serie}
 \alias{hc_add_series}
-\alias{hc_rm_serie}
-\alias{hc_rm_series}
 \title{Adding and removing series from highchart objects}
 \usage{
 hc_add_series(hc, ...)
 
-hc_rm_series(hc, name = NULL)
-
 hc_add_serie(hc, ...)
-
-hc_rm_serie(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
-
-\item{name}{The serie's name to delete.}
 }
 \description{
 Adding and removing series from highchart objects
-
-Removing series to highchart objects
 }
 \examples{
 
