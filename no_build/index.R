@@ -519,26 +519,71 @@ hc_tm %>%
 
 ##' ## Labels & Values ####
 
-data("favorite_bars")
 data("favorite_pies")
 
 highchart() %>% 
-  hc_title(text = "This is a bar graph describing my favorite pies
-                   including a pie chart describing my favorite bars") %>%
+  hc_title(text = "This is a bar graph describing my favorite pies") %>%
   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
                              colorByPoint = TRUE, type = "column") %>% 
-  hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
-                             colors = substr(terrain.colors(5), 0 , 7), type = "pie",
-                             name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
-                             size = 100, dataLabels = list(enabled = FALSE)) %>% 
   hc_yAxis(title = list(text = "percentage of tastiness"),
            labels = list(format = "{value}%"), max = 100) %>% 
   hc_xAxis(categories = favorite_pies$pie) %>% 
   hc_legend(enabled = FALSE) %>% 
   hc_tooltip(pointFormat = "{point.y}%")
 
-##' # `hchart()` function
+##' ## Maps & geojson ####
+
+data(worldgeojson)
+data(GNI2010, package = "treemap")
+
+head(GNI2010)
+
+highchart() %>% 
+  hc_add_series_map(worldgeojson, GNI2010,
+                    value = "GNI", joinBy = "iso3")
+
+#' 
+#' Other fun example. Load various geojson and chart them all.
+#' 
+library("httr")
+
+world <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json" %>% 
+  GET() %>% 
+  content() %>% 
+  jsonlite::fromJSON(simplifyVector = FALSE)
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
+marine <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
+  GET() %>% 
+  content()
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
+plates <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
+  GET() %>% 
+  content()
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
+volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
+  GET() %>% 
+  content()
+
+highchart(type = "map", debug = TRUE) %>% 
+  hc_add_series(mapData = world, showInLegend = FALSE) %>% 
+  hc_add_series(data = marine, type = "mapline",
+                name = "Marine currents", color = 'rgba(0, 0, 80, 0.75)',
+                states = list(hover = list(color = "#BADA55")),
+                tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
+  hc_add_series(data = plates, type = "mapline",
+                name = "Plates", color = 'rgba(10, 10, 10, 0.5)',
+                tooltip = list(pointFormat = "{point.properties.TIPO}")) %>% 
+  hc_add_series(data = volcano, type = "mappoint",
+                name = "Volcanos", color = 'rgba(255, 0, 80, 0.5)',
+                tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
+  hc_mapNavigation(enabled = TRUE) %>% 
+  hc_title(text = "Testing geojson format")
+
+##' # `hchart()` function ####
 #'
 #' Right now there are some R object to plot wiht this generic function. 
 #' 
@@ -552,7 +597,6 @@ x <- diamonds$cut
 class(x)
 plot(x)
 hchart(x)
-hchart(x, type = "pie")
 
 #' ### Distance matrix 
 x <- dist(mtcars[ order(mtcars$hp),])
@@ -571,58 +615,6 @@ x <- getSymbols("AAPL", src = "yahoo", auto.assign = FALSE)
 class(x)
 plot(x)
 hchart(x)
-
-##' ## geojson ####
-
-data(worldgeojson)
-data(GNI2010, package = "treemap")
-
-head(GNI2010)
-
-highchart() %>% 
-  hc_add_series_map(worldgeojson, GNI2010,
-                    value = "GNI", joinBy = "iso3")
-
-#' 
-#' Other fun example. Load various geojson and chart them all.
-#' 
-
-urlwd <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
-tmpfile <- tempfile(fileext = ".json")
-download.file(urlwd, tmpfile)
-world <- geojson_read(tmpfile)
-names(world)
-
-# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
-marine <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
-  readLines() %>% 
-  fromJSON(simplifyVector = FALSE)
-
-# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
-plates <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
-  readLines() %>% 
-  fromJSON(simplifyVector = FALSE)
-
-# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
-volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
-  readLines() %>% 
-  fromJSON(simplifyVector = FALSE)
-
-
-highchart(type = "map", debug = TRUE) %>% 
-  hc_add_series(mapData = world, showInLegend = FALSE) %>% 
-  hc_add_series(data = marine, type = "mapline",
-                name = "Marine currents", color = 'rgba(0, 0, 80, 0.75)',
-                states = list(hover = list(color = "#BADA55")),
-                tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-  hc_add_series(data = plates, type = "mapline",
-                name = "Plates", color = 'rgba(10, 10, 10, 0.5)',
-                tooltip = list(pointFormat = "{point.properties.TIPO}")) %>% 
-  hc_add_series(data = volcano, type = "mappoint",
-                name = "Volcanos", color = 'rgba(255, 0, 80, 0.5)',
-                tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-  hc_mapNavigation(enabled = TRUE) %>% 
-  hc_title(text = "Testing geojson format")
 
 ##' # Themes ####
 hc <- highchart() %>% 
@@ -729,61 +721,6 @@ hc %>% hc_add_theme(thm)
 ##' # More Examples ####
 
 ##' ## Highcharts home page example ####
-
-#' Example in http://www.highcharts.com/
-
-rainfall <- c(49.9, 71.5, 106.4, 129.2, 144, 176,
-              135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
-
-temperature <- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
-                 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
-
-col1 <- hc_get_colors()[3]
-col2 <- hc_get_colors()[2]
-
-highchart() %>% 
-  hc_title(text = "Tokyo Climate") %>% 
-  hc_legend(enabled = FALSE) %>% 
-  hc_xAxis(categories = month.abb) %>% 
-  hc_yAxis(
-    list(
-      title = list(text = "Temperature"),
-      align = "left",
-      showFirstLabel = FALSE,
-      showLastLabel = FALSE,
-      labels = list(format = "{value} &#176;C", useHTML = TRUE)
-    ),
-    list(
-      title = list(text = "Rainfall"),
-      align = "right",
-      showFirstLabel = FALSE,
-      showLastLabel = FALSE,
-      labels = list(format = "{value} mm"),
-      opposite = TRUE
-    )
-  ) %>% 
-  #
-  hc_tooltip(formatter = htmlwidgets::JS("function(){
-                              if('Sunshine' == this.series.name){
-                                return  '<b>' + this.point.name + ': </b>' + this.y
-                              } else {
-                                unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
-                                return (this.x + ': ' + this.y + ' ' + unts)
-                              }
-                            }"),
-             useHTML = TRUE) %>% 
-  hc_add_series(name = "Rainfall", type = "column",
-               data = rainfall, yAxis = 1) %>% 
-  hc_add_series(name = "Temperature", type = "spline",
-               data = temperature) %>% 
-  hc_add_series(name = "Sunshine", type = "pie",
-               data = list(list(y = 2020, name = "Sunshine hours",
-                                sliced = TRUE, color = col1),
-                           list(y = 6740, name = "Non sunshine hours (including night)",
-                                color = col2,
-                                dataLabels = list(enabled = FALSE))),
-               center = c('20%', 45),
-               size = 80)
 
 ##' ## Heatmap ####
 

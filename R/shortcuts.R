@@ -269,6 +269,28 @@ hc_add_serie_treemap <- hc_add_series_treemap
 #' @param ... Aditional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
+#' @examples 
+#' 
+#' library("viridisLite")
+#' library("dplyr")
+#' data(unemployment)
+#' data(uscountygeojson)
+#'  
+#' dclass <- data_frame(from = seq(0, 10, by = 2),
+#'                      to = c(seq(2, 10, by = 2), 50),
+#'                      color = substring(viridis(length(from), option = "C"), 0, 7))
+#'  dclass <- list.parse3(dclass)
+# 
+#' highchart() %>% 
+#'   hc_title(text = "US Counties unemployment rates, April 2015") %>% 
+#'   hc_add_series_map(uscountygeojson, unemployment,
+#'                     value = "value", joinBy = "code") %>%
+#'   hc_colorAxis(dataClasses = dclass) %>%
+#'   hc_legend(layout = "vertical", align = "right",
+#'             floating = TRUE, valueDecimals = 0,
+#'             valueSuffix = "%") %>%
+#'   hc_mapNavigation(enabled = TRUE)
+#'   
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
