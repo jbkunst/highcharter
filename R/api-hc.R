@@ -370,6 +370,10 @@ hc_add_series <- function(hc, ...) {
   
 }
 
+#' @rdname hc_add_series
+#' @export
+hc_add_serie <- hc_add_series
+
 #' Removing series to highchart objects
 #'
 #' @param name The serie's name to delete.
@@ -394,23 +398,7 @@ hc_rm_series <- function(hc, name = NULL) {
 
 #' @rdname hc_add_series
 #' @export
-hc_add_serie <- function(hc, ...) {
-
-  .Deprecated("hc_add_series")
-  
-  hc_add_series(hc, ...)
-  
-}
-
-#' @rdname hc_add_series
-#' @export
-hc_rm_serie <- function(hc, ...) {
-  
-  .Deprecated("hc_add_series")
-  
-  hc_rm_series(hc, ...)
-  
-}
+hc_rm_serie <- hc_add_series
 
 #' Adding scrollbar options to highstock objects
 #' 
