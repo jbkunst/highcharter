@@ -139,6 +139,7 @@ hc_add_serie_xts <- hc_add_series_xts
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A \code{OHLC} object from the \pkg{quantmod} package.
+#' @param type The type of chart. Can be \code{candlestick} or \code{ohlc}.
 #' @param ... Aditional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
@@ -174,7 +175,7 @@ hc_add_serie_xts <- hc_add_series_xts
 #' @importFrom stringr str_extract
 #' @importFrom methods hasArg
 #' @export
-hc_add_series_ohlc <- function(hc, x, ...){
+hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
   assertthat::assert_that(.is_highchart(hc), is.xts(x), is.OHLC(x))
   
@@ -194,7 +195,7 @@ hc_add_series_ohlc <- function(hc, x, ...){
 
   hc <- hc %>% hc_add_series(data = xds,
                              name = nm,
-                             type = "candlestick")
+                             type = type)
   
   hc
   

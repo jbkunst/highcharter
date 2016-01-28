@@ -54,6 +54,13 @@ class(x)
 plot(x)
 hchart(x)
 
+#' ### xts ohlc
+x <- getSymbols("YHOO", auto.assign = FALSE)
+class(x)
+plot(x)
+hchart(x)
+hchart(x, type = "ohlc")
+
 #' ### acf(s)
 x <- acf(diff(AirPassengers), plot = FALSE)
 class(x)
@@ -62,12 +69,6 @@ hchart(x)
 
 #' ### Multivariate Time series
 x <- cbind(mdeaths, fdeaths)
-class(x)
-plot(x)
-hchart(x)
-
-#' ### OHLC series
-x <- getSymbols("AAPL", src = "yahoo", auto.assign = FALSE)
 class(x)
 plot(x)
 hchart(x)

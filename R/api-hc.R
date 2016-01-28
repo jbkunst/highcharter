@@ -1,4 +1,4 @@
-#' @import rlist
+#' @importFrom rlist list.merge
 .hc_opt <- function(hc, name, ...) {
   
   assertthat::assert_that(.is_highchart(hc))
@@ -268,7 +268,7 @@ hc_credits <- function(hc, ...) {
 #' Function to set the axis color to highcharts objects.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highmaps#colorAxis}. 
 #' 
 #' @examples 
 #' 

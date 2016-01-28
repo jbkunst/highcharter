@@ -22,13 +22,14 @@ list.parse2 <- function(df) {
   
 }
 
+#' @importFrom rlist list.parse
 #' @rdname list.parse2  
 #' @export 
 list.parse3 <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  setNames(rlist::list.parse(df), NULL)
+  setNames(list.parse(df), NULL)
   
 }
 

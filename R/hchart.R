@@ -68,7 +68,11 @@ hchart.factor <- hchart.character
 
 #' @export
 hchart.xts <- function(object, ...) {
-  hc_add_series_xts(highchart(type = "stock"), object, ...)
+  
+  if (is.OHLC(object))
+    hc_add_series_ohlc(highchart(type = "stock"), object, ...)
+  else
+    hc_add_series_xts(highchart(type = "stock"), object, ...)
 }
 
 #' @export
@@ -109,11 +113,6 @@ hchart.acf <- function(object, ...){
     
   hc
   
-}
-
-#' @export
-hchart.ohlc <- function(object, ...) {
-  hc_add_series_ohlc(highchart(type = "stock"), object, ...)
 }
 
 #' @export

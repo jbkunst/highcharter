@@ -19,7 +19,7 @@ hc_add_series_drilldown <- function(hc, df, percent = FALSE) {
   
   assert_that(is.data.frame(df), nrow(df) > 0)
   
-  # library("ggplot2")
+  # data(diamonds, package = "ggplot2")
   # df <- diamonds %>% select(cut, color, clarity)
   # df <- diamonds %>% select(cut, color)
   
@@ -29,7 +29,9 @@ hc_add_series_drilldown <- function(hc, df, percent = FALSE) {
     mutate_("value" = ifelse(percent, 1/nrow(df), 1)) %>% 
     summarize_("value" = "sum(value)") %>% 
     ungroup() %>% 
-    map_if(is.factor, as.character)
+    map_if(is.factor, as.character) %>% 
+    as.data.frame(stringsAsFactors = FALSE) %>% 
+    tbl_df()
   
   # data series
   ds <- dfsum %>%

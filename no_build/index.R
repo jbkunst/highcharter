@@ -217,11 +217,13 @@ hc
 library("quantmod")
 
 x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("SPY", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
+z <- getSymbols("YHOO", auto.assign = FALSE)
 
 highchart() %>% 
   hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y)
+  hc_add_series_ohlc(y, type = "ohlc") %>% 
+  hc_add_series_ohlc(z, type = "line")
 
 ##' ## Highmaps #### 
 
@@ -574,7 +576,7 @@ volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&
   GET() %>% 
   content()
 
-highchart(type = "map", debug = TRUE) %>% 
+highchart(type = "map") %>% 
   hc_add_series(mapData = world, showInLegend = FALSE) %>% 
   hc_add_series(data = marine, type = "mapline",  lineWidth = 2,
                 name = "Marine currents", color = 'rgba(0, 0, 80, 0.5)',
@@ -629,6 +631,13 @@ class(x)
 plot(x)
 hchart(x)
 
+#' ### xts ohlc
+x <- getSymbols("YHOO", auto.assign = FALSE)
+class(x)
+plot(x)
+hchart(x)
+hchart(x, type = "ohlc")
+
 #' ### acf(s)
 x <- acf(diff(AirPassengers), plot = FALSE)
 class(x)
@@ -641,18 +650,11 @@ class(x)
 plot(x)
 hchart(x)
 
-#' ### OHLC series
-x <- getSymbols("AAPL", src = "yahoo", auto.assign = FALSE)
-class(x)
-plot(x)
-hchart(x)
-
 #' ### Distance matrix 
 x <- dist(mtcars[ order(mtcars$hp),])
 class(x)
 plot(x)
 hchart(x)
-
 ##' # Themes ####
 hc <- highchart() %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 

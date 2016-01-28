@@ -9,7 +9,7 @@ hc_colorAxis(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments are defined in \url{http://www.highcharts.com/docs/maps/color-axis}.}
+\item{...}{Arguments are defined in \url{http://api.highcharts.com/highmaps#colorAxis}.}
 }
 \description{
 Function to set the axis color to highcharts objects.
