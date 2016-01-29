@@ -11,16 +11,6 @@ library("highcharter")
 library("xts")
 
 
-x <- acf(mdeaths, plot = TRUE)
-class(hist(x))
-
-library(forecast)
-library(ggfortify)
-d.arima <- auto.arima(AirPassengers)
-d.forecast <- forecast(d.arima, level = c(95), h = 50)
-autoplot(d.forecast)
-
-
 #' ### Numeric
 x <- c(rnorm(500), rnorm(500, 6, 2))
 class(x)
@@ -72,6 +62,24 @@ x <- cbind(mdeaths, fdeaths)
 class(x)
 plot(x)
 hchart(x)
+
+#' ### Forecasts
+library("forecast")
+d.arima <- forecast::auto.arima(AirPassengers)
+object <- forecast::forecast(d.arima, level = c(95))
+class(object)
+plot(object)
+hchart(object)
+
+object <- forecast(ets(USAccDeaths), h = 48)
+class(object)
+plot(object)
+hchart(object)
+
+object <- forecast(Arima(WWWusage, c(3,1,0)))
+class(object)
+plot(object)
+hchart(object)
 
 #' ### Distance matrix 
 x <- dist(mtcars[ order(mtcars$hp),])

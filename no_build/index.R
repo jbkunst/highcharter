@@ -650,33 +650,31 @@ class(x)
 plot(x)
 hchart(x)
 
+#' #### Forecasts
+library("forecast")
+d.arima <- forecast::auto.arima(AirPassengers)
+object <- forecast::forecast(d.arima, level = c(95))
+class(object)
+plot(object)
+hchart(object)
+
+object <- forecast(ets(USAccDeaths), h = 48)
+class(object)
+plot(object)
+hchart(object)
+
+object <- forecast(Arima(WWWusage, c(3,1,0)))
+class(object)
+plot(object)
+hchart(object)
+
 #' ### Distance matrix 
 x <- dist(mtcars[ order(mtcars$hp),])
 class(x)
 plot(x)
 hchart(x)
+
 ##' # Themes ####
-hc <- highchart() %>% 
-  hc_title(text = "Motor Trend Car Road Tests") %>% 
-  hc_subtitle(text = "Source: 1974 Motor Trend US magazine") %>% 
-  hc_xAxis(title = list(text = "Weight")) %>% 
-  hc_yAxis(title = list(text = "Miles/gallon")) %>% 
-  hc_chart(zoomType = "xy") %>% 
-  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
-                       mtcars$drat, mtcars$hp,
-                       rownames(mtcars),
-                       dataLabels = list(
-                         enabled = TRUE,
-                         format = "{point.label}"
-                       )) %>% 
-  hc_tooltip(useHTML = TRUE,
-             headerFormat = "<table>",
-             pointFormat = paste("<tr><th colspan=\"1\"><b>{point.label}</b></th></tr>",
-                                 "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
-                                 "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
-                                 "<tr><th>Drat</th><td>{point.z} </td></tr>",
-                                 "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
-             footerFormat = "</table>")
 
 ##' ## Default ####
 

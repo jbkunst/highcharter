@@ -15,7 +15,7 @@
       downloadPDF = "Download PDF document",
       downloadPNG = "Download PNG image",
       downloadSVG = "Download SVG vector image",
-      drillUpText = "Back to list(series.name)",
+      drillUpText = "Back to {series.name}",
       invalidDate = NULL,
       loading = "Loading...",
       months = c( "January" , "February" , "March" , "April" , "May" , "June" ,

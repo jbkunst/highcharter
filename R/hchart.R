@@ -81,6 +81,35 @@ hchart.ts <- function(object, ...) {
 }
 
 #' @export
+hchart.forecast <- function(object, fillOpacity = 0.3, ...){
+  
+  hc <- highchart() %>% 
+    hc_add_serie_ts(object$x, name = "Series", ...) %>% 
+    hc_add_serie_ts(object$mean, name = object$method, ...)
+  
+  # time, names (forecast)
+  tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean)))
+  nmf <- paste("level", object$level)
+  
+  for (m in seq(ncol(object$upper))) {
+    
+    dsbands <- data_frame(t = tmf,
+                          u = as.vector(object$upper[, m]),
+                          l = as.vector(object$lower[, m])) %>% 
+      list.parse2()
+    hc <- hc %>% hc_add_series(data = dsbands,
+                               name = nmf[m],
+                               type = "arearange",
+                               fillOpacity = fillOpacity,
+                               zIndex = 0,
+                               lineWidth = 0, ...)
+  }
+  
+  hc
+  
+}
+
+#' @export
 hchart.acf <- function(object, ...){
   
   ytitle <- switch(object$type,
