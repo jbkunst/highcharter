@@ -440,6 +440,32 @@ hc_drilldown <- function(hc, ...) {
   
 }
 
+#' Series options from highchart objects
+#'
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#series}. 
+#'
+#' @examples
+#' 
+#' highchart() %>%  
+#'   hc_series(
+#'     list(
+#'       name = "Tokyo",
+#'       data = c(7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
+#'     ),
+#'     list(
+#'       name = "London",
+#'       data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)
+#'     )
+#'   )
+#'
+#' @export
+hc_series <- function(hc, ...) {
+  
+  .hc_opt(hc, "series", ...)
+  
+}
+
 #' Adding and removing series from highchart objects
 #'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 

@@ -13,9 +13,9 @@ License: MIT + file LICENSE
 URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 RoxygenNote: 5.0.1
-Depends:
+Depends: 
     R (>= 2.10)
-Imports:
+Imports: 
     htmlwidgets,
     purrr,
     rlist,
@@ -30,3 +30,5 @@ Imports:
     quantmod,
     methods,
     tidyr
+Vignettes:
+    Replicating Highcharts Demos
