@@ -7,8 +7,8 @@
 #' @param hc_opts A \code{list} object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
 #' @param theme A \code{hc_theme} class object
-#' @param type A character value to set if use Highstock instead of
-#'    Highcharts.
+#' @param type A character value to set if use Highchart, Highstock or
+#'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param debug A boolean value if you want to print in the browser console the 
@@ -21,6 +21,8 @@ highchart <- function(hc_opts = list(), theme = NULL,
                       type = "chart",
                       width = NULL, height = NULL,
                       debug = FALSE) {
+  
+  assertthat::assert_that(type %in% c("chart", "stock", "map"))
   
   opts <- getOption("highcharter.options", list())
 

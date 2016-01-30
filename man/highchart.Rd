@@ -13,8 +13,8 @@ highchart(hc_opts = list(), theme = NULL, type = "chart", width = NULL,
 
 \item{theme}{A \code{hc_theme} class object}
 
-\item{type}{A character value to set if use Highstock instead of
-Highcharts.}
+\item{type}{A character value to set if use Highchart, Highstock or
+Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 
 \item{width}{A numeric input in pixels.}
 
