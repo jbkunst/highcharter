@@ -46,15 +46,14 @@
 #' <style>
 #' 
 #'   .main-container {
-#'     max-width: 1000px;
-#'     margin-left: 100px;
+#'     max-width: 960px;
+#'     margin-left: auto;
 #'     margin-right: auto;
 #'   }
 #'   
 #'   h1, h2, h3, h4 {
 #'       color: #1A237E;
 #'       font-family: 'Roboto Condensed', sans-serif;
-#'       text-transform: uppercase;
 #'     }
 #'     
 #'   p, ul, .back-to-top {
@@ -63,12 +62,10 @@
 #'   font-weight: 400;
 #'   }
 #'   
-#'   p, pre, ul {
-#'     max-width: 800px
-#'   }
 #'    
 #'  .highchart {
-#'    margin: 50px;
+#'    margin-top: 50px;
+#'    margin-bottom: 50px
 #'  }  
 #'    
 #'   a {
@@ -772,6 +769,53 @@ thm <- hc_theme_merge(
 )
 
 hc %>% hc_add_theme(thm)
+
+##' # Plugins ####
+
+##' ## Draggable points ###
+
+highchart() %>% 
+  hc_chart(animation = FALSE) %>% 
+  hc_title(text = "draggable points demo") %>% 
+  hc_xAxis(categories = month.abb) %>% 
+  hc_plotOptions(
+    series = list(
+      point = list(
+        events = list(
+          drop = JS("function(){
+                   alert(this.series.name + ' ' + this.category + ' ' + Highcharts.numberFormat(this.y, 2))
+          }")
+        )
+      ),
+      stickyTracking = FALSE
+    ),
+    column = list(
+      stacking = "normal"
+    ),
+    line = list(
+      cursor = "ns-resize"
+    )
+  ) %>% 
+  hc_tooltip(yDecimals = 2) %>% 
+  hc_add_series(
+    data = citytemp$tokyo,
+    draggableY = TRUE,
+    dragMinY = 0,
+    type = "column",
+    minPointLength = 2
+  ) %>% 
+  hc_add_series(
+    data = citytemp$new_york,
+    draggableY = TRUE,
+    dragMinY = 0,
+    type = "column",
+    minPointLength = 2
+  ) %>% 
+  hc_add_series(
+    data = citytemp$berlin,
+    draggableY = TRUE
+  )
+
 
 ##' # More Examples ####
 

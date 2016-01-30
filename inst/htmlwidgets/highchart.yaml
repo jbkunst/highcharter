@@ -22,3 +22,4 @@ dependencies:
     - modules/map.js
     - modules/treemap.js
     - modules/reset.js
+    - plugins/draggable-points.js
