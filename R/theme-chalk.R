@@ -4,8 +4,6 @@
 #' 
 #' @examples
 #' 
-#' require("dplyr")
-#' 
 #' highchart() %>% 
 #'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
@@ -60,6 +58,9 @@ hc_theme_chalk <- function(){
       
     ),
     xAxis = list(
+      lineWidth = 1,
+      tickWidth = 1,
+      gridLineColor = "transparent",
       labels = list(
         enabled = TRUE,
         style = list(
@@ -77,14 +78,15 @@ hc_theme_chalk <- function(){
       )
     ),
     yAxis = list(
+      lineWidth = 1,
+      tickWidth = 1,
+      gridLineColor = "transparent",
       labels = list(
         enabled = TRUE,
         style = list(
           color = "#FFFFFF",
           fontSize = "20px"
-          
         )
-        
       ),
       title = list(
         enabled = TRUE,
@@ -93,9 +95,7 @@ hc_theme_chalk <- function(){
           fontSize = "20px"
           
         )
-        
-      ),
-      gridLineColor = "transparent"
+      )
     ),
     tooltip = list(
       backgroundColor = "#333333",
