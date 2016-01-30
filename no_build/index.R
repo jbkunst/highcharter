@@ -1,7 +1,7 @@
 #' ---
 #' title: "highcharter: Just another Highcharts wrapper for R"
 #' author: Joshua Kunst
-#' date: false
+#' date: "`r format(Sys.time(), '%d %m, %Y')`"
 #' output:
 #'   html_document:
 #'     theme: journal
@@ -42,13 +42,37 @@
 #' ga('create', 'UA-17670833-9', 'auto');
 #' ga('send', 'pageview');
 #' </script>
+#' <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
 #' <style>
-#'     h1, h2, h3, h4, .TOC > li {
-#'       color: #1FA67A;
-#'     } 
+#' 
+#'   .main-container {
+#'     max-width: 1000px;
+#'     margin-left: 100px;
+#'     margin-right: auto;
+#'   }
 #'   
+#'   h1, h2, h3, h4 {
+#'       color: #1A237E;
+#'       font-family: 'Roboto Condensed', sans-serif;
+#'       text-transform: uppercase;
+#'     }
+#'     
+#'   p, ul, .back-to-top {
+#'   font-family: 'Lato';
+#'   color: #222;
+#'   font-weight: 400;
+#'   }
+#'   
+#'   p, pre, ul {
+#'     max-width: 800px
+#'   }
+#'    
+#'  .highchart {
+#'    margin: 50px;
+#'  }  
+#'    
 #'   a {
-#'     color: #1FA67A;
+#'     color: #1A237E;
 #'   }
 #'   
 #'   .level2 {
@@ -62,7 +86,7 @@
 #'     right: 0px;
 #'     text-decoration: none;
 #'     color : white;
-#'     background-color : #1FA67A;
+#'     background-color : #1A237E;
 #'     font-size: 12px;
 #'     padding: 1em;
 #'     display: none;
@@ -77,16 +101,10 @@
 #'     margin-right: auto;
 #'   }
 #'   
-#'   .main-container {
-#'     max-width: 850px;
-#'     margin-left: auto;
-#'     margin-right: auto;
-#'   }
 #'   
 #'   .table {
 #'      width: auto;
-#'      margin-left:auto; 
-#'      margin-right:auto;
+#'      margin-left: 200px;
 #'   }
 #'   
 #' </style>
@@ -194,7 +212,7 @@ hc <- hc %>%
               style = list(color = "#B71C1C", fontWeight = "bold")) %>% 
   hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) %>% 
-  hc_add_series(name = "A another data", type = "column", color = "#1FA67A",
+  hc_add_series(name = "A another data", type = "column", color = "#1A237E",
                dataLabels = list(align = "center", enabled = TRUE),
                data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
                         17.0, 16.6, 14.2, 10.3, 6.6, 4.8)) %>% 
@@ -650,7 +668,7 @@ class(x)
 plot(x)
 hchart(x)
 
-#' #### Forecasts
+#' ### Forecasts
 library("forecast")
 d.arima <- forecast::auto.arima(AirPassengers)
 object <- forecast::forecast(d.arima, level = c(95))
