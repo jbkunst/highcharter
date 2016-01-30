@@ -21,7 +21,7 @@ modified , or deleted. I will ensure have the minimum impact.
 - Support [Highstock charts](http://jkunst.com/highcharter/#highstocks). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/#highmaps). It's easy to create choropleths or add information in geojson format.
 - Have [*ggfortify*-like](https://github.com/sinhrks/ggfortify) funcionalities. This is chart a lot
-of **R** objects with `hchart(x)`. numeric, character, factors, ts, mts, xts, ohlc, dist classes are supported.
+of **R** objects with `hchart(x)`. numeric, character, factors, ts, mts, xts, ohlc, forecast, dist classes are supported.
 - [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - <3 to Highcharts.com
 
