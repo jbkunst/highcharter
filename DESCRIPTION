@@ -30,5 +30,6 @@ Imports:
     quantmod,
     methods,
     tidyr
-Vignettes:
-    Replicating Highcharts Demos
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
