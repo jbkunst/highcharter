@@ -5,6 +5,9 @@ Another R wrapper for highchartsjs
 [![codecov.io](https://codecov.io/github/jbkunst/highcharter/coverage.svg?branch=master)](https://codecov.io/github/jbkunst/highcharter?branch=master)
 [![version](http://www.r-pkg.org/badges/version/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
+[![issues](http://issuestats.com/github/jbkunst/highcharter/badge/issue?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
+[![pr](http://issuestats.com/github/jbkunst/highcharter/badge/pr?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
+
 
 **highcharter is in active development**. The functions in the package can be renamed,
 modified , or deleted. I will ensure have the minimum impact.
@@ -20,8 +23,7 @@ modified , or deleted. I will ensure have the minimum impact.
 - [Piping styling](http://jkunst.com/highcharter/#quick-demo).
 - Support [Highstock charts](http://jkunst.com/highcharter/#highstocks). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/#highmaps). It's easy to create choropleths or add information in geojson format.
-- Have [*ggfortify*-like](https://github.com/sinhrks/ggfortify) funcionalities. This is chart a lot
-of **R** objects with `hchart(x)`. numeric, character, factors, ts, mts, xts, ohlc, acf, forecast, dist classes are supported.
+- Plot various R object with [one function](http://jkunst.com/highcharter/#hchart-function). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, ohlc, acf, forecast, dist classes. All in one function.
 - [Themes](http://jkunst.com/highcharter/#themes): Add themes, merge themes or create your own.
 - <3 to Highcharts.com
 
