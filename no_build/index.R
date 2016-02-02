@@ -606,6 +606,13 @@ highchart(type = "map") %>%
   hc_mapNavigation(enabled = TRUE) %>% 
   hc_title(text = "Testing geojson format")
 
+##' # Shiny Integration ####
+#'
+#' Not much to say here. Highcharter is htmlwidlgets powered so it's shiny ready.
+#' See a live example here https://jbkunst.shinyapps.io/highcharter/. The code for the 
+#' app is here https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
+#' 
+
 ##' # `hchart()` function ####
 #'
 #' Right now there are some R object to plot wiht this generic function. 
