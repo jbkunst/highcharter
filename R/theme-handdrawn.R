@@ -1,30 +1,29 @@
-#' Chalk theme for highcharts
+#' Hand Drawn theme for highcharts
 #' 
-#' Chalk theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/chalk/
+#' Hand Drawn theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/hand-drawn/
 #' 
 #' @examples
 #' 
 #' highchart() %>% 
 #'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
-#'                         type = "column") %>% 
-#'   hc_add_theme(hc_theme_chalk())
+#'                         type = "column", color = "black") %>% 
+#'   hc_add_theme(hc_theme_handdrawn())
 #' 
-#' @importFrom grDevices colorRampPalette 
 #' @export
-hc_theme_chalk <- function(){
+hc_theme_handdrawn <- function(){
   
-  cols <- colorRampPalette(c("#FFFFFF", "#8C8984"))(4)
+  cols <- colorRampPalette(c("#171314", "#888782"))(4)
   
   theme <-   
   list(
     colors = cols,
     chart = list(
-      divBackgroundImage = "https://www.amcharts.com/inspiration/chalk/bg.jpg",
+      divBackgroundImage = "https://www.amcharts.com/inspiration/hand-drawn/bg.jpg",
       backgroundColor = "transparent",
       style = list(
-        fontFamily = "Shadows Into Light",
-        color = "#FFFFFF"
+        fontFamily = "Berkshire Swash",
+        color = "#000000"
       )
     ),
     plotOptions = list(
@@ -39,20 +38,20 @@ hc_theme_chalk <- function(){
     title = list(
       style = list(
         fontSize = "30px",
-        color = "#FFFFFF"
+        color = "#000000"
       )
     ),
     subtitle = list(
       style = list(
         fontSize = "20px",
-        color = "#FFFFFF"
+        color = "#000000"
       )
     ),
     legend = list(
       enabled = TRUE,
       itemStyle = list(
         fontSize = "20px",
-        color = "#FFFFFF"
+        color = "#000000"
       )
       
     ),
@@ -61,49 +60,53 @@ hc_theme_chalk <- function(){
       
     ),
     xAxis = list(
+      lineColor = "#000000",
+      tickColor = "#000000",
       lineWidth = 1,
       tickWidth = 1,
       gridLineColor = "transparent",
       labels = list(
         enabled = TRUE,
         style = list(
-          color = "#FFFFFF",
+          color = "#000000",
           fontSize = "20px"
         )
       ),
       title = list(
         enabled = TRUE,
         style = list(
-          color = "#FFFFFF",
+          color = "#000000",
           fontSize = "20px"
           
         )
       )
     ),
     yAxis = list(
+      lineColor = "#000000",
+      tickColor = "#000000",
       lineWidth = 1,
       tickWidth = 1,
       gridLineColor = "transparent",
       labels = list(
         enabled = TRUE,
         style = list(
-          color = "#FFFFFF",
+          color = "#000000",
           fontSize = "20px"
         )
       ),
       title = list(
         enabled = TRUE,
         style = list(
-          color = "#FFFFFF",
+          color = "#000000",
           fontSize = "20px"
           
         )
       )
     ),
     tooltip = list(
-      backgroundColor = "#333333",
+      backgroundColor = "#C9C8C3",
       style = list(
-        color = "#FFFFFF",
+        color = "#000000",
         fontSize = "20px",
         padding = "10px"
         

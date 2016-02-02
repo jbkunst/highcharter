@@ -23,3 +23,5 @@ dependencies:
     - modules/treemap.js
     - modules/reset.js
     - plugins/draggable-points.js
+    - plugins/draggable-legend.js
+    - plugins/pattern-fill-v2.js

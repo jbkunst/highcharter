@@ -575,7 +575,7 @@ hc_rangeSelector <- function(hc, ...) {
   
 }
 
-#' Adding mapNavigation options to highstock charts
+#' Adding mapNavigation options to highmaps charts
 #' 
 #' Options regarding the mapNavigation: A collection of options for zooming 
 #' and panning in a map.
@@ -590,5 +590,19 @@ hc_mapNavigation <- function(hc, ...) {
   
 }
 
+#' Adding patterns to be used in highcharts series
+#' 
+#' Helper function to use the fill patter plugin http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill.
+#' 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{https://github.com/highcharts/pattern-fillhc}. 
+#' 
+#' @export
+hc_defs <- function(hc, ...) {
+  
+  .hc_opt(hc, "defs", ...)
+  
+}
 
 

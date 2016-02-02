@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_mapNavigation}
 \alias{hc_mapNavigation}
-\title{Adding mapNavigation options to highstock charts}
+\title{Adding mapNavigation options to highmaps charts}
 \usage{
 hc_mapNavigation(hc, ...)
 }

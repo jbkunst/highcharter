@@ -709,9 +709,15 @@ hc %>% hc_add_theme(hc_theme_sandsignika())
 
 ##' ## Chalk ####
 #'
-#' Insipired in https://www.amcharts.com/inspiration/chalk/
+#' Insipired in https://www.amcharts.com/inspiration/chalk/.
 
 hc %>% hc_add_theme(hc_theme_chalk())
+
+##' ## Hand Drawn ####
+#'
+#' Insipired in https://www.amcharts.com/inspiration/hand-drawn/ (again!).
+
+hc %>% hc_add_theme(hc_theme_handdrawn())
 
 ##' ## Null ####
 
@@ -772,7 +778,7 @@ hc %>% hc_add_theme(thm)
 
 ##' # Plugins ####
 
-##' ## Draggable points ###
+##' ## Draggable points ####
 
 highchart() %>% 
   hc_chart(animation = FALSE) %>% 
@@ -816,6 +822,31 @@ highchart() %>%
     draggableY = TRUE
   )
 
+##' ## Pattern fill ####
+
+highchart() %>% 
+  hc_title(text = "I'm a pirate looking chart") %>% 
+  hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                        26.5, 23.3, 18.3, 13.9, 9.6),
+                type = "column",
+                color = 'url(#highcharts-default-pattern-0)') %>% 
+  hc_add_theme(hc_theme_handdrawn())
+
+highchart() %>% 
+  hc_title(text = "I'm a old school school chart") %>% 
+  hc_defs(patterns = list(
+    list(id = 'custom-pattern',
+         path = list(d = 'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
+                     stroke = "white",
+                     strokeWidth = 3
+                     )
+         )
+    )) %>% 
+  hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                         26.5, 23.3, 18.3, 13.9, 9.6),
+                type = "area",
+                fillColor = 'url(#custom-pattern)') %>% 
+  hc_add_theme(hc_theme_chalk())
 
 ##' # More Examples ####
 

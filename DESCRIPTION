@@ -30,6 +30,3 @@ Imports:
     quantmod,
     methods,
     tidyr
-Suggests: knitr,
-    rmarkdown
-VignetteBuilder: knitr
