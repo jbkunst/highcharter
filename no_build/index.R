@@ -840,12 +840,12 @@ highchart() %>%
   hc_add_theme(hc_theme_handdrawn())
 
 highchart() %>% 
-  hc_title(text = "I'm a old school school chart") %>% 
+  hc_title(text = "I'm an old school school chart") %>% 
   hc_defs(patterns = list(
     list(id = 'custom-pattern',
          path = list(d = 'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
                      stroke = "white",
-                     strokeWidth = 3
+                     strokeWidth = 1
                      )
          )
     )) %>% 
