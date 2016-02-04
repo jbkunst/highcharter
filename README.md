@@ -12,10 +12,10 @@ Another R wrapper for highchartsjs
 **highcharter is in active development**. The functions in the package can be renamed,
 modified , or deleted. I will ensure have the minimum impact.
 
-## Info
+## Resources
 
-- Official package page: http://jkunst.com/highcharter/
-- Shiny demo: https://jbkunst.shinyapps.io/highcharter/
+- Official package page: http://jkunst.com/highcharter/.
+- Shiny demo: https://jbkunst.shinyapps.io/highcharter/ (code https://github.com/jbkunst/shiny-apps/tree/master/highcharter).
 
 ## Why highcharter?
 
