@@ -84,8 +84,8 @@ hchart.ts <- function(object, ...) {
 hchart.forecast <- function(object, fillOpacity = 0.3, ...){
   
   hc <- highchart() %>% 
-    hc_add_serie_ts(object$x, name = "Series", ...) %>% 
-    hc_add_serie_ts(object$mean, name = object$method, ...)
+    hc_add_serie_ts(object$x, name = "Series", zIndex = 3, ...) %>% 
+    hc_add_serie_ts(object$mean, name = object$method,  zIndex = 2, ...)
   
   # time, names (forecast)
   tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean)))
@@ -101,7 +101,7 @@ hchart.forecast <- function(object, fillOpacity = 0.3, ...){
                                name = nmf[m],
                                type = "arearange",
                                fillOpacity = fillOpacity,
-                               zIndex = 0,
+                               zIndex = 1,
                                lineWidth = 0, ...)
   }
   
