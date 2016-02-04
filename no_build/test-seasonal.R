@@ -1,42 +1,29 @@
-library("seasonal")
+object <- seas(AirPassengers,
+               regression.aictest = c("td", "easter"),
+               outlier.critical = 3)
 
-m <- seas(AirPassengers)
+plot(object)
 
-final(m)
-
-plot(m)
-
-summary(m)
-
-class(m)
-
-m <- seas(x = AirPassengers, 
-          regression.variables = c("td1coef", "easter[1]", "ao1951.May"), 
-          arima.model = "(0 1 1)(0 1 1)", 
-          regression.aictest = NULL,
-          outlier = NULL, 
-          transform.function = "log")
-
-plot(m)
-
-static(m)
-static(m, coef = TRUE)
-
-m <- seas(AirPassengers)
-fcs <- series(m, "forecast.forecasts")
-class(fcs)
-
-hchart(series(seas(AirPassengers), "forecast.forecasts"), color = "red") %>% 
-  hc_add_series_ts(AirPassengers) 
-
-m <- seas(AirPassengers, regression.aictest = c("td", "easter"))
-plot(m)
-plot(m, trend = TRUE)
-
-pacf(resid(m))
-spectrum(diff(resid(m)))
-plot(density(resid(m)))
-qqnorm(resid(m))
-
-inspect(m)
+#' @importFrom seasonal original final trend outlier
+hchart.seas <- function(object, outliers = TRUE, trend = FALSE, ...) {
   
+  hc <- highchart() %>% 
+    hc_add_serie_ts(original(object), name = "original", zIndex = 3, id = "original") %>% 
+    hc_add_serie_ts(final(object), name = "adjusted", zIndex = 2, id = "adjusted") 
+  
+  if (trend) {
+    hc <- hc %>% hc_add_serie_ts(trend(object), name = "trend", zIndex = 1) 
+  }
+  
+  if (outliers) {
+    ol.ts <- outlier(object)  
+    ixd.nna <- !is.na(ol.ts)
+    text <- as.character(ol.ts)[!is.na(ol.ts)]
+    dates <- zoo::as.Date(time(ol.ts))[!is.na(ol.ts)]
+    hc <- hc %>% hc_add_series_flags(dates, text, text,
+                                     name = "outiliers", id = "adjusted") 
+  }
+  
+  hc
+  
+}

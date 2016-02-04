@@ -247,7 +247,7 @@ hc_add_series_flags <- function(hc, dates,
   
   dsflags <- list.parse3(dfflags)
   
-  hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags")
+  hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags", ...)
   
 }
 

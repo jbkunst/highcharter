@@ -29,4 +29,5 @@ Imports:
     xts,
     quantmod,
     methods,
-    tidyr
+    tidyr,
+    seasonal

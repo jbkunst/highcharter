@@ -66,20 +66,29 @@ hchart(x)
 #' ### Forecasts
 library("forecast")
 d.arima <- forecast::auto.arima(AirPassengers)
-object <- forecast::forecast(d.arima, level = c(95, 80))
-class(object)
-plot(object)
-hchart(object)
+x <- forecast::forecast(d.arima, level = c(95, 80))
+class(x)
+plot(x)
+hchart(x)
 
-object <- forecast(ets(USAccDeaths), h = 48)
-class(object)
-plot(object)
-hchart(object)
+x <- forecast(ets(USAccDeaths), h = 48)
+class(x)
+plot(x)
+hchart(x)
 
-object <- forecast(Arima(WWWusage, c(3,1,0)))
-class(object)
-plot(object)
-hchart(object)
+x <- forecast(Arima(WWWusage, c(3,1,0)))
+class(x)
+plot(x)
+hchart(x)
+
+#' ### Seasonal Package (X-13ARIMA-SEATS) 
+library("seasonal")
+x <- seas(AirPassengers,
+          regression.aictest = c("td", "easter"),
+          outlier.critical = 3)
+class(x)
+plot(x)
+hchart(x)
 
 #' ### Distance matrix 
 x <- dist(mtcars[ order(mtcars$hp),])
