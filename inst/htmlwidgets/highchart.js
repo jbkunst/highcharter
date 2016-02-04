@@ -65,13 +65,12 @@ HTMLWidgets.widget({
       $("#" + el.id).highcharts('StockChart', x.hc_opts);  
     } else if (x.type == "map"){
       if(x.debug) console.log("charting MAP");
-      
       x.hc_opts.series = _.each(x.hc_opts.series, function(e){
         if(!(e.type === undefined)) {
           e.data = Highcharts.geojson(e.data, e.type);
         }
         return e;
-      })
+      });
       
       $("#" + el.id).highcharts('Map', x.hc_opts);  
     }
@@ -79,6 +78,12 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, instance) {
+    
+    /* http://stackoverflow.com/questions/18445784/ */
+    var chart = $("#" +el.id).highcharts();
+    var height = chart.renderTo.clientHeight; 
+    var width = chart.renderTo.clientWidth; 
+    chart.setSize(width, height); 
 
   }
 
