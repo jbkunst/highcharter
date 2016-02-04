@@ -177,7 +177,7 @@ hchart.seas <- function(object, outliers = TRUE, trend = FALSE, ...) {
     ixd.nna <- !is.na(ol.ts)
     text <- as.character(ol.ts)[!is.na(ol.ts)]
     dates <- zoo::as.Date(time(ol.ts))[!is.na(ol.ts)]
-    hc <- hc %>% hc_add_series_flags(dates, text, text,
+    hc <- hc %>% hc_add_series_flags(dates, text, text, zIndex = 4,
                                      name = "outiliers", id = "adjusted") 
   }
   
