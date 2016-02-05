@@ -209,7 +209,7 @@ hc <- hc %>%
               style = list(color = "#B71C1C", fontWeight = "bold")) %>% 
   hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) %>% 
-  hc_add_series(name = "A another data", type = "column", color = "#1A237E",
+  hc_add_series(name = "Another data", type = "column", color = "#1A237E",
                dataLabels = list(align = "center", enabled = TRUE),
                data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
                         17.0, 16.6, 14.2, 10.3, 6.6, 4.8)) %>% 
