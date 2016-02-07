@@ -1,3 +1,4 @@
+library("seasonal")
 object <- seas(AirPassengers,
                regression.aictest = c("td", "easter"),
                outlier.critical = 3)

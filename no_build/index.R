@@ -332,7 +332,7 @@ hc %>%
            showFirstLabel = FALSE,
            showLastLabel = FALSE,
            plotBands = list(
-             list(from = 25, to = htmlwidgets::JS("Infinity"), color = "rgba(100, 0, 0, 0.1)",
+             list(from = 25, to = JS("Infinity"), color = "rgba(100, 0, 0, 0.1)",
                   label = list(text = "This is a plotBand")))) 
 
 ##' ## hc_add_series and hc_rm_series ####
@@ -674,8 +674,8 @@ hchart(x)
 
 #' ### Forecasts
 library("forecast")
-d.arima <- forecast::auto.arima(AirPassengers)
-x <- forecast::forecast(d.arima, level = c(95, 80))
+d.arima <- auto.arima(AirPassengers)
+x <- forecast(d.arima, level = c(95, 80))
 class(x)
 plot(x)
 hchart(x)
@@ -741,6 +741,10 @@ hc %>% hc_add_theme(hc_theme_gridlight())
 ##' ## Sand Signika ####
 
 hc %>% hc_add_theme(hc_theme_sandsignika())
+
+##' ## Fivethirtyeight ####
+
+hc %>% hc_add_theme(hc_theme_538())
 
 ##' ## Chalk ####
 #'
@@ -920,13 +924,13 @@ highchart() %>%
     )
   ) %>% 
   #
-  hc_tooltip(formatter = htmlwidgets::JS("function(){
-                                         if('Sunshine' == this.series.name){
-                                         return  '<b>' + this.point.name + ': </b>' + this.y
-                                         } else {
-                                         unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
-                                         return (this.x + ': ' + this.y + ' ' + unts)
-                                         }}"),
+  hc_tooltip(formatter = JS("function(){
+                             if('Sunshine' == this.series.name){
+                             return  '<b>' + this.point.name + ': </b>' + this.y
+                             } else {
+                             unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
+                             return (this.x + ': ' + this.y + ' ' + unts)
+                             }}"),
              useHTML = TRUE) %>% 
   hc_add_series(name = "Rainfall", type = "column",
                 data = rainfall, yAxis = 1) %>% 
@@ -972,7 +976,7 @@ hc_colorAxis(hc, stops = stops, max = 75)
 
 data(diamonds, package = "ggplot2")
 
-df <- dplyr::count(diamonds, cut)
+df <- count(diamonds, cut)
 df
 
 df <- setNames(df, c("name", "value"))

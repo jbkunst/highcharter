@@ -65,8 +65,8 @@ hchart(x)
 
 #' ### Forecasts
 library("forecast")
-d.arima <- forecast::auto.arima(AirPassengers)
-x <- forecast::forecast(d.arima, level = c(95, 80))
+d.arima <- auto.arima(AirPassengers)
+x <- forecast(d.arima, level = c(95, 80))
 class(x)
 plot(x)
 hchart(x)
