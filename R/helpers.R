@@ -41,7 +41,7 @@ list.parse3 <- function(df) {
 #' 
 #' @examples 
 #' 
-#' str_to_id(" A string _ with    Underscores   ")
+#' str_to_id(" A string _ with sd / sdg    Underscores \   ")
 #' 
 #' @importFrom stringr str_to_lower str_replace_all
 #' @export
@@ -53,6 +53,7 @@ str_to_id <- function(x) {
     str_trim() %>%
     str_to_lower() %>% 
     str_replace_all("\\s+", "_") %>% 
+    str_replace_all("\\\\|/", "_") %>% 
     str_replace_all("_+", "_") %>% 
     iconv("latin1", "ASCII", sub = "")
   

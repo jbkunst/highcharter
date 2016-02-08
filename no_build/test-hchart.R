@@ -21,7 +21,7 @@ hchart(x)
 x <- hist(rbeta(300, 0.2, 4), plot = FALSE)
 class(x)
 plot(x) # by default hchart use *Freedman-Diaconis* rule 
-hchart(x)
+hchart(x, color = "darkred")
 
 #' ### Character, Factor
 data(diamonds, package = "ggplot2")
@@ -42,7 +42,7 @@ library("quantmod")
 x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
 class(x)
 plot(x)
-hchart(x)
+hchart(x) %>% hc_add_theme(hc_theme_chalk())
 
 #' ### xts ohlc
 x <- getSymbols("YHOO", auto.assign = FALSE)
@@ -55,7 +55,7 @@ hchart(x, type = "ohlc")
 x <- acf(diff(AirPassengers), plot = FALSE)
 class(x)
 plot(x)
-hchart(x)
+hchart(x) %>% hc_title(text = "This is an ACF chart")
 
 #' ### Multivariate Time series
 x <- cbind(mdeaths, fdeaths)
@@ -71,10 +71,12 @@ class(x)
 plot(x)
 hchart(x)
 
-x <- forecast(ets(USAccDeaths), h = 48)
+x <- forecast(ets(USAccDeaths), h = 48, level = 90)
 class(x)
 plot(x)
-hchart(x)
+hchart(x) %>%
+  hc_tooltip(valueDecimals = 2) %>% # share toolip
+  hc_add_theme(hc_theme_538()) 
 
 x <- forecast(Arima(WWWusage, c(3,1,0)))
 class(x)

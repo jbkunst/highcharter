@@ -553,7 +553,10 @@ highchart() %>%
            labels = list(format = "{value}%"), max = 100) %>% 
   hc_xAxis(categories = favorite_pies$pie) %>% 
   hc_legend(enabled = FALSE) %>% 
-  hc_tooltip(pointFormat = "{point.y}%")
+  hc_tooltip(pointFormat = "{point.y}%") %>% 
+  hc_credits(enabled = TRUE, text = "Source: HIMYM",
+             href = "https://www.youtube.com/watch?v=f_J8QU1m0Ng",
+             style = list(fontSize = "12px"))
 
 ##' ## Maps & geojson ####
 
@@ -988,7 +991,6 @@ hc_opts$series <- list(list(name = "Tokyo",
 hc_opts$series <- append(hc_opts$series,
                          list(list(name = "New York",
                                    type = "spline",
-                                   lineWidth = 5,
                                    data = c(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0,
                                             24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
                                    dataLabels = list(align = "left", enabled = TRUE))))

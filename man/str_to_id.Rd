@@ -14,7 +14,7 @@ Turn a string to \code{id} format used in treemaps.
 }
 \examples{
 
-str_to_id(" A string _ with    Underscores   ")
+str_to_id(" A string _ with sd / sdg    Underscores \\   ")
 
 }
 
