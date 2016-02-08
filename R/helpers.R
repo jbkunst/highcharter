@@ -115,3 +115,27 @@ hc_get_dash_styles <- function() {
     "Dot", "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
   
 }
+
+#' Chart a demo for testing themes
+#'
+#' Chart a demo for testing themes
+#' 
+#' @examples 
+#' 
+#' hc_demo()
+#' 
+#' @export
+hc_demo <- function() {
+  
+  load(system.file("data/citytemp.rda", package = "highcharter"))
+  
+  highchart() %>% 
+    hc_title(text = "Monthly Average Temperature") %>% 
+    hc_subtitle(text = "Source: WorldClimate.com") %>% 
+    hc_yAxis(title = list(text = "Temperature")) %>% 
+    hc_xAxis(categories = citytemp$month) %>% 
+    hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+    hc_add_series(name = "London", data = citytemp$london) %>% 
+    hc_add_series(name = "Berlin", data = citytemp$berlin) 
+  
+}

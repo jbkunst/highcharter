@@ -4,36 +4,31 @@
 #' 
 #' @examples 
 #' 
-#' highchart() %>% 
-#'   hc_add_series(data = list.parse2(data.frame(rnorm(15), runif(15))), type = "scatter") %>% 
-#'   hc_add_series(data = list.parse2(data.frame(rexp(15), rexp(15))), type = "scatter") %>% 
-#'   hc_add_theme(hc_theme_538()) %>% 
-#'   hc_title(text = "Some Long Title") %>% 
-#'   hc_subtitle(text = "Some subtitle")
+#' hc_demo() %>% 
+#'   hc_add_theme(hc_theme_538())
 #' 
 #' @export
 hc_theme_538 <- function(){
   
   theme <-
   list(
-    colors = c("#636464", "#C4C4C4","#FF2700", "#008FD5", "#77AB43"),
+    colors = c("#FF2700", "#008FD5", "#77AB43", "#636464", "#C4C4C4"),
     chart = list(
       backgroundColor = "#F0F0F0",
-      plotBorderColor = '#606063'
+      plotBorderColor = '#606063',
+      style = list(
+        fontFamily = "Roboto",
+        color = '#3C3C3C'
+      )
     ),
     title = list(
       align = "left",
       style = list(
-        fontWeight = "bold",
-        color = '#3C3C3C',
-        fontSize = '20px'
+        fontWeight = "bold"
       )
     ),
     subtitle = list(
-      align = "left",
-      style = list(
-        color = '#3C3C3C'
-      )
+      align = "left"
     ),
     xAxis = list(
       gridLineWidth = 1,

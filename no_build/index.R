@@ -709,24 +709,7 @@ hchart(x)
 
 ##' # Themes ####
 
-hc <- highchart() %>% 
-  hc_title(text = "A complete example for Scatter") %>% 
-  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
-                        mtcars$drat, mtcars$hp,
-                        rownames(mtcars),
-                        dataLabels = list(
-                          enabled = TRUE,
-                          format = "{point.label}"
-                        )) %>% 
-  hc_chart(zoomType = "xy") %>% 
-  hc_tooltip(useHTML = TRUE,
-             headerFormat = "<table>",
-             pointFormat = paste("<tr><th colspan=\"1\"><b>{point.label}</b></th></tr>",
-                                 "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
-                                 "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
-                                 "<tr><th>Drat</th><td>{point.z} </td></tr>",
-                                 "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
-             footerFormat = "</table>")
+hc <- hc_demo() 
 
 ##' ## Default ####
 

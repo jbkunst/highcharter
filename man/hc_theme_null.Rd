@@ -11,9 +11,7 @@ Null theme for highcharts. Axis are removed (\code{visible = FALSE}).
 }
 \examples{
 
-highchart() \%>\% 
-  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
-                        mtcars$drat, mtcars$cyl) \%>\% 
+hc_demo() \%>\% 
   hc_add_theme(hc_theme_null())
   
 }

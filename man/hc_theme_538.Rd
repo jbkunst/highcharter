@@ -11,12 +11,8 @@ Fivethirtyeight theme for highcharts
 }
 \examples{
 
-highchart() \%>\% 
-  hc_add_series(data = list.parse2(data.frame(rnorm(15), runif(15))), type = "scatter") \%>\% 
-  hc_add_series(data = list.parse2(data.frame(rexp(15), rexp(15))), type = "scatter") \%>\% 
-  hc_add_theme(hc_theme_538()) \%>\% 
-  hc_title(text = "Some Long Title") \%>\% 
-  hc_subtitle(text = "Some subtitle")
+hc_demo() \%>\% 
+  hc_add_theme(hc_theme_538())
 
 }
 
