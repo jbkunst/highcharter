@@ -770,6 +770,10 @@ hc %>% hc_add_theme(hc_theme_sandsignika())
 
 hc %>% hc_add_theme(hc_theme_538())
 
+##' ## Economist ####
+
+hc %>% hc_add_theme(hc_theme_economist())
+
 ##' ## Chalk ####
 #'
 #' Insipired in https://www.amcharts.com/inspiration/chalk/.

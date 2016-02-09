@@ -5,19 +5,29 @@
 #' @examples 
 #' 
 #' hc_demo() %>% 
-#'   hc_add_theme(hc_theme_538())
+#'   hc_add_theme(hc_theme_economist())
 #' 
 #' @export
-hc_theme_538 <- function(){
+hc_theme_economist <- function(){
   
   theme <-
   list(
-    colors = c("#FF2700", "#008FD5", "#77AB43", "#636464", "#C4C4C4"),
+    colors = c("#6794a7",
+               "#014d64",
+               "#76c0c1",
+               "#01a2d9",
+               "#7ad2f6",
+               "#00887d",
+               "#adadad",
+               "#7bd3f6",
+               "#7c260b",
+               "#ee8f71",
+               "#76c0c1",
+               "#a18376"),
     chart = list(
-      backgroundColor = "#F0F0F0",
-      plotBorderColor = '#606063',
+      backgroundColor = "#d5e4eb",
       style = list(
-        fontFamily = "Roboto",
+        fontFamily = "Droid Sans",
         color = '#3C3C3C'
       )
     ),
@@ -30,35 +40,10 @@ hc_theme_538 <- function(){
     subtitle = list(
       align = "left"
     ),
-    xAxis = list(
-      gridLineWidth = 1,
-      gridLineColor = '#D7D7D8',
-      labels = list(
-        style = list(
-          fontFamily = "Unica One, sans-serif",
-          color = '#3C3C3C'
-        )
-      ),
-      lineColor = '#D7D7D8',
-      minorGridLineColor = '#505053',
-      tickColor = '#D7D7D8',
-      tickWidth = 1,
-      title = list(
-        style = list(
-          color = '#A0A0A3'
-        )
-      )
-    ),
     yAxis = list(
-      gridLineColor = '#D7D7D8',
-      labels = list(
-        style = list(
-          fontFamily = "Unica One, sans-serif",
-          color = '#3C3C3C'
-        )
-      ),
-      lineColor = '#D7D7D8',
-      minorGridLineColor = '#505053',
+      gridLineColor = '#FFFFFF',
+      lineColor = '#FFFFFF',
+      minorGridLineColor = '#FFFFFF',
       tickColor = '#D7D7D8',
       tickWidth = 1,
       title = list(
@@ -68,9 +53,10 @@ hc_theme_538 <- function(){
       )
     ),
     tooltip = list(
-      backgroundColor = 'rgba(0, 0, 0, 0.85)',
+      backgroundColor = "#FFFFFF",
+      borderColor = "#76c0c1",
       style = list(
-        color = '#F0F0F0'
+        color = "#000000"
       )
     ),
     legend = list(
@@ -95,6 +81,23 @@ hc_theme_538 <- function(){
       )
     ),
     
+    drilldown = list(
+      activeAxisLabelStyle = list(
+        color = '#F0F0F3'
+      ),
+      activeDataLabelStyle = list(
+        color = '#F0F0F3'
+      )
+    ),
+    
+    navigation = list(
+      buttonOptions = list(
+        symbolStroke = '#DDDDDD',
+        theme = list(
+          fill = '#505053'
+        )
+      )
+    ),
     legendBackgroundColor = 'rgba(0, 0, 0, 0.5)',
     background2 = '#505053',
     dataLabelsColor = '#B0B0B3',

@@ -1,8 +1,7 @@
 rm(list = ls())
-library("magrittr")
 
 hc <- highchart(debug = TRUE) %>% 
-  hc_add_series_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl) %>% 
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg, mtcars$cyl, mtcars$cyl) %>% 
   hc_chart(zoomType = "xy") %>% 
   hc_title(text = "Motor Trend Car Road Tests") %>% 
   hc_subtitle(text = "Motor Trend Car Road Tests") %>% 
@@ -13,13 +12,43 @@ hc <- highchart(debug = TRUE) %>%
 
 hc
 
+# hc <- hc_demo()
+
+##' ## Dark Unica ####
+
 hc %>% hc_add_theme(hc_theme_darkunica())
+
+##' ## Grid Light ####
 
 hc %>% hc_add_theme(hc_theme_gridlight())
 
+##' ## Sand Signika ####
+
 hc %>% hc_add_theme(hc_theme_sandsignika())
 
+##' ## Fivethirtyeight ####
+
+hc %>% hc_add_theme(hc_theme_538())
+
+##' ## Economist ####
+
+hc %>% hc_add_theme(hc_theme_economist())
+
+##' ## Chalk ####
+#'
+#' Insipired in https://www.amcharts.com/inspiration/chalk/.
+
 hc %>% hc_add_theme(hc_theme_chalk())
+
+##' ## Hand Drawn ####
+#'
+#' Insipired in https://www.amcharts.com/inspiration/hand-drawn/ (again!).
+
+hc %>% hc_add_theme(hc_theme_handdrawn())
+
+##' ## Null ####
+
+hc %>% hc_add_theme(hc_theme_null())
 
 thm <- hc_theme(
   colors = c('red', 'green', 'blue'),
