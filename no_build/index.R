@@ -569,45 +569,90 @@ highchart() %>%
   hc_add_series_map(worldgeojson, GNI2010,
                     value = "GNI", joinBy = "iso3")
 
-#+ echo=FALSE, eval=FALSE
-# Other fun example. Load various geojson and chart them all.
+#'
+#'  Other fun example. Load various geojson and chart them all.
+#'  
  
-# library("httr")
-# 
-# world <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json" %>% 
-#   GET() %>% 
-#   content() %>% 
-#   jsonlite::fromJSON(simplifyVector = FALSE)
-# 
-# # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
-# marine <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
-#   GET() %>% 
-#   content()
-# 
-# # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
-# plates <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
-#   GET() %>% 
-#   content()
-# 
-# # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
-# volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
-#   GET() %>% 
-#   content()
-# 
-# highchart(type = "map") %>% 
-#   hc_add_series(mapData = world, showInLegend = FALSE) %>% 
-#   hc_add_series(data = marine, type = "mapline",  lineWidth = 2,
-#                 name = "Marine currents", color = 'rgba(0, 0, 80, 0.5)',
-#                 states = list(hover = list(color = "#BADA55")),
-#                 tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-#   hc_add_series(data = plates, type = "mapline",
-#                 name = "Plates", color = 'rgba(10, 10, 10, 0.5)',
-#                 tooltip = list(pointFormat = "{point.properties.TIPO}")) %>% 
-#   hc_add_series(data = volcano, type = "mappoint",
-#                 name = "Volcanos", color = 'rgba(255, 0, 80, 0.5)',
-#                 tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-#   hc_mapNavigation(enabled = TRUE) %>% 
-#   hc_title(text = "Testing geojson format")
+library("dplyr")
+library("readr")
+library("httr")
+library("rvest")
+library("geojsonio")
+
+map <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json" %>% 
+  GET() %>% 
+  content() %>% 
+  jsonlite::fromJSON(simplifyVector = FALSE)
+
+# http://openflights.org/data.html
+airports <- read_csv("https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat",
+                     col_names = FALSE)
+
+tblnames <- read_html("http://openflights.org/data.html") %>% 
+  html_node("table") %>% 
+  html_table(fill = TRUE)
+
+airports <- setNames(airports, str_to_id(tblnames$X1))
+
+airportsmin <- airports %>% 
+  filter(country == "Australia", tz_database_time_zone != "\\N") %>% 
+  select(name, latitude, longitude, altitude) 
+
+airpjson <- geojson_json(airportsmin, lat = "latitude", lon = "longitude")
+
+highchart(type = "map") %>% 
+  hc_title(text = "Airports in Australia") %>% 
+  hc_chart(backgroundColor = "#D9E9FF") %>% 
+  hc_add_series(mapData = map, showInLegend = FALSE,
+                nullColor = "#C0D890") %>% 
+  hc_add_series(data = airpjson, type = "mappoint", dataLabels = list(enabled = FALSE),
+                name = "Airports", color = 'rgba(57, 86, 139, 0.5)',
+                tooltip = list(pointFormat = "{point.properties.name}: {point.properties.altitude} fts")) %>% 
+  hc_mapNavigation(enabled = TRUE) 
+
+
+#' 
+#' And the last example ;)!
+#' 
+
+library("httr")
+
+world <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json" %>% 
+  GET() %>% 
+  content() %>% 
+  jsonlite::fromJSON(simplifyVector = FALSE)
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
+marine <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
+  GET() %>% 
+  content()
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
+plates <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
+  GET() %>% 
+  content()
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
+volcano <- "http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature" %>% 
+  GET() %>% 
+  content()
+
+highchart(type = "map") %>% 
+  hc_title(text = "Marine Currents, Plates & Volcanos") %>% 
+  hc_chart(backgroundColor = "#D9E9FF") %>% 
+  hc_add_series(mapData = world, showInLegend = FALSE,
+                nullColor = "#C0D890") %>% 
+  hc_add_series(data = marine, type = "mapline",  lineWidth = 2,
+                name = "Marine currents", color = 'rgba(0, 0, 80, 0.33)',
+                states = list(hover = list(color = "#BADA55")),
+                tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
+  hc_add_series(data = plates, type = "mapline",
+                name = "Plates", color = 'rgba(5, 5, 5, 0.5)',
+                tooltip = list(pointFormat = "{point.properties.TIPO}")) %>% 
+  hc_add_series(data = volcano, type = "mappoint",
+                name = "Volcanos", color = 'rgba(200, 10, 80, 0.5)',
+                tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
+  hc_mapNavigation(enabled = TRUE)
 
 #+ shiny
 ##' # Shiny Integration ####
@@ -691,15 +736,6 @@ plot(x)
 hchart(x)
 
 x <- forecast(Arima(WWWusage, c(3,1,0)))
-class(x)
-plot(x)
-hchart(x)
-
-#' ### Seasonal Package (X-13ARIMA-SEATS) 
-library("seasonal")
-x <- seas(AirPassengers,
-          regression.aictest = c("td", "easter"),
-          outlier.critical = 3)
 class(x)
 plot(x)
 hchart(x)
