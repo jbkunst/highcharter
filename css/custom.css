@@ -1,3 +1,7 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
 .main-container, .container {
   max-width: 1024px;
   margin-left: auto;
@@ -19,3 +23,25 @@
   background-color: #0A566F;
 }
 
+#rcontent h3 {
+  padding-top: 10px;
+  padding-bottom: 7px;
+  font-size: 22px;
+}
+
+@media (min-width: 768px) {
+  .affix {
+    position: fixed;
+  }
+}
+
+.hljs {
+  font-size: 13px;
+  color: #333;
+  background: #f5f5f5;
+}
+
+.highchart {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}

@@ -7,7 +7,7 @@ library("highcharter")
 
 ##' ## Shiny Integration
 #' 
-#' Not much to say here. Highcharter is htmlwidlgets powered so it’s shiny ready.
+#' Not much to say here. Highcharter is htmlwidlgets powered so it's **shiny ready**.
 #' See a live example here https://jbkunst.shinyapps.io/highcharter/. The code for 
 #' the app is here https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
 #'  

@@ -1,5 +1,6 @@
 #' ---
 #' layout: post
+#' toc: true
 #' ---
 #+echo=FALSE
 rm(list = ls())

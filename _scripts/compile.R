@@ -3,20 +3,18 @@ library("knitr")
 library("rmarkdown")
 library("magrittr")
 library("purrr")
+library("stringr")
 
 set.seed(100)
-options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE))
+options(htmlwidgets.TOJSON_ARGS = list(pretty = FALSE))
 
 #### moving dependencies ####
 # Move libraries in to lib
 yaml <- system.file(package = "highcharter", "htmlwidgets/highchart.yaml") %>% 
   yaml::yaml.load_file()
 
-
-try(dir.create("lib"))
-try(dir.create("_includes"))
-
-
+# try(dir.create("lib"))
+# try(dir.create("_includes"))
 
 htmlwdtjs <- system.file(package = "htmlwidgets", "www/htmlwidgets.js")
 htmlwdtjsto <- file.path("lib", basename(htmlwdtjs))
@@ -46,14 +44,30 @@ alldeps <- paste0("<script src=\"", alldeps, "\"></script>")
 alldeps <- c("", paste0("    ", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
-#### knit knit ####
+#### navigation ####
 rs_to_md <- c("_scripts/introduction.R",
               "_scripts/highcharts-api.R",
               "_scripts/shiny-integration.R",
               "_scripts/hchart-function.R",
               "_scripts/themes.R")
               
+html_links <- paste0(gsub(".R$", "", basename(rs_to_md)), ".html")
+html_title <- basename(rs_to_md) %>% 
+  str_replace(".R", "") %>% 
+  str_replace("-", " ") %>% 
+  str_to_title()
 
+navlist <- paste0(
+  '<a href="',
+  html_links,
+  '" class="list-group-item"><h5 class="list-group-item-heading">',
+  html_title,
+  '</h5></a>'
+)
+
+writeLines(navlist, "_includes/navigation.html")
+
+#### knitr ####
 lapply(rs_to_md, function(f){
   # f <- "_scripts/hchart-function.R"
   # f <- "_scripts/themes.R"
@@ -72,15 +86,6 @@ lapply(rs_to_md, function(f){
 
 })
 
+file.copy("introduction.html", "index.html", overwrite = TRUE)
 
-file.copy("introduction.html", "index.html")
 
-navlist <- paste0(
-  '<a href="',
-  paste0(gsub(".R$", "", basename(rs_to_md)), ".html"),  
-  '" class="list-group-item"><h5 class="list-group-item-heading">',
-  stringr::str_to_title(gsub(".R$", "", basename(rs_to_md))),
-  '</h5></a>'
-)
-
-writeLines(navlist, "_includes/navigation.html")

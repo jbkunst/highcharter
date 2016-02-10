@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
     <link rel="stylesheet" href="css/custom.css" media="screen">
     {% include dependencies.html %}
   </head>
@@ -35,12 +37,12 @@
       <div class="container-fluid" id="content">
   
         <div class="row">
-          <div class="col-sm-4">
-            <div class="list-group">
+          <div class="col-sm-3">
+            <div class="list-group"  data-spy="affix" data-offset-top="80">
               {% include navigation.html %}
             </div>
-          </div>  
-          <div class="col-sm-8">
+          </div>
+          <div class="col-sm-9" id="rcontent">
               {{ content }} 
           </div>
         </div>
@@ -51,7 +53,6 @@
   
               <ul class="list-unstyled">
                 <li class="pull-right"><a href="#top">Back to top</a></li>
-                <li><a href="http://news.bootswatch.com" onclick="pageTracker._link(this.href); return false;">Blog</a></li>
                 <li><a href="http://feeds.feedburner.com/bootswatch">RSS</a></li>
                 <li><a href="https://twitter.com/bootswatch">Twitter</a></li>
                 <li><a href="https://github.com/thomaspark/bootswatch/">GitHub</a></li>
@@ -74,7 +75,6 @@
     <script src="js/ga.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/languages/r.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>

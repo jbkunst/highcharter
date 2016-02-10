@@ -11,9 +11,8 @@ library("highcharter")
 #' 
 #' Let's use a simple plot to show how do with the differentes funcions from the package.
 #' 
-data(citytemp)
 
-citytemp
+data(citytemp)
 
 hc <- highchart() %>% 
   hc_xAxis(categories = citytemp$month) %>% 
