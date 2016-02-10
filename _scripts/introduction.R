@@ -2,6 +2,10 @@
 #' layout: post
 #' ---
 
+#'
+#' ## Welcome to the Highcharter home page
+#'
+
 library("highcharter")
 
 hc <- highchart() %>% 

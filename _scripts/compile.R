@@ -48,8 +48,11 @@ writeLines(alldeps, "_includes/dependencies.html")
 
 #### knit knit ####
 rs_to_md <- c("_scripts/introduction.R",
+              "_scripts/highcharts-api.R",
+              "_scripts/shiny-integration.R",
               "_scripts/hchart-function.R",
               "_scripts/themes.R")
+              
 
 lapply(rs_to_md, function(f){
   # f <- "_scripts/hchart-function.R"
@@ -76,7 +79,7 @@ navlist <- paste0(
   '<a href="',
   paste0(gsub(".R$", "", basename(rs_to_md)), ".html"),  
   '" class="list-group-item"><h5 class="list-group-item-heading">',
-  gsub(".R$", "", basename(rs_to_md)),
+  stringr::str_to_title(gsub(".R$", "", basename(rs_to_md))),
   '</h5></a>'
 )
 

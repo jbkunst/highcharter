@@ -63,106 +63,71 @@
             </div>
           </div>  
           <div class="col-sm-8">
-              <div id="welcom-the-highcharter-home-page" class="section level2">
-<h2>Welcom the Highcharter home page</h2>
-<pre class="r"><code>library(&quot;highcharter&quot;)
+              <div id="shiny-integration" class="section level2">
+<h2>Shiny Integration</h2>
+<p>Not much to say here. Highcharter is htmlwidlgets powered so itâ€™s shiny ready. See a live example here <a href="https://jbkunst.shinyapps.io/highcharter/" class="uri">https://jbkunst.shinyapps.io/highcharter/</a>. The code for the app is here <a href="https://github.com/jbkunst/shiny-apps/tree/master/highcharter" class="uri">https://github.com/jbkunst/shiny-apps/tree/master/highcharter</a>.</p>
+<p>The code of a simple app can be:</p>
+<pre class="r"><code>library(&quot;shiny&quot;)
+library(&quot;highcharter&quot;)
 
-hc &lt;- highchart() %&gt;% 
-  hc_title(text = &quot;A nice chart&quot;) %&gt;% 
-  hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                         26.5, 23.3, 18.3, 13.9, 9.6))
+data(citytemp)
 
-hc</code></pre>
-<p><div id="htmlwidget-3078" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-3078">{
-  "x": {
-    "hc_opts": {
-      "title": {
-        "text": "A nice chart"
-      },
-      "credits": {
-        "enabled": false
-      },
-      "exporting": {
-        "enabled": false
-      },
-      "plotOptions": {
-        "series": {
-          "turboThreshold": 0
-        }
-      },
-      "series": [
-        {
-          "data": [7, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }
-      ]
-    },
-    "theme": null,
-    "conf_opts": {
-      "global": {
-        "Date": null,
-        "VMLRadialGradientURL": "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
-        "canvasToolsURL": "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
-        "getTimezoneOffset": null,
-        "timezoneOffset": 0,
-        "useUTC": true
-      },
-      "lang": {
-        "contextButtonTitle": "Chart context menu",
-        "decimalPoint": ".",
-        "downloadJPEG": "Download JPEG image",
-        "downloadPDF": "Download PDF document",
-        "downloadPNG": "Download PNG image",
-        "downloadSVG": "Download SVG vector image",
-        "drillUpText": "Back to {series.name}",
-        "invalidDate": null,
-        "loading": "Loading...",
-        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        "noData": "No data to display",
-        "numericSymbols": ["k", "M", "G", "T", "P", "E"],
-        "printChart": "Print chart",
-        "resetZoom": "Reset zoom",
-        "resetZoomTitle": "Reset zoom level 1:1",
-        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        "thousandsSep": " ",
-        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-      }
-    },
-    "type": "chart",
-    "fonts": [],
-    "debug": false
-  },
-  "evals": []
-}</script></p>
-<p>asdasd asd asdas dasd asda</p>
-<pre class="r"><code># library(&quot;quantmod&quot;)
-# 
-# x &lt;- getSymbols(&quot;AAPL&quot;, auto.assign = FALSE)
-# y &lt;- getSymbols(&quot;AMZN&quot;, auto.assign = FALSE)
-# 
-# highchart() %&gt;% 
-#   hc_add_series_ohlc(x) %&gt;% 
-#   hc_add_series_ohlc(y, type = &quot;ohlc&quot;) </code></pre>
-<p>asdasdas dasd asd asd asd asd asdasd asdasda asdasd</p>
-<pre class="r"><code># library(&quot;viridisLite&quot;)
-# library(&quot;dplyr&quot;)
-# data(unemployment)
-# data(uscountygeojson)
-# 
-# dclass &lt;- data_frame(from = seq(0, 10, by = 2),
-#                      to = c(seq(2, 10, by = 2), 50),
-#                      color = substring(viridis(length(from), option = &quot;C&quot;), 0, 7))
-# dclass &lt;- list.parse3(dclass)
-# 
-# highchart() %&gt;% 
-#   hc_title(text = &quot;US Counties unemployment rates, April 2015&quot;) %&gt;% 
-#   hc_add_series_map(uscountygeojson, unemployment,
-#                     value = &quot;value&quot;, joinBy = &quot;code&quot;) %&gt;% 
-#   hc_colorAxis(dataClasses = dclass) %&gt;% 
-#   hc_legend(layout = &quot;vertical&quot;, align = &quot;right&quot;,
-#             floating = TRUE, valueDecimals = 0,
-#             valueSuffix = &quot;%&quot;) %&gt;% 
-#   hc_mapNavigation(enabled = TRUE)</code></pre>
+ui &lt;- fluidPage(
+  h1(&quot;Highcharter Demo&quot;),
+  fluidRow(
+    column(width = 4, class = &quot;panel&quot;,
+           selectInput(&quot;type&quot;, label = &quot;Type&quot;, width = &quot;100%&quot;,
+                       choices = c(&quot;line&quot;, &quot;column&quot;, &quot;bar&quot;, &quot;spline&quot;)), 
+           selectInput(&quot;stacked&quot;, label = &quot;Stacked&quot;,  width = &quot;100%&quot;,
+                       choices = c(FALSE, &quot;normal&quot;, &quot;percent&quot;)),
+           selectInput(&quot;theme&quot;, label = &quot;Theme&quot;,  width = &quot;100%&quot;,
+                       choices = c(FALSE, &quot;fivethirtyeight&quot;, &quot;economist&quot;,
+                                   &quot;darkunica&quot;, &quot;gridlight&quot;, &quot;sandsignika&quot;,
+                                   &quot;null&quot;, &quot;handdrwran&quot;, &quot;chalk&quot;)
+           )
+    ),
+    column(width = 8,
+           highchartOutput(&quot;hcontainer&quot;,height = &quot;500px&quot;)
+    )
+  )
+)
+
+server = function(input, output) {
+  
+  output$hcontainer &lt;- renderHighchart({
+    
+    hc &lt;- hc_demo() %&gt;%
+      hc_rm_series(&quot;Berlin&quot;) %&gt;% 
+      hc_chart(type = input$type)
+    
+    if (input$stacked != FALSE) {
+      hc &lt;- hc %&gt;%
+        hc_plotOptions(series = list(stacking = input$stacked))
+    }
+    
+    if (input$theme != FALSE) {
+      theme &lt;- switch(input$theme,
+                      null = hc_theme_null(),
+                      darkunica = hc_theme_darkunica(),
+                      gridlight = hc_theme_gridlight(),
+                      sandsignika = hc_theme_sandsignika(),
+                      fivethirtyeight = hc_theme_538(),
+                      economist = hc_theme_economist(),
+                      chalk = hc_theme_chalk(),
+                      handdrwran = hc_theme_handdrawn()
+      )
+      
+      hc &lt;- hc %&gt;% hc_add_theme(theme)
+      
+    }
+    
+    hc
+    
+  })
+  
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
 </div>
  
           </div>

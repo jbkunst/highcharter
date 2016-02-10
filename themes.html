@@ -1,14 +1,14 @@
 ---
 layout: base
 ---
-<div id="themes" class="section level3">
-<h3>Themes</h3>
+<div id="themes" class="section level2">
+<h2>Themes</h2>
 <pre class="r"><code>hc &lt;- hc_demo()</code></pre>
-<div id="default" class="section level4">
-<h4>Default</h4>
+<div id="default" class="section level3">
+<h3>Default</h3>
 <pre class="r"><code>hc</code></pre>
-<p><div id="htmlwidget-2019" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-2019">{
+<p><div id="htmlwidget-2565" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-2565">{
   "x": {
     "hc_opts": {
       "title": {
@@ -89,11 +89,350 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="dark-unica" class="section level4">
-<h4>Dark Unica</h4>
+<div id="fivethirtyeight" class="section level3">
+<h3>Fivethirtyeight</h3>
+<pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_538())</code></pre>
+<p><div id="htmlwidget-7658" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-7658">{
+  "x": {
+    "hc_opts": {
+      "title": {
+        "text": "Monthly Average Temperature"
+      },
+      "credits": {
+        "enabled": false
+      },
+      "exporting": {
+        "enabled": false
+      },
+      "plotOptions": {
+        "series": {
+          "turboThreshold": 0
+        }
+      },
+      "subtitle": {
+        "text": "Source: WorldClimate.com"
+      },
+      "yAxis": {
+        "title": {
+          "text": "Temperature"
+        }
+      },
+      "xAxis": {
+        "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      },
+      "series": [
+        {
+          "name": "Tokyo",
+          "data": [7, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        },
+        {
+          "name": "London",
+          "data": [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17, 16.6, 14.2, 10.3, 6.6, 4.8]
+        },
+        {
+          "name": "Berlin",
+          "data": [-0.9, 0.6, 3.5, 8.4, 13.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1]
+        }
+      ]
+    },
+    "theme": {
+      "colors": ["#FF2700", "#008FD5", "#77AB43", "#636464", "#C4C4C4"],
+      "chart": {
+        "backgroundColor": "#F0F0F0",
+        "plotBorderColor": "#606063",
+        "style": {
+          "fontFamily": "Roboto",
+          "color": "#3C3C3C"
+        }
+      },
+      "title": {
+        "align": "left",
+        "style": {
+          "fontWeight": "bold"
+        }
+      },
+      "subtitle": {
+        "align": "left"
+      },
+      "xAxis": {
+        "gridLineWidth": 1,
+        "gridLineColor": "#D7D7D8",
+        "labels": {
+          "style": {
+            "fontFamily": "Unica One, sans-serif",
+            "color": "#3C3C3C"
+          }
+        },
+        "lineColor": "#D7D7D8",
+        "minorGridLineColor": "#505053",
+        "tickColor": "#D7D7D8",
+        "tickWidth": 1,
+        "title": {
+          "style": {
+            "color": "#A0A0A3"
+          }
+        }
+      },
+      "yAxis": {
+        "gridLineColor": "#D7D7D8",
+        "labels": {
+          "style": {
+            "fontFamily": "Unica One, sans-serif",
+            "color": "#3C3C3C"
+          }
+        },
+        "lineColor": "#D7D7D8",
+        "minorGridLineColor": "#505053",
+        "tickColor": "#D7D7D8",
+        "tickWidth": 1,
+        "title": {
+          "style": {
+            "color": "#A0A0A3"
+          }
+        }
+      },
+      "tooltip": {
+        "backgroundColor": "rgba(0, 0, 0, 0.85)",
+        "style": {
+          "color": "#F0F0F0"
+        }
+      },
+      "legend": {
+        "itemStyle": {
+          "color": "#3C3C3C"
+        },
+        "itemHoverStyle": {
+          "color": "#FFF"
+        },
+        "itemHiddenStyle": {
+          "color": "#606063"
+        }
+      },
+      "credits": {
+        "style": {
+          "color": "#666"
+        }
+      },
+      "labels": {
+        "style": {
+          "color": "#D7D7D8"
+        }
+      },
+      "legendBackgroundColor": "rgba(0, 0, 0, 0.5)",
+      "background2": "#505053",
+      "dataLabelsColor": "#B0B0B3",
+      "textColor": "#C0C0C0",
+      "contrastTextColor": "#F0F0F3",
+      "maskColor": "rgba(255,255,255,0.3)"
+    },
+    "conf_opts": {
+      "global": {
+        "Date": null,
+        "VMLRadialGradientURL": "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
+        "canvasToolsURL": "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
+        "getTimezoneOffset": null,
+        "timezoneOffset": 0,
+        "useUTC": true
+      },
+      "lang": {
+        "contextButtonTitle": "Chart context menu",
+        "decimalPoint": ".",
+        "downloadJPEG": "Download JPEG image",
+        "downloadPDF": "Download PDF document",
+        "downloadPNG": "Download PNG image",
+        "downloadSVG": "Download SVG vector image",
+        "drillUpText": "Back to {series.name}",
+        "invalidDate": null,
+        "loading": "Loading...",
+        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "noData": "No data to display",
+        "numericSymbols": ["k", "M", "G", "T", "P", "E"],
+        "printChart": "Print chart",
+        "resetZoom": "Reset zoom",
+        "resetZoomTitle": "Reset zoom level 1:1",
+        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "thousandsSep": " ",
+        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      }
+    },
+    "type": "chart",
+    "fonts": ["Roboto", "Unica+One"],
+    "debug": false
+  },
+  "evals": []
+}</script></p>
+</div>
+<div id="economist" class="section level3">
+<h3>Economist</h3>
+<pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_economist())</code></pre>
+<p><div id="htmlwidget-5423" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-5423">{
+  "x": {
+    "hc_opts": {
+      "title": {
+        "text": "Monthly Average Temperature"
+      },
+      "credits": {
+        "enabled": false
+      },
+      "exporting": {
+        "enabled": false
+      },
+      "plotOptions": {
+        "series": {
+          "turboThreshold": 0
+        }
+      },
+      "subtitle": {
+        "text": "Source: WorldClimate.com"
+      },
+      "yAxis": {
+        "title": {
+          "text": "Temperature"
+        }
+      },
+      "xAxis": {
+        "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      },
+      "series": [
+        {
+          "name": "Tokyo",
+          "data": [7, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        },
+        {
+          "name": "London",
+          "data": [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17, 16.6, 14.2, 10.3, 6.6, 4.8]
+        },
+        {
+          "name": "Berlin",
+          "data": [-0.9, 0.6, 3.5, 8.4, 13.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1]
+        }
+      ]
+    },
+    "theme": {
+      "colors": ["#6794a7", "#014d64", "#76c0c1", "#01a2d9", "#7ad2f6", "#00887d", "#adadad", "#7bd3f6", "#7c260b", "#ee8f71", "#76c0c1", "#a18376"],
+      "chart": {
+        "backgroundColor": "#d5e4eb",
+        "style": {
+          "fontFamily": "Droid Sans",
+          "color": "#3C3C3C"
+        }
+      },
+      "title": {
+        "align": "left",
+        "style": {
+          "fontWeight": "bold"
+        }
+      },
+      "subtitle": {
+        "align": "left"
+      },
+      "yAxis": {
+        "gridLineColor": "#FFFFFF",
+        "lineColor": "#FFFFFF",
+        "minorGridLineColor": "#FFFFFF",
+        "tickColor": "#D7D7D8",
+        "tickWidth": 1,
+        "title": {
+          "style": {
+            "color": "#A0A0A3"
+          }
+        }
+      },
+      "tooltip": {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#76c0c1",
+        "style": {
+          "color": "#000000"
+        }
+      },
+      "legend": {
+        "itemStyle": {
+          "color": "#3C3C3C"
+        },
+        "itemHoverStyle": {
+          "color": "#FFF"
+        },
+        "itemHiddenStyle": {
+          "color": "#606063"
+        }
+      },
+      "credits": {
+        "style": {
+          "color": "#666"
+        }
+      },
+      "labels": {
+        "style": {
+          "color": "#D7D7D8"
+        }
+      },
+      "drilldown": {
+        "activeAxisLabelStyle": {
+          "color": "#F0F0F3"
+        },
+        "activeDataLabelStyle": {
+          "color": "#F0F0F3"
+        }
+      },
+      "navigation": {
+        "buttonOptions": {
+          "symbolStroke": "#DDDDDD",
+          "theme": {
+            "fill": "#505053"
+          }
+        }
+      },
+      "legendBackgroundColor": "rgba(0, 0, 0, 0.5)",
+      "background2": "#505053",
+      "dataLabelsColor": "#B0B0B3",
+      "textColor": "#C0C0C0",
+      "contrastTextColor": "#F0F0F3",
+      "maskColor": "rgba(255,255,255,0.3)"
+    },
+    "conf_opts": {
+      "global": {
+        "Date": null,
+        "VMLRadialGradientURL": "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
+        "canvasToolsURL": "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
+        "getTimezoneOffset": null,
+        "timezoneOffset": 0,
+        "useUTC": true
+      },
+      "lang": {
+        "contextButtonTitle": "Chart context menu",
+        "decimalPoint": ".",
+        "downloadJPEG": "Download JPEG image",
+        "downloadPDF": "Download PDF document",
+        "downloadPNG": "Download PNG image",
+        "downloadSVG": "Download SVG vector image",
+        "drillUpText": "Back to {series.name}",
+        "invalidDate": null,
+        "loading": "Loading...",
+        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "noData": "No data to display",
+        "numericSymbols": ["k", "M", "G", "T", "P", "E"],
+        "printChart": "Print chart",
+        "resetZoom": "Reset zoom",
+        "resetZoomTitle": "Reset zoom level 1:1",
+        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "thousandsSep": " ",
+        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      }
+    },
+    "type": "chart",
+    "fonts": "Droid+Sans",
+    "debug": false
+  },
+  "evals": []
+}</script></p>
+</div>
+<div id="dark-unica" class="section level3">
+<h3>Dark Unica</h3>
 <pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_darkunica())</code></pre>
-<p><div id="htmlwidget-9616" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-9616">{
+<p><div id="htmlwidget-4608" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-4608">{
   "x": {
     "hc_opts": {
       "title": {
@@ -372,11 +711,11 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="grid-light" class="section level4">
-<h4>Grid Light</h4>
+<div id="grid-light" class="section level3">
+<h3>Grid Light</h3>
 <pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_gridlight())</code></pre>
-<p><div id="htmlwidget-3871" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-3871">{
+<p><div id="htmlwidget-6704" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-6704">{
   "x": {
     "hc_opts": {
       "title": {
@@ -510,11 +849,11 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="sand-signika" class="section level4">
-<h4>Sand Signika</h4>
+<div id="sand-signika" class="section level3">
+<h3>Sand Signika</h3>
 <pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_sandsignika())</code></pre>
-<p><div id="htmlwidget-813" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-813">{
+<p><div id="htmlwidget-2206" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-2206">{
   "x": {
     "hc_opts": {
       "title": {
@@ -671,351 +1010,12 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="fivethirtyeight" class="section level4">
-<h4>Fivethirtyeight</h4>
-<pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_538())</code></pre>
-<p><div id="htmlwidget-8207" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-8207">{
-  "x": {
-    "hc_opts": {
-      "title": {
-        "text": "Monthly Average Temperature"
-      },
-      "credits": {
-        "enabled": false
-      },
-      "exporting": {
-        "enabled": false
-      },
-      "plotOptions": {
-        "series": {
-          "turboThreshold": 0
-        }
-      },
-      "subtitle": {
-        "text": "Source: WorldClimate.com"
-      },
-      "yAxis": {
-        "title": {
-          "text": "Temperature"
-        }
-      },
-      "xAxis": {
-        "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-      },
-      "series": [
-        {
-          "name": "Tokyo",
-          "data": [7, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        },
-        {
-          "name": "London",
-          "data": [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17, 16.6, 14.2, 10.3, 6.6, 4.8]
-        },
-        {
-          "name": "Berlin",
-          "data": [-0.9, 0.6, 3.5, 8.4, 13.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1]
-        }
-      ]
-    },
-    "theme": {
-      "colors": ["#FF2700", "#008FD5", "#77AB43", "#636464", "#C4C4C4"],
-      "chart": {
-        "backgroundColor": "#F0F0F0",
-        "plotBorderColor": "#606063",
-        "style": {
-          "fontFamily": "Roboto",
-          "color": "#3C3C3C"
-        }
-      },
-      "title": {
-        "align": "left",
-        "style": {
-          "fontWeight": "bold"
-        }
-      },
-      "subtitle": {
-        "align": "left"
-      },
-      "xAxis": {
-        "gridLineWidth": 1,
-        "gridLineColor": "#D7D7D8",
-        "labels": {
-          "style": {
-            "fontFamily": "Unica One, sans-serif",
-            "color": "#3C3C3C"
-          }
-        },
-        "lineColor": "#D7D7D8",
-        "minorGridLineColor": "#505053",
-        "tickColor": "#D7D7D8",
-        "tickWidth": 1,
-        "title": {
-          "style": {
-            "color": "#A0A0A3"
-          }
-        }
-      },
-      "yAxis": {
-        "gridLineColor": "#D7D7D8",
-        "labels": {
-          "style": {
-            "fontFamily": "Unica One, sans-serif",
-            "color": "#3C3C3C"
-          }
-        },
-        "lineColor": "#D7D7D8",
-        "minorGridLineColor": "#505053",
-        "tickColor": "#D7D7D8",
-        "tickWidth": 1,
-        "title": {
-          "style": {
-            "color": "#A0A0A3"
-          }
-        }
-      },
-      "tooltip": {
-        "backgroundColor": "rgba(0, 0, 0, 0.85)",
-        "style": {
-          "color": "#F0F0F0"
-        }
-      },
-      "legend": {
-        "itemStyle": {
-          "color": "#3C3C3C"
-        },
-        "itemHoverStyle": {
-          "color": "#FFF"
-        },
-        "itemHiddenStyle": {
-          "color": "#606063"
-        }
-      },
-      "credits": {
-        "style": {
-          "color": "#666"
-        }
-      },
-      "labels": {
-        "style": {
-          "color": "#D7D7D8"
-        }
-      },
-      "legendBackgroundColor": "rgba(0, 0, 0, 0.5)",
-      "background2": "#505053",
-      "dataLabelsColor": "#B0B0B3",
-      "textColor": "#C0C0C0",
-      "contrastTextColor": "#F0F0F3",
-      "maskColor": "rgba(255,255,255,0.3)"
-    },
-    "conf_opts": {
-      "global": {
-        "Date": null,
-        "VMLRadialGradientURL": "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
-        "canvasToolsURL": "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
-        "getTimezoneOffset": null,
-        "timezoneOffset": 0,
-        "useUTC": true
-      },
-      "lang": {
-        "contextButtonTitle": "Chart context menu",
-        "decimalPoint": ".",
-        "downloadJPEG": "Download JPEG image",
-        "downloadPDF": "Download PDF document",
-        "downloadPNG": "Download PNG image",
-        "downloadSVG": "Download SVG vector image",
-        "drillUpText": "Back to {series.name}",
-        "invalidDate": null,
-        "loading": "Loading...",
-        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        "noData": "No data to display",
-        "numericSymbols": ["k", "M", "G", "T", "P", "E"],
-        "printChart": "Print chart",
-        "resetZoom": "Reset zoom",
-        "resetZoomTitle": "Reset zoom level 1:1",
-        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        "thousandsSep": " ",
-        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-      }
-    },
-    "type": "chart",
-    "fonts": ["Roboto", "Unica+One"],
-    "debug": false
-  },
-  "evals": []
-}</script></p>
-</div>
-<div id="economist" class="section level4">
-<h4>Economist</h4>
-<pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_economist())</code></pre>
-<p><div id="htmlwidget-1938" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-1938">{
-  "x": {
-    "hc_opts": {
-      "title": {
-        "text": "Monthly Average Temperature"
-      },
-      "credits": {
-        "enabled": false
-      },
-      "exporting": {
-        "enabled": false
-      },
-      "plotOptions": {
-        "series": {
-          "turboThreshold": 0
-        }
-      },
-      "subtitle": {
-        "text": "Source: WorldClimate.com"
-      },
-      "yAxis": {
-        "title": {
-          "text": "Temperature"
-        }
-      },
-      "xAxis": {
-        "categories": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-      },
-      "series": [
-        {
-          "name": "Tokyo",
-          "data": [7, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        },
-        {
-          "name": "London",
-          "data": [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17, 16.6, 14.2, 10.3, 6.6, 4.8]
-        },
-        {
-          "name": "Berlin",
-          "data": [-0.9, 0.6, 3.5, 8.4, 13.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1]
-        }
-      ]
-    },
-    "theme": {
-      "colors": ["#6794a7", "#014d64", "#76c0c1", "#01a2d9", "#7ad2f6", "#00887d", "#adadad", "#7bd3f6", "#7c260b", "#ee8f71", "#76c0c1", "#a18376"],
-      "chart": {
-        "backgroundColor": "#d5e4eb",
-        "style": {
-          "fontFamily": "Droid Sans",
-          "color": "#3C3C3C"
-        }
-      },
-      "title": {
-        "align": "left",
-        "style": {
-          "fontWeight": "bold"
-        }
-      },
-      "subtitle": {
-        "align": "left"
-      },
-      "yAxis": {
-        "gridLineColor": "#FFFFFF",
-        "lineColor": "#FFFFFF",
-        "minorGridLineColor": "#FFFFFF",
-        "tickColor": "#D7D7D8",
-        "tickWidth": 1,
-        "title": {
-          "style": {
-            "color": "#A0A0A3"
-          }
-        }
-      },
-      "tooltip": {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#76c0c1",
-        "style": {
-          "color": "#000000"
-        }
-      },
-      "legend": {
-        "itemStyle": {
-          "color": "#3C3C3C"
-        },
-        "itemHoverStyle": {
-          "color": "#FFF"
-        },
-        "itemHiddenStyle": {
-          "color": "#606063"
-        }
-      },
-      "credits": {
-        "style": {
-          "color": "#666"
-        }
-      },
-      "labels": {
-        "style": {
-          "color": "#D7D7D8"
-        }
-      },
-      "drilldown": {
-        "activeAxisLabelStyle": {
-          "color": "#F0F0F3"
-        },
-        "activeDataLabelStyle": {
-          "color": "#F0F0F3"
-        }
-      },
-      "navigation": {
-        "buttonOptions": {
-          "symbolStroke": "#DDDDDD",
-          "theme": {
-            "fill": "#505053"
-          }
-        }
-      },
-      "legendBackgroundColor": "rgba(0, 0, 0, 0.5)",
-      "background2": "#505053",
-      "dataLabelsColor": "#B0B0B3",
-      "textColor": "#C0C0C0",
-      "contrastTextColor": "#F0F0F3",
-      "maskColor": "rgba(255,255,255,0.3)"
-    },
-    "conf_opts": {
-      "global": {
-        "Date": null,
-        "VMLRadialGradientURL": "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
-        "canvasToolsURL": "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
-        "getTimezoneOffset": null,
-        "timezoneOffset": 0,
-        "useUTC": true
-      },
-      "lang": {
-        "contextButtonTitle": "Chart context menu",
-        "decimalPoint": ".",
-        "downloadJPEG": "Download JPEG image",
-        "downloadPDF": "Download PDF document",
-        "downloadPNG": "Download PNG image",
-        "downloadSVG": "Download SVG vector image",
-        "drillUpText": "Back to {series.name}",
-        "invalidDate": null,
-        "loading": "Loading...",
-        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        "noData": "No data to display",
-        "numericSymbols": ["k", "M", "G", "T", "P", "E"],
-        "printChart": "Print chart",
-        "resetZoom": "Reset zoom",
-        "resetZoomTitle": "Reset zoom level 1:1",
-        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        "thousandsSep": " ",
-        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-      }
-    },
-    "type": "chart",
-    "fonts": "Droid+Sans",
-    "debug": false
-  },
-  "evals": []
-}</script></p>
-</div>
-<div id="chalk" class="section level4">
-<h4>Chalk</h4>
+<div id="chalk" class="section level3">
+<h3>Chalk</h3>
 <p>Insipired in <a href="https://www.amcharts.com/inspiration/chalk/" class="uri">https://www.amcharts.com/inspiration/chalk/</a>.</p>
 <pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_chalk())</code></pre>
-<p><div id="htmlwidget-4837" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-4837">{
+<p><div id="htmlwidget-7110" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-7110">{
   "x": {
     "hc_opts": {
       "title": {
@@ -1181,12 +1181,12 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="hand-drawn" class="section level4">
-<h4>Hand Drawn</h4>
+<div id="hand-drawn" class="section level3">
+<h3>Hand Drawn</h3>
 <p>Insipired in <a href="https://www.amcharts.com/inspiration/hand-drawn/" class="uri">https://www.amcharts.com/inspiration/hand-drawn/</a> (again!).</p>
 <pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_handdrawn())</code></pre>
-<p><div id="htmlwidget-2224" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-2224">{
+<p><div id="htmlwidget-4477" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-4477">{
   "x": {
     "hc_opts": {
       "title": {
@@ -1356,11 +1356,11 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="null" class="section level4">
-<h4>Null</h4>
+<div id="null" class="section level3">
+<h3>Null</h3>
 <pre class="r"><code>hc %&gt;% hc_add_theme(hc_theme_null())</code></pre>
-<p><div id="htmlwidget-8915" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-8915">{
+<p><div id="htmlwidget-6528" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-6528">{
   "x": {
     "hc_opts": {
       "title": {
@@ -1464,8 +1464,8 @@ layout: base
   "evals": []
 }</script></p>
 </div>
-<div id="create-themes" class="section level4">
-<h4>Create themes</h4>
+<div id="create-themes" class="section level3">
+<h3>Create themes</h3>
 <pre class="r"><code>thm &lt;- hc_theme(
   colors = c('red', 'green', 'blue'),
   chart = list(
@@ -1496,8 +1496,8 @@ layout: base
 )
 
 hc %&gt;% hc_add_theme(thm)</code></pre>
-<p><div id="htmlwidget-4006" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-4006">{
+<p><div id="htmlwidget-181" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-181">{
   "x": {
     "hc_opts": {
       "title": {
@@ -1604,7 +1604,6 @@ hc %&gt;% hc_add_theme(thm)</code></pre>
   },
   "evals": []
 }</script></p>
-</div>
 <div id="merge-themes" class="section level4">
 <h4>Merge Themes</h4>
 <pre class="r"><code>thm &lt;- hc_theme_merge(
@@ -1624,8 +1623,8 @@ hc %&gt;% hc_add_theme(thm)</code></pre>
 )
 
 hc %&gt;% hc_add_theme(thm)</code></pre>
-<p><div id="htmlwidget-4763" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-4763">{
+<p><div id="htmlwidget-335" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-335">{
   "x": {
     "hc_opts": {
       "title": {
@@ -1888,5 +1887,6 @@ hc %&gt;% hc_add_theme(thm)</code></pre>
   },
   "evals": []
 }</script></p>
+</div>
 </div>
 </div>

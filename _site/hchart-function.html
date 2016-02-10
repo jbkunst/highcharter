@@ -5,27 +5,8 @@
     <title>Highcharter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.css" media="screen">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
-      <script src="../bower_components/respond/dest/respond.min.js"></script>
-    <![endif]-->
-    <style>
-      .main-container {
-        max-width: 1140px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      
-      #content {
-        padding-top: 80px;
-      }
-      .table {
-         width: auto;
-      }
-      
-    </style>
+    <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="css/custom.css" media="screen">
     
     <script src="lib/htmlwidgets.js"></script>
     <script src="lib/jquery.min.js"></script>
@@ -71,25 +52,26 @@
       <div class="container-fluid" id="content">
   
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="list-group">
-              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">introduction</h5></a>
-<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading">hchart-function</h5></a>
-<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">themes</h5></a>
+              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">Introduction</h5></a>
+<a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading">Highcharts-Api</h5></a>
+<a href="shiny-integration.html" class="list-group-item"><h5 class="list-group-item-heading">Shiny-Integration</h5></a>
+<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading">Hchart-Function</h5></a>
+<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">Themes</h5></a>
 
             </div>
           </div>  
-          <div class="col-sm-9">
-              <div id="hchart-function" class="section level3">
-<h3><code>hchart</code> function</h3>
-<div id="numeric" class="section level4">
-<h4>Numeric</h4>
+          <div class="col-sm-8">
+              <div id="generic-hchart-function" class="section level2">
+<h2>Generic <code>hchart</code> function</h2>
+<div id="numeric" class="section level3">
+<h3>Numeric</h3>
 <pre class="r"><code>x &lt;- c(rnorm(500), rnorm(500, 6, 2))
-class(x)</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-7676" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-7676">{
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-8721" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-8721">{
   "x": {
     "hc_opts": {
       "title": {
@@ -117,37 +99,37 @@ class(x)</code></pre>
           "data": [
             {
               "x": -3.5,
-              "y": 1,
+              "y": 2,
               "name": "(-4, -3]"
             },
             {
               "x": -2.5,
-              "y": 7,
+              "y": 15,
               "name": "(-3, -2]"
             },
             {
               "x": -1.5,
-              "y": 50,
+              "y": 69,
               "name": "(-2, -1]"
             },
             {
               "x": -0.5,
-              "y": 166,
+              "y": 175,
               "name": "(-1, 0]"
             },
             {
               "x": 0.5,
-              "y": 175,
+              "y": 167,
               "name": "(0, 1]"
             },
             {
               "x": 1.5,
-              "y": 98,
+              "y": 73,
               "name": "(1, 2]"
             },
             {
               "x": 2.5,
-              "y": 33,
+              "y": 27,
               "name": "(2, 3]"
             },
             {
@@ -157,53 +139,48 @@ class(x)</code></pre>
             },
             {
               "x": 4.5,
-              "y": 86,
+              "y": 76,
               "name": "(4, 5]"
             },
             {
               "x": 5.5,
-              "y": 104,
+              "y": 73,
               "name": "(5, 6]"
             },
             {
               "x": 6.5,
-              "y": 91,
+              "y": 93,
               "name": "(6, 7]"
             },
             {
               "x": 7.5,
-              "y": 69,
+              "y": 87,
               "name": "(7, 8]"
             },
             {
               "x": 8.5,
-              "y": 38,
+              "y": 47,
               "name": "(8, 9]"
             },
             {
               "x": 9.5,
-              "y": 19,
+              "y": 27,
               "name": "(9, 10]"
             },
             {
               "x": 10.5,
-              "y": 10,
+              "y": 16,
               "name": "(10, 11]"
             },
             {
               "x": 11.5,
-              "y": 1,
+              "y": 2,
               "name": "(11, 12]"
             },
             {
               "x": 12.5,
               "y": 1,
               "name": "(12, 13]"
-            },
-            {
-              "x": 13.5,
-              "y": 1,
-              "name": "(13, 14]"
             }
           ],
           "type": "column",
@@ -252,14 +229,13 @@ class(x)</code></pre>
   "evals": ["hc_opts.tooltip.formatter"]
 }</script></p>
 </div>
-<div id="histogram" class="section level4">
-<h4>Histogram</h4>
+<div id="histogram" class="section level3">
+<h3>Histogram</h3>
 <pre class="r"><code>x &lt;- hist(rbeta(300, 0.2, 4), plot = FALSE)
-class(x)</code></pre>
-<pre><code>## [1] &quot;histogram&quot;</code></pre>
-<pre class="r"><code>hchart(x, color = &quot;darkred&quot;)</code></pre>
-<p><div id="htmlwidget-3785" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-3785">{
+
+hchart(x, color = &quot;darkred&quot;)</code></pre>
+<p><div id="htmlwidget-5839" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-5839">{
   "x": {
     "hc_opts": {
       "title": {
@@ -287,47 +263,47 @@ class(x)</code></pre>
           "data": [
             {
               "x": 0.025,
-              "y": 226,
+              "y": 227,
               "name": "(0, 0.05]"
             },
             {
               "x": 0.075,
-              "y": 28,
+              "y": 22,
               "name": "(0.05, 0.1]"
             },
             {
               "x": 0.125,
-              "y": 13,
+              "y": 10,
               "name": "(0.1, 0.15]"
             },
             {
               "x": 0.175,
-              "y": 12,
+              "y": 13,
               "name": "(0.15, 0.2]"
             },
             {
               "x": 0.225,
-              "y": 5,
+              "y": 9,
               "name": "(0.2, 0.25]"
             },
             {
               "x": 0.275,
-              "y": 4,
+              "y": 7,
               "name": "(0.25, 0.3]"
             },
             {
               "x": 0.325,
-              "y": 5,
+              "y": 4,
               "name": "(0.3, 0.35]"
             },
             {
               "x": 0.375,
-              "y": 4,
+              "y": 3,
               "name": "(0.35, 0.4]"
             },
             {
               "x": 0.425,
-              "y": 1,
+              "y": 3,
               "name": "(0.4, 0.45]"
             },
             {
@@ -337,8 +313,23 @@ class(x)</code></pre>
             },
             {
               "x": 0.525,
-              "y": 1,
+              "y": 0,
               "name": "(0.5, 0.55]"
+            },
+            {
+              "x": 0.575,
+              "y": 0,
+              "name": "(0.55, 0.6]"
+            },
+            {
+              "x": 0.625,
+              "y": 0,
+              "name": "(0.6, 0.65]"
+            },
+            {
+              "x": 0.675,
+              "y": 1,
+              "name": "(0.65, 0.7]"
             }
           ],
           "type": "column",
@@ -388,15 +379,14 @@ class(x)</code></pre>
   "evals": ["hc_opts.tooltip.formatter"]
 }</script></p>
 </div>
-<div id="character-factor" class="section level4">
-<h4>Character, Factor</h4>
+<div id="character-factor" class="section level3">
+<h3>Character, Factor</h3>
 <pre class="r"><code>data(diamonds, package = &quot;ggplot2&quot;)
 x &lt;- diamonds$cut
-class(x)</code></pre>
-<pre><code>## [1] &quot;ordered&quot; &quot;factor&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-8088" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-8088">{
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-7080" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-7080">{
   "x": {
     "hc_opts": {
       "title": {
@@ -482,8 +472,8 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 <pre class="r"><code>hchart(as.character(x), type = &quot;pie&quot;)</code></pre>
-<p><div id="htmlwidget-6223" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-6223">{
+<p><div id="htmlwidget-5084" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-5084">{
   "x": {
     "hc_opts": {
       "title": {
@@ -569,14 +559,14 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 </div>
-<div id="ts" class="section level4">
-<h4>ts</h4>
+<div id="ts" class="section level3">
+<h3>ts</h3>
 <pre class="r"><code>x &lt;- LakeHuron
-class(x)</code></pre>
-<pre><code>## [1] &quot;ts&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-7246" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-7246">{
+
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-372" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-372">{
   "x": {
     "hc_opts": {
       "title": {
@@ -1036,15 +1026,15 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 </div>
-<div id="xts-quantmod-package" class="section level4">
-<h4>xts quantmod package</h4>
+<div id="xts-quantmod-package" class="section level3">
+<h3>xts quantmod package</h3>
 <pre class="r"><code>library(&quot;quantmod&quot;)
 x &lt;- getSymbols(&quot;USD/JPY&quot;, src = &quot;oanda&quot;, auto.assign = FALSE)
-class(x)</code></pre>
-<pre><code>## [1] &quot;xts&quot; &quot;zoo&quot;</code></pre>
-<pre class="r"><code>hchart(x) %&gt;% hc_add_theme(hc_theme_chalk())</code></pre>
-<p><div id="htmlwidget-1620" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-1620">{
+
+
+hchart(x) %&gt;% hc_add_theme(hc_theme_chalk())</code></pre>
+<p><div id="htmlwidget-4342" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-4342">{
   "x": {
     "hc_opts": {
       "title": {
@@ -3187,22 +3177,22 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 </div>
-<div id="xts-ohlc" class="section level4">
-<h4>xts ohlc</h4>
+<div id="xts-ohlc" class="section level3">
+<h3>xts ohlc</h3>
 <pre class="r"><code># x &lt;- getSymbols(&quot;YHOO&quot;, auto.assign = FALSE)
-# class(x)
+# 
 # 
 # hchart(x)
 # hchart(x, type = &quot;ohlc&quot;)</code></pre>
 </div>
-<div id="acfs" class="section level4">
-<h4>acf(s)</h4>
+<div id="acfs" class="section level3">
+<h3>acf(s)</h3>
 <pre class="r"><code>x &lt;- acf(diff(AirPassengers), plot = FALSE)
-class(x)</code></pre>
-<pre><code>## [1] &quot;acf&quot;</code></pre>
-<pre class="r"><code>hchart(x) %&gt;% hc_title(text = &quot;This is an ACF chart&quot;)</code></pre>
-<p><div id="htmlwidget-2349" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-2349">{
+
+
+hchart(x) %&gt;% hc_title(text = &quot;This is an ACF chart&quot;)</code></pre>
+<p><div id="htmlwidget-2893" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-2893">{
   "x": {
     "hc_opts": {
       "title": {
@@ -3388,14 +3378,14 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 </div>
-<div id="multivariate-time-series" class="section level4">
-<h4>Multivariate Time series</h4>
+<div id="multivariate-time-series" class="section level3">
+<h3>Multivariate Time series</h3>
 <pre class="r"><code>x &lt;- cbind(mdeaths, fdeaths)
-class(x)</code></pre>
-<pre><code>## [1] &quot;mts&quot;    &quot;ts&quot;     &quot;matrix&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-6459" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-6459">{
+
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-9171" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-9171">{
   "x": {
     "hc_opts": {
       "title": {
@@ -4048,16 +4038,16 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 </div>
-<div id="forecasts" class="section level4">
-<h4>Forecasts</h4>
+<div id="forecasts" class="section level3">
+<h3>Forecasts</h3>
 <pre class="r"><code>library(&quot;forecast&quot;)
 d.arima &lt;- auto.arima(AirPassengers)
 x &lt;- forecast(d.arima, level = c(95, 80))
-class(x)</code></pre>
-<pre><code>## [1] &quot;forecast&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-6661" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-6661">{
+
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-561" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-561">{
   "x": {
     "hc_opts": {
       "title": {
@@ -5066,13 +5056,13 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 <pre class="r"><code>x &lt;- forecast(ets(USAccDeaths), h = 48, level = 90)
-class(x)</code></pre>
-<pre><code>## [1] &quot;forecast&quot;</code></pre>
-<pre class="r"><code>hchart(x) %&gt;%
+
+
+hchart(x) %&gt;%
   hc_tooltip(valueDecimals = 2) %&gt;% # share toolip
   hc_add_theme(hc_theme_538()) </code></pre>
-<p><div id="htmlwidget-2665" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-2665">{
+<p><div id="htmlwidget-3031" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-3031">{
   "x": {
     "hc_opts": {
       "title": {
@@ -5972,11 +5962,11 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 <pre class="r"><code>x &lt;- forecast(Arima(WWWusage, c(3,1,0)))
-class(x)</code></pre>
-<pre><code>## [1] &quot;forecast&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-3912" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-3912">{
+
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-1099" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-1099">{
   "x": {
     "hc_opts": {
       "title": {
@@ -6613,14 +6603,14 @@ class(x)</code></pre>
   "evals": []
 }</script></p>
 </div>
-<div id="distance-matrix" class="section level4">
-<h4>Distance matrix</h4>
+<div id="distance-matrix" class="section level3">
+<h3>Distance matrix</h3>
 <pre class="r"><code>x &lt;- dist(mtcars[ order(mtcars$hp),])
-class(x)</code></pre>
-<pre><code>## [1] &quot;dist&quot;</code></pre>
-<pre class="r"><code>hchart(x)</code></pre>
-<p><div id="htmlwidget-5616" style="width:100%;height:500px;" class="highchart"></div>
-<script type="application/json" data-for="htmlwidget-5616">{
+
+
+hchart(x)</code></pre>
+<p><div id="htmlwidget-5155" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-5155">{
   "x": {
     "hc_opts": {
       "title": {
@@ -11855,7 +11845,8 @@ class(x)</code></pre>
       </div>
   
     </div>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="js/custom.js"></script>
     <script src="js/ga.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

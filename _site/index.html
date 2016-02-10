@@ -5,27 +5,8 @@
     <title>Highcharter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.css" media="screen">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
-      <script src="../bower_components/respond/dest/respond.min.js"></script>
-    <![endif]-->
-    <style>
-      .main-container {
-        max-width: 1140px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      
-      #content {
-        padding-top: 80px;
-      }
-      .table {
-         width: auto;
-      }
-      
-    </style>
+    <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="css/custom.css" media="screen">
     
     <script src="lib/htmlwidgets.js"></script>
     <script src="lib/jquery.min.js"></script>
@@ -71,15 +52,17 @@
       <div class="container-fluid" id="content">
   
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="list-group">
-              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">introduction</h5></a>
-<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading">hchart-function</h5></a>
-<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">themes</h5></a>
+              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">Introduction</h5></a>
+<a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading">Highcharts-Api</h5></a>
+<a href="shiny-integration.html" class="list-group-item"><h5 class="list-group-item-heading">Shiny-Integration</h5></a>
+<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading">Hchart-Function</h5></a>
+<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">Themes</h5></a>
 
             </div>
           </div>  
-          <div class="col-sm-9">
+          <div class="col-sm-8">
               <pre class="r"><code>library(&quot;highcharter&quot;)
 
 hc &lt;- highchart() %&gt;% 
@@ -205,7 +188,8 @@ hc</code></pre>
       </div>
   
     </div>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="js/custom.js"></script>
     <script src="js/ga.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

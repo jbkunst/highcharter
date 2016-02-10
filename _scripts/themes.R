@@ -6,52 +6,52 @@ rm(list = ls())
 library("highcharter")
 
 #'
-#' ### Themes
+#' ## Themes
 #' 
 
 hc <- hc_demo()
 
-##' #### Default
+##' ### Default
 
 hc
 
-##' #### Dark Unica
-
-hc %>% hc_add_theme(hc_theme_darkunica())
-
-##' #### Grid Light
-
-hc %>% hc_add_theme(hc_theme_gridlight())
-
-##' #### Sand Signika
-
-hc %>% hc_add_theme(hc_theme_sandsignika())
-
-##' #### Fivethirtyeight
+##' ### Fivethirtyeight
 
 hc %>% hc_add_theme(hc_theme_538())
 
-##' #### Economist
+##' ### Economist
 
 hc %>% hc_add_theme(hc_theme_economist())
 
-##' #### Chalk
+##' ### Dark Unica
+
+hc %>% hc_add_theme(hc_theme_darkunica())
+
+##' ### Grid Light
+
+hc %>% hc_add_theme(hc_theme_gridlight())
+
+##' ### Sand Signika
+
+hc %>% hc_add_theme(hc_theme_sandsignika())
+
+##' ### Chalk
 #'
 #' Insipired in https://www.amcharts.com/inspiration/chalk/.
 
 hc %>% hc_add_theme(hc_theme_chalk())
 
-##' #### Hand Drawn
+##' ### Hand Drawn
 #'
 #' Insipired in https://www.amcharts.com/inspiration/hand-drawn/ (again!).
 
 hc %>% hc_add_theme(hc_theme_handdrawn())
 
-##' #### Null
+##' ### Null
 
 hc %>% hc_add_theme(hc_theme_null())
 
-##' #### Create themes
+##' ### Create themes
 
 thm <- hc_theme(
   colors = c('red', 'green', 'blue'),
