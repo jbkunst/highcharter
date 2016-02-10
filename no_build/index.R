@@ -231,14 +231,14 @@ hc
 
 library("quantmod")
 
-x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("AMZN", auto.assign = FALSE)
-z <- getSymbols("YHOO", auto.assign = FALSE)
-
-highchart() %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y, type = "ohlc") %>% 
-  hc_add_series_ohlc(z, type = "line")
+# x <- getSymbols("AAPL", auto.assign = FALSE)
+# y <- getSymbols("AMZN", auto.assign = FALSE)
+# z <- getSymbols("YHOO", auto.assign = FALSE)
+# 
+# highchart() %>% 
+#   hc_add_series_ohlc(x) %>% 
+#   hc_add_series_ohlc(y, type = "ohlc") %>% 
+#   hc_add_series_ohlc(z, type = "line")
 
 ##' ## Highmaps #### 
 
@@ -472,12 +472,12 @@ highchart(type = "stock") %>%
 
 library("quantmod")
 
-x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("SPY", auto.assign = FALSE)
-
-highchart() %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y)
+# x <- getSymbols("AAPL", auto.assign = FALSE)
+# y <- getSymbols("SPY", auto.assign = FALSE)
+# 
+# highchart() %>% 
+#   hc_add_series_ohlc(x) %>% 
+#   hc_add_series_ohlc(y)
 
 
 usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
@@ -704,11 +704,11 @@ plot(x)
 hchart(x)
 
 #' ### xts ohlc
-x <- getSymbols("YHOO", auto.assign = FALSE)
-class(x)
-plot(x)
-hchart(x)
-hchart(x, type = "ohlc")
+# x <- getSymbols("YHOO", auto.assign = FALSE)
+# class(x)
+# plot(x)
+# hchart(x)
+# hchart(x, type = "ohlc")
 
 #' ### acf(s)
 x <- acf(diff(AirPassengers), plot = FALSE)
