@@ -1,0 +1,20 @@
+title: highcharter
+
+author:
+  name: Joshua Kunst
+  email: jbkunst@gmail.com
+  twitter: jbkunst
+  github: jbkunst
+
+permalink: /:title/
+
+encoding: utf-8
+
+exclude:
+  - jekyllserve.bat
+  - highcharter-gh-pages.Rproj
+
+markdown: redcarpet
+markdown_ext:  markdown,mkdown,mkdn,mkd,md
+redcarpet:
+  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]

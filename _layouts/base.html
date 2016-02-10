@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootswatch: Paper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.css" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
+      <script src="../bower_components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      .main-container {
+        max-width: 1140px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      #content {
+        padding-top: 80px;
+      }
+      .table {
+         width: auto;
+      }
+      
+    </style>
+    {% include dependencies.html %}
+  </head>
+  <body>
+    
+    <div class="container-fluid main-container">
+    
+      <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="../" class="navbar-brand">Highcharter</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://github.com/jbkunst/highcharter" target="_blank">Github</a></li>
+            </ul>
+  
+          </div>
+        </div>
+      </div>
+  
+      <div class="container-fluid" id="content">
+  
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="list-group">
+              {% include navigation.html %}
+            </div>
+          </div>  
+          <div class="col-sm-9">
+              {{ content }} 
+          </div>
+        </div>
+  
+        <footer>
+          <div class="row">
+            <div class="col-lg-12">
+  
+              <ul class="list-unstyled">
+                <li class="pull-right"><a href="#top">Back to top</a></li>
+                <li><a href="http://news.bootswatch.com" onclick="pageTracker._link(this.href); return false;">Blog</a></li>
+                <li><a href="http://feeds.feedburner.com/bootswatch">RSS</a></li>
+                <li><a href="https://twitter.com/bootswatch">Twitter</a></li>
+                <li><a href="https://github.com/thomaspark/bootswatch/">GitHub</a></li>
+                <li><a href="../help/#api">API</a></li>
+                <li><a href="../help/#support">Support</a></li>
+              </ul>
+  
+  
+            </div>
+          </div>
+  
+        </footer>
+  
+      </div>
+  
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="/js/ga.js"></script>
+</body>
+</html>
