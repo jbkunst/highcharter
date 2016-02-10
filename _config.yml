@@ -6,8 +6,6 @@ author:
   twitter: jbkunst
   github: jbkunst
 
-permalink: /:title/
-
 encoding: utf-8
 
 exclude:
