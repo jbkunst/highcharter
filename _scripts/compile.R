@@ -42,52 +42,35 @@ deps <- yaml$dependencies %>%
   })
 
 alldeps <- c(htmlwdtjsto, unlist(deps), hgcrtrtjsto)
-alldeps <- paste0("<script src=\"/", alldeps, "\"></script>")
+alldeps <- paste0("<script src=\"", alldeps, "\"></script>")
 alldeps <- c("", paste0("    ", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
 #### knit knit ####
-rs_to_md <- dir("_scripts/", full.names = TRUE)
-rs_to_md <- setdiff(rs_to_md, c("_scripts/compile.R"))
+rs_to_md <- c("_scripts/introduction.R",
+              "_scripts/hchart-function.R",
+              "_scripts/themes.R")
 
-# lapply(rs_to_md, function(f){
-for(f in rs_to_md) {
+lapply(rs_to_md, function(f){
   # f <- "_scripts/hchart-function.R"
   # f <- "_scripts/themes.R"
-  
   message(f)
   bf <- gsub(".R$", "", f)
-  fmd <- paste0(bf, ".md")
   fhtml <- paste0(bf, ".html")
-  frmd <- paste0(bf, ".Rmd")
+
+  render(f, output_format = html_fragment(preserve_yaml = TRUE), envir = new.env())
   
-  
-  render(f, output_format = html_fragment(preserve_yaml = TRUE),  envir = new.env())
-  
-#   knit2html(spin(f, knit = FALSE),
-#             output = fmd, force_v1 = TRUE,
-#             encoding = "UTF-8",
-#             envir = new.env())
-  
-  file.copy(fhtml, file.path("_posts", paste(Sys.Date(),  basename(fhtml), sep = "-")), overwrite = TRUE)
-  
-#   # file.copy(basename(fmd), file.path("_posts", paste(Sys.Date(),  basename(fmd), sep = "-")), overwrite = TRUE)
-#   readLines(basename(fmd)) %>% 
-#     gsub("```r", "```", .) %>% 
-#     writeLines(file.path("_posts", paste(Sys.Date(),  basename(fmd), sep = "-")))
+  readLines(fhtml) %>% 
+    {c("---", "layout: base", "---", .)} %>% 
+    writeLines(basename(fhtml))
   
   file.remove(fhtml)
   
-#   fs2rm <- dir(".", recursive = TRUE)
-#   fs2rm <- setdiff(fs2rm[grepl(bf, fs2rm)], f)
-#   lapply(fs2rm, file.remove)
-}
-# })
 
-readLines("_posts/2016-02-10-introduction.html") %>% 
-  {c("---", "layout: base", "---", .)} %>% 
-  writeLines("index.html")
+})
 
+
+file.copy("introduction.html", "index.html")
 
 navlist <- paste0(
   '<a href="/',

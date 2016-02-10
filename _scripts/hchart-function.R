@@ -40,11 +40,11 @@ class(x)
 hchart(x) %>% hc_add_theme(hc_theme_chalk())
 
 #' #### xts ohlc
-x <- getSymbols("YHOO", auto.assign = FALSE)
-class(x)
-
-hchart(x)
-hchart(x, type = "ohlc")
+# x <- getSymbols("YHOO", auto.assign = FALSE)
+# class(x)
+# 
+# hchart(x)
+# hchart(x, type = "ohlc")
 
 #' #### acf(s)
 x <- acf(diff(AirPassengers), plot = FALSE)

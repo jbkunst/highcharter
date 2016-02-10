@@ -1,0 +1,101 @@
+---
+layout: base
+---
+<pre class="r"><code>library(&quot;highcharter&quot;)
+
+hc &lt;- highchart() %&gt;% 
+  hc_title(text = &quot;A nice chart&quot;) %&gt;% 
+  hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                         26.5, 23.3, 18.3, 13.9, 9.6))
+
+hc</code></pre>
+<p><div id="htmlwidget-3078" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-3078">{
+  "x": {
+    "hc_opts": {
+      "title": {
+        "text": "A nice chart"
+      },
+      "credits": {
+        "enabled": false
+      },
+      "exporting": {
+        "enabled": false
+      },
+      "plotOptions": {
+        "series": {
+          "turboThreshold": 0
+        }
+      },
+      "series": [
+        {
+          "data": [7, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }
+      ]
+    },
+    "theme": null,
+    "conf_opts": {
+      "global": {
+        "Date": null,
+        "VMLRadialGradientURL": "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
+        "canvasToolsURL": "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
+        "getTimezoneOffset": null,
+        "timezoneOffset": 0,
+        "useUTC": true
+      },
+      "lang": {
+        "contextButtonTitle": "Chart context menu",
+        "decimalPoint": ".",
+        "downloadJPEG": "Download JPEG image",
+        "downloadPDF": "Download PDF document",
+        "downloadPNG": "Download PNG image",
+        "downloadSVG": "Download SVG vector image",
+        "drillUpText": "Back to {series.name}",
+        "invalidDate": null,
+        "loading": "Loading...",
+        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "noData": "No data to display",
+        "numericSymbols": ["k", "M", "G", "T", "P", "E"],
+        "printChart": "Print chart",
+        "resetZoom": "Reset zoom",
+        "resetZoomTitle": "Reset zoom level 1:1",
+        "shortMonths": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "thousandsSep": " ",
+        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      }
+    },
+    "type": "chart",
+    "fonts": [],
+    "debug": false
+  },
+  "evals": []
+}</script></p>
+<p>asdasd asd asdas dasd asda</p>
+<pre class="r"><code># library(&quot;quantmod&quot;)
+# 
+# x &lt;- getSymbols(&quot;AAPL&quot;, auto.assign = FALSE)
+# y &lt;- getSymbols(&quot;AMZN&quot;, auto.assign = FALSE)
+# 
+# highchart() %&gt;% 
+#   hc_add_series_ohlc(x) %&gt;% 
+#   hc_add_series_ohlc(y, type = &quot;ohlc&quot;) </code></pre>
+<p>asdasdas dasd asd asd asd asd asdasd asdasda asdasd</p>
+<pre class="r"><code># library(&quot;viridisLite&quot;)
+# library(&quot;dplyr&quot;)
+# data(unemployment)
+# data(uscountygeojson)
+# 
+# dclass &lt;- data_frame(from = seq(0, 10, by = 2),
+#                      to = c(seq(2, 10, by = 2), 50),
+#                      color = substring(viridis(length(from), option = &quot;C&quot;), 0, 7))
+# dclass &lt;- list.parse3(dclass)
+# 
+# highchart() %&gt;% 
+#   hc_title(text = &quot;US Counties unemployment rates, April 2015&quot;) %&gt;% 
+#   hc_add_series_map(uscountygeojson, unemployment,
+#                     value = &quot;value&quot;, joinBy = &quot;code&quot;) %&gt;% 
+#   hc_colorAxis(dataClasses = dclass) %&gt;% 
+#   hc_legend(layout = &quot;vertical&quot;, align = &quot;right&quot;,
+#             floating = TRUE, valueDecimals = 0,
+#             valueSuffix = &quot;%&quot;) %&gt;% 
+#   hc_mapNavigation(enabled = TRUE)</code></pre>
