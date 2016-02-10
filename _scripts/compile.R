@@ -73,9 +73,9 @@ lapply(rs_to_md, function(f){
 file.copy("introduction.html", "index.html")
 
 navlist <- paste0(
-  '<a href="/',
-  gsub(".R$", "", basename(rs_to_md)),  
-  '/" class="list-group-item"><h5 class="list-group-item-heading">',
+  '<a href="',
+  paste0(gsub(".R$", "", basename(rs_to_md)), ".html"),  
+  '" class="list-group-item"><h5 class="list-group-item-heading">',
   gsub(".R$", "", basename(rs_to_md)),
   '</h5></a>'
 )
