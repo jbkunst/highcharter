@@ -3,7 +3,7 @@
 #' ---
 
 #'
-#' ## Welcome to the Highcharter home page
+#' ## Welcome to the Highcharter homepage
 #'
 
 library("highcharter")
