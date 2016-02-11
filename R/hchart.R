@@ -28,7 +28,7 @@ hchart.numeric <- function(object, breaks = "FD", ...) {
   
   h <- hist(object, plot = FALSE, breaks = breaks)
   
-  hchart.histogram(h)
+  hchart.histogram(h, ...)
 
 }
 
