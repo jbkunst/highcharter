@@ -1,6 +1,6 @@
 /* navbar and container things */
 .main-container, .container-fluid {
-  max-width: 1366px;
+  max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -17,7 +17,12 @@
 }
 
 /* content things */
-h1, h2, h3, h4, h5, h6 {
+#rcontent h1,
+#rcontent h2,
+#rcontent h3,
+#rcontent h4,
+#rcontent h5,
+#rcontent h6 {
   font-family: 'Roboto Condensed', sans-serif;
 }
 
@@ -34,6 +39,16 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 10px;
   padding-bottom: 7px;
   font-size: 22px;
+}
+
+#rcontent p,
+#rcontent li {
+  /* http://www.getmdl.io/templates/blog/entry.html */
+  margin: 16px auto;
+  font-size: 14px;
+  line-height: 30px;
+  margin-bottom: 1em;
+  color: #616161;
 }
 
 @media (min-width: 768px) {

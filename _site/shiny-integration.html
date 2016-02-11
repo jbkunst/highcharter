@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Highcharter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
-    <link rel="stylesheet" href="css/custom.css" media="screen">
-    
+<head>
+  <meta charset="utf-8">
+  <title>Highcharter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
+  <link rel="stylesheet" href="css/custom.css" media="screen">
+  
     <script src="lib/htmlwidgets.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/underscore-min.js"></script>
@@ -27,45 +27,49 @@
     <script src="lib/pattern-fill-v2.js"></script>
     <script src="lib/highchart.js"></script>
 
-  </head>
-  <body>
-    
-    <div class="container-fluid main-container">
-    
-      <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a href="../" class="navbar-brand">Highcharter</a>
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
-          <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="http://github.com/jbkunst/highcharter" target="_blank">Github</a></li>
-            </ul>
+</head>
+<body>
   
-          </div>
+  <div class="container-fluid main-container">
+  
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">Highcharter</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://github.com/jbkunst/highcharter" target="_blank">Github</a></li>
+          </ul>
+
         </div>
       </div>
-  
-      <div class="container-fluid" id="content">
-  
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="list-group"  data-spy="affix" data-offset-top="80">
+    </div>
+
+    <div class="container-fluid" id="content">
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div data-spy="affix" data-offset-top="80">
+            <div class="list-group">
               <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">Introduction</h5></a>
 <a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading">Highcharts Api</h5></a>
 <a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading">Hchart Function</h5></a>
 <a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">Themes</h5></a>
 <a href="shiny-integration.html" class="list-group-item"><h5 class="list-group-item-heading">Shiny Integration</h5></a>
+<a href="plugins.html" class="list-group-item"><h5 class="list-group-item-heading">Plugins</h5></a>
 
-            </div>
+            </div>  
           </div>
-          <div class="col-sm-9" id="rcontent">
-              <div id="shiny-integration" class="section level2">
+          
+        </div>
+        <div class="col-sm-9" id="rcontent">
+            <div id="shiny-integration" class="section level2">
 <h2>Shiny Integration</h2>
 <p>Not much to say here. Highcharter is htmlwidlgets powered so it’s <strong>shiny ready</strong>. See a live example here <a href="https://jbkunst.shinyapps.io/highcharter/" class="uri">https://jbkunst.shinyapps.io/highcharter/</a>. The code for the app is here <a href="https://github.com/jbkunst/shiny-apps/tree/master/highcharter" class="uri">https://github.com/jbkunst/shiny-apps/tree/master/highcharter</a>.</p>
 <p>The code of a simple app can be:</p>
@@ -132,40 +136,31 @@ server = function(input, output) {
 shinyApp(ui = ui, server = server)</code></pre>
 </div>
  
+        </div>
+      </div>
+
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-unstyled">
+              <li class="pull-right"><a href="#top">Back to top</a></li>
+              <li><a href="http://jkunst.com">Jkunst</a></li>
+            </ul>
           </div>
         </div>
-  
-        <footer>
-          <div class="row">
-            <div class="col-lg-12">
-  
-              <ul class="list-unstyled">
-                <li class="pull-right"><a href="#top">Back to top</a></li>
-                <li><a href="http://feeds.feedburner.com/bootswatch">RSS</a></li>
-                <li><a href="https://twitter.com/bootswatch">Twitter</a></li>
-                <li><a href="https://github.com/thomaspark/bootswatch/">GitHub</a></li>
-                <li><a href="../help/#api">API</a></li>
-                <li><a href="../help/#support">Support</a></li>
-              </ul>
-  
-  
-            </div>
-          </div>
-  
-        </footer>
-  
-      </div>
-  
+      </footer>
+
     </div>
-    
-    
-    <script src="js/custom.js"></script>
-    <script src="js/ga.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/languages/r.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+  
+
+  <script src="js/custom.js"></script>
+  <script src="js/ga.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/languages/r.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
     
 </body>
 </html>

@@ -9,21 +9,29 @@ library("highcharter")
 #'
 #' ## Generic `hchart` function
 #' 
+#' This function can chart various R objects on the fly with
+#' one line of code. The resulting chart is a highchart object
+#' so you can keep modifying with the implmented API
+#' 
+#' Some implemented classes are: numeric, histogram, character,
+#' factor, ts, mts, xts (and OHLC), forecast, dist.
+#' 
 
 #' ### Numeric & Histograms
-x <- c(rnorm(500), rnorm(500, 6, 2))
+data(diamonds, package = "ggplot2")
 
-hchart(x)
+hchart(diamonds$price, color = "#B71C1C", name = "Price") %>% 
+  hc_title(text = "Histogram") %>% 
+  hc_subtitle(text = "You can zoom me")
 
-x <- hist(rbeta(300, 0.2, 4), plot = FALSE)
 
-hchart(x, color = "darkred")
+x <- hist(c(rnorm(500), rnorm(500, 6, 2)), plot = FALSE)
+
+hchart(x, color = "gray")
 
 #' ### Character & Factor
-data(diamonds, package = "ggplot2")
-x <- diamonds$cut
+hchart(diamonds$cut)
 
-hchart(x)
 hchart(as.character(x), type = "pie")
 
 #' ### Time Series
@@ -33,18 +41,9 @@ hchart(x)
 #' ### Forecast package
 library("forecast")
 
-d.arima <- auto.arima(AirPassengers)
-
-x <- forecast(d.arima, level = c(95, 80))
-
-
-hchart(x)
-
 x <- forecast(ets(USAccDeaths), h = 48, level = 90)
 
-hchart(x) %>%
-  hc_tooltip(valueDecimals = 2) %>%
-  hc_add_theme(hc_theme_economist()) 
+hchart(x) %>% hc_tooltip(valueDecimals = 2)
 
 x <- forecast(Arima(WWWusage, c(3,1,0)))
 
@@ -55,10 +54,11 @@ library("quantmod")
 
 x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
 
-hchart(x) %>%
-  hc_add_theme(hc_theme_538())
+hchart(x)
 
 #' ### `xts ohlc` objects
+
+#+eval=FALSE 
 x <- getSymbols("YHOO", auto.assign = FALSE)
 
 hchart(x)

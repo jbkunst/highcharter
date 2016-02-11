@@ -49,7 +49,8 @@ rs_to_md <- c("_scripts/introduction.R",
               "_scripts/highcharts-api.R",
               "_scripts/hchart-function.R",
               "_scripts/themes.R",
-              "_scripts/shiny-integration.R")
+              "_scripts/shiny-integration.R",
+              "_scripts/plugins.R")
               
 html_links <- paste0(gsub(".R$", "", basename(rs_to_md)), ".html")
 html_title <- basename(rs_to_md) %>% 

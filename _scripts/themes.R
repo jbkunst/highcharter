@@ -8,6 +8,10 @@ library("highcharter")
 #'
 #' ## Themes
 #' 
+#' Highcharts is super really flexible to add and create themes.
+#' In Highcarter there are some predefined themes and some 
+#' function to define/create you own theme or merge themes.
+#' 
 
 hc <- hc_demo()
 
