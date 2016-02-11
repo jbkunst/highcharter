@@ -11,6 +11,8 @@ library("highcharter")
 #' See a live example here https://jbkunst.shinyapps.io/highcharter/. The code for 
 #' the app is here https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
 #'  
+#' The functions are `highchartOutput` and `renderHighchart`. 
+#'  
 #' The code of a simple app can be:
 
 #+eval=FALSE 

@@ -57,12 +57,13 @@
         <div class="col-sm-3">
           <div data-spy="affix" data-offset-top="80">
             <div class="list-group">
-              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">Introduction</h5></a>
-<a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading">Highcharts Api</h5></a>
-<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading">Hchart Function</h5></a>
-<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">Themes</h5></a>
-<a href="shiny-integration.html" class="list-group-item"><h5 class="list-group-item-heading">Shiny Integration</h5></a>
-<a href="plugins.html" class="list-group-item"><h5 class="list-group-item-heading">Plugins</h5></a>
+              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">Welcome</h5><p class="list-group-item-text">The starting point</p></a>
+<a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading">API</h5><p class="list-group-item-text">What can we do</p></a>
+<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading"><code>hchart</code> function</h5><p class="list-group-item-text">The Magic Function</p></a>
+<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">Theme</h5><p class="list-group-item-text">Changing the look</p></a>
+<a href="shiny-integration.html" class="list-group-item"><h5 class="list-group-item-heading">Shiny</h5><p class="list-group-item-text">Output & Render</p></a>
+<a href="plugins.html" class="list-group-item"><h5 class="list-group-item-heading">Plugins</h5><p class="list-group-item-text">Some extensions</p></a>
+<a href="miscellaneous-examples.html" class="list-group-item"><h5 class="list-group-item-heading">Examples</h5><p class="list-group-item-text">Fun and miscellaneous</p></a>
 
             </div>  
           </div>
@@ -72,6 +73,7 @@
             <div id="shiny-integration" class="section level2">
 <h2>Shiny Integration</h2>
 <p>Not much to say here. Highcharter is htmlwidlgets powered so it’s <strong>shiny ready</strong>. See a live example here <a href="https://jbkunst.shinyapps.io/highcharter/" class="uri">https://jbkunst.shinyapps.io/highcharter/</a>. The code for the app is here <a href="https://github.com/jbkunst/shiny-apps/tree/master/highcharter" class="uri">https://github.com/jbkunst/shiny-apps/tree/master/highcharter</a>.</p>
+<p>The functions are <code>highchartOutput</code> and <code>renderHighchart</code>.</p>
 <p>The code of a simple app can be:</p>
 <pre class="r"><code>library(&quot;shiny&quot;)
 library(&quot;highcharter&quot;)

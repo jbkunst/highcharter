@@ -45,25 +45,31 @@ alldeps <- c("", paste0("    ", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
 #### navigation ####
-rs_to_md <- c("_scripts/introduction.R",
-              "_scripts/highcharts-api.R",
-              "_scripts/hchart-function.R",
-              "_scripts/themes.R",
-              "_scripts/shiny-integration.R",
-              "_scripts/plugins.R")
+infolist <- list(
+  list(c("_scripts/introduction.R", "Welcome", "The starting point")),
+  list(c("_scripts/highcharts-api.R", "API", "What can we do")),
+  list(c("_scripts/hchart-function.R", "<code>hchart</code> function", "The Magic Function")),
+  list(c("_scripts/themes.R", "Theme", "Changing the look")),
+  list(c("_scripts/shiny-integration.R", "Shiny", "Output & Render")),
+  list(c("_scripts/plugins.R", "Plugins", "Some extensions")),
+  list(c("_scripts/miscellaneous-examples.R", "Examples", "Fun and miscellaneous"))
+  )
+  
+
+rfiles <- infolist %>% map_chr(function(x) x[[1]][1])
+titles <- infolist %>% map_chr(function(x) x[[1]][2])
+inftxt <- infolist %>% map_chr(function(x) x[[1]][3])
               
-html_links <- paste0(gsub(".R$", "", basename(rs_to_md)), ".html")
-html_title <- basename(rs_to_md) %>% 
-  str_replace(".R", "") %>% 
-  str_replace("-", " ") %>% 
-  str_to_title()
+html_links <- paste0(gsub(".R$", "", basename(rfiles)), ".html")
 
 navlist <- paste0(
   '<a href="',
   html_links,
   '" class="list-group-item"><h5 class="list-group-item-heading">',
-  html_title,
-  '</h5></a>'
+  titles,
+  '</h5><p class="list-group-item-text">',
+  inftxt,
+  '</p></a>'
 )
 
 writeLines(navlist, "_includes/navigation.html")
@@ -71,9 +77,8 @@ writeLines(navlist, "_includes/navigation.html")
 #### knitr ####
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 
-lapply(rs_to_md, function(f){
-  # f <- "_scripts/hchart-function.R"
-  # f <- "_scripts/themes.R"
+lapply(rfiles, function(f){
+  # f <- "_scripts/introduction.R"
   message(f)
   bf <- gsub(".R$", "", f)
   fhtml <- paste0(bf, ".html")
@@ -85,7 +90,6 @@ lapply(rs_to_md, function(f){
     writeLines(basename(fhtml))
   
   file.remove(fhtml)
-  
 
 })
 

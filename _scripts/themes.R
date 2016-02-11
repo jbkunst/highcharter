@@ -12,10 +12,9 @@ library("highcharter")
 #' In Highcarter there are some predefined themes and some 
 #' function to define/create you own theme or merge themes.
 #' 
+#' ### Default
 
 hc <- hc_demo()
-
-##' ### Default
 
 hc
 

@@ -5,7 +5,7 @@
 rm(list = ls())
 library("highcharter")
 
-##' ## The higcharts API
+##' ## The highcharts API in highcharter
 #' 
 #' *Premise*: There's not default arguments. All arguments need to be named.
 #' 

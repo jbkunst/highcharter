@@ -7,9 +7,9 @@ rm(list = ls())
 library("highcharter")
 
 #'
-#' ## Generic `hchart` function
+#' ## `hchart` function
 #' 
-#' This function can chart various R objects on the fly with
+#' This generic function can chart various R objects on the fly with
 #' one line of code. The resulting chart is a highchart object
 #' so you can keep modifying with the implmented API
 #' 

@@ -4,6 +4,15 @@
 #' 
 #' ## Welcome to the Highcharter homepage
 #'
+
+#+echo=FALSE
+rm(list = ls())
+try(source("_scripts/helpers.R"))
+try(source("helpers.R"))
+get_demos()
+
+
+#'
 #' *This website is under construction. See the old one 
 #' [here](http://jkunst.com/highcharter/oldindex.html).*
 #'
@@ -14,7 +23,7 @@
 #' 
 #' The main feature of this package are:
 #' 
-#' - The implementation of Highcharts API including Highstocks and Highmaps.
+#' - The implementation of **Highcharts** API including **Highstocks** and **Highmaps**.
 #' You can chart almost every type of chart using the ap. It is a **must** 
 #' know how highcharts works to take advantage of this package.
 #' - The shortcuts functions to add data from R objects to a highchart 
@@ -85,6 +94,8 @@ eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
 dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
 
 highchart(type = "stock") %>% 
+  hc_title(text = "Charting some Symbols") %>% 
+  hc_subtitle(text = "Data extracted using quantmod package") %>% 
   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
   hc_add_series_xts(eurkpw, id = "eurkpw") %>% 
   hc_add_series_flags(dates,
@@ -126,4 +137,4 @@ highchart() %>%
   hc_legend(layout = "vertical", align = "right",
             floating = TRUE, valueDecimals = 0,
             valueSuffix = "%") %>% 
-  hc_mapNavigation(enabled = TRUE)
+  hc_mapNavigation(enabled = TRUE) 

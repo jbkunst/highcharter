@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Highcharter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
+  <link rel="stylesheet" href="css/custom.css" media="screen">
+  
+    <script src="lib/htmlwidgets.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/underscore-min.js"></script>
+    <script src="lib/highstock.js"></script>
+    <script src="lib/highcharts-more.js"></script>
+    <script src="lib/highcharts-3d.js"></script>
+    <script src="lib/exporting.js"></script>
+    <script src="lib/drilldown.js"></script>
+    <script src="lib/heatmap.js"></script>
+    <script src="lib/map.js"></script>
+    <script src="lib/treemap.js"></script>
+    <script src="lib/reset.js"></script>
+    <script src="lib/draggable-points.js"></script>
+    <script src="lib/draggable-legend.js"></script>
+    <script src="lib/pattern-fill-v2.js"></script>
+    <script src="lib/highchart.js"></script>
+
+</head>
+<body>
+  
+  <div class="container-fluid main-container">
+  
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">Highcharter</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://github.com/jbkunst/highcharter" target="_blank">Github</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" id="content">
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div data-spy="affix" data-offset-top="80">
+            <div class="list-group">
+              <a href="introduction.html" class="list-group-item"><h5 class="list-group-item-heading">Welcome</h5><p class="list-group-item-text">The starting point</p></a>
+<a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading">API</h5><p class="list-group-item-text">What can we do</p></a>
+<a href="hchart-function.html" class="list-group-item"><h5 class="list-group-item-heading"><code>hchart</code> function</h5><p class="list-group-item-text">The Magic Function</p></a>
+<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading">Theme</h5><p class="list-group-item-text">Changing the look</p></a>
+<a href="shiny-integration.html" class="list-group-item"><h5 class="list-group-item-heading">Shiny</h5><p class="list-group-item-text">Output & Render</p></a>
+<a href="plugins.html" class="list-group-item"><h5 class="list-group-item-heading">Plugins</h5><p class="list-group-item-text">Some extensions</p></a>
+<a href="miscellaneous-examples.html" class="list-group-item"><h5 class="list-group-item-heading">Examples</h5><p class="list-group-item-text">Fun and miscellaneous</p></a>
+
+            </div>  
+          </div>
+          
+        </div>
+        <div class="col-sm-9" id="rcontent">
+            <div id="miscellaneous-examples" class="section level2">
+<h2>Miscellaneous Examples</h2>
+<div id="highcharts-home-page-example" class="section level3">
+<h3>Highcharts home page example</h3>
+<p>Example in <a href="http://www.highcharts.com/" class="uri">http://www.highcharts.com/</a></p>
+<pre class="r"><code>rainfall &lt;- c(49.9, 71.5, 106.4, 129.2, 144, 176,
+              135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
+
+temperature &lt;- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
+                 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
+
+col1 &lt;- hc_get_colors()[3]
+col2 &lt;- hc_get_colors()[2]
+
+highchart() %&gt;% 
+  hc_title(text = &quot;Tokyo Climate&quot;) %&gt;% 
+  hc_legend(enabled = FALSE) %&gt;% 
+  hc_xAxis(categories = month.abb) %&gt;% 
+  hc_yAxis(
+    list(
+      title = list(text = &quot;Temperature&quot;),
+      align = &quot;left&quot;,
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = &quot;{value} &amp;#176;C&quot;, useHTML = TRUE)
+    ),
+    list(
+      title = list(text = &quot;Rainfall&quot;),
+      align = &quot;right&quot;,
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = &quot;{value} mm&quot;),
+      opposite = TRUE
+    )
+  ) %&gt;% 
+  hc_tooltip(formatter = JS(&quot;function(){
+                             if('Sunshine' == this.series.name){
+                             return  '&lt;b&gt;' + this.point.name + ': &lt;/b&gt;' + this.y
+                             } else {
+                             unts = this.series.name == 'Rainfall' ? 'mm' : '&amp;#176;C';
+                             return (this.x + ': ' + this.y + ' ' + unts)
+                             }}&quot;),
+             useHTML = TRUE) %&gt;% 
+  hc_add_series(name = &quot;Rainfall&quot;, type = &quot;column&quot;,
+                data = rainfall, yAxis = 1) %&gt;% 
+  hc_add_series(name = &quot;Temperature&quot;, type = &quot;spline&quot;,
+                data = temperature) %&gt;% 
+  hc_add_series(name = &quot;Sunshine&quot;, type = &quot;pie&quot;,
+                data = list(list(y = 2020, name = &quot;Sunshine hours&quot;,
+                                 sliced = TRUE, color = col1),
+                            list(y = 6740, name = &quot;Non sunshine hours (including night)&quot;,
+                                 color = col2,
+                                 dataLabels = list(enabled = FALSE))),
+                center = c('20%', 45),
+                size = 80)</code></pre>
+<p><div id="htmlwidget-5249" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-5249">{"x":{"hc_opts":{"title":{"text":"Tokyo Climate"},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0}},"legend":{"enabled":false},"xAxis":{"categories":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]},"yAxis":[{"title":{"text":"Temperature"},"align":"left","showFirstLabel":false,"showLastLabel":false,"labels":{"format":"{value} &#176;C","useHTML":true}},{"title":{"text":"Rainfall"},"align":"right","showFirstLabel":false,"showLastLabel":false,"labels":{"format":"{value} mm"},"opposite":true}],"tooltip":{"formatter":"function(){\n                             if('Sunshine' == this.series.name){\n                             return  '<b>' + this.point.name + ': </b>' + this.y\n                             } else {\n                             unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';\n                             return (this.x + ': ' + this.y + ' ' + unts)\n                             }}","useHTML":true},"series":[{"name":"Rainfall","type":"column","data":[49.9,71.5,106.4,129.2,144,176,135.6,148.5,216.4,194.1,95.6,54.4],"yAxis":1},{"name":"Temperature","type":"spline","data":[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6]},{"name":"Sunshine","type":"pie","data":[{"y":2020,"name":"Sunshine hours","sliced":true,"color":"#90ed7d"},{"y":6740,"name":"Non sunshine hours (including night)","color":"#434348","dataLabels":{"enabled":false}}],"center":["20%","45"],"size":80}]},"theme":null,"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.formatter"]}</script></p>
+</div>
+<div id="chart-color-gradient" class="section level3">
+<h3>Chart Color Gradient</h3>
+<p>Idea from <a href="http://jsfiddle.net/bilelz/sxy1cwnv/" class="uri">http://jsfiddle.net/bilelz/sxy1cwnv/</a></p>
+<pre class="r"><code>highchart() %&gt;% 
+  hc_chart(backgroundColor = &quot;#&quot;) %&gt;% 
+  hc_title(text = &quot;Chart color gradient&quot;, style = list(color = &quot;#CCC&quot;)) %&gt;% 
+  hc_xAxis(categories = month.abb) %&gt;% 
+  hc_yAxis(labels = list(style = list(color = &quot;#CCC&quot;)),
+           gridLineColor = &quot;#111111&quot;) %&gt;% 
+  hc_series(
+    list(
+      data = c(0, 71.5, 106.4, 129.2, 144.0, 176.0,
+               135.6, 148.5, 225, 194.1, 95.6,0),
+      type = &quot;areaspline&quot;,
+      marker = list(enabled = FALSE),
+      color =  list(
+        linearGradient = list(x1 = 0, y1 = 1, x2 = 0, y2 = 0),
+        stops = list(
+          list(0, &quot;transparent&quot;),
+          list(0.33, &quot;yellow&quot;),
+          list(0.66, &quot;red&quot;),
+          list(1, &quot;#ccc&quot;)
+        )
+      ),
+      fillColor = list(
+        linearGradient = list(x1 = 0, y1 = 1, x2 = 0, y2 = 0),
+        stops = list(
+          list(0, &quot;transparent&quot;),
+          list(0.33, &quot;yellow&quot;),
+          list(0.66, &quot;red&quot;),
+          list(1, &quot;black&quot;)
+          )
+        )
+      )
+    )</code></pre>
+<p><div id="htmlwidget-1503" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-1503">{"x":{"hc_opts":{"title":{"text":"Chart color gradient","style":{"color":"#CCC"}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0}},"chart":{"backgroundColor":"#"},"xAxis":{"categories":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]},"yAxis":{"labels":{"style":{"color":"#CCC"}},"gridLineColor":"#111111"},"series":[{"data":[0,71.5,106.4,129.2,144,176,135.6,148.5,225,194.1,95.6,0],"type":"areaspline","marker":{"enabled":false},"color":{"linearGradient":{"x1":0,"y1":1,"x2":0,"y2":0},"stops":[[0,"transparent"],[0.33,"yellow"],[0.66,"red"],[1,"#ccc"]]},"fillColor":{"linearGradient":{"x1":0,"y1":1,"x2":0,"y2":0},"stops":[[0,"transparent"],[0.33,"yellow"],[0.66,"red"],[1,"black"]]}}]},"theme":null,"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[]}</script></p>
+</div>
+</div>
+ 
+        </div>
+      </div>
+
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-unstyled">
+              <li class="pull-right"><a href="#top">Back to top</a></li>
+              <li><a href="http://jkunst.com">Jkunst</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+  
+
+  <script src="js/custom.js"></script>
+  <script src="js/ga.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/languages/r.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    
+</body>
+</html>
