@@ -23,14 +23,14 @@ hc
 #' Lorem lorem pondunorem
 #' 
 
-# library("quantmod")
-# 
-# x <- getSymbols("AAPL", auto.assign = FALSE)
-# y <- getSymbols("AMZN", auto.assign = FALSE)
-# 
-# highchart() %>% 
-#   hc_add_series_ohlc(x) %>% 
-#   hc_add_series_ohlc(y, type = "ohlc") 
+library("quantmod")
+
+x <- getSymbols("AAPL", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
+
+highchart() %>% 
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y, type = "ohlc") 
 
 #'
 #' Lorem lorem pondunorem

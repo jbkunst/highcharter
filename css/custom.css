@@ -1,15 +1,8 @@
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto Condensed', sans-serif;
-}
-
-.main-container, .container {
-  max-width: 1024px;
+/* navbar and container things */
+.main-container, .container-fluid {
+  max-width: 1366px;
   margin-left: auto;
   margin-right: auto;
-}
-
-#content {
-  padding-top: 80px;
 }
 
 .navbar-default {
@@ -21,6 +14,20 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-default .navbar-nav > li > a:focus {
   color: #ffffff;
   background-color: #0A566F;
+}
+
+/* content things */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+#content {
+  padding-top: 80px;
+}
+
+#rcontent h2 {
+  margin-top: 0px;
+  margin-bottom: 15px;
 }
 
 #rcontent h3 {
@@ -42,6 +49,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .highchart {
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

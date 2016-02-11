@@ -47,9 +47,9 @@ writeLines(alldeps, "_includes/dependencies.html")
 #### navigation ####
 rs_to_md <- c("_scripts/introduction.R",
               "_scripts/highcharts-api.R",
-              "_scripts/shiny-integration.R",
               "_scripts/hchart-function.R",
-              "_scripts/themes.R")
+              "_scripts/themes.R",
+              "_scripts/shiny-integration.R")
               
 html_links <- paste0(gsub(".R$", "", basename(rs_to_md)), ".html")
 html_title <- basename(rs_to_md) %>% 
@@ -68,6 +68,8 @@ navlist <- paste0(
 writeLines(navlist, "_includes/navigation.html")
 
 #### knitr ####
+knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
+
 lapply(rs_to_md, function(f){
   # f <- "_scripts/hchart-function.R"
   # f <- "_scripts/themes.R"
