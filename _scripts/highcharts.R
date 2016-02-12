@@ -7,11 +7,10 @@ rm(list = ls())
 library("highcharter")
 
 #'
-#' ## Miscellaneous Examples
+#' ## Highcharts Examples
 #' 
-
 #'
-#' ### Highcharts home page example
+#' ### Highcharts home page demo
 #'
 #' Example in http://www.highcharts.com/
 

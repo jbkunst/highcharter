@@ -11,10 +11,6 @@ try(source("_scripts/helpers.R"))
 try(source("helpers.R"))
 get_demos()
 
-
-#'
-#' *This website is under construction. See the old one 
-#' [here](http://jkunst.com/highcharter/oldindex.html).*
 #'
 #' Highcharter is a wrapper for highcharts javascript libray and its 
 #' modules. Highcharts is very mature javascript charting library and
@@ -103,15 +99,6 @@ highchart(type = "stock") %>%
                       text = c("Event 1", "Event 2"),
                       id = "usdjpy") %>% 
   hc_add_theme(hc_theme_538()) 
-
-
-#+eval=FALSE
-x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("AMZN", auto.assign = FALSE)
-
-highchart() %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y, type = "ohlc") 
 
 #' 
 #' ### Highmaps

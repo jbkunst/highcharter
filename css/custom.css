@@ -6,7 +6,7 @@
 }
 
 .navbar-default {
-  background-color: #008cba;
+  background-color: #242F39;
   border-color: transparent;
 }
 
@@ -15,6 +15,22 @@
   color: #ffffff;
   background-color: #0A566F;
 }
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    z-index: 2;
+    color: #ffffff;
+    background-color: #242F39;
+    border-color: #242F39;
+}
+
+.list-group-item.active .list-group-item-text,
+.list-group-item.active:hover .list-group-item-text,
+.list-group-item.active:focus .list-group-item-text {
+    color: #ccc;
+}
+
 
 /* content things */
 #rcontent h1,

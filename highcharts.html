@@ -1,0 +1,99 @@
+---
+layout: base
+---
+<div id="highcharts-examples" class="section level2">
+<h2>Highcharts Examples</h2>
+<div id="highcharts-home-page-demo" class="section level3">
+<h3>Highcharts home page demo</h3>
+<p>Example in <a href="http://www.highcharts.com/" class="uri">http://www.highcharts.com/</a></p>
+<pre class="r"><code>rainfall &lt;- c(49.9, 71.5, 106.4, 129.2, 144, 176,
+              135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
+
+temperature &lt;- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
+                 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
+
+col1 &lt;- hc_get_colors()[3]
+col2 &lt;- hc_get_colors()[2]
+
+highchart() %&gt;% 
+  hc_title(text = &quot;Tokyo Climate&quot;) %&gt;% 
+  hc_legend(enabled = FALSE) %&gt;% 
+  hc_xAxis(categories = month.abb) %&gt;% 
+  hc_yAxis(
+    list(
+      title = list(text = &quot;Temperature&quot;),
+      align = &quot;left&quot;,
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = &quot;{value} &amp;#176;C&quot;, useHTML = TRUE)
+    ),
+    list(
+      title = list(text = &quot;Rainfall&quot;),
+      align = &quot;right&quot;,
+      showFirstLabel = FALSE,
+      showLastLabel = FALSE,
+      labels = list(format = &quot;{value} mm&quot;),
+      opposite = TRUE
+    )
+  ) %&gt;% 
+  hc_tooltip(formatter = JS(&quot;function(){
+                             if('Sunshine' == this.series.name){
+                             return  '&lt;b&gt;' + this.point.name + ': &lt;/b&gt;' + this.y
+                             } else {
+                             unts = this.series.name == 'Rainfall' ? 'mm' : '&amp;#176;C';
+                             return (this.x + ': ' + this.y + ' ' + unts)
+                             }}&quot;),
+             useHTML = TRUE) %&gt;% 
+  hc_add_series(name = &quot;Rainfall&quot;, type = &quot;column&quot;,
+                data = rainfall, yAxis = 1) %&gt;% 
+  hc_add_series(name = &quot;Temperature&quot;, type = &quot;spline&quot;,
+                data = temperature) %&gt;% 
+  hc_add_series(name = &quot;Sunshine&quot;, type = &quot;pie&quot;,
+                data = list(list(y = 2020, name = &quot;Sunshine hours&quot;,
+                                 sliced = TRUE, color = col1),
+                            list(y = 6740, name = &quot;Non sunshine hours (including night)&quot;,
+                                 color = col2,
+                                 dataLabels = list(enabled = FALSE))),
+                center = c('20%', 45),
+                size = 80)</code></pre>
+<p><div id="htmlwidget-2070" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-2070">{"x":{"hc_opts":{"title":{"text":"Tokyo Climate"},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0}},"legend":{"enabled":false},"xAxis":{"categories":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]},"yAxis":[{"title":{"text":"Temperature"},"align":"left","showFirstLabel":false,"showLastLabel":false,"labels":{"format":"{value} &#176;C","useHTML":true}},{"title":{"text":"Rainfall"},"align":"right","showFirstLabel":false,"showLastLabel":false,"labels":{"format":"{value} mm"},"opposite":true}],"tooltip":{"formatter":"function(){\n                             if('Sunshine' == this.series.name){\n                             return  '<b>' + this.point.name + ': </b>' + this.y\n                             } else {\n                             unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';\n                             return (this.x + ': ' + this.y + ' ' + unts)\n                             }}","useHTML":true},"series":[{"name":"Rainfall","type":"column","data":[49.9,71.5,106.4,129.2,144,176,135.6,148.5,216.4,194.1,95.6,54.4],"yAxis":1},{"name":"Temperature","type":"spline","data":[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6]},{"name":"Sunshine","type":"pie","data":[{"y":2020,"name":"Sunshine hours","sliced":true,"color":"#90ed7d"},{"y":6740,"name":"Non sunshine hours (including night)","color":"#434348","dataLabels":{"enabled":false}}],"center":["20%","45"],"size":80}]},"theme":null,"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.formatter"]}</script></p>
+</div>
+<div id="chart-color-gradient" class="section level3">
+<h3>Chart Color Gradient</h3>
+<p>Idea from <a href="http://jsfiddle.net/bilelz/sxy1cwnv/" class="uri">http://jsfiddle.net/bilelz/sxy1cwnv/</a></p>
+<pre class="r"><code>highchart() %&gt;% 
+  hc_chart(backgroundColor = &quot;#&quot;) %&gt;% 
+  hc_title(text = &quot;Chart color gradient it's on fire&quot;, style = list(color = &quot;#CCC&quot;)) %&gt;% 
+  # hc_xAxis(categories = month.abb) %&gt;% 
+  hc_yAxis(labels = list(style = list(color = &quot;#CCC&quot;)),
+           gridLineColor = &quot;#111111&quot;) %&gt;% 
+  hc_series(
+    list(
+      data =  abs(rnorm(100)) + 1,
+      type = &quot;areaspline&quot;,
+      marker = list(enabled = FALSE),
+      color =  list(
+        linearGradient = list(x1 = 0, y1 = 1, x2 = 0, y2 = 0),
+        stops = list(
+          list(0, &quot;transparent&quot;),
+          list(0.33, &quot;yellow&quot;),
+          list(0.66, &quot;red&quot;),
+          list(1, &quot;#ccc&quot;)
+        )
+      ),
+      fillColor = list(
+        linearGradient = list(x1 = 0, y1 = 1, x2 = 0, y2 = 0),
+        stops = list(
+          list(0, &quot;transparent&quot;),
+          list(0.1, &quot;yellow&quot;),
+          list(0.5, &quot;red&quot;),
+          list(1, &quot;black&quot;)
+          )
+        )
+      )
+    )</code></pre>
+<p><div id="htmlwidget-987" style="width:100%;height:500px;" class="highchart"></div>
+<script type="application/json" data-for="htmlwidget-987">{"x":{"hc_opts":{"title":{"text":"Chart color gradient it's on fire","style":{"color":"#CCC"}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0}},"chart":{"backgroundColor":"#"},"yAxis":{"labels":{"style":{"color":"#CCC"}},"gridLineColor":"#111111"},"series":[{"data":[1.27348169575633,1.83719974249656,1.16340177015487,1.52891889480175,1.50347577144056,2.22758487302991,1.79706264597349,1.18140440126168,1.86979081379694,2.38537374650787,1.51260524300583,2.12095679875579,1.15437866664502,1.35749779023323,2.23648319682949,1.75350951350757,1.92059392797074,1.67157445191191,1.33567503962401,1.34528380817879,1.42655216139556,2.22608227004774,1.03827172848938,1.4073490566353,1.4295371235826,1.03636523060968,2.4911813410249,1.33547187075316,1.83351542768975,2.37247410731054,2.25312320625134,1.02135767937963,1.31027789740541,1.72343227991323,1.03411332073646,1.16840385291024,1.45738046773175,1.21319106318534,3.9962631949999,1.0406725462551,1.27938928272378,1.92113143942101,1.83489223437758,2.13145224820713,1.94877208231282,2.39150094262967,1.29514783355609,1.5060651861311,3.90644023812446,1.03188405560306,1.85523345157179,1.75421152042141,2.03929397134349,3.41577011581735,2.49554346816152,1.76368792922672,1.30343190220804,1.43375988813592,1.02082052582909,2.4917464170295,3.35506096495555,1.64632726090054,1.41361077517266,1.85634658047659,2.52359506732598,1.00560718523419,2.31695790931737,1.00862717139233,1.03082238113366,2.68384119611757,1.66372162158181,2.6514435022132,1.53470433514113,1.21415531242881,1.68746282253803,1.18325445173152,2.41739515588939,1.75473731935039,1.88884867205415,1.69392719500809,2.85997994595366,1.346311411456,3.46767678969894,1.33369734969522,1.98100753176113,3.4588694616329,3.30990612447463,2.09713502274987,1.30715075111781,2.19405174680322,2.209815162214,2.40829003795977,1.93553482167175,1.52437593426014,1.81210880458679,2.01629365629098,2.48165366900216,2.46225764929432,2.47232966724161,2.01607288909315],"type":"areaspline","marker":{"enabled":false},"color":{"linearGradient":{"x1":0,"y1":1,"x2":0,"y2":0},"stops":[[0,"transparent"],[0.33,"yellow"],[0.66,"red"],[1,"#ccc"]]},"fillColor":{"linearGradient":{"x1":0,"y1":1,"x2":0,"y2":0},"stops":[[0,"transparent"],[0.1,"yellow"],[0.5,"red"],[1,"black"]]}}]},"theme":null,"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[]}</script></p>
+</div>
+</div>

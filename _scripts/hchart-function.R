@@ -9,12 +9,12 @@ library("highcharter")
 #'
 #' ## `hchart` function
 #' 
-#' This generic function can chart various R objects on the fly with
-#' one line of code. The resulting chart is a highchart object
+#' This generic function can chart various R objects on the fly.
+#' The resulting chart is a highchart object
 #' so you can keep modifying with the implmented API
 #' 
 #' Some implemented classes are: numeric, histogram, character,
-#' factor, ts, mts, xts (and OHLC), forecast, dist.
+#' factor, ts, mts, xts (and OHLC), forecast, acf, dist.
 #' 
 
 #' ### Numeric & Histograms
@@ -32,7 +32,7 @@ hchart(x, color = "gray")
 #' ### Character & Factor
 hchart(diamonds$cut)
 
-hchart(as.character(x), type = "pie")
+hchart(as.character(diamonds$cut), type = "pie")
 
 #' ### Time Series
 x <- LakeHuron

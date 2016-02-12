@@ -1,6 +1,8 @@
 get_demos <- function(){
   library("highcharter")
   library("forecast")
+  library("htmltools")
+  data("citytemp")
   
   p1 <- highchart() %>% 
     hc_yAxis(title = list(text = NULL)) %>% 
@@ -13,29 +15,36 @@ get_demos <- function(){
     hc_tooltip(valueDecimals = 2) %>% 
     hc_add_theme(hc_theme_538())
   
-  x <- getSymbols("USD/EUR", src = "oanda", auto.assign = FALSE)
-  p3 <- hchart(x, name = "USD/EUR") %>%
-    hc_navigator(enabled = FALSE) %>% 
+#   x <- getSymbols("USD/EUR", src = "oanda", auto.assign = FALSE)
+#   p3 <- hchart(x, name = "USD/EUR") %>%
+#     hc_navigator(enabled = FALSE) %>% 
+#     hc_add_theme(hc_theme_economist())
+  
+  p3 <- highchart() %>% 
+    hc_yAxis(title = list(text = NULL)) %>% 
+    hc_xAxis(categories = citytemp$month) %>% 
+    hc_add_series(name = "Tokyo", data = citytemp$tokyo, showInLegend = FALSE) %>% 
+    hc_add_series(name = "London", data = citytemp$london, showInLegend = FALSE) %>% 
+    hc_add_series(name = "Berlin", data = citytemp$berlin, showInLegend = FALSE) %>% 
     hc_add_theme(hc_theme_economist())
   
   
   data(worldgeojson)
   data(GNI2010, package = "treemap")
   head(GNI2010)
+  library("viridisLite")
   
-  n <- 10
-  cols <- c("yellow", "black")
-  
-  stops <- data.frame(q = 0:n/n, c = colorRampPalette(cols)(n + 1))
-  stops <- list.parse2(stops)
+  dshmstops <- data.frame(q = c(0, exp(1:5)/exp(5)), c = substring(viridis(5 + 1), 0, 7)) %>% 
+    list.parse2()
   
   p4 <- highchart() %>% 
     hc_add_series_map(worldgeojson, GNI2010,
                       value = "GNI", joinBy = "iso3") %>% 
-    hc_legend(enabled = FALSE) %>% 
-    hc_colorAxis(stops = stops) %>% 
-    hc_add_theme(hc_theme_darkunica()) %>% 
+    hc_colorAxis(stops = dshmstops) %>% 
+    hc_legend(enabled = TRUE) %>% 
+    hc_add_theme(hc_theme_db()) %>% 
     hc_mapNavigation(enabled = TRUE)
+  
     
   H <- 250
   p1$height <- H

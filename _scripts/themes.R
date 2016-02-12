@@ -8,9 +8,9 @@ library("highcharter")
 #'
 #' ## Themes
 #' 
-#' Highcharts is super really flexible to add and create themes.
+#' Highcharts is super flexible to add and create themes.
 #' In Highcarter there are some predefined themes and some 
-#' function to define/create you own theme or merge themes.
+#' functions to create or merge themes.
 #' 
 #' ### Default
 
@@ -18,43 +18,49 @@ hc <- hc_demo()
 
 hc
 
-##' ### Fivethirtyeight
+#' ### Fivethirtyeight
 
 hc %>% hc_add_theme(hc_theme_538())
 
-##' ### Economist
+#' ### Economist
 
 hc %>% hc_add_theme(hc_theme_economist())
 
-##' ### Dark Unica
+#' ### Dotabuff
+#' 
+#' Extracted/inspired from  http://www.dotabuff.com/.
 
-hc %>% hc_add_theme(hc_theme_darkunica())
+hc %>% hc_add_theme(hc_theme_db())
 
-##' ### Grid Light
+#' ### Grid Light
 
 hc %>% hc_add_theme(hc_theme_gridlight())
 
-##' ### Sand Signika
+#' ### Sand Signika
 
 hc %>% hc_add_theme(hc_theme_sandsignika())
 
-##' ### Chalk
+#' ### Dark Unica
+
+hc %>% hc_add_theme(hc_theme_darkunica())
+
+#' ### Chalk
 #'
 #' Insipired in https://www.amcharts.com/inspiration/chalk/.
 
 hc %>% hc_add_theme(hc_theme_chalk())
 
-##' ### Hand Drawn
+#' ### Hand Drawn
 #'
 #' Insipired in https://www.amcharts.com/inspiration/hand-drawn/ (again!).
 
 hc %>% hc_add_theme(hc_theme_handdrawn())
 
-##' ### Null
+#' ### Null
 
 hc %>% hc_add_theme(hc_theme_null())
 
-##' ### Create themes
+#' ### Create themes
 
 thm <- hc_theme(
   colors = c('red', 'green', 'blue'),
@@ -65,7 +71,7 @@ thm <- hc_theme(
   title = list(
     style = list(
       color = '#333333',
-      fontFamily = "Erica One"
+      fontFamily = "Lato"
     )
   ),
   subtitle = list(
@@ -99,7 +105,7 @@ thm <- hc_theme_merge(
     title = list(
       style = list(
         color = 'white',
-        fontFamily = "Erica One"
+        fontFamily = "Open Sans"
       )
     )
   )

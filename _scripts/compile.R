@@ -5,6 +5,7 @@ library("magrittr")
 library("purrr")
 library("stringr")
 
+
 set.seed(100)
 options(htmlwidgets.TOJSON_ARGS = list(pretty = FALSE))
 
@@ -46,13 +47,16 @@ writeLines(alldeps, "_includes/dependencies.html")
 
 #### navigation ####
 infolist <- list(
-  list(c("_scripts/introduction.R", "Welcome", "The starting point")),
-  list(c("_scripts/highcharts-api.R", "API", "What can we do")),
+  list(c("_scripts/index.R", "Welcome", "Let's start")),
+  list(c("_scripts/highcharts-api.R", "API", "What can we do with highcharter")),
+  list(c("_scripts/shortcuts.R", "Shortcuts", "For add data series from R objects")),
   list(c("_scripts/hchart-function.R", "<code>hchart</code> function", "The Magic Function")),
-  list(c("_scripts/themes.R", "Theme", "Changing the look")),
-  list(c("_scripts/shiny-integration.R", "Shiny", "Output & Render")),
-  list(c("_scripts/plugins.R", "Plugins", "Some extensions")),
-  list(c("_scripts/miscellaneous-examples.R", "Examples", "Fun and miscellaneous"))
+  list(c("_scripts/themes.R", "Themes", "Changing the look")),
+  list(c("_scripts/shiny-integration.R", "Shiny", "Output & Render functions")),
+  list(c("_scripts/highcharts.R", "Highchart Examples", "Some fun and miscellaneous charts")),
+  list(c("_scripts/highstock.R", "Highstocks Examples", "Using the quantmod package")),
+  list(c("_scripts/highmaps.R", "Highmaps Examples", "Give me the geojson data")),
+  list(c("_scripts/plugins.R", "Plugins", "Some extensions"))
   )
   
 
@@ -78,7 +82,7 @@ writeLines(navlist, "_includes/navigation.html")
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 
 lapply(rfiles, function(f){
-  # f <- "_scripts/introduction.R"
+  # f <- "_scripts/highmaps.R
   message(f)
   bf <- gsub(".R$", "", f)
   fhtml <- paste0(bf, ".html")
@@ -92,7 +96,3 @@ lapply(rfiles, function(f){
   file.remove(fhtml)
 
 })
-
-file.copy("introduction.html", "index.html", overwrite = TRUE)
-
-

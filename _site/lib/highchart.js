@@ -74,15 +74,19 @@ HTMLWidgets.widget({
       
       $("#" + el.id).highcharts('Map', x.hc_opts);  
       
-      /* http://stackoverflow.com/questions/7600454 */
-      $("#" + el.id).bind( 'mousewheel DOMMouseScroll', function ( e ) {
-        var e0 = e.originalEvent,
-        delta = e0.wheelDelta || -e0.detail;
-        this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-        e.preventDefault();
-        
-      });
       
+      if(x.hc_opts.mapNavigation != undefined && x.hc_opts.mapNavigation.enabled === true){
+        /* if have navigation option and enabled true */
+        /* http://stackoverflow.com/questions/7600454 */
+        $("#" + el.id).bind( 'mousewheel DOMMouseScroll', function ( e ) {
+          var e0 = e.originalEvent,
+          delta = e0.wheelDelta || -e0.detail;
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          e.preventDefault();
+          
+        });
+        
+      }
       
     }
     
