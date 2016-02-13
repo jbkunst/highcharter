@@ -53,7 +53,7 @@ infolist <- list(
   list(c("_scripts/hchart-function.R", "<code>hchart</code> function", "The Magic Function")),
   list(c("_scripts/themes.R", "Themes", "Changing the look")),
   list(c("_scripts/shiny-integration.R", "Shiny", "Output & Render functions")),
-  list(c("_scripts/highcharts.R", "Highchart Examples", "Some fun and miscellaneous charts")),
+  list(c("_scripts/highcharts.R", "Highchart Examples", "Some fun and miscellaneous")),
   list(c("_scripts/highstock.R", "Highstocks Examples", "Using the quantmod package")),
   list(c("_scripts/highmaps.R", "Highmaps Examples", "Give me the geojson data")),
   list(c("_scripts/plugins.R", "Plugins", "Some extensions"))

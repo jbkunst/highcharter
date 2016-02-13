@@ -7,12 +7,7 @@ $(document).ready(function () {
   if (href == "")
     href = "index.html";
   
-  if (href.startsWith("index")) {
-    $('.list-group a[href="' + "introduction.html" + '"]').addClass('active');
-  } else  {
-    $('.list-group a[href="' + href + '"]').addClass('active');      
-  } 
-  
+  $('.list-group a[href="' + href + '"]').addClass('active'); 
   
   
   // keep affix width

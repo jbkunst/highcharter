@@ -25,10 +25,9 @@ get_demos()
 #' - The shortcuts functions to add data from R objects to a highchart 
 #' like xts, ohlc, heatmaps, etc.
 #' - The `hchart()` function. This function can chart various R objects on the
-#' fly with one line of code. The resulting chart is a highchart object so you
+#' fly. The resulting chart is a highchart object so you
 #' can keep modifying with the implmented API.
-#' - Themes. Highcharts is super really flexible to add and create theme.
-#' So why dont implement?
+#' - Themes. Highcharts is super really flexible to create themes.
 #' 
 #' 
 #' ### Hello World Example 
@@ -54,6 +53,17 @@ hc
 #' [`hchart`](hchart-function.html) function and add 
 #' [themes](themes.html).
 
+data(diamonds, package = "ggplot2")
+
+hchart(diamonds$price, color = "#B71C1C") %>% 
+  hc_title(text = "You can zoom me")
+
+hchart(diamonds$cut, colorByPoint = TRUE)
+
+#' One of the nicest class which `hchart` can plot is the `forecast`
+#' class from the forecast package.
+#' 
+
 library("forecast")
 
 airforecast <- forecast(auto.arima(AirPassengers), level = 95)
@@ -62,14 +72,6 @@ hchart(airforecast) %>%
   hc_title(text = "Charting Example using hchart") %>% 
   hc_add_theme(hc_theme_economist())
 
-
-data(diamonds, package = "ggplot2")
-
-hchart(diamonds$price, color = "#B71C1C", name = "Price") %>% 
-  hc_title(text = "Histogram") %>% 
-  hc_subtitle(text = "You can zoom me")
-
-hchart(diamonds$cut, colorByPoint = TRUE)
 
 #' 
 #' ### Highstock
@@ -84,21 +86,14 @@ hchart(diamonds$cut, colorByPoint = TRUE)
 
 library("quantmod")
 
-usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
-eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
+x <- getSymbols("AAPL", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
 
-dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
-
-highchart(type = "stock") %>% 
-  hc_title(text = "Charting some Symbols") %>% 
-  hc_subtitle(text = "Data extracted using quantmod package") %>% 
-  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
-  hc_add_series_xts(eurkpw, id = "eurkpw") %>% 
-  hc_add_series_flags(dates,
-                      title = c("E1", "E2"), 
-                      text = c("Event 1", "Event 2"),
-                      id = "usdjpy") %>% 
-  hc_add_theme(hc_theme_538()) 
+highchart() %>% 
+  hc_title(text = "Apple and Amazon") %>% 
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y, type = "ohlc") %>% 
+  hc_add_theme(hc_theme_538())
 
 #' 
 #' ### Highmaps

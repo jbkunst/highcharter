@@ -11,7 +11,7 @@ library("highcharter")
 #' Highstock work well with the quantmod package. It's 
 #' easy download data and chart it. 
 #'
-#' ### Candlestick
+#' ### Candlestick and OHLC charts
 #'  
 
 library("quantmod")
@@ -21,7 +21,8 @@ y <- getSymbols("AMZN", auto.assign = FALSE)
 
 highchart() %>% 
   hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y, type = "ohlc")
+  hc_add_series_ohlc(y, type = "ohlc") %>% 
+  hc_add_theme(hc_theme_538())
 
 
 #'
@@ -44,4 +45,4 @@ highchart(type = "stock") %>%
                       title = c("E1", "E2"), 
                       text = c("Event 1", "Event 2"),
                       id = "usdjpy") %>% 
-  hc_add_theme(hc_theme_538()) 
+  hc_add_theme(hc_theme_db()) 
