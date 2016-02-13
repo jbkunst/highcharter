@@ -4,16 +4,13 @@
 
 # RStudio files
 .Rproj.user/
-
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
-
 # Some htmls and rpubs
 no_build/*.html
 no_build/rsconnect/
 inst/doc
-
 # seasonal
 fort.6
