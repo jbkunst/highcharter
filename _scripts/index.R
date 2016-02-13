@@ -23,7 +23,7 @@ get_demos()
 #' You can chart almost every type of chart using the ap. It is a **must** 
 #' know how highcharts works to take advantage of this package.
 #' - The shortcuts functions to add data from R objects to a highchart 
-#' like xts, ohlc, heatmaps, etc.
+#' like xts, ohlc, treemaps, etc.
 #' - The `hchart()` function. This function can chart various R objects on the
 #' fly. The resulting chart is a highchart object so you
 #' can keep modifying with the implmented API.
