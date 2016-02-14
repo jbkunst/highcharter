@@ -1,5 +1,5 @@
 # [highcharter](http://jkunst.com/highcharter/)
-Another R wrapper for highchartsjs
+R wrapper for highchartsjs
 
 [![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
 [![codecov.io](https://codecov.io/github/jbkunst/highcharter/coverage.svg?branch=master)](https://codecov.io/github/jbkunst/highcharter?branch=master)
@@ -7,10 +7,6 @@ Another R wrapper for highchartsjs
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 [![issues](http://issuestats.com/github/jbkunst/highcharter/badge/issue?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
 [![pr](http://issuestats.com/github/jbkunst/highcharter/badge/pr?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
-
-
-**highcharter is in active development**. The functions in the package can be renamed,
-modified , or deleted. I will ensure have the minimum impact.
 
 ## Resources
 
