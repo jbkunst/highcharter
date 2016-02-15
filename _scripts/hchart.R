@@ -5,6 +5,7 @@
 #+echo=FALSE
 rm(list = ls())
 library("highcharter")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 #'
 #' ## `hchart` function
@@ -43,7 +44,7 @@ library("forecast")
 
 x <- forecast(ets(USAccDeaths), h = 48, level = 90)
 
-hchart(x) %>% hc_tooltip(valueDecimals = 2)
+hchart(x)
 
 x <- forecast(Arima(WWWusage, c(3,1,0)))
 
@@ -77,7 +78,6 @@ x <- cbind(mdeaths, fdeaths)
 hchart(x)
 
 #' ### Distance matrix 
-x <- dist(mtcars[ order(mtcars$hp),])
-
+x <- dist(mtcars[order(mtcars$hp),][1:20, ])
 
 hchart(x)

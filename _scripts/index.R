@@ -17,7 +17,7 @@ get_demos()
 #'  it has a great and powerful API to get a very style of charts and 
 #'  highly customized (see http://www.highcharts.com/demo).
 #' 
-#' The main feature of this package are:
+#' The main features of this package are:
 #' 
 #' - The implementation of **Highcharts** API including **Highstocks** and **Highmaps**.
 #' You can chart almost every type of chart using the ap. It is a **must** 
@@ -50,8 +50,8 @@ hc
 #' 
 #' Among its features highcharter can chart various objects 
 #' with the generic^[I want to say *magic*] 
-#' [`hchart`](hchart-function.html) function and add 
-#' [themes](themes.html).
+#' `hchart` function and add 
+#' themes.
 
 data(diamonds, package = "ggplot2")
 
@@ -60,6 +60,7 @@ hchart(diamonds$price, color = "#B71C1C") %>%
 
 hchart(diamonds$cut, colorByPoint = TRUE)
 
+#' 
 #' One of the nicest class which `hchart` can plot is the `forecast`
 #' class from the forecast package.
 #' 

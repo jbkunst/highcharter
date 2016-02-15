@@ -50,9 +50,9 @@ infolist <- list(
   list(c("_scripts/index.R", "Welcome", "Let's start")),
   list(c("_scripts/highcharts-api.R", "API", "What can we do with highcharter")),
   list(c("_scripts/shortcuts.R", "Shortcuts", "For add data series from R objects")),
-  list(c("_scripts/hchart-function.R", "<code>hchart</code> function", "The Magic Function")),
+  list(c("_scripts/hchart.R", "<code>hchart</code> function", "The Magic")),
   list(c("_scripts/themes.R", "Themes", "Changing the look")),
-  list(c("_scripts/shiny-integration.R", "Shiny", "Output & Render functions")),
+  list(c("_scripts/shiny.R", "Shiny", "Output & Render functions")),
   list(c("_scripts/highcharts.R", "Highcharts Examples", "Some fun and miscellaneous")),
   list(c("_scripts/highstock.R", "Highstock Examples", "Using the quantmod package")),
   list(c("_scripts/highmaps.R", "Highmaps Examples", "Give me the geojson data")),
@@ -82,7 +82,7 @@ writeLines(navlist, "_includes/navigation.html")
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 
 lapply(rfiles, function(f){
-  # f <- "_scripts/highmaps.R
+  f <- "_scripts/index.R"
   message(f)
   bf <- gsub(".R$", "", f)
   fhtml <- paste0(bf, ".html")
