@@ -1,7 +1,31 @@
+validate_args <- function(name, lstargs) {
+  
+  lstargsnn <- lstargs[which(names(lstargs) == "")]
+  lenlst <- length(lstargsnn)
+  
+  if (lenlst != 0) {
+    
+    chrargs <- lstargsnn %>% 
+      unlist() %>% 
+      as.character() %>% 
+      paste0("'", ., "'", collapse = ", ")
+    
+    if (lenlst == 1) {
+      stop(chrargs, " argument is not named in ", paste0("hc_", name), call. = FALSE)
+    } else {
+      stop(chrargs, " arguments are not named in ", paste0("hc_", name), call. = FALSE)
+    }
+    
+  }
+  
+}
+
 #' @importFrom rlist list.merge
 .hc_opt <- function(hc, name, ...) {
   
   assertthat::assert_that(.is_highchart(hc))
+  
+  validate_args(name, eval(substitute(alist(...))))
   
   if (is.null(hc$x$hc_opts[[name]])) {
     
@@ -490,6 +514,8 @@ hc_series <- function(hc, ...) {
 #'
 #' @export
 hc_add_series <- function(hc, ...) {
+  
+  validate_args("add_series", eval(substitute(alist(...))))
   
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
   
