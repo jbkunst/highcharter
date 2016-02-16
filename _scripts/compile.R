@@ -82,7 +82,7 @@ writeLines(navlist, "_includes/navigation.html")
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 
 lapply(rfiles, function(f){
-  f <- "_scripts/index.R"
+  f <- "_scripts/themes.R"
   message(f)
   bf <- gsub(".R$", "", f)
   fhtml <- paste0(bf, ".html")

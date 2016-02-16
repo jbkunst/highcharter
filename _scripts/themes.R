@@ -32,6 +32,12 @@ hc %>% hc_add_theme(hc_theme_economist())
 
 hc %>% hc_add_theme(hc_theme_db())
 
+#' ### Google
+#' 
+#' http://www.google.com/.
+
+hc %>% hc_add_theme(hc_theme_google())
+
 #' ### Grid Light
 
 hc %>% hc_add_theme(hc_theme_gridlight())
