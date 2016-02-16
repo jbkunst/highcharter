@@ -20,7 +20,7 @@ R wrapper for highcharts
 - [Piping styling](http://jkunst.com/highcharter/).
 - Support [Highstock charts](http://jkunst.com/highcharter/highstock.html). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
-- Plot various R object with [one function](http://jkunst.com/highcharter/#hchart-function). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, ohlc, acf, forecast, dist classes. All in one function.
+- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, ohlc, acf, forecast, dist classes.
 - [Themes](http://jkunst.com/highcharter/themes.html): Add themes, merge themes or create your own.
 - <3 to Highcharts.com
 

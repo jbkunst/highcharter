@@ -1,4 +1,18 @@
-# highchart() %>%  hc_xAxis(title = "hey", "s", "aa", 4+4)
+highchart() %>%
+  hc_xAxis(title = "hey", var = 4+4) %>% 
+  hc_add_series(data = c(1, 2, 3))
+
+highchart() %>%
+  hc_xAxis(title = "hey", 4 + 4) %>% 
+  hc_add_series(data = c(1, 2, 3))
+
+highchart() %>%
+  hc_xAxis(title = "hey") %>% 
+  hc_add_series(data = c(1, 2, 3),
+                rexp(19), c(1,2,3,2,3,2,3,2,3))
+
+
+
 
 g <- function(...){
   
@@ -23,18 +37,25 @@ g <- function(...){
   print(substitute(match.call()))
   
   message("exp 2")
-  print(as.list(match.call(call = sys.call(sys.parent(-1)), expand.dots = FALSE))$...)
+  print(
+    print(eval(substitute(alist(...)))))
   
 }
 
 g <- function(...) {
-  print(as.list(match.call(expand.dots = FALSE))$...)
+  lstargs <- eval(substitute(alist(...)))
+  print(lstargs)
+  lstargs
 }
 
 f <- function(...)  g(...)
   
 g(rnorm(5), par = "a", 4 + 4)
 
-f(rnorm(5), par = "a", 4 + 4)
+lstargs <- f(rnorm(5), par = "a", 4 + 4)
+lstargs <- f(a = rnorm(5), par = "a",  b = 4 + 4)
 
-
+chrargs <- lstargs[which(names(lstargs) == "")] %>% 
+  unlist() %>% 
+  as.character() %>% 
+  paste0("'", ., "'", collapse = ", ")
