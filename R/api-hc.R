@@ -7,8 +7,9 @@ validate_args <- function(name, lstargs) {
     
     chrargs <- lstargsnn %>% 
       unlist() %>% 
-      as.character() %>% 
-      paste0("'", ., "'", collapse = ", ")
+      as.character()
+    
+    chrargs <- paste0("'", chrargs, "'", collapse = ", ")
     
     if (lenlst == 1) {
       stop(chrargs, " argument is not named in ", paste0("hc_", name), call. = FALSE)

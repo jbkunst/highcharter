@@ -16,8 +16,8 @@ hc_theme_handdrawn <- function(){
   list(
     colors = cols,
     chart = list(
-      # divBackgroundImage = "https://www.amcharts.com/inspiration/hand-drawn/bg.jpg",
-      divBackgroundImage = "http://newimages.ru/wallpapers/24_2006_oboi_tekstura_bumagi_1400x1050.jpg",
+      divBackgroundImage = "https://www.amcharts.com/inspiration/hand-drawn/bg.jpg",
+      # divBackgroundImage = "http://newimages.ru/wallpapers/24_2006_oboi_tekstura_bumagi_1400x1050.jpg",
       backgroundColor = "transparent",
       style = list(
         fontFamily = "Berkshire Swash",
