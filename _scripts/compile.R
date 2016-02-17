@@ -47,17 +47,40 @@ alldeps <- c("", paste0("    ", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
 #### navigation ####
+ico <- function(x) as.character(shiny::icon(x))
+ico("magic")
+
 infolist <- list(
-  list(c("_scripts/index.R", "Welcome", "Let's start")),
-  list(c("_scripts/highcharts-api.R", "API", "What can we do with highcharter")),
-  list(c("_scripts/shortcuts.R", "Shortcuts", "For add data series from R objects")),
-  list(c("_scripts/hchart.R", "<code>hchart</code> function", "The Magic")),
-  list(c("_scripts/themes.R", "Themes", "Changing the look")),
-  list(c("_scripts/shiny.R", "Shiny", "Output & Render functions")),
-  list(c("_scripts/highcharts.R", "Highcharts Examples", "Some fun and miscellaneous")),
-  list(c("_scripts/highstock.R", "Highstock Examples", "Using the quantmod package")),
-  list(c("_scripts/highmaps.R", "Highmaps Examples", "Give me the geojson data")),
-  list(c("_scripts/plugins.R", "Plugins", "Some extensions"))
+  list(c("_scripts/index.R",
+         paste(ico("hand-spock-o"), "Welcome"),
+         "Let's start")),
+  list(c("_scripts/highcharts-api.R",
+         paste(ico("cogs"), "API"),
+         "What can we do with highcharter")),
+  list(c("_scripts/shortcuts.R",
+         paste(ico("rocket"), "Shortcuts"),
+         "For add data series from R objects")),
+  list(c("_scripts/hchart.R",
+         paste(ico("magic"), "<code>hchart</code> function"),
+         "The Magic")),
+  list(c("_scripts/themes.R",
+         paste(ico("paint-brush"), "Themes"),
+         "Changing the look")),
+  list(c("_scripts/shiny.R",
+         paste(ico("certificate"), "Shiny"),
+         "Output & Render functions")),
+  list(c("_scripts/highcharts.R",
+         paste(ico("area-chart"), "Highcharts Examples"),
+         "Some fun and miscellaneous")),
+  list(c("_scripts/highstock.R",
+         paste(ico("line-chart"), "Highstock Examples"),
+         "Using the quantmod package")),
+  list(c("_scripts/highmaps.R",
+         paste(ico("map"), "Highmaps Examples"),
+         "Give me the geojson data")),
+  list(c("_scripts/plugins.R",
+         paste(ico("plug"), "Plugins"),
+         "Some extensions"))
   )
   
 
@@ -101,4 +124,4 @@ f <- "_scripts/plugins.R"
 
 makepage(f)
 
-lapply(rfiles, makepage)
+# lapply(rfiles, makepage)
