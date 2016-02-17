@@ -91,19 +91,21 @@ highchart() %>%
 #' ### Pattern fill
 
 highchart() %>% 
-  hc_title(text = "I'm a pirate looking chart") %>% 
+  hc_title(text = "I'm an old school school chart") %>% 
+  hc_xAxis(categories = month.abb) %>% 
   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
                          26.5, 23.3, 18.3, 13.9, 9.6),
                 type = "column",
                 color = 'url(#highcharts-default-pattern-0)') %>% 
-  hc_add_theme(hc_theme_handdrawn())
+  hc_add_theme(hc_theme_chalk())
 
 highchart() %>% 
-  hc_title(text = "I'm an old school school chart") %>% 
+  hc_title(text = "I'm a pirate looking chart") %>% 
+  hc_xAxis(categories = month.abb) %>% 
   hc_defs(patterns = list(
     list(id = 'custom-pattern',
          path = list(d = 'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
-                     stroke = "white",
+                     stroke = "black",
                      strokeWidth = 1
          )
     )
@@ -112,5 +114,5 @@ highchart() %>%
                          26.5, 23.3, 18.3, 13.9, 9.6),
                 type = "area",
                 fillColor = 'url(#custom-pattern)') %>% 
-  hc_add_theme(hc_theme_chalk())
+  hc_add_theme(hc_theme_handdrawn())
 
