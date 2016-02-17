@@ -85,3 +85,48 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
     } # force quoted
   shinyRenderWidget(expr, highchartOutput, env, quoted = TRUE)
 }
+
+
+#' Create a Highcharts chart widget
+#'
+#' This function creates a Highchart chart using \pkg{htmlwidgets}. The
+#' widget can be rendered on HTML pages generated from R Markdown, Shiny, or
+#' other applications.
+#'
+#' @param hc_opts A \code{list} object containing options defined as 
+#'    \url{http://api.highcharts.com/highcharts}.
+#' @param theme A \code{hc_theme} class object
+#' @param width A numeric input in pixels.
+#' @param height  A numeric input in pixels.
+#' @param debug A boolean value if you want to print in the browser console the 
+#'    parameters given to \code{highchart}.
+#'
+#' @export
+highchart2 <- function(hc_opts = list(), theme = NULL,
+                      width = NULL, height = NULL,
+                      debug = FALSE) {
+  
+  unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme))) 
+  
+  # forward options using x
+  x <- list(
+    hc_opts = hc_opts,
+    theme = theme,
+    fonts = unfonts,
+    debug = debug
+    
+  )
+  
+  # create widget
+  htmlwidgets::createWidget(
+    name = "highchart2",
+    x,
+    width = width,
+    height = height,
+    package = "highcharter",
+    sizingPolicy = htmlwidgets::sizingPolicy(defaultWidth = "100%",
+                                             knitr.figure = FALSE,
+                                             knitr.defaultWidth = "100%",
+                                             browser.fill = TRUE)
+  )
+}
