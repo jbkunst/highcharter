@@ -1,3 +1,4 @@
+#### ws ####
 rm(list = ls())
 library("knitr")
 library("rmarkdown")
@@ -81,18 +82,23 @@ writeLines(navlist, "_includes/navigation.html")
 #### knitr ####
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
 
-lapply(rfiles, function(f){
-  f <- "_scripts/themes.R"
+makepage <- function(f){
   message(f)
   bf <- gsub(".R$", "", f)
   fhtml <- paste0(bf, ".html")
-
+  
   render(f, output_format = html_fragment(preserve_yaml = TRUE), envir = new.env())
   
   readLines(fhtml) %>% 
-    {c("---", "layout: base", "---", .)} %>% 
+  {c("---", "layout: base", "---", .)} %>% 
     writeLines(basename(fhtml))
   
   file.remove(fhtml)
+  
+}
 
-})
+f <- "_scripts/plugins.R"
+
+makepage(f)
+
+lapply(rfiles, makepage)
