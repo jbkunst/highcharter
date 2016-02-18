@@ -147,3 +147,51 @@ hc_demo <- function() {
     hc_add_series(name = "Berlin", data = dtemp$berlin) 
   
 }
+
+#' Helpers functions to get FontAwesome icons code
+#'
+#' Helpers functions to get FontAwesome icons code
+#'
+#' @param iconname The icon's name
+#'
+#' @examples
+#'
+#' fa_icon("car")
+#'
+#' @export
+fa_icon <- function(iconname = "circle") {
+  
+  faicos <- readRDS(system.file("extdata/faicos.rds", package = "highcharter"))
+
+  stopifnot(iconname %in% faicos$name)
+
+  sprintf("<i class=\"fa fa-%s\"></i>", iconname)
+}
+
+#' @rdname fa_icon
+#'
+#' @examples
+#'
+#' fa_icon_mark("car")
+#'
+#' fa_icon_mark(iconname = c("car", "plane", "car"))
+#'
+#' @export
+fa_icon_mark <- function(iconname = "circle"){
+  
+  faicos <- readRDS(system.file("extdata/faicos.rds", package = "highcharter"))
+  
+  stopifnot(all(iconname %in% faicos$name))
+
+  idx <- purrr::map_int(iconname, function(icn) which(faicos$name %in% icn))
+
+  cod <- faicos$code[idx]
+
+  # this is for the plugin: need the text:code to parse
+  paste0("text:", cod)
+
+}
+
+  
+  
+  
