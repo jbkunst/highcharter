@@ -103,3 +103,34 @@ highchart() %>%
       )
     )
 
+#'
+#' ### A spiderweb chart 
+#'
+#' Highcharts support a range of different chart types so data 
+#' can be displayed in a meaningfull way. Highcharter inherit
+#' all this awesome features. Here's is an example how make a 
+#' spiderweb chart.
+#' 
+
+highchart() %>% 
+  hc_chart(polar = TRUE, type = "line") %>% 
+  hc_title(text = "Budget vs Spending") %>% 
+  hc_xAxis(categories = c('Sales', 'Marketing', 'Development', 'Customer Support', 
+                          'Information Technology', 'Administration'),
+           tickmarkPlacement = 'on',
+           lineWidth = 0) %>% 
+  hc_yAxis(gridLineInterpolation = 'polygon',
+           lineWidth = 0,
+           min = 0) %>% 
+  hc_series(
+    list(
+      name = "Allocated Budget",
+      data = c(43000, 19000, 60000, 35000, 17000, 10000),
+      pointPlacement = 'on'
+    ),
+    list(
+      name = "Actual Spending",
+      data = c(50000, 39000, 42000, 31000, 26000, 14000),
+      pointPlacement = 'on'
+    )
+  )
