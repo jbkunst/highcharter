@@ -1,9 +1,10 @@
 library("shiny")
 library("MASS")
+
 title <- as.character(
   tags$div(icon("quote-left"),
            "This is a", icon("bar-chart"),
-           " with a awesome icon")
+           " with an awesome icon")
   )
 
 subtitle <- as.character(
@@ -11,8 +12,6 @@ subtitle <- as.character(
            icon("thumbs-o-up"),
            "wait for it... awesome")
   )
-
-
 
 dscars <- round(mvrnorm(n = 20, mu = c(1, 1), Sigma = matrix(c(1,0,0,1),2)), 2)
 dsplan <- round(mvrnorm(n = 10, mu = c(3, 4), Sigma = matrix(c(2,.5,2,2),2)), 2)
