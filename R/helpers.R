@@ -12,13 +12,16 @@
 #' 
 #' list.parse3(x)
 #' 
-#' @importFrom stats setNames
 #' @export
 list.parse2 <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  setNames(apply(df, 1, function(r) as.list(as.vector(r))), NULL)
+  res <- apply(df, 1, function(r) as.list(as.vector(r)))
+  
+  names(res) <- NULL
+  
+  res
   
 }
 
@@ -29,7 +32,11 @@ list.parse3 <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  setNames(list.parse(df), NULL)
+  res <- list.parse(df)
+  
+  names(res) <- NULL
+  
+  res
   
 }
 

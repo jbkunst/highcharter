@@ -200,14 +200,12 @@ hc_add_serie_labels_values <- hc_add_series_labels_values
 #' }
 #' 
 #' @importFrom dplyr filter_ mutate_ rename_ select_ tbl_df
-#' @importFrom plyr ldply
-#' @importFrom purrr map_if map
+#' @importFrom purrr map map_df map_if 
 #' 
 #' @export 
 hc_add_series_treemap <- function(hc, tm, ...) {
   
-  assertthat::assert_that(.is_highchart(hc),
-                          is.list(tm))
+  assertthat::assert_that(.is_highchart(hc), is.list(tm))
   
   df <- tm$tm %>% 
     tbl_df() %>% 
@@ -219,7 +217,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   
   ndepth <- which(names(df) == "value") - 1
   
-  ds <- ldply(seq(ndepth), function(lvl){ # lvl <- sample(seq(ndepth), size = 1)
+  ds <- map_df(seq(ndepth), function(lvl){ # lvl <- sample(seq(ndepth), size = 1)
     
     df2 <- df %>% 
       filter_(sprintf("level == %s", lvl)) %>% 

@@ -28,7 +28,6 @@ Imports:
     viridisLite,
     xts,
     quantmod,
-    methods,
     tidyr
 Suggests: knitr,
     jsonlite,

@@ -187,11 +187,9 @@ hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
   xds <- list.parse2(xdf)
   
-  if (hasArg("name")) {
-    nm <- list(...)[["name"]]
-  } else{
-    nm <- str_extract(names(x)[1], "^[A-Za-z]+")
-  }
+  nm <- ifelse(!is.null(list(...)[["name"]]),
+               list(...)[["name"]],
+               str_extract(names(x)[1], "^[A-Za-z]+"))
 
   hc <- hc %>% hc_add_series(data = xds,
                              name = nm,
