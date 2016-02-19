@@ -61,7 +61,9 @@ str_to_id <- function(x) {
     str_to_lower() %>% 
     str_replace_all("\\s+", "_") %>% 
     str_replace_all("\\\\|/", "_") %>% 
+    str_replace_all("\\[|\\]", "_") %>% 
     str_replace_all("_+", "_") %>% 
+    str_replace_all("_$|^_", "") %>% 
     iconv("latin1", "ASCII", sub = "")
   
 }
