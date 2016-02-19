@@ -17,14 +17,13 @@ Depends:
     R (>= 2.10)
 Imports:
     htmlwidgets,
+    magrittr,
     purrr,
     rlist,
     assertthat,
     zoo,
-    magrittr,
     dplyr,
     stringr,
-    plyr,
     viridisLite,
     xts,
     quantmod,

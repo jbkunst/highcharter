@@ -173,7 +173,6 @@ hc_add_serie_xts <- hc_add_series_xts
 #'   
 #' @importFrom quantmod is.OHLC
 #' @importFrom stringr str_extract
-#' @importFrom methods hasArg
 #' @export
 hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
