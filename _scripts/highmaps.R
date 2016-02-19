@@ -7,59 +7,121 @@ library("highcharter")
 
 #'
 #' ## Highmaps Examples
+#'
+#'
+#' ### Charting county data
 #' 
+#' Original source: http://www.arilamstein.com/blog/2016/01/25/mapping-us-religion-adherence-county-r/
 #' 
-#' ### Charting Australian Airports
-#' 
-#' Download airports data around the globe filter them
-#' and then transform to geojson data points to chart 
-#' the airports over a map.
-#' 
- 
+library("haven")
 library("dplyr")
-library("readr")
-library("httr")
+library("stringr")
+library("viridisLite")
+data("uscountygeojson")
+
+url <- "http://www.thearda.com/download/download.aspx?file=U.S.%20Religion%20Census%20Religious%20Congregations%20and%20Membership%20Study,%202010%20(County%20File).SAV"
+
+data <- read_sav(url)
+
+data <- data %>% 
+  mutate(CODE = paste("us",
+                      tolower(STABBR),
+                      str_pad(CNTYCODE, width = 3, pad = "0"),
+                      sep = "-"))
+
+n <- 32
+dstops <- data.frame(q = 0:n/n, c = substring(viridis(n + 1), 0, 7))
+dstops <- list.parse2(dstops)
+
+highchart() %>% 
+  hc_title(text = "Total Religious Adherents by County") %>% 
+  hc_add_series_map(map = uscountygeojson, df = data,
+                    value = "TOTRATE", joinBy = c("code", "CODE"),
+                    name = "Adherents", borderWidth = 0.5) %>% 
+  hc_colorAxis(stops = dstops, min = 0, max = 1000) %>% 
+  hc_legend(layout = "vertical", reversed = TRUE,
+            floating = TRUE, align = "right") %>% 
+  hc_mapNavigation(enabled = TRUE, align = "right") %>% 
+  hc_tooltip(valueDecimals = 0)
+
+#'
+#' ### geojsonio package and FontAwesome plugin
+#' 
 library("rvest")
+library("dplyr")
+library("stringr")
 library("geojsonio")
+library("sp")
+library("purrr")
+library("ggmap")
 
-map <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json" %>% 
-  GET() %>% 
-  content() %>% 
-  jsonlite::fromJSON(simplifyVector = FALSE)
+california <- geojson_read(system.file("examples/california.geojson", package = "geojsonio"))
 
-# http://openflights.org/data.html
-airports <- read_csv("https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat",
-                     col_names = FALSE)
+airports <- read_html("http://www.mapsofworld.com/usa/states/california/california-airports.html") %>% 
+  html_table() %>% 
+  .[[3]] %>% 
+  cbind(.$Coordinates %>% 
+          str_split(" ") %>% 
+          str_extract_all("\\d+") %>% 
+          map_df(function(e){
+            data_frame(x = paste0(e[1], "d", e[2], "'", e[3], "\"", " ", "N"),
+                       y = paste0(e[4], "d", e[5], "'", e[6], "\"", " ", "W")) %>% 
+              mutate(lon = y %>% char2dms %>% as.numeric,
+                     lat = x %>% char2dms %>% as.numeric)
+          })) %>% 
+  tbl_df() %>% 
+  setNames(str_to_id(names(.)))
 
-tblnames <- read_html("http://openflights.org/data.html") %>% 
-  html_node("table") %>% 
-  html_table(fill = TRUE)
+parks <- read_html("http://www.theguardian.com/travel/2013/sep/17/top-10-national-parks-california") %>% 
+  html_nodes(".content__article-body > h2") %>% 
+  html_text() %>% 
+  str_trim() %>% 
+  data_frame(park = .) %>% 
+  cbind(geocode(paste(.$park, "california"), messaging = FALSE))
 
-airports <- setNames(airports, str_to_id(tblnames$X1))
 
-airportsmin <- airports %>% 
-  filter(country == "Australia", tz_database_time_zone != "\\N") %>% 
-  select(name, latitude, longitude, altitude) 
+ports <- read_html("https://en.wikipedia.org/wiki/Category:Ports_and_harbors_of_California") %>% 
+  html_nodes(".mw-category-group > ul > li") %>% 
+  html_text() %>% 
+  str_trim() %>% 
+  data_frame(port = .) %>% 
+  cbind(geocode(paste(.$port, "california"), messaging = FALSE)) %>% 
+  filter(!is.na(lon) & port != "Alcatraz Wharf")
 
-airpjson <- geojson_json(airportsmin, lat = "latitude", lon = "longitude")
+
+airptgjs <- geojson_json(airports, lat = "lat", lon = "lon")
+parksgjs <- geojson_json(parks, lat = "lat", lon = "lon")
+portsgjs <- geojson_json(ports, lat = "lat", lon = "lon")
+
 
 highchart(type = "map") %>% 
-  hc_title(text = "Airports in Australia") %>% 
-  hc_add_series(mapData = map, showInLegend = FALSE,
-                nullColor = "#A9CF54") %>% 
-  hc_add_series(data = airpjson, type = "mappoint", dataLabels = list(enabled = FALSE),
-                name = "Airports", color = 'rgba(250, 250, 250, 0.7)',
-                tooltip = list(pointFormat = "{point.properties.name}: {point.properties.altitude} fts")) %>% 
+  hc_title(text = "California") %>% 
+  hc_add_series(mapData = california, 
+                nullColor = "#425668",
+                showInLegend = FALSE) %>% 
+  hc_add_series(data = airptgjs, type = "mappoint",
+                marker = list(symbol = fa_icon_mark("plane")),
+                dataLabels = list(enabled = FALSE),
+                name = "Airports", color = 'rgba(250, 250, 250, 0.8)',
+                tooltip = list(pointFormat = "{point.properties.airport_name}")) %>% 
+  hc_add_series(data = parksgjs, type = "mappoint",
+                marker = list(symbol = fa_icon_mark("tree")),
+                dataLabels = list(enabled = FALSE),
+                name = "National Parks", color = 'rgba(0, 250, 0, 0.8)',
+                tooltip = list(pointFormat = "{point.properties.park}")) %>% 
+  hc_add_series(data = portsgjs, type = "mappoint",
+                marker = list(symbol = fa_icon_mark("ship")),
+                dataLabels = list(enabled = FALSE),
+                name = "Ports & Harbors ", color = 'rgba(100, 100, 250, 0.8)',
+                tooltip = list(pointFormat = "{point.properties.port}")) %>% 
   hc_mapNavigation(enabled = TRUE) %>% 
-  hc_add_theme(hc_theme_db())
-
+  hc_add_theme(hc_theme_db()) 
 
 #' 
 #' ### Charting Lines and Points 
 #' 
 #' Download data and plot point and lines. 
 #'  
-
 
 library("httr")
 
@@ -103,51 +165,49 @@ highchart(type = "map") %>%
                      verticalAlign = "bottom")) %>% 
   hc_add_theme(hc_theme_economist())
 
+#' 
+#' ### Charting Australian Airports
+#' 
+#' Download airports data around the globe filter them
+#' and then transform to geojson data points to chart 
+#' the airports over a map.
+#' 
 
-#'
-#' ### Charting county data
-#' 
-#' Source: http://www.arilamstein.com/blog/2016/01/25/mapping-us-religion-adherence-county-r/
-#' 
-#' This is a try to implement the choropleth using highcarter. Download the data:
-#' 
-
-library("haven")
 library("dplyr")
-library("stringr")
+library("readr")
+library("httr")
+library("rvest")
+library("geojsonio")
 
-url <- "http://www.thearda.com/download/download.aspx?file=U.S.%20Religion%20Census%20Religious%20Congregations%20and%20Membership%20Study,%202010%20(County%20File).SAV"
+map <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json" %>% 
+  GET() %>% 
+  content() %>% 
+  jsonlite::fromJSON(simplifyVector = FALSE)
 
-data <- read_sav(url)
+# http://openflights.org/data.html
+airports <- read_csv("https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat",
+                     col_names = FALSE)
 
-data[, tail(seq(ncol(data)), -560)]
+tblnames <- read_html("http://openflights.org/data.html") %>% 
+  html_node("table") %>% 
+  html_table(fill = TRUE)
 
-data <- data %>% 
-  mutate(CODE = paste("us",
-                      tolower(STABBR),
-                      str_pad(CNTYCODE, width = 3, pad = "0"),
-                      sep = "-"))
+airports <- setNames(airports, str_to_id(tblnames$X1))
+
+airportsmin <- airports %>% 
+  filter(country == "Australia", tz_database_time_zone != "\\N") %>% 
+  select(name, latitude, longitude, altitude) 
+
+airpjson <- geojson_json(airportsmin, lat = "latitude", lon = "longitude")
+
+highchart(type = "map") %>% 
+  hc_title(text = "Airports in Australia") %>% 
+  hc_add_series(mapData = map, showInLegend = FALSE,
+                nullColor = "#A9CF54") %>% 
+  hc_add_series(data = airpjson, type = "mappoint", dataLabels = list(enabled = FALSE),
+                name = "Airports", color = 'rgba(250, 250, 250, 0.7)',
+                tooltip = list(pointFormat = "{point.properties.name}: {point.properties.altitude} fts")) %>% 
+  hc_mapNavigation(enabled = TRUE) %>% 
+  hc_add_theme(hc_theme_db())
 
 
-library(highcharter)
-data("uscountygeojson")
-
-#' 
-#' Adding viridis palette:
-#' 
-require("viridisLite")
-n <- 32
-dstops <- data.frame(q = 0:n/n, c = substring(viridis(n + 1), 0, 7))
-dstops <- list.parse2(dstops)
-
-
-highchart() %>% 
-  hc_title(text = "Total Religious Adherents by County") %>% 
-  hc_add_series_map(map = uscountygeojson, df = data,
-                    value = "TOTRATE", joinBy = c("code", "CODE"),
-                    name = "Adherents", borderWidth = 0.5) %>% 
-  hc_colorAxis(stops = dstops, min = 0, max = 1000) %>% 
-  hc_legend(layout = "vertical", reversed = TRUE,
-            floating = TRUE, align = "right") %>% 
-  hc_mapNavigation(enabled = TRUE, align = "right") %>% 
-  hc_tooltip(valueDecimals = 0)

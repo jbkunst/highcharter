@@ -69,7 +69,7 @@
 
 @media (min-width: 768px) {
   .affix {
-    position: fixed;
+    height: 0;
   }
 }
 

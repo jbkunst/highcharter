@@ -9,7 +9,6 @@ library("highcharter")
 #'
 #' ## Highcharts Examples
 #' 
-#'
 #' ### Highcharts home page demo
 #'
 #' Example in http://www.highcharts.com/

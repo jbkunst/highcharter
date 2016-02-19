@@ -120,7 +120,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/plugins.R"
+f <- "_scripts/highmaps.R"
 
 makepage(f)
 
