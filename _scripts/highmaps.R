@@ -8,6 +8,24 @@ library("highcharter")
 #'
 #' ## Highmaps Examples
 #'
+#' ### World Chart
+#' 
+library("viridisLite")
+
+data(worldgeojson, package = "highcharter")
+data("GNI2010", package = "treemap")
+
+dshmstops <- data.frame(q = c(0, exp(1:5)/exp(5)),
+                        c = substring(viridis(5 + 1, option = "D"), 0, 7)) %>% 
+  list.parse2()
+
+highchart() %>% 
+  hc_add_series_map(worldgeojson, GNI2010, value = "population", joinBy = "iso3") %>% 
+  hc_colorAxis(stops = dshmstops) %>% 
+  hc_legend(enabled = TRUE) %>% 
+  hc_add_theme(hc_theme_db()) %>% 
+  hc_mapNavigation(enabled = TRUE)
+
 #'
 #' ### Charting county data
 #' 
@@ -30,14 +48,14 @@ data <- data %>%
                       sep = "-"))
 
 n <- 32
-dstops <- data.frame(q = 0:n/n, c = substring(viridis(n + 1), 0, 7))
+dstops <- data.frame(q = 0:n/n, c = substring(viridis(n + 1, option = "B"), 0, 7))
 dstops <- list.parse2(dstops)
 
 highchart() %>% 
   hc_title(text = "Total Religious Adherents by County") %>% 
   hc_add_series_map(map = uscountygeojson, df = data,
                     value = "TOTRATE", joinBy = c("code", "CODE"),
-                    name = "Adherents", borderWidth = 0.5) %>% 
+                    name = "Adherents", borderWidth = 0.1) %>% 
   hc_colorAxis(stops = dstops, min = 0, max = 1000) %>% 
   hc_legend(layout = "vertical", reversed = TRUE,
             floating = TRUE, align = "right") %>% 

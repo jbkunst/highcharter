@@ -12,10 +12,9 @@ try(source("helpers.R"))
 get_demos()
 
 #'
-#' Highcharter is a wrapper for highcharts javascript libray and its 
-#' modules. Highcharts is very mature javascript charting library and
-#'  it has a great and powerful API to get a very style of charts and 
-#'  highly customized (see http://www.highcharts.com/demo).
+#' Highcharter is a [R](https://cran.r-project.org/) wrapper for highcharts javascript
+#' libray and its modules. Highcharts is very mature and flexible javascript charting library and
+#'  it has a great and powerful API^[See http://www.highcharts.com/demo].
 #' 
 #' The main features of this package are:
 #' 
@@ -28,6 +27,7 @@ get_demos()
 #' fly. The resulting chart is a highchart object so you
 #' can keep modifying with the implmented API.
 #' - Themes. Highcharts is super really flexible to create themes.
+#' - Plugin implementations
 #' 
 #' 
 #' ### Hello World Example 

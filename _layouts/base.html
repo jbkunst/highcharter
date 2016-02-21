@@ -3,9 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>Highcharter</title>
+  <link rel="shortcut icon" type="image/png" href="https://www.iconexperience.com/_img/o_collection_png/office/24x24/plain/chart_line.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="highcharter and R wrapper for highcharts"/>
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Joshua Kunst"/>
+  <meta name="keywords" content="Joshua Kunst, jbkunst, jkunst, r-project, r-cran, r, statistics, 
+  programming, data mining, data visualization, datascience, data, highcharts"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+  <link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.css" media="screen">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
   <link rel="stylesheet" href="css/custom.css" media="screen">
@@ -19,7 +25,10 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a href="index.html" class="navbar-brand">Highcharter</a>
+          <a href="index.html" class="navbar-brand">
+            <img src="https://www.iconexperience.com/_img/o_collection_png/office/24x24/plain/chart_line.png" class="img-responsive pull-left inline-block"/>
+            <span class="tweakbrand">Highcharter</span>
+          </a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -28,7 +37,13 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://github.com/jbkunst/highcharter" target="_blank">Github</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" id="navbarlist">Sections<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="download">
+                {% include navigation2.html %}
+              </ul>
+            </li>
+            <li><a href="http://github.com/jbkunst/highcharter" target="_blank"><i class="fa fa-github"></i> Github</a></li>
           </ul>
 
         </div>
@@ -39,8 +54,8 @@
 
       <div class="row">
         <div class="col-sm-3">
-          <div data-spy="affix" data-offset-top="80">
-            <div class="list-group">
+          <div data-spy="affix" data-offset-top="0" id="sidebar">
+            <div class="list-group modal-content">
               {% include navigation.html %}
             </div>  
           </div>
@@ -50,14 +65,17 @@
             {{ content }} 
         </div>
       </div>
+      
+      <hr>
 
-      <footer>
+      <footer class="footer">
         <div class="row">
           <div class="col-lg-12">
-            <ul class="list-unstyled">
-              <li class="pull-right"><a href="#top">Back to top</a></li>
-              <li><a href="http://jkunst.com">Jkunst</a></li>
-            </ul>
+            <p class="text-muted text-center">
+              <i class="fa fa-code"></i> with <i class="fa fa-heart" style="color:red" tooltip="passion"></i>,
+              <i class="fa fa-clock-o" tooltip="w/o sleep sometimes"></i> & <i class="fa fa-coffee" tooltip="latte; nom" style="color:brown"></i>
+              by <a href="http://jkunst.com">Joshua Kunst</a>.
+            </p>
           </div>
         </div>
       </footer>

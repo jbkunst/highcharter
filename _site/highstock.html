@@ -3,9 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>Highcharter</title>
+  <link rel="shortcut icon" type="image/png" href="https://www.iconexperience.com/_img/o_collection_png/office/24x24/plain/chart_line.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="highcharter and R wrapper for highcharts"/>
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Joshua Kunst"/>
+  <meta name="keywords" content="Joshua Kunst, jbkunst, jkunst, r-project, r-cran, r, statistics, 
+  programming, data mining, data visualization, datascience, data, highcharts"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.css" media="screen">
+  <link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.css" media="screen">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%7CRoboto+Condensed:300">
   <link rel="stylesheet" href="css/custom.css" media="screen">
@@ -37,7 +43,10 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a href="index.html" class="navbar-brand">Highcharter</a>
+          <a href="index.html" class="navbar-brand">
+            <img src="https://www.iconexperience.com/_img/o_collection_png/office/24x24/plain/chart_line.png" class="img-responsive pull-left inline-block"/>
+            <span class="tweakbrand">Highcharter</span>
+          </a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -46,7 +55,23 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://github.com/jbkunst/highcharter" target="_blank">Github</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" id="navbarlist">Sections<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="download">
+                <li><a href="index.html"><i class="fa fa-hand-spock-o"></i> Welcome</a></li>
+<li><a href="highcharts-api.html"><i class="fa fa-cogs"></i> API</a></li>
+<li><a href="shortcuts.html"><i class="fa fa-rocket"></i> Shortcuts</a></li>
+<li><a href="hchart.html"><i class="fa fa-magic"></i> <code>hchart</code> function</a></li>
+<li><a href="themes.html"><i class="fa fa-paint-brush"></i> Themes</a></li>
+<li><a href="shiny.html"><i class="fa fa-certificate"></i> Shiny</a></li>
+<li><a href="highcharts.html"><i class="fa fa-area-chart"></i> Highcharts Examples</a></li>
+<li><a href="highstock.html"><i class="fa fa-line-chart"></i> Highstock Examples</a></li>
+<li><a href="highmaps.html"><i class="fa fa-map"></i> Highmaps Examples</a></li>
+<li><a href="plugins.html"><i class="fa fa-plug"></i> Plugins</a></li>
+
+              </ul>
+            </li>
+            <li><a href="http://github.com/jbkunst/highcharter" target="_blank"><i class="fa fa-github"></i> Github</a></li>
           </ul>
 
         </div>
@@ -57,18 +82,48 @@
 
       <div class="row">
         <div class="col-sm-3">
-          <div data-spy="affix" data-offset-top="80">
-            <div class="list-group">
-              <a href="index.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-hand-spock-o"></i> Welcome</h5><p class="list-group-item-text">Let's start</p></a>
-<a href="highcharts-api.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-cogs"></i> API</h5><p class="list-group-item-text">What can we do with highcharter</p></a>
-<a href="shortcuts.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-rocket"></i> Shortcuts</h5><p class="list-group-item-text">For add data series from R objects</p></a>
-<a href="hchart.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-magic"></i> <code>hchart</code> function</h5><p class="list-group-item-text">The Magic</p></a>
-<a href="themes.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-paint-brush"></i> Themes</h5><p class="list-group-item-text">Changing the look</p></a>
-<a href="shiny.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-certificate"></i> Shiny</h5><p class="list-group-item-text">Output & Render functions</p></a>
-<a href="highcharts.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-area-chart"></i> Highcharts Examples</h5><p class="list-group-item-text">Some fun and miscellaneous</p></a>
-<a href="highstock.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-line-chart"></i> Highstock Examples</h5><p class="list-group-item-text">Using the quantmod package</p></a>
-<a href="highmaps.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-map"></i> Highmaps Examples</h5><p class="list-group-item-text">Give me the geojson data</p></a>
-<a href="plugins.html" class="list-group-item"><h5 class="list-group-item-heading"><i class="fa fa-plug"></i> Plugins</h5><p class="list-group-item-text">Some extensions</p></a>
+          <div data-spy="affix" data-offset-top="0" id="sidebar">
+            <div class="list-group modal-content">
+              <a href="index.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-hand-spock-o"></i> Welcome</h5>
+  <p class="list-group-item-text text-muted">Let's start</p>
+</a>
+<a href="highcharts-api.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-cogs"></i> API</h5>
+  <p class="list-group-item-text text-muted">What can we do</p>
+</a>
+<a href="shortcuts.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-rocket"></i> Shortcuts</h5>
+  <p class="list-group-item-text text-muted">Add data series from R objects</p>
+</a>
+<a href="hchart.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-magic"></i> <code>hchart</code> function</h5>
+  <p class="list-group-item-text text-muted">The Magic</p>
+</a>
+<a href="themes.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-paint-brush"></i> Themes</h5>
+  <p class="list-group-item-text text-muted">Changing the look</p>
+</a>
+<a href="shiny.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-certificate"></i> Shiny</h5>
+  <p class="list-group-item-text text-muted">Output & Render functions</p>
+</a>
+<a href="highcharts.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-area-chart"></i> Highcharts Examples</h5>
+  <p class="list-group-item-text text-muted">Some fun and miscellaneous</p>
+</a>
+<a href="highstock.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-line-chart"></i> Highstock Examples</h5>
+  <p class="list-group-item-text text-muted">Using the quantmod package</p>
+</a>
+<a href="highmaps.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-map"></i> Highmaps Examples</h5>
+  <p class="list-group-item-text text-muted">Give me the geojson data</p>
+</a>
+<a href="plugins.html" class="list-group-item text-muted">
+   <h5 class="list-group-item-heading"><i class="fa fa-plug"></i> Plugins</h5>
+  <p class="list-group-item-text text-muted">Some extensions</p>
+</a>
 
             </div>  
           </div>
@@ -118,14 +173,17 @@ highchart(type = &quot;stock&quot;) %&gt;%
  
         </div>
       </div>
+      
+      <hr>
 
-      <footer>
+      <footer class="footer">
         <div class="row">
           <div class="col-lg-12">
-            <ul class="list-unstyled">
-              <li class="pull-right"><a href="#top">Back to top</a></li>
-              <li><a href="http://jkunst.com">Jkunst</a></li>
-            </ul>
+            <p class="text-muted text-center">
+              <i class="fa fa-code"></i> with <i class="fa fa-heart" style="color:red" tooltip="passion"></i>,
+              <i class="fa fa-clock-o" tooltip="w/o sleep sometimes"></i> & <i class="fa fa-coffee" tooltip="latte; nom" style="color:brown"></i>
+              by <a href="http://jkunst.com">Joshua Kunst</a>.
+            </p>
           </div>
         </div>
       </footer>
