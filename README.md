@@ -22,6 +22,7 @@ R wrapper for highcharts
 - Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
 - Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, ohlc, acf, forecast, dist classes.
 - [Themes](http://jkunst.com/highcharter/themes.html): Add themes, merge themes or create your own.
+- [Plugins](http://jkunst.com/highcharter/plugins.html): Drag points, fontawesome, url-pattern.
 - <3 to Highcharts.com
 
 ## Licence 
