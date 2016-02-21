@@ -47,39 +47,36 @@ alldeps <- c("", paste0("    ", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
 #### navigation ####
-ico <- function(x) as.character(shiny::icon(x))
-ico("magic")
-
 infolist <- list(
   list(c("_scripts/index.R",
-         paste(ico("hand-spock-o"), "Welcome"),
+         paste(fa_icon("hand-spock-o"), "Welcome"),
          "Let's start")),
   list(c("_scripts/highcharts-api.R",
-         paste(ico("cogs"), "API"),
-         "What can we do with highcharter")),
+         paste(fa_icon("cogs"), "API"),
+         "What can we do")),
   list(c("_scripts/shortcuts.R",
-         paste(ico("rocket"), "Shortcuts"),
-         "For add data series from R objects")),
+         paste(fa_icon("rocket"), "Shortcuts"),
+         "Add data series from R objects")),
   list(c("_scripts/hchart.R",
-         paste(ico("magic"), "<code>hchart</code> function"),
+         paste(fa_icon("magic"), "<code>hchart</code> function"),
          "The Magic")),
   list(c("_scripts/themes.R",
-         paste(ico("paint-brush"), "Themes"),
+         paste(fa_icon("paint-brush"), "Themes"),
          "Changing the look")),
   list(c("_scripts/shiny.R",
-         paste(ico("certificate"), "Shiny"),
+         paste(fa_icon("certificate"), "Shiny"),
          "Output & Render functions")),
   list(c("_scripts/highcharts.R",
-         paste(ico("area-chart"), "Highcharts Examples"),
+         paste(fa_icon("area-chart"), "Highcharts Examples"),
          "Some fun and miscellaneous")),
   list(c("_scripts/highstock.R",
-         paste(ico("line-chart"), "Highstock Examples"),
+         paste(fa_icon("line-chart"), "Highstock Examples"),
          "Using the quantmod package")),
   list(c("_scripts/highmaps.R",
-         paste(ico("map"), "Highmaps Examples"),
+         paste(fa_icon("map"), "Highmaps Examples"),
          "Give me the geojson data")),
   list(c("_scripts/plugins.R",
-         paste(ico("plug"), "Plugins"),
+         paste(fa_icon("plug"), "Plugins"),
          "Some extensions"))
   )
   
@@ -90,17 +87,21 @@ inftxt <- infolist %>% map_chr(function(x) x[[1]][3])
               
 html_links <- paste0(gsub(".R$", "", basename(rfiles)), ".html")
 
-navlist <- paste0(
-  '<a href="',
-  html_links,
-  '" class="list-group-item"><h5 class="list-group-item-heading">',
-  titles,
-  '</h5><p class="list-group-item-text">',
-  inftxt,
-  '</p></a>'
-)
 
+tmplt <- 
+"<a href=\"%s\" class=\"list-group-item text-muted\">
+   <h5 class=\"list-group-item-heading\">%s</h5>
+  <p class=\"list-group-item-text text-muted\">%s</p>
+</a>"
+navlist <- sprintf(tmplt, html_links, titles, inftxt)
 writeLines(navlist, "_includes/navigation.html")
+
+
+tmplt2 <- "<li><a href=\"%s\">%s</a></li>"
+navlist2 <- sprintf(tmplt2, html_links, titles)
+writeLines(navlist2, "_includes/navigation2.html")
+
+
 
 #### knitr ####
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
@@ -120,7 +121,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/highmaps.R"
+f <- "_scripts/index.R"
 
 makepage(f)
 
