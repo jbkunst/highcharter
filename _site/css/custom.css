@@ -30,6 +30,13 @@ footer i {
   font-family: 'Roboto Condensed', sans-serif;
 }
 
+#rcontent h3
+{
+  /*border-top: 1px solid #eee;*/
+  margin-top: 50px;
+}
+
+
 #content {
   padding-top: 80px;
 }
