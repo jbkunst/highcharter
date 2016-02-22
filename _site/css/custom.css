@@ -30,26 +30,22 @@ footer i {
   font-family: 'Roboto Condensed', sans-serif;
 }
 
-#rcontent h3
-{
-  /*border-top: 1px solid #eee;*/
-  margin-top: 50px;
-}
-
-
-#content {
-  padding-top: 80px;
-}
-
 #rcontent h2 {
   margin-top: 0px;
   margin-bottom: 15px;
 }
 
-#rcontent h3 {
+#rcontent h3
+{
+  /*border-top: 1px solid #eee;*/
+  margin-top: 50px;
   padding-top: 10px;
   padding-bottom: 7px;
   font-size: 22px;
+}
+
+#content {
+  padding-top: 80px;
 }
 
 #rcontent p,
