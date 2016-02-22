@@ -1,3 +1,5 @@
+_site
+
 # History files
 .Rhistory
 .Rapp.history
@@ -13,7 +15,7 @@ vignettes/*.pdf
 # Some htmls and rpubs
 no_build/*.html
 no_build/rsconnect/
-  inst/doc
+inst/doc
 
 # seasonal
 fort.6

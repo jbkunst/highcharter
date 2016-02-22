@@ -21,6 +21,10 @@ footer i {
 }
 
 /* content things */
+#content {
+  padding-top: 80px;
+}
+
 #rcontent h1,
 #rcontent h2,
 #rcontent h3,
@@ -42,10 +46,6 @@ footer i {
   padding-top: 10px;
   padding-bottom: 7px;
   font-size: 22px;
-}
-
-#content {
-  padding-top: 80px;
 }
 
 #rcontent p,
