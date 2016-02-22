@@ -5,6 +5,7 @@ library("rmarkdown")
 library("magrittr")
 library("purrr")
 library("stringr")
+library("highcharter")
 
 
 set.seed(100)
