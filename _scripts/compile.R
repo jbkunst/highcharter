@@ -92,7 +92,7 @@ html_links <- paste0(gsub(".R$", "", basename(rfiles)), ".html")
 tmplt <- 
 "<a href=\"%s\" class=\"list-group-item text-muted\">
    <h5 class=\"list-group-item-heading\">%s</h5>
-  <p class=\"list-group-item-text text-muted\">%s</p>
+  <p class=\"list-group-item-text text-muted desc\">%s</p>
 </a>"
 navlist <- sprintf(tmplt, html_links, titles, inftxt)
 writeLines(navlist, "_includes/navigation.html")

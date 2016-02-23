@@ -55,13 +55,31 @@ footer i {
   font-size: 14px;
   line-height: 30px;
   margin-bottom: 1em;
-  color: #616161;
+}
+
+.toc li {
+  margin: 5px auto;
+  line-height: 5px; !important
+  margin-bottom: 0em;
+  list-style-type: none;
+  font-family: 'Roboto Condensed', sans-serif;
+} 
+
+.toc li:before {
+  font-family: 'FontAwesome';
+  content: '\f292';
 }
 
 @media screen and (max-width: 768px) {
-    #sidebar {
-        display: none !important;
-    }
+  #sidebar {
+    display: none !important;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .desc {
+    display: none !important;
+  }
 }
 
 .hljs {
