@@ -98,7 +98,7 @@ highchart() %&gt;%
 </div>
 <div id="a-spiderweb-chart" class="section level3">
 <h3>A spiderweb chart</h3>
-<p>Highcharts support a range of different chart types so data can be displayed in a meaningfull way. Highcharter inherit all this awesome features. Here’s is an example how make a spiderweb chart.</p>
+<p>Highcharts support a range of different chart types so data can be displayed in a meaningfull way. Highcharter inherit all this awesome features. Here’s is an example how make a spiderweb chart<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p>
 <pre class="r"><code>highchart() %&gt;% 
   hc_chart(polar = TRUE, type = &quot;line&quot;) %&gt;% 
   hc_title(text = &quot;Budget vs Spending&quot;) %&gt;% 
@@ -124,4 +124,10 @@ highchart() %&gt;%
 <p><div id="htmlwidget-9135" style="width:100%;height:500px;" class="highchart"></div>
 <script type="application/json" data-for="htmlwidget-9135">{"x":{"hc_opts":{"title":{"text":"Budget vs Spending"},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0}},"chart":{"polar":true,"type":"line"},"xAxis":{"categories":["Sales","Marketing","Development","Customer Support","Information Technology","Administration"],"tickmarkPlacement":"on","lineWidth":0},"yAxis":{"gridLineInterpolation":"polygon","lineWidth":0,"min":0},"series":[{"name":"Allocated Budget","data":[43000,19000,60000,35000,17000,10000],"pointPlacement":"on"},{"name":"Actual Spending","data":[50000,39000,42000,31000,26000,14000],"pointPlacement":"on"}]},"theme":null,"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[]}</script></p>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Example proposed by <span class="citation">@johnstantongeddes</span> (<a href="https://github.com/johnstantongeddes" class="uri">https://github.com/johnstantongeddes</a>)<a href="#fnref1">↩</a></p></li>
+</ol>
 </div>

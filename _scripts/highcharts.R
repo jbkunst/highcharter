@@ -108,7 +108,8 @@ highchart() %>%
 #' Highcharts support a range of different chart types so data 
 #' can be displayed in a meaningfull way. Highcharter inherit
 #' all this awesome features. Here's is an example how make a 
-#' spiderweb chart.
+#' spiderweb chart^[Example proposed by
+#' @johnstantongeddes (https://github.com/johnstantongeddes)].
 #' 
 
 highchart() %>% 
