@@ -19,8 +19,6 @@ Adding and removing series from highchart objects
 }
 \examples{
 
-require("dplyr")
-
 data("citytemp")
 
 hc <- highchart() \%>\% 
