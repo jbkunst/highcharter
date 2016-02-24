@@ -39,6 +39,12 @@ hchart(as.character(diamonds$cut), type = "pie")
 x <- LakeHuron
 hchart(x)
 
+#' ### Seasonal Decomposition of Time Series by Loess
+
+x <- stl(nottem, "per")
+
+hchart(x)
+
 #' ### Forecast package
 library("forecast")
 
@@ -46,7 +52,7 @@ x <- forecast(ets(USAccDeaths), h = 48, level = 90)
 
 hchart(x)
 
-x <- forecast(Arima(WWWusage, c(3,1,0)))
+x <- forecast(auto.arima(log(co2)), level = 95)
 
 hchart(x)
 
