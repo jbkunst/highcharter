@@ -1,5 +1,4 @@
-_site
-
+_site/*
 # History files
 .Rhistory
 .Rapp.history
