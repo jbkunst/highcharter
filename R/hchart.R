@@ -19,8 +19,8 @@ hchart <- function(object, ...){
 
 #' @export
 hchart.default <- function(object, ...) {
-  stop("Objects of type ", paste(class(object), collapse = "/"),
-       " not supported by hchart (yet).", call. = FALSE)
+  stop("Objects of class/type ", paste(class(object), collapse = "/"),
+       " are not supported by hchart (yet).", call. = FALSE)
 }
 
 #' @export
@@ -160,30 +160,43 @@ hchart.mts <- function(object, ...) {
   hc
 }
 
-# #' @importFrom seasonal original final trend outlier
-# #' @export
-# hchart.seas <- function(object, outliers = TRUE, trend = FALSE, ...) {
-#   
-#   hc <- highchart() %>% 
-#     hc_add_serie_ts(original(object), name = "original", zIndex = 3, id = "original") %>% 
-#     hc_add_serie_ts(final(object), name = "adjusted", zIndex = 2, id = "adjusted") 
-#   
-#   if (trend) {
-#     hc <- hc %>% hc_add_serie_ts(trend(object), name = "trend", zIndex = 1) 
-#   }
-#   
-#   if (outliers) {
-#     ol.ts <- outlier(object)  
-#     ixd.nna <- !is.na(ol.ts)
-#     text <- as.character(ol.ts)[!is.na(ol.ts)]
-#     dates <- zoo::as.Date(time(ol.ts))[!is.na(ol.ts)]
-#     hc <- hc %>% hc_add_series_flags(dates, text, text, zIndex = 4,
-#                                      name = "outiliers", id = "adjusted") 
-#   }
-#   
-#   hc
-#   
-# }
+#' @export
+hchart.stl <- function(object, widths = c(2, 1, 1, 1), sep = 0.01) {
+  
+  tss <- object$time.series
+  ncomp <- ncol(tss)
+  data <- drop(tss %*% rep(1, ncomp))
+  tss <- cbind(data = data , tss)
+  
+  pcnt <- function(x) paste0(x * 100, "%")
+  
+  p <- widths/sum(widths)
+  p <- c(p[1], sep, p[2], sep, p[3], sep, p[4])
+  
+  p <- round(p/sum(p), 2)
+  csp <- cumsum(p)
+  
+  cspp <- pcnt(csp)
+  pp <- pcnt(p)
+  
+  yxs <- list(title = list(text = NULL),
+              offset = 0, lineWidth = 2,
+              showFirstLabel = FALSE, showLastLabel = FALSE)
+  
+  highchart() %>% 
+    hc_tooltip(shared = TRUE) %>% 
+    hc_yAxis(
+      list.merge(yxs, list(height = pp[1], top = "0%")),
+      list.merge(yxs, list(height = pp[3], top = cspp[2], opposite = TRUE)),
+      list.merge(yxs, list(height = pp[5], top = cspp[4])),
+      list.merge(yxs, list(height = pp[7], top = cspp[6], opposite = TRUE))
+    ) %>% 
+    hc_add_serie_ts(tss[, 1], yAxis = 0, name = "data") %>% 
+    hc_add_serie_ts(tss[, 2], yAxis = 1, name = "seasonal") %>% 
+    hc_add_serie_ts(tss[, 3], yAxis = 2, name = "trend") %>% 
+    hc_add_serie_ts(tss[, 4], yAxis = 3, name = "remainder")
+  
+}
 
 #' @importFrom tidyr gather
 #' @importFrom dplyr count_ left_join select_
@@ -224,3 +237,28 @@ hchart.dist <- function(object, ...) {
               y = 25, symbolHeight = 280) %>% 
     hc_colorAxis(arg  = "")
 }
+
+# #' @importFrom seasonal original final trend outlier
+# #' @export
+# hchart.seas <- function(object, outliers = TRUE, trend = FALSE, ...) {
+#   
+#   hc <- highchart() %>% 
+#     hc_add_serie_ts(original(object), name = "original", zIndex = 3, id = "original") %>% 
+#     hc_add_serie_ts(final(object), name = "adjusted", zIndex = 2, id = "adjusted") 
+#   
+#   if (trend) {
+#     hc <- hc %>% hc_add_serie_ts(trend(object), name = "trend", zIndex = 1) 
+#   }
+#   
+#   if (outliers) {
+#     ol.ts <- outlier(object)  
+#     ixd.nna <- !is.na(ol.ts)
+#     text <- as.character(ol.ts)[!is.na(ol.ts)]
+#     dates <- zoo::as.Date(time(ol.ts))[!is.na(ol.ts)]
+#     hc <- hc %>% hc_add_series_flags(dates, text, text, zIndex = 4,
+#                                      name = "outiliers", id = "adjusted") 
+#   }
+#   
+#   hc
+#   
+# }
