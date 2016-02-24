@@ -41,18 +41,14 @@ hchart(x)
 
 #' ### Seasonal Decomposition of Time Series by Loess
 
-x <- stl(nottem, "per")
+x <- stl(log(AirPassengers), "per")
 
 hchart(x)
 
 #' ### Forecast package
 library("forecast")
 
-x <- forecast(ets(USAccDeaths), h = 48, level = 90)
-
-hchart(x)
-
-x <- forecast(auto.arima(log(co2)), level = 95)
+x <- forecast(ets(USAccDeaths), h = 48, level = 95)
 
 hchart(x)
 
