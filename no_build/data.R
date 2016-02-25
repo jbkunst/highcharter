@@ -91,6 +91,36 @@ counties
 
 save(uscountygeojson, file = "data/uscountygeojson.rda", compress = "xz")
 
+#### usgeojson all all ####
+url <- "https://code.highcharts.com/mapdata/countries/us/us-all.js"
+tmpfile <- tempfile(fileext = ".json")
+download.file(url, tmpfile)
+usgeojson <- readLines(tmpfile)
+usgeojson <- gsub(".* = ", "", usgeojson)
+usgeojson <- jsonlite::fromJSON(usgeojson, simplifyVector = FALSE)
+
+usgeojson$features[52] <- NULL
+
+usgeojson$features <- map(usgeojson$features, function(x){
+  # x <- uscountygeojson$features[[10]]
+  x$properties$code <-  x$properties$`hc-key`
+  x$properties <- x$properties[!grepl("hc", names(x$properties))]
+  names(x$properties) <- gsub("-", "", names(x$properties))
+  names(x$properties) <- gsub("isoa", "iso", names(x$properties))
+  x$properties$name <- ifelse(x$properties$code == "us-nm-013", "Dona Ana", x$properties$name)
+  x
+})
+
+states <- map_df(usgeojson$features, function(x){
+  as.data.frame(x$properties, stringsAsFactors = FALSE)
+})
+
+states
+
+save(usgeojson, file = "data/usgeojson.rda", compress = "xz")
+
+
+
 #### fontawesome ####
 library("stringr")
 library("dplyr")

@@ -3,7 +3,7 @@ title: "Replicating Highcharts Demos"
 author: "Joshua Kunst"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Replicating Highcharts Demos}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

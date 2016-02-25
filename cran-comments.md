@@ -1,9 +1,7 @@
-## Resubmission
+## Resubmitting new version 0.2.0
 
-This is a resubmission. In this version I fix/have:
+Adding imports: hist, qnomr, tail
 
-* More dateiled descriptions in manual pages.
-* Adding examples for every exported function (whithout \dontrun).
-* Adding "<>" to link highcharts.com in the description.
+Modify examples which take too long
 
-Thanks. Regards,
+thanks a lot again!

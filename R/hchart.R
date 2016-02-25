@@ -23,6 +23,7 @@ hchart.default <- function(object, ...) {
        " are not supported by hchart (yet).", call. = FALSE)
 }
 
+#' @importFrom graphics hist
 #' @export
 hchart.numeric <- function(object, breaks = "FD", ...) {
   
@@ -109,6 +110,7 @@ hchart.forecast <- function(object, fillOpacity = 0.3, ...){
   
 }
 
+#' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...){
   
@@ -161,7 +163,7 @@ hchart.mts <- function(object, ...) {
 }
 
 #' @export
-hchart.stl <- function(object, widths = c(2, 1, 1, 1), sep = 0.01) {
+hchart.stl <- function(object, ..., widths = c(2, 1, 1, 1), sep = 0.01) {
   
   tss <- object$time.series
   ncomp <- ncol(tss)
@@ -205,6 +207,8 @@ hchart.dist <- function(object, ...) {
   
   df <- as.data.frame(as.matrix(object), stringsAsFactors = FALSE)
   
+  dist <- NULL
+  
   x <- y <- names(df)
   
   df <- tbl_df(cbind(x = y, df)) %>% 
@@ -238,27 +242,29 @@ hchart.dist <- function(object, ...) {
     hc_colorAxis(arg  = "")
 }
 
-# #' @importFrom seasonal original final trend outlier
-# #' @export
-# hchart.seas <- function(object, outliers = TRUE, trend = FALSE, ...) {
-#   
-#   hc <- highchart() %>% 
-#     hc_add_serie_ts(original(object), name = "original", zIndex = 3, id = "original") %>% 
-#     hc_add_serie_ts(final(object), name = "adjusted", zIndex = 2, id = "adjusted") 
-#   
+# # @export
+# hchart.seas <- function(object, ..., outliers = TRUE, trend = FALSE) {
+# 
+#   hc <- highchart() %>%
+#     hc_add_serie_ts(seasonal::original(object),
+#                     name = "original",
+#                     zIndex = 3, id = "original") %>%
+#     hc_add_serie_ts(seasonal::final(object),
+#                     name = "adjusted",
+#                     zIndex = 2, id = "adjusted")
+# 
 #   if (trend) {
-#     hc <- hc %>% hc_add_serie_ts(trend(object), name = "trend", zIndex = 1) 
+#     hc <- hc %>% hc_add_serie_ts(seasonal::trend(object), name = "trend", zIndex = 1)
 #   }
-#   
+# 
 #   if (outliers) {
-#     ol.ts <- outlier(object)  
+#     ol.ts <- seasonal::outlier(object)
 #     ixd.nna <- !is.na(ol.ts)
 #     text <- as.character(ol.ts)[!is.na(ol.ts)]
 #     dates <- zoo::as.Date(time(ol.ts))[!is.na(ol.ts)]
 #     hc <- hc %>% hc_add_series_flags(dates, text, text, zIndex = 4,
-#                                      name = "outiliers", id = "adjusted") 
+#                                      name = "outiliers", id = "adjusted")
 #   }
-#   
+# 
 #   hc
-#   
 # }

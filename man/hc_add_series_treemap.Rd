@@ -22,7 +22,7 @@ This function helps to create higcharts treemaps from \code{treemap} objects
 from the package \code{treemap}.
 }
 \examples{
-
+ 
 \dontrun{
 
 library("treemap")

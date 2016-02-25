@@ -1,12 +1,12 @@
 Package: highcharter
-Version: 0.1.0.9000
+Version: 0.2.0
 Type: Package
 Title: A Wrapper for the 'Highcharts' Library
 Description: A wrapper for the 'Highcharts' library including
   shortcut functions to plot R objects. 'Highcharts' 
   <http://www.highcharts.com/> is a charting library offering
   numerous chart types with a simple configuration syntax.
-Date: 2016-01-12
+Date: 2016-02-25
 Author: Joshua Kunst <jbkunst@gmail.com>
 Maintainer: Joshua Kunst <jbkunst@gmail.com>
 License: MIT + file LICENSE

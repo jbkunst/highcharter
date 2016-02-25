@@ -9,7 +9,7 @@ hc_defs(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://github.com/highcharts/pattern-fillhc}.}
+\item{...}{Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.}
 }
 \description{
 Helper function to use the fill patter plugin http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill.

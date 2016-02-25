@@ -4,6 +4,4 @@
 tests/
 no_build/
 ^\.travis\.yml$
-^NEWS$
-^NEWS\.md$
 fort.6

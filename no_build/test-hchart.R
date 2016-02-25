@@ -37,6 +37,11 @@ class(x)
 plot(x)
 hchart(x)
 
+#' ### lst
+x <- stl(co2, "per")
+plot(x)
+hchart(x)
+
 #' ### xts quantmod package
 library("quantmod")
 x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)

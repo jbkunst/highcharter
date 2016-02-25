@@ -216,7 +216,7 @@ hc_mapNavigation <- function(hc, ...) {
 #' 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{https://github.com/highcharts/pattern-fillhc}. 
+#' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}. 
 #' 
 #' @export
 hc_defs <- function(hc, ...) {
@@ -234,5 +234,7 @@ hc_defs <- function(hc, ...) {
 #' 
 #' @export
 hc_annotations <- function(hc, ...) {
-  highcharter:::.hc_opt(hc, "annotations", ...)
+  
+  .hc_opt(hc, "annotations", ...)
+  
 }
