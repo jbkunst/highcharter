@@ -229,3 +229,30 @@ highchart(type = "map") %>%
   hc_add_theme(hc_theme_db())
 
 
+#'
+#' ### Charting US states
+#' 
+library("dplyr")
+library("viridisLite")
+
+data("USArrests", package = "datasets")
+data("usgeojson")
+
+USArrests <- USArrests %>%
+  mutate(state = rownames(.))
+
+n <- 4
+colstops <- data.frame(q = 0:n/n,
+                       c = substring(viridis(n + 1, option = "A"), 0, 7)) %>%
+list.parse2()
+
+highchart() %>%
+  hc_title(text = "Violent Crime Rates by US State") %>%
+  hc_subtitle(text = "Source: USArrests data") %>%
+  hc_add_series_map(usgeojson, USArrests, name = "Murder arrests (per 100,000)",
+                    value = "Murder", joinBy = c("woename", "state"),
+                    dataLabels = list(enabled = TRUE,
+                                      format = '{point.properties.postalcode}')) %>%
+  hc_colorAxis(stops = colstops) %>%
+  hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
+  hc_mapNavigation(enabled = TRUE)
