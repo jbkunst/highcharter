@@ -22,38 +22,43 @@ $(document).ready(function () {
     affixthiz.width(affixthiz.parent().width());
   });
   
+  ////////////////////////////////////////////////////////////
+  // Hide show code
+  
+  $("pre.r").hideShow({
+    hideText: "Hide code",
+    showText: "Show code",
+    state: "hidden"
+  });
+  
   
   ////////////////////////////////////////////////////////////
   // TOC
-  var newLine, el, title, link;
   
-  var ToC =
-  "<nav role='navigation' class=\"toc\">" +
-    "<ul>";
+  sep = " <i class=\"fa fa-minus\"></i> ";
   
-  $("#rcontent h3").each(function() {
+  items = $("#rcontent h3").map(function() {
     
     el = $(this);
     title = el.text();
     link = "#" + el.parent().attr("id");
   
-    newLine =
-      "<li>" +
-        "<a href='" + link + "'>" +
-            title +
-        "</a>" +
-      "</li>";
+    item = "<a href='" + link + "'>" + title + "</a>";
   
-    ToC += newLine;
+    return item;
   
   });
   
-  ToC +=
-   "</ul>" +
-  "</nav>";
+
+  var items2 = [];
   
-  /* $("#rcontent").prepend(ToC); */
+  for(var i = 0; i < items.length; ++i) {
+    items2.push(items[i]);
+  }
   
+  toc = items2.join(sep)
+  
+  $("#rcontent").prepend(toc);
   
      
   

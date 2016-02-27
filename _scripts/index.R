@@ -21,7 +21,7 @@ get_demos()
 #' - The implementation of **Highcharts** API including **Highstocks** and **Highmaps**.
 #' You can chart almost every type of chart using the ap. It is a **must** 
 #' know how highcharts works to take advantage of this package.
-#' - The shortcuts functions to add data from R objects to a highchart 
+#' - The shortcuts functions to easily add data from R objects to a highchart one
 #' like xts, ohlc, treemaps, etc.
 #' - The `hchart()` function. This function can chart various R objects on the
 #' fly. The resulting chart is a highchart object so you

@@ -107,15 +107,6 @@ highchart() %>%
 #' ### Pattern fill
 
 highchart() %>% 
-  hc_title(text = "I'm an old school school chart") %>% 
-  hc_xAxis(categories = month.abb) %>% 
-  hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                         26.5, 23.3, 18.3, 13.9, 9.6),
-                type = "column",
-                color = 'url(#highcharts-default-pattern-0)') %>% 
-  hc_add_theme(hc_theme_chalk())
-
-highchart() %>% 
   hc_title(text = "I'm a pirate looking chart") %>% 
   hc_xAxis(categories = month.abb) %>% 
   hc_defs(patterns = list(

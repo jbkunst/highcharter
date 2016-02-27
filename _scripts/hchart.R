@@ -25,19 +25,12 @@ hchart(diamonds$price, color = "#B71C1C", name = "Price") %>%
   hc_title(text = "Histogram") %>% 
   hc_subtitle(text = "You can zoom me")
 
-
-x <- hist(c(rnorm(500), rnorm(500, 6, 2)), plot = FALSE)
-
-hchart(x, color = "gray")
-
 #' ### Character & Factor
 hchart(diamonds$cut)
 
-hchart(as.character(diamonds$cut), type = "pie")
 
 #' ### Time Series
-x <- LakeHuron
-hchart(x)
+hchart(LakeHuron)
 
 #' ### Seasonal Decomposition of Time Series by Loess
 
@@ -61,18 +54,15 @@ hchart(x)
 
 #' ### `xts ohlc` objects
 
-#+eval=FALSE 
+#+eval=TRUE 
 x <- getSymbols("YHOO", auto.assign = FALSE)
 
 hchart(x)
 
-hchart(x, type = "ohlc")
-
 #' ### Autocovariance & Autocorrelation
 x <- acf(diff(AirPassengers), plot = FALSE)
 
-hchart(x) %>%
-  hc_title(text = "This is an ACF chart")
+hchart(x)
 
 #' ### Multivariate Time series
 x <- cbind(mdeaths, fdeaths)

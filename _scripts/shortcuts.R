@@ -101,13 +101,12 @@ highchart(type = "stock") %>%
 #'
 #' Here we use the `treemap` package to create a treemap object and then
 #' we create the same treemap via highcharts ;).
-
+#+fig.keep="none"
 library("treemap")
 library("viridisLite")
 
 data(GNI2010)
 
-#+fig.keep="none"
 tm <- treemap(GNI2010, index = c("continent", "iso3"),
               vSize = "population", vColor = "GNI",
               type = "value", palette = viridis(6))
