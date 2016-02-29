@@ -77,9 +77,6 @@ hc_theme_538 <- function(){
       itemStyle = list(
         color = '#3C3C3C'
       ),
-      itemHoverStyle = list(
-        color = '#FFF'
-      ),
       itemHiddenStyle = list(
         color = '#606063'
       )

@@ -63,9 +63,6 @@ hc_theme_economist <- function(){
       itemStyle = list(
         color = '#3C3C3C'
       ),
-      itemHoverStyle = list(
-        color = '#FFF'
-      ),
       itemHiddenStyle = list(
         color = '#606063'
       )
