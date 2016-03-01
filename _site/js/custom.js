@@ -61,10 +61,6 @@ $(document).ready(function () {
   
   ////////////////////////////////////////////////////////////
   // Button up!
-  $(function () {
-    $.scrollUp({
-      scrollText: "as"
-    });
-  });
+
   
 });
