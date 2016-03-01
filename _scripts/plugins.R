@@ -7,6 +7,8 @@ library("highcharter")
 
 #' ## Plugins 
 #' 
+#' <div id ="toc"></div>
+#' 
 #' Highcharter include some plugins for highcharts so you have almost
 #' no limits to implement whatever you want.
 #' 

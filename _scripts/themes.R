@@ -8,6 +8,8 @@ library("highcharter")
 #'
 #' ## Themes
 #' 
+#' <div id ="toc"></div>
+#' 
 #' Highcharts is super flexible to add and create themes.
 #' In Highcarter there are some predefined themes and some 
 #' functions to create or merge themes.

@@ -8,6 +8,8 @@ library("highcharter")
 #'
 #' ## Highstock Examples
 #' 
+#' <div id ="toc"></div>
+#' 
 #' Highstock work well with the quantmod package. It's 
 #' easy download data and chart it. 
 #'

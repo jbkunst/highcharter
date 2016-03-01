@@ -8,6 +8,8 @@ library("highcharter")
 #'
 #' ## Shortcuts for add data from R objects
 #' 
+#' <div id ="toc"></div>
+#' 
 #' There are some functions to add data from differents
 #' objects like vectors, time series, treemaps, gejson, etc. 
 #' Let's check them

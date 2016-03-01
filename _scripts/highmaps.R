@@ -7,6 +7,8 @@ library("highcharter")
 
 #'
 #' ## Highmaps Examples
+#' 
+#' <div id ="toc"></div>
 #'
 #' ### World Chart
 #' 

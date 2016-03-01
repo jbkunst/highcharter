@@ -7,6 +7,8 @@ library("highcharter")
 
 ##' ## The highcharts API in highcharter
 #' 
+#' <div id ="toc"></div>
+#' 
 #' *Premise*: There's not default arguments. All arguments need to be named.
 #' 
 #' Let's use a simple plot to show how do with the differentes funcions from the package.

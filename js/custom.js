@@ -26,8 +26,8 @@ $(document).ready(function () {
   // Hide show code
   
   $("pre.r").hideShow({
-    hideText: "Hide code",
-    showText: "Show code",
+    hideText: "Hide <i class=\"fa fa-code\"></i>",
+    showText: "Show <i class=\"fa fa-code\"></i>",
     state: "hidden"
   });
   
@@ -35,7 +35,7 @@ $(document).ready(function () {
   ////////////////////////////////////////////////////////////
   // TOC
   
-  sep = " <i class=\"fa fa-minus\"></i> ";
+  sep = "  &middot; ";
   
   items = $("#rcontent h3").map(function() {
     
@@ -48,7 +48,6 @@ $(document).ready(function () {
     return item;
   
   });
-  
 
   var items2 = [];
   
@@ -56,10 +55,12 @@ $(document).ready(function () {
     items2.push(items[i]);
   }
   
-  toc = items2.join(sep)
+  toc = items2.join(sep);
   
-  $("#rcontent").prepend(toc);
+  $("#toc").prepend(toc);
   
-     
+  ////////////////////////////////////////////////////////////
+  // Button up!
+
   
 });

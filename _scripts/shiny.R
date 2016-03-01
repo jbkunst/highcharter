@@ -1,4 +1,4 @@
-isntal#' ---
+#' ---
 #' layout: post
 #' ---
 #+echo=FALSE
@@ -6,6 +6,8 @@ rm(list = ls())
 library("highcharter")
 
 ##' ## Shiny Integration
+#' 
+#' <div id ="toc"></div>
 #' 
 #' Not much to say here. Highcharter is htmlwidlgets powered so it's **shiny ready**.
 #' See a live example here https://jbkunst.shinyapps.io/highcharter/. The code for 

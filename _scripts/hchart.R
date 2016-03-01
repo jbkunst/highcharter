@@ -10,6 +10,8 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 #'
 #' ## `hchart` function
 #' 
+#' <div id ="toc"></div>
+#' 
 #' This generic function can chart various R objects on the fly.
 #' The resulting chart is a highchart object
 #' so you can keep modifying with the implmented API

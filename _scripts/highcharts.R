@@ -9,6 +9,8 @@ library("highcharter")
 #'
 #' ## Highcharts Examples
 #' 
+#' <div id ="toc"></div>
+#' 
 #' ### Highcharts home page demo
 #'
 #' Example in http://www.highcharts.com/
