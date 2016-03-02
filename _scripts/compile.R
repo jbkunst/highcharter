@@ -126,4 +126,4 @@ f <- "_scripts/hchart.R"
 
 makepage(f)
 
-# lapply(rfiles, makepage)
+lapply(rfiles, makepage)

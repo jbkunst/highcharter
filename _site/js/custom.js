@@ -35,7 +35,7 @@ $(document).ready(function () {
   ////////////////////////////////////////////////////////////
   // TOC
   
-  sep = "  &middot; ";
+  sep = "&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;";
   
   items = $("#rcontent h3").map(function() {
     
@@ -61,6 +61,8 @@ $(document).ready(function () {
   
   ////////////////////////////////////////////////////////////
   // Button up!
-
+  $("body").prepend("<a class=\"to-top\" style=\"text-decoration: none;\">Top &uarr;</a>");
+  $('.to-top').toTop();
+   
   
 });
