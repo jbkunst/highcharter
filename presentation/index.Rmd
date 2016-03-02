@@ -1,0 +1,118 @@
+---
+title       : Testing htmlwidgets in slidify and revealjs 
+author      : Joshua Kunst
+job         : bugmaker
+framework   : revealjs        # {io2012, html5Tests, shower, dzTests, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2Tests
+---
+
+```{r, echo=FALSE, results='hide'}
+lapply(dir(pattern = "wdgt.*\\.html"), file.remove)
+
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
+```
+
+## How works
+
+This function for every htmlwidget save separately with a random
+name and then put an iframe with the respective source file.
+
+```{r, echo=TRUE}
+knit_print.htmlwidget <- function(x, ..., options = NULL){
+  
+  options(pandoc.stack.size = "2048m")
+  
+  wdgtclass <- setdiff(class(x), "htmlwidget")[1]
+  wdgtrndnm <- paste0(sample(letters, size = 7), collapse = "")
+  wdgtfname <- sprintf("wdgt_%s_%s.html", wdgtclass, wdgtrndnm)
+  
+  htmlwidgets::saveWidget(x, file = wdgtfname, selfcontained = TRUE, background = "transparent")
+  
+  iframetxt <- sprintf("<iframe  frameBorder=\"0\" src=\"%s\" width=\"100%%\" height=\"600\"></iframe>", wdgtfname)
+  
+  knitr::asis_output(iframetxt)
+}
+```
+
+---
+## Test 1
+
+
+```{r}
+library("highcharter")
+hc_demo() %>% 
+  hc_add_theme(hc_theme_db())
+```
+
+---
+## Test 2
+
+
+```{r}
+library("dplyr")
+library("viridisLite")
+
+data("USArrests", package = "datasets")
+data("usgeojson")
+
+USArrests <- USArrests %>%
+  mutate(state = rownames(.))
+
+n <- 4
+colstops <- data.frame(q = 0:n/n,
+                       c = substring(viridis(n + 1, option = "A"), 0, 7)) %>%
+list.parse2()
+
+highchart() %>%
+  hc_chart(plotBackgroundColor = "transparent") %>% 
+  hc_title(text = "Violent Crime Rates by US State") %>%
+  hc_subtitle(text = "Source: USArrests data") %>%
+  hc_add_series_map(usgeojson, USArrests, name = "Murder arrests (per 100,000)",
+                    value = "Murder", joinBy = c("woename", "state"),
+                    dataLabels = list(enabled = TRUE,
+                                      format = '{point.properties.postalcode}')) %>%
+  hc_colorAxis(stops = colstops) %>%
+  hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
+  hc_mapNavigation(enabled = TRUE)
+```
+
+---
+## Test 3
+
+```{r}
+library(forecast)
+hchart(forecast(AirPassengers, level = 99)) %>% 
+  hc_add_theme(hc_theme_538())
+```
+
+---
+## Test 3
+
+```{r}
+hchart(stl(co2, s.window = 7)) %>% 
+  hc_add_theme(hc_theme_google())
+```
+
+---
+## All htmlwidgets
+
+```{r}
+library(d3heatmap)
+d3heatmap(mtcars, scale="column", colors="Blues")
+```
+
+
+---
+## All htmlwidgets
+
+```{r}
+library(DT)
+datatable(iris, options = list(pageLength = 5))
+```
+
+
+

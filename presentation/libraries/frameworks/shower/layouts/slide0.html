@@ -1,0 +1,14 @@
+<div class="slide {{ slide.class }}" id = "{{ slide.id }}">
+  <div>
+    <section>
+      {{# slide.header }}
+      <header>
+        <h2>
+          {{{ slide.title }}}
+        </h2>
+      </header>
+      {{/ slide.header}}
+      {{{ slide.content }}}
+    </section>
+  </div>
+</div>
