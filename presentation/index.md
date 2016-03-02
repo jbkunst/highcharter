@@ -1,6 +1,5 @@
 ---
 title       : Testing htmlwidgets in slidify and revealjs 
-author      : Joshua Kunst
 framework   : revealjs        # {io2012, html5Tests, shower, dzTests, ...}
 revealjs:
   theme: white
@@ -11,8 +10,7 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2Tests
 ---
 
----
-## How works
+## Testing htmlwidgets in slidify and revealjs
 
 This function for every htmlwidget save separately with a random
 name and then put an iframe with the respective source file.
@@ -39,22 +37,25 @@ knit_print.htmlwidget <- function(x, ..., options = NULL){
 
 
 ---
-<iframe  frameBorder="0" src="wdgt_highchart_sopcdif.html" width="100%" height="600"></iframe>
+<iframe  frameBorder="0" src="wdgt_highchart_xwkifev.html" width="100%" height="600"></iframe>
 
 
 ---
-<iframe  frameBorder="0" src="wdgt_highchart_xwfzvur.html" width="100%" height="600"></iframe>
+<iframe  frameBorder="0" src="wdgt_highchart_zvlambh.html" width="100%" height="600"></iframe>
+
+---
+<iframe  frameBorder="0" src="wdgt_highchart2_obuadtr.html" width="100%" height="600"></iframe>
 
 
 ---
-<iframe  frameBorder="0" src="wdgt_highchart_lcuajtf.html" width="100%" height="600"></iframe>
+<iframe  frameBorder="0" src="wdgt_highchart_rivjnps.html" width="100%" height="600"></iframe>
 
 
 ---
-<iframe  frameBorder="0" src="wdgt_highchart_iskftqz.html" width="100%" height="600"></iframe>
+<iframe  frameBorder="0" src="wdgt_highchart_tyrvizl.html" width="100%" height="600"></iframe>
 
 
 ---
-<iframe  frameBorder="0" src="wdgt_highchart_bmxqkgv.html" width="100%" height="600"></iframe>
+<iframe  frameBorder="0" src="wdgt_highchart_yblknqf.html" width="100%" height="600"></iframe>
 
 
