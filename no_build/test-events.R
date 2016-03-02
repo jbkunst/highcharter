@@ -29,24 +29,22 @@ hc_add_event <- function(hc, typeseries = "scatter", event = "click", inputname 
 
 }
 
+fn <- "function(){
+  alert('Category: ' + this.category + ', value: ' + this.y + ', series: ' + this.series.name);
+  window.ds = this.series.data.map(function(e){ return {x: e.x, y: e.y  }  } );  
+}"
+
 hc <- hc_demo() %>%
-  hc_chart(type = "scatter") %>% 
+  hc_chart(type = "scatter") %>%  
   hc_plotOptions(
-    point = list(
-      events = list(
-        click = JS("function(){ console.log(this)}")
+    series = list(
+      cursor = "pointer",
+      point = list(
+        events = list(
+          click = JS(fn)
+          )
         )
       )
-    )
+    ) 
 
 hc
-
-hc2 <- hc_demo() %>% 
-  hc_chart(type = "scatter") %>% 
-  hc_add_event_serie(event = "click")
-
-hc2
-
-
-hc$x$hc_opts$plotOptions$series
-hc2$x$hc_opts$plotOptions$series
