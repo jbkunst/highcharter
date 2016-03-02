@@ -1,8 +1,9 @@
 ---
 title       : Testing htmlwidgets in slidify and revealjs 
 author      : Joshua Kunst
-job         : bugmaker
 framework   : revealjs        # {io2012, html5Tests, shower, dzTests, ...}
+revealjs:
+  theme: white
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
@@ -10,16 +11,17 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2Tests
 ---
 
+---
+## How works
+
+This function for every htmlwidget save separately with a random
+name and then put an iframe with the respective source file.
+
 ```{r, echo=FALSE, results='hide'}
 lapply(dir(pattern = "wdgt.*\\.html"), file.remove)
 
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 ```
-
-## How works
-
-This function for every htmlwidget save separately with a random
-name and then put an iframe with the respective source file.
 
 ```{r, echo=TRUE}
 knit_print.htmlwidget <- function(x, ..., options = NULL){
@@ -38,20 +40,28 @@ knit_print.htmlwidget <- function(x, ..., options = NULL){
 }
 ```
 
+
 ---
-## Test 1
-
-
 ```{r}
 library("highcharter")
-hc_demo() %>% 
-  hc_add_theme(hc_theme_db())
+data(economics, package = "ggplot2")
+
+highchart() %>% 
+  hc_title(text = "US economic time series") %>% 
+  hc_subtitle(text = "This dataset was produced from US 
+              economic time series data available") %>% 
+  hc_tooltip(valueDecimals = 2) %>% 
+  hc_add_series_times_values(economics$date,
+                             economics$psavert,
+                             name = "Personal savings rate") %>% 
+  hc_add_series_times_values(economics$date,
+                             economics$uempmed,
+                             name = "Median duration of unemployment") %>% 
+  hc_add_theme(hc_theme_db()) 
 ```
 
+
 ---
-## Test 2
-
-
 ```{r}
 library("dplyr")
 library("viridisLite")
@@ -80,39 +90,43 @@ highchart() %>%
   hc_mapNavigation(enabled = TRUE)
 ```
 
----
-## Test 3
 
+---
 ```{r}
 library(forecast)
 hchart(forecast(AirPassengers, level = 99)) %>% 
   hc_add_theme(hc_theme_538())
 ```
 
----
-## Test 3
 
+---
 ```{r}
-hchart(stl(co2, s.window = 7)) %>% 
+hchart(stl(head(as.zoo(co2), 12*10), s.window = 7)) %>% 
   hc_add_theme(hc_theme_google())
 ```
 
----
-## All htmlwidgets
-
-```{r}
-library(d3heatmap)
-d3heatmap(mtcars, scale="column", colors="Blues")
-```
-
 
 ---
-## All htmlwidgets
+```{r, fig.keep='none'}
+library("treemap")
+library("viridisLite")
 
-```{r}
-library(DT)
-datatable(iris, options = list(pageLength = 5))
+data(GNI2010)
+
+tm <- treemap(GNI2010, index = c("continent", "iso3"),
+              vSize = "population", vColor = "GNI",
+              type = "value", palette = viridis(6))
+
+hc_tm <- highchart() %>% 
+  hc_add_series_treemap(tm, allowDrillToNode = TRUE,
+                        layoutAlgorithm = "squarified",
+                        name = "tmdata") %>% 
+  hc_title(text = "Gross National Income World Data") %>% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+             Pop: {point.value:,.0f}<br>
+             GNI: {point.valuecolor:,.0f}")
+
+hc_tm
 ```
-
 
 

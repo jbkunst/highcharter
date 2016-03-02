@@ -12,7 +12,7 @@ exclude:
   - jekyllserve.bat
   - highcharter-gh-pages.Rproj
 
-markdown: redcarpet
+markdown: kramdown
 markdown_ext:  markdown,mkdown,mkdn,mkd,md
 redcarpet:
   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
