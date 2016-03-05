@@ -52,6 +52,9 @@ infolist <- list(
   list(c("_scripts/index.R",
          paste(fa_icon("hand-spock-o"), "Welcome"),
          "Let's start")),
+  list(c("_scripts/showcase.R",
+         paste(fa_icon("newspaper-o"), "Showcase"),
+         "Some fancy tries")),
   list(c("_scripts/highcharts-api.R",
          paste(fa_icon("cogs"), "API"),
          "What can we do")),
@@ -122,8 +125,8 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/hchart.R"
+f <- "_scripts/showcase.R"
 
 makepage(f)
 
-lapply(rfiles, makepage)
+# lapply(rfiles, makepage)
