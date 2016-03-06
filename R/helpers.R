@@ -110,6 +110,31 @@ hc_get_colors <- function() {
   
 }
 
+#' Transform colors from hexadeximal format to rgba hc notation
+#' 
+#' @param x colors in hexadecimal format
+#' @param alpha alpha 
+#' 
+#' @examples 
+#' 
+#' hex_to_rgba(hc_get_colors())
+#' 
+#'
+#' @importFrom grDevices col2rgb
+#' @importFrom tidyr unite
+#' @export
+hex_to_rgba <- function(x, alpha = 1) {
+  
+  x %>% 
+    col2rgb() %>% 
+    t() %>% 
+    as.data.frame() %>% 
+    unite(red, green, blue, col = "rgba", sep = ",") %>% 
+    mutate(rgba = sprintf("rgba(%s,%s)", rgba, alpha)) %>% 
+    .[[1]]
+  
+}  
+
 #' Get dash styles
 #'
 #' Get dash style to use on highcharts objects.
