@@ -16,7 +16,7 @@ Transform colors from hexadeximal format to rgba hc notation
 }
 \examples{
 
-hex_to_rgba(hc_get_colors())
+hex_to_rgba(x <- hc_get_colors())
 
 
 }

@@ -117,11 +117,11 @@ hc_get_colors <- function() {
 #' 
 #' @examples 
 #' 
-#' hex_to_rgba(hc_get_colors())
+#' hex_to_rgba(x <- hc_get_colors())
 #' 
 #'
 #' @importFrom grDevices col2rgb
-#' @importFrom tidyr unite
+#' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
   
@@ -129,7 +129,7 @@ hex_to_rgba <- function(x, alpha = 1) {
     col2rgb() %>% 
     t() %>% 
     as.data.frame() %>% 
-    unite(red, green, blue, col = "rgba", sep = ",") %>% 
+    unite_(col = "rgba", from = c("red", "green", "blue") , sep = ",") %>% 
     mutate(rgba = sprintf("rgba(%s,%s)", rgba, alpha)) %>% 
     .[[1]]
   
