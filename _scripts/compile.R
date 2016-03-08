@@ -125,7 +125,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/showcase.R"
+f <- "_scripts/themes.R"
 
 makepage(f)
 

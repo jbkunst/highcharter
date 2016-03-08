@@ -65,7 +65,17 @@ HTMLWidgets.widget({
       $("#" + el.id).highcharts('StockChart', x.hc_opts);  
     } else if (x.type == "map"){
       if(x.debug) console.log("charting MAP");
+      
+      /*
       x.hc_opts.series = _.each(x.hc_opts.series, function(e){
+        if(!(e.type === undefined)) {
+          e.data = Highcharts.geojson(e.data, e.type);
+        }
+        return e;
+      });
+      */
+      
+      x.hc_opts.series = x.hc_opts.series.map(function(e){
         if(!(e.type === undefined)) {
           e.data = Highcharts.geojson(e.data, e.type);
         }
