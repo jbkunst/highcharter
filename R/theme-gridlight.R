@@ -2,13 +2,15 @@
 #' 
 #' Grid Light theme for highchart
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples 
 #' 
 #' hc_demo() %>% 
 #'   hc_add_theme(hc_theme_gridlight())
 #' 
 #' @export
-hc_theme_gridlight <- function(){
+hc_theme_gridlight <- function(...){
   
   theme <-  
   list(
@@ -70,6 +72,13 @@ hc_theme_gridlight <- function(){
   )
   
   theme <- structure(theme, class = "hc_theme")
+
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   
   theme
 

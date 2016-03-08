@@ -7,7 +7,7 @@
 hc_theme_merge(...)
 }
 \arguments{
-\item{...}{A \code{hc_theme} objects.}
+\item{...}{\code{hc_theme} objects.}
 }
 \description{
 Function to combine hc_theme objects.

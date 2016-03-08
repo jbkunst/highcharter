@@ -4,7 +4,10 @@
 \alias{hc_theme_sandsignika}
 \title{Sand Signika theme for highcharts}
 \usage{
-hc_theme_sandsignika()
+hc_theme_sandsignika(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Sand Signika theme for highcharts

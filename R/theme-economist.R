@@ -2,13 +2,15 @@
 #' 
 #' Fivethirtyeight theme for highcharts
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples 
 #' 
 #' hc_demo() %>% 
 #'   hc_add_theme(hc_theme_economist())
 #' 
 #' @export
-hc_theme_economist <- function(){
+hc_theme_economist <- function(...){
   
   theme <-
   list(
@@ -104,6 +106,13 @@ hc_theme_economist <- function(){
   )
   
   theme <- structure(theme, class = "hc_theme")
+  
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   
   theme
   

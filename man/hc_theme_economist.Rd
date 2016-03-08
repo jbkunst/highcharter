@@ -4,7 +4,10 @@
 \alias{hc_theme_economist}
 \title{Fivethirtyeight theme for highcharts}
 \usage{
-hc_theme_economist()
+hc_theme_economist(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Fivethirtyeight theme for highcharts

@@ -2,13 +2,15 @@
 #' 
 #' Hand Drawn theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/hand-drawn/
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples
 #' 
 #' hc_demo() %>% 
 #'   hc_add_theme(hc_theme_handdrawn())
 #' 
 #' @export
-hc_theme_handdrawn <- function(){
+hc_theme_handdrawn <- function(...){
   
   cols <- colorRampPalette(c("#171314", "#888782"))(4)
   
@@ -114,6 +116,13 @@ hc_theme_handdrawn <- function(){
   )
   
   theme <- structure(theme, class = "hc_theme")
+  
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   
   theme
   

@@ -4,7 +4,10 @@
 \alias{hc_theme_handdrawn}
 \title{Hand Drawn theme for highcharts}
 \usage{
-hc_theme_handdrawn()
+hc_theme_handdrawn(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Hand Drawn theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/hand-drawn/

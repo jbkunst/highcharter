@@ -2,6 +2,8 @@
 #' 
 #' Chalk theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/chalk/
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples
 #' 
 #' hc_demo() %>% 
@@ -9,7 +11,7 @@
 #' 
 #' @importFrom grDevices colorRampPalette 
 #' @export
-hc_theme_chalk <- function(){
+hc_theme_chalk <- function(...){
   
   cols <- colorRampPalette(c("#FFFFFF", "#8C8984"))(4)
   
@@ -110,6 +112,13 @@ hc_theme_chalk <- function(){
   )
   
   theme <- structure(theme, class = "hc_theme")
+  
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   
   theme
   

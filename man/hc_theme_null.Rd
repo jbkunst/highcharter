@@ -4,7 +4,10 @@
 \alias{hc_theme_null}
 \title{Null theme for highcharts}
 \usage{
-hc_theme_null()
+hc_theme_null(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Null theme for highcharts. Axis are removed (\code{visible = FALSE}).

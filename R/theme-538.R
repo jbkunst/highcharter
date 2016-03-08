@@ -2,13 +2,23 @@
 #' 
 #' Fivethirtyeight theme for highcharts
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples 
 #' 
 #' hc_demo() %>% 
 #'   hc_add_theme(hc_theme_538())
+#'    
+#' hc_demo() %>%
+#'   hc_add_theme(
+#'     hc_theme_538(
+#'       colors = c("red", "blue", "green"),
+#'       chart = list(backgroundColor = "white")
+#'     )
+#'   )
 #' 
 #' @export
-hc_theme_538 <- function(){
+hc_theme_538 <- function(...){
   
   theme <-
   list(
@@ -101,6 +111,13 @@ hc_theme_538 <- function(){
   )
   
   theme <- structure(theme, class = "hc_theme")
+  
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   
   theme
   

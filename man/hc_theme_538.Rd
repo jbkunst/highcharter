@@ -4,7 +4,10 @@
 \alias{hc_theme_538}
 \title{Fivethirtyeight theme for highcharts}
 \usage{
-hc_theme_538()
+hc_theme_538(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Fivethirtyeight theme for highcharts
@@ -13,6 +16,14 @@ Fivethirtyeight theme for highcharts
 
 hc_demo() \%>\% 
   hc_add_theme(hc_theme_538())
+   
+hc_demo() \%>\%
+  hc_add_theme(
+    hc_theme_538(
+      colors = c("red", "blue", "green"),
+      chart = list(backgroundColor = "white")
+    )
+  )
 
 }
 

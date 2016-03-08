@@ -2,13 +2,15 @@
 #' 
 #' Dark unica theme for highcharts
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples 
 #' 
 #' hc_demo() %>% 
 #'   hc_add_theme(hc_theme_darkunica())
 #' 
 #' @export
-hc_theme_darkunica <- function(){
+hc_theme_darkunica <- function(...){
   
   theme <-
   list(
@@ -209,6 +211,13 @@ hc_theme_darkunica <- function(){
   )
   
   theme <- structure(theme, class = "hc_theme")
+  
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   
   theme
   

@@ -4,7 +4,10 @@
 \alias{hc_theme_google}
 \title{Google theme for highcharts}
 \usage{
-hc_theme_google()
+hc_theme_google(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Google theme for highcharts based on https://books.google.com/ngrams/

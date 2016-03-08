@@ -7,7 +7,7 @@
 hc_theme(...)
 }
 \arguments{
-\item{...}{A named list with the parameters.}
+\item{...}{A named parameters.}
 }
 \description{
 Function to create highcharts themes.

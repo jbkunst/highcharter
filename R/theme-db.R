@@ -2,13 +2,15 @@
 #' 
 #' Dotabuff theme for highcharts
 #' 
+#' @param ... Named argument to modify the theme
+#' 
 #' @examples 
 #' 
 #' hc_demo() %>% 
 #'   hc_add_theme(hc_theme_db())
 #' 
 #' @export
-hc_theme_db <- function(){
+hc_theme_db <- function(...){
   
   theme <- 
   list(  
@@ -88,6 +90,12 @@ hc_theme_db <- function(){
   
   theme <- structure(theme, class = "hc_theme")
   
+  if (length(list(...)) > 0) {
+    theme <- hc_theme_merge(
+      theme,
+      hc_theme(...)
+    )
+  } 
   theme
   
 }

@@ -4,7 +4,10 @@
 \alias{hc_theme_gridlight}
 \title{Grid Light theme for highchart}
 \usage{
-hc_theme_gridlight()
+hc_theme_gridlight(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Grid Light theme for highchart

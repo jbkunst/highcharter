@@ -4,7 +4,7 @@
 #' 
 #' More examples are in http://www.highcharts.com/docs/chart-design-and-style/themes.
 #' 
-#' @param ... A named list with the parameters.
+#' @param ... A named parameters.
 #' 
 #' @examples 
 #' 
@@ -89,7 +89,7 @@ hc_add_theme <- function(hc, hc_thm){
 #' 
 #' Function to combine hc_theme objects.
 #' 
-#' @param ... A \code{hc_theme} objects.
+#' @param ... \code{hc_theme} objects.
 #' 
 #' @examples 
 #' 

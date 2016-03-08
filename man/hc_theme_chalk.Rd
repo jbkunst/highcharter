@@ -4,7 +4,10 @@
 \alias{hc_theme_chalk}
 \title{Chalk theme for highcharts}
 \usage{
-hc_theme_chalk()
+hc_theme_chalk(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Chalk theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/chalk/

@@ -4,7 +4,10 @@
 \alias{hc_theme_db}
 \title{Dotabuff theme for highcharts}
 \usage{
-hc_theme_db()
+hc_theme_db(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Dotabuff theme for highcharts

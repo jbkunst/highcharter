@@ -4,7 +4,10 @@
 \alias{hc_theme_darkunica}
 \title{Dark Unica theme for highcharts}
 \usage{
-hc_theme_darkunica()
+hc_theme_darkunica(...)
+}
+\arguments{
+\item{...}{Named argument to modify the theme}
 }
 \description{
 Dark unica theme for highcharts
