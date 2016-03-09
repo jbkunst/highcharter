@@ -12,7 +12,8 @@ R wrapper for highcharts
 ## Resources
 
 - Official package page: http://jkunst.com/highcharter/.
-- Shiny demo: https://jbkunst.shinyapps.io/highcharter/ (code https://github.com/jbkunst/shiny-apps/tree/master/highcharter).
+- CRAN site https://cran.r-project.org/web/packages/highcharter/.
+- Shiny demo code https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
 
 ## Why highcharter?
 
