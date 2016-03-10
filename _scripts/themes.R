@@ -42,7 +42,7 @@ hc %>% hc_add_theme(hc_theme_google())
 
 #' ### Flat
 #' 
-#' Isnpired in by https://github.com/cttobin/ggthemr#flat
+#' Inspired by https://github.com/cttobin/ggthemr#flat
 
 hc %>% hc_add_theme(hc_theme_flat())
 
