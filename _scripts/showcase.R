@@ -21,7 +21,7 @@ readRDS("../_showcase/hcphones.rds")
 #' 
 #' ### Pokemon types treemap
 #' 
-#' source: tbd
+#' source: http://jkunst.com/r/pokemon-visualize-em-all/
 #' 
 
 readRDS("../_showcase/hctmpkmn.rds")
