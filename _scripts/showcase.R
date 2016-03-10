@@ -4,19 +4,19 @@
 #+echo=FALSE
 rm(list = ls())
 library("highcharter")
-knitr::opts_chunk$set(echo=FALSE)
+knitr::opts_chunk$set(echo=FALSE, warning = FALSE)
+
+printhc <- function(x) {
+  try(hc <- readRDS(sprintf("_showcase/%s.rds", x)))
+  try(hc <- readRDS(sprintf("../_showcase/%s.rds", x)))
+  hc
+}
+
 #'
 #' ## Showcases
 #' 
 #' <div id ="toc"></div>
 #'
-#' ### Phone size evolution
-#' 
-#' source: http://jkunst.com/r/bythmusters-mobile-phone-evolution/
-#' 
-
-readRDS("../_showcase/hcphones.rds")
-
 
 #' 
 #' ### Pokemon types treemap
@@ -24,4 +24,15 @@ readRDS("../_showcase/hcphones.rds")
 #' source: http://jkunst.com/r/pokemon-visualize-em-all/
 #' 
 
-readRDS("../_showcase/hctmpkmn.rds")
+printhc("hctmpkmn")
+
+
+#'
+#' ### Phone size evolution
+#' 
+#' source: http://jkunst.com/r/bythmusters-mobile-phone-evolution/
+#' 
+
+printhc("hcphones")
+
+
