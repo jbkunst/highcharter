@@ -40,6 +40,14 @@ hc %>% hc_add_theme(hc_theme_db())
 
 hc %>% hc_add_theme(hc_theme_google())
 
+#' ### Flat
+#' 
+#' Isnpired in by https://github.com/cttobin/ggthemr#flat
+
+hc %>% hc_add_theme(hc_theme_flat())
+
+hc %>% hc_add_theme(hc_theme_flatdark())
+
 #' ### Grid Light
 
 hc %>% hc_add_theme(hc_theme_gridlight())
