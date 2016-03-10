@@ -47,4 +47,4 @@ highchart(type = "stock") %>%
                       title = c("E1", "E2"), 
                       text = c("Event 1", "Event 2"),
                       id = "usdjpy") %>% 
-  hc_add_theme(hc_theme_db()) 
+  hc_add_theme(hc_theme_flat()) 

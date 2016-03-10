@@ -84,17 +84,23 @@ hchart(airforecast) %>%
 #' time series data. For example data from [quantmod](http://www.quantmod.com/)
 #' package.
 #' 
-
 library("quantmod")
 
-x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("AMZN", auto.assign = FALSE)
+usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
+eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
 
-highchart() %>% 
-  hc_title(text = "Apple and Amazon") %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y, type = "ohlc") %>% 
-  hc_add_theme(hc_theme_538())
+dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
+
+highchart(type = "stock") %>% 
+  hc_title(text = "Charting some Symbols") %>% 
+  hc_subtitle(text = "Data extracted using quantmod package") %>% 
+  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+  hc_add_series_xts(eurkpw, id = "eurkpw") %>% 
+  hc_add_series_flags(dates,
+                      title = c("E1", "E2"), 
+                      text = c("Event 1", "Event 2"),
+                      id = "usdjpy") %>% 
+  hc_add_theme(hc_theme_flat()) 
 
 #' 
 #' ### Highmaps

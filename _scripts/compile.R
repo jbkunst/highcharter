@@ -30,6 +30,7 @@ file.copy(hgcrtrtjs, hgcrtrtjsto, overwrite = TRUE)
 deps <- yaml$dependencies %>% 
   map(function(x){
     # x <- sample(yaml$dependencies, size = 1)[[1]]
+    if (x$name == "jquery") return(NA)
     message(x$name)
     
     fs <- file.path(system.file(package = "highcharter", x$src), x$script)
@@ -42,9 +43,9 @@ deps <- yaml$dependencies %>%
     fsl
   })
 
-alldeps <- c(htmlwdtjsto, unlist(deps), hgcrtrtjsto)
+alldeps <- na.omit(c(htmlwdtjsto, unlist(deps), hgcrtrtjsto))
 alldeps <- paste0("<script src=\"", alldeps, "\"></script>")
-alldeps <- c("", paste0("    ", alldeps))
+alldeps <- c("", paste0("\t", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
 #### navigation ####
@@ -125,8 +126,8 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/themes.R"
+f <- "_scripts/index.R"
 
 makepage(f)
 
-# lapply(rfiles, makepage)
+# lapply(rfiles, function(x) { try(makepage(x))  })
