@@ -125,13 +125,13 @@ hc_get_colors <- function() {
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
   
-  x %>% 
+  rgba <- x %>% 
     col2rgb() %>% 
     t() %>% 
     as.data.frame() %>% 
-    unite_(col = "rgba", from = c("red", "green", "blue") , sep = ",") %>% 
-    mutate(rgba = sprintf("rgba(%s,%s)", rgba, alpha)) %>% 
-    .[[1]]
+    unite_(col = "rgba", from = c("red", "green", "blue") , sep = ",")
+  
+  sprintf("rgba(%s,%s)", rgba[["rgba"]], alpha)
   
 }  
 

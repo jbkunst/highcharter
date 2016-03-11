@@ -238,3 +238,20 @@ hc_annotations <- function(hc, ...) {
   .hc_opt(hc, "annotations", ...)
   
 }
+
+
+#' Adding annotations to highcharts objects
+#' 
+#' Applies only to polar charts and angular gauges. This configuration object
+#' holds general options for the combined X and Y axes set. Each xAxis or
+#' yAxis can reference the pane by index.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#pane}. 
+#' 
+#' @export
+hc_pane <- function(hc, ...) {
+  
+  .hc_opt(hc, "pane", ...)
+  
+}
