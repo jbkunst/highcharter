@@ -126,7 +126,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/highcharts.R"
+f <- "_scripts/shortcuts.R"
 
 makepage(f)
 
