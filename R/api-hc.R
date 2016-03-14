@@ -83,6 +83,35 @@ hc_chart <- function(hc, ...) {
   
 }
 
+#' Adding color options to highchart objects
+#' 
+#' An array containing the default colors for the chart's series. When all 
+#' colors are used, new colors are pulled from the start again. 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param colors A vector of colors. 
+#' 
+#' @examples 
+#' 
+#' library("viridisLite")
+#' 
+#' cols <- viridis(3)
+#' cols <- substr(cols, 0, 7)
+#' 
+#' hc_demo() %>% 
+#'   hc_colors(cols)
+#'
+#' 
+#' @export
+hc_colors <- function(hc, colors) {
+  
+  hc$x$hc_opts$colors <- colors
+  
+  hc
+  
+}
+
+
 #' Adding axis options to highchart objects
 #'
 #' Change axis labels or style. Add lines or band to charts.
