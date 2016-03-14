@@ -5,3 +5,4 @@ tests/
 no_build/
 ^\.travis\.yml$
 fort.6
+^CONDUCT\.md$

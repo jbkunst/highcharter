@@ -31,3 +31,8 @@ R wrapper for highcharts
 Highcharter is licensed under the MIT License. However, highcharts.com is licensed under 
 their own terms. Highcharts is free for personal or non profit projects under the 
 [Creative Commons Attribution-NonCommercial 3.0 License](http://creativecommons.org/licenses/by-nc/3.0/).
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
