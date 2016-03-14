@@ -126,7 +126,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/highcharts-api.R"
+f <- "_scripts/showcase.R"
 
 makepage(f)
 
