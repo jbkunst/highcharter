@@ -13,7 +13,7 @@ printhc <- function(x) {
 }
 
 #'
-#' ## Showcases
+#' ## Showcase
 #' 
 #' <div id ="toc"></div>
 #'
