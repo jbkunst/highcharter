@@ -52,6 +52,19 @@ hc
 
 hc <- hc_chart(hc, type = "line", options3d = list(enabled = FALSE))
 
+
+##' ### hc_colors
+
+#' With `hc_colors` you can redefine general color options.
+
+library("viridisLite")
+
+cols <- viridis(3)
+cols <- substr(cols, 0, 7)
+
+hc %>% 
+  hc_colors(cols)
+
 ##' ### hc_xAxis and hc_yAxis
 
 #' This functions allow between other things:
