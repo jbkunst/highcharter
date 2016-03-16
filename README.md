@@ -9,6 +9,8 @@ R wrapper for highcharts
 [![issues](http://issuestats.com/github/jbkunst/highcharter/badge/issue?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
 [![pr](http://issuestats.com/github/jbkunst/highcharter/badge/pr?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
 
+It is a *must* know how `highcharts` works to *take advantage* of this package. I invited you to look some [demo](http://www.highcharts.com/demo) charts and see how the highcharts' api works.
+
 ## Resources
 
 - Official package page: http://jkunst.com/highcharter/.
