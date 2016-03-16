@@ -48,6 +48,13 @@ hc %>% hc_add_theme(hc_theme_flat())
 
 hc %>% hc_add_theme(hc_theme_flatdark())
 
+#' ### Simple
+#' 
+#' Desing inspired by https://github.com/hrbrmstr/hrbrmisc/blob/master/R/ggplot.r
+#'  and color by http://www.materialui.co/flatuicolors
+
+hc %>% hc_add_theme(hc_theme_smpl())
+
 #' ### Grid Light
 
 hc %>% hc_add_theme(hc_theme_gridlight())
