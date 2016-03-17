@@ -27,7 +27,8 @@ Imports:
     viridisLite,
     xts,
     quantmod,
-    tidyr
+    tidyr,
+    htmltools
 Suggests: knitr,
     jsonlite,
     rmarkdown
