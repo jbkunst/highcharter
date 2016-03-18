@@ -235,7 +235,8 @@ fa_icon_mark <- function(iconname = "circle"){
 #' @param y A string with accesors ex: \code{point.series.name}, 
 #'   \code{point.x}
 #' @param title A title tag with accessor or string
-#' @param img Img tag  
+#' @param img Img tag
+#' @param ... html attributes for the table element
 #' 
 #' @examples 
 #' 
@@ -248,7 +249,7 @@ fa_icon_mark <- function(iconname = "circle"){
 #' @importFrom purrr map2
 #' @importFrom htmltools tags tagList
 #' @export
-tooltip_table <- function(x, y, title = NULL, img = NULL) {
+tooltip_table <- function(x, y, title = NULL, img = NULL, ...) {
   
   assertthat::assert_that(length(x) == length(y))
   
@@ -257,8 +258,9 @@ tooltip_table <- function(x, y, title = NULL, img = NULL) {
       tags$th(x),
       tags$td(y)
     )
-  }) %>% 
-    tags$table()
+  })
+  
+  tbl <- tags$table(tbl, ...)
   
   if (!is.null(title))
     tbl <- tagList(title, tbl)
