@@ -28,8 +28,8 @@ Imports:
     xts,
     quantmod,
     tidyr,
-    htmltools
-Suggests: knitr,
-    jsonlite,
+    htmltools,
+    jsonlite
+Suggests: knitr
     rmarkdown
 VignetteBuilder: knitr

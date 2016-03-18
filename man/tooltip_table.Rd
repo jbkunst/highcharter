@@ -4,7 +4,7 @@
 \alias{tooltip_table}
 \title{Helper for make table in tooltips}
 \usage{
-tooltip_table(x, y, title = NULL, img)
+tooltip_table(x, y, title = NULL, img = NULL, ...)
 }
 \arguments{
 \item{x}{A string vector with description text}
@@ -15,6 +15,8 @@ tooltip_table(x, y, title = NULL, img)
 \item{title}{A title tag with accessor or string}
 
 \item{img}{Img tag}
+
+\item{...}{html attributes for the table element}
 }
 \description{
 Helper to make table in tooltips for the \code{pointFormat}
