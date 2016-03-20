@@ -30,6 +30,7 @@ Imports:
     tidyr,
     htmltools,
     jsonlite
-Suggests: knitr
+Suggests:
+    knitr,
     rmarkdown
 VignetteBuilder: knitr

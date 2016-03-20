@@ -1,8 +1,7 @@
-# hc <- hc_demo()
 # library("jsonlite")
 # library("stringr")
-#  library("purrr")
-#hc <- readRDS("~/hcgross1.rds")
+# library("purrr")
+# hc <- readRDS("~/hcgross1.rds")
 
 #' Function to export to jsfiddle
 #' @param hc A \code{A highcarts object}
@@ -12,13 +11,15 @@
 #' @export 
 export_hc <- function(hc, filename = NULL) {
   
+  # filename <- "~/tets.js"
+  
   stopifnot(!is.null(filename))
   
   if (!str_detect(filename, ".js$"))
     filename <- str_c(filename, ".js")
   . <- ""
   # http://lisperator.net/uglifyjs/walk
-  # hc$x$hc_opts$series[3:10000] <- NULL
+  # hc$x$hc_opts$series[5:10000] <- NULL
   hc$x$hc_opts %>% 
     toJSON(pretty = TRUE, auto_unbox = TRUE, force = TRUE) %>% 
     str_split("\n") %>% 
@@ -38,7 +39,9 @@ export_hc <- function(hc, filename = NULL) {
     }) %>% 
     unlist() %>%
     tail(-1) %>% 
-    str_c("    ", ., collapse = "\n") %>% 
+    str_c("    ", ., collapse = "\n") %>%
+    str_replace_all("\n\\s{4,}\\]\\,\n\\s{4,}\\[\n\\s{4,}", "],[") %>% 
+    str_replace_all("\\,\n\\s{4,}", ",") %>% 
     sprintf("$(function () {\n  $('#container').highcharts({\n%s\n  );\n});", .) %>% 
     writeLines(filename)
   
