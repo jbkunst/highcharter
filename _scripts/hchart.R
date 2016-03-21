@@ -47,6 +47,28 @@ x <- forecast(ets(USAccDeaths), h = 48, level = 95)
 
 hchart(x)
 
+
+#' ### igraph 
+library("igraph")
+library("networkD3")
+library("dplyr")
+data(MisLinks)
+data(MisNodes)
+
+MisNodes <- MisNodes %>% 
+  mutate(label = name, name = seq(nrow(.)) - 1)
+
+net <- graph.data.frame(MisLinks, MisNodes, directed = TRUE)
+
+V(net)$color <- colorize_vector(V(net)$group)
+net <- remove.vertex.attribute(net, "label")
+
+hchart(net)
+
+# net <- remove.vertex.attribute(net, "label")
+# hchart(net)
+
+
 #' ### `xts` from quantmod package
 library("quantmod")
 
@@ -56,7 +78,7 @@ hchart(x)
 
 #' ### `xts ohlc` objects
 
-#+eval=TRUE 
+#+eval=FALSE 
 x <- getSymbols("YHOO", auto.assign = FALSE)
 
 hchart(x)

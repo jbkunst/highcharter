@@ -126,7 +126,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/themes.R"
+f <- "_scripts/hchart.R"
 
 makepage(f)
 
