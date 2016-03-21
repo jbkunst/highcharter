@@ -26,44 +26,79 @@ E(gD)[as.character(dataSet.ext$V1) %--% as.character(dataSet.ext$V2)]$weight <- 
 E(gD)[as.character(dataSet.ext$V1) %--% as.character(dataSet.ext$V2)]$similarity <- as.numeric(dataSet.ext$V4)
 
 
-
+library("dplyr")
+library("purrr")
+library("highcharter")
 plot.igraph(gD, layout = layout_nicely)
 
 str(gD)
 
-library
 object <- gD
 layout <- layout_nicely
 
 lyout <- layout(object)
 
-dsvertex <- object %>% 
+
+dfvertex <- object %>% 
   get.vertex.attribute() %>%
   as.data.frame() %>% 
   dplyr::tbl_df() %>% 
   mutate(x = lyout[, 1],
-         y = lyout[, 2]) %>% 
-  list.parse3()
+         y = lyout[, 2]) 
 
 dfedge <-  object %>%
   get.edgelist %>% 
   as.data.frame() %>% 
-  dplyr::tbl_df()
+  dplyr::tbl_df() %>% 
+  setNames(c("from", "to"))
 
 dfedgeextra <- object %>% 
   get.edge.attribute() %>% 
   as.data.frame() %>% 
   dplyr::tbl_df()
  
-dfedge %>% 
+dfedge <- dfedge %>% 
   cbind(dfedgeextra) %>% 
-  dplyr::tbl_df()
-
+  dplyr::tbl_df() %>% 
+  left_join(dfvertex %>% select(name, x, y) %>% setNames(c("from", "xf", "yf"))) %>% 
+  left_join(dfvertex %>% select(name, x, y) %>% setNames(c("to", "xt", "yt")))
   
-highchart() %>% 
-  hc_add_series(data = dsvertex, type = "scatter") %>% 
-  hc_add_theme(hc_theme_null())
 
+hc <- highchart() %>% 
+  hc_add_serie(data = list.parse3(dfvertex), type = "scatter",
+               name = "nodes", zIndex = 3) %>% 
+  hc_add_series(data = NULL, name = "edges", id = "e") %>% 
+  hc_mapNavigation(enabled = TRUE) %>% 
+  hc_add_theme(
+    hc_theme_null(
+      legend = list(
+        enabled = TRUE
+      )
+    )
+  )
 
-plot.igraph(gD, layout = lyout)
+dsedges <- dfedge %>%
+  list.parse3() %>% 
+  map(function(x) {
+    # x <- sample( dfedge %>% list.parse3(), 1)[[1]]
+    y <- list(
+      data = list(
+        list(x = x$xf, y = x$yf),
+        list(x = x$xt, y = x$yt)
+        ),
+      linkedTo = "e"
+      )
+    
+    y
+    
+  })
+
+hc$x$hc_opts$series <- append(
+  hc$x$hc_opts$series,
+  dsedges
+  )
+
+hc
+
+# plot.igraph(gD, layout = lyout)
 
