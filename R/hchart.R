@@ -244,7 +244,7 @@ hchart.dist <- function(object, ...) {
 
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
 #' @export
-hchart.igraph <- function(object, ..., layout = layout_nicely){
+hchart.igraph <- function(object, ..., layout = layout_nicely) {
   
   lst_to_tbl <- function(x) {
     x %>% 
@@ -253,27 +253,23 @@ hchart.igraph <- function(object, ..., layout = layout_nicely){
   }
   
   # data
-  lout <- layout(object) %>% 
+  dfv <- layout(object) %>% 
     lst_to_tbl() %>% 
     setNames(c("x", "y"))
   
-  dfv <- object %>% 
+  dfvex <- object %>% 
     get.vertex.attribute() %>% 
     lst_to_tbl()
 
-  if (nrow(dfv) > 0) {
-    dfv <- cbind(dfv, lout)
-  } else {
-    dfv <- lout
-  }
+  if (nrow(dfvex) > 0) 
+    dfv <- tbl_df(cbind(dfv, dfvex))
   
-  if (is.null(dfv[["name"]])) 
-    dfv <- dfv %>% 
-    mutate(name = seq(nrow(dfv)))
+  if (is.null(dfv[["name"]]))
+    dfv <- dfv %>%  mutate(name = seq(nrow(dfv)))
   
   dfe <-  object %>%
     get.edgelist() %>% 
-    lst_to_tbl %>% 
+    lst_to_tbl() %>% 
     setNames(c("from", "to")) %>% 
     left_join(dfv %>%
                 select_(.dots = c("name", "x", "y")) %>%
@@ -287,10 +283,8 @@ hchart.igraph <- function(object, ..., layout = layout_nicely){
     get.edge.attribute() %>% 
     lst_to_tbl()
   
-  if (nrow(dfex) > 0) {
-    dfe <- cbind(dfe, dfex) %>% 
-      tbl_df()
-  }
+  if (nrow(dfex) > 0)
+    dfe <- tbl_df(cbind(dfe, dfex))
   
   # Checking opts
   type <- "scatter"
@@ -300,10 +294,10 @@ hchart.igraph <- function(object, ..., layout = layout_nicely){
     type <- "bubble"
   }
   
-  if (!is.null(dfv[["label"]])) {
-    dlopts <- list(enabled = TRUE, format = "{point.label}")
-  } else {
+  if (is.null(dfv[["label"]])) {
     dlopts <- list(enabled = FALSE)
+  } else {
+    dlopts <- list(enabled = TRUE, format = "{point.label}")
   }
   
   if (!is.null(dfe[["width"]])) 
@@ -311,7 +305,6 @@ hchart.igraph <- function(object, ..., layout = layout_nicely){
   
   if (is.null(dfe[["color"]])) 
     dfe <- dfe %>% mutate("color" = "#d3d3d3")
-  
   
   dse <- dfe %>%
     list.parse3() %>% 
@@ -321,7 +314,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely){
         list(x = x$xf, y = x$yf),
         list(x = x$xt, y = x$yt)
       )
-      
+      x$type <- "line"
       x[c("xf", "yf", "xt", "yt")] <- NULL
 
       x
@@ -331,10 +324,11 @@ hchart.igraph <- function(object, ..., layout = layout_nicely){
   hc <- highchart() %>% 
     hc_add_serie(data = list.parse3(dfv),
                  type = type, dataLabels = dlopts,
-                 name = "nodes", zIndex = 3) %>% 
+                 name = "nodes", zIndex = 3, ...) %>% 
     hc_add_series(data = NULL, name = "edges", id = "e") %>% 
     hc_plotOptions(
-      line = list(enableMouseTracking = FALSE)
+      line = list(enableMouseTracking = FALSE),
+      bubble = list(minSize = 5, maxSize = 25)
     ) %>% 
     hc_chart(zoomType = "xy") %>% 
     hc_add_theme(
