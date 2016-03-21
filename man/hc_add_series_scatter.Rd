@@ -39,35 +39,13 @@ argumets like size, color and label for points are added.
 }
 \examples{
 
-hc <- highchart() \%>\% 
-  hc_title(text = "Motor Trend Car Road Tests") \%>\% 
-  hc_xAxis(title = list(text = "Weight")) \%>\% 
-  hc_yAxis(title = list(text = "Miles/gallon"))
-   
-hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
+hc <- highchart()
 
-hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
-                     mtcars$drat)
-                     
-hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
-                     mtcars$drat, mtcars$cyl)
-                     
-hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
-                     mtcars$drat, mtcars$hp,
-                     rownames(mtcars),
-                     dataLabels = list(
-                       enabled = TRUE,
-                       format = "{point.label}"
-                       )) \%>\% 
-hc_chart(zoomType = "xy") \%>\% 
-hc_tooltip(useHTML = TRUE,
-           headerFormat = "<table>",
-           pointFormat = paste("<tr><th colspan=\\"2\\"><h3>{point.label}</h3></th></tr>",
-                               "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
-                               "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
-                               "<tr><th>Drat</th><td>{point.z} </td></tr>",
-                               "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
-           footerFormat = "</table>")
+hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
+hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat)
+hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$am)
+hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec)
+hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec, rownames(mtcars))
 
 }
 

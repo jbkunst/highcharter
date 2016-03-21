@@ -245,6 +245,17 @@ fa_icon_mark <- function(iconname = "circle"){
 #'        "{point.series.options.extra.runtime}")
 #' 
 #' tooltip_table(x, y)
+#' hc_add_series_scatter(highchart(), mtcars$wt, mtcars$mpg,
+#'                      mtcars$drat, mtcars$hp, rownames(mtcars)) %>% 
+#' hc_chart(zoomType = "xy") %>% 
+#' hc_tooltip(useHTML = TRUE,
+#'            headerFormat = "<table>",
+#'            pointFormat = paste("<tr><th colspan=\"2\"><h3>{point.label}</h3></th></tr>",
+#'                                "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
+#'                                "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
+#'                                "<tr><th>Drat</th><td>{point.z} </td></tr>",
+#'                                "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
+#'            footerFormat = "</table>")
 #' 
 #' @importFrom purrr map2
 #' @importFrom htmltools tags tagList
@@ -269,5 +280,48 @@ tooltip_table <- function(x, y, title = NULL, img = NULL, ...) {
     tbl <- tagList(tbl, img)
   
   as.character(tbl) 
+  
+}
+
+#' Create vector of color from vector
+#' 
+#' Using viridis
+#' 
+#' @param x A numeric, character or factor vector.
+#' @param option A character string indicating the colormap option to use.
+#' 
+#' @examples
+#' x <- runif(50)
+#' colorize_vector(x)
+#' 
+#' x <- sample(letters[1:4], size = 20, replace = TRUE)
+#' colorize_vector(x)
+#' 
+#' @importFrom viridisLite viridis
+#' @importFrom stats ecdf
+#' @importFrom stringr str_sub
+#' @export
+colorize_vector <- function(x, option = "D") {
+  
+  nunique <- length(unique(x))
+  
+  if (!is.numeric(x) | nunique < 10) {
+    
+    bcol <- str_sub(viridis(nunique, option = option), 0, 7)
+    y <- as.numeric(as.factor(x))
+    cols <- bcol[y]
+    
+  } else {
+    
+    nc <- 1000
+    
+    bcol <- str_sub(viridis(nc, option = option), 0, 7)
+    ecum <- ecdf(x)
+    
+    cols <- bcol[round(nc*ecum(x))]
+    
+  }
+  
+  cols
   
 }

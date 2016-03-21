@@ -18,39 +18,15 @@
 #' 
 #' @examples 
 #' 
-#' hc <- highchart() %>% 
-#'   hc_title(text = "Motor Trend Car Road Tests") %>% 
-#'   hc_xAxis(title = list(text = "Weight")) %>% 
-#'   hc_yAxis(title = list(text = "Miles/gallon"))
-#'    
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
+#' hc <- highchart()
 #' 
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
-#'                      mtcars$drat)
-#'                      
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
-#'                      mtcars$drat, mtcars$cyl)
-#'                      
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg,
-#'                      mtcars$drat, mtcars$hp,
-#'                      rownames(mtcars),
-#'                      dataLabels = list(
-#'                        enabled = TRUE,
-#'                        format = "{point.label}"
-#'                        )) %>% 
-#' hc_chart(zoomType = "xy") %>% 
-#' hc_tooltip(useHTML = TRUE,
-#'            headerFormat = "<table>",
-#'            pointFormat = paste("<tr><th colspan=\"2\"><h3>{point.label}</h3></th></tr>",
-#'                                "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
-#'                                "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
-#'                                "<tr><th>Drat</th><td>{point.z} </td></tr>",
-#'                                "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
-#'            footerFormat = "</table>")
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat)
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$am)
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec)
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec, rownames(mtcars))
 #' 
 #' @importFrom dplyr mutate group_by do select data_frame
-#' @importFrom viridisLite viridis
-#' @importFrom stats ecdf
 #' 
 #' @export 
 hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
@@ -71,15 +47,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
     assert_that(length(x) == length(color))
     assert_that(viridis.option %in% c("A", "B", "C", "D"))
     
-    colorvar <- color
-    
-    if (!is.numeric(colorvar))
-      colorvar <- as.numeric(as.factor(colorvar))
-    
-    cols <- viridisLite::viridis(1000, option = viridis.option)[round(ecdf(colorvar)(colorvar)*1000)]
-    
-    if (is.null(z))
-      cols <- substr(cols, 0, 7)
+    cols <- colorize_vector(color, option = viridis.option)
     
     df <- df %>% mutate(valuecolor = color,
                         color = cols)
@@ -94,7 +62,16 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
   
   type <- ifelse(!is.null(z), "bubble", "scatter")
   
-  hc %>% hc_add_series(data = ds, type = type, showInLegend = showInLegend, ...)
+  if (!is.null(label)) {
+    dlopts <- list(enabled = TRUE, format = "{point.label}")
+  } else {
+    dlopts <- list(enabled = FALSE)
+  }
+  
+  hc %>% hc_add_series(data = ds,
+                       type = type,
+                       showInLegend = showInLegend,
+                       dataLabels = dlopts, ...)
   
 }
 

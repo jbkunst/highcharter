@@ -29,6 +29,17 @@ y <- c("$ {point.y}", "{point.series.options.extra.genre}",
        "{point.series.options.extra.runtime}")
 
 tooltip_table(x, y)
+hc_add_series_scatter(highchart(), mtcars$wt, mtcars$mpg,
+                     mtcars$drat, mtcars$hp, rownames(mtcars)) \%>\% 
+hc_chart(zoomType = "xy") \%>\% 
+hc_tooltip(useHTML = TRUE,
+           headerFormat = "<table>",
+           pointFormat = paste("<tr><th colspan=\\"2\\"><h3>{point.label}</h3></th></tr>",
+                               "<tr><th>Weight</th><td>{point.x} lb/1000</td></tr>",
+                               "<tr><th>MPG</th><td>{point.y} mpg</td></tr>",
+                               "<tr><th>Drat</th><td>{point.z} </td></tr>",
+                               "<tr><th>HP</th><td>{point.valuecolor} hp</td></tr>"),
+           footerFormat = "</table>")
 
 }
 

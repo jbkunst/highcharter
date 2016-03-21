@@ -29,7 +29,8 @@ Imports:
     quantmod,
     tidyr,
     htmltools,
-    jsonlite
+    jsonlite,
+    igraph
 Suggests:
     knitr,
     rmarkdown
