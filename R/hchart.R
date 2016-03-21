@@ -300,20 +300,25 @@ hchart.igraph <- function(object, ..., layout = layout_nicely) {
     dlopts <- list(enabled = TRUE, format = "{point.label}")
   }
   
+  
+  if (!is.null(dfv[["group"]])) 
+    dfv <- dfv %>% rename_("groupvar" = "group")
+  
   if (!is.null(dfe[["width"]])) 
     dfe <- dfe %>% rename_("lineWidth" = "width")
   
   if (is.null(dfe[["color"]])) 
-    dfe <- dfe %>% mutate("color" = "#d3d3d3")
+    dfe <- dfe %>% mutate("color" = hex_to_rgba("#d3d3d3", 0.5))
   
   dse <- dfe %>%
     list.parse3() %>% 
     map(function(x) {
-      # x <- sample( dfedge %>% list.parse3(), 1)[[1]]
+      # x <- sample( dfe %>% list.parse3(), 1)[[1]]
       x$data <- list(
         list(x = x$xf, y = x$yf),
         list(x = x$xt, y = x$yt)
       )
+      
       x$type <- "line"
       x[c("xf", "yf", "xt", "yt")] <- NULL
 
@@ -328,7 +333,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely) {
     hc_add_series(data = NULL, name = "edges", id = "e") %>% 
     hc_plotOptions(
       line = list(enableMouseTracking = FALSE),
-      bubble = list(minSize = 5, maxSize = 25)
+      bubble = list(minSize = 5, maxSize = 20)
     ) %>% 
     hc_chart(zoomType = "xy") %>% 
     hc_add_theme(

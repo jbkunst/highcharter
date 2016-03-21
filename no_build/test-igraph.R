@@ -4,6 +4,8 @@ library("readr")
 library("dplyr")
 library("highcharter")
 
+layout <- layout_nicely
+
 urlb <- "https://raw.githubusercontent.com/kateto/R-Network-Visualization-Workshop/master/Data"
 
 nodes <- read_csv(file.path(urlb, "Dataset1-Media-Example-NODES.csv"))
@@ -37,6 +39,9 @@ hchart(net, minSize = 5, maxSize = 20)
 V(net)$label <- NA
 hchart(net, minSize = 5, maxSize = 20) 
 
+net <- remove.vertex.attribute(net, "size")
+hchart(net)
+
 
 net <- barabasi.game(80) 
 
@@ -56,4 +61,26 @@ hchart(net, minSize = 5, maxSize = 20)
 
 set.seed(10)
 plot(net)
+
+
+library(networkD3)
+data(MisLinks)
+data(MisNodes)
+
+MisNodes <- MisNodes %>% 
+  mutate(label = name, name = seq(nrow(.)) - 1)
+
+net <- graph.data.frame(MisLinks, MisNodes, directed = TRUE)
+
+V(net)$color <- colorize_vector(V(net)$group)
+
+hchart(net)
+
+net <- remove.vertex.attribute(net, "label")
+hchart(net)
+
+
+
+
+
 
