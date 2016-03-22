@@ -244,7 +244,7 @@ hchart.dist <- function(object, ...) {
 
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
 #' @export
-hchart.igraph <- function(object, ..., layout = layout_nicely) {
+hchart.igraph <- function(object, ..., layout = layout_nicely,  digits = 4) {
   
   lst_to_tbl <- function(x) {
     x %>% 
@@ -253,7 +253,8 @@ hchart.igraph <- function(object, ..., layout = layout_nicely) {
   }
   
   # data
-  dfv <- layout(object) %>% 
+  dfv <- layout(object) %>%
+    round(digits) %>% 
     lst_to_tbl() %>% 
     setNames(c("x", "y"))
   

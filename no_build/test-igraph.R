@@ -43,12 +43,7 @@ net <- remove.vertex.attribute(net, "size")
 hchart(net)
 
 
-net <- barabasi.game(80) 
-
-set.seed(10)
-plot(net, layout = layout_nicely)
-
-set.seed(10)
+net <- barabasi.game(1000) 
 hchart(net)
 
 V(net)$degree <- degree(net, mode = "all")*3
@@ -63,24 +58,32 @@ set.seed(10)
 plot(net)
 
 
-library(networkD3)
-data(MisLinks)
-data(MisNodes)
+library("rgexf")
+library("stringr")
+library("purrr")
+library("resolution")
 
-MisNodes <- MisNodes %>% 
-  mutate(label = name, name = seq(nrow(.)) - 1)
+net <- #"http://media.moviegalaxies.com/gexf/316.gexf" %>% 
+  "http://media.moviegalaxies.com/gexf/92.gexf" %>% 
+  read_lines() %>% 
+  read.gexf() %>% 
+  gexf.to.igraph()
 
-net <- graph.data.frame(MisLinks, MisNodes, directed = TRUE)
+V(net)$name <- str_to_title(V(net)$name)
+V(net)$label <- V(net)$name %>% 
+  str_extract_all("^\\w{2}| \\w") %>% 
+  map_chr(function(x) {
+    x %>% unlist() %>% str_c(collapse = "")
+  })
+V(net)$size <- degree(net)  # page.rank(net)$vector
 
-V(net)$color <- colorize_vector(V(net)$group)
+cl <- cluster_resolution(net)
 
-hchart(net)
+V(net)$comm <- membership(cl)
+table(V(net)$comm)
 
-net <- remove.vertex.attribute(net, "label")
-hchart(net)
-
-
+V(net)$color <- colorize_vector(V(net)$comm)
 
 
-
-
+plot(net)
+hchart(net, minSize = 10, maxSize = 20)
