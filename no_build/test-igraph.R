@@ -23,10 +23,14 @@ E(net)$width <- E(net)$weight/6
 # E(net)$color <- V(net)$color[get.edges(net, 1:ecount(net))[,1]]
 
 set.seed(10)
-plot(net, layout = layout_nicely)
+plot(net)
 
 set.seed(10)
 hchart(net)
+
+# object <- net
+# layout <- layout_nicely
+# digits <- 2
 
 hchart(net, minSize = 25, maxSize = 30, marker = list(fillOpacity = 0.25))
 
@@ -48,36 +52,39 @@ library("rgexf")
 library("stringr")
 library("purrr")
 library("resolution")
+library("RColorBrewer")
 
 id <- 316 # Forrest
-id <- 110 # BatmanReturns
-id <- 92 # Babel
+# id <- 110 # BatmanReturns
+# id <- 92 # Babel
+# id <- 837 # Eternal Sun
 
 net <- sprintf("http://media.moviegalaxies.com/gexf/%s.gexf", id) %>% 
   read_lines() %>% 
   read.gexf() %>% 
   gexf.to.igraph()
 
+cl <- cluster_resolution(net)
+
 V(net)$name <- str_to_title(V(net)$name)
+V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree
+V(net)$comm <- membership(cl)
+
+#V(net)$color <- colorize_vector(membership(cl), option = "A")
+V(net)$color <- brewer.pal(length(unique(membership(cl))), "Accent")[membership(cl)]
+
 V(net)$label <- V(net)$name %>% 
   str_extract_all("^\\w{2}| \\w") %>% 
   map_chr(function(x) {
     x %>% unlist() %>% str_c(collapse = "")
   })
-V(net)$size <- degree(net)  # page.rank(net)$vector
 
-cl <- cluster_resolution(net)
-
-V(net)$comm <- membership(cl)
-table(V(net)$comm)
-V(net)$color <- colorize_vector(V(net)$comm, option = "A")
-E(net)$color <-  hex_to_rgba("#d3d3d3", 0.15)
 
 plot(net)
-hchart(net, minSize = 10, marker = list(fillOpacity = .75)) %>% 
-  hc_add_theme(
-    hc_theme_merge(
-      hc_theme_null(),
-      hc_theme_db(chart = list(backgroundColor = "black"))
-      )
-    ) 
+
+hchart(net, layout = layout_with_fr,
+       minSize = 15, maxSize = 30,
+       marker = list(fillOpacity = .75)) 

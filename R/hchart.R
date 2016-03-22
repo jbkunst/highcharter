@@ -268,6 +268,8 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   if (is.null(dfv[["name"]]))
     dfv <- dfv %>%  mutate(name = seq(nrow(dfv)))
   
+  names(dfv) <- str_replace_all(names(dfv), "\\.", "_")
+  
   dfe <-  object %>%
     get.edgelist() %>% 
     lst_to_tbl() %>% 
@@ -318,8 +320,16 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
       
     })
   
+  vattrs <- setdiff(names(dfv), c("x", "y", "z", "color", "label" , "name"))
+  tltip_fmt <- tooltip_table(
+    str_to_title(str_replace(vattrs, "_", " ")),
+    sprintf("{point.%s}", vattrs))
+  
   hc <- highchart() %>% 
     hc_chart(zoomType = "xy", type = "line") %>% 
+    hc_tooltip(
+      useHTML = TRUE
+    ) %>% 
     hc_plotOptions(
       line = list(enableMouseTracking = FALSE),
       bubble = list(
@@ -332,7 +342,11 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
   hc <- hc %>% 
     hc_add_serie(data = list.parse3(dfv),
-                 type = type, name = "nodes", zIndex = 3, ...) 
+                 type = type, name = "nodes", zIndex = 3, 
+                 tooltip = list(
+                   headerFormat = as.character(tags$small("{point.key}")),
+                   pointFormat = tltip_fmt
+                 ), ...) 
   
   if (!is.null(dfv[["label"]])) {
     hc <- hc %>% 

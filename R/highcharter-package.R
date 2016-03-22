@@ -31,3 +31,8 @@ NULL
 #' @rdname highcarter-exports
 NULL
 
+#' @importFrom htmltools tags
+#' @name tags
+#' @export
+#' @rdname highcarter-exports
+NULL

@@ -4,6 +4,7 @@
 \alias{JS}
 \alias{\%>\%}
 \alias{highcarter-exports}
+\alias{tags}
 \title{highcharter exported operators and S3 methods}
 \description{
 The following functions are imported and then re-exported
