@@ -1,56 +1,62 @@
-#' Economist theme for highcharts
+#' Financial Times theme for highcharts
 #' 
-#' Economist theme for highcharts
+#' Financial Times theme for highcharts
 #' 
 #' @param ... Named argument to modify the theme
 #' 
 #' @examples 
 #' 
 #' hc_demo() %>% 
-#'   hc_add_theme(hc_theme_economist())
+#'   hc_add_theme(hc_theme_ft())
 #' 
 #' @export
-hc_theme_economist <- function(...){
+hc_theme_ft <- function(...){
   
   theme <-
   list(
-    colors = c("#6794a7",
-               "#014d64",
-               "#76c0c1",
-               "#01a2d9",
-               "#7ad2f6",
-               "#00887d",
-               "#adadad",
-               "#7bd3f6",
-               "#7c260b",
-               "#ee8f71",
-               "#76c0c1",
-               "#a18376"),
+    colors = c("#89736C",
+               "#43423e",
+               "#2e6e9e",
+               "#FF0000",
+               "#BEDDDE"),
     chart = list(
-      backgroundColor = "#d5e4eb",
+      backgroundColor = "#FFF1E0",
       style = list(
         fontFamily = "Droid Sans",
-        color = '#3C3C3C'
+        color = '#777'
       )
     ),
     title = list(
       align = "left",
       style = list(
+        fontFamily = "Droid Serif",
+        color = "black",
         fontWeight = "bold"
       )
     ),
     subtitle = list(
-      align = "left"
+      align = "left",
+      style = list(
+        fontFamily = "Droid Serif",
+        fontWeight = "bold"
+      )
     ),
     yAxis = list(
-      gridLineColor = '#FFFFFF',
-      lineColor = '#FFFFFF',
-      minorGridLineColor = '#FFFFFF',
-      tickColor = '#D7D7D8',
+      gridLineDashStyle = "Dot",
+      gridLineColor = '#CEC6B9',
+      lineColor = '#CEC6B9',
+      minorGridLineColor = '#CEC6B9',
+      labels = list(
+        align = "left",
+        x = 0,
+        y = -2
+      ),
+      tickLength = 0,
+      tickColor = '#CEC6B9',
       tickWidth = 1,
       title = list(
         style = list(
-          color = '#A0A0A3'
+          color = '#74736c'
         )
       )
     ),

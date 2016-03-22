@@ -244,7 +244,7 @@ hchart.dist <- function(object, ...) {
 
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
 #' @export
-hchart.igraph <- function(object, ..., layout = layout_nicely,  digits = 4) {
+hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
   lst_to_tbl <- function(x) {
     x %>% 
@@ -295,12 +295,6 @@ hchart.igraph <- function(object, ..., layout = layout_nicely,  digits = 4) {
     type <- "bubble"
   }
   
-  if (is.null(dfv[["label"]])) {
-    dlopts <- list(enabled = FALSE)
-  } else {
-    dlopts <- list(enabled = TRUE, format = "{point.label}")
-  }
-  
   
   if (!is.null(dfv[["group"]])) 
     dfv <- dfv %>% rename_("groupvar" = "group")
@@ -319,32 +313,37 @@ hchart.igraph <- function(object, ..., layout = layout_nicely,  digits = 4) {
         list(x = x$xf, y = x$yf),
         list(x = x$xt, y = x$yt)
       )
-      
-      x$type <- "line"
       x[c("xf", "yf", "xt", "yt")] <- NULL
-
       x
       
     })
   
   hc <- highchart() %>% 
-    hc_add_serie(data = list.parse3(dfv),
-                 type = type, dataLabels = dlopts,
-                 name = "nodes", zIndex = 3, ...) %>% 
-    hc_add_series(data = NULL, name = "edges", id = "e") %>% 
+    hc_chart(zoomType = "xy", type = "line") %>% 
     hc_plotOptions(
       line = list(enableMouseTracking = FALSE),
-      bubble = list(minSize = 5, maxSize = 20)
+      bubble = list(
+        marker = list(fillOpacity = 0.65),
+        minSize = 5, maxSize = 20)
     ) %>% 
-    hc_chart(zoomType = "xy") %>% 
     hc_add_theme(
-      hc_theme_null(
-        legend = list(
-          enabled = TRUE
-        )
-      )
+      hc_theme_null(legend = list(enabled = TRUE))
     )
   
+  hc <- hc %>% 
+    hc_add_serie(data = list.parse3(dfv),
+                 type = type, name = "nodes", zIndex = 3, ...) 
+  
+  if (!is.null(dfv[["label"]])) {
+    hc <- hc %>% 
+      hc_add_serie(data = list.parse3(dfv %>% select(x, y, label)),
+                   type = "scatter", name = "labels", zIndex = 4,
+                   marker = list(radius = 0), enableMouseTracking = FALSE,
+                   dataLabels = list(enabled = TRUE, format = "{point.label}"))
+  }
+  
+  hc <- hc %>% hc_add_series(data = NULL, name = "edges", id = "e")
+ 
   hc$x$hc_opts$series <- append(
     hc$x$hc_opts$series,
     dse
