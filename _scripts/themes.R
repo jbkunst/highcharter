@@ -28,6 +28,10 @@ hc %>% hc_add_theme(hc_theme_538())
 
 hc %>% hc_add_theme(hc_theme_economist())
 
+#' ### Financial Times
+
+hc %>% hc_add_theme(hc_theme_ft())
+
 #' ### Dotabuff
 #' 
 #' Extracted/inspired from  http://www.dotabuff.com/.
