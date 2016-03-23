@@ -2,7 +2,7 @@
 % Please edit documentation in R/export-hc.R
 \name{export_hc}
 \alias{export_hc}
-\title{Function to export to jsfiddle}
+\title{Function to export js file the configuration options}
 \usage{
 export_hc(hc, filename = NULL)
 }
@@ -12,6 +12,26 @@ export_hc(hc, filename = NULL)
 \item{filename}{A string}
 }
 \description{
-Function to export to jsfiddle
+Function to export js file the configuration options
+}
+\examples{
+
+fn <- "function(){
+  console.log('Category: ' + this.category);
+  alert('Category: ' + this.category);
+}"
+
+hc <- hc_demo() \%>\% 
+  hc_plotOptions(
+    series = list(
+      cursor = "pointer",
+        point = list(
+          events = list(
+            click = JS(fn)
+         )
+       )
+   )
+ )
+
 }
 
