@@ -243,6 +243,7 @@ hchart.dist <- function(object, ...) {
 }
 
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
+#' @importFrom stringr str_to_title
 #' @export
 hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
@@ -350,7 +351,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
   if (!is.null(dfv[["label"]])) {
     hc <- hc %>% 
-      hc_add_serie(data = list.parse3(dfv %>% select(x, y, label)),
+      hc_add_serie(data = list.parse3(dfv %>% select_(.dots = c("x", "y", "label"))),
                    type = "scatter", name = "labels", zIndex = 4,
                    marker = list(radius = 0), enableMouseTracking = FALSE,
                    dataLabels = list(enabled = TRUE, format = "{point.label}"))
