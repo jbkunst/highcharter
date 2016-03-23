@@ -49,24 +49,23 @@ hchart(x)
 
 
 #' ### igraph 
+
 library("igraph")
-library("networkD3")
-library("dplyr")
-data(MisLinks)
-data(MisNodes)
+library("RColorBrewer")
 
-MisNodes <- MisNodes %>% 
-  mutate(label = name, name = seq(nrow(.)) - 1)
+net <- barabasi.game(50)
 
-net <- graph.data.frame(MisLinks, MisNodes, directed = TRUE)
+wc <- cluster_walktrap(net)
 
-V(net)$color <- colorize_vector(V(net)$group)
-net <- remove.vertex.attribute(net, "label")
+V(net)$label <- 1:50
+V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree
+V(net)$comm <- membership(wc)
+V(net)$color <- brewer.pal(length(unique(membership(wc))), "Accent")[membership(wc)]
 
-hchart(net)
-
-# net <- remove.vertex.attribute(net, "label")
-# hchart(net)
+hchart(net, layout = layout_with_fr)
 
 
 #' ### `xts` from quantmod package
