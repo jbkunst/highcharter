@@ -1,4 +1,4 @@
 cls
 @echo off
-jekyll serve
+jekyll serve --incremental
 cmd /k

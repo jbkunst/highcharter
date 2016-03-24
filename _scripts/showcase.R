@@ -39,6 +39,13 @@ hc
 #' 
 printhc("hctmpkmn")
 
+#'
+#' ### Weathers Radials
+#' 
+#' From [here](http://bl.ocks.org/bricedev/458a01917183d98dff3c) and 
+#' replicated in http://jkunst.com/r/how-to-weather-radials/
+#'       
+printhc("weatherradial")
 
 #'
 #' ### Phone size evolution
@@ -47,11 +54,5 @@ printhc("hctmpkmn")
 #' 
 printhc("hcphones")
 
-#'
-#' ### Weathers Radials
-#' 
-#' From [here](http://bl.ocks.org/bricedev/458a01917183d98dff3c) and 
-#' replicated in http://jkunst.com/r/how-to-weather-radials/
-#'       
-printhc("weatherradial")
+
 
