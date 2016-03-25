@@ -14,6 +14,7 @@ It is a *must* know how `highcharts` api works to *take advantage* of this packa
 ## Resources
 
 - Official package website: http://jkunst.com/highcharter/.
+- Replicating- Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
 - Shiny demo code https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
 
