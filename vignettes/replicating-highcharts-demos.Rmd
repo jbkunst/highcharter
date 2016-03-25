@@ -249,7 +249,7 @@ highchart() %>%
 ```
 
 
-If you don't get what you hope to get you must check if you passed all the arguments correctly.
+If you don't get what you hope you must check if you passed all the arguments correctly.
 You can compare the javascript object with:
 
 ```{r}
