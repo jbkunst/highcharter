@@ -218,6 +218,9 @@ hc_add_serie_ohlc <- hc_add_series_ohlc
 #'   
 #' @examples
 #' 
+#' 
+#' \dontrun{
+#' 
 #' library("quantmod")
 #' 
 #' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
@@ -230,6 +233,7 @@ hc_add_serie_ohlc <- hc_add_series_ohlc
 #'                       title = c("E1", "E2"), 
 #'                       text = c("This is event 1", "This is the event 2"),
 #'                       id = "usdjpy") 
+#' }
 #'                       
 #' @export
 hc_add_series_flags <- function(hc, dates,
