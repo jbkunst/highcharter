@@ -102,6 +102,8 @@ hc_add_serie_ts <- hc_add_series_ts
 #'   
 #' @examples 
 #' 
+#' \dontrun{
+#' 
 #' library("quantmod")
 #' 
 #' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
@@ -110,6 +112,7 @@ hc_add_serie_ts <- hc_add_series_ts
 #' highchart(type = "stock") %>% 
 #'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
 #'   hc_add_series_xts(eurkpw, id = "eurkpw")
+#' }
 #' 
 #' @importFrom xts is.xts
 #' @export
