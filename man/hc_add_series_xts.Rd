@@ -23,6 +23,8 @@ obtaining by \code{getSymbols} function from the  \pkg{quantmod}.
 }
 \examples{
 
+\dontrun{
+
 library("quantmod")
 
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
@@ -31,6 +33,7 @@ eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
 highchart(type = "stock") \%>\% 
   hc_add_series_xts(usdjpy, id = "usdjpy") \%>\% 
   hc_add_series_xts(eurkpw, id = "eurkpw")
+}
 
 }
 
