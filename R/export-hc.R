@@ -24,6 +24,7 @@
 #' 
 #' @importFrom jsonlite toJSON
 #' @importFrom stringr str_split str_c str_detect
+#' @importFrom utils head
 #' @export 
 export_hc <- function(hc, filename = NULL) {
   

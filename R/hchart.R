@@ -244,6 +244,7 @@ hchart.dist <- function(object, ...) {
 
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
 #' @importFrom stringr str_to_title
+#' @importFrom stats setNames
 #' @export
 hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
