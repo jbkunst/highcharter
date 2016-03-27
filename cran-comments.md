@@ -1,7 +1,8 @@
-## Resubmitting new version 0.2.0
+## Updating the package and fix build
 
-Adding imports: hist, qnomr, tail
+* Uploading to 0.3.0 (prevous 0.2.0)
 
-Modify examples which take too long
+* Removing run code (using quantmod package) which throw
+and error un build procedure.
 
-thanks a lot again!
+Thanks and regards!

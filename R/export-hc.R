@@ -1,3 +1,4 @@
+. <- NULL
 #' Function to export js file the configuration options
 #' @param hc A \code{A highcarts object}
 #' @param filename A string 
@@ -27,6 +28,7 @@
 export_hc <- function(hc, filename = NULL) {
   
   # filename <- "~/tets.js"
+  # load("~/hc.Rdata")
   stopifnot(!is.null(filename))
   
   if (!str_detect(filename, ".js$"))
@@ -35,8 +37,9 @@ export_hc <- function(hc, filename = NULL) {
   jslns <- hc$x$hc_opts %>% 
     toJSON(pretty = TRUE, auto_unbox = TRUE, force = TRUE) %>% 
     str_split("\n") %>% 
-    head(1) %>% 
-    str_replace("\"", "") %>% 
+    head(1) %>%
+    unlist() %>% 
+    str_replace('"', "") %>% 
     str_replace("\":", ":")
   
   # function thing 
@@ -50,10 +53,8 @@ export_hc <- function(hc, filename = NULL) {
                     jslns)  
   }
   
-  . <- ""
-  
   jslns <- jslns %>% 
-    str_split("\\\\n") %>% 
+    # str_split("\\\\n") %>% 
     unlist() %>% 
     tail(-1) %>% 
     str_c("    ", ., collapse = "\n") %>%

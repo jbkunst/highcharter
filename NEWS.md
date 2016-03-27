@@ -1,3 +1,27 @@
+# highcharter 0.3.0
+
+* Igraph support to `hchart` (#61)
+
+* New function `export_hc`. Take a highchart object and 
+write a js file with the options (#60).
+
+* New function `tooltip_table`. Helper to create table based
+in `tags` from `htmltools`package #59).
+
+* New function `hc_colors`. Function for the `colors` option in 
+highcharts api (#57).
+
+* Adding funnel.js and gauge-solid.js to depedenci for create
+funnel charts and charts like apple watch (#56).
+
+* The `hc_themes_...` functions gains a `...` parameter to
+add styles to the current invoked theme (#53).
+
+* More themes: flat, flatdark, smpl, ft (financial times) (#49).
+
+* Dont run error (`\dontrun{}`) to avoid `quantmod` package example
+in flags function
+
 # highcharter 0.2.0
 
 * Implemenation of highcharts with boost module `highchart2()` (#43). 

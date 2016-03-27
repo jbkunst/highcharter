@@ -31,6 +31,9 @@ This function helps to add flags highstock charts created from \code{xts} object
 }
 \examples{
 
+
+\dontrun{
+
 library("quantmod")
 
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
@@ -42,6 +45,7 @@ highchart(type = "stock") \%>\%
                       title = c("E1", "E2"), 
                       text = c("This is event 1", "This is the event 2"),
                       id = "usdjpy") 
+}
                       
 }
 
