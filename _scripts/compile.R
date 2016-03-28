@@ -132,7 +132,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/showcase.R"
+f <- "_scripts/plugins.R"
 
 makepage(f)
 
