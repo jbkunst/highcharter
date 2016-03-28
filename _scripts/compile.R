@@ -48,6 +48,12 @@ alldeps <- paste0("<script src=\"", alldeps, "\"></script>")
 alldeps <- c("", paste0("\t", alldeps))
 writeLines(alldeps, "_includes/dependencies.html")
 
+#### footerinfo ####
+fi <- sprintf("Generated %s using highcharter %s",
+              format(Sys.time(), "%Y/%m"),
+              packageVersion("highcharter"))
+writeLines(fi, "_includes/footerinfo.html")
+
 #### navigation ####
 infolist <- list(
   list(c("_scripts/index.R",
