@@ -255,3 +255,18 @@ hc_pane <- function(hc, ...) {
   .hc_opt(hc, "pane", ...)
   
 }
+
+#' Adding options to Motion options to highcharts objects
+#' 
+#' The Motion Highcharts Plugin adds an interactive HTML5 player
+#' to any Highcharts chart (Highcharts, Highmaps and Highstock).
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{https://github.com/larsac07/Motion-Highcharts-Plugin/wiki}. 
+#' 
+#' @export
+hc_motion <- function(hc, ...) {
+  
+  .hc_opt(hc, "motion", ...)
+  
+}

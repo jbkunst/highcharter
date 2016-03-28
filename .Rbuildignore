@@ -2,7 +2,7 @@
 ^\.Rproj\.user$
 ^cran-comments\.md$
 tests/
-no_build/
+devscripts/
 ^\.travis\.yml$
 fort.6
 ^CONDUCT\.md$
