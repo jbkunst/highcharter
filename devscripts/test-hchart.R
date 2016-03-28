@@ -29,7 +29,6 @@ x <- diamonds$cut
 class(x)
 plot(x)
 hchart(x)
-hchart(as.character(x), type = "pie")
 
 #' ### ts
 x <- LakeHuron
@@ -50,11 +49,11 @@ plot(x)
 hchart(x) %>% hc_add_theme(hc_theme_chalk())
 
 #' ### xts ohlc
-x <- getSymbols("YHOO", auto.assign = FALSE)
+# x <- getSymbols("YHOO", auto.assign = FALSE)
 class(x)
 plot(x)
 hchart(x)
-hchart(x, type = "ohlc")
+
 
 #' ### acf(s)
 x <- acf(diff(AirPassengers), plot = FALSE)
@@ -79,9 +78,7 @@ hchart(x)
 x <- forecast(ets(USAccDeaths), h = 48, level = 90)
 class(x)
 plot(x)
-hchart(x) %>%
-  hc_tooltip(valueDecimals = 2) %>% # share toolip
-  hc_add_theme(hc_theme_538()) 
+hchart(x)
 
 x <- forecast(Arima(WWWusage, c(3,1,0)))
 class(x)
@@ -89,13 +86,13 @@ plot(x)
 hchart(x)
 
 #' ### Seasonal Package (X-13ARIMA-SEATS) 
-library("seasonal")
-x <- seas(AirPassengers,
-          regression.aictest = c("td", "easter"),
-          outlier.critical = 3)
-class(x)
-plot(x)
-hchart(x)
+# library("seasonal")
+# x <- seas(AirPassengers,
+#           regression.aictest = c("td", "easter"),
+#           outlier.critical = 3)
+# class(x)
+# plot(x)
+# hchart(x)
 
 #' ### igraph
 library("igraph")

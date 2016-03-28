@@ -2,6 +2,7 @@
 .Rhistory
 .Rapp.history
 
+devscripts/*.html
 # RStudio files
 .Rproj.user/
 # produced vignettes
