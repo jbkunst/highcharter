@@ -14,17 +14,17 @@ It is a *must* know how `highcharts` api works to *take advantage* of this packa
 ## Resources
 
 - Official package website: http://jkunst.com/highcharter/.
-- Replicating- Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
+- Replicating Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
 - Shiny demo code https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
 
 ## Why highcharter?
 
-- [Various](http://jkunst.com/highcharter/) chart type with the same style (scatters, time series, heatmaps, treemap, bar charts, more coming soon).
+- [Various](http://jkunst.com/highcharter/) chart type with the same style: scatters, bubble, line, time series, heatmaps, treemap, bar charts, networks.
 - [Piping styling](http://jkunst.com/highcharter/).
 - Support [Highstock charts](http://jkunst.com/highcharter/highstock.html). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
-- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, stl, ohlc, acf, forecast, dist classes.
+- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, stl, ohlc, acf, forecast, igraph, dist classes.
 - [Themes](http://jkunst.com/highcharter/themes.html): Add themes, merge themes or create your own.
 - [Plugins](http://jkunst.com/highcharter/plugins.html): Drag points, fontawesome, url-pattern.
 - <3 to Highcharts.com
