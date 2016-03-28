@@ -46,7 +46,7 @@ library("quantmod")
 x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
 class(x)
 plot(x)
-hchart(x) %>% hc_add_theme(hc_theme_chalk())
+hchart(x)
 
 #' ### xts ohlc
 # x <- getSymbols("YHOO", auto.assign = FALSE)
