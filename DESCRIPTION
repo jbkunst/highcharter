@@ -1,5 +1,5 @@
 Package: highcharter
-Version: 0.3.0
+Version: 0.3.0.9999
 Type: Package
 Title: A Wrapper for the 'Highcharts' Library
 Description: A wrapper for the 'Highcharts' library including
