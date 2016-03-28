@@ -42,16 +42,14 @@ hchart(net, minSize = 5, maxSize = 20)
 net <- remove.vertex.attribute(net, "size")
 hchart(net)
 
-
-net <- barabasi.game(1000) 
+library("igraph")
+net <- barabasi.game(200) 
 hchart(net)
 
 V(net)$degree <- degree(net, mode = "all")*3
 V(net)$betweenness <- betweenness(net)
 V(net)$color <- colorize_vector(V(net)$betweenness)
 V(net)$size <- sqrt(V(net)$degree)
-
-set.seed(10)
 hchart(net, minSize = 5, maxSize = 20)
 
 set.seed(10)

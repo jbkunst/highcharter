@@ -97,8 +97,20 @@ class(x)
 plot(x)
 hchart(x)
 
+#' ### igraph
+library("igraph")
+net <- barabasi.game(200) 
+hchart(net)
+
+V(net)$degree <- degree(net, mode = "all")*3
+V(net)$betweenness <- betweenness(net)
+V(net)$color <- colorize_vector(V(net)$betweenness)
+V(net)$size <- sqrt(V(net)$degree)
+hchart(net, minSize = 5, maxSize = 20)
+
 #' ### Distance matrix 
 x <- dist(mtcars[ order(mtcars$hp),])
 class(x)
 plot(x)
 hchart(x)
+

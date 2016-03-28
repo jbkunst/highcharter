@@ -21,6 +21,7 @@ dependencies:
     - plugins/draggable-points.js
     - plugins/pattern-fill-v2.js
     - plugins/text-symbols.js
+    - plugins/motion.js
   - name: fontawesome
     version: 4.5.0
     src: "htmlwidgets/lib/font-awesome-4.5.0"
