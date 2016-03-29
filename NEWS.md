@@ -1,3 +1,7 @@
+# highcharter 0.3.1.9999
+
+* Adding underscore dependency (previously was removed. Solves #28)
+ 
 # highcharter 0.3.0
 
 * Igraph support to `hchart` (#61)
