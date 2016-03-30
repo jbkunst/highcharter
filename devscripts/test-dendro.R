@@ -1,56 +1,57 @@
-library("ape")
+rm(list = ls())
+library("highcharter")
 library("ggdendro")
+library("dplyr")
 
-hc <- hclust(dist(mtcars))
+dd <- iris[, -5] %>% dist %>% hclust %>% as.dendrogram()
+dd <- mtcars %>% dist %>% hclust %>% as.dendrogram()
+plot(dd)
 
-plot(hc)
-plot(as.dendrogram(hc))
-plot(as.dendrogram(hc), type = "triangle")
-plot(as.phylo(hc))
-plot(as.phylo(hc), type = "cladogram")
-plot(as.phylo(hc), type = "unrooted")
-plot(as.phylo(hc), type = "fan")
-plot(as.phylo(hc), type = "radial")
+dddata <- dendro_data(dd)
 
+by_row2 <- function(.d, .f, ...) {
+  purrr::by_row(.d, .f, ..., .to = "out")[["out"]]
+}
 
-library("ggplot2")
-library("ggdendro")
-
-hc <- hclust(dist(mtcars))
-hcdata <- dendro_data(hc, type="rectangle")
-ggplot() + 
-  geom_segment(data=segment(hcdata), aes(x=x, y=y, xend=xend, yend=yend)) +
-  geom_text(data=label(hcdata), aes(x=x, y=y, label=label, hjust=0), size=3) +
-  coord_flip() + 
-  scale_y_reverse(expand=c(0.2, 0))
-
-### demonstrate plotting directly from object class hclust
-ggdendrogram(hc)
-ggdendrogram(hc, rotate = TRUE)
-
-### demonstrate converting hclust to dendro using dendro_data first
-hcdata <- dendro_data(hc)
-ggdendrogram(hcdata, rotate=TRUE) + 
-  labs(title="Dendrogram in ggplot2") + 
-  coord_polar() + 
-  scale_y_reverse()
+dsseg <- dddata$segments %>% 
+  mutate(x = x - 1, xend = xend - 1) %>% 
+  by_row2(function(x){
+    list(list(x = x$x, y = x$y), list(x = x$xend, y = x$yend))
+  }) 
 
 
+hc <- highchart() %>% 
+  hc_plotOptions(
+    series = list(
+      lineWidth = 2,
+      showInLegend = FALSE,
+      marker = list(radius = 0),
+      enableMouseTracking = FALSE
+    )
+  ) %>% 
+  hc_xAxis(categories = dddata$labels$label,
+           tickmarkPlacement = "on") %>% 
+  hc_colors(list(hex_to_rgba("#606060")))
 
+for (i in seq_along(dsseg)) {
+  hc <- hc %>% hc_add_series(data = dsseg[[i]], type = "scatter")
+}
 
+hc
 
-hc <- hclust(dist(USArrests), "ave")
-plot(hc)
-### demonstrate converting hclust to dendro using dendro_data first
-hcdata <- dendro_data(hc)
-ggdendrogram(hcdata, rotate=FALSE, size=2) + labs(title="Dendrogram in ggplot2 - Rotate=F; segments not modified; downwards")
-ggdendrogram(hcdata, rotate=TRUE, size=2) + labs(title="Dendrogram in ggplot2 - Rotate=T; segments not modified; rightwards")
+hc %>%
+  hc_chart(type = "column")
 
+hc %>%
+  hc_chart(type = "bar") %>% 
+  hc_xAxis(tickLength = 0)
 
-hcdata$segments[["y"]] <- abs(hcdata$segments[["y"]] - max(hcdata$segments[["y"]]))
-hcdata$segments[["yend"]] <- abs(hcdata$segments[["yend"]] - max(hcdata$segments[["yend"]]))
+hc %>% hc_chart(type = "bar") %>%
+  hc_yAxis(reversed = TRUE) %>%
+  hc_xAxis(opposite = TRUE, tickLength = 0)
 
-ggdendrogram(hcdata, rotate=TRUE, size=2) + labs(title="Dendrogram in ggplot2- Rotate=T; segments modified; leftwards")
-ggdendrogram(hcdata, rotate=FALSE, size=2) + labs(title="Dendrogram in ggplot2- Rotate=F; segments modified; upwards")
-
-ggdendrogram(hcdata) + labs(title="Dendrogram in ggplot2 - Fan") + coord_polar()
+hc %>% hc_chart(polar = TRUE) %>%
+  hc_yAxis(reversed = TRUE, visible = FALSE) %>% 
+  hc_xAxis(gridLineWidth = 0,
+           lineWidth = 0)
+  
