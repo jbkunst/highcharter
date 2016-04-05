@@ -26,7 +26,7 @@ It is a *must* know how `highcharts` api works to *take advantage* of this packa
 - [Piping styling](http://jkunst.com/highcharter/).
 - Support [Highstock charts](http://jkunst.com/highcharter/highstock.html). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
-- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, stl, ohlc, acf, forecast, igraph, dist classes.
+- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, stl, ohlc, acf, forecast, igraph, dist, dendrogram, phylo classes.
 - [Themes](http://jkunst.com/highcharter/themes.html): Add themes, merge themes or create your own.
 - [Plugins](http://jkunst.com/highcharter/plugins.html): motion, drag points, fontawesome, url-pattern.
 - <3 to Highcharts.com
