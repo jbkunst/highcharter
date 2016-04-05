@@ -30,7 +30,9 @@ Imports:
     tidyr,
     htmltools,
     jsonlite,
-    igraph
+    igraph,
+    ggdendro,
+    ape
 Suggests:
     knitr,
     rmarkdown

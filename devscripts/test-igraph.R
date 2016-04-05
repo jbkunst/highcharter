@@ -50,6 +50,7 @@ V(net)$degree <- degree(net, mode = "all")*3
 V(net)$betweenness <- betweenness(net)
 V(net)$color <- colorize_vector(V(net)$betweenness)
 V(net)$size <- sqrt(V(net)$degree)
+V(net)$label <- seq_along(V(net)$size)
 hchart(net, minSize = 5, maxSize = 20)
 
 set.seed(10)
@@ -61,8 +62,8 @@ library("stringr")
 library("purrr")
 library("resolution")
 
-net <- #"http://media.moviegalaxies.com/gexf/316.gexf" %>% 
-  "http://media.moviegalaxies.com/gexf/92.gexf" %>% 
+net <- "http://media.moviegalaxies.com/gexf/316.gexf" %>% 
+  # "http://media.moviegalaxies.com/gexf/92.gexf" %>% 
   read_lines() %>% 
   read.gexf() %>% 
   gexf.to.igraph()
