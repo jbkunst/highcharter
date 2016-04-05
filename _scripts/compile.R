@@ -132,7 +132,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/plugins.R"
+f <- "_scripts/hchart.R"
 
 makepage(f)
 

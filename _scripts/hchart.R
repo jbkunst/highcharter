@@ -78,9 +78,9 @@ hchart(x)
 #' ### `xts ohlc` objects
 
 #+eval=FALSE 
-x <- getSymbols("YHOO", auto.assign = FALSE)
+# x <- getSymbols("YHOO", auto.assign = FALSE)
 
-hchart(x)
+# hchart(x)
 
 #' ### Autocovariance & Autocorrelation
 x <- acf(diff(AirPassengers), plot = FALSE)
@@ -93,6 +93,23 @@ x <- cbind(mdeaths, fdeaths)
 hchart(x)
 
 #' ### Distance matrix 
-x <- dist(mtcars[order(mtcars$hp),][1:20, ])
+#' 
+mtcars2 <- mtcars[1:20, ]
+x <- dist(mtcars2)
 
 hchart(x)
+
+#' ### Dendrogram
+x <- mtcars2 %>% dist() %>% hclust() %>% as.dendrogram()
+
+hchart(x) %>%
+  hc_chart(type = "bar") %>% 
+  hc_xAxis(tickLength = 0)
+
+#' ### Phylo
+library("ape")
+
+x <- mtcars %>% dist() %>% hclust() %>% as.phylo()
+
+hchart(x)
+
