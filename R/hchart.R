@@ -369,7 +369,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
     
 }
 
-# @importFrom ape as.igraph.phylo
+# @importFrom ape as.igraph.phylo makeNodeLabel
 #' @importFrom igraph graph.edgelist V V<-
 #' @export
 hchart.phylo <- function(object, ...) {
@@ -395,7 +395,11 @@ hchart.dendrogram <- function(object, ...) {
   
   dddata <- dendro_data(object)  
   
-  dsseg <- dddata$segments %>% 
+  dsseg <- dddata$segments
+  dsseg$x <- dsseg$x - 1
+  dsseg$xend <- dsseg$xend - 1
+  
+  dsseg <- dsseg %>% 
     mutate(x = x - 1, xend = xend - 1) %>% 
     by_row(function(x){
       list(list(x = x$x, y = x$y), list(x = x$xend, y = x$yend))
