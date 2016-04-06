@@ -278,7 +278,7 @@ tooltip_table <- function(x, y,
 #' 
 #' Using viridis
 #' 
-#' @param x A numeric, character or factor vector.
+#' @param x A numeric, character or factor object.
 #' @param option A character string indicating the colormap option to use.
 #' 
 #' @examples
@@ -315,4 +315,23 @@ colorize_vector <- function(x, option = "D") {
   
   cols
   
+}
+
+#' Function to create \code{stops} argumente in \code{hc_colorAxis}
+#' 
+#' Using viridis
+#' 
+#' @param n A numeric indicating how much quantiles generate.
+#' @param option A character string indicating the colormap option to use.
+#' 
+#' @examples
+#' 
+#' color_stops(5)
+#' 
+#' @export
+color_stops <- function(n = 10, option = "D") {
+  
+  data.frame(q = seq(0, n)/n,
+             c = str_sub(viridis(n + 1, option = "D"), 0, 7)) %>% 
+    list.parse2()
 }
