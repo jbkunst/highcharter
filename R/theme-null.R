@@ -25,7 +25,9 @@ hc_theme_null <- function(...){
       )
     ),
     legend = list(
-      enabled = FALSE
+      enabled = TRUE,
+      align = "right",
+      verticalAlign = "bottom"
       ),
     credits = list(
       enabled = FALSE
