@@ -332,6 +332,6 @@ colorize_vector <- function(x, option = "D") {
 color_stops <- function(n = 10, option = "D") {
   
   data.frame(q = seq(0, n)/n,
-             c = str_sub(viridis(n + 1, option = "D"), 0, 7)) %>% 
+             c = str_sub(viridis(n + 1, option = option), 0, 7)) %>% 
     list.parse2()
 }
