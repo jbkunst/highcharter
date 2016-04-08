@@ -3,6 +3,7 @@
 .Rapp.history
 
 devscripts/*.html
+devscripts/rsconnect
 # RStudio files
 .Rproj.user/
 # produced vignettes
