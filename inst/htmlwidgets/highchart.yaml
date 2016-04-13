@@ -34,3 +34,8 @@ dependencies:
     src: "htmlwidgets/lib/font-awesome-4.5.0"
     stylesheet:
     - font-awesome.min.css
+  - name: htmlwdgtgrid
+    version: 1.0
+    src: "htmlwidgets/lib/htmlwdgtgrid"
+    stylesheet:
+    - htmlwdgtgrid.css
