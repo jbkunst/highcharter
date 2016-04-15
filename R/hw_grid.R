@@ -5,6 +5,8 @@
 #'     individual \code{highchart} objects
 #' and \code{list}s of \code{highchart} objects.
 #' @param ncol how many columns in the grid
+#' @param rowheight Height in px.
+#' 
 #' @importFrom grDevices n2mfrow
 #' @export
 hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
@@ -54,10 +56,4 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
   # htmltools::browsable(divgrid)
   divgrid
   
-}
-
-#' @importFrom htmltools browsable
-#' @export
-print.htmlwdwtgrid <- function(x){
-  browsable(x)
 }

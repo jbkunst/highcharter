@@ -16,8 +16,8 @@ Shorcut for data series from a list of data series
 }
 \examples{
 
-ds <- map(seq(5), function(x){
-  list(data = cummean(rnorm(100, 2, 5)), name = x)
+ds <- lapply(seq(5), function(x){
+  list(data = cumsum(rnorm(100, 2, 5)), name = x)
 })
 
 highchart() \%>\% 

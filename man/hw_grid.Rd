@@ -13,6 +13,8 @@ hw_grid(..., ncol = NULL, rowheight = NULL)
 and \code{list}s of \code{highchart} objects.}
 
 \item{ncol}{how many columns in the grid}
+
+\item{rowheight}{Height in px.}
 }
 \description{
 Lays out highchart widgets into a "grid", similar to
