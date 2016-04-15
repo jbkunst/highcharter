@@ -14,8 +14,7 @@ timestamps <- time(xtsobj) %>%
 values <- as.numeric(xtsobj)
 ds <- list.parse2(data.frame(timestamps, values))
 
-highstock() %>%
-  hc_add_theme(hc_theme_darkunica()) %>% 
+highchart(type = "stock") %>%
   hc_add_series(marker = list(enabled = FALSE),
                 data = ds, name = "data") %>% 
   hc_add_series(marker = list(enabled = FALSE),
