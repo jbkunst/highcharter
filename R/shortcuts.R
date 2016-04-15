@@ -1,3 +1,33 @@
+#' Shorcut for data series from a list of data series
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param lst A list of data series.
+#' 
+#' @examples 
+#' 
+#' ds <- map(seq(5), function(x){
+#'   list(data = cummean(rnorm(100, 2, 5)), name = x)
+#' })
+#' 
+#' highchart() %>% 
+#'   hc_plotOptions(series = list(marker = list(enabled = FALSE))) %>% 
+#'   hc_add_series_list(ds)
+#'   
+#' @export
+hc_add_series_list <- function(hc, lst) {
+  
+  assertthat::assert_that(.is_highchart(hc), is.list(lst))
+                          
+  hc$x$hc_opts$series <- append(
+    hc$x$hc_opts$series,
+    lst
+  )
+  
+  hc
+  
+}
+
+
 #' Shorcut for create scatter plots
 #'
 #' This function helps to create scatter plot from two numerics vectors. Options
