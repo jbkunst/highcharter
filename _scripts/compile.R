@@ -101,7 +101,7 @@ html_links <- paste0(gsub(".R$", "", basename(rfiles)), ".html")
 
 tmplt <- 
 "<a href=\"%s\" class=\"list-group-item text-muted\">
-   <h5 class=\"list-group-item-heading\">%s</h5>
+   <h5 class=\"list-group-item-heading section\">%s</h5>
   <p class=\"list-group-item-text text-muted desc\">%s</p>
 </a>"
 navlist <- sprintf(tmplt, html_links, titles, inftxt)
@@ -132,7 +132,7 @@ makepage <- function(f){
   
 }
 
-f <- "_scripts/hchart.R"
+f <- "_scripts/showcase.R"
 
 makepage(f)
 

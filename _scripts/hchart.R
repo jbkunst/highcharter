@@ -111,5 +111,6 @@ library("ape")
 
 x <- mtcars %>% dist() %>% hclust() %>% as.phylo()
 
+set.seed(10)
 hchart(x)
 

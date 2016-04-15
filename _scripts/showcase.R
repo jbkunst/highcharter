@@ -30,7 +30,7 @@ printhc <- function(x) {
 #'  
 hc <- printhc("impact-vaccines")
 hc$height <- 700
-hc
+hc %>% hc_subtitle(text = "")
 
 #' 
 #' ### Pokemon types treemap
@@ -45,14 +45,16 @@ printhc("hctmpkmn")
 #' From [here](http://bl.ocks.org/bricedev/458a01917183d98dff3c) and 
 #' replicated in http://jkunst.com/r/how-to-weather-radials/
 #'       
-printhc("weatherradial")
+hc <- printhc("weatherradial")
+hc %>% hc_title(text = "")
 
-#'
-#' ### Phone size evolution
-#' 
-#' source: http://jkunst.com/r/bythmusters-mobile-phone-evolution/
-#' 
-printhc("hcphones")
+
+# #'
+# #' ### Phone size evolution
+# #' 
+# #' source: http://jkunst.com/r/bythmusters-mobile-phone-evolution/
+# #' 
+# printhc("hcphones")
 
 
 
