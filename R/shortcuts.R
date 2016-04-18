@@ -27,6 +27,52 @@ hc_add_series_list <- function(hc, lst) {
   
 }
 
+#' Shorcut for add data series where data is a dataframe
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param data A data frame.
+#' @param ... Aditional shared arguments for the data series 
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#' 
+#' @examples 
+#' 
+#' require("dplyr")
+#' n <- 100
+#' df <- data_frame(
+#'   x = rnorm(n),
+#'   y = x * 2 + rnorm(n),
+#'   z =  x^2,
+#'   color = colorize_vector(x)
+#'   )
+#'   
+#' highchart() %>% 
+#'   hc_add_series_df(data = df, type = "bubble")
+#'
+#'
+#' m <- 100
+#' df2 <- data_frame(
+#'   e = rnorm(m),
+#'   y = e + c(1, diff(e))*0.9,
+#'   x = seq(m),
+#'   low = y - 1*e,
+#'   high = y + 1*e,
+#'   color = colorize_vector(e, "A")
+#' )
+#' 
+#' highchart() %>% 
+#'   hc_add_series_df(data = df2, type = "columnrange")
+#' 
+#' @export
+hc_add_series_df <- function(hc, data, ...) {
+  
+  assertthat::assert_that(.is_highchart(hc), is.data.frame(data))
+  
+  hc <- hc %>%
+    hc_add_series(data = list.parse3(data), ...)
+  
+  hc
+}
+
 
 #' Shorcut for create scatter plots
 #'

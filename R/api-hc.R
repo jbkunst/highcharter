@@ -104,8 +104,8 @@ hc_chart <- function(hc, ...) {
 #' 
 #' @export
 hc_colors <- function(hc, colors) {
-  
-  hc$x$hc_opts$colors <- colors
+
+  hc$x$hc_opts$colors <- list(unlist(colors))
   
   hc
   
