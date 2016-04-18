@@ -17,14 +17,15 @@
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #'
 #' @export
-highchart <- function(hc_opts = list(), theme = NULL,
+highchart <- function(hc_opts = list(), theme = getOption("highcharter.theme"),
                       type = "chart",
                       width = NULL, height = NULL,
                       debug = FALSE) {
   
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
   
-  opts <- getOption("highcharter.options", list())
+  # opts <- getOption("highcharter.options", list())
+  opts <- .join_hc_opts()
 
   if (identical(hc_opts, list()))
     hc_opts <- opts$chart
