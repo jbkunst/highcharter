@@ -4,7 +4,7 @@
 \alias{hchart_waffle}
 \title{Function to create  waffle charts}
 \usage{
-hchart_waffle(labels, counts, rows = NULL, icon = NULL, size = NULL)
+hchart_waffle(labels, counts, rows = NULL, icon = NULL, size = 4)
 }
 \arguments{
 \item{labels}{A character vector}

@@ -8,8 +8,9 @@
 #' @importFrom purrr transpose
 #' @importFrom dplyr ungroup arrange desc group_by_
 #' @export
-hchart_waffle <- function(labels, counts, rows = NULL, icon = NULL, size = NULL){
+hchart_waffle <- function(labels, counts, rows = NULL, icon = NULL, size = 4){
 
+  # library(dplyr);library(purrr)
   # data(diamonds, package = "ggplot2")
   # cnts <- count(diamonds, cut) %>%
   #   mutate(n = n/sum(n)*500,
@@ -17,11 +18,20 @@ hchart_waffle <- function(labels, counts, rows = NULL, icon = NULL, size = NULL)
   #   arrange(desc(n))
   # labels <- cnts$cut
   # counts <- cnts$n
+  # size <- 4; icon <- "diamond"
 
-  sizegrid <- n2mfrow(sum(counts))
-  
-  w <- sizegrid[1] 
-  h <- sizegrid[2] 
+  if (is.null(rows)) {
+    
+    sizegrid <- n2mfrow(sum(counts))
+    w <- sizegrid[1] 
+    h <- sizegrid[2]   
+    
+  } else {
+    
+    h <- rows
+    w <- ceiling(sum(counts)/rows)
+    
+  }
   
   
   ds <- data_frame(x = rep(1:w, h), y = rep(1:h, each = w)) %>% 
@@ -37,9 +47,29 @@ hchart_waffle <- function(labels, counts, rows = NULL, icon = NULL, size = NULL)
     map(function(x) x) %>% 
     transpose()
 
-  highchart() %>% 
+  hc <- highchart() %>% 
     hc_chart(type = "scatter") %>% 
     hc_add_series_list(ds) %>% 
+    hc_tooltip(pointFormat = "{point.series.options.counts}") %>%
     hc_add_theme(hc_theme_null())
+  
+  if (!is.null(icon)) {
+    
+    hc <- hc %>% 
+      hc_plotOptions(
+        series = list(
+          marker = list(symbol = fa_icon_mark(icon), radius = size),
+          icon = fa_icon("male"),
+          states = list(
+            hover = list(
+              enabled = FALSE
+              )
+            )
+          )
+      )
+    }
+  
+  hc
+  
   
 }
