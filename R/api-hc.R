@@ -104,8 +104,13 @@ hc_chart <- function(hc, ...) {
 #' 
 #' @export
 hc_colors <- function(hc, colors) {
+  
+  assertthat::assert_that(is.vector(colors))
+  
+  if(length(colors) == 1)
+    colors <- list(colors)
 
-  hc$x$hc_opts$colors <- list(unlist(colors))
+  hc$x$hc_opts$colors <- colors
   
   hc
   
