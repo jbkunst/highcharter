@@ -144,13 +144,13 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
   for (i in seq_along(args)) {
     if (length(x) == length(args[[i]])) {
       attr <- list(args[i])
-      name <- names(args)[i]
-      df <- cbind(df, setNames(attr, name))
+      names(attr) <- names(args)[i]
+      df <- cbind(df, attr)
       # Used argument is set to zero length
       args[[i]] <- character(0)
     }
   }
-  # Pass the remaining arguments to the function
+  # Remove already used arguments
   args <- Filter(length, args)
   
   ds <- list.parse3(df)
