@@ -47,5 +47,10 @@ hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$am)
 hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec)
 hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec, rownames(mtcars))
 
+# Add named attributes to data points (attributes length needs to match number of rows)
+hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec,
+                      name = rownames(mtcars), gear = mtcars$gear) \%>\%
+  hc_tooltip(pointFormat = "<b>{point.name}</b><br/>Gear: {point.gear}")
+
 }
 

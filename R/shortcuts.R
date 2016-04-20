@@ -102,11 +102,16 @@ hc_add_series_df <- function(hc, data, ...) {
 #' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec)
 #' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec, rownames(mtcars))
 #' 
+#' # Add named attributes to data (attributes length needs to match number of rows)
+#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec,
+#'                       name = rownames(mtcars), gear = mtcars$gear) %>%
+#'   hc_tooltip(pointFormat = "<b>{point.name}</b><br/>Gear: {point.gear}")
+#' 
 #' @importFrom dplyr mutate group_by do select data_frame
 #' 
 #' @export 
 hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
-                                 showInLegend = FALSE, viridis.option = "D", ...) {
+                                  showInLegend = FALSE, viridis.option = "D", ...) {
   
   assertthat::assert_that(.is_highchart(hc), length(x) == length(y),
                           is.numeric(x), is.numeric(y))
@@ -134,6 +139,20 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
     df <- df %>% mutate(label = label)
   }
   
+  # Add arguments to data points if they match the length of the data
+  args <- list(...)
+  for (i in seq_along(args)) {
+    if (length(x) == length(args[[i]])) {
+      attr <- list(args[i])
+      names(attr) <- names(args)[i]
+      df <- cbind(df, attr)
+      # Used argument is set to zero length
+      args[[i]] <- character(0)
+    }
+  }
+  # Remove already used arguments
+  args <- Filter(length, args)
+  
   ds <- list.parse3(df)
   
   type <- ifelse(!is.null(z), "bubble", "scatter")
@@ -144,11 +163,12 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
     dlopts <- list(enabled = FALSE)
   }
   
-  hc %>% hc_add_series(data = ds,
-                       type = type,
-                       showInLegend = showInLegend,
-                       dataLabels = dlopts, ...)
-  
+  do.call("hc_add_series", c(list(hc,
+                                  data = ds, 
+                                  type = type, 
+                                  showInLegend = showInLegend, 
+                                  dataLabels = dlopts),
+                             args))
 }
 
 #' @rdname hc_add_series_scatter
