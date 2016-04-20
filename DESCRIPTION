@@ -2,6 +2,11 @@ Package: highcharter
 Version: 0.3.1.9999
 Type: Package
 Title: A Wrapper for the 'Highcharts' Library
+Authors@R: c(
+  person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
+  person("Nuno", "Agostinho", role = c("ctb"), comment  = "improvement to hc_add_series_scatter"),
+  person("Nick", "Carchedi", role = c("ctb"), comment  = "fix big typo")
+  )
 Description: A wrapper for the 'Highcharts' library including
   shortcut functions to plot R objects. 'Highcharts' 
   <http://www.highcharts.com/> is a charting library offering
