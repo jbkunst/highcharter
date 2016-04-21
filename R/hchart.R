@@ -185,18 +185,32 @@ hchart.stl <- function(object, ..., widths = c(2, 1, 1, 1), sep = 0.01) {
               offset = 0, lineWidth = 2,
               showFirstLabel = FALSE, showLastLabel = FALSE)
   
-  highchart() %>% 
-    hc_tooltip(shared = TRUE) %>% 
-    hc_yAxis(
+  hc <- highchart() %>% 
+    hc_tooltip(shared = TRUE) 
+  
+  hc <- hc %>% 
+    hc_yAxis_multiples(
       list.merge(yxs, list(height = pp[1], top = "0%")),
       list.merge(yxs, list(height = pp[3], top = cspp[2], opposite = TRUE)),
       list.merge(yxs, list(height = pp[5], top = cspp[4])),
       list.merge(yxs, list(height = pp[7], top = cspp[6], opposite = TRUE))
-    ) %>% 
+    )
+  
+  # hc$x$hc_opts$yAxis <- 
+  #   list(
+  #     list.merge(yxs, list(height = pp[1], top = "0%")),
+  #     list.merge(yxs, list(height = pp[3], top = cspp[2], opposite = TRUE)),
+  #     list.merge(yxs, list(height = pp[5], top = cspp[4])),
+  #     list.merge(yxs, list(height = pp[7], top = cspp[6], opposite = TRUE))
+  #   ) 
+  
+  hc <- hc %>% 
     hc_add_series_ts(tss[, 1], yAxis = 0, name = "data") %>% 
     hc_add_series_ts(tss[, 2], yAxis = 1, name = "seasonal") %>% 
     hc_add_series_ts(tss[, 3], yAxis = 2, name = "trend") %>% 
     hc_add_series_ts(tss[, 4], yAxis = 3, name = "remainder")
+  
+  hc
   
 }
 

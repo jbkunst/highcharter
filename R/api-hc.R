@@ -162,6 +162,15 @@ hc_yAxis  <- function(hc, ...) {
   
 }
 
+#' @rdname hc_xAxis
+#' @export
+hc_yAxis_multiples <- function(hc, ...) {
+  
+  hc$x$hc_opts$yAxis <- list(...)
+  
+  hc
+}
+
 #' Adding title and subtitle options to highchart objects
 #'
 #' Function to add and change title and subtitle'a style.

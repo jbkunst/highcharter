@@ -37,9 +37,9 @@ plot(x)
 hchart(x)
 
 #' ### lst
-x <- stl(co2, "per")
-plot(x)
-hchart(x)
+object <- stl(co2, "per")
+plot(object)
+hchart(object)
 
 #' ### xts quantmod package
 library("quantmod")

@@ -3,11 +3,14 @@
 \name{hc_xAxis}
 \alias{hc_xAxis}
 \alias{hc_yAxis}
+\alias{hc_yAxis_multiples}
 \title{Adding axis options to highchart objects}
 \usage{
 hc_xAxis(hc, ...)
 
 hc_yAxis(hc, ...)
+
+hc_yAxis_multiples(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
