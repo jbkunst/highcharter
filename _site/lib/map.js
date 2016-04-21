@@ -1,57 +1,2304 @@
-/*
- Highmaps JS v4.2.3 (2016-02-08)
- Highmaps as a plugin for Highcharts 4.1.x or Highstock 2.1.x (x being the patch version of this file)
+/**
+ * @license Highmaps JS v4.2.4 (2016-04-14)
+ * Highmaps as a plugin for Highcharts 4.1.x or Highstock 2.1.x (x being the patch version of this file)
+ *
+ * (c) 2011-2016 Torstein Honsi
+ *
+ * License: www.highcharts.com/license
+ */
+/* eslint indent: [2, 4] */
+(function (factory) {
+    if (typeof module === 'object' && module.exports) {
+        module.exports = factory;
+    } else {
+        factory(Highcharts);
+    }
+}(function (Highcharts) {
 
- (c) 2011-2016 Torstein Honsi
 
- License: www.highcharts.com/license
-*/
-(function(i){typeof module==="object"&&module.exports?module.exports=i:i(Highcharts)})(function(i){function K(a,b){var c,d,e,f,g=!1,h=a.x,j=a.y;for(c=0,d=b.length-1;c<b.length;d=c++)e=b[c][1]>j,f=b[d][1]>j,e!==f&&h<(b[d][0]-b[c][0])*(j-b[c][1])/(b[d][1]-b[c][1])+b[c][0]&&(g=!g);return g}function L(a,b,c,d,e,f,g,h){return["M",a+e,b,"L",a+c-f,b,"C",a+c-f/2,b,a+c,b+f/2,a+c,b+f,"L",a+c,b+d-g,"C",a+c,b+d-g/2,a+c-g/2,b+d,a+c-g,b+d,"L",a+h,b+d,"C",a+h/2,b+d,a,b+d-h/2,a,b+d-h,"L",a,b+e,"C",a,b+e/2,a+e/2,
-b,a+e,b,"Z"]}var p=i.Axis,q=i.Chart,x=i.Color,t=i.Point,G=i.Pointer,D=i.Legend,H=i.LegendSymbolMixin,R=i.Renderer,y=i.Series,I=i.SVGRenderer,M=i.VMLRenderer,A=i.win,N=A.document,J=i.addEvent,k=i.each,E=i.error,o=i.extend,u=i.extendClass,O=i.format,n=i.merge,l=i.pick,B=i.getOptions(),m=i.seriesTypes,w=B.plotOptions,v=i.wrap,s=function(){};v(p.prototype,"getSeriesExtremes",function(a){var b=this.isXAxis,c,d,e=[],f;b&&k(this.series,function(a,b){if(a.useMapGeometry)e[b]=a.xData,a.xData=[]});a.call(this);
-if(b&&(c=l(this.dataMin,Number.MAX_VALUE),d=l(this.dataMax,-Number.MAX_VALUE),k(this.series,function(a,b){if(a.useMapGeometry)c=Math.min(c,l(a.minX,c)),d=Math.max(d,l(a.maxX,c)),a.xData=e[b],f=!0}),f))this.dataMin=c,this.dataMax=d});v(p.prototype,"setAxisTranslation",function(a){var b=this.chart,c=b.plotWidth/b.plotHeight,b=b.xAxis[0],d;a.call(this);this.coll==="yAxis"&&b.transA!==void 0&&k(this.series,function(a){a.preserveAspectRatio&&(d=!0)});if(d&&(this.transA=b.transA=Math.min(this.transA,b.transA),
-a=c/((b.max-b.min)/(this.max-this.min)),a=a<1?this:b,c=(a.max-a.min)*a.transA,a.pixelPadding=a.len-c,a.minPixelPadding=a.pixelPadding/2,c=a.fixTo)){c=c[1]-a.toValue(c[0],!0);c*=a.transA;if(Math.abs(c)>a.minPixelPadding||a.min===a.dataMin&&a.max===a.dataMax)c=0;a.minPixelPadding-=c}});v(p.prototype,"render",function(a){a.call(this);this.fixTo=null});var C=i.ColorAxis=function(){this.isColorAxis=!0;this.init.apply(this,arguments)};o(C.prototype,p.prototype);o(C.prototype,{defaultColorAxisOptions:{lineWidth:0,
-minPadding:0,maxPadding:0,gridLineWidth:1,tickPixelInterval:72,startOnTick:!0,endOnTick:!0,offset:0,marker:{animation:{duration:50},color:"gray",width:0.01},labels:{overflow:"justify"},minColor:"#EFEFFF",maxColor:"#003875",tickLength:5},init:function(a,b){var c=a.options.legend.layout!=="vertical",d;d=n(this.defaultColorAxisOptions,{side:c?2:1,reversed:!c},b,{opposite:!c,showEmpty:!1,title:null,isColor:!0});p.prototype.init.call(this,a,d);b.dataClasses&&this.initDataClasses(b);this.initStops(b);this.horiz=
-c;this.zoomEnabled=!1},tweenColors:function(a,b,c){var d;!b.rgba.length||!a.rgba.length?a=b.input||"none":(a=a.rgba,b=b.rgba,d=b[3]!==1||a[3]!==1,a=(d?"rgba(":"rgb(")+Math.round(b[0]+(a[0]-b[0])*(1-c))+","+Math.round(b[1]+(a[1]-b[1])*(1-c))+","+Math.round(b[2]+(a[2]-b[2])*(1-c))+(d?","+(b[3]+(a[3]-b[3])*(1-c)):"")+")");return a},initDataClasses:function(a){var b=this,c=this.chart,d,e=0,f=this.options,g=a.dataClasses.length;this.dataClasses=d=[];this.legendItems=[];k(a.dataClasses,function(a,j){var r,
-a=n(a);d.push(a);if(!a.color)f.dataClassColor==="category"?(r=c.options.colors,a.color=r[e++],e===r.length&&(e=0)):a.color=b.tweenColors(x(f.minColor),x(f.maxColor),g<2?0.5:j/(g-1))})},initStops:function(a){this.stops=a.stops||[[0,this.options.minColor],[1,this.options.maxColor]];k(this.stops,function(a){a.color=x(a[1])})},setOptions:function(a){p.prototype.setOptions.call(this,a);this.options.crosshair=this.options.marker;this.coll="colorAxis"},setAxisSize:function(){var a=this.legendSymbol,b=this.chart,
-c,d,e;if(a)this.left=c=a.attr("x"),this.top=d=a.attr("y"),this.width=e=a.attr("width"),this.height=a=a.attr("height"),this.right=b.chartWidth-c-e,this.bottom=b.chartHeight-d-a,this.len=this.horiz?e:a,this.pos=this.horiz?c:d},toColor:function(a,b){var c,d=this.stops,e,f=this.dataClasses,g,h;if(f)for(h=f.length;h--;){if(g=f[h],e=g.from,d=g.to,(e===void 0||a>=e)&&(d===void 0||a<=d)){c=g.color;if(b)b.dataClass=h;break}}else{this.isLog&&(a=this.val2lin(a));c=1-(this.max-a)/(this.max-this.min||1);for(h=
-d.length;h--;)if(c>d[h][0])break;e=d[h]||d[h+1];d=d[h+1]||e;c=1-(d[0]-c)/(d[0]-e[0]||1);c=this.tweenColors(e.color,d.color,c)}return c},getOffset:function(){var a=this.legendGroup,b=this.chart.axisOffset[this.side];if(a){this.axisParent=a;p.prototype.getOffset.call(this);if(!this.added)this.added=!0,this.labelLeft=0,this.labelRight=this.width;this.chart.axisOffset[this.side]=b}},setLegendColor:function(){var a,b=this.options,c=this.reversed;a=c?1:0;c=c?0:1;a=this.horiz?[a,0,c,0]:[0,c,0,a];this.legendColor=
-{linearGradient:{x1:a[0],y1:a[1],x2:a[2],y2:a[3]},stops:b.stops||[[0,b.minColor],[1,b.maxColor]]}},drawLegendSymbol:function(a,b){var c=a.padding,d=a.options,e=this.horiz,f=l(d.symbolWidth,e?200:12),g=l(d.symbolHeight,e?12:200),h=l(d.labelPadding,e?16:30),d=l(d.itemDistance,10);this.setLegendColor();b.legendSymbol=this.chart.renderer.rect(0,a.baseline-11,f,g).attr({zIndex:1}).add(b.legendGroup);this.legendItemWidth=f+c+(e?d:h);this.legendItemHeight=g+c+(e?h:0)},setState:s,visible:!0,setVisible:s,
-getSeriesExtremes:function(){var a;if(this.series.length)a=this.series[0],this.dataMin=a.valueMin,this.dataMax=a.valueMax},drawCrosshair:function(a,b){var c=b&&b.plotX,d=b&&b.plotY,e,f=this.pos,g=this.len;if(b)e=this.toPixels(b[b.series.colorKey]),e<f?e=f-2:e>f+g&&(e=f+g+2),b.plotX=e,b.plotY=this.len-e,p.prototype.drawCrosshair.call(this,a,b),b.plotX=c,b.plotY=d,this.cross&&this.cross.attr({fill:this.crosshair.color}).add(this.legendGroup)},getPlotLinePath:function(a,b,c,d,e){return typeof e==="number"?
-this.horiz?["M",e-4,this.top-6,"L",e+4,this.top-6,e,this.top,"Z"]:["M",this.left,e,"L",this.left-6,e+6,this.left-6,e-6,"Z"]:p.prototype.getPlotLinePath.call(this,a,b,c,d)},update:function(a,b){var c=this.chart,d=c.legend;k(this.series,function(a){a.isDirtyData=!0});if(a.dataClasses&&d.allItems)k(d.allItems,function(a){a.isDataClass&&a.legendGroup.destroy()}),c.isDirtyLegend=!0;c.options[this.coll]=n(this.userOptions,a);p.prototype.update.call(this,a,b);this.legendItem&&(this.setLegendColor(),d.colorizeItem(this,
-!0))},getDataClassLegendSymbols:function(){var a=this,b=this.chart,c=this.legendItems,d=b.options.legend,e=d.valueDecimals,f=d.valueSuffix||"",g;c.length||k(this.dataClasses,function(d,j){var r=!0,z=d.from,l=d.to;g="";z===void 0?g="< ":l===void 0&&(g="> ");z!==void 0&&(g+=i.numberFormat(z,e)+f);z!==void 0&&l!==void 0&&(g+=" - ");l!==void 0&&(g+=i.numberFormat(l,e)+f);c.push(o({chart:b,name:g,options:{},drawLegendSymbol:H.drawRectangle,visible:!0,setState:s,isDataClass:!0,setVisible:function(){r=this.visible=
-!r;k(a.series,function(a){k(a.points,function(a){a.dataClass===j&&a.setVisible(r)})});b.legend.colorizeItem(this,r)}},d))});return c},name:""});k(["fill","stroke"],function(a){i.Fx.prototype[a+"Setter"]=function(){this.elem.attr(a,C.prototype.tweenColors(x(this.start),x(this.end),this.pos))}});v(q.prototype,"getAxes",function(a){var b=this.options.colorAxis;a.call(this);this.colorAxis=[];b&&new C(this,b)});v(D.prototype,"getAllItems",function(a){var b=[],c=this.chart.colorAxis[0];c&&(c.options.dataClasses?
-b=b.concat(c.getDataClassLegendSymbols()):b.push(c),k(c.series,function(a){a.options.showInLegend=!1}));return b.concat(a.call(this))});var D={setVisible:function(a){var b=this,c=a?"show":"hide";k(["graphic","dataLabel"],function(a){if(b[a])b[a][c]()})}},P={pointAttrToOptions:{stroke:"borderColor","stroke-width":"borderWidth",fill:"color",dashstyle:"dashStyle"},pointArrayMap:["value"],axisTypes:["xAxis","yAxis","colorAxis"],optionalAxis:"colorAxis",trackerGroups:["group","markerGroup","dataLabelsGroup"],
-getSymbol:s,parallelArrays:["x","y","value"],colorKey:"value",translateColors:function(){var a=this,b=this.options.nullColor,c=this.colorAxis,d=this.colorKey;k(this.data,function(e){var f=e[d];if(f=e.options.color||(f===null?b:c&&f!==void 0?c.toColor(f,e):e.color||a.color))e.color=f})}};o(q.prototype,{renderMapNavigation:function(){var a=this,b=this.options.mapNavigation,c=b.buttons,d,e,f,g,h=function(a){if(a)a.preventDefault&&a.preventDefault(),a.stopPropagation&&a.stopPropagation(),a.cancelBubble=
-!0},j=function(b){this.handler.call(a,b);h(b)};if(l(b.enableButtons,b.enabled)&&!a.renderer.forExport)for(d in c)if(c.hasOwnProperty(d))f=n(b.buttonOptions,c[d]),e=f.theme,e.style=n(f.theme.style,f.style),g=e.states,e=a.renderer.button(f.text,0,0,j,e,g&&g.hover,g&&g.select,0,d==="zoomIn"?"topbutton":"bottombutton").attr({width:f.width,height:f.height,title:a.options.lang[d],zIndex:5}).add(),e.handler=f.onclick,e.align(o(f,{width:e.width,height:2*e.height}),null,f.alignTo),J(e.element,"dblclick",h)},
-fitToBox:function(a,b){k([["x","width"],["y","height"]],function(c){var d=c[0],c=c[1];a[d]+a[c]>b[d]+b[c]&&(a[c]>b[c]?(a[c]=b[c],a[d]=b[d]):a[d]=b[d]+b[c]-a[c]);a[c]>b[c]&&(a[c]=b[c]);a[d]<b[d]&&(a[d]=b[d])});return a},mapZoom:function(a,b,c,d,e){var f=this.xAxis[0],g=f.max-f.min,h=l(b,f.min+g/2),j=g*a,g=this.yAxis[0],i=g.max-g.min,z=l(c,g.min+i/2);i*=a;h=this.fitToBox({x:h-j*(d?(d-f.pos)/f.len:0.5),y:z-i*(e?(e-g.pos)/g.len:0.5),width:j,height:i},{x:f.dataMin,y:g.dataMin,width:f.dataMax-f.dataMin,
-height:g.dataMax-g.dataMin});if(d)f.fixTo=[d-f.pos,b];if(e)g.fixTo=[e-g.pos,c];a!==void 0?(f.setExtremes(h.x,h.x+h.width,!1),g.setExtremes(h.y,h.y+h.height,!1)):(f.setExtremes(void 0,void 0,!1),g.setExtremes(void 0,void 0,!1));this.redraw()}});v(q.prototype,"render",function(a){var b=this,c=b.options.mapNavigation;b.renderMapNavigation();a.call(b);(l(c.enableDoubleClickZoom,c.enabled)||c.enableDoubleClickZoomTo)&&J(b.container,"dblclick",function(a){b.pointer.onContainerDblClick(a)});l(c.enableMouseWheelZoom,
-c.enabled)&&J(b.container,N.onmousewheel===void 0?"DOMMouseScroll":"mousewheel",function(a){b.pointer.onContainerMouseWheel(a);return!1})});o(G.prototype,{onContainerDblClick:function(a){var b=this.chart,a=this.normalize(a);b.options.mapNavigation.enableDoubleClickZoomTo?b.pointer.inClass(a.target,"highcharts-tracker")&&b.hoverPoint.zoomTo():b.isInsidePlot(a.chartX-b.plotLeft,a.chartY-b.plotTop)&&b.mapZoom(0.5,b.xAxis[0].toValue(a.chartX),b.yAxis[0].toValue(a.chartY),a.chartX,a.chartY)},onContainerMouseWheel:function(a){var b=
-this.chart,c,a=this.normalize(a);c=a.detail||-(a.wheelDelta/120);b.isInsidePlot(a.chartX-b.plotLeft,a.chartY-b.plotTop)&&b.mapZoom(Math.pow(2,c),b.xAxis[0].toValue(a.chartX),b.yAxis[0].toValue(a.chartY),a.chartX,a.chartY)}});v(G.prototype,"init",function(a,b,c){a.call(this,b,c);if(l(c.mapNavigation.enableTouchZoom,c.mapNavigation.enabled))this.pinchX=this.pinchHor=this.pinchY=this.pinchVert=this.hasZoom=!0});v(G.prototype,"pinchTranslate",function(a,b,c,d,e,f,g){a.call(this,b,c,d,e,f,g);this.chart.options.chart.type===
-"map"&&this.hasZoom&&(a=d.scaleX>d.scaleY,this.pinchTranslateDirection(!a,b,c,d,e,f,g,a?d.scaleX:d.scaleY))});var F=N.documentElement.style.vectorEffect!==void 0;w.map=n(w.scatter,{allAreas:!0,animation:!1,nullColor:"#F8F8F8",borderColor:"silver",borderWidth:1,marker:null,stickyTracking:!1,dataLabels:{formatter:function(){return this.point.value},inside:!0,verticalAlign:"middle",crop:!1,overflow:!1,padding:0},turboThreshold:0,tooltip:{followPointer:!0,pointFormat:"{point.name}: {point.value}<br/>"},
-states:{normal:{animation:!0},hover:{brightness:0.2,halo:null}}});var Q=u(t,o({applyOptions:function(a,b){var c=t.prototype.applyOptions.call(this,a,b),d=this.series,e=d.joinBy;if(d.mapData)if(e=c[e[1]]!==void 0&&d.mapMap[c[e[1]]]){if(d.xyFromShape)c.x=e._midX,c.y=e._midY;o(c,e)}else c.value=c.value||null;return c},onMouseOver:function(a){clearTimeout(this.colorInterval);if(this.value!==null)t.prototype.onMouseOver.call(this,a);else this.series.onMouseOut(a)},onMouseOut:function(){var a=this,b=+new Date,
-c=x(a.color),d=x(a.pointAttr.hover.fill),e=a.series.options.states.normal.animation,f=e&&(e.duration||500),g;if(f&&c.rgba.length===4&&d.rgba.length===4&&a.state!=="select")g=a.pointAttr[""].fill,delete a.pointAttr[""].fill,clearTimeout(a.colorInterval),a.colorInterval=setInterval(function(){var e=(new Date-b)/f,g=a.graphic;e>1&&(e=1);g&&g.attr("fill",C.prototype.tweenColors.call(0,d,c,e));e>=1&&clearTimeout(a.colorInterval)},13);t.prototype.onMouseOut.call(a);if(g)a.pointAttr[""].fill=g},zoomTo:function(){var a=
-this.series;a.xAxis.setExtremes(this._minX,this._maxX,!1);a.yAxis.setExtremes(this._minY,this._maxY,!1);a.chart.redraw()}},D));m.map=u(m.scatter,n(P,{type:"map",pointClass:Q,supportsDrilldown:!0,getExtremesFromAll:!0,useMapGeometry:!0,forceDL:!0,searchPoint:s,directTouch:!0,preserveAspectRatio:!0,getBox:function(a){var b=Number.MAX_VALUE,c=-b,d=b,e=-b,f=b,g=b,h=this.xAxis,j=this.yAxis,r;k(a||[],function(a){if(a.path){if(typeof a.path==="string")a.path=i.splitPath(a.path);var h=a.path||[],j=h.length,
-k=!1,m=-b,n=b,o=-b,p=b,q=a.properties;if(!a._foundBox){for(;j--;)typeof h[j]==="number"&&!isNaN(h[j])&&(k?(m=Math.max(m,h[j]),n=Math.min(n,h[j])):(o=Math.max(o,h[j]),p=Math.min(p,h[j])),k=!k);a._midX=n+(m-n)*(a.middleX||q&&q["hc-middle-x"]||0.5);a._midY=p+(o-p)*(a.middleY||q&&q["hc-middle-y"]||0.5);a._maxX=m;a._minX=n;a._maxY=o;a._minY=p;a.labelrank=l(a.labelrank,(m-n)*(o-p));a._foundBox=!0}c=Math.max(c,a._maxX);d=Math.min(d,a._minX);e=Math.max(e,a._maxY);f=Math.min(f,a._minY);g=Math.min(a._maxX-
-a._minX,a._maxY-a._minY,g);r=!0}});if(r){this.minY=Math.min(f,l(this.minY,b));this.maxY=Math.max(e,l(this.maxY,-b));this.minX=Math.min(d,l(this.minX,b));this.maxX=Math.max(c,l(this.maxX,-b));if(h&&h.options.minRange===void 0)h.minRange=Math.min(5*g,(this.maxX-this.minX)/5,h.minRange||b);if(j&&j.options.minRange===void 0)j.minRange=Math.min(5*g,(this.maxY-this.minY)/5,j.minRange||b)}},getExtremes:function(){y.prototype.getExtremes.call(this,this.valueData);this.chart.hasRendered&&this.isDirtyData&&
-this.getBox(this.options.data);this.valueMin=this.dataMin;this.valueMax=this.dataMax;this.dataMin=this.minY;this.dataMax=this.maxY},translatePath:function(a){var b=!1,c=this.xAxis,d=this.yAxis,e=c.min,f=c.transA,c=c.minPixelPadding,g=d.min,h=d.transA,d=d.minPixelPadding,j,i=[];if(a)for(j=a.length;j--;)typeof a[j]==="number"?(i[j]=b?(a[j]-e)*f+c:(a[j]-g)*h+d,b=!b):i[j]=a[j];return i},setData:function(a,b){var c=this.options,d=c.mapData,e=c.joinBy,f=e===null,g=[],h,j,l;f&&(e="_i");e=this.joinBy=i.splat(e);
-e[1]||(e[1]=e[0]);a&&k(a,function(b,c){typeof b==="number"&&(a[c]={value:b});if(f)a[c]._i=c});this.getBox(a);if(d){if(d.type==="FeatureCollection"){if(d["hc-transform"])for(h in this.chart.mapTransforms=j=d["hc-transform"],j)if(j.hasOwnProperty(h)&&h.rotation)h.cosAngle=Math.cos(h.rotation),h.sinAngle=Math.sin(h.rotation);d=i.geojson(d,this.type,this)}this.getBox(d);this.mapData=d;this.mapMap={};for(l=0;l<d.length;l++)h=d[l],j=h.properties,h._i=l,e[0]&&j&&j[e[0]]&&(h[e[0]]=j[e[0]]),this.mapMap[h[e[0]]]=
-h;c.allAreas&&(a=a||[],e[1]&&k(a,function(a){g.push(a[e[1]])}),g="|"+g.join("|")+"|",k(d,function(b){(!e[0]||g.indexOf("|"+b[e[0]]+"|")===-1)&&a.push(n(b,{value:null}))}))}y.prototype.setData.call(this,a,b)},drawGraph:s,drawDataLabels:s,doFullTranslate:function(){return this.isDirtyData||this.chart.isResizing||this.chart.renderer.isVML||!this.baseTrans},translate:function(){var a=this,b=a.xAxis,c=a.yAxis,d=a.doFullTranslate();a.generatePoints();k(a.data,function(e){e.plotX=b.toPixels(e._midX,!0);
-e.plotY=c.toPixels(e._midY,!0);if(d)e.shapeType="path",e.shapeArgs={d:a.translatePath(e.path)},F&&(e.shapeArgs["vector-effect"]="non-scaling-stroke")});a.translateColors()},drawPoints:function(){var a=this,b=a.xAxis,c=a.yAxis,d=a.group,e=a.chart,f=e.renderer,g,h=this.baseTrans;if(!a.transformGroup)a.transformGroup=f.g().attr({scaleX:1,scaleY:1}).add(d),a.transformGroup.survive=!0;a.doFullTranslate()?(e.hasRendered&&a.pointAttrToOptions.fill==="color"&&k(a.points,function(a){if(a.shapeArgs)a.shapeArgs.fill=
-a.pointAttr[l(a.state,"")].fill}),F||k(a.points,function(b){b=b.pointAttr[""];b["stroke-width"]===a.pointAttr[""]["stroke-width"]&&(b["stroke-width"]="inherit")}),a.group=a.transformGroup,m.column.prototype.drawPoints.apply(a),a.group=d,k(a.points,function(a){a.graphic&&(a.name&&a.graphic.addClass("highcharts-name-"+a.name.replace(" ","-").toLowerCase()),a.properties&&a.properties["hc-key"]&&a.graphic.addClass("highcharts-key-"+a.properties["hc-key"].toLowerCase()),F||(a.graphic["stroke-widthSetter"]=
-s))}),this.baseTrans={originX:b.min-b.minPixelPadding/b.transA,originY:c.min-c.minPixelPadding/c.transA+(c.reversed?0:c.len/c.transA),transAX:b.transA,transAY:c.transA},this.transformGroup.animate({translateX:0,translateY:0,scaleX:1,scaleY:1})):(g=b.transA/h.transAX,d=c.transA/h.transAY,b=b.toPixels(h.originX,!0),c=c.toPixels(h.originY,!0),g>0.99&&g<1.01&&d>0.99&&d<1.01&&(d=g=1,b=Math.round(b),c=Math.round(c)),this.transformGroup.animate({translateX:b,translateY:c,scaleX:g,scaleY:d}));F||a.group.element.setAttribute("stroke-width",
-a.options.borderWidth/(g||1));this.drawMapDataLabels()},drawMapDataLabels:function(){y.prototype.drawDataLabels.call(this);this.dataLabelsGroup&&this.dataLabelsGroup.clip(this.chart.clipRect)},render:function(){var a=this,b=y.prototype.render;a.chart.renderer.isVML&&a.data.length>3E3?setTimeout(function(){b.call(a)}):b.call(a)},animate:function(a){var b=this.options.animation,c=this.group,d=this.xAxis,e=this.yAxis,f=d.pos,g=e.pos;if(this.chart.renderer.isSVG)b===!0&&(b={duration:1E3}),a?c.attr({translateX:f+
-d.len/2,translateY:g+e.len/2,scaleX:0.001,scaleY:0.001}):(c.animate({translateX:f,translateY:g,scaleX:1,scaleY:1},b),this.animate=null)},animateDrilldown:function(a){var b=this.chart.plotBox,c=this.chart.drilldownLevels[this.chart.drilldownLevels.length-1],d=c.bBox,e=this.chart.options.drilldown.animation;if(!a)a=Math.min(d.width/b.width,d.height/b.height),c.shapeArgs={scaleX:a,scaleY:a,translateX:d.x,translateY:d.y},k(this.points,function(a){a.graphic&&a.graphic.attr(c.shapeArgs).animate({scaleX:1,
-scaleY:1,translateX:0,translateY:0},e)}),this.animate=null},drawLegendSymbol:H.drawRectangle,animateDrillupFrom:function(a){m.column.prototype.animateDrillupFrom.call(this,a)},animateDrillupTo:function(a){m.column.prototype.animateDrillupTo.call(this,a)}}));w.mapline=n(w.map,{lineWidth:1,fillColor:"none"});m.mapline=u(m.map,{type:"mapline",pointAttrToOptions:{stroke:"color","stroke-width":"lineWidth",fill:"fillColor",dashstyle:"dashStyle"},drawLegendSymbol:m.line.prototype.drawLegendSymbol});w.mappoint=
-n(w.scatter,{dataLabels:{enabled:!0,formatter:function(){return this.point.name},crop:!1,defer:!1,overflow:!1,style:{color:"#000000"}}});m.mappoint=u(m.scatter,{type:"mappoint",forceDL:!0,pointClass:u(t,{applyOptions:function(a,b){var c=t.prototype.applyOptions.call(this,a,b);a.lat!==void 0&&a.lon!==void 0&&(c=o(c,this.series.chart.fromLatLonToPoint(c)));return c}})});if(m.bubble)w.mapbubble=n(w.bubble,{animationLimit:500,tooltip:{pointFormat:"{point.name}: {point.z}"}}),m.mapbubble=u(m.bubble,{pointClass:u(t,
-{applyOptions:function(a,b){var c;a&&a.lat!==void 0&&a.lon!==void 0?(c=t.prototype.applyOptions.call(this,a,b),c=o(c,this.series.chart.fromLatLonToPoint(c))):c=Q.prototype.applyOptions.call(this,a,b);return c},ttBelow:!1}),xyFromShape:!0,type:"mapbubble",pointArrayMap:["z"],getMapData:m.map.prototype.getMapData,getBox:m.map.prototype.getBox,setData:m.map.prototype.setData});B.plotOptions.heatmap=n(B.plotOptions.scatter,{animation:!1,borderWidth:0,nullColor:"#F8F8F8",dataLabels:{formatter:function(){return this.point.value},
-inside:!0,verticalAlign:"middle",crop:!1,overflow:!1,padding:0},marker:null,pointRange:null,tooltip:{pointFormat:"{point.x}, {point.y}: {point.value}<br/>"},states:{normal:{animation:!0},hover:{halo:!1,brightness:0.2}}});m.heatmap=u(m.scatter,n(P,{type:"heatmap",pointArrayMap:["y","value"],hasPointSpecificOptions:!0,pointClass:u(t,D),supportsDrilldown:!0,getExtremesFromAll:!0,directTouch:!0,init:function(){var a;m.scatter.prototype.init.apply(this,arguments);a=this.options;a.pointRange=l(a.pointRange,
-a.colsize||1);this.yAxis.axisPointRange=a.rowsize||1},translate:function(){var a=this.options,b=this.xAxis,c=this.yAxis,d=function(a,b,c){return Math.min(Math.max(b,a),c)};this.generatePoints();k(this.points,function(e){var f=(a.colsize||1)/2,g=(a.rowsize||1)/2,h=d(Math.round(b.len-b.translate(e.x-f,0,1,0,1)),0,b.len),f=d(Math.round(b.len-b.translate(e.x+f,0,1,0,1)),0,b.len),j=d(Math.round(c.translate(e.y-g,0,1,0,1)),0,c.len),g=d(Math.round(c.translate(e.y+g,0,1,0,1)),0,c.len);e.plotX=e.clientX=(h+
-f)/2;e.plotY=(j+g)/2;e.shapeType="rect";e.shapeArgs={x:Math.min(h,f),y:Math.min(j,g),width:Math.abs(f-h),height:Math.abs(g-j)}});this.translateColors();this.chart.hasRendered&&k(this.points,function(a){a.shapeArgs.fill=a.options.color||a.color})},drawPoints:m.column.prototype.drawPoints,animate:s,getBox:s,drawLegendSymbol:H.drawRectangle,getExtremes:function(){y.prototype.getExtremes.call(this,this.valueData);this.valueMin=this.dataMin;this.valueMax=this.dataMax;y.prototype.getExtremes.call(this)}}));
-q.prototype.transformFromLatLon=function(a,b){if(A.proj4===void 0)return E(21),{x:0,y:null};var c=A.proj4(b.crs,[a.lon,a.lat]),d=b.cosAngle||b.rotation&&Math.cos(b.rotation),e=b.sinAngle||b.rotation&&Math.sin(b.rotation),c=b.rotation?[c[0]*d+c[1]*e,-c[0]*e+c[1]*d]:c;return{x:((c[0]-(b.xoffset||0))*(b.scale||1)+(b.xpan||0))*(b.jsonres||1)+(b.jsonmarginX||0),y:(((b.yoffset||0)-c[1])*(b.scale||1)+(b.ypan||0))*(b.jsonres||1)-(b.jsonmarginY||0)}};q.prototype.transformToLatLon=function(a,b){if(A.proj4===
-void 0)E(21);else{var c={x:((a.x-(b.jsonmarginX||0))/(b.jsonres||1)-(b.xpan||0))/(b.scale||1)+(b.xoffset||0),y:((-a.y-(b.jsonmarginY||0))/(b.jsonres||1)+(b.ypan||0))/(b.scale||1)+(b.yoffset||0)},d=b.cosAngle||b.rotation&&Math.cos(b.rotation),e=b.sinAngle||b.rotation&&Math.sin(b.rotation),c=A.proj4(b.crs,"WGS84",b.rotation?{x:c.x*d+c.y*-e,y:c.x*e+c.y*d}:c);return{lat:c.y,lon:c.x}}};q.prototype.fromPointToLatLon=function(a){var b=this.mapTransforms,c;if(b){for(c in b)if(b.hasOwnProperty(c)&&b[c].hitZone&&
-K({x:a.x,y:-a.y},b[c].hitZone.coordinates[0]))return this.transformToLatLon(a,b[c]);return this.transformToLatLon(a,b["default"])}else E(22)};q.prototype.fromLatLonToPoint=function(a){var b=this.mapTransforms,c,d;if(!b)return E(22),{x:0,y:null};for(c in b)if(b.hasOwnProperty(c)&&b[c].hitZone&&(d=this.transformFromLatLon(a,b[c]),K({x:d.x,y:-d.y},b[c].hitZone.coordinates[0])))return d;return this.transformFromLatLon(a,b["default"])};i.geojson=function(a,b,c){var d=[],e=[],f=function(a){var b,c=a.length;
-e.push("M");for(b=0;b<c;b++)b===1&&e.push("L"),e.push(a[b][0],-a[b][1])},b=b||"map";k(a.features,function(a){var c=a.geometry,j=c.type,c=c.coordinates,a=a.properties,i;e=[];b==="map"||b==="mapbubble"?(j==="Polygon"?(k(c,f),e.push("Z")):j==="MultiPolygon"&&(k(c,function(a){k(a,f)}),e.push("Z")),e.length&&(i={path:e})):b==="mapline"?(j==="LineString"?f(c):j==="MultiLineString"&&k(c,f),e.length&&(i={path:e})):b==="mappoint"&&j==="Point"&&(i={x:c[0],y:-c[1]});i&&d.push(o(i,{name:a.name||a.NAME,properties:a}))});
-if(c&&a.copyrightShort)c.chart.mapCredits=O(c.chart.options.credits.mapText,{geojson:a}),c.chart.mapCreditsFull=O(c.chart.options.credits.mapTextFull,{geojson:a});return d};v(q.prototype,"showCredits",function(a,b){if(this.mapCredits)b.href=null;a.call(this,i.merge(b,{text:b.text+(this.mapCredits||"")}));this.credits&&this.mapCreditsFull&&this.credits.attr({title:this.mapCreditsFull})});o(B.lang,{zoomIn:"Zoom in",zoomOut:"Zoom out"});B.mapNavigation={buttonOptions:{alignTo:"plotBox",align:"left",
-verticalAlign:"top",x:0,width:18,height:18,style:{fontSize:"15px",fontWeight:"bold",textAlign:"center"},theme:{"stroke-width":1}},buttons:{zoomIn:{onclick:function(){this.mapZoom(0.5)},text:"+",y:0},zoomOut:{onclick:function(){this.mapZoom(2)},text:"-",y:28}}};i.splitPath=function(a){var b,a=a.replace(/([A-Za-z])/g," $1 "),a=a.replace(/^\s*/,"").replace(/\s*$/,""),a=a.split(/[ ,]+/);for(b=0;b<a.length;b++)/[a-zA-Z]/.test(a[b])||(a[b]=parseFloat(a[b]));return a};i.maps={};I.prototype.symbols.topbutton=
-function(a,b,c,d,e){return L(a-1,b-1,c,d,e.r,e.r,0,0)};I.prototype.symbols.bottombutton=function(a,b,c,d,e){return L(a-1,b-1,c,d,0,0,e.r,e.r)};R===M&&k(["topbutton","bottombutton"],function(a){M.prototype.symbols[a]=I.prototype.symbols[a]});i.Map=i.mapChart=function(a,b,c){var d=typeof a==="string"||a.nodeName,e=arguments[d?1:0],f={endOnTick:!1,gridLineWidth:0,lineWidth:0,minPadding:0,maxPadding:0,startOnTick:!1,title:null,tickPositions:[]},g,h=i.getOptions().credits;g=e.series;e.series=null;e=n({chart:{panning:"xy",
-type:"map"},credits:{mapText:l(h.mapText,' \u00a9 <a href="{geojson.copyrightUrl}">{geojson.copyrightShort}</a>'),mapTextFull:l(h.mapTextFull,"{geojson.copyright}")},xAxis:f,yAxis:n(f,{reversed:!0})},e,{chart:{inverted:!1,alignTicks:!1}});e.series=g;return d?new q(a,e,c):new q(e,b)}});
+    var UNDEFINED,
+        animObject = Highcharts.animObject,
+        Axis = Highcharts.Axis,
+        Chart = Highcharts.Chart,
+        Color = Highcharts.Color,
+        Point = Highcharts.Point,
+        Pointer = Highcharts.Pointer,
+        Legend = Highcharts.Legend,
+        LegendSymbolMixin = Highcharts.LegendSymbolMixin,
+        Renderer = Highcharts.Renderer,
+        Series = Highcharts.Series,
+        SVGRenderer = Highcharts.SVGRenderer,
+        VMLRenderer = Highcharts.VMLRenderer,
+        win = Highcharts.win,
+
+        doc = win.document,
+        addEvent = Highcharts.addEvent,
+        each = Highcharts.each,
+        error = Highcharts.error,
+        extend = Highcharts.extend,
+        extendClass = Highcharts.extendClass,
+        format = Highcharts.format,
+        merge = Highcharts.merge,
+        pick = Highcharts.pick,
+        defaultOptions = Highcharts.getOptions(),
+        seriesTypes = Highcharts.seriesTypes,
+        defaultPlotOptions = defaultOptions.plotOptions,
+        wrap = Highcharts.wrap,
+        noop = function () {};
+    /**
+     * Override to use the extreme coordinates from the SVG shape, not the
+     * data values
+     */
+    wrap(Axis.prototype, 'getSeriesExtremes', function (proceed) {
+        var isXAxis = this.isXAxis,
+            dataMin,
+            dataMax,
+            xData = [],
+            useMapGeometry;
+
+        // Remove the xData array and cache it locally so that the proceed method doesn't use it
+        if (isXAxis) {
+            each(this.series, function (series, i) {
+                if (series.useMapGeometry) {
+                    xData[i] = series.xData;
+                    series.xData = [];
+                }
+            });
+        }
+
+        // Call base to reach normal cartesian series (like mappoint)
+        proceed.call(this);
+
+        // Run extremes logic for map and mapline
+        if (isXAxis) {
+            dataMin = pick(this.dataMin, Number.MAX_VALUE);
+            dataMax = pick(this.dataMax, -Number.MAX_VALUE);
+            each(this.series, function (series, i) {
+                if (series.useMapGeometry) {
+                    dataMin = Math.min(dataMin, pick(series.minX, dataMin));
+                    dataMax = Math.max(dataMax, pick(series.maxX, dataMin));
+                    series.xData = xData[i]; // Reset xData array
+                    useMapGeometry = true;
+                }
+            });
+            if (useMapGeometry) {
+                this.dataMin = dataMin;
+                this.dataMax = dataMax;
+            }
+        }
+    });
+
+    /**
+     * Override axis translation to make sure the aspect ratio is always kept
+     */
+    wrap(Axis.prototype, 'setAxisTranslation', function (proceed) {
+        var chart = this.chart,
+            mapRatio,
+            plotRatio = chart.plotWidth / chart.plotHeight,
+            adjustedAxisLength,
+            xAxis = chart.xAxis[0],
+            padAxis,
+            fixTo,
+            fixDiff,
+            preserveAspectRatio;
+
+
+        // Run the parent method
+        proceed.call(this);
+
+        // Check for map-like series
+        if (this.coll === 'yAxis' && xAxis.transA !== UNDEFINED) {
+            each(this.series, function (series) {
+                if (series.preserveAspectRatio) {
+                    preserveAspectRatio = true;
+                }
+            });
+        }
+
+        // On Y axis, handle both
+        if (preserveAspectRatio) {
+
+            // Use the same translation for both axes
+            this.transA = xAxis.transA = Math.min(this.transA, xAxis.transA);
+
+            mapRatio = plotRatio / ((xAxis.max - xAxis.min) / (this.max - this.min));
+
+            // What axis to pad to put the map in the middle
+            padAxis = mapRatio < 1 ? this : xAxis;
+
+            // Pad it
+            adjustedAxisLength = (padAxis.max - padAxis.min) * padAxis.transA;
+            padAxis.pixelPadding = padAxis.len - adjustedAxisLength;
+            padAxis.minPixelPadding = padAxis.pixelPadding / 2;
+
+            fixTo = padAxis.fixTo;
+            if (fixTo) {
+                fixDiff = fixTo[1] - padAxis.toValue(fixTo[0], true);
+                fixDiff *= padAxis.transA;
+                if (Math.abs(fixDiff) > padAxis.minPixelPadding || (padAxis.min === padAxis.dataMin && padAxis.max === padAxis.dataMax)) { // zooming out again, keep within restricted area
+                    fixDiff = 0;
+                }
+                padAxis.minPixelPadding -= fixDiff;
+            }
+        }
+    });
+
+    /**
+     * Override Axis.render in order to delete the fixTo prop
+     */
+    wrap(Axis.prototype, 'render', function (proceed) {
+        proceed.call(this);
+        this.fixTo = null;
+    });
+
+
+    /**
+     * The ColorAxis object for inclusion in gradient legends
+     */
+    var ColorAxis = Highcharts.ColorAxis = function () {
+        this.isColorAxis = true;
+        this.init.apply(this, arguments);
+    };
+    extend(ColorAxis.prototype, Axis.prototype);
+    extend(ColorAxis.prototype, {
+        defaultColorAxisOptions: {
+            lineWidth: 0,
+            minPadding: 0,
+            maxPadding: 0,
+            gridLineWidth: 1,
+            tickPixelInterval: 72,
+            startOnTick: true,
+            endOnTick: true,
+            offset: 0,
+            marker: {
+                animation: {
+                    duration: 50
+                },
+                color: 'gray',
+                width: 0.01
+            },
+            labels: {
+                overflow: 'justify'
+            },
+            minColor: '#EFEFFF',
+            maxColor: '#003875',
+            tickLength: 5
+        },
+        init: function (chart, userOptions) {
+            var horiz = chart.options.legend.layout !== 'vertical',
+                options;
+
+            // Build the options
+            options = merge(this.defaultColorAxisOptions, {
+                side: horiz ? 2 : 1,
+                reversed: !horiz
+            }, userOptions, {
+                opposite: !horiz,
+                showEmpty: false,
+                title: null,
+                isColor: true
+            });
+
+            Axis.prototype.init.call(this, chart, options);
+
+            // Base init() pushes it to the xAxis array, now pop it again
+            //chart[this.isXAxis ? 'xAxis' : 'yAxis'].pop();
+
+            // Prepare data classes
+            if (userOptions.dataClasses) {
+                this.initDataClasses(userOptions);
+            }
+            this.initStops(userOptions);
+
+            // Override original axis properties
+            this.horiz = horiz;
+            this.zoomEnabled = false;
+        },
+
+        /*
+         * Return an intermediate color between two colors, according to pos where 0
+         * is the from color and 1 is the to color.
+         * NOTE: Changes here should be copied
+         * to the same function in drilldown.src.js and solid-gauge-src.js.
+         */
+        tweenColors: function (from, to, pos) {
+            // Check for has alpha, because rgba colors perform worse due to lack of
+            // support in WebKit.
+            var hasAlpha,
+                ret;
+
+            // Unsupported color, return to-color (#3920)
+            if (!to.rgba.length || !from.rgba.length) {
+                ret = to.input || 'none';
+
+            // Interpolate
+            } else {
+                from = from.rgba;
+                to = to.rgba;
+                hasAlpha = (to[3] !== 1 || from[3] !== 1);
+                ret = (hasAlpha ? 'rgba(' : 'rgb(') +
+                    Math.round(to[0] + (from[0] - to[0]) * (1 - pos)) + ',' +
+                    Math.round(to[1] + (from[1] - to[1]) * (1 - pos)) + ',' +
+                    Math.round(to[2] + (from[2] - to[2]) * (1 - pos)) +
+                    (hasAlpha ? (',' + (to[3] + (from[3] - to[3]) * (1 - pos))) : '') + ')';
+            }
+            return ret;
+        },
+
+        initDataClasses: function (userOptions) {
+            var axis = this,
+                chart = this.chart,
+                dataClasses,
+                colorCounter = 0,
+                options = this.options,
+                len = userOptions.dataClasses.length;
+            this.dataClasses = dataClasses = [];
+            this.legendItems = [];
+
+            each(userOptions.dataClasses, function (dataClass, i) {
+                var colors;
+
+                dataClass = merge(dataClass);
+                dataClasses.push(dataClass);
+                if (!dataClass.color) {
+                    if (options.dataClassColor === 'category') {
+                        colors = chart.options.colors;
+                        dataClass.color = colors[colorCounter++];
+                        // loop back to zero
+                        if (colorCounter === colors.length) {
+                            colorCounter = 0;
+                        }
+                    } else {
+                        dataClass.color = axis.tweenColors(
+                            Color(options.minColor),
+                            Color(options.maxColor),
+                            len < 2 ? 0.5 : i / (len - 1) // #3219
+                        );
+                    }
+                }
+            });
+        },
+
+        initStops: function (userOptions) {
+            this.stops = userOptions.stops || [
+                [0, this.options.minColor],
+                [1, this.options.maxColor]
+            ];
+            each(this.stops, function (stop) {
+                stop.color = Color(stop[1]);
+            });
+        },
+
+        /**
+         * Extend the setOptions method to process extreme colors and color
+         * stops.
+         */
+        setOptions: function (userOptions) {
+            Axis.prototype.setOptions.call(this, userOptions);
+
+            this.options.crosshair = this.options.marker;
+            this.coll = 'colorAxis';
+        },
+
+        setAxisSize: function () {
+            var symbol = this.legendSymbol,
+                chart = this.chart,
+                x,
+                y,
+                width,
+                height;
+
+            if (symbol) {
+                this.left = x = symbol.attr('x');
+                this.top = y = symbol.attr('y');
+                this.width = width = symbol.attr('width');
+                this.height = height = symbol.attr('height');
+                this.right = chart.chartWidth - x - width;
+                this.bottom = chart.chartHeight - y - height;
+
+                this.len = this.horiz ? width : height;
+                this.pos = this.horiz ? x : y;
+            }
+        },
+
+        /**
+         * Translate from a value to a color
+         */
+        toColor: function (value, point) {
+            var pos,
+                stops = this.stops,
+                from,
+                to,
+                color,
+                dataClasses = this.dataClasses,
+                dataClass,
+                i;
+
+            if (dataClasses) {
+                i = dataClasses.length;
+                while (i--) {
+                    dataClass = dataClasses[i];
+                    from = dataClass.from;
+                    to = dataClass.to;
+                    if ((from === UNDEFINED || value >= from) && (to === UNDEFINED || value <= to)) {
+                        color = dataClass.color;
+                        if (point) {
+                            point.dataClass = i;
+                        }
+                        break;
+                    }
+                }
+
+            } else {
+
+                if (this.isLog) {
+                    value = this.val2lin(value);
+                }
+                pos = 1 - ((this.max - value) / ((this.max - this.min) || 1));
+                i = stops.length;
+                while (i--) {
+                    if (pos > stops[i][0]) {
+                        break;
+                    }
+                }
+                from = stops[i] || stops[i + 1];
+                to = stops[i + 1] || from;
+
+                // The position within the gradient
+                pos = 1 - (to[0] - pos) / ((to[0] - from[0]) || 1);
+
+                color = this.tweenColors(
+                    from.color,
+                    to.color,
+                    pos
+                );
+            }
+            return color;
+        },
+
+        /**
+         * Override the getOffset method to add the whole axis groups inside the legend.
+         */
+        getOffset: function () {
+            var group = this.legendGroup,
+                sideOffset = this.chart.axisOffset[this.side];
+
+            if (group) {
+
+                // Hook for the getOffset method to add groups to this parent group
+                this.axisParent = group;
+
+                // Call the base
+                Axis.prototype.getOffset.call(this);
+
+                // First time only
+                if (!this.added) {
+
+                    this.added = true;
+
+                    this.labelLeft = 0;
+                    this.labelRight = this.width;
+                }
+                // Reset it to avoid color axis reserving space
+                this.chart.axisOffset[this.side] = sideOffset;
+            }
+        },
+
+        /**
+         * Create the color gradient
+         */
+        setLegendColor: function () {
+            var grad,
+                horiz = this.horiz,
+                options = this.options,
+                reversed = this.reversed,
+                one = reversed ? 1 : 0,
+                zero = reversed ? 0 : 1;
+
+            grad = horiz ? [one, 0, zero, 0] : [0, zero, 0, one]; // #3190
+            this.legendColor = {
+                linearGradient: { x1: grad[0], y1: grad[1], x2: grad[2], y2: grad[3] },
+                stops: options.stops || [
+                    [0, options.minColor],
+                    [1, options.maxColor]
+                ]
+            };
+        },
+
+        /**
+         * The color axis appears inside the legend and has its own legend symbol
+         */
+        drawLegendSymbol: function (legend, item) {
+            var padding = legend.padding,
+                legendOptions = legend.options,
+                horiz = this.horiz,
+                width = pick(legendOptions.symbolWidth, horiz ? 200 : 12),
+                height = pick(legendOptions.symbolHeight, horiz ? 12 : 200),
+                labelPadding = pick(legendOptions.labelPadding, horiz ? 16 : 30),
+                itemDistance = pick(legendOptions.itemDistance, 10);
+
+            this.setLegendColor();
+
+            // Create the gradient
+            item.legendSymbol = this.chart.renderer.rect(
+                0,
+                legend.baseline - 11,
+                width,
+                height
+            ).attr({
+                zIndex: 1
+            }).add(item.legendGroup);
+
+            // Set how much space this legend item takes up
+            this.legendItemWidth = width + padding + (horiz ? itemDistance : labelPadding);
+            this.legendItemHeight = height + padding + (horiz ? labelPadding : 0);
+        },
+        /**
+         * Fool the legend
+         */
+        setState: noop,
+        visible: true,
+        setVisible: noop,
+        getSeriesExtremes: function () {
+            var series;
+            if (this.series.length) {
+                series = this.series[0];
+                this.dataMin = series.valueMin;
+                this.dataMax = series.valueMax;
+            }
+        },
+        drawCrosshair: function (e, point) {
+            var plotX = point && point.plotX,
+                plotY = point && point.plotY,
+                crossPos,
+                axisPos = this.pos,
+                axisLen = this.len;
+
+            if (point) {
+                crossPos = this.toPixels(point[point.series.colorKey]);
+                if (crossPos < axisPos) {
+                    crossPos = axisPos - 2;
+                } else if (crossPos > axisPos + axisLen) {
+                    crossPos = axisPos + axisLen + 2;
+                }
+
+                point.plotX = crossPos;
+                point.plotY = this.len - crossPos;
+                Axis.prototype.drawCrosshair.call(this, e, point);
+                point.plotX = plotX;
+                point.plotY = plotY;
+
+                if (this.cross) {
+                    this.cross
+                        .attr({
+                            fill: this.crosshair.color
+                        })
+                        .add(this.legendGroup);
+                }
+            }
+        },
+        getPlotLinePath: function (a, b, c, d, pos) {
+            return typeof pos === 'number' ? // crosshairs only // #3969 pos can be 0 !!
+                (this.horiz ?
+                    ['M', pos - 4, this.top - 6, 'L', pos + 4, this.top - 6, pos, this.top, 'Z'] :
+                    ['M', this.left, pos, 'L', this.left - 6, pos + 6, this.left - 6, pos - 6, 'Z']
+                ) :
+                Axis.prototype.getPlotLinePath.call(this, a, b, c, d);
+        },
+
+        update: function (newOptions, redraw) {
+            var chart = this.chart,
+                legend = chart.legend;
+
+            each(this.series, function (series) {
+                series.isDirtyData = true; // Needed for Axis.update when choropleth colors change
+            });
+
+            // When updating data classes, destroy old items and make sure new ones are created (#3207)
+            if (newOptions.dataClasses && legend.allItems) {
+                each(legend.allItems, function (item) {
+                    if (item.isDataClass) {
+                        item.legendGroup.destroy();
+                    }
+                });
+                chart.isDirtyLegend = true;
+            }
+
+            // Keep the options structure updated for export. Unlike xAxis and yAxis, the colorAxis is
+            // not an array. (#3207)
+            chart.options[this.coll] = merge(this.userOptions, newOptions);
+
+            Axis.prototype.update.call(this, newOptions, redraw);
+            if (this.legendItem) {
+                this.setLegendColor();
+                legend.colorizeItem(this, true);
+            }
+        },
+
+        /**
+         * Get the legend item symbols for data classes
+         */
+        getDataClassLegendSymbols: function () {
+            var axis = this,
+                chart = this.chart,
+                legendItems = this.legendItems,
+                legendOptions = chart.options.legend,
+                valueDecimals = legendOptions.valueDecimals,
+                valueSuffix = legendOptions.valueSuffix || '',
+                name;
+
+            if (!legendItems.length) {
+                each(this.dataClasses, function (dataClass, i) {
+                    var vis = true,
+                        from = dataClass.from,
+                        to = dataClass.to;
+
+                    // Assemble the default name. This can be overridden by legend.options.labelFormatter
+                    name = '';
+                    if (from === UNDEFINED) {
+                        name = '< ';
+                    } else if (to === UNDEFINED) {
+                        name = '> ';
+                    }
+                    if (from !== UNDEFINED) {
+                        name += Highcharts.numberFormat(from, valueDecimals) + valueSuffix;
+                    }
+                    if (from !== UNDEFINED && to !== UNDEFINED) {
+                        name += ' - ';
+                    }
+                    if (to !== UNDEFINED) {
+                        name += Highcharts.numberFormat(to, valueDecimals) + valueSuffix;
+                    }
+
+                    // Add a mock object to the legend items
+                    legendItems.push(extend({
+                        chart: chart,
+                        name: name,
+                        options: {},
+                        drawLegendSymbol: LegendSymbolMixin.drawRectangle,
+                        visible: true,
+                        setState: noop,
+                        isDataClass: true,
+                        setVisible: function () {
+                            vis = this.visible = !vis;
+                            each(axis.series, function (series) {
+                                each(series.points, function (point) {
+                                    if (point.dataClass === i) {
+                                        point.setVisible(vis);
+                                    }
+                                });
+                            });
+
+                            chart.legend.colorizeItem(this, vis);
+                        }
+                    }, dataClass));
+                });
+            }
+            return legendItems;
+        },
+        name: '' // Prevents 'undefined' in legend in IE8
+    });
+
+    /**
+     * Handle animation of the color attributes directly
+     */
+    each(['fill', 'stroke'], function (prop) {
+        Highcharts.Fx.prototype[prop + 'Setter'] = function () {
+            this.elem.attr(prop, ColorAxis.prototype.tweenColors(Color(this.start), Color(this.end), this.pos));
+        };
+    });
+
+    /**
+     * Extend the chart getAxes method to also get the color axis
+     */
+    wrap(Chart.prototype, 'getAxes', function (proceed) {
+
+        var options = this.options,
+            colorAxisOptions = options.colorAxis;
+
+        proceed.call(this);
+
+        this.colorAxis = [];
+        if (colorAxisOptions) {
+            new ColorAxis(this, colorAxisOptions); // eslint-disable-line no-new
+        }
+    });
+
+
+    /**
+     * Wrap the legend getAllItems method to add the color axis. This also removes the
+     * axis' own series to prevent them from showing up individually.
+     */
+    wrap(Legend.prototype, 'getAllItems', function (proceed) {
+        var allItems = [],
+            colorAxis = this.chart.colorAxis[0];
+
+        if (colorAxis) {
+
+            // Data classes
+            if (colorAxis.options.dataClasses) {
+                allItems = allItems.concat(colorAxis.getDataClassLegendSymbols());
+            // Gradient legend
+            } else {
+                // Add this axis on top
+                allItems.push(colorAxis);
+            }
+
+            // Don't add the color axis' series
+            each(colorAxis.series, function (series) {
+                series.options.showInLegend = false;
+            });
+        }
+
+        return allItems.concat(proceed.call(this));
+    });
+    /**
+     * Mixin for maps and heatmaps
+     */
+    var colorPointMixin = {
+        /**
+         * Set the visibility of a single point
+         */
+        setVisible: function (vis) {
+            var point = this,
+                method = vis ? 'show' : 'hide';
+
+            // Show and hide associated elements
+            each(['graphic', 'dataLabel'], function (key) {
+                if (point[key]) {
+                    point[key][method]();
+                }
+            });
+        }
+    };
+    var colorSeriesMixin = {
+
+        pointAttrToOptions: { // mapping between SVG attributes and the corresponding options
+            stroke: 'borderColor',
+            'stroke-width': 'borderWidth',
+            fill: 'color',
+            dashstyle: 'dashStyle'
+        },
+        pointArrayMap: ['value'],
+        axisTypes: ['xAxis', 'yAxis', 'colorAxis'],
+        optionalAxis: 'colorAxis',
+        trackerGroups: ['group', 'markerGroup', 'dataLabelsGroup'],
+        getSymbol: noop,
+        parallelArrays: ['x', 'y', 'value'],
+        colorKey: 'value',
+
+        /**
+         * In choropleth maps, the color is a result of the value, so this needs translation too
+         */
+        translateColors: function () {
+            var series = this,
+                nullColor = this.options.nullColor,
+                colorAxis = this.colorAxis,
+                colorKey = this.colorKey;
+
+            each(this.data, function (point) {
+                var value = point[colorKey],
+                    color;
+
+                color = point.options.color ||
+                    (value === null ? nullColor : (colorAxis && value !== undefined) ? colorAxis.toColor(value, point) : point.color || series.color);
+
+                if (color) {
+                    point.color = color;
+                }
+            });
+        }
+    };
+
+    // Add events to the Chart object itself
+    extend(Chart.prototype, {
+        renderMapNavigation: function () {
+            var chart = this,
+                options = this.options.mapNavigation,
+                buttons = options.buttons,
+                n,
+                button,
+                buttonOptions,
+                attr,
+                states,
+                stopEvent = function (e) {
+                    if (e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+                        e.cancelBubble = true;
+                    }
+                },
+                outerHandler = function (e) {
+                    this.handler.call(chart, e);
+                    stopEvent(e); // Stop default click event (#4444)
+                };
+
+            if (pick(options.enableButtons, options.enabled) && !chart.renderer.forExport) {
+                chart.mapNavButtons = [];
+                for (n in buttons) {
+                    if (buttons.hasOwnProperty(n)) {
+                        buttonOptions = merge(options.buttonOptions, buttons[n]);
+                        attr = buttonOptions.theme;
+                        attr.style = merge(buttonOptions.theme.style, buttonOptions.style); // #3203
+                        states = attr.states;
+                        button = chart.renderer.button(
+                                buttonOptions.text,
+                                0,
+                                0,
+                                outerHandler,
+                                attr,
+                                states && states.hover,
+                                states && states.select,
+                                0,
+                                n === 'zoomIn' ? 'topbutton' : 'bottombutton'
+                            )
+                            .attr({
+                                width: buttonOptions.width,
+                                height: buttonOptions.height,
+                                title: chart.options.lang[n],
+                                zIndex: 5
+                            })
+                            .add();
+                        button.handler = buttonOptions.onclick;
+                        button.align(extend(buttonOptions, { width: button.width, height: 2 * button.height }), null, buttonOptions.alignTo);
+                        addEvent(button.element, 'dblclick', stopEvent); // Stop double click event (#4444)
+                        chart.mapNavButtons.push(button);
+                    }
+                }
+            }
+        },
+
+        /**
+         * Fit an inner box to an outer. If the inner box overflows left or right, align it to the sides of the
+         * outer. If it overflows both sides, fit it within the outer. This is a pattern that occurs more places
+         * in Highcharts, perhaps it should be elevated to a common utility function.
+         */
+        fitToBox: function (inner, outer) {
+            each([['x', 'width'], ['y', 'height']], function (dim) {
+                var pos = dim[0],
+                    size = dim[1];
+
+                if (inner[pos] + inner[size] > outer[pos] + outer[size]) { // right overflow
+                    if (inner[size] > outer[size]) { // the general size is greater, fit fully to outer
+                        inner[size] = outer[size];
+                        inner[pos] = outer[pos];
+                    } else { // align right
+                        inner[pos] = outer[pos] + outer[size] - inner[size];
+                    }
+                }
+                if (inner[size] > outer[size]) {
+                    inner[size] = outer[size];
+                }
+                if (inner[pos] < outer[pos]) {
+                    inner[pos] = outer[pos];
+                }
+            });
+
+
+            return inner;
+        },
+
+        /**
+         * Zoom the map in or out by a certain amount. Less than 1 zooms in, greater than 1 zooms out.
+         */
+        mapZoom: function (howMuch, centerXArg, centerYArg, mouseX, mouseY) {
+            /*if (this.isMapZooming) {
+                this.mapZoomQueue = arguments;
+                return;
+            }*/
+
+            var chart = this,
+                xAxis = chart.xAxis[0],
+                xRange = xAxis.max - xAxis.min,
+                centerX = pick(centerXArg, xAxis.min + xRange / 2),
+                newXRange = xRange * howMuch,
+                yAxis = chart.yAxis[0],
+                yRange = yAxis.max - yAxis.min,
+                centerY = pick(centerYArg, yAxis.min + yRange / 2),
+                newYRange = yRange * howMuch,
+                fixToX = mouseX ? ((mouseX - xAxis.pos) / xAxis.len) : 0.5,
+                fixToY = mouseY ? ((mouseY - yAxis.pos) / yAxis.len) : 0.5,
+                newXMin = centerX - newXRange * fixToX,
+                newYMin = centerY - newYRange * fixToY,
+                newExt = chart.fitToBox({
+                    x: newXMin,
+                    y: newYMin,
+                    width: newXRange,
+                    height: newYRange
+                }, {
+                    x: xAxis.dataMin,
+                    y: yAxis.dataMin,
+                    width: xAxis.dataMax - xAxis.dataMin,
+                    height: yAxis.dataMax - yAxis.dataMin
+                });
+
+            // When mousewheel zooming, fix the point under the mouse
+            if (mouseX) {
+                xAxis.fixTo = [mouseX - xAxis.pos, centerXArg];
+            }
+            if (mouseY) {
+                yAxis.fixTo = [mouseY - yAxis.pos, centerYArg];
+            }
+
+            // Zoom
+            if (howMuch !== undefined) {
+                xAxis.setExtremes(newExt.x, newExt.x + newExt.width, false);
+                yAxis.setExtremes(newExt.y, newExt.y + newExt.height, false);
+
+            // Reset zoom
+            } else {
+                xAxis.setExtremes(undefined, undefined, false);
+                yAxis.setExtremes(undefined, undefined, false);
+            }
+
+            // Prevent zooming until this one is finished animating
+            /*chart.holdMapZoom = true;
+            setTimeout(function () {
+                chart.holdMapZoom = false;
+            }, 200);*/
+            /*delay = animation ? animation.duration || 500 : 0;
+            if (delay) {
+                chart.isMapZooming = true;
+                setTimeout(function () {
+                    chart.isMapZooming = false;
+                    if (chart.mapZoomQueue) {
+                        chart.mapZoom.apply(chart, chart.mapZoomQueue);
+                    }
+                    chart.mapZoomQueue = null;
+                }, delay);
+            }*/
+
+            chart.redraw();
+        }
+    });
+
+    /**
+     * Extend the Chart.render method to add zooming and panning
+     */
+    wrap(Chart.prototype, 'render', function (proceed) {
+        var chart = this,
+            mapNavigation = chart.options.mapNavigation;
+
+        // Render the plus and minus buttons. Doing this before the shapes makes getBBox much quicker, at least in Chrome.
+        chart.renderMapNavigation();
+
+        proceed.call(chart);
+    
+        // Add the double click event
+        if (pick(mapNavigation.enableDoubleClickZoom, mapNavigation.enabled) || mapNavigation.enableDoubleClickZoomTo) {
+            addEvent(chart.container, 'dblclick', function (e) {
+                chart.pointer.onContainerDblClick(e);
+            });
+        }
+
+        // Add the mousewheel event
+        if (pick(mapNavigation.enableMouseWheelZoom, mapNavigation.enabled)) {
+            addEvent(chart.container, doc.onmousewheel === undefined ? 'DOMMouseScroll' : 'mousewheel', function (e) {
+                chart.pointer.onContainerMouseWheel(e);
+                return false;
+            });
+        }
+    });
+
+
+    // Extend the Pointer
+    extend(Pointer.prototype, {
+
+        /**
+         * The event handler for the doubleclick event
+         */
+        onContainerDblClick: function (e) {
+            var chart = this.chart;
+
+            e = this.normalize(e);
+
+            if (chart.options.mapNavigation.enableDoubleClickZoomTo) {
+                if (chart.pointer.inClass(e.target, 'highcharts-tracker')) {
+                    chart.hoverPoint.zoomTo();
+                }
+            } else if (chart.isInsidePlot(e.chartX - chart.plotLeft, e.chartY - chart.plotTop)) {
+                chart.mapZoom(
+                    0.5,
+                    chart.xAxis[0].toValue(e.chartX),
+                    chart.yAxis[0].toValue(e.chartY),
+                    e.chartX,
+                    e.chartY
+                );
+            }
+        },
+
+        /**
+         * The event handler for the mouse scroll event
+         */
+        onContainerMouseWheel: function (e) {
+            var chart = this.chart,
+                delta;
+
+            e = this.normalize(e);
+
+            // Firefox uses e.detail, WebKit and IE uses wheelDelta
+            delta = e.detail || -(e.wheelDelta / 120);
+            if (chart.isInsidePlot(e.chartX - chart.plotLeft, e.chartY - chart.plotTop)) {
+                chart.mapZoom(
+                    Math.pow(chart.options.mapNavigation.mouseWheelSensitivity, delta),
+                    chart.xAxis[0].toValue(e.chartX),
+                    chart.yAxis[0].toValue(e.chartY),
+                    e.chartX,
+                    e.chartY
+                );
+            }
+        }
+    });
+
+    // Implement the pinchType option
+    wrap(Pointer.prototype, 'init', function (proceed, chart, options) {
+
+        proceed.call(this, chart, options);
+
+        // Pinch status
+        if (pick(options.mapNavigation.enableTouchZoom, options.mapNavigation.enabled)) {
+            this.pinchX = this.pinchHor = this.pinchY = this.pinchVert = this.hasZoom = true;
+        }
+    });
+
+    // Extend the pinchTranslate method to preserve fixed ratio when zooming
+    wrap(Pointer.prototype, 'pinchTranslate', function (proceed, pinchDown, touches, transform, selectionMarker, clip, lastValidTouch) {
+        var xBigger;
+        proceed.call(this, pinchDown, touches, transform, selectionMarker, clip, lastValidTouch);
+
+        // Keep ratio
+        if (this.chart.options.chart.type === 'map' && this.hasZoom) {
+            xBigger = transform.scaleX > transform.scaleY;
+            this.pinchTranslateDirection(
+                !xBigger,
+                pinchDown,
+                touches,
+                transform,
+                selectionMarker,
+                clip,
+                lastValidTouch,
+                xBigger ? transform.scaleX : transform.scaleY
+            );
+        }
+    });
+
+
+    // The vector-effect attribute is not supported in IE <= 11 (at least), so we need
+    // diffent logic (#3218)
+    var supportsVectorEffect = doc.documentElement.style.vectorEffect !== undefined;
+
+    /**
+     * Extend the default options with map options
+     */
+    defaultPlotOptions.map = merge(defaultPlotOptions.scatter, {
+        allAreas: true,
+
+        animation: false, // makes the complex shapes slow
+        nullColor: '#F8F8F8',
+        borderColor: 'silver',
+        borderWidth: 1,
+        marker: null,
+        stickyTracking: false,
+        dataLabels: {
+            formatter: function () { // #2945
+                return this.point.value;
+            },
+            inside: true, // for the color
+            verticalAlign: 'middle',
+            crop: false,
+            overflow: false,
+            padding: 0
+        },
+        turboThreshold: 0,
+        tooltip: {
+            followPointer: true,
+            pointFormat: '{point.name}: {point.value}<br/>'
+        },
+        states: {
+            normal: {
+                animation: true
+            },
+            hover: {
+                brightness: 0.2,
+                halo: null
+            }
+        }
+    });
+
+    /**
+     * The MapAreaPoint object
+     */
+    var MapAreaPoint = extendClass(Point, extend({
+        /**
+         * Extend the Point object to split paths
+         */
+        applyOptions: function (options, x) {
+
+            var point = Point.prototype.applyOptions.call(this, options, x),
+                series = this.series,
+                joinBy = series.joinBy,
+                mapPoint;
+
+            if (series.mapData) {
+                mapPoint = point[joinBy[1]] !== undefined && series.mapMap[point[joinBy[1]]];
+                if (mapPoint) {
+                    // This applies only to bubbles
+                    if (series.xyFromShape) {
+                        point.x = mapPoint._midX;
+                        point.y = mapPoint._midY;
+                    }
+                    extend(point, mapPoint); // copy over properties
+                } else {
+                    point.value = point.value || null;
+                }
+            }
+
+            return point;
+        },
+
+        /**
+         * Stop the fade-out
+         */
+        onMouseOver: function (e) {
+            clearTimeout(this.colorInterval);
+            if (this.value !== null) {
+                Point.prototype.onMouseOver.call(this, e);
+            } else { //#3401 Tooltip doesn't hide when hovering over null points
+                this.series.onMouseOut(e);
+            }
+        },
+        /**
+         * Custom animation for tweening out the colors. Animation reduces blinking when hovering
+         * over islands and coast lines. We run a custom implementation of animation becuase we
+         * need to be able to run this independently from other animations like zoom redraw. Also,
+         * adding color animation to the adapters would introduce almost the same amount of code.
+         */
+        onMouseOut: function () {
+            var point = this,
+                start = +new Date(),
+                normalColor = Color(point.color),
+                hoverColor = Color(point.pointAttr.hover.fill),
+                animation = point.series.options.states.normal.animation,
+                duration = animObject(animation).duration,
+                fill;
+
+            if (duration && normalColor.rgba.length === 4 && hoverColor.rgba.length === 4 && point.state !== 'select') {
+                fill = point.pointAttr[''].fill;
+                delete point.pointAttr[''].fill; // avoid resetting it in Point.setState
+
+                clearTimeout(point.colorInterval);
+                point.colorInterval = setInterval(function () {
+                    var pos = (new Date() - start) / duration,
+                        graphic = point.graphic;
+                    if (pos > 1) {
+                        pos = 1;
+                    }
+                    if (graphic) {
+                        graphic.attr('fill', ColorAxis.prototype.tweenColors.call(0, hoverColor, normalColor, pos));
+                    }
+                    if (pos >= 1) {
+                        clearTimeout(point.colorInterval);
+                    }
+                }, 13);
+            }
+            Point.prototype.onMouseOut.call(point);
+
+            if (fill) {
+                point.pointAttr[''].fill = fill;
+            }
+        },
+
+        /**
+         * Zoom the chart to view a specific area point
+         */
+        zoomTo: function () {
+            var point = this,
+                series = point.series;
+
+            series.xAxis.setExtremes(
+                point._minX,
+                point._maxX,
+                false
+            );
+            series.yAxis.setExtremes(
+                point._minY,
+                point._maxY,
+                false
+            );
+            series.chart.redraw();
+        }
+    }, colorPointMixin)
+    );
+
+    /**
+     * Add the series type
+     */
+    seriesTypes.map = extendClass(seriesTypes.scatter, merge(colorSeriesMixin, {
+        type: 'map',
+        pointClass: MapAreaPoint,
+        supportsDrilldown: true,
+        getExtremesFromAll: true,
+        useMapGeometry: true, // get axis extremes from paths, not values
+        forceDL: true,
+        searchPoint: noop,
+        directTouch: true, // When tooltip is not shared, this series (and derivatives) requires direct touch/hover. KD-tree does not apply.
+        preserveAspectRatio: true, // X axis and Y axis must have same translation slope
+        /**
+         * Get the bounding box of all paths in the map combined.
+         */
+        getBox: function (paths) {
+            var MAX_VALUE = Number.MAX_VALUE,
+                maxX = -MAX_VALUE,
+                minX =  MAX_VALUE,
+                maxY = -MAX_VALUE,
+                minY =  MAX_VALUE,
+                minRange = MAX_VALUE,
+                xAxis = this.xAxis,
+                yAxis = this.yAxis,
+                hasBox;
+
+            // Find the bounding box
+            each(paths || [], function (point) {
+
+                if (point.path) {
+                    if (typeof point.path === 'string') {
+                        point.path = Highcharts.splitPath(point.path);
+                    }
+
+                    var path = point.path || [],
+                        i = path.length,
+                        even = false, // while loop reads from the end
+                        pointMaxX = -MAX_VALUE,
+                        pointMinX =  MAX_VALUE,
+                        pointMaxY = -MAX_VALUE,
+                        pointMinY =  MAX_VALUE,
+                        properties = point.properties;
+
+                    // The first time a map point is used, analyze its box
+                    if (!point._foundBox) {
+                        while (i--) {
+                            if (typeof path[i] === 'number' && !isNaN(path[i])) {
+                                if (even) { // even = x
+                                    pointMaxX = Math.max(pointMaxX, path[i]);
+                                    pointMinX = Math.min(pointMinX, path[i]);
+                                } else { // odd = Y
+                                    pointMaxY = Math.max(pointMaxY, path[i]);
+                                    pointMinY = Math.min(pointMinY, path[i]);
+                                }
+                                even = !even;
+                            }
+                        }
+                        // Cache point bounding box for use to position data labels, bubbles etc
+                        point._midX = pointMinX + (pointMaxX - pointMinX) *
+                            (point.middleX || (properties && properties['hc-middle-x']) || 0.5); // pick is slower and very marginally needed
+                        point._midY = pointMinY + (pointMaxY - pointMinY) *
+                            (point.middleY || (properties && properties['hc-middle-y']) || 0.5);
+                        point._maxX = pointMaxX;
+                        point._minX = pointMinX;
+                        point._maxY = pointMaxY;
+                        point._minY = pointMinY;
+                        point.labelrank = pick(point.labelrank, (pointMaxX - pointMinX) * (pointMaxY - pointMinY));
+                        point._foundBox = true;
+                    }
+
+                    maxX = Math.max(maxX, point._maxX);
+                    minX = Math.min(minX, point._minX);
+                    maxY = Math.max(maxY, point._maxY);
+                    minY = Math.min(minY, point._minY);
+                    minRange = Math.min(point._maxX - point._minX, point._maxY - point._minY, minRange);
+                    hasBox = true;
+                }
+            });
+
+            // Set the box for the whole series
+            if (hasBox) {
+                this.minY = Math.min(minY, pick(this.minY, MAX_VALUE));
+                this.maxY = Math.max(maxY, pick(this.maxY, -MAX_VALUE));
+                this.minX = Math.min(minX, pick(this.minX, MAX_VALUE));
+                this.maxX = Math.max(maxX, pick(this.maxX, -MAX_VALUE));
+
+                // If no minRange option is set, set the default minimum zooming range to 5 times the
+                // size of the smallest element
+                if (xAxis && xAxis.options.minRange === undefined) {
+                    xAxis.minRange = Math.min(5 * minRange, (this.maxX - this.minX) / 5, xAxis.minRange || MAX_VALUE);
+                }
+                if (yAxis && yAxis.options.minRange === undefined) {
+                    yAxis.minRange = Math.min(5 * minRange, (this.maxY - this.minY) / 5, yAxis.minRange || MAX_VALUE);
+                }
+            }
+        },
+
+        getExtremes: function () {
+            // Get the actual value extremes for colors
+            Series.prototype.getExtremes.call(this, this.valueData);
+
+            // Recalculate box on updated data
+            if (this.chart.hasRendered && this.isDirtyData) {
+                this.getBox(this.options.data);
+            }
+
+            this.valueMin = this.dataMin;
+            this.valueMax = this.dataMax;
+
+            // Extremes for the mock Y axis
+            this.dataMin = this.minY;
+            this.dataMax = this.maxY;
+        },
+
+        /**
+         * Translate the path so that it automatically fits into the plot area box
+         * @param {Object} path
+         */
+        translatePath: function (path) {
+
+            var series = this,
+                even = false, // while loop reads from the end
+                xAxis = series.xAxis,
+                yAxis = series.yAxis,
+                xMin = xAxis.min,
+                xTransA = xAxis.transA,
+                xMinPixelPadding = xAxis.minPixelPadding,
+                yMin = yAxis.min,
+                yTransA = yAxis.transA,
+                yMinPixelPadding = yAxis.minPixelPadding,
+                i,
+                ret = []; // Preserve the original
+
+            // Do the translation
+            if (path) {
+                i = path.length;
+                while (i--) {
+                    if (typeof path[i] === 'number') {
+                        ret[i] = even ?
+                            (path[i] - xMin) * xTransA + xMinPixelPadding :
+                            (path[i] - yMin) * yTransA + yMinPixelPadding;
+                        even = !even;
+                    } else {
+                        ret[i] = path[i];
+                    }
+                }
+            }
+
+            return ret;
+        },
+
+        /**
+         * Extend setData to join in mapData. If the allAreas option is true, all areas
+         * from the mapData are used, and those that don't correspond to a data value
+         * are given null values.
+         */
+        setData: function (data, redraw) {
+            var options = this.options,
+                mapData = options.mapData,
+                joinBy = options.joinBy,
+                joinByNull = joinBy === null,
+                dataUsed = [],
+                mapMap = {},
+                mapPoint,
+                transform,
+                mapTransforms,
+                props,
+                i;
+
+            if (joinByNull) {
+                joinBy = '_i';
+            }
+            joinBy = this.joinBy = Highcharts.splat(joinBy);
+            if (!joinBy[1]) {
+                joinBy[1] = joinBy[0];
+            }
+
+            // Pick up numeric values, add index
+            if (data) {
+                each(data, function (val, i) {
+                    if (typeof val === 'number') {
+                        data[i] = {
+                            value: val
+                        };
+                    }
+                    if (joinByNull) {
+                        data[i]._i = i;
+                    }
+                });
+            }
+
+            this.getBox(data);
+            if (mapData) {
+                if (mapData.type === 'FeatureCollection') {
+                    if (mapData['hc-transform']) {
+                        this.chart.mapTransforms = mapTransforms = mapData['hc-transform'];
+                        // Cache cos/sin of transform rotation angle
+                        for (transform in mapTransforms) {
+                            if (mapTransforms.hasOwnProperty(transform) && transform.rotation) {
+                                transform.cosAngle = Math.cos(transform.rotation);
+                                transform.sinAngle = Math.sin(transform.rotation);
+                            }
+                        }
+                    }
+                    mapData = Highcharts.geojson(mapData, this.type, this);
+                }
+
+                this.mapData = mapData;
+
+                for (i = 0; i < mapData.length; i++) {
+                    mapPoint = mapData[i];
+                    props = mapPoint.properties;
+
+                    mapPoint._i = i;
+                    // Copy the property over to root for faster access
+                    if (joinBy[0] && props && props[joinBy[0]]) {
+                        mapPoint[joinBy[0]] = props[joinBy[0]];
+                    }
+                    mapMap[mapPoint[joinBy[0]]] = mapPoint;
+                }
+                this.mapMap = mapMap;
+
+                // Registered the point codes that actually hold data
+                if (data && joinBy[1]) {
+                    each(data, function (point) {
+                        if (mapMap[point[joinBy[1]]]) {
+                            dataUsed.push(mapMap[point[joinBy[1]]]);
+                        }
+                    });
+                }
+
+                if (options.allAreas) {
+                    this.getBox(mapData);
+                    data = data || [];            
+
+                    // Add those map points that don't correspond to data, which will be drawn as null points
+                    dataUsed = '|' + dataUsed.map(function (point) { 
+                        return point[joinBy[0]]; 
+                    }).join('|') + '|'; // String search is faster than array.indexOf
+                
+                    each(mapData, function (mapPoint) {
+                        if (!joinBy[0] || dataUsed.indexOf('|' + mapPoint[joinBy[0]] + '|') === -1) {
+                            data.push(merge(mapPoint, { value: null }));
+                        }
+                    });
+                } else {
+                    this.getBox(dataUsed); // Issue #4784
+                }
+            }
+            Series.prototype.setData.call(this, data, redraw);
+        },
+
+
+        /**
+         * No graph for the map series
+         */
+        drawGraph: noop,
+
+        /**
+         * We need the points' bounding boxes in order to draw the data labels, so
+         * we skip it now and call it from drawPoints instead.
+         */
+        drawDataLabels: noop,
+
+        /**
+         * Allow a quick redraw by just translating the area group. Used for zooming and panning
+         * in capable browsers.
+         */
+        doFullTranslate: function () {
+            return this.isDirtyData || this.chart.isResizing || this.chart.renderer.isVML || !this.baseTrans;
+        },
+
+        /**
+         * Add the path option for data points. Find the max value for color calculation.
+         */
+        translate: function () {
+            var series = this,
+                xAxis = series.xAxis,
+                yAxis = series.yAxis,
+                doFullTranslate = series.doFullTranslate();
+
+            series.generatePoints();
+
+            each(series.data, function (point) {
+
+                // Record the middle point (loosely based on centroid), determined
+                // by the middleX and middleY options.
+                point.plotX = xAxis.toPixels(point._midX, true);
+                point.plotY = yAxis.toPixels(point._midY, true);
+
+                if (doFullTranslate) {
+
+                    point.shapeType = 'path';
+                    point.shapeArgs = {
+                        d: series.translatePath(point.path)
+                    };
+                    if (supportsVectorEffect) {
+                        point.shapeArgs['vector-effect'] = 'non-scaling-stroke';
+                    }
+                }
+            });
+
+            series.translateColors();
+        },
+
+        /**
+         * Use the drawPoints method of column, that is able to handle simple shapeArgs.
+         * Extend it by assigning the tooltip position.
+         */
+        drawPoints: function () {
+            var series = this,
+                xAxis = series.xAxis,
+                yAxis = series.yAxis,
+                group = series.group,
+                chart = series.chart,
+                renderer = chart.renderer,
+                scaleX,
+                scaleY,
+                translateX,
+                translateY,
+                baseTrans = this.baseTrans;
+
+            // Set a group that handles transform during zooming and panning in order to preserve clipping
+            // on series.group
+            if (!series.transformGroup) {
+                series.transformGroup = renderer.g()
+                    .attr({
+                        scaleX: 1,
+                        scaleY: 1
+                    })
+                    .add(group);
+                series.transformGroup.survive = true;
+            }
+
+            // Draw the shapes again
+            if (series.doFullTranslate()) {
+
+                // Individual point actions
+                if (chart.hasRendered && series.pointAttrToOptions.fill === 'color') {
+                    each(series.points, function (point) {
+
+                        // Reset color on update/redraw
+                        if (point.shapeArgs) {
+                            point.shapeArgs.fill = point.pointAttr[pick(point.state, '')].fill; // #3529
+                        }
+                    });
+                }
+
+                // If vector-effect is not supported, we set the stroke-width on the group element
+                // and let all point graphics inherit. That way we don't have to iterate over all
+                // points to update the stroke-width on zooming.
+                if (!supportsVectorEffect) {
+                    each(series.points, function (point) {
+                        var attr = point.pointAttr[''];
+                        if (attr['stroke-width'] === series.pointAttr['']['stroke-width']) {
+                            attr['stroke-width'] = 'inherit';
+                        }
+                    });
+                }
+
+                // Draw them in transformGroup
+                series.group = series.transformGroup;
+                seriesTypes.column.prototype.drawPoints.apply(series);
+                series.group = group; // Reset
+
+                // Add class names
+                each(series.points, function (point) {
+                    if (point.graphic) {
+                        if (point.name) {
+                            point.graphic.addClass('highcharts-name-' + point.name.replace(' ', '-').toLowerCase());
+                        }
+                        if (point.properties && point.properties['hc-key']) {
+                            point.graphic.addClass('highcharts-key-' + point.properties['hc-key'].toLowerCase());
+                        }
+
+                        if (!supportsVectorEffect) {
+                            point.graphic['stroke-widthSetter'] = noop;
+                        }
+                    }
+                });
+
+                // Set the base for later scale-zooming. The originX and originY properties are the
+                // axis values in the plot area's upper left corner.
+                this.baseTrans = {
+                    originX: xAxis.min - xAxis.minPixelPadding / xAxis.transA,
+                    originY: yAxis.min - yAxis.minPixelPadding / yAxis.transA + (yAxis.reversed ? 0 : yAxis.len / yAxis.transA),
+                    transAX: xAxis.transA,
+                    transAY: yAxis.transA
+                };
+
+                // Reset transformation in case we're doing a full translate (#3789)
+                this.transformGroup.animate({
+                    translateX: 0,
+                    translateY: 0,
+                    scaleX: 1,
+                    scaleY: 1
+                });
+
+            // Just update the scale and transform for better performance
+            } else {
+                scaleX = xAxis.transA / baseTrans.transAX;
+                scaleY = yAxis.transA / baseTrans.transAY;
+                translateX = xAxis.toPixels(baseTrans.originX, true);
+                translateY = yAxis.toPixels(baseTrans.originY, true);
+
+                // Handle rounding errors in normal view (#3789)
+                if (scaleX > 0.99 && scaleX < 1.01 && scaleY > 0.99 && scaleY < 1.01) {
+                    scaleX = 1;
+                    scaleY = 1;
+                    translateX = Math.round(translateX);
+                    translateY = Math.round(translateY);
+                }
+
+                this.transformGroup.animate({
+                    translateX: translateX,
+                    translateY: translateY,
+                    scaleX: scaleX,
+                    scaleY: scaleY
+                });
+
+            }
+
+            // Set the stroke-width directly on the group element so the children inherit it. We need to use
+            // setAttribute directly, because the stroke-widthSetter method expects a stroke color also to be
+            // set.
+            if (!supportsVectorEffect) {
+                series.group.element.setAttribute('stroke-width', series.options.borderWidth / (scaleX || 1));
+            }
+
+            this.drawMapDataLabels();
+
+
+        },
+
+        /**
+         * Draw the data labels. Special for maps is the time that the data labels are drawn (after points),
+         * and the clipping of the dataLabelsGroup.
+         */
+        drawMapDataLabels: function () {
+
+            Series.prototype.drawDataLabels.call(this);
+            if (this.dataLabelsGroup) {
+                this.dataLabelsGroup.clip(this.chart.clipRect);
+            }
+        },
+
+        /**
+         * Override render to throw in an async call in IE8. Otherwise it chokes on the US counties demo.
+         */
+        render: function () {
+            var series = this,
+                render = Series.prototype.render;
+
+            // Give IE8 some time to breathe.
+            if (series.chart.renderer.isVML && series.data.length > 3000) {
+                setTimeout(function () {
+                    render.call(series);
+                });
+            } else {
+                render.call(series);
+            }
+        },
+
+        /**
+         * The initial animation for the map series. By default, animation is disabled.
+         * Animation of map shapes is not at all supported in VML browsers.
+         */
+        animate: function (init) {
+            var chart = this.chart,
+                animation = this.options.animation,
+                group = this.group,
+                xAxis = this.xAxis,
+                yAxis = this.yAxis,
+                left = xAxis.pos,
+                top = yAxis.pos;
+
+            if (chart.renderer.isSVG) {
+
+                if (animation === true) {
+                    animation = {
+                        duration: 1000
+                    };
+                }
+
+                // Initialize the animation
+                if (init) {
+
+                    // Scale down the group and place it in the center
+                    group.attr({
+                        translateX: left + xAxis.len / 2,
+                        translateY: top + yAxis.len / 2,
+                        scaleX: 0.001, // #1499
+                        scaleY: 0.001
+                    });
+
+                // Run the animation
+                } else {
+                    group.animate({
+                        translateX: left,
+                        translateY: top,
+                        scaleX: 1,
+                        scaleY: 1
+                    }, animation);
+
+                    // Delete this function to allow it only once
+                    this.animate = null;
+                }
+            }
+        },
+
+        /**
+         * Animate in the new series from the clicked point in the old series.
+         * Depends on the drilldown.js module
+         */
+        animateDrilldown: function (init) {
+            var toBox = this.chart.plotBox,
+                level = this.chart.drilldownLevels[this.chart.drilldownLevels.length - 1],
+                fromBox = level.bBox,
+                animationOptions = this.chart.options.drilldown.animation,
+                scale;
+
+            if (!init) {
+
+                scale = Math.min(fromBox.width / toBox.width, fromBox.height / toBox.height);
+                level.shapeArgs = {
+                    scaleX: scale,
+                    scaleY: scale,
+                    translateX: fromBox.x,
+                    translateY: fromBox.y
+                };
+
+                each(this.points, function (point) {
+                    if (point.graphic) {
+                        point.graphic
+                            .attr(level.shapeArgs)
+                            .animate({
+                                scaleX: 1,
+                                scaleY: 1,
+                                translateX: 0,
+                                translateY: 0
+                            }, animationOptions);
+                    }
+                });
+
+                this.animate = null;
+            }
+
+        },
+
+        drawLegendSymbol: LegendSymbolMixin.drawRectangle,
+
+        /**
+         * When drilling up, pull out the individual point graphics from the lower series
+         * and animate them into the origin point in the upper series.
+         */
+        animateDrillupFrom: function (level) {
+            seriesTypes.column.prototype.animateDrillupFrom.call(this, level);
+        },
+
+
+        /**
+         * When drilling up, keep the upper series invisible until the lower series has
+         * moved into place
+         */
+        animateDrillupTo: function (init) {
+            seriesTypes.column.prototype.animateDrillupTo.call(this, init);
+        }
+    }));
+
+
+
+    // The mapline series type
+    defaultPlotOptions.mapline = merge(defaultPlotOptions.map, {
+        lineWidth: 1,
+        fillColor: 'none'
+    });
+    seriesTypes.mapline = extendClass(seriesTypes.map, {
+        type: 'mapline',
+        pointAttrToOptions: { // mapping between SVG attributes and the corresponding options
+            stroke: 'color',
+            'stroke-width': 'lineWidth',
+            fill: 'fillColor',
+            dashstyle: 'dashStyle'
+        },
+        drawLegendSymbol: seriesTypes.line.prototype.drawLegendSymbol
+    });
+
+
+    // The mappoint series type
+    defaultPlotOptions.mappoint = merge(defaultPlotOptions.scatter, {
+        dataLabels: {
+            enabled: true,
+            formatter: function () { // #2945
+                return this.point.name;
+            },
+            crop: false,
+            defer: false,
+            overflow: false,
+            style: {
+                color: '#000000'
+            }
+        }
+    });
+    seriesTypes.mappoint = extendClass(seriesTypes.scatter, {
+        type: 'mappoint',
+        forceDL: true,
+        pointClass: extendClass(Point, {
+            applyOptions: function (options, x) {
+                var point = Point.prototype.applyOptions.call(this, options, x);
+                if (options.lat !== undefined && options.lon !== undefined) {
+                    point = extend(point, this.series.chart.fromLatLonToPoint(point));
+                }
+                return point;
+            }
+        })
+    });
+
+
+    // The mapbubble series type
+    if (seriesTypes.bubble) {
+
+        defaultPlotOptions.mapbubble = merge(defaultPlotOptions.bubble, {
+            animationLimit: 500,
+            tooltip: {
+                pointFormat: '{point.name}: {point.z}'
+            }
+        });
+        seriesTypes.mapbubble = extendClass(seriesTypes.bubble, {
+            pointClass: extendClass(Point, {
+                applyOptions: function (options, x) {
+                    var point;
+                    if (options && options.lat !== undefined && options.lon !== undefined) {
+                        point = Point.prototype.applyOptions.call(this, options, x);
+                        point = extend(point, this.series.chart.fromLatLonToPoint(point));
+                    } else {
+                        point = MapAreaPoint.prototype.applyOptions.call(this, options, x);
+                    }
+                    return point;
+                },
+                ttBelow: false
+            }),
+            xyFromShape: true,
+            type: 'mapbubble',
+            pointArrayMap: ['z'], // If one single value is passed, it is interpreted as z
+            /**
+             * Return the map area identified by the dataJoinBy option
+             */
+            getMapData: seriesTypes.map.prototype.getMapData,
+            getBox: seriesTypes.map.prototype.getBox,
+            setData: seriesTypes.map.prototype.setData
+        });
+    }
+
+    /**
+     * Extend the default options with map options
+     */
+    defaultOptions.plotOptions.heatmap = merge(defaultOptions.plotOptions.scatter, {
+        animation: false,
+        borderWidth: 0,
+        nullColor: '#F8F8F8',
+        dataLabels: {
+            formatter: function () { // #2945
+                return this.point.value;
+            },
+            inside: true,
+            verticalAlign: 'middle',
+            crop: false,
+            overflow: false,
+            padding: 0 // #3837
+        },
+        marker: null,
+        pointRange: null, // dynamically set to colsize by default
+        tooltip: {
+            pointFormat: '{point.x}, {point.y}: {point.value}<br/>'
+        },
+        states: {
+            normal: {
+                animation: true
+            },
+            hover: {
+                halo: false,  // #3406, halo is not required on heatmaps
+                brightness: 0.2
+            }
+        }
+    });
+
+    // The Heatmap series type
+    seriesTypes.heatmap = extendClass(seriesTypes.scatter, merge(colorSeriesMixin, {
+        type: 'heatmap',
+        pointArrayMap: ['y', 'value'],
+        hasPointSpecificOptions: true,
+        pointClass: extendClass(Point, colorPointMixin),
+        supportsDrilldown: true,
+        getExtremesFromAll: true,
+        directTouch: true,
+
+        /**
+         * Override the init method to add point ranges on both axes.
+         */
+        init: function () {
+            var options;
+            seriesTypes.scatter.prototype.init.apply(this, arguments);
+
+            options = this.options;
+            options.pointRange = pick(options.pointRange, options.colsize || 1); // #3758, prevent resetting in setData
+            this.yAxis.axisPointRange = options.rowsize || 1; // general point range
+        },
+        translate: function () {
+            var series = this,
+                options = series.options,
+                xAxis = series.xAxis,
+                yAxis = series.yAxis,
+                between = function (x, a, b) {
+                    return Math.min(Math.max(a, x), b);
+                };
+
+            series.generatePoints();
+
+            each(series.points, function (point) {
+                var xPad = (options.colsize || 1) / 2,
+                    yPad = (options.rowsize || 1) / 2,
+                    x1 = between(Math.round(xAxis.len - xAxis.translate(point.x - xPad, 0, 1, 0, 1)), 0, xAxis.len),
+                    x2 = between(Math.round(xAxis.len - xAxis.translate(point.x + xPad, 0, 1, 0, 1)), 0, xAxis.len),
+                    y1 = between(Math.round(yAxis.translate(point.y - yPad, 0, 1, 0, 1)), 0, yAxis.len),
+                    y2 = between(Math.round(yAxis.translate(point.y + yPad, 0, 1, 0, 1)), 0, yAxis.len);
+
+                // Set plotX and plotY for use in K-D-Tree and more
+                point.plotX = point.clientX = (x1 + x2) / 2;
+                point.plotY = (y1 + y2) / 2;
+
+                point.shapeType = 'rect';
+                point.shapeArgs = {
+                    x: Math.min(x1, x2),
+                    y: Math.min(y1, y2),
+                    width: Math.abs(x2 - x1),
+                    height: Math.abs(y2 - y1)
+                };
+            });
+
+            series.translateColors();
+
+            // Make sure colors are updated on colorAxis update (#2893)
+            if (this.chart.hasRendered) {
+                each(series.points, function (point) {
+                    point.shapeArgs.fill = point.options.color || point.color; // #3311
+                });
+            }
+        },
+        drawPoints: seriesTypes.column.prototype.drawPoints,
+        animate: noop,
+        getBox: noop,
+        drawLegendSymbol: LegendSymbolMixin.drawRectangle,
+
+        getExtremes: function () {
+            // Get the extremes from the value data
+            Series.prototype.getExtremes.call(this, this.valueData);
+            this.valueMin = this.dataMin;
+            this.valueMax = this.dataMax;
+
+            // Get the extremes from the y data
+            Series.prototype.getExtremes.call(this);
+        }
+
+    }));
+
+
+    /**
+     * Test for point in polygon. Polygon defined as array of [x,y] points.
+     */
+    function pointInPolygon(point, polygon) {
+        var i,
+            j,
+            rel1,
+            rel2,
+            c = false,
+            x = point.x,
+            y = point.y;
+
+        for (i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+            rel1 = polygon[i][1] > y;
+            rel2 = polygon[j][1] > y;
+            if (rel1 !== rel2 && (x < (polygon[j][0] - polygon[i][0]) * (y - polygon[i][1]) / (polygon[j][1] - polygon[i][1]) + polygon[i][0])) {
+                c = !c;
+            }
+        }
+
+        return c;
+    }
+
+    /**
+     * Get point from latLon using specified transform definition
+     */
+    Chart.prototype.transformFromLatLon = function (latLon, transform) {
+        if (win.proj4 === undefined) {
+            error(21);
+            return {
+                x: 0,
+                y: null
+            };
+        }
+
+        var projected = win.proj4(transform.crs, [latLon.lon, latLon.lat]),
+            cosAngle = transform.cosAngle || (transform.rotation && Math.cos(transform.rotation)),
+            sinAngle = transform.sinAngle || (transform.rotation && Math.sin(transform.rotation)),
+            rotated = transform.rotation ? [projected[0] * cosAngle + projected[1] * sinAngle, -projected[0] * sinAngle + projected[1] * cosAngle] : projected;
+
+        return {
+            x: ((rotated[0] - (transform.xoffset || 0)) * (transform.scale || 1) + (transform.xpan || 0)) * (transform.jsonres || 1) + (transform.jsonmarginX || 0),
+            y: (((transform.yoffset || 0) - rotated[1]) * (transform.scale || 1) + (transform.ypan || 0)) * (transform.jsonres || 1) - (transform.jsonmarginY || 0)
+        };
+    };
+
+    /**
+     * Get latLon from point using specified transform definition
+     */
+    Chart.prototype.transformToLatLon = function (point, transform) {
+        if (win.proj4 === undefined) {
+            error(21);
+            return;
+        }
+
+        var normalized = {
+                x: ((point.x - (transform.jsonmarginX || 0)) / (transform.jsonres || 1) - (transform.xpan || 0)) / (transform.scale || 1) + (transform.xoffset || 0),
+                y: ((-point.y - (transform.jsonmarginY || 0)) / (transform.jsonres || 1) + (transform.ypan || 0)) / (transform.scale || 1) + (transform.yoffset || 0)
+            },
+            cosAngle = transform.cosAngle || (transform.rotation && Math.cos(transform.rotation)),
+            sinAngle = transform.sinAngle || (transform.rotation && Math.sin(transform.rotation)),
+            // Note: Inverted sinAngle to reverse rotation direction
+            projected = win.proj4(transform.crs, 'WGS84', transform.rotation ? {
+                x: normalized.x * cosAngle + normalized.y * -sinAngle,
+                y: normalized.x * sinAngle + normalized.y * cosAngle
+            } : normalized);
+
+        return { lat: projected.y, lon: projected.x };
+    };
+
+    Chart.prototype.fromPointToLatLon = function (point) {
+        var transforms = this.mapTransforms,
+            transform;
+
+        if (!transforms) {
+            error(22);
+            return;
+        }
+
+        for (transform in transforms) {
+            if (transforms.hasOwnProperty(transform) && transforms[transform].hitZone && 
+                    pointInPolygon({ x: point.x, y: -point.y }, transforms[transform].hitZone.coordinates[0])) {
+                return this.transformToLatLon(point, transforms[transform]);
+            }
+        }
+
+        return this.transformToLatLon(point, transforms['default']); // eslint-disable-line dot-notation
+    };
+
+    Chart.prototype.fromLatLonToPoint = function (latLon) {
+        var transforms = this.mapTransforms,
+            transform,
+            coords;
+
+        if (!transforms) {
+            error(22);
+            return {
+                x: 0,
+                y: null
+            };
+        }
+
+        for (transform in transforms) {
+            if (transforms.hasOwnProperty(transform) && transforms[transform].hitZone) {
+                coords = this.transformFromLatLon(latLon, transforms[transform]);
+                if (pointInPolygon({ x: coords.x, y: -coords.y }, transforms[transform].hitZone.coordinates[0])) {
+                    return coords;
+                }
+            }
+        }
+
+        return this.transformFromLatLon(latLon, transforms['default']); // eslint-disable-line dot-notation
+    };
+
+    /**
+     * Convert a geojson object to map data of a given Highcharts type (map, mappoint or mapline).
+     */
+    Highcharts.geojson = function (geojson, hType, series) {
+        var mapData = [],
+            path = [],
+            polygonToPath = function (polygon) {
+                var i,
+                    len = polygon.length;
+                path.push('M');
+                for (i = 0; i < len; i++) {
+                    if (i === 1) {
+                        path.push('L');
+                    }
+                    path.push(polygon[i][0], -polygon[i][1]);
+                }
+            };
+
+        hType = hType || 'map';
+
+        each(geojson.features, function (feature) {
+
+            var geometry = feature.geometry,
+                type = geometry.type,
+                coordinates = geometry.coordinates,
+                properties = feature.properties,
+                point;
+
+            path = [];
+
+            if (hType === 'map' || hType === 'mapbubble') {
+                if (type === 'Polygon') {
+                    each(coordinates, polygonToPath);
+                    path.push('Z');
+
+                } else if (type === 'MultiPolygon') {
+                    each(coordinates, function (items) {
+                        each(items, polygonToPath);
+                    });
+                    path.push('Z');
+                }
+
+                if (path.length) {
+                    point = { path: path };
+                }
+
+            } else if (hType === 'mapline') {
+                if (type === 'LineString') {
+                    polygonToPath(coordinates);
+                } else if (type === 'MultiLineString') {
+                    each(coordinates, polygonToPath);
+                }
+
+                if (path.length) {
+                    point = { path: path };
+                }
+
+            } else if (hType === 'mappoint') {
+                if (type === 'Point') {
+                    point = {
+                        x: coordinates[0],
+                        y: -coordinates[1]
+                    };
+                }
+            }
+            if (point) {
+                mapData.push(extend(point, {
+                    name: properties.name || properties.NAME,
+                    properties: properties
+                }));
+            }
+
+        });
+
+        // Create a credits text that includes map source, to be picked up in Chart.showCredits
+        if (series && geojson.copyrightShort) {
+            series.chart.mapCredits = format(series.chart.options.credits.mapText, { geojson: geojson });
+            series.chart.mapCreditsFull = format(series.chart.options.credits.mapTextFull, { geojson: geojson });
+        }
+
+        return mapData;
+    };
+
+    /**
+     * Override showCredits to include map source by default
+     */
+    wrap(Chart.prototype, 'showCredits', function (proceed, credits) {
+
+        // Disable credits link if map credits enabled. This to allow for in-text anchors.
+        if (this.mapCredits) {
+            credits.href = null;
+        }
+
+        proceed.call(this, Highcharts.merge(credits, {
+            text: credits.text + (this.mapCredits || '') // Add map credits to credits text
+        }));
+
+        // Add full map credits to hover
+        if (this.credits && this.mapCreditsFull) {
+            this.credits.attr({
+                title: this.mapCreditsFull
+            });
+        }
+    });
+
+
+    // Add language
+    extend(defaultOptions.lang, {
+        zoomIn: 'Zoom in',
+        zoomOut: 'Zoom out'
+    });
+
+
+    // Set the default map navigation options
+    defaultOptions.mapNavigation = {
+        buttonOptions: {
+            alignTo: 'plotBox',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 0,
+            width: 18,
+            height: 18,
+            style: {
+                fontSize: '15px',
+                fontWeight: 'bold',
+                textAlign: 'center'
+            },
+            theme: {
+                'stroke-width': 1
+            }
+        },
+        buttons: {
+            zoomIn: {
+                onclick: function () {
+                    this.mapZoom(0.5);
+                },
+                text: '+',
+                y: 0
+            },
+            zoomOut: {
+                onclick: function () {
+                    this.mapZoom(2);
+                },
+                text: '-',
+                y: 28
+            }
+        },
+        mouseWheelSensitivity: 1.1
+        // enabled: false,
+        // enableButtons: null, // inherit from enabled
+        // enableTouchZoom: null, // inherit from enabled
+        // enableDoubleClickZoom: null, // inherit from enabled
+        // enableDoubleClickZoomTo: false
+        // enableMouseWheelZoom: null, // inherit from enabled
+    };
+
+    /**
+     * Utility for reading SVG paths directly.
+     */
+    Highcharts.splitPath = function (path) {
+        var i;
+
+        // Move letters apart
+        path = path.replace(/([A-Za-z])/g, ' $1 ');
+        // Trim
+        path = path.replace(/^\s*/, '').replace(/\s*$/, '');
+
+        // Split on spaces and commas
+        path = path.split(/[ ,]+/);
+
+        // Parse numbers
+        for (i = 0; i < path.length; i++) {
+            if (!/[a-zA-Z]/.test(path[i])) {
+                path[i] = parseFloat(path[i]);
+            }
+        }
+        return path;
+    };
+
+    // A placeholder for map definitions
+    Highcharts.maps = {};
+
+
+
+
+
+    // Create symbols for the zoom buttons
+    function selectiveRoundedRect(x, y, w, h, rTopLeft, rTopRight, rBottomRight, rBottomLeft) {
+        return ['M', x + rTopLeft, y,
+            // top side
+            'L', x + w - rTopRight, y,
+            // top right corner
+            'C', x + w - rTopRight / 2, y, x + w, y + rTopRight / 2, x + w, y + rTopRight,
+            // right side
+            'L', x + w, y + h - rBottomRight,
+            // bottom right corner
+            'C', x + w, y + h - rBottomRight / 2, x + w - rBottomRight / 2, y + h, x + w - rBottomRight, y + h,
+            // bottom side
+            'L', x + rBottomLeft, y + h,
+            // bottom left corner
+            'C', x + rBottomLeft / 2, y + h, x, y + h - rBottomLeft / 2, x, y + h - rBottomLeft,
+            // left side
+            'L', x, y + rTopLeft,
+            // top left corner
+            'C', x, y + rTopLeft / 2, x + rTopLeft / 2, y, x + rTopLeft, y,
+            'Z'
+        ];
+    }
+    SVGRenderer.prototype.symbols.topbutton = function (x, y, w, h, attr) {
+        return selectiveRoundedRect(x - 1, y - 1, w, h, attr.r, attr.r, 0, 0);
+    };
+    SVGRenderer.prototype.symbols.bottombutton = function (x, y, w, h, attr) {
+        return selectiveRoundedRect(x - 1, y - 1, w, h, 0, 0, attr.r, attr.r);
+    };
+    // The symbol callbacks are generated on the SVGRenderer object in all browsers. Even
+    // VML browsers need this in order to generate shapes in export. Now share
+    // them with the VMLRenderer.
+    if (Renderer === VMLRenderer) {
+        each(['topbutton', 'bottombutton'], function (shape) {
+            VMLRenderer.prototype.symbols[shape] = SVGRenderer.prototype.symbols[shape];
+        });
+    }
+
+
+    /**
+     * A wrapper for Chart with all the default values for a Map
+     */
+    Highcharts.Map = Highcharts.mapChart = function (a, b, c) {
+
+        var hasRenderToArg = typeof a === 'string' || a.nodeName,
+            options = arguments[hasRenderToArg ? 1 : 0],
+            hiddenAxis = {
+                endOnTick: false,
+                gridLineWidth: 0,
+                lineWidth: 0,
+                minPadding: 0,
+                maxPadding: 0,
+                startOnTick: false,
+                title: null,
+                tickPositions: []
+            },
+            seriesOptions,
+            defaultCreditsOptions = Highcharts.getOptions().credits;
+
+        /* For visual testing
+        hiddenAxis.gridLineWidth = 1;
+        hiddenAxis.gridZIndex = 10;
+        hiddenAxis.tickPositions = undefined;
+        // */
+
+        // Don't merge the data
+        seriesOptions = options.series;
+        options.series = null;
+
+        options = merge(
+            {
+                chart: {
+                    panning: 'xy',
+                    type: 'map'
+                },
+                credits: {
+                    mapText: pick(defaultCreditsOptions.mapText, ' \u00a9 <a href="{geojson.copyrightUrl}">{geojson.copyrightShort}</a>'),
+                    mapTextFull: pick(defaultCreditsOptions.mapTextFull, '{geojson.copyright}')
+                },
+                xAxis: hiddenAxis,
+                yAxis: merge(hiddenAxis, { reversed: true })
+            },
+            options, // user's options
+
+            { // forced options
+                chart: {
+                    inverted: false,
+                    alignTicks: false
+                }
+            }
+        );
+
+        options.series = seriesOptions;
+
+
+        return hasRenderToArg ? 
+            new Chart(a, options, c) :
+            new Chart(options, b);
+    };
+
+}));
+window.console && console.log('--- Running modules/map.src.js from GitHub, branch/commit/tag "v4.2.4" ---');

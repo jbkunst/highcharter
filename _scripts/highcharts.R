@@ -24,11 +24,12 @@ temperature <- c(7, 6.9, 9.5, 14.5, 18.2, 21.5,
 col1 <- hc_get_colors()[3]
 col2 <- hc_get_colors()[2]
 
+
 highchart() %>% 
   hc_title(text = "Tokyo Climate") %>% 
   hc_legend(enabled = FALSE) %>% 
   hc_xAxis(categories = month.abb) %>% 
-  hc_yAxis(
+  hc_yAxis_multiples(
     list(
       title = list(text = "Temperature"),
       align = "left",
@@ -46,12 +47,12 @@ highchart() %>%
     )
   ) %>% 
   hc_tooltip(formatter = JS("function(){
-                             if('Sunshine' == this.series.name){
-                             return  '<b>' + this.point.name + ': </b>' + this.y
-                             } else {
-                             unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
-                             return (this.x + ': ' + this.y + ' ' + unts)
-                             }}"),
+                            if('Sunshine' == this.series.name){
+                            return  '<b>' + this.point.name + ': </b>' + this.y
+                            } else {
+                            unts = this.series.name == 'Rainfall' ? 'mm' : '&#176;C';
+                            return (this.x + ': ' + this.y + ' ' + unts)
+                            }}"),
              useHTML = TRUE) %>% 
   hc_add_series(name = "Rainfall", type = "column",
                 data = rainfall, yAxis = 1) %>% 

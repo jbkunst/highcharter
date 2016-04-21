@@ -14,25 +14,76 @@ library("highcharter")
 #' objects like vectors, time series, treemaps, gejson, etc. 
 #' Let's check them
 #' 
-#' ### Scatter
+#' ### Add series from a list of series
 #' 
+#' Sometimes you create a list of data where each
+#' element is a data series (a list with data values and name). So,
+#' for dont repeat `hc_add_series` you can use `hc_add_series_list`
+#' 
+ds <- lapply(seq(10), function(x){
+  list(data = cumsum(rnorm(100, 1, 5)), name = x)
+})
 
+highchart() %>%
+  hc_plotOptions(
+    series = list(
+      showInLegend = FALSE,
+      marker = list(enabled = FALSE)
+      )
+    ) %>%
+  hc_add_series_list(ds)
+
+#' ### Data from data frame
+#' 
+#' With `hc_add_series_df` the data frame is
+#' automatically parsed so you can use the default parameters
+#' of highcharts such as `x`, `y`, `z`, `color`, `name`, `low`, 
+#' `high` (http://api.highcharts.com/highcharts#series<column>.data).
+
+
+require("dplyr")
+n <- 50
+df <- data_frame(
+  x = rnorm(n),
+  y = x * 2 + rnorm(n),
+  z =  x ^ 2,
+  color = colorize_vector(x),
+  extrainfo = sprintf("I have (%s, %s) coordiantes!", round(x, 2), round(y, 2))
+  )
+
+head(df)
+
+highchart() %>%
+  hc_tooltip(pointFormat = "{point.extrainfo}") %>% 
+  hc_add_series_df(data = df, type = "bubble")
+
+
+m <- 100
+s <- cumsum(rnorm(m))
+e <- 2 + rbeta(n, 2, 2)
+
+df2 <- data_frame(
+  x = seq(m),
+  low = s - e,
+  high = s + e,
+  name = paste("I'm point #%s", x),
+  color = colorize_vector(high, "B")
+)
+
+head(df2)
+
+highchart() %>%
+  hc_tooltip(valueDecimals = 2) %>% 
+  hc_add_series_df(data = df2, name = "I'm a columnrage series",
+                   type = "columnrange", showInLegend = FALSE)
+
+
+#' ### Scatters
+#' 
 highchart() %>% 
   hc_title(text = "Scatter chart with size and color") %>% 
   hc_add_series_scatter(mtcars$wt, mtcars$mpg,
                         mtcars$drat, mtcars$hp)
-
-#' Or we can add series one by one.
-hc <- highchart()
-for (cyl in unique(mtcars$cyl)) {
-  hc <- hc %>%
-    hc_add_series_scatter(mtcars$wt[mtcars$cyl == cyl],
-                          mtcars$mpg[mtcars$cyl == cyl],
-                          name = sprintf("Cyl %s", cyl),
-                          showInLegend = TRUE)
-}
-
-hc
 
 #' 
 #' ### From times and values
@@ -72,15 +123,6 @@ highchart(type = "stock") %>%
 #' You can also add markes or flag with `hc_add_series_flags`: 
 
 library("quantmod")
-
-x <- getSymbols("AAPL", auto.assign = FALSE)
-y <- getSymbols("SPY", auto.assign = FALSE)
-
-highchart() %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y)
-
-
 usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
 eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
 
@@ -107,9 +149,9 @@ highchart(type = "stock") %>%
 library("treemap")
 library("viridisLite")
 
-data(GNI2010)
+data(GNI2014)
 
-tm <- treemap(GNI2010, index = c("continent", "iso3"),
+tm <- treemap(GNI2014, index = c("continent", "iso3"),
               vSize = "population", vColor = "GNI",
               type = "value", palette = viridis(6))
 
@@ -159,14 +201,14 @@ highchart() %>%
 #' 
 
 data(worldgeojson)
-data(GNI2010, package = "treemap")
+data(GNI2014, package = "treemap")
 
 dshmstops <- data.frame(q = c(0, exp(1:5)/exp(5)), c = substring(viridis(5 + 1), 0, 7)) %>% 
   list.parse2()
 
 highchart() %>% 
   hc_title(text = "Charting GNI data") %>% 
-  hc_add_series_map(worldgeojson, GNI2010,
+  hc_add_series_map(worldgeojson, GNI2014,
                     value = "GNI", joinBy = "iso3") %>% 
   hc_colorAxis(stops = dshmstops) %>% 
   hc_add_theme(hc_theme_db())
