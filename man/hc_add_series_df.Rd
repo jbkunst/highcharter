@@ -9,7 +9,8 @@ hc_add_series_df(hc, data, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{data}{A data frame.}
+\item{data}{A data frame usually with columns: \code{x}, \code{y},
+\code{z}, \code{color}, \code{name}, \code{low}, \code{high}.}
 
 \item{...}{Aditional shared arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
@@ -33,17 +34,21 @@ highchart() \%>\%
 
 
 m <- 100
+s <- cumsum(rnorm(m))
+e <- 2 + rbeta(n, 2, 2)
+
 df2 <- data_frame(
-  e = rnorm(m),
-  y = e + c(1, diff(e))*0.9,
   x = seq(m),
-  low = y - 1*e,
-  high = y + 1*e,
-  color = colorize_vector(e, "A")
+  low = s - e,
+  high = s + e,
+  name = paste("I'm point #\%s", x),
+  color = colorize_vector(high, "B")
 )
 
-highchart() \%>\% 
-  hc_add_series_df(data = df2, type = "columnrange")
+highchart() \%>\%
+  hc_tooltip(valueDecimals = 2) \%>\% 
+  hc_add_series_df(data = df2, name = "I'm a columnrage series",
+                   type = "columnrange", showInLegend = FALSE)
 
 }
 

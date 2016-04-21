@@ -29,8 +29,15 @@ hc_add_series_list <- function(hc, lst) {
 
 #' Shorcut for add data series where data is a dataframe
 #' 
+#' Automatically parsed de data frame (to a list) so you can use the 
+#' default parameters of highcharts such as \code{x}, \code{y},
+#' \code{z}, \code{color}, \code{name}, \code{low}, \code{high} for 
+#' each series \url{http://api.highcharts.com/highcharts#series<bubble>.data}.
+#' 
 #' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param data A data frame.
+#' @param data A data frame usually with columns: \code{x}, \code{y},
+#'    \code{z}, \code{color}, \code{name}, \code{low}, \code{high}.
+#'    \url{http://api.highcharts.com/highcharts#series<bubble>.data}
 #' @param ... Aditional shared arguments for the data series 
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
@@ -48,19 +55,23 @@ hc_add_series_list <- function(hc, lst) {
 #' highchart() %>% 
 #'   hc_add_series_df(data = df, type = "bubble")
 #'
-#'
+#' 
 #' m <- 100
+#' s <- cumsum(rnorm(m))
+#' e <- 2 + rbeta(n, 2, 2)
+#' 
 #' df2 <- data_frame(
-#'   e = rnorm(m),
-#'   y = e + c(1, diff(e))*0.9,
 #'   x = seq(m),
-#'   low = y - 1*e,
-#'   high = y + 1*e,
-#'   color = colorize_vector(e, "A")
+#'   low = s - e,
+#'   high = s + e,
+#'   name = paste("I'm point #%s", x),
+#'   color = colorize_vector(high, "B")
 #' )
 #' 
-#' highchart() %>% 
-#'   hc_add_series_df(data = df2, type = "columnrange")
+#' highchart() %>%
+#'   hc_tooltip(valueDecimals = 2) %>% 
+#'   hc_add_series_df(data = df2, name = "I'm a columnrage series",
+#'                    type = "columnrange", showInLegend = FALSE)
 #' 
 #' @export
 hc_add_series_df <- function(hc, data, ...) {
