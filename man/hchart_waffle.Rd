@@ -4,7 +4,7 @@
 \alias{hchart_waffle}
 \title{Function to create  waffle charts}
 \usage{
-hchart_waffle(labels, counts, rows = NULL, icon = NULL, size = 4)
+hchart_waffle(labels, counts, rows = NULL, icons = NULL, size = 4)
 }
 \arguments{
 \item{labels}{A character vector}
@@ -13,11 +13,22 @@ hchart_waffle(labels, counts, rows = NULL, icon = NULL, size = 4)
 
 \item{rows}{A integer to set}
 
-\item{icon}{A string}
+\item{icons}{A character vector same length (o length 1) as labels}
 
 \item{size}{Font size}
 }
 \description{
 Function to create  waffle charts
+}
+\examples{
+
+hchart_waffle(c("nice", "good"), c(10, 20))
+
+hchart_waffle(c("nice", "good"), c(10, 20), size = 10)
+
+hchart_waffle(c("nice", "good"), c(100, 200), icons = "child")
+
+hchart_waffle(c("car", "truck", "plane"), c(50, 20, 10), icons = c("car", "truck", "plane"))
+
 }
 

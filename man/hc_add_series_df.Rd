@@ -10,13 +10,17 @@ hc_add_series_df(hc, data, ...)
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
 \item{data}{A data frame usually with columns: \code{x}, \code{y},
-\code{z}, \code{color}, \code{name}, \code{low}, \code{high}.}
+\code{z}, \code{color}, \code{name}, \code{low}, \code{high}.
+\url{http://api.highcharts.com/highcharts#series<bubble>.data}}
 
 \item{...}{Aditional shared arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-Shorcut for add data series where data is a dataframe
+Automatically parsed de data frame (to a list) so you can use the 
+default parameters of highcharts such as \code{x}, \code{y},
+\code{z}, \code{color}, \code{name}, \code{low}, \code{high} for 
+each series \url{http://api.highcharts.com/highcharts#series<bubble>.data}.
 }
 \examples{
 
