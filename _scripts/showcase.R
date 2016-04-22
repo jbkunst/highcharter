@@ -37,7 +37,16 @@ hc %>% hc_subtitle(text = "")
 #' 
 #' source: http://jkunst.com/r/pokemon-visualize-em-all/
 #' 
-printhc("hctmpkmn")
+hctm <- printhc("hctmpkmn")
+hctm$x$hc_opts$series[[1]]$levels <- list(
+  list(
+    level = 1, dataLabels = list(enabled = TRUE)
+  ),
+  list(
+    level = 2, dataLabels = list(enabled = FALSE)
+  )
+)
+hctm
 
 #'
 #' ### Weathers Radials
