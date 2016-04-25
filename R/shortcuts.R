@@ -431,3 +431,58 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @rdname hc_add_series_map
 #' @export
 hc_add_serie_map <- hc_add_series_map
+
+#' Shorcut for create boxplot 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param x A numerci vector
+#' @param by A string vector same length of \code{x}
+#' @param outliers A boolean value to show or not the outliers
+#' @param ... Aditional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#' @examples
+#' 
+#' highchart() %>% 
+#'   hc_add_series_boxplot(x = iris$Sepal.Length, by = iris$Species, name = "length") 
+#'   
+#' @importFrom grDevices boxplot.stats
+#' @importFrom purrr map2_df
+#' @export
+hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
+  
+  if(is.null(by)) {
+    by <- "value"
+  } else {
+    stopifnot(length(x) == length(by))
+  }
+  
+  df <- data_frame(value = x, by = by) %>% 
+    group_by(by) %>% 
+    do(data = boxplot.stats(.$value))
+  
+  bxps <- map(df$data, "stats")
+  
+  hc <- hc %>%
+    hc_xAxis(categories = df$by) %>% 
+    hc_add_series(data = bxps, type = "boxplot", ...)
+  
+  if(outliers) {
+    outs <- map2_df(seq(nrow(df)), df$data, function(x, y){
+      if(length(y$out) > 0)
+        data_frame(x = x - 1, y = y$out)
+      else
+        data_frame()
+    })
+    
+    if(nrow(outs) > 0)
+      hc <- hc %>%  hc_add_series_df(data = outs, name = "outliers", type = "scatter")
+    
+  }
+  
+  hc
+  
+}
+
+#' @export
+#' @rdname hc_add_series_boxplot
+hc_add_series_whisker <- hc_add_series_boxplot
