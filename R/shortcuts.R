@@ -264,10 +264,10 @@ hc_add_serie_labels_values <- hc_add_series_labels_values
 #' library("treemap")
 #' library("viridis")
 #' 
-#' data(GNI2010)
-#' head(GNI2010)
+#' data(GNI2014)
+#' head(GNI2014)
 #' 
-#' tm <- treemap(GNI2010, index = c("continent", "iso3"),
+#' tm <- treemap(GNI2014, index = c("continent", "iso3"),
 #'               vSize = "population", vColor = "GNI",
 #'               type = "comp", palette = rev(viridis(6)),
 #'               draw = FALSE)
