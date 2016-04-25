@@ -450,7 +450,7 @@ hc_add_serie_map <- hc_add_series_map
 #' @export
 hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
   
-  if(is.null(by)) {
+  if (is.null(by)) {
     by <- "value"
   } else {
     stopifnot(length(x) == length(by))
@@ -466,16 +466,29 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
     hc_xAxis(categories = df$by) %>% 
     hc_add_series(data = bxps, type = "boxplot", ...)
   
-  if(outliers) {
+  if (outliers) {
     outs <- map2_df(seq(nrow(df)), df$data, function(x, y){
-      if(length(y$out) > 0)
-        data_frame(x = x - 1, y = y$out)
+      if (length(y$out) > 0)
+        d <- data_frame(x = x - 1, y = y$out)
       else
-        data_frame()
+        d <- data_frame()
+      d
     })
     
-    if(nrow(outs) > 0)
-      hc <- hc %>%  hc_add_series_df(data = outs, name = "outliers", type = "scatter")
+    if (nrow(outs) > 0) {
+      hc <- hc %>%
+        hc_add_series_df(
+          data = outs, name = "outliers", type = "scatter",linkedTo = ":previous",
+          marker = list(...),
+          tooltip = list(
+            headerFormat = "<span>{point.key}</span><br/>",
+            # pointFormat = "Observation: {point.y}"
+            pointFormat = "<span style='color:{point.color}'></span> Outlier: <b>{point.y}</b><br/>"
+          ),
+          ...
+        )
+    }
+    
     
   }
   

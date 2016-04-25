@@ -5,51 +5,64 @@ suppressPackageStartupMessages(library(purrr))
 
 options(highcharter.theme = hc_theme_smpl())
 
-hc_add_series_boxplot <- function(hc, value, by = NULL, outilers = TRUE, ...) {
+hc <- highchart()
+... <- NULL
+
+hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
   
-  if(is.null(by)) {
+  if (is.null(by)) {
     by <- "value"
   } else {
-    stopifnot(length(value) == length(by))
+    stopifnot(length(x) == length(by))
   }
   
-  df <- data_frame(x = value, by = by) %>% 
+  df <- data_frame(value = x, by = by) %>% 
     group_by(by) %>% 
     do(data = boxplot.stats(.$value))
   
   bxps <- map(df$data, "stats")
-
+  
   hc <- hc %>%
     hc_xAxis(categories = df$by) %>% 
     hc_add_series(data = bxps, type = "boxplot", ...)
   
-  if(outilers) {
+  if (outliers) {
     outs <- map2_df(seq(nrow(df)), df$data, function(x, y){
-      if(length(y$out) > 0)
-        data_frame(x = x - 1, y = y$out)
+      if (length(y$out) > 0)
+        d <- data_frame(x = x - 1, y = y$out)
       else
-        data_frame()
+        d <- data_frame()
+      d
     })
     
-    if(nrow(outs) > 0)
-      hc <- hc %>%  hc_add_series_df(data = outs, name = "outliers", type = "scatter")
-   
+    if (nrow(outs) > 0) {
+      hc <- hc %>%
+        hc_add_series_df(
+          data = outs, name = "outliers", type = "scatter",linkedTo = ":previous",
+          marker = list(...),
+          tooltip = list(
+            headerFormat = "<span>{point.key}</span><br/>",
+            # pointFormat = "Observation: {point.y}"
+            pointFormat = "<span style='color:{point.color}'></span> Outlier: <b>{point.y}</b><br/>"
+            ),
+          ...
+          )
+    }
+      
+    
   }
   
   hc
-
+  
 }
 
 # I think its better use a more autoexplained name
 hc_add_series_whisker <- hc_add_series_boxplot
 
-
-
 highchart() %>% 
-  hc_add_series_boxplot(x = mtcars$mpg, by = mtcars$cyl, name = "mpg") 
-
-highchart() %>% 
-  hc_add_series_boxplot(x = iris$Sepal.Length, by = iris$Species, name = "length")
+  hc_add_series_boxplot(x = iris$Sepal.Length, by = iris$Species,
+                        name = "length", color = "red",
+                        fillColor = "transparent", lineColor = "red",  lineWidth = 1)
 
 # support omitted `by` option
 hc_add_series_boxplot(hc = highchart(), x = iris$Sepal.Length) 
@@ -58,12 +71,21 @@ hc_add_series_boxplot(hc = highchart(), x = iris$Sepal.Length)
 library(diamonds, package = "ggplot2")
 head(diamonds)
 
+
 highchart() %>% 
-  hc_add_series_boxplot(diamonds$x, diamonds$color, name = "X") 
+  hc_add_series_boxplot(diamonds$x, diamonds$color, name = "X", color = "#2980b9") 
 
-
+highchart() %>% 
+  hc_add_series_boxplot(diamonds$x, diamonds$color, name = "X", color = "red") %>% 
+  hc_plotOptions(scatter = list(marker = list(fillColor = "transparent", lineWidth = 1, lineColor = "red")))
+  
+  
 # here y remove outliers because the use the SAME x coordinates
 highchart() %>% 
-  hc_add_series_boxplot(diamonds$x, diamonds$color, outilers = FALSE, name = "x") %>%
-  hc_add_series_boxplot(diamonds$y, diamonds$color, outilers = FALSE, name = "y") %>% 
-  hc_add_series_boxplot(diamonds$z, diamonds$color, outilers = FALSE, name = "z") 
+  hc_add_series_boxplot(diamonds$x, diamonds$color, outliers = FALSE, name = "x") %>%
+  hc_add_series_boxplot(diamonds$y, diamonds$color, outliers = FALSE, name = "y")
+
+highchart() %>% 
+  hc_add_series_boxplot(x = diamonds$x, by = diamonds$color, name = "x") %>%
+  hc_add_series_boxplot(diamonds$y, diamonds$color, name = "y") %>% 
+  hc_add_series_boxplot(diamonds$z, diamonds$color, name = "z") 
