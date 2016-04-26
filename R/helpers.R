@@ -12,14 +12,19 @@
 #' 
 #' list.parse3(x)
 #' 
+#' @importFrom purrr transpose
 #' @export
 list.parse2 <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  res <- apply(df, 1, function(r) as.list(as.vector(r)))
+  # res <- apply(df, 1, function(r) as.list(as.vector(r)))
+  # names(res) <- NULL
   
-  names(res) <- NULL
+  res <- df %>% 
+    map(identity) %>%  
+    transpose() %>% 
+    map(function(x) setNames(x, NULL))
   
   res
   
