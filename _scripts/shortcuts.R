@@ -11,10 +11,11 @@ library("highcharter")
 #' <div id ="toc"></div>
 #' 
 #' There are some functions to add data from differents
-#' objects like vectors, time series, treemaps, gejson, etc. 
-#' Let's check them
+#' objects like vectors, time series, treemaps, gejson, or make 
+#' special charts like boxplots. 
 #' 
-#' ### Add series from a list of series
+#' 
+#' ### List of series
 #' 
 #' Sometimes you create a list of data where each
 #' element is a data series (a list with data values and name). So,
@@ -33,7 +34,7 @@ highchart() %>%
     ) %>%
   hc_add_series_list(ds)
 
-#' ### Data from data frame
+#' ### Data frame
 #' 
 #' With `hc_add_series_df` the data frame is
 #' automatically parsed so you can use the default parameters
@@ -137,7 +138,7 @@ highchart(type = "stock") %>%
                       id = "usdjpy") %>% 
   hc_rangeSelector(inputEnabled = FALSE) %>% 
   hc_scrollbar(enabled = FALSE) %>% 
-  hc_add_theme(hc_theme_gridlight()) 
+  hc_add_theme(hc_theme_smpl()) 
 
 
 #' 
@@ -155,7 +156,7 @@ tm <- treemap(GNI2014, index = c("continent", "iso3"),
               vSize = "population", vColor = "GNI",
               type = "value", palette = viridis(6))
 
-hc_tm <- highchart(height = 800) %>% 
+hc_tm <- highchart() %>% 
   hc_add_series_treemap(tm, allowDrillToNode = TRUE,
                         layoutAlgorithm = "squarified",
                         name = "tmdata") %>% 
@@ -193,6 +194,14 @@ highchart() %>%
   hc_credits(enabled = TRUE, text = "Source: HIMYM",
              href = "https://www.youtube.com/watch?v=f_J8QU1m0Ng",
              style = list(fontSize = "12px"))
+
+#' ### Boxplot
+#' 
+data(diamonds, package = "ggplot2")
+
+highchart() %>% 
+  hc_add_series_boxplot(diamonds$x, diamonds$color,
+                        name = "X", color = "#2980b9") 
 
 #' 
 #' ### Maps & geojson
