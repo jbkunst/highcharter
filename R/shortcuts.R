@@ -58,7 +58,7 @@ hc_add_series_list <- function(hc, lst) {
 #' 
 #' m <- 100
 #' s <- cumsum(rnorm(m))
-#' e <- 2 + rbeta(n, 2, 2)
+#' e <- 2 + rbeta(m, 2, 2)
 #' 
 #' df2 <- data_frame(
 #'   x = seq(m),
