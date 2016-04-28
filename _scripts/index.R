@@ -12,7 +12,7 @@ try(source("helpers.R"))
 get_demos()
 
 #'
-#' Highcharter is a [R](https://cran.r-project.org/) wrapper for highcharts javascript
+#' Highcharter is a [R](https://cran.r-project.org/) wrapper for **Highcharts** javascript
 #' libray and its modules. Highcharts is very mature and flexible javascript charting library and
 #'  it has a great and powerful API^[See http://www.highcharts.com/demo].
 #' 
@@ -27,7 +27,7 @@ get_demos()
 #' fly. The resulting chart is a highchart object so you
 #' can keep modifying with the implmented API.
 #' - Themes. Highcharts is super really flexible to create themes.
-#' - Plugin implementations
+#' - Plugin implementations such a motion, font awesome and drag plugins.
 #' 
 #' 
 #' ### Hello World Example 
@@ -55,10 +55,10 @@ hc
 
 data(diamonds, package = "ggplot2")
 
-hchart(diamonds$price, color = "#B71C1C") %>% 
+hchart(diamonds$price, color = "#B71C1C", name = "Price") %>% 
   hc_title(text = "You can zoom me")
 
-hchart(diamonds$cut, colorByPoint = TRUE)
+hchart(diamonds$cut, colorByPoint = TRUE, name = "Cut")
 
 #' 
 #' One of the nicest class which `hchart` can plot is the `forecast`
@@ -71,7 +71,7 @@ airforecast <- forecast(auto.arima(AirPassengers), level = 95)
 
 hchart(airforecast) %>%
   hc_title(text = "Charting Example using hchart") %>% 
-  hc_add_theme(hc_theme_economist())
+  hc_add_theme(hc_theme_smpl())
 
 
 #' 
