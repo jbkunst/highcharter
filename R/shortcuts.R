@@ -478,7 +478,9 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
     if (nrow(outs) > 0) {
       hc <- hc %>%
         hc_add_series_df(
-          data = outs, name = "outliers", type = "scatter",linkedTo = ":previous",
+          data = outs,
+          name = str_trim(paste(list(...)$name, "outliers")),
+          type = "scatter", #linkedTo = ":previous",
           marker = list(...),
           tooltip = list(
             headerFormat = "<span>{point.key}</span><br/>",
