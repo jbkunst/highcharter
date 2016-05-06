@@ -9,5 +9,5 @@
 #' @format A \code{list} in geojson format.
 #' @examples
 #' data(worldgeojson)
-#' worldgeojson
+#' head(worldgeojson)
 NULL

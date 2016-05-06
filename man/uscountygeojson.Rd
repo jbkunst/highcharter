@@ -14,6 +14,6 @@ and is used in highmaps examples.
 }
 \examples{
 data(uscountygeojson)
-uscountygeojson
+head(uscountygeojson)
 }
 

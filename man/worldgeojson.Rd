@@ -14,6 +14,6 @@ and is used in highmaps examples.#'
 }
 \examples{
 data(worldgeojson)
-worldgeojson
+head(worldgeojson)
 }
 
