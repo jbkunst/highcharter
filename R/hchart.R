@@ -147,14 +147,14 @@ hchart.acf <- function(object, ...){
 }
 
 #' @export
-hchart.mts <- function(object, ...) {
+hchart.mts <- function(object, ..., heights =  rep(1, ncol(object)), sep = 0.01) {
   
   hc <- highchart(type = "stock")
   
   for (i in seq(dim(object)[2])) {
     nm <- attr(object, "dimnames")[[2]][i]
-    if (class(object[, i]) == "ts") 
-      hc <- hc %>% hc_add_series_ts(object[, i], name = nm, ...)  
+    if ("ts" %in% class(object[, i]))
+      hc <- hc %>% hc_add_series_ts(object[, i], name = nm, ...)
     else
       hc <- hc %>% hc_add_series_xts(object[, i], name = nm, ...)  
   }
@@ -163,7 +163,7 @@ hchart.mts <- function(object, ...) {
 }
 
 #' @export
-hchart.stl <- function(object, ..., widths = c(2, 1, 1, 1), sep = 0.01) {
+hchart.stl <- function(object, ..., heights = c(2, 1, 1, 1), sep = 0.01) {
   
   tss <- object$time.series
   ncomp <- ncol(tss)
@@ -172,7 +172,7 @@ hchart.stl <- function(object, ..., widths = c(2, 1, 1, 1), sep = 0.01) {
   
   pcnt <- function(x) paste0(x * 100, "%")
   
-  p <- widths/sum(widths)
+  p <- heights/sum(heights)
   p <- c(p[1], sep, p[2], sep, p[3], sep, p[4])
   
   p <- round(p/sum(p), 2)
