@@ -466,7 +466,7 @@ hchart.dendrogram <- function(object, ...) {
 #' 
 #' @examples
 #' # Plot Kaplan-Meier curves
-#' library(survival)
+#' require(`survival`)
 #' leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
 #' hchart(leukemia.surv)
 #' 
