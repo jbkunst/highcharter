@@ -459,7 +459,7 @@ hchart.dendrogram <- function(object, ...) {
 #' @param markerColor Color of the marker ("black" by default); use NULL to use
 #' the respective color of each series
 #' @param ranges Plot interval ranges? FALSE by default
-#' @param rangeOpacity Opacity of the interval ranges (0.3 by default)
+#' @param rangesOpacity Opacity of the interval ranges (0.3 by default)
 #' 
 #' @return Highcharts object to plot survival curves
 #' @export
