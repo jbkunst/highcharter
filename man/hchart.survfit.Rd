@@ -32,7 +32,7 @@ the respective color of each series}
 
 \item{ranges}{Plot interval ranges? FALSE by default}
 
-\item{rangeOpacity}{Opacity of the interval ranges (0.3 by default)}
+\item{rangesOpacity}{Opacity of the interval ranges (0.3 by default)}
 }
 \value{
 Highcharts object to plot survival curves
