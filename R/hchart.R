@@ -11,7 +11,7 @@
 #'    (\url{http://api.highcharts.com/highcharts#series}).
 #'    
 #' @export
-hchart <- functiokn(object, ...){
+hchart <- function(object, ...){
   
   UseMethod("hchart")
 
