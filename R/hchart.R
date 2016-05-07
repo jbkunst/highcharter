@@ -11,7 +11,7 @@
 #'    (\url{http://api.highcharts.com/highcharts#series}).
 #'    
 #' @export
-hchart <- function(object, ...){
+hchart <- functiokn(object, ...){
   
   UseMethod("hchart")
 
@@ -465,7 +465,7 @@ hchart.dendrogram <- function(object, ...) {
 #' @export
 #' 
 #' @examples
-#' # Plot Keplen-Meier curves
+#' # Plot Kaplan-Meier curves
 #' library(survival)
 #' leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
 #' hchart(leukemia.surv)
