@@ -41,7 +41,7 @@ Highcharts object to plot survival curves
 Plot survival curves using Highcharts
 }
 \examples{
-# Plot Keplen-Meier curves
+# Plot Kaplan-Meier curves
 library(survival)
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
 hchart(leukemia.surv)
