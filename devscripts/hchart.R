@@ -111,3 +111,7 @@ class(x)
 plot(x)
 hchart(x)
 
+#' ### Correlation Matrix
+x <- cor(mtcars)
+hchart(x)
+
