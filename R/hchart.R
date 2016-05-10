@@ -518,7 +518,7 @@ hchart.dendrogram <- function(object, ...) {
 #' -log(y)), and \code{cloglog} creates a complimentary log-log survival plot
 #' (f(y) = log(-log(y)) along with log scale for the x-axis.
 #' @param markTimes Label curves marked at each censoring time? TRUE by default
-#' @param markerSymbol Symbol to use as marker (plus sign by default)
+#' @param symbol Symbol to use as marker (plus sign by default)
 #' @param markerColor Color of the marker ("black" by default); use NULL to use
 #' the respective color of each series
 #' @param ranges Plot interval ranges? FALSE by default
@@ -541,8 +541,7 @@ hchart.dendrogram <- function(object, ...) {
 #' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
 #' ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
 #' hchart(ovarian.surv, ranges = TRUE)
-hchart.survfit <- function(object, fun=NULL, markTimes=TRUE,
-                           markerSymbol=fa_icon_mark("plus"),
+hchart.survfit <- function(object, fun=NULL, markTimes=TRUE, symbol="triangle",
                            markerColor="black", ranges=FALSE,
                            rangesOpacity=0.3) {
   # Check if there are groups
@@ -582,8 +581,7 @@ hchart.survfit <- function(object, fun=NULL, markTimes=TRUE,
                      stringsAsFactors = FALSE)
   
   # Data markers
-  marker <- list(list(fillColor=markerColor, symbol=markerSymbol,
-                      enabled=TRUE))
+  marker <- list(list(fillColor=markerColor, symbol=symbol, enabled=TRUE))
   if(markTimes)
     mark <- object$n.censor == 1
   else
