@@ -20,7 +20,7 @@ hchart(fc)
 # autoplot of an stl object
 autoplot(stl(mdeaths, s.window = "periodic", robust = TRUE))
 hchart(stl(mdeaths, s.window = "periodic", robust = TRUE))
-
+tas
 
 
 # Plotting multiple forecasts in one plot

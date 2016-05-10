@@ -6,6 +6,9 @@
 
 .onLoad <- function(libname = find.package("highcharter"), pkgname = "highcharter") {
   
+  message("Highcharts (www.highcharts.com) is a Highsoft software product")
+  message("which is not free for commercial and Governmental use")
+  
   options(highcharter.global = list(
     Date = NULL,
     VMLRadialGradientURL = "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
