@@ -4,12 +4,14 @@
 \alias{hchart.survfit}
 \title{Plot survival curves using Highcharts}
 \usage{
-\method{hchart}{survfit}(object, fun = NULL, ymin = 0, ymax = 1,
-  markTimes = TRUE, markerSymbol = fa_icon_mark("plus"),
-  markerColor = "black", ranges = FALSE, rangesOpacity = 0.3)
+\method{hchart}{survfit}(object, ..., fun = NULL, markTimes = TRUE,
+  symbol = "triangle", markerColor = "black", ranges = FALSE,
+  rangesOpacity = 0.3)
 }
 \arguments{
 \item{object}{A survfit object as returned from the \code{survfit} function}
+
+\item{...}{Extra parameters to pass to \code{hc_add_series} function}
 
 \item{fun}{Name of function or function used to transform the survival curve:
 \code{log} will put y axis on log scale, \code{event} plots cumulative events
@@ -17,15 +19,9 @@
 -log(y)), and \code{cloglog} creates a complimentary log-log survival plot
 (f(y) = log(-log(y)) along with log scale for the x-axis.}
 
-\item{ymin}{Minimum Y axis value to plot if all Y values are higher than the 
-indicated (0 by default)}
-
-\item{ymax}{Maximum Y axis value to plot if all Y values are lower than the 
-indicated (1 by default)}
-
 \item{markTimes}{Label curves marked at each censoring time? TRUE by default}
 
-\item{markerSymbol}{Symbol to use as marker (plus sign by default)}
+\item{symbol}{Symbol to use as marker (plus sign by default)}
 
 \item{markerColor}{Color of the marker ("black" by default); use NULL to use
 the respective color of each series}
