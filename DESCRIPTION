@@ -41,5 +41,6 @@ Imports:
     ape
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    survival
 VignetteBuilder: knitr
