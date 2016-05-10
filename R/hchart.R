@@ -517,10 +517,6 @@ hchart.dendrogram <- function(object, ...) {
 #' (f(y) = 1-y), \code{cumhaz} plots the cumulative hazard function (f(y) =
 #' -log(y)), and \code{cloglog} creates a complimentary log-log survival plot
 #' (f(y) = log(-log(y)) along with log scale for the x-axis.
-#' @param ymin Minimum Y axis value to plot if all Y values are higher than the 
-#' indicated (0 by default)
-#' @param ymax Maximum Y axis value to plot if all Y values are lower than the 
-#' indicated (1 by default)
 #' @param markTimes Label curves marked at each censoring time? TRUE by default
 #' @param markerSymbol Symbol to use as marker (plus sign by default)
 #' @param markerColor Color of the marker ("black" by default); use NULL to use
@@ -545,7 +541,7 @@ hchart.dendrogram <- function(object, ...) {
 #' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
 #' ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
 #' hchart(ovarian.surv, ranges = TRUE)
-hchart.survfit <- function(object, fun=NULL, ymin=0, ymax=1, markTimes=TRUE,
+hchart.survfit <- function(object, fun=NULL, markTimes=TRUE,
                            markerSymbol=fa_icon_mark("plus"),
                            markerColor="black", ranges=FALSE,
                            rangesOpacity=0.3) {
@@ -595,8 +591,8 @@ hchart.survfit <- function(object, fun=NULL, ymin=0, ymax=1, markTimes=TRUE,
   
   # Adjust Y axis range
   yValues <- object$surv
-  ymin <- ifelse(min(yValues) >= ymin, ymin, min(yValues))
-  ymax <- ifelse(max(yValues) <= ymax, ymax, max(yValues))
+  ymin <- ifelse(min(yValues) >= 0, 0, min(yValues))
+  ymax <- ifelse(max(yValues) <= 1, 1, max(yValues))
   
   hc <- highchart() %>%
     hc_tooltip(shared = TRUE) %>%
