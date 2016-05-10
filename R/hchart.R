@@ -512,6 +512,7 @@ hchart.dendrogram <- function(object, ...) {
 #' Plot survival curves using Highcharts
 #' 
 #' @param object A survfit object as returned from the \code{survfit} function
+#' @param ... Extra parameters to pass to \code{hc_add_series} function
 #' @param fun Name of function or function used to transform the survival curve:
 #' \code{log} will put y axis on log scale, \code{event} plots cumulative events
 #' (f(y) = 1-y), \code{cumhaz} plots the cumulative hazard function (f(y) =
@@ -541,8 +542,8 @@ hchart.dendrogram <- function(object, ...) {
 #' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
 #' ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
 #' hchart(ovarian.surv, ranges = TRUE)
-hchart.survfit <- function(object, fun=NULL, markTimes=TRUE, symbol="triangle",
-                           markerColor="black", ranges=FALSE,
+hchart.survfit <- function(object, ..., fun=NULL, markTimes=TRUE,
+                           symbol="triangle", markerColor="black", ranges=FALSE,
                            rangesOpacity=0.3) {
   # Check if there are groups
   if (is.null(object$strata))
@@ -629,7 +630,8 @@ hchart.survfit <- function(object, fun=NULL, markTimes=TRUE, symbol="triangle",
     
     hc <- hc %>% hc_add_series(
       data=c(first, ls), step="left", name=name, zIndex=1,
-      color=JS("Highcharts.getOptions().colors[", count, "]"))
+      color=JS("Highcharts.getOptions().colors[", count, "]"),
+      ...)
     
     if (ranges && !is.null(object$upper)) {
       # Add interval range
@@ -639,7 +641,8 @@ hchart.survfit <- function(object, fun=NULL, markTimes=TRUE, symbol="triangle",
         data=range, step="left", name="Ranges", type="arearange",
         zIndex=0, linkedTo=':previous', fillOpacity=rangesOpacity, 
         lineWidth=0,
-        color=JS("Highcharts.getOptions().colors[", count, "]"))
+        color=JS("Highcharts.getOptions().colors[", count, "]"),
+        ...)
     }
     count <- count + 1
   }
