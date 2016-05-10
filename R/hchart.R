@@ -78,7 +78,7 @@ hchart.xts <- function(object, ...) {
 
 #' @export
 hchart.ts <- function(object, ...) {
-  hc_add_series_ts(highchart(type = "stock"), object, ...)
+  hc_add_series_ts(highchart(), object, ...)
 }
 
 #' @export
@@ -110,6 +110,55 @@ hchart.forecast <- function(object, fillOpacity = 0.3, ...){
   
 }
 
+#' @export
+hchart.mforecast <- function(object, fillOpacity = 0.3, ...){
+  
+  ntss <- ncol(object$x)
+  lvls <- object$level
+  tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean[[1]])))
+
+  hc <- hchart.mts2(object$x) %>% 
+    hc_plotOptions(
+      series = list(
+        marker = list(enabled = FALSE)
+      )
+    )
+  
+  # hc <- hc %>% hc_add_series(data = NULL, id = "series", name = "Series")
+  
+  # means
+  hc <- hc %>% hc_add_series(data = NULL, id = "f", name = "forecast")
+  for (i in seq(ntss))
+    hc <- hc %>% hc_add_series_ts(object$mean[[i]], yAxis = i - 1, linkedTo = "f", ...)
+  
+  # levels
+  for (lvl in seq(lvls)) {
+    
+    idlvl <- paste0("level", lvls[lvl])
+    nmlvl <- paste("level", lvls[lvl])
+    
+    hc <- hc %>% hc_add_series(data = NULL, id = idlvl, name = nmlvl, ...)
+    
+    for (i in seq(ntss)) {
+      
+      dsbands <- data_frame(
+        t = tmf,
+        u = as.vector(object$upper[[i]][, lvl]),
+        l = as.vector(object$lower[[i]][, lvl]))
+      
+      hc <- hc %>%
+        hc_add_series(data = list.parse2(dsbands), name = nmlvl, linkedTo = idlvl, yAxis = i - 1,
+                         type = "arearange", fillOpacity = fillOpacity,
+                         zIndex = 1, lineWidth = 0, ...)
+ 
+    }
+    
+  }
+    
+  hc
+  
+}
+
 #' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...){
@@ -121,23 +170,24 @@ hchart.acf <- function(object, ...){
                    )
   
   maxlag <- max(object$lag[ , , ])
+  
   sv <- qnorm(1 - 0.05/2) / sqrt(object$n.used)
   
-  ds <- data_frame(x = object$lag[ , , ],
-                   y = object$acf[ , , ]) %>% 
-    list.parse2()
+  ds <- data_frame(
+    x = seq(object$lag[ , , ]),
+    y = object$acf[ , , ]) 
   
   hc <- highchart() %>% 
-    hc_add_series(data = ds, type = "column",
-                  name = ytitle, pointRange = 0.01)
+    hc_add_series_df(data = ds, type = "column",
+                     name = ytitle, pointRange = 0.01)
   
   if (object$type != "covariance") {
     hc <- hc %>% 
       hc_plotOptions(series = list(marker = list(enabled = FALSE))) %>% 
-      hc_add_series(data = list(list(0, sv), list(maxlag, sv)), 
+      hc_add_series(data = list(list(0, sv), list(nrow(ds), sv)), 
                     color = hc_get_colors()[2],
                     showInLegend = FALSE, enableMouseTracking = FALSE) %>% 
-      hc_add_series(data = list(list(0,-sv), list(maxlag,-sv)),
+      hc_add_series(data = list(list(0,-sv), list(nrow(ds),-sv)),
                     color = hc_get_colors()[2],
                     showInLegend = FALSE, enableMouseTracking = FALSE) 
   }
@@ -147,9 +197,20 @@ hchart.acf <- function(object, ...){
 }
 
 #' @export
-hchart.mts <- function(object, ..., heights =  rep(1, ncol(object)), sep = 0.01) {
+hchart.mts <- function(object, ..., separate = TRUE, heights =  rep(1, ncol(object))) {
   
-  hc <- highchart(type = "stock")
+  if (separate) {
+    hc <- hchart.mts2(object, heights = heights, ...)
+  } else {
+    hc <- hchart.mts1(object, ...)
+  }
+  
+  hc 
+}
+
+hchart.mts1 <- function(object, ...) {
+  
+  hc <- highchart()
   
   for (i in seq(dim(object)[2])) {
     nm <- attr(object, "dimnames")[[2]][i]
@@ -160,6 +221,30 @@ hchart.mts <- function(object, ..., heights =  rep(1, ncol(object)), sep = 0.01)
   }
   
   hc
+  
+}
+
+hchart.mts2 <- function(object, ..., heights =  rep(1, ncol(object)), sep = 0.01) {
+  
+  ntss <- ncol(object)
+  
+  hc <- highchart() %>% 
+    hc_tooltip(shared = TRUE) 
+  
+  hc <- hc %>% 
+    hc_yAxis_multiples(
+      create_yaxis(ntss, heights = heights, turnopposite = TRUE,
+                   title = list(text = NULL), offset = 0, lineWidth = 2,
+                   showFirstLabel = FALSE, showLastLabel = FALSE, ...)
+    )
+  
+  namestss <- as.character(attr(object, "dimnames")[[2]])
+  
+  for (col in seq(ntss))
+    hc <-  hc %>%  hc_add_series_ts(object[, col], yAxis = col - 1, name = namestss[col], ...)
+  
+  hc
+ 
 }
 
 #' @export
@@ -170,45 +255,27 @@ hchart.stl <- function(object, ..., heights = c(2, 1, 1, 1), sep = 0.01) {
   data <- drop(tss %*% rep(1, ncomp))
   tss <- cbind(data = data , tss)
   
-  pcnt <- function(x) paste0(x * 100, "%")
+  attr(tss, "dimnames")[[2]] <- gsub("tss\\.", "", attr(tss, "dimnames")[[2]])
   
-  p <- heights/sum(heights)
-  p <- c(p[1], sep, p[2], sep, p[3], sep, p[4])
+  hchart.mts2(tss)
   
-  p <- round(p/sum(p), 2)
-  csp <- cumsum(p)
+}
+
+#' @export
+hchart.ets <- function(object, ...){
   
-  cspp <- pcnt(csp)
-  pp <- pcnt(p)
+  names <- c(y = "observed", l = "level", b = "slope", s1 = "season")
   
-  yxs <- list(title = list(text = NULL),
-              offset = 0, lineWidth = 2,
-              showFirstLabel = FALSE, showLastLabel = FALSE)
+  data <- cbind(object$x, object$states[, colnames(object$states) %in%  names(names)])
   
-  hc <- highchart() %>% 
-    hc_tooltip(shared = TRUE) 
+  cn <- c("y", c(colnames(object$states)))
   
-  hc <- hc %>% 
-    hc_yAxis_multiples(
-      list.merge(yxs, list(height = pp[1], top = "0%")),
-      list.merge(yxs, list(height = pp[3], top = cspp[2], opposite = TRUE)),
-      list.merge(yxs, list(height = pp[5], top = cspp[4])),
-      list.merge(yxs, list(height = pp[7], top = cspp[6], opposite = TRUE))
-    )
+  colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
   
-  # hc$x$hc_opts$yAxis <- 
-  #   list(
-  #     list.merge(yxs, list(height = pp[1], top = "0%")),
-  #     list.merge(yxs, list(height = pp[3], top = cspp[2], opposite = TRUE)),
-  #     list.merge(yxs, list(height = pp[5], top = cspp[4])),
-  #     list.merge(yxs, list(height = pp[7], top = cspp[6], opposite = TRUE))
-  #   ) 
+  hc <- hchart.mts2(data)
   
   hc <- hc %>% 
-    hc_add_series_ts(tss[, 1], yAxis = 0, name = "data") %>% 
-    hc_add_series_ts(tss[, 2], yAxis = 1, name = "seasonal") %>% 
-    hc_add_series_ts(tss[, 3], yAxis = 2, name = "trend") %>% 
-    hc_add_series_ts(tss[, 4], yAxis = 3, name = "remainder")
+    hc_title(text = paste("Decomposition by", object$method, "method"))
   
   hc
   
