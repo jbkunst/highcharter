@@ -509,6 +509,147 @@ hchart.dendrogram <- function(object, ...) {
   hc
 }
 
+#' Plot survival curves using Highcharts
+#' 
+#' @param object A survfit object as returned from the \code{survfit} function
+#' @param ... Extra parameters to pass to \code{hc_add_series} function
+#' @param fun Name of function or function used to transform the survival curve:
+#' \code{log} will put y axis on log scale, \code{event} plots cumulative events
+#' (f(y) = 1-y), \code{cumhaz} plots the cumulative hazard function (f(y) =
+#' -log(y)), and \code{cloglog} creates a complimentary log-log survival plot
+#' (f(y) = log(-log(y)) along with log scale for the x-axis.
+#' @param markTimes Label curves marked at each censoring time? TRUE by default
+#' @param symbol Symbol to use as marker (plus sign by default)
+#' @param markerColor Color of the marker ("black" by default); use NULL to use
+#' the respective color of each series
+#' @param ranges Plot interval ranges? FALSE by default
+#' @param rangesOpacity Opacity of the interval ranges (0.3 by default)
+#' 
+#' @return Highcharts object to plot survival curves
+#' @export
+#' 
+#' @examples
+#' # Plot Kaplan-Meier curves
+#' require(`survival`)
+#' leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
+#' hchart(leukemia.surv)
+#' 
+#' # Plot the cumulative hazard function
+#' lsurv2 <- survfit(Surv(time, status) ~ x, aml, type='fleming') 
+#' hchart(lsurv2, fun="cumhaz")
+#' 
+#' # Plot the fit of a Cox proportional hazards regression model
+#' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
+#' ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
+#' hchart(ovarian.surv, ranges = TRUE)
+hchart.survfit <- function(object, ..., fun=NULL, markTimes=TRUE,
+                           symbol="triangle", markerColor="black", ranges=FALSE,
+                           rangesOpacity=0.3) {
+  # Check if there are groups
+  if (is.null(object$strata))
+    strata <- c("Series 1" = length(object$time))
+  else
+    strata <- object$strata
+  
+  # Modify data according to functions (adapted from survival:::plot.survfit)
+  if (is.character(fun)) {
+    tfun <- switch(fun,
+                   log = function(x) x,
+                   event = function(x) 1 - x,
+                   cumhaz = function(x) -log(x),
+                   cloglog = function(x) log(-log(x)),
+                   pct = function(x) x * 100,
+                   logpct = function(x) 100 * x,
+                   identity = function(x) x,
+                   function(x) x)
+  } else if (is.function(fun)) {
+    tfun <- fun
+  } else {
+    tfun <- function(x) x
+  }
+  
+  firsty <- tfun(1)
+  object$surv <- tfun(object$surv)
+  if (ranges && !is.null(object$upper)) {
+    object$upper <- tfun(object$upper)
+    object$lower <- tfun(object$lower)
+  }
+  
+  # Prepare data
+  data <- data.frame(x=object$time, y=object$surv,
+                     up=object$upper, low=object$lower,
+                     group=rep(names(strata), strata), 
+                     stringsAsFactors = FALSE)
+  
+  # Data markers
+  marker <- list(list(fillColor=markerColor, symbol=symbol, enabled=TRUE))
+  if(markTimes)
+    mark <- object$n.censor == 1
+  else
+    mark <- FALSE
+  
+  # Adjust Y axis range
+  yValues <- object$surv
+  ymin <- ifelse(min(yValues) >= 0, 0, min(yValues))
+  ymax <- ifelse(max(yValues) <= 1, 1, max(yValues))
+  
+  hc <- highchart() %>%
+    hc_tooltip(shared = TRUE) %>%
+    hc_yAxis(min=ymin, max=ymax) %>%
+    hc_plotOptions(line = list(marker = list(enabled = FALSE)))
+  
+  count <- 0
+  
+  # Process groups by columns (CoxPH-like) or in a single column
+  if(!is.null(ncol(object$surv))) {
+    groups <- seq(ncol(object$surv))
+  } else {
+    groups <- names(strata)
+  }
+  
+  for (name in groups) {
+    if (!is.null(ncol(object$surv))) {
+      df <- df[c("x", paste(c("y", "low", "up"), col, sep="."))]
+      names(df) <- c("x", "y", "low", "up")
+      submark <- mark
+    } else {
+      df <- subset(data, group == name)
+      submark <- mark[data$group == name]
+    }
+    
+    # Add first value if there is no value for time at 0 in the data
+    if (!0 %in% df$x)
+      first <- list(list(x=0, y=firsty))
+    else
+      first <- NULL
+    
+    # Mark events
+    ls <- list.parse3(df)
+    if (markTimes)
+      ls[submark] <- lapply(ls[submark], c, marker=marker)
+    
+    hc <- hc %>% hc_add_series(
+      data=c(first, ls), step="left", name=name, zIndex=1,
+      color=JS("Highcharts.getOptions().colors[", count, "]"),
+      ...)
+    
+    if (ranges && !is.null(object$upper)) {
+      # Add interval range
+      range <- lapply(ls, function(i) 
+        setNames(i[c("x", "low", "up")], NULL))
+      hc <- hc %>% hc_add_series(
+        data=range, step="left", name="Ranges", type="arearange",
+        zIndex=0, linkedTo=':previous', fillOpacity=rangesOpacity, 
+        lineWidth=0,
+        color=JS("Highcharts.getOptions().colors[", count, "]"),
+        ...)
+    }
+    count <- count + 1
+  }
+  
+  return(hc)
+}
+
 # # @export
 # hchart.seas <- function(object, ..., outliers = TRUE, trend = FALSE) {
 # 
