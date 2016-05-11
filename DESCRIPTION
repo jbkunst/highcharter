@@ -6,7 +6,7 @@ Authors@R: c(
   person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
   person("Dean", "Kilfoyle", role = c("ctb"), comment  = "code 1st version of hc_add_series_boxplot"),
   person("Nuno", "Agostinho", role = c("ctb"), comment  = "code of hchart.survfit and improvement to hc_add_series_scatter"),
-  person("Nick", "Carchedi", role = c("ctb"), comment  = "fix big typo")
+  person("Nick", "Carchedi", role = c("ctb"), comment  = "fix typo: serie -> series")
   )
 Description: A wrapper for the 'Highcharts' library including
   shortcut functions to plot R objects. 'Highcharts' 
