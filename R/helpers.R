@@ -89,9 +89,7 @@ datetime_to_timestamp <- function(dt) {
   # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts 
   assertthat::assert_that(assertthat::is.date(dt) | assertthat::is.time(dt))
   
-  tmstmp <- dt %>% 
-    as.POSIXct(dt) %>% 
-    as.numeric() 
+  tmstmp <- as.numeric(as.POSIXct(dt))
   
   tmstmp <- 1000 * tmstmp
   
