@@ -4,10 +4,14 @@
        chart = getOption("highcharter.chart"))
 }
 
-.onLoad <- function(libname = find.package("highcharter"), pkgname = "highcharter") {
+.onAttach <- function(libname = find.package("highcharter"), pkgname = "highcharter") {
+
+  packageStartupMessage("Highcharts (www.highcharts.com) is a Highsoft software product")
+  packageStartupMessage("which is not free for commercial and Governmental use")
   
-  message("Highcharts (www.highcharts.com) is a Highsoft software product")
-  message("which is not free for commercial and Governmental use")
+}
+
+.onLoad <- function(libname = find.package("highcharter"), pkgname = "highcharter") {
   
   options(highcharter.global = list(
     Date = NULL,

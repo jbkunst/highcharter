@@ -526,11 +526,11 @@ hchart.dendrogram <- function(object, ...) {
 #' @param rangesOpacity Opacity of the interval ranges (0.3 by default)
 #' 
 #' @return Highcharts object to plot survival curves
-#' @export
 #' 
 #' @examples
+#' 
 #' # Plot Kaplan-Meier curves
-#' require(`survival`)
+#' require("survival")
 #' leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
 #' hchart(leukemia.surv)
 #' 
@@ -542,9 +542,14 @@ hchart.dendrogram <- function(object, ...) {
 #' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
 #' ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
 #' hchart(ovarian.surv, ranges = TRUE)
-hchart.survfit <- function(object, ..., fun=NULL, markTimes=TRUE,
-                           symbol="triangle", markerColor="black", ranges=FALSE,
-                           rangesOpacity=0.3) {
+#' 
+#' @export
+hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
+                           symbol = "plus", markerColor = "black", ranges = FALSE,
+                           rangesOpacity = 0.3) {
+  
+  group <- NULL
+  
   # Check if there are groups
   if (is.null(object$strata))
     strata <- c("Series 1" = length(object$time))

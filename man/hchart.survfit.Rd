@@ -5,7 +5,7 @@
 \title{Plot survival curves using Highcharts}
 \usage{
 \method{hchart}{survfit}(object, ..., fun = NULL, markTimes = TRUE,
-  symbol = "triangle", markerColor = "black", ranges = FALSE,
+  symbol = "plus", markerColor = "black", ranges = FALSE,
   rangesOpacity = 0.3)
 }
 \arguments{
@@ -37,8 +37,9 @@ Highcharts object to plot survival curves
 Plot survival curves using Highcharts
 }
 \examples{
+
 # Plot Kaplan-Meier curves
-require(`survival`)
+require("survival")
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
 hchart(leukemia.surv)
 
@@ -50,5 +51,6 @@ hchart(lsurv2, fun="cumhaz")
 fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
 ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
 hchart(ovarian.surv, ranges = TRUE)
+
 }
 

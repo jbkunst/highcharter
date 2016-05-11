@@ -27,6 +27,7 @@ dependencies:
     - plugins/draggable-points.js
     - plugins/pattern-fill-v2.js
     - plugins/text-symbols.js
+    - plugins/symbols-extra.js
     stylesheet:
     - css/motion.css
   - name: fontawesome
