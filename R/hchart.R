@@ -55,13 +55,12 @@ hchart.histogram <- function(object, ...) {
 #' @export
 hchart.character <- function(object, type = "column", ...) {
   
-  cnts <- count_(data_frame(variable = object), "variable")
+  tbl <- table(object)
   
   highchart() %>% 
-    hc_add_series_labels_values(cnts[["variable"]], 
-                                cnts[["n"]],
+    hc_add_series_labels_values(names(tbl), as.vector(tbl),
                                 type = type, ...) %>% 
-    hc_xAxis(categories = cnts[["variable"]])
+    hc_xAxis(categories = names(tbl))
 }
 
 #' @export
