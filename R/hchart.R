@@ -58,8 +58,7 @@ hchart.character <- function(object, type = "column", ...) {
   tbl <- table(object)
   
   highchart() %>% 
-    hc_add_series_labels_values(names(tbl), as.vector(tbl),
-                                type = type, ...) %>% 
+    hc_add_series_labels_values(names(tbl), as.vector(tbl), type = type, ...) %>% 
     hc_xAxis(categories = names(tbl))
 }
 
