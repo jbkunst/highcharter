@@ -23,6 +23,7 @@ dependencies:
     - modules/funnel.js
     - modules/solid-gauge.js
     - modules/reset.js
+    - plugins/annotations.js
     - plugins/motion.js    
     - plugins/draggable-points.js
     - plugins/pattern-fill-v2.js
