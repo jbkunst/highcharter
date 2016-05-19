@@ -67,7 +67,7 @@ df2 <- data_frame(
   x = seq(m),
   low = s - e,
   high = s + e,
-  name = paste("I'm point #%s", x),
+  name = paste0("I'm point #", x),
   color = colorize_vector(high, "B")
 )
 
