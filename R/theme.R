@@ -122,7 +122,7 @@ hc_theme_merge <- function(...){
   
 }
 
-#' @importFrom stringr str_replace_all str_replace str_trim
+#' @importFrom stringr str_replace_all str_trim
 .hc_get_fonts <- function(lst){
   
   unls <- unlist(lst)
@@ -130,7 +130,7 @@ hc_theme_merge <- function(...){
   
   fonts <- unls %>% 
     str_replace_all(",\\s+sans-serif|,\\s+serif", "") %>% 
-    str_replace("\\s+", "+") %>% 
+    str_replace_all("\\s+", "+") %>% 
     str_trim() %>% 
     unlist()
   
