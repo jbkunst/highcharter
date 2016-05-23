@@ -653,6 +653,11 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   return(hc)
 }
 
+#' @export
+hchart.density <- function (object,..., area = FALSE) { 
+  hc_add_series_density(highchart(), object, area = area, ...)
+}
+
 # # @export
 # hchart.seas <- function(object, ..., outliers = TRUE, trend = FALSE) {
 # 
