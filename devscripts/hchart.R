@@ -111,3 +111,21 @@ class(x)
 plot(x)
 hchart(x)
 
+## Matrix heatmap ##
+
+x <- as.matrix(mtcars)
+hchart(x)
+
+## based on correlation
+hchart(cor(x))
+
+## show labels
+hchart(cor(x),label =T) 
+
+## based on logarithmic scale
+x <- as.matrix(mtcars[1:4])
+hchart(x)
+
+
+
+
