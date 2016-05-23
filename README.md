@@ -5,8 +5,8 @@ R wrapper for highcharts
 [![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
 [![version](http://www.r-pkg.org/badges/version/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
-[![issues](http://issuestats.com/github/jbkunst/highcharter/badge/issue?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
 <!--
+[![issues](http://issuestats.com/github/jbkunst/highcharter/badge/issue?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
 [![codecov.io](https://codecov.io/github/jbkunst/highcharter/coverage.svg?branch=master)](https://codecov.io/github/jbkunst/highcharter?branch=master)
 [![pr](http://issuestats.com/github/jbkunst/highcharter/badge/pr?style=flat)](http://issuestats.com/github/jbkunst/highcharter)
 -->
@@ -26,9 +26,9 @@ It is a *must* know how `highcharts` api works to *take advantage* of this packa
 - [Piping styling](http://jkunst.com/highcharter/).
 - Support [Highstock charts](http://jkunst.com/highcharter/highstock.html). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
-- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, factors, ts, mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist, dendrogram, phylo, survfit classes.
-- [Themes](http://jkunst.com/highcharter/themes.html): Add themes, merge themes or create your own.
-- [Plugins](http://jkunst.com/highcharter/plugins.html): motion, drag points, fontawesome, url-pattern.
+- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). With `hchart(x)` you can chart: numeric, histograms, character, density, factors, ts, mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist, dendrogram, phylo, survfit classes.
+- [Themes](http://jkunst.com/highcharter/themes.html): Add lot fo themes. Some of them are economist, financial times, google, 538. Or you just can create your own.
+- [Plugins](http://jkunst.com/highcharter/plugins.html): motion, drag points, fontawesome, url-pattern, annotations.
 - <3 to Highcharts.com
 
 ## Licence 
