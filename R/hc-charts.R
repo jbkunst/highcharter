@@ -132,5 +132,6 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
 #' @rdname hc_add_series_density
 #' @export
 hcdensity <- function(x, area = FALSE, ...) {
+  stopifnot(inherits(density(x), "density") || inherits(x, "numeric"))
   hchart.density(x, area = area, ...)
 }
