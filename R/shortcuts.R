@@ -501,3 +501,24 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
 #' @export
 #' @rdname hc_add_series_boxplot
 hc_add_series_whisker <- hc_add_series_boxplot
+
+#' Shorcut to create a density plot 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param x A numeric vector
+#' @param area A boolean value to show or not the area
+#' @param ... Aditional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#' @examples
+#' 
+#' highchart() %>%
+#'   hc_add_series_density(rnorm(1000)) %>%
+#'   hc_add_series_density(rexp(1000), area = TRUE)
+#'  
+#' @export
+hc_add_series_density <- function (hc, x, area = FALSE, ...) {
+  if(is.numeric(x)) x <- density(x)
+  type <- ifelse(area, "areaspline", "spline")
+  data <- list.parse3(data.frame(cbind(x = x$x, y = x$y)))
+  return(hc %>% hc_add_series(data = data, type = type))
+}
