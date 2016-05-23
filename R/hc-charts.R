@@ -128,3 +128,9 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   hc
   
 }
+
+#' @rdname hc_add_series_density
+#' @export
+hcdensity <- function(x, area = FALSE, ...) {
+  hchart.density(x, area = area, ...)
+}
