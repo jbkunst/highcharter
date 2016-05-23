@@ -110,9 +110,9 @@ x <- dist(mtcars[ order(mtcars$hp),])
 class(x)
 plot(x)
 hchart(x)
+hchart(as.matrix(x))
 
 ## Matrix heatmap ##
-
 x <- as.matrix(mtcars)
 hchart(x)
 
