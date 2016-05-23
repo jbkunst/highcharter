@@ -321,6 +321,74 @@ hchart.dist <- function(object, ...) {
     hc_colorAxis(arg  = "")
 }
 
+
+#' @importFrom tidyr gather
+#' @importFrom dplyr count_ left_join select_
+#' @export
+hchart.matrix <- function(object, label = F,...) {
+  df <- as.data.frame(object)
+  is.num <- sapply(df, is.numeric)
+  df[is.num] <- lapply(df[is.num], round, 2)
+  dist <- NULL
+  x <- rownames(df)
+  y <- colnames(df)
+  
+  df <- tbl_df(cbind(x , df)) %>% 
+    gather(y, dist, -x) %>% 
+    mutate(x = as.character(x),
+           y = as.character(y)) %>% 
+    left_join(data_frame(x = x,
+                         xid = seq(length(x)) - 1), by = "x") %>%
+  left_join(data_frame(y = y,
+                       yid = seq(length(y)) - 1), by = "y")
+    
+  ds <- df  %>%
+    select_("yid", "xid", "dist") %>% 
+    list.parse2()
+  
+  fntltp <- JS("function(){
+               return this.series.xAxis.categories[this.point.x] + ' ~ ' +
+               this.series.yAxis.categories[this.point.y] + ': <b>' +
+               Highcharts.numberFormat(this.point.value, 2)+'</b>';
+               ; }")
+
+  
+  hc <- highchart() %>% 
+    hc_chart(type = "heatmap") %>% 
+    hc_xAxis(categories = y, title = NULL) %>% 
+    hc_yAxis(categories = x, title = NULL) %>% 
+    hc_add_series(data = ds) %>% 
+    hc_plotOptions(
+      series = list(
+        boderWidth = 0,
+        dataLabels = list(enabled = label)
+      )) %>% 
+    hc_tooltip(formatter = fntltp) %>% 
+    hc_legend(align = "right", layout = "vertical",
+              margin = 0, verticalAlign = "top",
+              y = 25, symbolHeight = 280) 
+  
+  if(max(object) <=1 && min(object) <0 && min(object) >= -1)
+  {
+    cor_colr <- list( list(0, '#FF5733'),
+                      list(0.5, '#F8F5F5'),
+                      list(1, '#2E86C1'))
+    hc <- hc %>% hc_colorAxis(  stops= cor_colr)
+  }
+  else if(min(object)> 0)
+  {
+    hc<-   hc %>% hc_colorAxis(minColor = "#F8F5F5", maxColor = "#2E86C1",
+                               type = "logarithmic")
+  }
+  else
+  {
+    hc<-   hc %>% hc_colorAxis() 
+  }
+    hc
+  }
+
+
+
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
 #' @importFrom stringr str_to_title
 #' @importFrom stats setNames
