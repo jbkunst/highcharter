@@ -13,16 +13,6 @@ hc_add_series_boxplot(hc, x, by = NULL, outliers = TRUE, ...)
 hc_add_series_whisker(hc, x, by = NULL, outliers = TRUE, ...)
 }
 \arguments{
-\item{x}{A numeric vector.}
-
-\item{by}{A character vector same length of \code{x}}
-
-\item{outliers}{A boolean value to show or not the outliers}
-
-\item{...}{Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).}
-
-\item{hc}{A \code{highchart} \code{htmlwidget} object.}
-
 \item{x}{A numerci vector}
 
 \item{by}{A string vector same length of \code{x}}
@@ -31,6 +21,8 @@ hc_add_series_whisker(hc, x, by = NULL, outliers = TRUE, ...)
 
 \item{...}{Aditional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
+
+\item{hc}{A \code{highchart} \code{htmlwidget} object.}
 }
 \description{
 Function to make a boxplot

@@ -15,7 +15,7 @@ hc_add_series_density(hc, x, area = FALSE, ...)
 \item{area}{A boolean value to show or not the area}
 
 \item{...}{Aditional shared arguments for the data series
-(\url{http://api.highcharts.com/highcharts#series}).}
+(\url{http://api.highcharts.com/highcharts#series})}
 
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 }

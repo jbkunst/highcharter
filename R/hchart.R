@@ -580,11 +580,12 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   group <- NULL
   
   # Check if there are groups
-  if (is.null(object$strata))
+  if (is.null(object$strata)) {
     strata <- c("Series 1" = length(object$time))
-  else
+  } else {
     strata <- object$strata
-  
+  }
+    
   # Modify data according to functions (adapted from survival:::plot.survfit)
   if (is.character(fun)) {
     tfun <- switch(fun,
@@ -603,25 +604,29 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   }
   
   firsty <- tfun(1)
+  
   object$surv <- tfun(object$surv)
+  
   if (ranges && !is.null(object$upper)) {
     object$upper <- tfun(object$upper)
     object$lower <- tfun(object$lower)
   }
   
   # Prepare data
-  data <- data.frame(x=object$time, y=object$surv,
-                     up=object$upper, low=object$lower,
-                     group=rep(names(strata), strata), 
+  data <- data.frame(x = object$time, y = object$surv,
+                     up = object$upper, low = object$lower,
+                     group = rep(names(strata), strata), 
                      stringsAsFactors = FALSE)
-  
+
   # Data markers
-  marker <- list(list(fillColor=markerColor, symbol=symbol, enabled=TRUE))
-  if(markTimes)
-    mark <- object$n.censor == 1
-  else
-    mark <- FALSE
+  marker <- list(list(fillColor = markerColor, symbol = symbol, enabled = TRUE))
   
+  if (markTimes) {
+    mark <- object$n.censor == 1
+  } else {
+    mark <- FALSE
+  }
+    
   # Adjust Y axis range
   yValues <- object$surv
   ymin <- ifelse(min(yValues) >= 0, 0, min(yValues))
@@ -629,54 +634,64 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   
   hc <- highchart() %>%
     hc_tooltip(shared = TRUE) %>%
-    hc_yAxis(min=ymin, max=ymax) %>%
+    hc_yAxis(min = ymin, max = ymax) %>%
     hc_plotOptions(line = list(marker = list(enabled = FALSE)))
   
   count <- 0
   
   # Process groups by columns (CoxPH-like) or in a single column
-  if(!is.null(ncol(object$surv))) {
+  if (!is.null(ncol(object$surv))) {
     groups <- seq(ncol(object$surv))
   } else {
     groups <- names(strata)
   }
   
   for (name in groups) {
+    
     if (!is.null(ncol(object$surv))) {
-      df <- df[c("x", paste(c("y", "low", "up"), col, sep="."))]
+      
+      df <- df[c("x", paste(c("y", "low", "up"), col, sep = "."))]
       names(df) <- c("x", "y", "low", "up")
       submark <- mark
+      
     } else {
+      
       df <- subset(data, group == name)
       submark <- mark[data$group == name]
+      
     }
     
     # Add first value if there is no value for time at 0 in the data
-    if (!0 %in% df$x)
-      first <- list(list(x=0, y=firsty))
-    else
+    if (!0 %in% df$x) {
+      first <- list(list(x = 0, y = firsty))
+    } else {
       first <- NULL
-    
+    }
+      
     # Mark events
     ls <- list.parse3(df)
-    if (markTimes)
-      ls[submark] <- lapply(ls[submark], c, marker=marker)
+    if (markTimes) {
+      ls[submark] <- lapply(ls[submark], c, marker = marker)
+    }
+      
     
-    hc <- hc %>% hc_add_series(
-      data=c(first, ls), step="left", name=name, zIndex=1,
-      color=JS("Highcharts.getOptions().colors[", count, "]"),
-      ...)
+    hc <- hc %>%
+      hc_add_series(
+        data = c(first, ls), step = "left", name = name, zIndex = 1,
+        color = JS("Highcharts.getOptions().colors[", count, "]"),
+        ...)
     
     if (ranges && !is.null(object$upper)) {
       # Add interval range
       range <- lapply(ls, function(i) 
         setNames(i[c("x", "low", "up")], NULL))
-      hc <- hc %>% hc_add_series(
-        data=range, step="left", name="Ranges", type="arearange",
-        zIndex=0, linkedTo=':previous', fillOpacity=rangesOpacity, 
-        lineWidth=0,
-        color=JS("Highcharts.getOptions().colors[", count, "]"),
-        ...)
+      
+      hc <- hc %>%
+        hc_add_series(
+          data = range, step = "left", name = "Ranges", type = "arearange",
+          zIndex = 0, linkedTo = ':previous', fillOpacity = rangesOpacity, 
+          lineWidth = 0, color = JS("Highcharts.getOptions().colors[", count, "]"),
+          ...)
     }
     count <- count + 1
   }
@@ -685,7 +700,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 }
 
 #' @export
-hchart.density <- function (object,..., area = FALSE) { 
+hchart.density <- function(object,..., area = FALSE) { 
   hc_add_series_density(highchart(), object, area = area, ...)
 }
 

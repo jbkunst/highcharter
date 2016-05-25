@@ -1,6 +1,6 @@
 #' Function to make a bar chart
 #' 
-#' @param x A character o factor vector.
+#' @param x A character or factor vector.
 #' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
 hcbar <- function(x, ...) {
@@ -27,10 +27,6 @@ hchist <- function(x, ...) {
 }
 
 #' Function to make a boxplot
-#' @param x A numeric vector.
-#' @param by A character vector same length of \code{x}
-#' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
-#' @param outliers A boolean value to show or not the outliers
 #' @rdname hc_add_series_boxplot
 #' @export
 hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
@@ -43,6 +39,9 @@ hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
   hchart(x, ...)
 }
 
+#' Function to make time or line charts
+#' @param x A numeric vector or a time series object.
+#' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
 hcts <- function(x, ...) {
   hchart(as.ts(x), ...)
