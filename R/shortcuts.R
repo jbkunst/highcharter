@@ -153,7 +153,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
   # Add arguments to data points if they match the length of the data
   args <- list(...)
   for (i in seq_along(args)) {
-    if (length(x) == length(args[[i]])) {
+    if (length(x) == length(args[[i]]) && names(args[i]) != "name") {
       attr <- list(args[i])
       names(attr) <- names(args)[i]
       df <- cbind(df, attr)
