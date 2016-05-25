@@ -31,6 +31,7 @@ hchist <- function(x, ...) {
 #' @param by A character vector same length of \code{x}
 #' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @param outliers A boolean value to show or not the outliers
+#' @rdname hc_add_series_boxplot
 #' @export
 hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
   stopifnot(is.numeric(x))
@@ -38,9 +39,20 @@ hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
     hc_add_series_boxplot(highchart(), x, outliers = outliers, ...)
   else
     hc_add_series_boxplot(highchart(), x, by = by, outliers = outliers, ...)
-  
-  
+
   hchart(x, ...)
+}
+
+#' @export
+hcts <- function(x, ...) {
+  hchart(as.ts(x), ...)
+}
+
+#' @rdname hc_add_series_density
+#' @export
+hcdensity <- function(x, area = FALSE, ...) {
+  stopifnot(inherits(density(x), "density") || inherits(x, "numeric"))
+  hchart.density(x, area = area, ...)
 }
 
 #' Function to create  waffle charts
@@ -127,11 +139,4 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   
   hc
   
-}
-
-#' @rdname hc_add_series_density
-#' @export
-hcdensity <- function(x, area = FALSE, ...) {
-  stopifnot(inherits(density(x), "density") || inherits(x, "numeric"))
-  hchart.density(x, area = area, ...)
 }
