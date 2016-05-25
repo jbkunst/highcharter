@@ -508,7 +508,8 @@ hc_add_series_whisker <- hc_add_series_boxplot
 #' @param x A numeric vector
 #' @param area A boolean value to show or not the area
 #' @param ... Aditional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   (\url{http://api.highcharts.com/highcharts#series})
+#' @importFrom stats density
 #' @examples
 #' 
 #' highchart() %>%
@@ -524,5 +525,5 @@ hc_add_series_density <- function (hc, x, area = FALSE, ...) {
   
   type <- ifelse(area, "areaspline", "spline")
   data <- list.parse3(data.frame(cbind(x = x$x, y = x$y)))
-  return(hc %>% hc_add_series(data = data, type = type))
+  return(hc %>% hc_add_series(data = data, type = type, ...))
 }
