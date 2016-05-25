@@ -524,5 +524,5 @@ hc_add_series_density <- function (hc, x, area = FALSE, ...) {
   
   type <- ifelse(area, "areaspline", "spline")
   data <- list.parse3(data.frame(cbind(x = x$x, y = x$y)))
-  return(hc %>% hc_add_series(data = data, type = type))
+  return(hc %>% hc_add_series(data = data, type = type, ...))
 }
