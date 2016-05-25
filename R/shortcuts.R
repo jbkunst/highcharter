@@ -508,7 +508,8 @@ hc_add_series_whisker <- hc_add_series_boxplot
 #' @param x A numeric vector
 #' @param area A boolean value to show or not the area
 #' @param ... Aditional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   (\url{http://api.highcharts.com/highcharts#series})
+#' @importFrom stats density
 #' @examples
 #' 
 #' highchart() %>%
