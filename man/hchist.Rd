@@ -9,7 +9,7 @@ hchist(x, ...)
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{...}{Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
 Function to make an histogram

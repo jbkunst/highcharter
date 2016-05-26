@@ -9,7 +9,7 @@ hcts(x, ...)
 \arguments{
 \item{x}{A numeric vector or a time series object.}
 
-\item{...}{Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
 Function to make time or line charts

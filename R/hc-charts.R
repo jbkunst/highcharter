@@ -1,7 +1,7 @@
 #' Function to make a bar chart
 #' 
 #' @param x A character or factor vector.
-#' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
 hcbar <- function(x, ...) {
   stopifnot(is.character(x) | is.factor(x))
@@ -10,7 +10,7 @@ hcbar <- function(x, ...) {
 
 #' Function to make a pie chart
 #' @param x A character o factor vector.
-#' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
 hcpie <- function(x, ...) {
   stopifnot(is.character(x) | is.factor(x))
@@ -19,7 +19,7 @@ hcpie <- function(x, ...) {
 
 #' Function to make an histogram
 #' @param x A numeric vector.
-#' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
 hchist <- function(x, ...) {
   stopifnot(is.numeric(x))
@@ -41,7 +41,7 @@ hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
 
 #' Function to make time or line charts
 #' @param x A numeric vector or a time series object.
-#' @param ... Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
 hcts <- function(x, ...) {
   hchart(as.ts(x), ...)

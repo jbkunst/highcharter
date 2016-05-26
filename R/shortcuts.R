@@ -85,6 +85,48 @@ hc_add_series_df <- function(hc, data, ...) {
 }
 
 
+#' Shorcut for tidy data frame using a group variable
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param data A \code{data.frame} object.
+#' @param group bare column name of categories (one for every series)
+#' @param values bare column name of values
+#' @param ... Aditional shared arguments for the data series 
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   
+#' @examples 
+#' 
+#' dat <- data.frame(id = c(1,2,3,4,5,6),
+#'                   grp = c("A","A","B","B","C","C"),
+#'                   value = c(10,13,9,15,11,16))
+#' 
+#' highchart() %>% 
+#'  hc_chart(type = "column") %>% 
+#'  hc_add_series_df_tidy(data = dat, group = grp, values = value)
+#'   
+#' @export
+hc_add_series_df_tidy <- function(hc, data, group, values, ...){
+  
+  assertthat::assert_that(.is_highchart(hc), is.data.frame(data))
+  
+  arguments <- as.list(match.call())
+  cats <- eval(arguments$group, data)
+  
+  n <- length(unique(as.character(cats)))
+  if (n > 0) {
+    for (i in 1:n) {
+      nm <- as.character(unique(cats)[i])
+      dat <- eval(arguments$values, data)
+      dat <- dat[cats == nm]
+      
+      hc <- hc_add_series(hc, name = nm, data = dat, ...)
+      
+    }
+  }
+  
+  hc
+}
+
 #' Shorcut for create scatter plots
 #'
 #' This function helps to create scatter plot from two numerics vectors. Options

@@ -9,7 +9,7 @@ hcbar(x, ...)
 \arguments{
 \item{x}{A character or factor vector.}
 
-\item{...}{Aditional shared arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
 Function to make a bar chart

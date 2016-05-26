@@ -279,7 +279,38 @@ tooltip_table <- function(x, y,
 
 #' Create vector of color from vector
 #' 
-#' Using viridis
+#' @param x A numeric, character or factor object.
+#' @param colors A character string of colors (ordered) to colorize \code{x}
+#' @examples 
+#' 
+#' colorize(runif(10))
+#' 
+#' colorize(LETTERS[rbinom(20, 5, 0.5)], c("#FF0000", "#00FFFF"))
+#' 
+#' @importFrom grDevices colorRampPalette
+#' @export
+colorize <- function(x, colors = viridis::viridis(10)) {
+  
+  nuniques <- length(unique(x))
+  palcols <- grDevices::colorRampPalette(colors)(nuniques)
+  
+  if (!is.numeric(x) | nuniques < 10) {
+    
+    y <- as.numeric(as.factor(x))
+    xcols <- palcols[y]
+    
+  } else {
+    
+    ecum <- ecdf(x)
+    xcols <- palcols[ceiling(nuniques*ecum(x))]
+    
+  }
+  
+  xcols
+  
+}
+
+#' Create vector of color from vector
 #' 
 #' @param x A numeric, character or factor object.
 #' @param option A character string indicating the colormap option to use.
