@@ -4,9 +4,10 @@ Type: Package
 Title: A Wrapper for the 'Highcharts' Library
 Authors@R: c(
   person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
-  person("Nuno", "Agostinho", role = c("ctb"), comment  = "code of hchart.survfit, densities and hc_add_series_scatter"),  
-  person("Dean", "Kilfoyle", role = c("ctb"), comment  = "code 1st version of hc_add_series_boxplot"),
-    person("Adline", "Dsilva", role = c("ctb"), comment  = "Matrix heatmap"),
+  person("Nuno", "Agostinho", role = c("ctb"), comment  = "hchart.survfit, densities and hc_add_series_scatter"),  
+  person("Eduardo", "Flores", role = c("ctb"), comment  = "hc_add_series_df_tidy"),
+  person("Dean", "Kilfoyle", role = c("ctb"), comment  = "1st version of hc_add_series_boxplot"),
+  person("Adline", "Dsilva", role = c("ctb"), comment  = "Matrix heatmap"),
   person("Nick", "Carchedi", role = c("ctb"), comment  = "fix typo: serie -> series")
   )
 Description: A wrapper for the 'Highcharts' library including
