@@ -4,7 +4,7 @@
 \alias{colorize}
 \title{Create vector of color from vector}
 \usage{
-colorize(x, colors = viridis::viridis(10))
+colorize(x, colors = c("#440154", "#21908C", "#FDE725"))
 }
 \arguments{
 \item{x}{A numeric, character or factor object.}

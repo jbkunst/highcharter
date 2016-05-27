@@ -42,6 +42,7 @@ hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
 #' Function to make time or line charts
 #' @param x A numeric vector or a time series object.
 #' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @importFrom stats as.ts
 #' @export
 hcts <- function(x, ...) {
   hchart(as.ts(x), ...)

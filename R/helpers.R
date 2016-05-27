@@ -289,7 +289,7 @@ tooltip_table <- function(x, y,
 #' 
 #' @importFrom grDevices colorRampPalette
 #' @export
-colorize <- function(x, colors = viridis::viridis(10)) {
+colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   
   nuniques <- length(unique(x))
   palcols <- grDevices::colorRampPalette(colors)(nuniques)
