@@ -345,7 +345,7 @@ hchart.matrix <- function(object, label = FALSE, ...) {
     
   } else {
     
-    hc <- hc_colorAxis(hc) 
+    hc <- hc_colorAxis(hc, auxarg = NULL) 
   
   }
   

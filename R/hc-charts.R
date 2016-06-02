@@ -35,8 +35,6 @@ hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
     hc_add_series_boxplot(highchart(), x, outliers = outliers, ...)
   else
     hc_add_series_boxplot(highchart(), x, by = by, outliers = outliers, ...)
-
-  hchart(x, ...)
 }
 
 #' Function to make time or line charts
