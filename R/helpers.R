@@ -352,12 +352,10 @@ colorize_vector <- function(x, option = "D") {
   
 }
 
-#' Function to create \code{stops} argumente in \code{hc_colorAxis}
-#' 
-#' Using viridis
+#' Function to create \code{stops} argument in \code{hc_colorAxis}
 #' 
 #' @param n A numeric indicating how much quantiles generate.
-#' @param colors A character string of colors (ordered) to colorize \code{x}
+#' @param colors A character string of colors (ordered)
 #' 
 #' @examples
 #' 
@@ -371,4 +369,29 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
   list.parse2(
     data.frame(q = seq(0, n)/n, c = palcols)
     )
+}
+
+#' Function to create \code{dataClasses} argument in \code{hc_colorAxis}
+#' 
+#' @param breaks A numeric vector 
+#' @param colors A character string of colors (ordered)
+#' 
+#' @examples
+#' 
+#' color_classes(c(0, 10, 20, 50))
+#' 
+#' @export
+color_classes <- function(breaks = NULL, colors = c("#440154", "#21908C", "#FDE725")) {
+  
+  lbrks <- length(breaks)
+  
+  list.parse3(
+    data.frame(
+      from = breaks[-lbrks],
+      to = breaks[-1],
+      color = grDevices::colorRampPalette(colors)(lbrks - 1),
+      stringsAsFactors = FALSE
+    )
+  )
+  
 }

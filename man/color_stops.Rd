@@ -2,17 +2,17 @@
 % Please edit documentation in R/helpers.R
 \name{color_stops}
 \alias{color_stops}
-\title{Function to create \code{stops} argumente in \code{hc_colorAxis}}
+\title{Function to create \code{stops} argument in \code{hc_colorAxis}}
 \usage{
 color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))
 }
 \arguments{
 \item{n}{A numeric indicating how much quantiles generate.}
 
-\item{colors}{A character string of colors (ordered) to colorize \code{x}}
+\item{colors}{A character string of colors (ordered)}
 }
 \description{
-Using viridis
+Function to create \code{stops} argument in \code{hc_colorAxis}
 }
 \examples{
 
