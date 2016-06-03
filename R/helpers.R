@@ -22,6 +22,7 @@ list.parse2 <- function(df) {
   # names(res) <- NULL
   
   res <- df %>% 
+    map_if(is.factor, as.character) %>% 
     map(identity) %>%  
     transpose() %>% 
     map(function(x) setNames(x, NULL))
@@ -41,7 +42,7 @@ list.parse3 <- function(df) {
   
   names(res) <- NULL
   
-  res
+  resB
   
 }
 
@@ -363,9 +364,11 @@ colorize_vector <- function(x, option = "D") {
 #' color_stops(5)
 #' 
 #' @export
-color_stops <- function(n = 10, option = "D") {
+color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
   
-  data.frame(q = seq(0, n)/n,
-             c = str_sub(viridis(n + 1, option = option), 0, 7)) %>% 
-    list.parse2()
+  palcols <- grDevices::colorRampPalette(colors)(n + 1)
+  
+  list.parse2(
+    data.frame(q = seq(0, n)/n, c = palcols)
+    )
 }

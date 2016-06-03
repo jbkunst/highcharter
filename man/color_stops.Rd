@@ -4,7 +4,7 @@
 \alias{color_stops}
 \title{Function to create \code{stops} argumente in \code{hc_colorAxis}}
 \usage{
-color_stops(n = 10, option = "D")
+color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))
 }
 \arguments{
 \item{n}{A numeric indicating how much quantiles generate.}
