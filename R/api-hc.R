@@ -492,7 +492,15 @@ hc_add_series <- function(hc, ...) {
   
   validate_args("add_series", eval(substitute(alist(...))))
   
-  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
+  dots <- list(...)
+  
+  if (is.numeric(dots$data) & length(dots$data) == 1) {
+    dots$data <- list(dots$data)
+  }
+    
+  lst <- do.call(list, dots)
+  
+  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(lst))
   
   hc
   
