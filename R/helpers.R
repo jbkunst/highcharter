@@ -42,7 +42,7 @@ list.parse3 <- function(df) {
   
   names(res) <- NULL
   
-  resB
+  res
   
 }
 
@@ -357,7 +357,7 @@ colorize_vector <- function(x, option = "D") {
 #' Using viridis
 #' 
 #' @param n A numeric indicating how much quantiles generate.
-#' @param option A character string indicating the colormap option to use.
+#' @param colors A character string of colors (ordered) to colorize \code{x}
 #' 
 #' @examples
 #' 

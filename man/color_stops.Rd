@@ -9,7 +9,7 @@ color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))
 \arguments{
 \item{n}{A numeric indicating how much quantiles generate.}
 
-\item{option}{A character string indicating the colormap option to use.}
+\item{colors}{A character string of colors (ordered) to colorize \code{x}}
 }
 \description{
 Using viridis
