@@ -120,12 +120,19 @@ hchart(x)
 hchart(cor(x))
 
 ## show labels
-hchart(cor(x),label =T) 
+hchart(cor(x),label = TRUE) 
 
 ## based on logarithmic scale
 x <- as.matrix(mtcars[1:4])
 hchart(x)
 
 
+#' Density
 
 
+hchart(density(rexp(5000)))
+
+#' Biplot Princomp
+hchart(princomp(USArrests))
+
+stopifnot(inherits(x, "density") || inherits(x, "numeric"))

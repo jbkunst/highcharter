@@ -704,6 +704,54 @@ hchart.density <- function(object,..., area = FALSE) {
   hc_add_series_density(highchart(), object, area = area, ...)
 }
 
+#' @importFrom dplyr add_rownames as_data_frame
+#' @export
+hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
+  
+  stopifnot(length(choices) == 2L)
+  stopifnot(0 <= scale | scale <= 1)
+  
+  lam <- object$sdev[choices]
+  lam <- lam * sqrt(object$n.obs)
+  
+  if (scale != 0) 
+    lam <- lam ^ scale
+  else
+    lam <- 1
+  
+  dfobs <- t(t(object$scores[, choices])/lam) %>% 
+    as.data.frame() %>% 
+    setNames(c("x", "y")) %>% 
+    add_rownames("name") 
+  
+  dfcomp <- t(t(object$loadings[, choices]) * lam) 
+  
+  mx <- max(abs(dfobs[, 2:3]))
+  mc <- max(abs(dfcomp)) 
+  
+  dfcomp <- dfcomp %>% 
+    {./mc*mx} %>% 
+    as.data.frame() %>% 
+    setNames(c("x", "y")) %>% 
+    add_rownames("name") %>%  
+    as_data_frame() %>% 
+    group_by_("name") %>% 
+    do(data = list(c(0,0), c(.$x, .$y))) %>% 
+    list.parse3()
+  
+  highchart() %>% 
+    hc_plotOptions(
+      line = list(
+        marker = list(enabled = FALSE)
+      )
+    ) %>% 
+    hc_add_series_df(
+      dfobs, name = "observations", type = "scatter", 
+      dataLabels = list(enabled = TRUE, format = "{point.name}"), ...)  %>% 
+    hc_add_series_list(dfcomp)
+  
+}
+
 # # @export
 # hchart.seas <- function(object, ..., outliers = TRUE, trend = FALSE) {
 # 

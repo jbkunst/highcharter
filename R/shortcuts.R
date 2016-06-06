@@ -559,11 +559,11 @@ hc_add_series_whisker <- hc_add_series_boxplot
 #'   hc_add_series_density(rexp(1000), area = TRUE)
 #'  
 #' @export
-hc_add_series_density <- function (hc, x, area = FALSE, ...) {
+hc_add_series_density <- function(hc, x, area = FALSE, ...) {
   
-  stopifnot(inherits(density(x), "density") || inherits(x, "numeric"))
+  stopifnot(inherits(x, "density") || inherits(x, "numeric"))
   
-  if(is.numeric(x)) x <- density(x)
+  if (is.numeric(x)) x <- density(x)
   
   type <- ifelse(area, "areaspline", "spline")
   data <- list.parse3(data.frame(cbind(x = x$x, y = x$y)))
