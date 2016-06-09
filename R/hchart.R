@@ -109,12 +109,13 @@ hchart.forecast <- function(object, fillOpacity = 0.3, ...){
 }
 
 #' @export
-hchart.mforecast <- function(object, fillOpacity = 0.3, ...){
+hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...){
   
   ntss <- ncol(object$x)
   lvls <- object$level
   tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean[[1]])))
-
+  nms <- attr(object$x, "dimnames")[[2]]
+  
   hc <- hchart.mts2(object$x) %>% 
     hc_plotOptions(
       series = list(
@@ -125,12 +126,18 @@ hchart.mforecast <- function(object, fillOpacity = 0.3, ...){
   # hc <- hc %>% hc_add_series(data = NULL, id = "series", name = "Series")
   
   # means
-  hc <- hc %>% hc_add_series(data = NULL, id = "f", name = "forecast")
-  for (i in seq(ntss))
-    hc <- hc %>% hc_add_series_ts(object$mean[[i]], yAxis = i - 1, linkedTo = "f", ...)
+  hc <- hc %>% hc_add_series(data = NULL, id = "forecasts", name = "forecasts")
+  
+  for (i in seq(ntss)) {
+    nm <- nms[i]
+    hc <- hc %>%
+      hc_add_series_ts(object$mean[[nm]], name = paste("forecast", nm),
+                       yAxis = i - 1, linkedTo = "forecasts", ...)
+  }
+    
   
   # levels
-  for (lvl in seq(lvls)) {
+  for (lvl in seq_along(lvls)) {
     
     idlvl <- paste0("level", lvls[lvl])
     nmlvl <- paste("level", lvls[lvl])
@@ -138,14 +145,14 @@ hchart.mforecast <- function(object, fillOpacity = 0.3, ...){
     hc <- hc %>% hc_add_series(data = NULL, id = idlvl, name = nmlvl, ...)
     
     for (i in seq(ntss)) {
-      
+      nm <- nms[i]
       dsbands <- data_frame(
         t = tmf,
         u = as.vector(object$upper[[i]][, lvl]),
         l = as.vector(object$lower[[i]][, lvl]))
       
       hc <- hc %>%
-        hc_add_series(data = list.parse2(dsbands), name = nmlvl, linkedTo = idlvl, yAxis = i - 1,
+        hc_add_series(data = list.parse2(dsbands), name = paste(nmlvl, nm), linkedTo = idlvl, yAxis = i - 1,
                          type = "arearange", fillOpacity = fillOpacity,
                          zIndex = 1, lineWidth = 0, ...)
  
@@ -153,6 +160,15 @@ hchart.mforecast <- function(object, fillOpacity = 0.3, ...){
     
   }
     
+  if (!separate) {
+    hc$x$hc_opts$yAxis <- NULL
+    hc$x$hc_opts$series <- map(hc$x$hc_opts$series, function(x) {
+      x$yAxis <- NULL
+      x
+    })
+    
+  }
+  
   hc
   
 }
@@ -213,9 +229,9 @@ hchart.mts1 <- function(object, ...) {
   for (i in seq(dim(object)[2])) {
     nm <- attr(object, "dimnames")[[2]][i]
     if ("ts" %in% class(object[, i]))
-      hc <- hc %>% hc_add_series_ts(object[, i], name = nm, ...)
+      hc <- hc %>% hc_add_series_ts(object[, i], name = nm, id = nm, ...)
     else
-      hc <- hc %>% hc_add_series_xts(object[, i], name = nm, ...)  
+      hc <- hc %>% hc_add_series_xts(object[, i], name = nm, id = nm, ...)  
   }
   
   hc
@@ -238,8 +254,11 @@ hchart.mts2 <- function(object, ..., heights =  rep(1, ncol(object)), sep = 0.01
   
   namestss <- as.character(attr(object, "dimnames")[[2]])
   
-  for (col in seq(ntss))
-    hc <-  hc %>%  hc_add_series_ts(object[, col], yAxis = col - 1, name = namestss[col], ...)
+  for (col in seq(ntss)) {
+    nm <- namestss[col]
+    hc <-  hc %>%  hc_add_series_ts(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
+  }
+    
   
   hc
  
