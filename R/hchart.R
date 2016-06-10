@@ -778,7 +778,7 @@ hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
 #' @export
 hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
   pca(object$sdev, nrow(object$x), object$x, object$rotation, choices=choices,
-      scale=scale)
+      scale=scale, ...)
 }
 
 # # @export
