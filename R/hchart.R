@@ -724,32 +724,30 @@ hchart.density <- function(object,..., area = FALSE) {
 }
 
 #' @importFrom dplyr add_rownames as_data_frame
-#' @export
-hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  
+pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scale = 1) {
   stopifnot(length(choices) == 2L)
   stopifnot(0 <= scale | scale <= 1)
   
-  lam <- object$sdev[choices]
-  lam <- lam * sqrt(object$n.obs)
+  lam <- sdev[choices]
+  lam <- lam * sqrt(n.obs)
   
   if (scale != 0) 
     lam <- lam ^ scale
   else
     lam <- 1
   
-  dfobs <- t(t(object$scores[, choices])/lam) %>% 
+  dfobs <- t(t(scores[, choices])/lam) %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
     add_rownames("name") 
   
-  dfcomp <- t(t(object$loadings[, choices]) * lam) 
+  dfcomp <- t(t(loadings[, choices]) * lam) 
   
   mx <- max(abs(dfobs[, 2:3]))
   mc <- max(abs(dfcomp)) 
   
   dfcomp <- dfcomp %>% 
-    {./mc*mx} %>% 
+  {./mc*mx} %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
     add_rownames("name") %>%  
@@ -768,7 +766,19 @@ hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
       dfobs, name = "observations", type = "scatter", 
       dataLabels = list(enabled = TRUE, format = "{point.name}"), ...)  %>% 
     hc_add_series_list(dfcomp)
-  
+}
+
+#' @export
+hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
+  pca(object$sdev, object$n.obs, object$scores, object$loadings, ...,
+      choices=choices, scale=scale)
+}
+
+#' @importFrom dplyr add_rownames as_data_frame
+#' @export
+hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
+  pca(object$sdev, nrow(object$x), object$x, object$rotation, choices=choices,
+      scale=scale)
 }
 
 # # @export
