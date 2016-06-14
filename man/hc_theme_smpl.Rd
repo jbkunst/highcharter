@@ -11,7 +11,7 @@ hc_theme_smpl(...)
 }
 \description{
 Desing inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/ggplot.r}
-and color by \url{http://www.materialui.co/flatuicolors}
+and color by \url{https://www.materialui.co/colors}
 }
 \examples{
 
