@@ -5,9 +5,7 @@ library("dplyr")
 library("highcharter")
 
 layout <- layout_nicely
-
 urlb <- "https://raw.githubusercontent.com/kateto/R-Network-Visualization-Workshop/master/Data"
-
 nodes <- read_csv(file.path(urlb, "Dataset1-Media-Example-NODES.csv"))
 links <- read_csv(file.path(urlb, "Dataset1-Media-Example-EDGES.csv"))
 links <- links %>% 
