@@ -506,10 +506,6 @@ hc_add_series <- function(hc, ...) {
   
 }
 
-#' @rdname hc_add_series
-#' @export
-hc_add_serie <- hc_add_series
-
 #' Removing series to highchart objects
 #'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
