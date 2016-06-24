@@ -368,7 +368,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   if (ismatrix) {
     hc <- hc %>%
       hc_xAxis(visible = FALSE) %>% 
-      hc_yAxis(visible = FALSE)
+      hc_yAxis(visible = FALSE, reversed = TRUE)
     
   } else {
     hc <- hc %>% 
@@ -397,22 +397,18 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
 #' @export
 hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
-  lst_to_tbl <- function(x) {
-    x %>% 
-      data.frame(stringsAsFactors = FALSE) %>% 
-      tbl_df() 
-  }
-  
   # data
   dfv <- layout(object) %>%
     round(digits) %>% 
-    lst_to_tbl() %>% 
+    data.frame() %>%
+    tbl_df() %>% 
     setNames(c("x", "y"))
   
   dfvex <- object %>% 
     get.vertex.attribute() %>% 
-    lst_to_tbl()
-
+    data.frame(stringsAsFactors = FALSE) %>% 
+    tbl_df() 
+  
   if (nrow(dfvex) > 0) 
     dfv <- tbl_df(cbind(dfv, dfvex))
   
@@ -423,7 +419,8 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
   dfe <-  object %>%
     get.edgelist() %>% 
-    lst_to_tbl() %>% 
+    data.frame(stringsAsFactors = FALSE) %>% 
+    tbl_df() %>% 
     setNames(c("from", "to")) %>% 
     left_join(dfv %>%
                 select_(.dots = c("name", "x", "y")) %>%
@@ -435,7 +432,8 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   
   dfex <- object %>% 
     get.edge.attribute() %>% 
-    lst_to_tbl()
+    data.frame(stringsAsFactors = FALSE) %>% 
+    tbl_df()
   
   if (nrow(dfex) > 0)
     dfe <- tbl_df(cbind(dfe, dfex))
@@ -443,19 +441,18 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   # Checking opts
   type <- "scatter"
   
-  if (!is.null(dfv[["size"]])) {
+  if ("size" %in% names(dfv)) {
     dfv <- dfv %>% rename_("z" = "size")
     type <- "bubble"
   }
   
-  
-  if (!is.null(dfv[["group"]])) 
+  if ("group" %in% names(dfv)) 
     dfv <- dfv %>% rename_("groupvar" = "group")
   
-  if (!is.null(dfe[["width"]])) 
+  if ("width" %in% names(dfe)) 
     dfe <- dfe %>% rename_("lineWidth" = "width")
   
-  if (is.null(dfe[["color"]])) 
+  if (!"color" %in% names(dfe)) 
     dfe <- dfe %>% mutate("color" = hex_to_rgba("#d3d3d3", 0.5))
   
   dse <- dfe %>%
@@ -472,6 +469,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
     })
   
   vattrs <- setdiff(names(dfv), c("x", "y", "z", "color", "label" , "name"))
+  
   tltip_fmt <- tooltip_table(
     str_to_title(str_replace(vattrs, "_", " ")),
     sprintf("{point.%s}", vattrs))
@@ -499,7 +497,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
                    pointFormat = tltip_fmt
                  ), ...) 
   
-  if (!is.null(dfv[["label"]])) {
+  if ("label" %in% names(dfv)) {
     hc <- hc %>% 
       hc_add_series(data = list.parse3(dfv %>% select_(.dots = c("x", "y", "label"))),
                    type = "scatter", name = "labels", zIndex = 4,
@@ -507,14 +505,10 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
                    dataLabels = list(enabled = TRUE, format = "{point.label}"))
   }
   
-  hc <- hc %>% hc_add_series(data = NULL, name = "edges", id = "e")
+  hc <- hc %>%
+    hc_add_series(data = NULL, name = "edges", id = "e") %>% 
+    hc_add_series_list(dse)
  
-  hc$x$hc_opts$series <- append(
-    hc$x$hc_opts$series,
-    dse
-  )
-  
-  hc 
     
 }
 
@@ -524,6 +518,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
 hchart.phylo <- function(object, ...) {
   
   x <- object
+  
   if (is.null(x$node.label))
     x <- makeNodeLabel(x)
   x$edge <- matrix(c(x$tip.label, x$node.label)[x$edge], ncol = 2)
@@ -744,7 +739,7 @@ hchart.density <- function(object,..., area = FALSE) {
 }
 
 #' @importFrom dplyr add_rownames as_data_frame
-pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scale = 1) {
+hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scale = 1) {
   stopifnot(length(choices) == 2L)
   stopifnot(0 <= scale | scale <= 1)
   
@@ -790,14 +785,14 @@ pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scale = 1) 
 
 #' @export
 hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  pca(object$sdev, object$n.obs, object$scores, object$loadings, ...,
+  hchart.pca(object$sdev, object$n.obs, object$scores, object$loadings, ...,
       choices=choices, scale=scale)
 }
 
 #' @importFrom dplyr add_rownames as_data_frame
 #' @export
 hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  pca(object$sdev, nrow(object$x), object$x, object$rotation, choices=choices,
+  hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation, choices=choices,
       scale=scale, ...)
 }
 
