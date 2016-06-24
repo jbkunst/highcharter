@@ -224,10 +224,6 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
                              args))
 }
 
-#' @rdname hc_add_series_scatter
-#' @export
-hc_add_serie_scatter <- hc_add_series_scatter
-
 #' Shorcut for add series for pie, bar and column charts
 #'
 #' This function add data to plot pie, bar and column charts.
@@ -284,10 +280,6 @@ hc_add_series_labels_values <- function(hc, labels, values, colors = NULL, ...) 
   hc
                       
 }
-
-#' @rdname hc_add_series_labels_values
-#' @export
-hc_add_serie_labels_values <- hc_add_series_labels_values
 
 #' Shorcut for create treemaps
 #'
@@ -374,10 +366,6 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   hc %>% hc_add_series(data = ds, type = "treemap", ...)
   
 }
-
-#' @rdname hc_add_series_treemap
-#' @export
-hc_add_serie_treemap <- hc_add_series_treemap
 
 #' Shorcut for create map
 #'
@@ -470,10 +458,6 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
 }
 
-#' @rdname hc_add_series_map
-#' @export
-hc_add_serie_map <- hc_add_series_map
-
 #' Shorcut for create boxplot 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -533,16 +517,11 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
         )
     }
     
-    
   }
   
   hc
   
 }
-
-#' @export
-#' @rdname hc_add_series_boxplot
-hc_add_series_whisker <- hc_add_series_boxplot
 
 #' Shorcut to create a density plot 
 #' 

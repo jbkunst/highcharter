@@ -39,10 +39,6 @@ hc_add_series_times_values <- function(hc, dates, values, ...) {
   
 }
 
-#' @rdname hc_add_series_times_values
-#' @export
-hc_add_serie_times_values <- hc_add_series_times_values
-
 #' Shorcut for create/add time series charts from a ts object
 #'
 #' This function add a time series to a \code{highchart} object
@@ -81,13 +77,9 @@ hc_add_series_ts <- function(hc, ts, ...) {
   
   values <- as.vector(ts)
   
-  hc %>% hc_add_serie_times_values(dates, values, ...)
+  hc %>% hc_add_series_times_values(dates, values, ...)
   
 }
-
-#' @rdname hc_add_series_ts
-#' @export
-hc_add_serie_ts <- hc_add_series_ts
 
 #' Shorcut for create highstock chart from \code{xts} object
 #'
@@ -129,10 +121,6 @@ hc_add_series_xts <- function(hc, x, ...) {
   hc %>%  hc_add_series(data = ds, ...)
   
 }
-
-#' @rdname hc_add_series_xts
-#' @export
-hc_add_serie_xts <- hc_add_series_xts
 
 #' Shorcut for create candlestick charts
 #'
@@ -201,10 +189,6 @@ hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
 }
 
-#' @rdname hc_add_series_ohlc
-#' @export
-hc_add_serie_ohlc <- hc_add_series_ohlc
-
 #' Shorcut for add flags to highstock chart
 #'
 #' This function helps to add flags highstock charts created from \code{xts} objects.
@@ -254,7 +238,3 @@ hc_add_series_flags <- function(hc, dates,
   hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags", ...)
   
 }
-
-#' @rdname hc_add_series_flags
-#' @export
-hc_add_serie_flags <- hc_add_series_flags
