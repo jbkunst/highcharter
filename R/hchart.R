@@ -308,40 +308,53 @@ hchart.dist <- function(object, ...) {
 
 
 #' @importFrom tidyr gather
-#' @importFrom dplyr count_ left_join select_
+#' @importFrom dplyr count_ left_join select_ rename
 #' @export
-hchart.matrix <- function(object, label = FALSE, ...) {
+hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   
+  stopifnot(is.numeric(object))
+
   df <- as.data.frame(object)
-  is.num <- sapply(df, is.numeric)
-  df[is.num] <- lapply(df[is.num], round, 2)
-  dist <- NULL
-  x <- rownames(df)
-  y <- colnames(df)
   
-  df <- tbl_df(cbind(x , df)) %>% 
-    gather(y, dist, -x) %>% 
-    mutate(x = as.character(x),
-           y = as.character(y)) %>% 
-    left_join(data_frame(x = x, xid = seq(length(x)) - 1), by = "x") %>%
-    left_join(data_frame(y = y, yid = seq(length(y)) - 1), by = "y")
-    
-  ds <- df  %>%
-    select_("yid", "xid", "dist") %>% 
-    list.parse2()
+  value <- NULL
+  key <- NULL
+  name <- NULL
+
+  ismatrix <- is.null(colnames(object)) & is.null(rownames(object))
+  pos <- ifelse(ismatrix, 0, 1)
+  
+  xnm <- if (is.null(colnames(object))) 1:ncol(object) else colnames(object)
+  xnm <- as.character(xnm)
+  xid <- seq(length(xnm)) - pos
+  
+  ynm <- if (is.null(rownames(object))) 1:nrow(object) else rownames(object)
+  ynm <- as.character(ynm)
+  yid <- seq(length(ynm)) - pos
+  
+  ds <- as.data.frame(df) %>% 
+    tbl_df() %>% 
+    bind_cols(data_frame(ynm), .)  %>% 
+    gather(key, value, -ynm) %>% 
+    rename(xnm = key) %>% 
+    mutate(xnm = as.character(xnm),
+           ynm = as.character(ynm))
+  
+  ds$xnm <- if (is.null(colnames(object))) str_replace(ds$xnm, "V", "") else ds$xnm
+  
+  ds <- ds %>% 
+    left_join(data_frame(xnm, xid), by = "xnm") %>%
+    left_join(data_frame(ynm, yid), by = "ynm") %>% 
+    mutate(name = paste(xnm, ynm, sep = " ~ ")) %>% 
+    select(x = xid, y = yid, value, name)
   
   fntltp <- JS("function(){
-               return this.series.xAxis.categories[this.point.x] + ' ~ ' +
-               this.series.yAxis.categories[this.point.y] + ': <b>' +
-               Highcharts.numberFormat(this.point.value, 2)+'</b>';
-               ; }")
+                 return this.point.name + ': ' +
+                   Highcharts.numberFormat(this.point.value, 2)
+               }")
 
-  
   hc <- highchart() %>% 
     hc_chart(type = "heatmap") %>% 
-    hc_xAxis(categories = y, title = NULL) %>% 
-    hc_yAxis(categories = x, title = NULL) %>% 
-    hc_add_series(data = ds) %>% 
+    hc_add_series_df(data = ds, showInLegend = showInLegend, ...) %>% 
     hc_plotOptions(
       series = list(
         boderWidth = 0,
@@ -349,22 +362,29 @@ hchart.matrix <- function(object, label = FALSE, ...) {
         )
       ) %>% 
     hc_tooltip(formatter = fntltp) %>% 
-    hc_legend(align = "right", layout = "vertical",
-              margin = 0, verticalAlign = "top",
-              y = 25, symbolHeight = 280) 
+    hc_legend(enabled = TRUE) %>% 
+    hc_colorAxis(auxarg = TRUE)
   
-  if(max(object) <= 1 && min(object) < 0 && min(object) >= -1) {
-    
-    cor_colr <- list(list(0, '#FF5733'), list(0.5, '#F8F5F5'), list(1, '#2E86C1'))
-    hc <- hc_colorAxis(hc, stops = cor_colr)
-  
-  } else if(min(object)> 0) {
-    
-    hc <- hc_colorAxis(hc, minColor = "#F8F5F5", maxColor = "#2E86C1", type = "logarithmic")
+  if (ismatrix) {
+    hc <- hc %>%
+      hc_xAxis(visible = FALSE) %>% 
+      hc_yAxis(visible = FALSE)
     
   } else {
+    hc <- hc %>% 
+      hc_xAxis(categories = xnm, title = list(text = ""), opposite = TRUE) %>% 
+      hc_yAxis(categories = ynm, title = list(text = ""))
+  }
+  
+  if (-1 <= min(object) & min(object) < 0 & max(object) <= 1) {
     
-    hc <- hc_colorAxis(hc, auxarg = NULL) 
+    cor_colr <- color_stops(3, c("#FF5733", "#F8F5F5", "#2E86C1"))
+    hc <- hc_colorAxis(hc, stops = cor_colr)
+  
+  } else {
+    
+    cor_colr <- color_stops(10, viridis(10, option = "B"))
+    hc <- hc_colorAxis(hc, stops = cor_colr) 
   
   }
   

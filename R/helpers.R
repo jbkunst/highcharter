@@ -364,10 +364,10 @@ colorize_vector <- function(x, option = "D") {
 #' @export
 color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
   
-  palcols <- grDevices::colorRampPalette(colors)(n + 1)
+  palcols <- grDevices::colorRampPalette(colors)(n)
   
   list.parse2(
-    data.frame(q = seq(0, n)/n, c = palcols)
+    data.frame(q = seq(0, n - 1)/(n - 1), c = palcols)
     )
 }
 
