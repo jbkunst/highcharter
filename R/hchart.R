@@ -366,7 +366,6 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
     hc_colorAxis(auxarg = TRUE)
   
   if (ismatrix) {
-    message("lo doy vuelta")
     hc <- hc %>%
       hc_xAxis(visible = FALSE) %>% 
       hc_yAxis(visible = FALSE, reversed = TRUE)
