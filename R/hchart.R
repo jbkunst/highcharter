@@ -373,7 +373,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   } else {
     hc <- hc %>% 
       hc_xAxis(categories = xnm, title = list(text = ""), opposite = TRUE) %>% 
-      hc_yAxis(categories = ynm, title = list(text = ""))
+      hc_yAxis(categories = ynm, title = list(text = ""), reversed = TRUE)
   }
   
   if (-1 <= min(object) & min(object) < 0 & max(object) <= 1) {
