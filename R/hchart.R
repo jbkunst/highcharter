@@ -730,6 +730,13 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
     count <- count + 1
   }
   
+  hc <- hc %>% 
+    hc_plotOptions(
+      series = list(
+        states = list(hover = list(enabled = FALSE))
+      )
+    )
+  
   return(hc)
 }
 
