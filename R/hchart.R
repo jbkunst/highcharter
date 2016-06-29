@@ -508,6 +508,8 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   hc <- hc %>%
     hc_add_series(data = NULL, name = "edges", id = "e") %>% 
     hc_add_series_list(dse)
+  
+  hc
  
     
 }
@@ -740,13 +742,16 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   return(hc)
 }
 
+#' @importFrom tibble rownames_to_column
 #' @export
+
 hchart.density <- function(object,..., area = FALSE) { 
   hc_add_series_density(highchart(), object, area = area, ...)
 }
 
-#' @importFrom dplyr add_rownames as_data_frame
+#' @importFrom dplyr as_data_frame
 hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scale = 1) {
+  
   stopifnot(length(choices) == 2L)
   stopifnot(0 <= scale | scale <= 1)
   
@@ -761,7 +766,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scal
   dfobs <- t(t(scores[, choices])/lam) %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
-    add_rownames("name") 
+    rownames_to_column("name") 
   
   dfcomp <- t(t(loadings[, choices]) * lam) 
   
@@ -772,7 +777,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scal
   {./mc*mx} %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
-    add_rownames("name") %>%  
+    rownames_to_column("name") %>%  
     as_data_frame() %>% 
     group_by_("name") %>% 
     do(data = list(c(0,0), c(.$x, .$y))) %>% 
@@ -796,7 +801,7 @@ hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
       choices=choices, scale=scale)
 }
 
-#' @importFrom dplyr add_rownames as_data_frame
+#' @importFrom dplyr as_data_frame
 #' @export
 hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
   hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation, choices=choices,
