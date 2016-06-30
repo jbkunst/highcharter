@@ -41,9 +41,11 @@ Imports:
     jsonlite,
     igraph,
     ggdendro,
+    lubridate,
     ape
 Suggests:
     knitr,
     rmarkdown,
-    survival
+    survival,
+    ggplot2
 VignetteBuilder: knitr

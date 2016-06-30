@@ -85,46 +85,142 @@ hc_add_series_df <- function(hc, data, ...) {
 }
 
 
-#' Shorcut for tidy data frame using a group variable
+#' Shorcut for tidy data frame a la ggplot2/qplot
+#' 
+#' Function to create chart from tidy data frames.
+#' 
+#' The types supported are line, column, point, polygon,
+#' columrange, spline, areaspline among others 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param data A \code{data.frame} object.
-#' @param group bare column name of categories (one for every series)
-#' @param values bare column name of values
-#' @param ... Aditional shared arguments for the data series 
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#' @param type The type of chart
+#' @param ... Aesthetic mappings, \code{x y group color low high}.
 #'   
 #' @examples 
+#' 
+#' hcdy(iris, "point", x = Sepal.Length, y = Sepal.Width, group = Species)
 #' 
 #' dat <- data.frame(id = c(1,2,3,4,5,6),
 #'                   grp = c("A","A","B","B","C","C"),
 #'                   value = c(10,13,9,15,11,16))
 #' 
 #' highchart() %>% 
-#'  hc_chart(type = "column") %>% 
-#'  hc_add_series_df_tidy(data = dat, group = grp, values = value)
+#'   hc_add_series_df_tidy(data = dat, type = "column", y = value, group = grp)
 #'   
+#' data(mpg, package = "ggplot2")
+#' 
+#' hcdy(mpg, "scatter", x = displ, y = cty)
+#' hcdy(mpg, "scatter", x = displ, y = cty, group = manufacturer)
+#' hcdy(mpg, "scatter", x = displ, y = cty, size = hwy, group = manufacturer)
+#' hcdy(mpg, "scatter", x = displ, y = cty, size = hwy, color = class,
+#'      group = manufacturer)
+#'      
+#' require(dplyr)
+#' 
+#' mpgman <- count(mpg, manufacturer)
+#' hcdy(mpgman, "column", x = manufacturer, y = n)
+#' 
+#' mpgman2 <- count(mpg, manufacturer, year)
+#' hcdy(mpgman2, "bar", x = manufacturer, y = n, group = year)
+#' 
+#' data(economics, package = "ggplot2")
+#' 
+#' hcdy(economics, "line", x = date, y = unemploy)
+#' 
+#' data(economics_long, package = "ggplot2")
+#' 
+#' economics_long2 <- filter(economics_long,
+#'                           variable %in% c("pop", "uempmed", "unemploy"))
+#' hcdy(economics_long2, "line", x = date, y = value01, group = variable)
+#' 
+#' 
+#' @importFrom lubridate is.Date
+#' @importFrom dplyr arrange_
 #' @export
-hc_add_series_df_tidy <- function(hc, data, group, values, ...){
+hc_add_series_df_tidy <- function(hc, data, type = NULL, ...) {
   
+  # check data
   assertthat::assert_that(.is_highchart(hc), is.data.frame(data))
   
-  arguments <- as.list(match.call())
-  cats <- eval(arguments$group, data)
+  pars <- eval(substitute(alist(...)))
+  parsc <- map(pars, as.character)
   
-  n <- length(unique(as.character(cats)))
-  if (n > 0) {
-    for (i in 1:n) {
-      nm <- as.character(unique(cats)[i])
-      dat <- eval(arguments$values, data)
-      dat <- dat[cats == nm]
-      
-      hc <- hc_add_series(hc, name = nm, data = dat, ...)
-      
-    }
+  data <- mutate(data, ...)
+  data <- ungroup(data)
+  
+  # check type
+  type <- ifelse(type == "point", "scatter", type)
+  type <- ifelse("size" %in% names(data) & type == "scatter", "bubble", type)
+  
+  # x values
+  if (is.Date(data[["x"]])) {
+    
+    hc <- hc_xAxis(hc, type = "datetime")
+    data[["x"]] <- datetime_to_timestamp(data[["x"]])
+    
+  } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
+   
+    hc <- hc_xAxis(hc, type = "category")
+    data[["name"]] <- data[["x"]]
+    data[["x"]] <- NULL
+    
+  } 
+  
+  # x
+  if ("x" %in% names(data))
+    data <- arrange_(data, "x")
+  
+  # color
+  if ("color" %in% names(parsc)) {
+    data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")
   }
+    
+  else if ("color" %in% names(data))
+    data  <- rename_(data, "colorv" = "color")
   
-  hc
+  # size
+  if ("size" %in% names(parsc) & type == "bubble")
+    data <- mutate_(data, "z" = "size")
+  
+  # group 
+  if (!"group" %in% names(parsc))
+    data[["group"]] <- "Series"
+  
+  data[["charttpye"]] <- type
+  
+  group <- NULL
+  dfs <- data %>% 
+    group_by_("group", "charttpye") %>% 
+    do(data = list.parse3(select(., -group))) %>% 
+    ungroup() %>% 
+    rename_("name" = "group", "type" = "charttpye")
+  
+  if (!"group" %in% names(parsc))
+    dfs[["name"]] <- NULL
+  
+  series <- list.parse3(dfs)
+  
+  hc_add_series_list(hc, series)
+  
+}
+
+#' @rdname hc_add_series_df_tidy
+#' @export
+hcdy <- function(data, type = NULL, ...){
+  
+  pars <- eval(substitute(alist(...)))
+  parsc <- map(pars, as.character)
+  
+  highchart() %>% 
+    hc_add_series_df_tidy(data = data, type = type, ...) %>% 
+    hc_xAxis(title = list(text = parsc$x)) %>% 
+    hc_yAxis(title = list(text = parsc$y)) %>% 
+    hc_plotOptions(
+      series = list(showInLegend = "group" %in% names(pars)),
+      scatter = list(marker = list(symbol = "circle")),
+      bubble = list(minSize = 5, maxSize = 25)
+    )
 }
 
 #' Shorcut for create scatter plots

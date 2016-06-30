@@ -1,7 +1,5 @@
 library(highcharter)
 
-
-
 hc <- highchart() %>% 
   hc_plotOptions(
     series = list(
