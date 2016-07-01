@@ -14,6 +14,7 @@ options(highcharter.theme = hc_theme_smpl())
 data(diamonds, package = "ggplot2")
 data(economics_long, package = "ggplot2")
 data(economics, package = "ggplot2")
+data(txhousing, package = "ggplot2")
 
 #### FUNCTIONS ####
 # in package
@@ -40,19 +41,20 @@ hcdy(mpg, "scatter", x = displ, y = cty, size = hwy, color = class, group = manu
 mpgman <- count(mpg, manufacturer)
 hcdy(mpgman, "column", x = manufacturer, y = n)
 
-data <- mutate(mpgman, x = manufacturer, y = n)
-
 mpgman2 <- count(mpg, manufacturer, year)
 hcdy(mpgman2, "bar", x = manufacturer, y = n, group = year)
 
 hcdy(economics, "line", x = date, y = unemploy)
-# qplot(data = economics, geom = "line", x = date, y = unemploy)
-
 hcdy(economics, "columnrange", x = date, low = psavert - 2, high = psavert + 2, color = unemploy)
 
 economics_long2 <- filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
 hcdy(economics_long2, "line", x = date, y = value01, group = variable)
-# qplot(data = economics_long2, geom = "line", x = date, y = value01, group = variable)
+
+
+txhousing %>% 
+  group_by(city, year) %>% 
+  summarize(median = median(median)) %>% 
+  hcdy("line", x = year, y = median, group = city)
 
 #### BROOM A LA GGPLOT ####
 modlss <- loess(price ~ carat, data = data)
