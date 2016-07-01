@@ -23,6 +23,39 @@ hchart.default <- function(object, ...) {
        " are not supported by hchart (yet).", call. = FALSE)
 }
 
+#' @export
+hchart.data.frame <- function(object, type = NULL, ...){
+  
+  pars <- eval(substitute(alist(...)))
+  parsc <- map(pars, as.character)
+  
+  object <- mutate(object, ...)
+  object <- ungroup(object)
+  
+  series <- get_hc_series_from_df(object, type = type, ...)
+  
+  hc <- highchart()
+  
+  if (is.Date(object[["x"]])) {
+    hc <- hc_xAxis(hc, type = "datetime")
+  } else if (is.character(object[["x"]]) | is.factor(object[["x"]])) {
+    hc <- hc_xAxis(hc, type = "category")
+  } 
+  
+  hc %>% 
+    hc_add_series_list(series) %>% 
+    hc_xAxis(title = list(text = parsc$x)) %>% 
+    hc_yAxis(title = list(text = parsc$y)) %>% 
+    hc_plotOptions(
+      series = list(showInLegend = "group" %in% names(pars)),
+      scatter = list(marker = list(symbol = "circle")),
+      bubble = list(minSize = 5, maxSize = 25)
+    )
+}
+
+#' @export
+hchart.data_frame <- hchart.data.frame
+
 #' @importFrom graphics hist
 #' @export
 hchart.numeric <- function(object, breaks = "FD", ...) {

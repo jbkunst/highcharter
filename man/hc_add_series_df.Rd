@@ -2,25 +2,33 @@
 % Please edit documentation in R/shortcuts.R
 \name{hc_add_series_df}
 \alias{hc_add_series_df}
-\title{Shorcut for add data series where data is a dataframe}
+\title{Shorcut for tidy data frame a la ggplot2/qplot}
 \usage{
-hc_add_series_df(hc, data, ...)
+hc_add_series_df(hc, data, type = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{data}{A data frame usually with columns: \code{x}, \code{y},
-\code{z}, \code{color}, \code{name}, \code{low}, \code{high}.
-\url{http://api.highcharts.com/highcharts#series<bubble>.data}}
+\item{data}{A \code{data.frame} object.}
 
-\item{...}{Aditional shared arguments for the data series 
-(\url{http://api.highcharts.com/highcharts#series}).}
+\item{type}{The type of chart. Possible values are line, scatter, point, colum,
+columnrange, etc. See \url{http://api.highcharts.com/highcharts#series}.}
+
+\item{...}{Aesthetic mappings, \code{x y group color low high}.}
 }
 \description{
-Automatically parsed de data frame (to a list) so you can use the 
-default parameters of highcharts such as \code{x}, \code{y},
+Function to create chart from tidy data frames. As same as qplot
+you can use aesthetic including the group variable
+}
+\details{
+The types supported are line, column, point, polygon,
+columrange, spline, areaspline among others.
+
+Automatically parsed de data frame (to a list o series). You
+you can use the  default parameters of highcharts such as \code{x}, \code{y},
 \code{z}, \code{color}, \code{name}, \code{low}, \code{high} for 
-each series \url{http://api.highcharts.com/highcharts#series<bubble>.data}.
+each series, for example check 
+\url{http://api.highcharts.com/highcharts#series<bubble>.data}.
 }
 \examples{
 
@@ -29,12 +37,12 @@ n <- 100
 df <- data_frame(
   x = rnorm(n),
   y = x * 2 + rnorm(n),
-  z =  x^2,
-  color = colorize_vector(x)
+  w =  x^2
   )
   
-highchart() \%>\% 
-  hc_add_series_df(data = df, type = "bubble")
+hc_add_series_df(highchart(), data = df, type = "point")
+hc_add_series_df(highchart(), data = df, type = "point", color = w)
+hc_add_series_df(highchart(), data = df, type = "point", color = w, size = y)
 
 
 m <- 100
@@ -42,17 +50,51 @@ s <- cumsum(rnorm(m))
 e <- 2 + rbeta(m, 2, 2)
 
 df2 <- data_frame(
-  x = seq(m),
-  low = s - e,
-  high = s + e,
-  name = paste("I'm point #\%s", x),
-  color = colorize_vector(high, "B")
+  var = seq(m),
+  l = s - e,
+  h = s + e,
+  n = paste("I'm point ", var)
 )
 
-highchart() \%>\%
-  hc_tooltip(valueDecimals = 2) \%>\% 
-  hc_add_series_df(data = df2, name = "I'm a columnrage series",
-                   type = "columnrange", showInLegend = FALSE)
+hc_add_series_df(highchart(), data = df2, type = "columnrange",
+                 x = var, low = l, high = h, name = n, color = var)
+
+hc_add_series_df(highchart(), iris, "point",
+                      x = Sepal.Length, y = Sepal.Width, group = Species)
+
+  
+data(mpg, package = "ggplot2")
+
+# point and scatter is the same
+hc_add_series_df(highchart(), mpg, "scatter", x = displ, y = cty)
+hc_add_series_df(highchart(), mpg, "point", x = displ, y = cty,
+                      group = manufacturer)
+     
+     
+require(dplyr)
+
+mpgman <- count(mpg, manufacturer)
+hc_add_series_df(highchart(), mpgman, "column", x = manufacturer, y = n) \%>\% 
+  hc_xAxis(type = "category")
+
+mpgman2 <- count(mpg, manufacturer, year)
+hc_add_series_df(highchart(), mpgman2, "bar", x = manufacturer, y = n, group = year) \%>\% 
+  hc_xAxis(type = "category")
+  
+data(economics, package = "ggplot2")
+
+hc_add_series_df(highchart(), economics, "line", x = date, y = unemploy) \%>\% 
+  hc_xAxis(type = "datetime")
+
+data(economics_long, package = "ggplot2")
+
+economics_long2 <- filter(economics_long,
+                          variable \%in\% c("pop", "uempmed", "unemploy"))
+                          
+hc_add_series_df(highchart(), economics_long2, "line", x = date,
+                 y = value01, group = variable) \%>\% 
+  hc_xAxis(type = "datetime")
+
 
 }
 

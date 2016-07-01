@@ -33,6 +33,9 @@ It is a **must** know how **highcharts** api works to **take advantage** of this
 
 ## Licence 
 
+The libraries are available under different licenses depending on whether it is 
+intended for commercial/government use, or for a personal or non-profit project.
+
 **Highcharts (http://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.**
 
 ## Code of Conduct

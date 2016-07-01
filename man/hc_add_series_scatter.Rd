@@ -35,6 +35,7 @@ argumets like size, color and label for points are added.
 }
 \examples{
 
+\dontrun{
 hc <- highchart()
 
 hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
@@ -47,6 +48,8 @@ hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec, rowna
 hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec,
                       name = rownames(mtcars), gear = mtcars$gear) \%>\%
   hc_tooltip(pointFormat = "<b>{point.name}</b><br/>Gear: {point.gear}")
+  
+}
 
 }
 

@@ -395,3 +395,76 @@ color_classes <- function(breaks = NULL, colors = c("#440154", "#21908C", "#FDE7
   )
   
 }
+
+#' Auxiliar function to get series from tidy frame 
+#' 
+#' This function is used in hchart.data.frame and hc_add_series_df
+#' 
+#' @param data A \code{data.frame} object.
+#' @param type The type of chart. Possible values are line, scatter, point, colum.
+#' @param ... Aesthetic mappings as \code{x y group color low high}.
+#' 
+#' @examples 
+#' 
+#' get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
+#' 
+#' @export
+get_hc_series_from_df <- function(data, type = NULL, ...) {
+  
+  assertthat::assert_that(is.data.frame(data))
+  stopifnot(!is.null(type))
+  
+  pars <- eval(substitute(alist(...)))
+  parsc <- map(pars, as.character)
+  
+  data <- mutate(data, ...)
+  data <- ungroup(data)
+  
+  # check type
+  type <- ifelse(type == "point", "scatter", type)
+  type <- ifelse("size" %in% names(data) & type == "scatter", "bubble", type)
+  
+  # x values
+  if (is.Date(data[["x"]])) {
+    data[["x"]] <- datetime_to_timestamp(data[["x"]])
+    
+  } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
+    data[["name"]] <- data[["x"]]
+    data[["x"]] <- NULL
+  } 
+  
+  # x
+  if ("x" %in% names(data))
+    data <- arrange_(data, "x")
+  
+  # color
+  if ("color" %in% names(parsc)) {
+    data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")
+  } else if ("color" %in% names(data)) {
+    data  <- rename_(data, "colorv" = "color")
+  }
+    
+  # size
+  if ("size" %in% names(parsc) & type == "bubble")
+    data <- mutate_(data, "z" = "size")
+  
+  # group 
+  if (!"group" %in% names(parsc))
+    data[["group"]] <- "Series"
+  
+  data[["charttpye"]] <- type
+  
+  dfs <- data %>% 
+    group_by_("group", "charttpye") %>% 
+    do(data = list.parse3(select_(., quote(-group)))) %>% 
+    ungroup() %>% 
+    rename_("name" = "group", "type" = "charttpye")
+  
+  if (!"group" %in% names(parsc))
+    dfs[["name"]] <- NULL
+  
+  series <- list.parse3(dfs)
+  
+  series
+  
+}
