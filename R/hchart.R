@@ -33,23 +33,29 @@ hchart.data.frame <- function(object, type = NULL, ...){
   object <- ungroup(object)
   
   series <- get_hc_series_from_df(object, type = type, ...)
-  
-  hc <- highchart()
-  
-  if (is.Date(object[["x"]])) {
-    hc <- hc_xAxis(hc, type = "datetime")
-  } else if (is.character(object[["x"]]) | is.factor(object[["x"]])) {
-    hc <- hc_xAxis(hc, type = "category")
-  } 
+  opts <- get_hc_options_from_df(object, type)
+    
+  hc <- highchart() 
+
+  if (opts$add_colorAxis) 
+    hc <- hc_colorAxis(hc, stops = color_stops())
   
   hc %>% 
     hc_add_series_list(series) %>% 
-    hc_xAxis(title = list(text = parsc$x)) %>% 
-    hc_yAxis(title = list(text = parsc$y)) %>% 
+    hc_xAxis(type = opts$xAxis_type,
+             title = list(text = parsc$x),
+             categories = opts$xAxis_categories) %>% 
+    hc_yAxis(type = opts$yAxis_type,
+             title = list(text = parsc$y),
+             categories = opts$yAxis_categories) %>% 
     hc_plotOptions(
-      series = list(showInLegend = "group" %in% names(pars)),
+      series = list(
+        showInLegend = opts$series_plotOptions_showInLegend,
+        marker = list(enabled = opts$series_marker_enabled)
+        ),
       scatter = list(marker = list(symbol = "circle")),
-      bubble = list(minSize = 5, maxSize = 25)
+      bubble = list(minSize = 5, maxSize = 25),
+      treemap = list(layoutAlgorithm = "squarified")
     )
 }
 
@@ -830,15 +836,15 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scal
 
 #' @export
 hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  hchart.pca(object$sdev, object$n.obs, object$scores, object$loadings, ...,
-      choices=choices, scale=scale)
+  hchart.pca(object$sdev, object$n.obs, object$scores, object$loadings,
+             choices = choices, scale = scale, ...)
 }
 
 #' @importFrom dplyr as_data_frame
 #' @export
 hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation, choices=choices,
-      scale=scale, ...)
+  hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation,
+             choices = choices, scale = scale, ...)
 }
 
 # # @export

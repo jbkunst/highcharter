@@ -167,7 +167,8 @@ hc_get_dash_styles <- function() {
 hc_demo <- function() {
 
   dtemp <- structure(
-    list(month = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+    list(month = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
          tokyo = c(7, 6.9,  9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
          new_york = c(-0.2,  0.8, 5.7, 11.3, 17, 22, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
          berlin = c(-0.9,  0.6, 3.5, 8.4, 13.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1),
@@ -396,12 +397,12 @@ color_classes <- function(breaks = NULL, colors = c("#440154", "#21908C", "#FDE7
   
 }
 
-#' Auxiliar function to get series from tidy frame 
+#' Auxiliar function to get series and options from tidy frame for hchart.data.frame
 #' 
 #' This function is used in hchart.data.frame and hc_add_series_df
 #' 
 #' @param data A \code{data.frame} object.
-#' @param type The type of chart. Possible values are line, scatter, point, colum.
+#' @param type The type of chart. Possible values are line, scatter, point, column.
 #' @param ... Aesthetic mappings as \code{x y group color low high}.
 #' 
 #' @examples 
@@ -424,28 +425,42 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   type <- ifelse(type == "point", "scatter", type)
   type <- ifelse("size" %in% names(data) & type == "scatter", "bubble", type)
   
-  # x values
-  if (is.Date(data[["x"]])) {
-    data[["x"]] <- datetime_to_timestamp(data[["x"]])
-    
-  } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-    data[["name"]] <- data[["x"]]
-    data[["x"]] <- NULL
-  } 
+  # heatmap
+  if (type == "heatmap") {
+    if (!is.numeric(data[["x"]])) {
+      data[["xf"]] <- as.factor(data[["x"]])
+      data[["x"]] <- as.numeric(as.factor(data[["x"]])) - 1
+    }
+    if (!is.numeric(data[["y"]])) {
+      data[["yf"]] <- as.factor(data[["y"]])
+      data[["y"]] <- as.numeric(as.factor(data[["y"]])) - 1
+    }
+  }
   
   # x
-  if ("x" %in% names(data))
-    data <- arrange_(data, "x")
+  if ("x" %in% names(parsc)) {
+    if (is.Date(data[["x"]])) {
+      data[["x"]] <- datetime_to_timestamp(data[["x"]])
+      
+    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
+      data[["name"]] <- data[["x"]]
+      data[["x"]] <- NULL
+    } 
+  }
   
   # color
   if ("color" %in% names(parsc)) {
-    data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")
+    if (type == "treemap") {
+      data <- rename_(data, "colorValue" = "color")
+    } else {
+      data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")  
+    }
   } else if ("color" %in% names(data)) {
     data  <- rename_(data, "colorv" = "color")
   }
-    
+  
   # size
-  if ("size" %in% names(parsc) & type == "bubble")
+  if ("size" %in% names(parsc) & type %in% c("bubble", "scatter"))
     data <- mutate_(data, "z" = "size")
   
   # group 
@@ -456,7 +471,7 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   
   dfs <- data %>% 
     group_by_("group", "charttpye") %>% 
-    do(data = list.parse3(select_(., quote(-group)))) %>% 
+    do(data = list.parse3(select_(., quote(-group), quote(-charttpye)))) %>% 
     ungroup() %>% 
     rename_("name" = "group", "type" = "charttpye")
   
@@ -466,5 +481,56 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   series <- list.parse3(dfs)
   
   series
+  
+}
+
+#' @rdname get_hc_series_from_df
+#' @export
+get_hc_options_from_df <- function(data, type) {
+  
+  opts <- list()
+  
+  # x
+  if ("x" %in% names(data)) {
+    if (is.Date(data[["x"]])) {
+      opts$xAxis_type <- "datetime"
+    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
+      opts$xAxis_type <- "category"
+    } else {
+      opts$xAxis_type <- "linear"
+    }
+  }
+  
+  # y
+  if ("y" %in% names(data)) {
+    if (is.Date(data[["y"]])) {
+      opts$yAxis_type <- "datetime"
+    } else if (is.character(data[["y"]]) | is.factor(data[["y"]])) {
+      opts$yAxis_type <- "category"
+    } else {
+      opts$yAxis_type <- "linear"
+    }
+  }  
+  
+  # showInLegend
+  opts$series_plotOptions_showInLegend <- "group" %in% names(data)
+  
+  # colorAxis
+  opts$add_colorAxis <- (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
+  
+  # series marker enabled
+  opts$series_marker_enabled <- !(type %in% c("line", "spline"))
+  
+  # heatmap
+  if (type == "heatmap") {
+    if (!is.numeric(data[["x"]])) {
+      opts$xAxis_categories <- levels(as.factor(data[["x"]]))
+    }
+    if (!is.numeric(data[["y"]])) {
+      opts$yAxis_categories <- levels(as.factor(data[["y"]]))
+    }
+  }
+  
+  opts
   
 }
