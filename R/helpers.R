@@ -409,6 +409,7 @@ color_classes <- function(breaks = NULL, colors = c("#440154", "#21908C", "#FDE7
 #' 
 #' get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #' 
+#' @importFrom tibble has_name
 #' @export
 get_hc_series_from_df <- function(data, type = NULL, ...) {
   
@@ -438,7 +439,7 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   }
   
   # x
-  if ("x" %in% names(parsc)) {
+  if (has_name(parsc, "x")) {
     if (is.Date(data[["x"]])) {
       data[["x"]] <- datetime_to_timestamp(data[["x"]])
       
@@ -449,22 +450,22 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   }
   
   # color
-  if ("color" %in% names(parsc)) {
+  if (has_name(parsc, "color")) {
     if (type == "treemap") {
       data <- rename_(data, "colorValue" = "color")
     } else {
       data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")  
     }
-  } else if ("color" %in% names(data)) {
+  } else if (has_name(data, "x")) {
     data  <- rename_(data, "colorv" = "color")
   }
   
   # size
-  if ("size" %in% names(parsc) & type %in% c("bubble", "scatter"))
+  if (has_name(parsc, "size") & type %in% c("bubble", "scatter"))
     data <- mutate_(data, "z" = "size")
   
   # group 
-  if (!"group" %in% names(parsc))
+  if (!has_name(parsc, "group"))
     data[["group"]] <- "Series"
   
   data[["charttpye"]] <- type
@@ -475,7 +476,7 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
     ungroup() %>% 
     rename_("name" = "group", "type" = "charttpye")
   
-  if (!"group" %in% names(parsc))
+  if (!has_name(parsc, "group"))
     dfs[["name"]] <- NULL
   
   series <- list.parse3(dfs)
@@ -491,7 +492,7 @@ get_hc_options_from_df <- function(data, type) {
   opts <- list()
   
   # x
-  if ("x" %in% names(data)) {
+  if (has_name(data, "x")) {
     if (is.Date(data[["x"]])) {
       opts$xAxis_type <- "datetime"
     } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
@@ -502,7 +503,7 @@ get_hc_options_from_df <- function(data, type) {
   }
   
   # y
-  if ("y" %in% names(data)) {
+  if (has_name(data, "x")) {
     if (is.Date(data[["y"]])) {
       opts$yAxis_type <- "datetime"
     } else if (is.character(data[["y"]]) | is.factor(data[["y"]])) {

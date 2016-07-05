@@ -138,3 +138,11 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   hc
   
 }
+
+#' Function to chart coefficients from glms
+#' 
+#' @export
+hccoef <- function(glm){
+  stopifnot(inherits(glm), "glm")
+  hchart.glm(gml)
+}

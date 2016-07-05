@@ -847,6 +847,19 @@ hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
              choices = choices, scale = scale, ...)
 }
 
+#' @importFrom broom tidy
+hchart.glm <- function(object, ...) {
+  
+  moddf <- tidy(object)
+  hchart.data.frame(
+    moddf, "errorbar",
+    x = term, low = estimate - std.error,
+    high = estimate + std.error) %>% 
+    hc_add_series_df(moddf, "point", x = term, y = estimate) %>% 
+    hc_chart(type = "bar")
+  
+}
+
 # # @export
 # hchart.seas <- function(object, ..., outliers = TRUE, trend = FALSE) {
 # 

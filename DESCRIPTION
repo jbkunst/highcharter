@@ -32,6 +32,7 @@ Imports:
     dplyr,
     tibble,
     stringr,
+    broom,
     viridisLite,
     xts,
     quantmod,
