@@ -57,7 +57,7 @@ hc_add_series_list <- function(hc, lst) {
 #'   w =  x^2
 #'   )
 #'   
-#' hc_add_series_df(highchart(), data = df, type = "point")
+#' hc_add_series_df(highchart(), data = df, type = "point", x = x, y = y)
 #' hc_add_series_df(highchart(), data = df, type = "point", color = w)
 #' hc_add_series_df(highchart(), data = df, type = "point", color = w, size = y)
 #'
@@ -87,8 +87,6 @@ hc_add_series_list <- function(hc, lst) {
 #' hc_add_series_df(highchart(), mpg, "point", x = displ, y = cty,
 #'                       group = manufacturer)
 #'      
-#'      
-#' require(dplyr)
 #' 
 #' mpgman <- count(mpg, manufacturer)
 #' hc_add_series_df(highchart(), mpgman, "column", x = manufacturer, y = n) %>% 
@@ -549,7 +547,10 @@ hc_add_series_density <- function(hc, x, area = FALSE, ...) {
   
   type <- ifelse(area, "areaspline", "spline")
   data <- list.parse3(data.frame(cbind(x = x$x, y = x$y)))
-  return(hc %>% hc_add_series(data = data, type = type, ...))
+  
+  hc %>% 
+    hc_chart(zoomType = "x") %>% 
+    hc_add_series(data = data, type = type, ...)
 }
 
 

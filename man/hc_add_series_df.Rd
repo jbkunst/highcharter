@@ -40,7 +40,7 @@ df <- data_frame(
   w =  x^2
   )
   
-hc_add_series_df(highchart(), data = df, type = "point")
+hc_add_series_df(highchart(), data = df, type = "point", x = x, y = y)
 hc_add_series_df(highchart(), data = df, type = "point", color = w)
 hc_add_series_df(highchart(), data = df, type = "point", color = w, size = y)
 
@@ -70,8 +70,6 @@ hc_add_series_df(highchart(), mpg, "scatter", x = displ, y = cty)
 hc_add_series_df(highchart(), mpg, "point", x = displ, y = cty,
                       group = manufacturer)
      
-     
-require(dplyr)
 
 mpgman <- count(mpg, manufacturer)
 hc_add_series_df(highchart(), mpgman, "column", x = manufacturer, y = n) \%>\% 

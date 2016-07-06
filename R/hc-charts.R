@@ -139,11 +139,11 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   
 }
 
-#' Function to chart coefficients from glms
-#' 
-#' @param glm A \code{glm} object.
-#' @export
-hccoef <- function(glm){
-  stopifnot(inherits(glm, "glm"))
-  hchart.glm(gml)
-}
+#' #' Function to chart coefficients from glms
+#' #' 
+#' #' @param glm A \code{glm} object.
+#' #' @export
+#' hccoef <- function(glm){
+#'   stopifnot(inherits(glm, "glm"))
+#'   hchart.glm(gml)
+#' }

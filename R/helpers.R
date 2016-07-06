@@ -456,8 +456,6 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
     } else {
       data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")  
     }
-  } else if (has_name(data, "x")) {
-    data  <- rename_(data, "colorv" = "color")
   }
   
   # size
