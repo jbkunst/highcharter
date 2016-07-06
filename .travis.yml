@@ -7,9 +7,13 @@ os:
 r_packages:
   - covr
   - testthat
+  
+r_github_packages:
+  - jimhester/lintr
 
 after_success:
-  - if [ $TRAVIS_OS_NAME == "linux" ]; then Rscript -e 'covr::codecov()'; fi
+  - if [ $TRAVIS_OS_NAME == "linux" ]; then Rscript -e 'covr::codecov()';
+  - Rscript -e 'lintr::lint_package()'
 
 warnings_are_errors: false
 

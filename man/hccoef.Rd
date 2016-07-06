@@ -6,6 +6,9 @@
 \usage{
 hccoef(glm)
 }
+\arguments{
+\item{glm}{A \code{glm} object.}
+}
 \description{
 Function to chart coefficients from glms
 }

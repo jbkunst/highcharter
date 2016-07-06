@@ -23,6 +23,7 @@
 #' }
 #' 
 #' @importFrom zoo as.Date
+#' @importFrom assertthat is.date assert_that
 #' 
 #' @export 
 hc_add_series_times_values <- function(hc, dates, values, ...) {

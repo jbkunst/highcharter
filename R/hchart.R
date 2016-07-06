@@ -850,6 +850,8 @@ hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
 #' @importFrom broom tidy
 hchart.glm <- function(object, ...) {
   
+  term <- estimate <- std.error <- NULL
+  
   moddf <- tidy(object)
   hchart.data.frame(
     moddf, "errorbar",
