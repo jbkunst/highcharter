@@ -4,5 +4,6 @@
 tests/
 devscripts/
 ^\.travis\.yml$
+.lintr
 fort.6
 ^CONDUCT\.md$
