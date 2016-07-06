@@ -40,9 +40,7 @@ Imports:
     htmltools,
     jsonlite,
     igraph,
-    ggdendro,
-    lubridate,
-    ape
+    lubridate
 Suggests:
     knitr,
     rmarkdown,

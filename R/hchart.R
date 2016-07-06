@@ -553,66 +553,6 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
     
 }
 
-#' @importFrom ape as.igraph.phylo makeNodeLabel
-#' @importFrom igraph graph.edgelist V V<-
-#' @export
-hchart.phylo <- function(object, ...) {
-  
-  x <- object
-  
-  if (is.null(x$node.label))
-    x <- makeNodeLabel(x)
-  x$edge <- matrix(c(x$tip.label, x$node.label)[x$edge], ncol = 2)
-  
-  object <- graph.edgelist(x$edge)
-  # object <- as.igraph.phylo(object)
-  
-  V(object)$size <- ifelse(str_detect(V(object)$name, "Node\\d+"), 0, 1)
-  
-  hchart(object, minSize = 0, ...)
-  
-}
-
-#' @importFrom ggdendro dendro_data
-#' @importFrom purrr by_row
-#' @export
-hchart.dendrogram <- function(object, ...) {
-  
-  dddata <- dendro_data(object)  
-  
-  x <- xend <- NULL
-  
-  dsseg <- dddata$segments
-  dsseg$x <- dsseg$x - 1
-  dsseg$xend <- dsseg$xend - 1
-  
-  dsseg <- dsseg %>% 
-    mutate(x = x - 1, xend = xend - 1) %>% 
-    by_row(function(x){
-      list(list(x = x$x, y = x$y), list(x = x$xend, y = x$yend))
-    }, .to = "out") %>% 
-    .[["out"]]
-  
-  hc <- highchart() %>% 
-    hc_plotOptions(
-      series = list(
-        lineWidth = 2,
-        showInLegend = FALSE,
-        marker = list(radius = 0),
-        enableMouseTracking = FALSE
-      )
-    ) %>% 
-    hc_xAxis(categories = dddata$labels$label,
-             tickmarkPlacement = "on") %>% 
-    hc_colors(list(hex_to_rgba("#606060")))
-  
-  for (i in seq_along(dsseg)) {
-    hc <- hc %>% hc_add_series(data = dsseg[[i]], type = "scatter")
-  }
-  
-  hc
-}
-
 #' Plot survival curves using Highcharts
 #' 
 #' @param object A survfit object as returned from the \code{survfit} function
@@ -888,3 +828,63 @@ hchart.glm <- function(object, ...) {
 # 
 #   hc
 # }
+
+#' #' @importFrom ggdendro dendro_data
+#' #' @importFrom purrr by_row
+#' #' @export
+#' hchart.dendrogram <- function(object, ...) {
+#'   
+#'   dddata <- dendro_data(object)  
+#'   
+#'   x <- xend <- NULL
+#'   
+#'   dsseg <- dddata$segments
+#'   dsseg$x <- dsseg$x - 1
+#'   dsseg$xend <- dsseg$xend - 1
+#'   
+#'   dsseg <- dsseg %>% 
+#'     mutate(x = x - 1, xend = xend - 1) %>% 
+#'     by_row(function(x){
+#'       list(list(x = x$x, y = x$y), list(x = x$xend, y = x$yend))
+#'     }, .to = "out") %>% 
+#'     .[["out"]]
+#'   
+#'   hc <- highchart() %>% 
+#'     hc_plotOptions(
+#'       series = list(
+#'         lineWidth = 2,
+#'         showInLegend = FALSE,
+#'         marker = list(radius = 0),
+#'         enableMouseTracking = FALSE
+#'       )
+#'     ) %>% 
+#'     hc_xAxis(categories = dddata$labels$label,
+#'              tickmarkPlacement = "on") %>% 
+#'     hc_colors(list(hex_to_rgba("#606060")))
+#'   
+#'   for (i in seq_along(dsseg)) {
+#'     hc <- hc %>% hc_add_series(data = dsseg[[i]], type = "scatter")
+#'   }
+#'   
+#'   hc
+#' }
+#' 
+#' #' @importFrom ape as.igraph.phylo makeNodeLabel
+#' #' @importFrom igraph graph.edgelist V V<-
+#' #' @export
+#' hchart.phylo <- function(object, ...) {
+#'   
+#'   x <- object
+#'   
+#'   if (is.null(x$node.label))
+#'     x <- makeNodeLabel(x)
+#'   x$edge <- matrix(c(x$tip.label, x$node.label)[x$edge], ncol = 2)
+#'   
+#'   object <- graph.edgelist(x$edge)
+#'   # object <- as.igraph.phylo(object)
+#'   
+#'   V(object)$size <- ifelse(str_detect(V(object)$name, "Node\\d+"), 0, 1)
+#'   
+#'   hchart(object, minSize = 0, ...)
+#'   
+#' }
