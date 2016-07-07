@@ -161,7 +161,7 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
 #'   
 #' }
 #' 
-#' @importFrom dplyr mutate group_by do select data_frame
+#' @importFrom dplyr mutate do data_frame
 #' 
 #' @export 
 hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
@@ -484,7 +484,7 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
   }
   
   df <- data_frame(value = x, by = by) %>% 
-    group_by(by) %>% 
+    group_by_("by") %>% 
     do(data = boxplot.stats(.$value))
   
   bxps <- map(df$data, "stats")

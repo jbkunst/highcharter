@@ -23,45 +23,6 @@ hchart.default <- function(object, ...) {
        " are not supported by hchart (yet).", call. = FALSE)
 }
 
-#' @export
-hchart.data.frame <- function(object, type = NULL, ...){
-  
-  pars <- eval(substitute(alist(...)))
-  parsc <- map(pars, as.character)
-  
-  object <- mutate(object, ...)
-  object <- ungroup(object)
-  
-  series <- get_hc_series_from_df(object, type = type, ...)
-  opts <- get_hc_options_from_df(object, type)
-    
-  hc <- highchart() 
-
-  if (opts$add_colorAxis) 
-    hc <- hc_colorAxis(hc, stops = color_stops())
-  
-  hc %>% 
-    hc_add_series_list(series) %>% 
-    hc_xAxis(type = opts$xAxis_type,
-             title = list(text = parsc$x),
-             categories = opts$xAxis_categories) %>% 
-    hc_yAxis(type = opts$yAxis_type,
-             title = list(text = parsc$y),
-             categories = opts$yAxis_categories) %>% 
-    hc_plotOptions(
-      series = list(
-        showInLegend = opts$series_plotOptions_showInLegend,
-        marker = list(enabled = opts$series_marker_enabled)
-        ),
-      scatter = list(marker = list(symbol = "circle")),
-      bubble = list(minSize = 5, maxSize = 25),
-      treemap = list(layoutAlgorithm = "squarified")
-    )
-}
-
-#' @export
-hchart.data_frame <- hchart.data.frame
-
 #' @importFrom graphics hist
 #' @export
 hchart.numeric <- function(object, breaks = "FD", ...) {
@@ -347,17 +308,13 @@ hchart.dist <- function(object, ...) {
 
 
 #' @importFrom tidyr gather
-#' @importFrom dplyr count_ left_join select_ rename
+#' @importFrom dplyr count_ left_join select_
 #' @export
 hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   
   stopifnot(is.numeric(object))
 
   df <- as.data.frame(object)
-  
-  value <- NULL
-  key <- NULL
-  name <- NULL
 
   ismatrix <- is.null(colnames(object)) & is.null(rownames(object))
   pos <- ifelse(ismatrix, 0, 1)
@@ -373,18 +330,18 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   ds <- as.data.frame(df) %>% 
     tbl_df() %>% 
     bind_cols(data_frame(ynm), .)  %>% 
-    gather(key, value, -ynm) %>% 
-    rename(xnm = key) %>% 
-    mutate(xnm = as.character(xnm),
-           ynm = as.character(ynm))
+    gather("key", "value", -ynm) 
+    rename_("xnm" = "key") %>% 
+    mutate_("xnm" = "as.character(xnm)",
+            "ynm" = "as.character(ynm)")
   
   ds$xnm <- if (is.null(colnames(object))) str_replace(ds$xnm, "V", "") else ds$xnm
   
   ds <- ds %>% 
     left_join(data_frame(xnm, xid), by = "xnm") %>%
     left_join(data_frame(ynm, yid), by = "ynm") %>% 
-    mutate(name = paste(xnm, ynm, sep = " ~ ")) %>% 
-    select(x = xid, y = yid, value, name)
+    mutate_("name" = "paste(xnm, ynm, sep = ' ~ ')") %>% 
+    select_("x" = "xid", "y" = "yid", "value", "name")
   
   fntltp <- JS("function(){
                  return this.point.name + ': ' +
@@ -392,10 +349,10 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
                }")
 
   hc <- highchart() %>% 
-    hc_chart(type = "heatmap") %>% 
-    hc_add_series_df(data = ds, showInLegend = showInLegend, ...) %>% 
+    hc_add_series_df(data = ds, type = "heatmap") %>% 
     hc_plotOptions(
       series = list(
+        showInLegend = showInLegend,
         boderWidth = 0,
         dataLabels = list(enabled = label)
         )
@@ -429,6 +386,45 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   
   hc
 }
+
+#' @export
+hchart.data.frame <- function(object, type = NULL, ...){
+  
+  pars <- eval(substitute(alist(...)))
+  parsc <- map(pars, as.character)
+  
+  object <- mutate(object, ...)
+  object <- ungroup(object)
+  
+  series <- get_hc_series_from_df(object, type = type, ...)
+  opts <- get_hc_options_from_df(object, type)
+  
+  hc <- highchart() 
+  
+  if (opts$add_colorAxis) 
+    hc <- hc_colorAxis(hc, stops = color_stops())
+  
+  hc %>% 
+    hc_add_series_list(series) %>% 
+    hc_xAxis(type = opts$xAxis_type,
+             title = list(text = parsc$x),
+             categories = opts$xAxis_categories) %>% 
+    hc_yAxis(type = opts$yAxis_type,
+             title = list(text = parsc$y),
+             categories = opts$yAxis_categories) %>% 
+    hc_plotOptions(
+      series = list(
+        showInLegend = opts$series_plotOptions_showInLegend,
+        marker = list(enabled = opts$series_marker_enabled)
+      ),
+      scatter = list(marker = list(symbol = "circle")),
+      bubble = list(minSize = 5, maxSize = 25),
+      treemap = list(layoutAlgorithm = "squarified")
+    )
+}
+
+#' @export
+hchart.data_frame <- hchart.data.frame
 
 #' @importFrom igraph get.vertex.attribute get.edge.attribute get.edgelist layout_nicely
 #' @importFrom stringr str_to_title

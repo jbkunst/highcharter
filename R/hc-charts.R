@@ -71,7 +71,7 @@ hcdensity <- function(x, area = FALSE, ...) {
 #' 
 #' hcwaffle(c("car", "truck", "plane"), c(50, 20, 10), icons = c("car", "truck", "plane"))
 #' 
-#' @importFrom dplyr ungroup arrange desc group_by_
+#' @importFrom dplyr ungroup group_by_
 #' @export
 hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   
@@ -111,7 +111,7 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
     do(data = list.parse2(data_frame(.$x, .$y))) %>% 
     ungroup() %>% 
     left_join(data_frame(labels = as.character(labels), counts), by = c("name" = "labels")) %>% 
-    arrange(desc(counts)) 
+    arrange_("-counts") 
   
   if (!is.null(icons)) {
     
