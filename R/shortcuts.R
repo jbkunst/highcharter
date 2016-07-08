@@ -61,7 +61,6 @@ hc_add_series_list <- function(hc, lst) {
 #' hc_add_series_df(highchart(), data = df, type = "point", color = w)
 #' hc_add_series_df(highchart(), data = df, type = "point", color = w, size = y)
 #'
-#' 
 #' m <- 100
 #' s <- cumsum(rnorm(m))
 #' e <- 2 + rbeta(m, 2, 2)
