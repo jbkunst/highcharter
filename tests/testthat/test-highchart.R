@@ -10,7 +10,9 @@ test_that("highchart object is a from highchart and htmlwidget class", {
 
 test_that("highchartOutput  return a function", {
   
-  expect_true(all(class(highchartOutput("outputid")) %in% c("shiny.tag.list", "list")))
+  expect_true(
+    all(class(highchartOutput("outputid")) %in% c("shiny.tag.list", "list"))
+    )
   
 })
 

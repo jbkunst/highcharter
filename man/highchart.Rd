@@ -21,6 +21,8 @@ Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 
 \item{height}{A numeric input in pixels.}
 
+\item{elementId}{Use an explicit element ID for the widget.}
+
 \item{debug}{A boolean value if you want to print in the browser console the 
 parameters given to \code{highchart}.}
 }

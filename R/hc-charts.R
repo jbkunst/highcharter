@@ -98,7 +98,7 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   } else {
     
     h <- rows
-    w <- ceiling(sum(counts)/rows)
+    w <- ceiling(sum(counts) / rows)
     
   }
   
@@ -106,11 +106,13 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
     head(sum(counts)) %>% 
     mutate_("y" = "-y") %>% 
     mutate(gr = rep(seq_along(labels), times = counts)) %>% 
-    left_join(data_frame(gr = seq_along(labels), name = as.character(labels)), by = "gr") %>% 
+    left_join(data_frame(gr = seq_along(labels), name = as.character(labels)),
+              by = "gr") %>% 
     group_by_("name") %>% 
     do(data = list.parse2(data_frame(.$x, .$y))) %>% 
     ungroup() %>% 
-    left_join(data_frame(labels = as.character(labels), counts), by = c("name" = "labels")) %>% 
+    left_join(data_frame(labels = as.character(labels), counts),
+              by = c("name" = "labels")) %>% 
     arrange_("-counts") 
   
   if (!is.null(icons)) {

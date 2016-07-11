@@ -27,7 +27,7 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
     }
   }
   
-  if (!all(sapply(params, function(x) { inherits(x, "htmlwidget") })))
+  if (!all(sapply(params, function(x) inherits(x, "htmlwidget") )))
     stop("All parameters must be htmlwidget objects")
   
   if (is.null(ncol))
@@ -36,8 +36,7 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
   if (ncol > 12)
     ncol <- 12
   
-  # mobile?
-  ncolm <- floor(ncol/2)
+  ncolm <- floor(ncol / 2)
   
   divs <- map(params, function(x){
     
@@ -53,7 +52,7 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
   divgrid <- tags$div(class = "grid grid-pad", style = "with:100%", divs)
   
   class(divgrid) <- c(class(divgrid), "htmlwdwtgrid")
-  # htmltools::browsable(divgrid)
+  
   divgrid
   
 }

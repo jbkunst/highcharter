@@ -14,11 +14,12 @@ hc_theme_sandsignika <- function(...){
   
   theme <- 
   list(
-    colors = c("#f45b5b", "#8085e9", "#8d4654", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
-             "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"),
+    colors = c("#F45B5B", "#8085E9", "#8D4654", "#7798BF", "#AAEEEE",
+               "#FF0066", "#EEAAEE", "#55BF3B", "#DF5353"),
     chart = list(
       backgroundColor = NULL,
-      divBackgroundImage = "http://www.highcharts.com/samples/graphics/sand.png",
+      divBackgroundImage = 
+        "http://www.highcharts.com/samples/graphics/sand.png",
       style = list(
         fontFamily = "Signika, serif"
       )

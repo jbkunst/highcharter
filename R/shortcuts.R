@@ -163,8 +163,9 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
 #' @importFrom dplyr mutate do data_frame
 #' 
 #' @export 
-hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL,
-                                  showInLegend = FALSE, viridis.option = "D", ...) {
+hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
+                                  label = NULL, showInLegend = FALSE,
+                                  viridis.option = "D", ...) {
   
   assertthat::assert_that(.is_highchart(hc), length(x) == length(y),
                           is.numeric(x), is.numeric(y))
@@ -258,7 +259,8 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL, label = NULL
 #' 
 #' 
 #' @export
-hc_add_series_labels_values <- function(hc, labels, values, colors = NULL, ...) {
+hc_add_series_labels_values <- function(hc, labels, values,
+                                        colors = NULL, ...) {
   
   assertthat::assert_that(.is_highchart(hc),
                           is.numeric(values),
@@ -335,7 +337,9 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   
   ndepth <- which(names(df) == "value") - 1
   
-  ds <- map_df(seq(ndepth), function(lvl){ # lvl <- sample(seq(ndepth), size = 1)
+  ds <- map_df(seq(ndepth), function(lvl) {
+    
+    # lvl <- sample(seq(ndepth), size = 1)
     
     df2 <- df %>% 
       filter_(sprintf("level == %s", lvl)) %>% 
@@ -511,7 +515,8 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
           tooltip = list(
             headerFormat = "<span>{point.key}</span><br/>",
             # pointFormat = "Observation: {point.y}"
-            pointFormat = "<span style='color:{point.color}'></span> Outlier: <b>{point.y}</b><br/>"
+            pointFormat = "<span style='color:{point.color}'></span> 
+            Outlier: <b>{point.y}</b><br/>"
           ),
           ...
         )

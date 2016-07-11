@@ -133,7 +133,7 @@ hex_to_rgba <- function(x, alpha = 1) {
     col2rgb() %>% 
     t() %>% 
     as.data.frame() %>% 
-    unite_(col = "rgba", from = c("red", "green", "blue") , sep = ",")
+    unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",")
   
   sprintf("rgba(%s,%s)", rgba[["rgba"]], alpha)
   
@@ -167,12 +167,17 @@ hc_get_dash_styles <- function() {
 hc_demo <- function() {
 
   dtemp <- structure(
-    list(month = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
-         tokyo = c(7, 6.9,  9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
-         new_york = c(-0.2,  0.8, 5.7, 11.3, 17, 22, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
-         berlin = c(-0.9,  0.6, 3.5, 8.4, 13.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1),
-         london = c(3.9,  4.2, 5.7, 8.5, 11.9, 15.2, 17, 16.6, 14.2, 10.3, 6.6, 4.8)),
+    list(
+      month = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+      tokyo = c(7, 6.9,  9.5, 14.5, 18.2, 21.5,
+                25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
+      new_york = c(-0.2,  0.8, 5.7, 11.3, 17, 22, 
+                   24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
+      berlin = c(-0.9,  0.6, 3.5, 8.4, 13.5, 17,
+                 18.6, 17.9, 14.3, 9, 3.9, 1),
+      london = c(3.9,  4.2, 5.7, 8.5, 11.9, 15.2,
+                 17, 16.6, 14.2, 10.3, 6.6, 4.8)),
     .Names = c("month", "tokyo", "new_york", "berlin", "london"),
     row.names = c(NA, 12L ), class = c("tbl_df", "tbl", "data.frame"))
   
@@ -368,7 +373,10 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
   palcols <- grDevices::colorRampPalette(colors)(n)
   
   list.parse2(
-    data.frame(q = seq(0, n - 1)/(n - 1), c = palcols)
+    data.frame(
+      q = seq(0, n - 1) / (n - 1),
+      c = palcols
+      )
     )
 }
 
@@ -515,7 +523,8 @@ get_hc_options_from_df <- function(data, type) {
   opts$series_plotOptions_showInLegend <- "group" %in% names(data)
   
   # colorAxis
-  opts$add_colorAxis <- (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
+  opts$add_colorAxis <- 
+    (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
   
   # series marker enabled
   opts$series_marker_enabled <- !(type %in% c("line", "spline"))

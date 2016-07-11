@@ -11,6 +11,7 @@
 #'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
+#' @param elementId	Use an explicit element ID for the widget.
 #' @param debug A boolean value if you want to print in the browser console the 
 #'    parameters given to \code{highchart}.
 #'      
@@ -27,7 +28,6 @@ highchart <- function(hc_opts = list(),
   
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
   
-  # opts <- getOption("highcharter.options", list())
   opts <- .join_hc_opts()
 
   if (identical(hc_opts, list()))
@@ -95,6 +95,8 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 
 #' Create a Highcharts chart widget
+#' 
+#' This widgets don't support options yet.
 #'
 #' This function creates a Highchart chart using \pkg{htmlwidgets}. The
 #' widget can be rendered on HTML pages generated from R Markdown, Shiny, or
@@ -105,6 +107,7 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param theme A \code{hc_theme} class object
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
+#' @param elementId	Use an explicit element ID for the widget.
 #' @param debug A boolean value if you want to print in the browser console the 
 #'    parameters given to \code{highchart}.
 #'
@@ -131,9 +134,12 @@ highchart2 <- function(hc_opts = list(), theme = NULL,
     width = width,
     height = height,
     package = "highcharter",
-    sizingPolicy = htmlwidgets::sizingPolicy(defaultWidth = "100%",
-                                             knitr.figure = FALSE,
-                                             knitr.defaultWidth = "100%",
-                                             browser.fill = TRUE)
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      defaultWidth = "100%",
+      knitr.figure = FALSE,
+      knitr.defaultWidth = "100%",
+      browser.fill = TRUE
+      )
   )
 }

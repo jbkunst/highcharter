@@ -18,31 +18,31 @@ hc_theme_google <- function(...){
     chart = list(
       style = list(
         fontFamily = "Arial, sans-serif",
-        color = '#444444'
+        color = "#444444"
       )
     ),
     xAxis = list(
       gridLineWidth = 1,
-      gridLineColor = '#F3F3F3',
-      lineColor = '#F3F3F3',
-      minorGridLineColor = '#F3F3F3',
-      tickColor = '#F3F3F3',
+      gridLineColor = "#F3F3F3",
+      lineColor = "#F3F3F3",
+      minorGridLineColor = "#F3F3F3",
+      tickColor = "#F3F3F3",
       tickWidth = 1
     ),
     yAxis = list(
-      gridLineColor = '#F3F3F3',
-      lineColor = '#F3F3F3',
-      minorGridLineColor = '#F3F3F3',
-      tickColor = '#F3F3F3',
+      gridLineColor = "#F3F3F3",
+      lineColor = "#F3F3F3",
+      minorGridLineColor = "#F3F3F3",
+      tickColor = "#F3F3F3",
       tickWidth = 1
     ),
     
-    legendBackgroundColor = 'rgba(0, 0, 0, 0.5)',
-    background2 = '#505053',
-    dataLabelsColor = '#B0B0B3',
-    textColor = '#C0C0C0',
-    contrastTextColor = '#F0F0F3',
-    maskColor = 'rgba(255,255,255,0.3)'
+    legendBackgroundColor = "rgba(0, 0, 0, 0.5)",
+    background2 = "#505053",
+    dataLabelsColor = "#B0B0B3",
+    textColor = "#C0C0C0",
+    contrastTextColor = "#F0F0F3",
+    maskColor = "rgba(255,255,255,0.3)"
   )
   
   theme <- structure(theme, class = "hc_theme")
@@ -57,4 +57,3 @@ hc_theme_google <- function(...){
   theme
   
 }
-

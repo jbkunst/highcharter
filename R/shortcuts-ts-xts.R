@@ -72,7 +72,7 @@ hc_add_series_ts <- function(hc, ts, ...) {
   
   assertthat::assert_that(is.ts(ts), .is_highchart(hc))
   
-  # http://stackoverflow.com/questions/29202021/r-how-to-extract-dates-from-a-time-series
+  # http://stackoverflow.com/questions/29202021/
   dates <- time(ts) %>% 
     zoo::as.Date()
   
@@ -113,7 +113,7 @@ hc_add_series_xts <- function(hc, x, ...) {
   
   assertthat::assert_that(.is_highchart(hc), is.xts(x))
   
-  hc$x$type = "stock"
+  hc$x$type <- "stock"
   
   timestamps <- datetime_to_timestamp(time(x))
   
@@ -170,7 +170,7 @@ hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
   assertthat::assert_that(.is_highchart(hc), is.xts(x), is.OHLC(x))
   
-  hc$x$type = "stock"
+  hc$x$type <- "stock"
   
   time <- datetime_to_timestamp(time(x))
   

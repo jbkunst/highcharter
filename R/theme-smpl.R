@@ -61,4 +61,3 @@ hc_theme_smpl <- function(...){
   theme
   
 }
-

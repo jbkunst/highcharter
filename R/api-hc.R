@@ -11,11 +11,10 @@ validate_args <- function(name, lstargs) {
     
     chrargs <- paste0("'", chrargs, "'", collapse = ", ")
     
-    if (lenlst == 1) {
-      stop(chrargs, " argument is not named in ", paste0("hc_", name), call. = FALSE)
-    } else {
-      stop(chrargs, " arguments are not named in ", paste0("hc_", name), call. = FALSE)
-    }
+    txt <- ifelse(lenlst == 1, " is ", "s are ")
+    
+    stop(chrargs, " argument", txt, "not named in ", paste0("hc_", name),
+         call. = FALSE)
     
   }
   
@@ -107,7 +106,7 @@ hc_colors <- function(hc, colors) {
   
   assertthat::assert_that(is.vector(colors))
   
-  if(length(colors) == 1)
+  if (length(colors) == 1)
     colors <- list(colors)
 
   hc$x$hc_opts$colors <- colors
@@ -175,9 +174,9 @@ hc_yAxis  <- function(hc, ...) {
 #' @export
 hc_yAxis_multiples <- function(hc, ...) {
   
-  #print(length(list(...)));  print(length(list(...)[[1]]));  print(class(list(...)));  print(class(list(...)[[1]]))
+  # print(length(list(...)));  print(length(list(...)[[1]]));  print(class(list(...)));  print(class(list(...)[[1]]))
   
-  if(length(list(...)) == 1 & class(list(...)[[1]]) == "hc_yaxis_list") {
+  if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_yaxis_list") {
     hc$x$hc_opts$yAxis <- list(...)[[1]]
   } else {
     hc$x$hc_opts$yAxis <- list(...)
@@ -219,11 +218,11 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01, offset = 0, turnopp
   
   heights <- rep(heights, length = naxis)
   
-  heights <- (heights/sum(heights)) %>% 
+  heights <- (heights / sum(heights)) %>% 
     map(function(x) c(x, sep)) %>% 
     unlist() %>% 
     head(-1) %>%
-    {./sum(.)} %>% 
+    { ./sum(.) } %>% 
     round(5) 
   
   tops <- cumsum(c(0, head(heights, -1)))

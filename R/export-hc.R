@@ -65,4 +65,3 @@ export_hc <- function(hc, filename = NULL) {
     writeLines(jslns, filename)
   
 }
-

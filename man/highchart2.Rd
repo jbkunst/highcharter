@@ -19,8 +19,13 @@ highchart2(hc_opts = list(), theme = NULL, width = NULL, height = NULL,
 
 \item{debug}{A boolean value if you want to print in the browser console the 
 parameters given to \code{highchart}.}
+
+\item{elementId}{Use an explicit element ID for the widget.}
 }
 \description{
+This widgets don't support options yet.
+}
+\details{
 This function creates a Highchart chart using \pkg{htmlwidgets}. The
 widget can be rendered on HTML pages generated from R Markdown, Shiny, or
 other applications.
