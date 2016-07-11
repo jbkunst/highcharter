@@ -1,4 +1,3 @@
-. <- NULL
 #' Function to export js file the configuration options
 #' @param hc A \code{A highcarts object}
 #' @param filename A string 
@@ -30,6 +29,9 @@ export_hc <- function(hc, filename = NULL) {
   
   # filename <- "~/tets.js"
   # load("~/hc.Rdata")
+  
+  . <- NULL
+  
   stopifnot(!is.null(filename))
   
   if (!str_detect(filename, ".js$"))
@@ -46,11 +48,16 @@ export_hc <- function(hc, filename = NULL) {
   # function thing 
   fflag <- str_detect(jslns, "function()")
   if (any(fflag)) {
-    jslns <- ifelse(fflag, str_replace(jslns, "\"function", "function"), jslns)  
+    jslns <- ifelse(fflag, str_replace(jslns, "\"function", "function"), jslns)
     jslns <- ifelse(fflag, str_replace(jslns, "\",$", ","), jslns)
     jslns <- ifelse(fflag, str_replace(jslns, "\"$", ""), jslns)
     jslns <- ifelse(fflag,
-                    str_replace_all(jslns, "\\\\n", str_c("\\\\n", str_extract(jslns, "^\\s+") )),
+                    str_replace_all(jslns,
+                                    "\\\\n",
+                                    str_c("\\\\n",
+                                          str_extract(jslns, "^\\s+")
+                                          )
+                                    ),
                     jslns)  
   }
   

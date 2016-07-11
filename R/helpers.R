@@ -82,12 +82,14 @@ str_to_id <- function(x) {
 #' 
 #' @examples 
 #' 
-#' datetime_to_timestamp(dt = as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d"))
+#' datetime_to_timestamp(
+#'   as.Date(c("2015-05-08", "2015-09-12"),
+#'   format = "%Y-%m-%d"))
 #' 
 #' @export
 datetime_to_timestamp <- function(dt) {
   
-  # http://stackoverflow.com/questions/10160822/handling-unix-timestamp-with-highcharts 
+  # http://stackoverflow.com/questions/10160822/
   assertthat::assert_that(assertthat::is.date(dt) | assertthat::is.time(dt))
   
   tmstmp <- as.numeric(as.POSIXct(dt))
@@ -309,7 +311,7 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   } else {
     
     ecum <- ecdf(x)
-    xcols <- palcols[ceiling(nuniques*ecum(x))]
+    xcols <- palcols[ceiling(nuniques * ecum(x))]
     
   }
   
@@ -350,7 +352,7 @@ colorize_vector <- function(x, option = "D") {
     bcol <- str_sub(viridis(nc, option = option), 0, 7)
     ecum <- ecdf(x)
     
-    cols <- bcol[round(nc*ecum(x))]
+    cols <- bcol[round(nc * ecum(x))]
     
   }
   
@@ -390,7 +392,8 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
 #' color_classes(c(0, 10, 20, 50))
 #' 
 #' @export
-color_classes <- function(breaks = NULL, colors = c("#440154", "#21908C", "#FDE725")) {
+color_classes <- function(breaks = NULL,
+                          colors = c("#440154", "#21908C", "#FDE725")) {
   
   lbrks <- length(breaks)
   
@@ -462,7 +465,8 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
     if (type == "treemap") {
       data <- rename_(data, "colorValue" = "color")
     } else {
-      data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")  
+      data  <- mutate_(data, "colorv" = "color",
+                       "color" = "highcharter::colorize(color)")  
     }
   }
   

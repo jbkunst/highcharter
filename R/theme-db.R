@@ -96,6 +96,7 @@ hc_theme_db <- function(...){
       hc_theme(...)
     )
   } 
+  
   theme
   
 }

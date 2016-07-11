@@ -23,6 +23,45 @@ hchart.default <- function(object, ...) {
        " are not supported by hchart (yet).", call. = FALSE)
 }
 
+#' @export
+hchart.data.frame <- function(object, type = NULL, ...){
+  
+  pars <- eval(substitute(alist(...)))
+  parsc <- map(pars, as.character)
+  
+  object <- mutate(object, ...)
+  object <- ungroup(object)
+  
+  series <- get_hc_series_from_df(object, type = type, ...)
+  opts <- get_hc_options_from_df(object, type)
+  
+  hc <- highchart() 
+  
+  if (opts$add_colorAxis) 
+    hc <- hc_colorAxis(hc, stops = color_stops())
+  
+  hc %>% 
+    hc_add_series_list(series) %>% 
+    hc_xAxis(type = opts$xAxis_type,
+             title = list(text = parsc$x),
+             categories = opts$xAxis_categories) %>% 
+    hc_yAxis(type = opts$yAxis_type,
+             title = list(text = parsc$y),
+             categories = opts$yAxis_categories) %>% 
+    hc_plotOptions(
+      series = list(
+        showInLegend = opts$series_plotOptions_showInLegend,
+        marker = list(enabled = opts$series_marker_enabled)
+      ),
+      scatter = list(marker = list(symbol = "circle")),
+      bubble = list(minSize = 5, maxSize = 25),
+      treemap = list(layoutAlgorithm = "squarified")
+    )
+}
+
+#' @export
+hchart.data_frame <- hchart.data.frame
+
 #' @importFrom graphics hist
 #' @export
 hchart.numeric <- function(object, breaks = "FD", ...) {
@@ -57,11 +96,14 @@ hchart.histogram <- function(object, ...) {
 #' @export
 hchart.character <- function(object, type = "column", ...) {
   
-  tbl <- table(object)
+  tbl <- object %>% 
+    table() %>% 
+    as.data.frame(stringsAsFactors = FALSE) %>% 
+    setNames(c("name", "y"))
   
   highchart() %>% 
-    hc_add_series_labels_values(names(tbl), as.vector(tbl), type = type, ...) %>% 
-    hc_xAxis(categories = names(tbl))
+    hc_add_series(data = list.parse3(tbl), type = "column", ...) %>% 
+    hc_xAxis(type = "category")
 }
 
 #' @export
@@ -94,16 +136,21 @@ hchart.forecast <- function(object, fillOpacity = 0.3, ...){
   
   for (m in seq(ncol(object$upper))) {
     
-    dsbands <- data_frame(t = tmf,
-                          u = as.vector(object$upper[, m]),
-                          l = as.vector(object$lower[, m])) %>% 
-      list.parse2()
-    hc <- hc %>% hc_add_series(data = dsbands,
-                               name = nmf[m],
-                               type = "arearange",
-                               fillOpacity = fillOpacity,
-                               zIndex = 1,
-                               lineWidth = 0, ...)
+    dsbands <- data_frame(
+      t = tmf,
+      u = as.vector(object$upper[, m]),
+      l = as.vector(object$lower[, m])
+      )
+    
+    hc <- hc %>%
+      hc_add_series(
+        data = list.parse2(dsbands),
+        name = nmf[m],
+        type = "arearange",
+        fillOpacity = fillOpacity,
+        zIndex = 1,
+        lineWidth = 0,
+        ...)
   }
   
   hc
@@ -384,45 +431,6 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   
   hc
 }
-
-#' @export
-hchart.data.frame <- function(object, type = NULL, ...){
-  
-  pars <- eval(substitute(alist(...)))
-  parsc <- map(pars, as.character)
-  
-  object <- mutate(object, ...)
-  object <- ungroup(object)
-  
-  series <- get_hc_series_from_df(object, type = type, ...)
-  opts <- get_hc_options_from_df(object, type)
-  
-  hc <- highchart() 
-  
-  if (opts$add_colorAxis) 
-    hc <- hc_colorAxis(hc, stops = color_stops())
-  
-  hc %>% 
-    hc_add_series_list(series) %>% 
-    hc_xAxis(type = opts$xAxis_type,
-             title = list(text = parsc$x),
-             categories = opts$xAxis_categories) %>% 
-    hc_yAxis(type = opts$yAxis_type,
-             title = list(text = parsc$y),
-             categories = opts$yAxis_categories) %>% 
-    hc_plotOptions(
-      series = list(
-        showInLegend = opts$series_plotOptions_showInLegend,
-        marker = list(enabled = opts$series_marker_enabled)
-      ),
-      scatter = list(marker = list(symbol = "circle")),
-      bubble = list(minSize = 5, maxSize = 25),
-      treemap = list(layoutAlgorithm = "squarified")
-    )
-}
-
-#' @export
-hchart.data_frame <- hchart.data.frame
 
 #' @importFrom igraph vertex_attr edge_attr get.edgelist layout_nicely
 #' @importFrom stringr str_to_title
@@ -725,7 +733,8 @@ hchart.density <- function(object, ..., area = FALSE) {
 }
 
 #' @importFrom dplyr as_data_frame
-hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scale = 1) {
+hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
+                       choices = 1L:2L, scale = 1) {
   
   stopifnot(length(choices) == 2L)
   stopifnot(0 <= scale | scale <= 1)
@@ -738,7 +747,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scal
   else
     lam <- 1
   
-  dfobs <- scores[, choices]/lam %>% 
+  dfobs <- scores[, choices] / lam %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
     rownames_to_column("name") 
@@ -749,7 +758,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ..., choices = 1L:2L, scal
   mc <- max(abs(dfcomp)) 
   
   dfcomp <- dfcomp %>% 
-    { ./mc*mx } %>% 
+    { ./ mc * mx } %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
     rownames_to_column("name") %>%  

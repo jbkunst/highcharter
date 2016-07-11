@@ -14,7 +14,9 @@ Turn a date time vector to \code{timestamp} format
 }
 \examples{
 
-datetime_to_timestamp(dt = as.Date(c("2015-05-08", "2015-09-12"), format = "\%Y-\%m-\%d"))
+datetime_to_timestamp(
+  as.Date(c("2015-05-08", "2015-09-12"),
+  format = "\%Y-\%m-\%d"))
 
 }
 

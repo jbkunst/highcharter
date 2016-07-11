@@ -1,0 +1,1 @@
+lintr::lint_package()

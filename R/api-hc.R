@@ -174,7 +174,8 @@ hc_yAxis  <- function(hc, ...) {
 #' @export
 hc_yAxis_multiples <- function(hc, ...) {
   
-  # print(length(list(...)));  print(length(list(...)[[1]]));  print(class(list(...)));  print(class(list(...)[[1]]))
+  # print(length(list(...)));  print(length(list(...)[[1]]));
+  # print(class(list(...)));  print(class(list(...)[[1]]))
   
   if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_yaxis_list") {
     hc$x$hc_opts$yAxis <- list(...)[[1]]
@@ -212,7 +213,8 @@ hc_yAxis_multiples <- function(hc, ...) {
 #'    
 #' @importFrom dplyr bind_cols
 #' @export
-create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01, offset = 0, turnopposite = TRUE, ...) {
+create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
+                         offset = 0, turnopposite = TRUE, ...) {
   
   pcnt <- function(x) paste0(x * 100, "%")
   
@@ -222,7 +224,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01, offset = 0, turnopp
     map(function(x) c(x, sep)) %>% 
     unlist() %>% 
     head(-1) %>%
-    { ./sum(.) } %>% 
+    { . / sum(.) } %>% 
     round(5) 
   
   tops <- cumsum(c(0, head(heights, -1)))
@@ -234,7 +236,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01, offset = 0, turnopp
 
   dfaxis <- dfaxis %>% dplyr::filter(seq(1:nrow(dfaxis)) %% 2 != 0)
   
-  if(turnopposite) {
+  if (turnopposite) {
     ops <- rep_len(c(FALSE, TRUE), length.out = nrow(dfaxis))
     dfaxis <- dfaxis %>%
       mutate(opposite = ops)
