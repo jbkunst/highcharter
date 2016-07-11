@@ -15,7 +15,7 @@ dependencies:
     - highcharts-more.js
     - highcharts-3d.js
     - modules/exporting.js
-    - modules/offline-exporting.js
+    # - modules/offline-exporting.js
     - modules/drilldown.js
     - modules/data.js
     - modules/heatmap.js
