@@ -17,9 +17,12 @@
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #'
 #' @export
-highchart <- function(hc_opts = list(), theme = getOption("highcharter.theme"),
+highchart <- function(hc_opts = list(),
+                      theme = getOption("highcharter.theme"),
                       type = "chart",
-                      width = NULL, height = NULL,
+                      width = NULL,
+                      height = NULL,
+                      elementId = NULL,
                       debug = FALSE) {
   
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
@@ -52,10 +55,13 @@ highchart <- function(hc_opts = list(), theme = getOption("highcharter.theme"),
     width = width,
     height = height,
     package = "highcharter",
-    sizingPolicy = htmlwidgets::sizingPolicy(defaultWidth = "100%",
-                                             knitr.figure = FALSE,
-                                             knitr.defaultWidth = "100%",
-                                             browser.fill = TRUE)
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      defaultWidth = "100%",
+      knitr.figure = FALSE,
+      knitr.defaultWidth = "100%",
+      browser.fill = TRUE
+      )
   )
 }
 
