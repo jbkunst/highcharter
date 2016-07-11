@@ -86,6 +86,7 @@ hc_theme_db <- function(...){
             )
           )
         )
+    )
       
   theme <- structure(theme, class = "hc_theme")
   
