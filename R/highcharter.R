@@ -112,9 +112,12 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'    parameters given to \code{highchart}.
 #'
 #' @export
-highchart2 <- function(hc_opts = list(), theme = NULL,
-                      width = NULL, height = NULL,
-                      debug = FALSE) {
+highchart2 <- function(hc_opts = list(),
+                       theme = NULL,
+                       width = NULL,
+                       height = NULL,
+                       elementId = NULL,
+                       debug = FALSE) {
   
   unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme))) 
   
