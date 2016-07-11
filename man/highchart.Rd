@@ -5,7 +5,8 @@
 \title{Create a Highcharts chart widget}
 \usage{
 highchart(hc_opts = list(), theme = getOption("highcharter.theme"),
-  type = "chart", width = NULL, height = NULL, debug = FALSE)
+  type = "chart", width = NULL, height = NULL, elementId = NULL,
+  debug = FALSE)
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as 

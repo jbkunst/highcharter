@@ -214,7 +214,6 @@ hc_mapNavigation <- function(hc, ...) {
 #' 
 #' Helper function to use the fill patter plugin http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill.
 #' 
-#' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}. 
 #' 
@@ -269,4 +268,22 @@ hc_motion <- function(hc, ...) {
   
   .hc_opt(hc, "motion", ...)
   
+}
+
+#' Setting elementId
+#' 
+#' Function to modify the \code{id} for the container.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param id A string
+#' 
+#' @examples 
+#' 
+#' hchart(rnorm(10)) %>% 
+#'   hc_elementId("newid")
+#' 
+#' @export
+hc_elementId <- function(hc, id = NULL) {
+  hc$elementId <- as.character(id)
+  hc
 }
