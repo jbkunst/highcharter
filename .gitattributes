@@ -1,1 +1,2 @@
 inst/htmlwidgets/lib/* linguist-vendored
+*.html linguist-vendored
