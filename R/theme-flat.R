@@ -7,7 +7,7 @@
 #' 
 #' @examples 
 #' 
-#' hc_demo() %>% 
+#' highcharts_demo() %>% 
 #'   hc_add_theme(hc_theme_flat())
 #' 
 #' @export
@@ -65,7 +65,7 @@ hc_theme_flat <- function(...){
 #' 
 #' @examples 
 #' 
-#' hc_demo() %>% 
+#' highcharts_demo() %>% 
 #'   hc_add_theme(hc_theme_flatdark())
 #' 
 #' @export

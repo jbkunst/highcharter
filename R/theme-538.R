@@ -6,10 +6,10 @@
 #' 
 #' @examples 
 #' 
-#' hc_demo() %>% 
+#' highcharts_demo() %>% 
 #'   hc_add_theme(hc_theme_538())
 #'    
-#' hc_demo() %>%
+#' highcharts_demo() %>%
 #'   hc_add_theme(
 #'     hc_theme_538(
 #'       colors = c("red", "blue", "green"),
