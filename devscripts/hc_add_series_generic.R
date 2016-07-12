@@ -8,7 +8,7 @@ hc_add_series <- function(hc, x, ...){
   
   else if (clssx %in% c("data.frame", "tbl_df"))
     
-    hc <- hc %>% hc_add_series(data = list.parse3(x), ...)
+    hc <- hc %>% hc_add_series(data = list_parse(x), ...)
   
   else if (clssx %in% "ts")
     
@@ -38,7 +38,7 @@ hc %>%  hc_add_seriesg(AirPassengers)
 library("dplyr")
 data <- data_frame(x = rnorm(100),
                    y = x*2 + 3 + rnorm(100)*2,
-                   color = colorize_vector(x))
+                   color = colorize(x))
 
 hc %>%
   hc_add_seriesg(data, type = "scatter")

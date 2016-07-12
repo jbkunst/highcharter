@@ -2,137 +2,113 @@
 #' date: false
 #' output:
 #'   html_document:
-#'     theme: journal
 #'     toc: yes
 #' ---
 
 #+ message=FALSE, warning=FALSE, echo=FALSE, results=FALSE
 library("highcharter")
-library("xts")
+options(highcharter.theme = hc_theme_smpl())
 
-
-#' ### Numeric
-x <- c(rnorm(500), rnorm(500, 6, 2))
-class(x)
-hist(x, breaks = "FD") # by default hchart use *Freedman-Diaconis* rule 
-hchart(x)
-
-#' ### Histogram
-x <- hist(rbeta(300, 0.2, 4), plot = FALSE)
-class(x)
-plot(x) # by default hchart use *Freedman-Diaconis* rule 
-hchart(x, color = "darkred")
-
-#' ### Character, Factor
+#' ### data.frame
+data(mpg, package = "ggplot2")
 data(diamonds, package = "ggplot2")
-x <- diamonds$cut
-class(x)
-plot(x)
-hchart(x)
+
+hchart(mpg, "point", x = displ, y = hwy)
+hchart(mpg, "point", x = displ, y = hwy, group = class)
+
+mpgman <- count(mpg, manufacturer)
+hchart(mpgman, "bar", x = manufacturer, y = n)
+hchart(mpgman, "treemap", x = manufacturer, value = n)
+
+mpgman2 <- count(mpg, manufacturer, year)
+hchart(mpgman2, "bar", x = manufacturer, y = n, group = year)
+
+#' ### numeric
+hchart(c(rnorm(500), rnorm(500, 6, 2)))
+
+#' ### histogram
+hchart(hist(rbeta(300, 0.2, 4), plot = FALSE))
+
+#' ### character
+hchart(mpg$manufacturer)
+
+#' ### factor
+hchart(diamonds$cut)
 
 #' ### ts
-x <- LakeHuron
-class(x)
-plot(x)
-hchart(x)
+hchart(LakeHuron)
+
+#' ### xts
+library("quantmod")
+options(download.file.method = "libcurl")
+
+hchart(getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE))
+
+hchart(getSymbols("YHOO", auto.assign = FALSE))
+
+#' ### forecast
+library("forecast")
+
+hchart(forecast(auto.arima(AirPassengers), level = c(95, 80)))
+
+hchart(forecast(ets(USAccDeaths), h = 48, level = 90))
+
+hchart(forecast(Arima(WWWusage, c(3,1,0))))
+
+#' ### mforecast
+# hchart(forecast(ets(cbind(M = mdeaths, F = fdeaths))))
+
+#' ### acf
+hchart(acf(diff(AirPassengers), plot = FALSE))
+
+#' ### mts
+hchart(cbind(mdeaths, fdeaths))
 
 #' ### lst
-object <- stl(co2, "per")
-plot(object)
-hchart(object)
+hchart(stl(co2, "per"))
 
-#' ### xts quantmod package
-library("quantmod")
-x <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
-class(x)
-plot(x)
-hchart(x)
+#' ### ets
+hchart(ets(mdeaths))
 
-#' ### xts ohlc
-# x <- getSymbols("YHOO", auto.assign = FALSE)
-class(x)
-plot(x)
-hchart(x)
+#' ### matrix
+data("volcano")
 
+hchart(volcano)
 
-#' ### acf(s)
-x <- acf(diff(AirPassengers), plot = FALSE)
-class(x)
-plot(x)
-hchart(x) %>% hc_title(text = "This is an ACF chart")
+hchart(cor(mtcars))
 
-#' ### Multivariate Time series
-x <- cbind(mdeaths, fdeaths)
-class(x)
-plot(x)
-hchart(x)
-
-#' ### Forecasts
-library("forecast")
-d.arima <- auto.arima(AirPassengers)
-x <- forecast(d.arima, level = c(95, 80))
-class(x)
-plot(x)
-hchart(x)
-
-x <- forecast(ets(USAccDeaths), h = 48, level = 90)
-class(x)
-plot(x)
-hchart(x)
-
-x <- forecast(Arima(WWWusage, c(3,1,0)))
-class(x)
-plot(x)
-hchart(x)
-
-#' ### Seasonal Package (X-13ARIMA-SEATS) 
-# library("seasonal")
-# x <- seas(AirPassengers,
-#           regression.aictest = c("td", "easter"),
-#           outlier.critical = 3)
-# class(x)
-# plot(x)
-# hchart(x)
+#' ### dist
+hchart(dist(mtcars[1:20, ]))
 
 #' ### igraph
 library("igraph")
-net <- barabasi.game(200) 
-hchart(net)
 
-V(net)$degree <- degree(net, mode = "all")*3
-V(net)$betweenness <- betweenness(net)
-V(net)$color <- colorize_vector(V(net)$betweenness)
-V(net)$size <- sqrt(V(net)$degree)
-hchart(net, minSize = 5, maxSize = 20)
+net <- barabasi.game(40)
 
-#' ### Distance matrix 
-x <- dist(mtcars[ order(mtcars$hp),])
-class(x)
-plot(x)
-hchart(x)
-hchart(as.matrix(x))
+wc <- cluster_walktrap(net)
 
-## Matrix heatmap ##
-x <- as.matrix(mtcars)
-hchart(x)
+V(net)$label <- 1:40
+V(net)$name <- 1:40
+V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree
+V(net)$comm <- membership(wc)
+V(net)$color <- colorize(membership(wc))
 
-## based on correlation
-hchart(cor(x))
+hchart(net, layout = layout_with_fr)
 
-## show labels
-hchart(cor(x),label = TRUE) 
+#' ### survfit
+library("survival")
+data(lung)
 
-## based on logarithmic scale
-x <- as.matrix(mtcars[1:4])
-hchart(x)
+hchart(survfit(Surv(time, status) ~ sex, data = lung) , ranges = TRUE)
 
+#' ### density
+hchart(density(rnorm(100)), area = TRUE)
 
-#' Density
-
-
-hchart(density(rexp(5000)))
-
-#' Biplot Princomp
+#' ### pca
 hchart(princomp(USArrests))
 
-stopifnot(inherits(x, "density") || inherits(x, "numeric"))
+#' ###
+hchart(glm(hwy ~ year + class + fl , data = mpg))

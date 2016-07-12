@@ -26,15 +26,15 @@ highchart() %>%
     pointFormat = paste0("<span style=\"color:{series.color};\">{series.options.icon}</span>",
                          "{series.name}: <b>[{point.x}, {point.y}]</b><br/>")
   ) %>% 
-  hc_add_series(data = list.parse2(as.data.frame(dscars)),
+  hc_add_series(data = list_parse2(as.data.frame(dscars)),
                 marker = list(symbol = fa_icon_mark("car")),
                 icon = fa_icon("car"), name = "car",
                 color = "rgba(250, 250, 250, 0.75)") %>% 
-  hc_add_series(data = list.parse2(as.data.frame(dsplan)),
+  hc_add_series(data = list_parse2(as.data.frame(dsplan)),
                 marker = list(symbol = fa_icon_mark("plane")),
                 icon = fa_icon("plane"), name = "plane",
                 color = "rgba(169, 207, 84, 0.75)") %>% 
-  hc_add_series(data = list.parse2(as.data.frame(dstrck)),
+  hc_add_series(data = list_parse2(as.data.frame(dstrck)),
                 marker = list(symbol = fa_icon_mark("truck")),
                 icon = fa_icon("truck"), name = "truck",
                 color = "rgba(194, 60, 42, 0.75)") %>% 

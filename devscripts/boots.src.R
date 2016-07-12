@@ -23,7 +23,7 @@ mvr <- round(mvrnorm(n, rep(c(0, 0)), sigma), 4)
 vx <- ceiling(1+abs(max(mvr[, 1])))
 vy <- ceiling(1+abs(max(mvr[, 2])))
 
-ds <- list.parse2(as.data.frame(mvr))
+ds <- list_parse2(as.data.frame(mvr))
 
 highchart2() %>%
   hc_chart(zoomType = "xy") %>%

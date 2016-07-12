@@ -27,7 +27,7 @@ tail(df)
 
 nrow(df) == nyears*12
 
-ds <- setNames(list.parse2(df), NULL)
+ds <- setNames(list_parse2(df), NULL)
 head(ds)
 tail(ds)
 

@@ -18,7 +18,7 @@ net <- graph.data.frame(links, nodes, directed = TRUE)
 net
 
 
-V(net)$color <- colorize_vector(V(net)$media.type)
+V(net)$color <- colorize(V(net)$media.type)
 V(net)$size <- V(net)$audience.size*0.6
 V(net)$label <- V(net)$media
 
@@ -46,7 +46,7 @@ hchart(net)
 
 V(net)$degree <- degree(net, mode = "all")*3
 V(net)$betweenness <- betweenness(net)
-V(net)$color <- colorize_vector(V(net)$betweenness)
+V(net)$color <- colorize(V(net)$betweenness)
 V(net)$size <- sqrt(V(net)$degree)
 V(net)$label <- seq_along(V(net)$size)
 hchart(net, minSize = 5, maxSize = 20)
@@ -79,7 +79,7 @@ cl <- cluster_resolution(net)
 V(net)$comm <- membership(cl)
 table(V(net)$comm)
 
-V(net)$color <- colorize_vector(V(net)$comm)
+V(net)$color <- colorize(V(net)$comm)
 
 
 plot(net)

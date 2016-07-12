@@ -12,7 +12,7 @@ timestamps <- time(xtsobj) %>%
   as.POSIXct() %>% 
   as.numeric()
 values <- as.numeric(xtsobj)
-ds <- list.parse2(data.frame(timestamps, values))
+ds <- list_parse2(data.frame(timestamps, values))
 
 highchart(type = "stock") %>%
   hc_add_series(marker = list(enabled = FALSE),

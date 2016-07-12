@@ -61,7 +61,7 @@ hc_add_series_drilldown <- function(hc, df, percent = FALSE) {
   #         })
   #     ) %>% 
   #     select(id, data) %>% 
-  #     list.parse2()
+  #     list_parse2()
   #   
   #   str(dd)
   #   

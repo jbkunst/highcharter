@@ -68,7 +68,7 @@ server = function(input, output) {
     
     ds <- mtcars %>% 
       mutate(x = mpg, y = wt, name = rownames(.)) %>% 
-      list.parse3()
+      list_parse()
     
     nms <- names(ds[[1]])
     obj <- paste("{", paste0(nms, ": this.", nms, collapse = ", "), "}")

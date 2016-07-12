@@ -42,7 +42,7 @@ highchart(type = "map") %>%
   hc_colorAxis(min = 0, minColor = "#FAFAFA", maxColor = "#2D2D2D") %>% 
   hc_series(
     list(
-      data = USArrests %>% select(name = state, value = Murder) %>% list.parse3(),
+      data = USArrests %>% select(name = state, value = Murder) %>% list_parse(),
       mapData = usgeojson,
       joinBy = "name",
       # data = usgeojson,

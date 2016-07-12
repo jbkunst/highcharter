@@ -25,7 +25,7 @@ ds2 <- map(seq(n), function(x){
   yc <- round(rnorm(1, sd = 2), 2)
   dt <- cbind(rnorm(200, xc), rnorm(200, yc))
   dt <- convex_hull(dt)
-  dt <- list.parse2(as.data.frame(dt$rescoords))
+  dt <- list_parse2(as.data.frame(dt$rescoords))
   list(data = dt, name = sprintf("%s, %s", xc, yc), type = "polygon", id = n)
 })
 
@@ -34,7 +34,7 @@ ds3 <- map(seq(n), function(x){
   xc <- round(rnorm(1, sd = 2), 2)
   yc <- round(rnorm(1, sd = 2), 2)
   dt <- cbind(rnorm(200, xc), rnorm(200, yc))
-  dt <- list.parse2(as.data.frame(dt))
+  dt <- list_parse2(as.data.frame(dt))
   list(data = dt, name = sprintf("%s, %s", xc, yc), type = "scatter", linkedTo = n)
 })
 
@@ -53,7 +53,7 @@ head(economics_long)
 ds <- economics_long %>% 
   group_by(variable) %>% 
   do(ds = list(
-    data = list.parse2(data.frame(datetime_to_timestamp(.$date), .$value01))
+    data = list_parse2(data.frame(datetime_to_timestamp(.$date), .$value01))
   )) %>% 
   {map2(.$variable, .$ds, function(x, y){
     append(list(name = x), y)

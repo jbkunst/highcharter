@@ -50,15 +50,15 @@ hc <- hc %>%
     series = list(
       list(
         id = "animals",
-        data = list.parse2(dfan)
+        data = list_parse2(dfan)
       ),
       list(
         id = "fruits",
-        data = list.parse2(dffru)
+        data = list_parse2(dffru)
       ),
       list(
         id = "cars",
-        data = list.parse2(dfcar)
+        data = list_parse2(dfcar)
       )
     )
   )

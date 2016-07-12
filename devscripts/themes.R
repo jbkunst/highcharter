@@ -12,7 +12,7 @@ hc <- highchart(debug = TRUE) %>%
 
 hc
 
-# hc <- hc_demo()
+# hc <- highcharts_demo()
 
 ##' ## Dark Unica ####
 

@@ -19,7 +19,7 @@ require("viridisLite")
 dclass <- data_frame(from = seq(0, 10, by = 2),
                      to = c(seq(2, 10, by = 2), 50),
                      color = substring(viridis(length(from), option = "C"), 0, 7))
-dclass <- list.parse3(dclass)
+dclass <- list_parse(dclass)
 
 
 highchart() %>% 
@@ -53,7 +53,7 @@ head(GNI2010)
 
 ddta <- GNI2010 %>% 
   select(iso3, value = GNI) %>% 
-  list.parse3()
+  list_parse()
 
 head(ddta)
 

@@ -11,8 +11,8 @@ data(diamonds, package = "ggplot2")
 series <- diamonds %>% 
   sample_n(500) %>% 
   group_by(name = cut) %>% 
-  do(data = list.parse2(data.frame(x = .$price, y = .$carat))) %>% 
-  list.parse3()
+  do(data = list_parse2(data.frame(x = .$price, y = .$carat))) %>% 
+  list_parse()
 
 str(series, max.level = 2)
 

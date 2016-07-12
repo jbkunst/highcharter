@@ -103,7 +103,7 @@ data(orstationc)
 c1 <- dygraph(nhtemp, main = "New Haven Temperatures") %>% 
   dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
 
-c2 <- hc_demo()
+c2 <- highcharts_demo()
 
 c5 <- mjs_plot(mtcars, x=wt, y=mpg) %>%
   mjs_point(color_accessor=carb, size_accessor=carb) %>%

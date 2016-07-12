@@ -12,7 +12,7 @@ dss <- map(c("square", "triangle",  "cross", "plus"), function(s){
   y <- (rnorm(1) + 1)*x + runif(20)
   
   list(name = s,
-       data = list.parse3(data_frame(x, y)),
+       data = list_parse(data_frame(x, y)),
        marker = list(symbol = s, enabled = TRUE), lineColor = NULL)
   
 })

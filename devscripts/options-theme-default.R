@@ -1,6 +1,6 @@
 library(highcharter)
 
-hc <- hc_demo()
+hc <- highcharts_demo()
 
 hc$x$hc_opts
 hc$x$theme
@@ -8,21 +8,21 @@ hc$x$theme
 
 options(highcharter.theme = hc_theme_db())
 
-hc_demo()
+highcharts_demo()
 
 options(highcharter.theme = hc_theme(chart = list(backgroundColor = "transparent")))
 
-hc_demo()
+highcharts_demo()
 
 
 
 options(highcharter.theme = hc_theme_flat())
 
-hc <- hc_demo()
+hc <- highcharts_demo()
 
 options(highcharter.theme = hc_theme_chalk())
 
-hc2 <- hc_demo()
+hc2 <- highcharts_demo()
 
 options(highcharter.theme = hc_theme_db())
 

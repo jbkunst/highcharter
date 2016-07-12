@@ -1,12 +1,12 @@
 n <- 50
 df <- data.frame(x = rnorm(n), y = rnorm(n))
-ds <- list.parse2(df)
+ds <- list_parse2(df)
 
 df2 <- data.frame(x = c(1, -1, -1, 1)*2,
                   y = c(1, 1, -1, -1)*2,
                   text = paste("Quadrant", letters[1:4]))
 
-ds2 <- list.parse3(df2)
+ds2 <- list_parse(df2)
 
 
 highchart() %>% 
