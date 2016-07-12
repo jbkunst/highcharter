@@ -136,9 +136,6 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
 #' @param color A vector to color the points.
 #' @param label A vector to put names in the dots if you enable the datalabels.
 #' @param showInLegend Logical value to show or not the data in the legend box.
-#' @param viridis.option Palette to use in case the \code{color}. Argument can not
-#'   be \code{NULL} in the case of use \code{color} argument.
-#'  Options are A, B, C, D.
 #' @param ... Aditional shared arguments for the data series 
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
@@ -165,7 +162,7 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
 #' @export 
 hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
                                   label = NULL, showInLegend = FALSE,
-                                  viridis.option = "D", ...) {
+                                  ...) {
   
   assertthat::assert_that(.is_highchart(hc), length(x) == length(y),
                           is.numeric(x), is.numeric(y))
@@ -180,9 +177,8 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
   if (!is.null(color)) {
     
     assert_that(length(x) == length(color))
-    assert_that(viridis.option %in% c("A", "B", "C", "D"))
-    
-    cols <- colorize_vector(color, option = viridis.option)
+
+    cols <- colorize_vector(color)
     
     df <- df %>% mutate(valuecolor = color,
                         color = cols)
@@ -207,7 +203,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
   # Remove already used arguments
   args <- Filter(length, args)
   
-  ds <- list.parse3(df)
+  ds <- list_parse(df)
   
   type <- ifelse(!is.null(z), "bubble", "scatter")
   
@@ -275,7 +271,7 @@ hc_add_series_labels_values <- function(hc, labels, values,
     
   }
   
-  ds <- list.parse3(df)
+  ds <- list_parse(df)
   
   hc <- hc %>% hc_add_series(data = ds, ...)
   
@@ -359,7 +355,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
     
   })
   
-  ds <- list.parse3(ds)
+  ds <- list_parse(ds)
   
   ds <- map(ds, function(x){
     if (is.na(x$parent))
@@ -399,7 +395,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 #' n <- 4
 #' colstops <- data.frame(q = 0:n/n,
 #'                        c = substring(viridis(n + 1, option = "A"), 0, 7)) %>% 
-#' list.parse2()
+#' list_parse2()
 #' 
 #' highchart() %>% 
 #'   hc_title(text = "Violent Crime Rates by US State") %>% 
@@ -422,7 +418,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 #' dclass <- data_frame(from = seq(0, 10, by = 2),
 #'                      to = c(seq(2, 10, by = 2), 50),
 #'                      color = substring(viridis(length(from), option = "C"), 0, 7))
-#'  dclass <- list.parse3(dclass)
+#'  dclass <- list_parse(dclass)
 # 
 #' highchart() %>% 
 #'   hc_title(text = "US Counties unemployment rates, April 2015") %>% 
@@ -450,7 +446,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
   ddta <- data_frame(value = df[[value]],
                      code = df[[joindf]]) %>% 
-    list.parse3()
+    list_parse()
   
   hc$x$type <- "map"
   
@@ -508,7 +504,7 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
     if (nrow(outs) > 0) {
       hc <- hc %>%
         hc_add_series(
-          data =  list.parse3(outs),
+          data =  list_parse(outs),
           name = str_trim(paste(list(...)$name, "outliers")),
           type = "scatter", #linkedTo = ":previous",
           marker = list(...),
@@ -550,7 +546,7 @@ hc_add_series_density <- function(hc, x, area = FALSE, ...) {
   if (is.numeric(x)) x <- density(x)
   
   type <- ifelse(area, "areaspline", "spline")
-  data <- list.parse3(data.frame(cbind(x = x$x, y = x$y)))
+  data <- list_parse(data.frame(cbind(x = x$x, y = x$y)))
   
   hc %>% 
     hc_chart(zoomType = "x") %>% 
@@ -563,7 +559,7 @@ hc_add_series_df_old <- function(hc, data, ...) {
   assertthat::assert_that(.is_highchart(hc), is.data.frame(data))
   
   hc <- hc %>%
-    hc_add_series(data = list.parse3(data), ...)
+    hc_add_series(data = list_parse(data), ...)
   
   hc
 }

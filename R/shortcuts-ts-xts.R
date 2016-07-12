@@ -32,7 +32,7 @@ hc_add_series_times_values <- function(hc, dates, values, ...) {
   
   timestamps <- datetime_to_timestamp(dates)
   
-  ds <- list.parse2(data.frame(timestamps, values))
+  ds <- list_parse2(data.frame(timestamps, values))
   
   hc %>% 
     hc_xAxis(type = "datetime") %>% 
@@ -117,7 +117,7 @@ hc_add_series_xts <- function(hc, x, ...) {
   
   timestamps <- datetime_to_timestamp(time(x))
   
-  ds <- list.parse2(data.frame(timestamps, as.vector(x)))
+  ds <- list_parse2(data.frame(timestamps, as.vector(x)))
   
   hc %>%  hc_add_series(data = ds, ...)
   
@@ -176,7 +176,7 @@ hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
   xdf <- cbind(time, as.data.frame(x))
   
-  xds <- list.parse2(xdf)
+  xds <- list_parse2(xdf)
   
   nm <- ifelse(!is.null(list(...)[["name"]]),
                list(...)[["name"]],
@@ -234,7 +234,7 @@ hc_add_series_flags <- function(hc, dates,
   dfflags <- data_frame(x = datetime_to_timestamp(dates),
                         title = title, text = text)
   
-  dsflags <- list.parse3(dfflags)
+  dsflags <- list_parse(dfflags)
   
   hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags", ...)
   
