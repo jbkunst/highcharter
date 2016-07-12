@@ -5,7 +5,7 @@
 \title{Shorcut for create scatter plots}
 \usage{
 hc_add_series_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
-  showInLegend = FALSE, viridis.option = "D", ...)
+  showInLegend = FALSE, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
@@ -21,10 +21,6 @@ hc_add_series_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
 \item{label}{A vector to put names in the dots if you enable the datalabels.}
 
 \item{showInLegend}{Logical value to show or not the data in the legend box.}
-
-\item{viridis.option}{Palette to use in case the \code{color}. Argument can not
- be \code{NULL} in the case of use \code{color} argument.
-Options are A, B, C, D.}
 
 \item{...}{Aditional shared arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}

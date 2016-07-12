@@ -21,7 +21,7 @@ fn <- "function(){
   alert('Category: ' + this.category);
 }"
 
-hc <- hc_demo() \%>\% 
+hc <- highcharts_demo() \%>\% 
   hc_plotOptions(
     series = list(
       cursor = "pointer",

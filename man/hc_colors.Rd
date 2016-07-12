@@ -22,7 +22,7 @@ library("viridisLite")
 cols <- viridis(3)
 cols <- substr(cols, 0, 7)
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_colors(cols)
 
 

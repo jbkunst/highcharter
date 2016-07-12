@@ -14,7 +14,7 @@ Google theme for highcharts based on https://books.google.com/ngrams/
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_google())
 
 }

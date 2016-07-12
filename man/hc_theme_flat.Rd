@@ -18,11 +18,11 @@ https://github.com/cttobin/ggthemr#flat
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_flat())
 
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_flatdark())
 
 }

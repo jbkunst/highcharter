@@ -39,7 +39,7 @@ USArrests <- USArrests \%>\%
 n <- 4
 colstops <- data.frame(q = 0:n/n,
                        c = substring(viridis(n + 1, option = "A"), 0, 7)) \%>\% 
-list.parse2()
+list_parse2()
 
 highchart() \%>\% 
   hc_title(text = "Violent Crime Rates by US State") \%>\% 
@@ -62,7 +62,7 @@ data(uscountygeojson)
 dclass <- data_frame(from = seq(0, 10, by = 2),
                      to = c(seq(2, 10, by = 2), 50),
                      color = substring(viridis(length(from), option = "C"), 0, 7))
- dclass <- list.parse3(dclass)
+ dclass <- list_parse(dclass)
 highchart() \%>\% 
   hc_title(text = "US Counties unemployment rates, April 2015") \%>\% 
   hc_add_series_map(uscountygeojson, unemployment,

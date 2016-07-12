@@ -14,12 +14,4 @@ colorize_vector(x, option = "D")
 \description{
 Create vector of color from vector
 }
-\examples{
-x <- runif(50)
-colorize_vector(x)
-
-x <- sample(letters[1:4], size = 20, replace = TRUE)
-colorize_vector(x)
-
-}
 

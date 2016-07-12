@@ -14,7 +14,7 @@ Chalk theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/c
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_chalk())
 
 }

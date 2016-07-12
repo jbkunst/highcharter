@@ -22,7 +22,7 @@ nyears <- 5
 df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
 df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
 df$value <- round(df$value, 2)
-ds <- list.parse2(df)
+ds <- list_parse2(df)
 
 
 hc <- highchart() \%>\% 
@@ -44,7 +44,7 @@ n <- 4
 stops <- data.frame(q = 0:n/n,
                     c = substring(viridis(n + 1), 0, 7),
                     stringsAsFactors = FALSE)
-stops <- list.parse2(stops)
+stops <- list_parse2(stops)
 
 hc_colorAxis(hc, stops = stops, max = 75) 
 

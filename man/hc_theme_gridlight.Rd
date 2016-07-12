@@ -14,7 +14,7 @@ Grid Light theme for highchart
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_gridlight())
 
 }

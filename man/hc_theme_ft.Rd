@@ -14,7 +14,7 @@ Financial Times theme for highcharts
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_ft())
 
 }

@@ -14,7 +14,7 @@ Based on \url{http://www.highcharts.com/demo/sparkline}.
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_sparkline())
   
 }

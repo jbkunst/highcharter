@@ -28,7 +28,7 @@ df <- data_frame(
 
 df
 
-ds <- list.parse3(df)
+ds <- list_parse(df)
 names(ds) <- NULL
 str(ds)
 
@@ -73,11 +73,11 @@ second_el_to_numeric <- function(ls){
   
 }
 
-dsan <- second_el_to_numeric(list.parse2(dfan))
+dsan <- second_el_to_numeric(list_parse2(dfan))
 
-dsfru <- second_el_to_numeric(list.parse2(dffru))
+dsfru <- second_el_to_numeric(list_parse2(dffru))
 
-dscar <- second_el_to_numeric(list.parse2(dfcar))
+dscar <- second_el_to_numeric(list_parse2(dfcar))
 
 
 hc <- hc \%>\% 

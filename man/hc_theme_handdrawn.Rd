@@ -14,7 +14,7 @@ Hand Drawn theme for highcharts. Inspirated by https://www.amcharts.com/inspirat
 }
 \examples{
 
-hc_demo() \%>\% 
+highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_handdrawn())
 
 }
