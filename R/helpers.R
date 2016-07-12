@@ -292,6 +292,7 @@ tooltip_table <- function(x, y,
 #' colorize(LETTERS[rbinom(20, 5, 0.5)], c("#FF0000", "#00FFFF"))
 #' 
 #' @importFrom grDevices colorRampPalette
+#' @importFrom stats ecdf
 #' @export
 colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   
@@ -318,8 +319,8 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 #' 
 #' @param x A numeric, character or factor object.
 #' @param option A character string indicating the colormap option to use.
+#' 
 #' @importFrom viridisLite viridis
-#' @importFrom stats ecdf
 #' @importFrom stringr str_sub
 #' @export
 colorize_vector <- function(x, option = "D") {

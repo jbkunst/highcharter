@@ -178,7 +178,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
     
     assert_that(length(x) == length(color))
 
-    cols <- colorize_vector(color)
+    cols <- colorize(color)
     
     df <- df %>% mutate(valuecolor = color,
                         color = cols)
