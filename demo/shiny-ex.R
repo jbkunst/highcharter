@@ -26,7 +26,7 @@ server = function(input, output) {
   
   output$hcontainer <- renderHighchart({
     
-    hc <- hc_demo() %>%
+    hc <- highcharts_demo() %>%
       hc_rm_series("Berlin") %>% 
       hc_chart(type = input$type)
       
