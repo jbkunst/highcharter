@@ -97,7 +97,7 @@ hc_chart <- function(hc, ...) {
 #' cols <- viridis(3)
 #' cols <- substr(cols, 0, 7)
 #' 
-#' hc_demo() %>% 
+#' highcharts_demo() %>% 
 #'   hc_colors(cols)
 #'
 #' 
@@ -244,7 +244,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
 
   dfaxis <- bind_cols(dfaxis, data_frame(nid = seq(naxis), ...))
 
-  yaxis <- list.parse3(dfaxis)
+  yaxis <- list_parse(dfaxis)
   
   # yaxis <- map(yaxis, function(x) c(x, ...))
   

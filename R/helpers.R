@@ -1,49 +1,61 @@
 #' Convert an object to list with identical structure
 #'
-#' This function is similiar to \code{rlist::list.parse} but this removes names. 
+#' This functions are similiar to \code{rlist::list.parse} but this removes
+#' names.
 #' 
 #' @param df A data frame to parse to list
 #' 
 #' @examples 
 #' 
-#' x <- data.frame(a=1:3,type=c('A','C','B'), stringsAsFactors = FALSE)
+#' x <- data.frame(a=1:3, type=c('A','C','B'), stringsAsFactors = FALSE)
 #' 
-#' list.parse2(x)
+#' list_parse(x)
 #' 
-#' list.parse3(x)
+#' list_parse2(x)
 #' 
 #' @importFrom purrr transpose
 #' @export
-list.parse2 <- function(df) {
+list_parse <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  # res <- apply(df, 1, function(r) as.list(as.vector(r)))
-  # names(res) <- NULL
+  setNames(list.parse(df), NULL)
+  
+}
+
+#' @importFrom rlist list.parse
+#' @rdname list_parse  
+#' @export 
+list_parse2 <- function(df) {
+  
+  assertthat::assert_that(is.data.frame(df))
   
   res <- df %>% 
     map_if(is.factor, as.character) %>% 
     map(identity) %>%  
     transpose() %>% 
-    map(function(x) setNames(x, NULL))
+    map(setNames, NULL)
   
   res
   
 }
 
-#' @importFrom rlist list.parse
-#' @rdname list.parse2  
+#' @rdname list_parse  
+#' @export 
+list.parse2 <- function(df) {
+  
+  .Deprecated("list_parse2")
+  
+  list_parse2(df) 
+}
+
+#' @rdname list_parse  
 #' @export 
 list.parse3 <- function(df) {
   
-  assertthat::assert_that(is.data.frame(df))
+  .Deprecated("list_parse")
   
-  res <- list.parse(df)
-  
-  names(res) <- NULL
-  
-  res
-  
+  list_parse(df) 
 }
 
 #' String to 'id' format
@@ -69,8 +81,7 @@ str_to_id <- function(x) {
     str_replace_all("\\\\|/", "_") %>% 
     str_replace_all("\\[|\\]", "_") %>% 
     str_replace_all("_+", "_") %>% 
-    str_replace_all("_$|^_", "") %>% 
-    iconv("latin1", "ASCII", sub = "")
+    str_replace_all("_$|^_", "")
   
 }
 
@@ -100,22 +111,6 @@ datetime_to_timestamp <- function(dt) {
   
 }
 
-#' Get default colors for Highcharts theme
-#'
-#' Get color used in highcharts charts.
-#' 
-#' @examples 
-#' 
-#' hc_get_colors()[1:5]
-#' 
-#' @export
-hc_get_colors <- function() {
-  
-  c("#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
-    "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1")
-  
-}
-
 #' Transform colors from hexadeximal format to rgba hc notation
 #' 
 #' @param x colors in hexadecimal format
@@ -123,7 +118,7 @@ hc_get_colors <- function() {
 #' 
 #' @examples 
 #' 
-#' hex_to_rgba(x <- hc_get_colors())
+#' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725"))
 #' 
 #'
 #' @importFrom grDevices col2rgb
@@ -131,13 +126,13 @@ hc_get_colors <- function() {
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
   
-  rgba <- x %>% 
+  x %>% 
     col2rgb() %>% 
     t() %>% 
     as.data.frame() %>% 
-    unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",")
-  
-  sprintf("rgba(%s,%s)", rgba[["rgba"]], alpha)
+    unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",") %>% 
+    .[[1]] %>% 
+    sprintf("rgba(%s,%s)", ., alpha)
   
 }  
 
@@ -147,10 +142,10 @@ hex_to_rgba <- function(x, alpha = 1) {
 #' 
 #' @examples 
 #' 
-#' hc_get_dash_styles()[1:5]
+#' dash_styles()[1:5]
 #' 
 #' @export
-hc_get_dash_styles <- function() {
+dash_styles <- function() {
   
   c("Solid", "ShortDash", "ShortDot", "ShortDashDot", "ShortDashDotDot",
     "Dot", "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
@@ -163,10 +158,10 @@ hc_get_dash_styles <- function() {
 #' 
 #' @examples 
 #' 
-#' hc_demo()
+#' highcharts_demo()
 #' 
 #' @export
-hc_demo <- function() {
+highcharts_demo <- function() {
 
   dtemp <- structure(
     list(
@@ -323,19 +318,13 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 #' 
 #' @param x A numeric, character or factor object.
 #' @param option A character string indicating the colormap option to use.
-#' 
-#' @examples
-#' x <- runif(50)
-#' colorize_vector(x)
-#' 
-#' x <- sample(letters[1:4], size = 20, replace = TRUE)
-#' colorize_vector(x)
-#' 
 #' @importFrom viridisLite viridis
 #' @importFrom stats ecdf
 #' @importFrom stringr str_sub
 #' @export
 colorize_vector <- function(x, option = "D") {
+  
+  .Deprecated("colorize")
   
   nunique <- length(unique(x))
   
@@ -374,7 +363,7 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
   
   palcols <- grDevices::colorRampPalette(colors)(n)
   
-  list.parse2(
+  list_parse2(
     data.frame(
       q = seq(0, n - 1) / (n - 1),
       c = palcols
@@ -397,7 +386,7 @@ color_classes <- function(breaks = NULL,
   
   lbrks <- length(breaks)
   
-  list.parse3(
+  list_parse(
     data.frame(
       from = breaks[-lbrks],
       to = breaks[-1],
@@ -482,14 +471,14 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   
   dfs <- data %>% 
     group_by_("group", "charttpye") %>% 
-    do(data = list.parse3(select_(., quote(-group), quote(-charttpye)))) %>% 
+    do(data = list_parse(select_(., quote(-group), quote(-charttpye)))) %>% 
     ungroup() %>% 
     rename_("name" = "group", "type" = "charttpye")
   
   if (!has_name(parsc, "group"))
     dfs[["name"]] <- NULL
   
-  series <- list.parse3(dfs)
+  series <- list_parse(dfs)
   
   series
   

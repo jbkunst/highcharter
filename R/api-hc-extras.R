@@ -13,7 +13,7 @@
 #' df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
 #' df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
 #' df$value <- round(df$value, 2)
-#' ds <- list.parse2(df)
+#' ds <- list_parse2(df)
 #' 
 #' 
 #' hc <- highchart() %>% 
@@ -35,7 +35,7 @@
 #' stops <- data.frame(q = 0:n/n,
 #'                     c = substring(viridis(n + 1), 0, 7),
 #'                     stringsAsFactors = FALSE)
-#' stops <- list.parse2(stops)
+#' stops <- list_parse2(stops)
 #' 
 #' hc_colorAxis(hc, stops = stops, max = 75) 
 #' 
@@ -67,7 +67,7 @@ hc_colorAxis  <- function(hc, ...) {
 #' 
 #' df
 #' 
-#' ds <- list.parse3(df)
+#' ds <- list_parse(df)
 #' names(ds) <- NULL
 #' str(ds)
 #' 
@@ -112,11 +112,11 @@ hc_colorAxis  <- function(hc, ...) {
 #'   
 #' }
 #' 
-#' dsan <- second_el_to_numeric(list.parse2(dfan))
+#' dsan <- second_el_to_numeric(list_parse2(dfan))
 #' 
-#' dsfru <- second_el_to_numeric(list.parse2(dffru))
+#' dsfru <- second_el_to_numeric(list_parse2(dffru))
 #' 
-#' dscar <- second_el_to_numeric(list.parse2(dfcar))
+#' dscar <- second_el_to_numeric(list_parse2(dfcar))
 #' 
 #' 
 #' hc <- hc %>% 

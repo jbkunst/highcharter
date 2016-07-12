@@ -109,7 +109,7 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
     left_join(data_frame(gr = seq_along(labels), name = as.character(labels)),
               by = "gr") %>% 
     group_by_("name") %>% 
-    do(data = list.parse2(data_frame(.$x, .$y))) %>% 
+    do(data = list_parse2(data_frame(.$x, .$y))) %>% 
     ungroup() %>% 
     left_join(data_frame(labels = as.character(labels), counts),
               by = c("name" = "labels")) %>% 
@@ -132,7 +132,7 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   
   hc <- hc %>% 
     hc_chart(type = "scatter") %>% 
-    hc_add_series_list(list.parse3(ds)) %>% 
+    hc_add_series_list(list_parse(ds)) %>% 
     hc_plotOptions(series = list(marker = list(radius = size))) %>% 
     hc_tooltip(pointFormat = "{point.series.options.counts}") %>%
     hc_add_theme(hc_theme_null())
