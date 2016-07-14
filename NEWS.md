@@ -30,7 +30,7 @@
  * Added function to create `dataClasses` and `stops` arguments in
  `hc_colorAxis` (#120).
  
- * Validate length of data = 1 (#119) and apply the `list` function-
+ * Validate length of data = 1 and apply the `list` function  (#119 #188 #65 #71)
 
  * Added `colorize` function so `colorize_vector` will be deprecate 
  in the next release (#75).
