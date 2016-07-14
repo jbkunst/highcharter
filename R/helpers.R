@@ -19,7 +19,10 @@ list_parse <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  setNames(list.parse(df), NULL)
+  map_if(df, is.factor, as.character) %>% 
+    as_data_frame() %>% 
+    list.parse() %>% 
+    setNames(NULL)
   
 }
 
@@ -30,13 +33,8 @@ list_parse2 <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  res <- df %>% 
-    map_if(is.factor, as.character) %>% 
-    map(identity) %>%  
-    transpose() %>% 
+  list_parse(df) %>% 
     map(setNames, NULL)
-  
-  res
   
 }
 
