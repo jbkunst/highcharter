@@ -71,6 +71,11 @@
 
  * `datetime_to_timestamp`don't break in certain cases (#97).
  
+## Others
+
+ * At startup a message disply mentioning that highchart, highstock and
+ highmaps are not free for commercial and Governmental use.
+ 
 
 # highcharter 0.3.1.9999
 
