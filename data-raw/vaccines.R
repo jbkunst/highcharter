@@ -5,7 +5,7 @@ library("stringr")
 library("highcharter")
 
 # DATA --------------------------------------------------------------------
-df <- read_csv("inst/extdata/MEASLES_Incidence_1928-2003_20160314103501.csv",
+df <- read_csv("https://raw.githubusercontent.com/jbkunst/r-posts/master/042-infectious-diseases-and-vaccines/data/MEASLES_Incidence_1928-2003_20160314103501.csv",
                skip = 2)
 names(df) <- tolower(names(df))
 
