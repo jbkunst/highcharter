@@ -287,3 +287,25 @@ hc_elementId <- function(hc, id = NULL) {
   hc$elementId <- as.character(id)
   hc
 }
+
+#' Changing the size 
+#' 
+#' @param width	A numeric input in pixels.
+#' @parama height	A numeric input in pixels.
+#' 
+#' @examples 
+#' 
+#' hc_size(hcts(rnorm(100)), 400, 200)
+#' 
+#' @export
+hc_size <- function(hc, width = NULL, height = NULL) {
+  
+  if(!is.null(width))
+    hc$width <- width
+  
+  if(!is.null(height))
+    hc$height <- height
+  
+  hc
+  
+}
