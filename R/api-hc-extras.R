@@ -284,14 +284,19 @@ hc_motion <- function(hc, ...) {
 #' 
 #' @export
 hc_elementId <- function(hc, id = NULL) {
+  
+  assertthat::assert_that(.is_highchart(hc))
+  
   hc$elementId <- as.character(id)
+  
   hc
 }
 
-#' Changing the size 
+#' Changing the size of a \code{highchart} object
 #' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param width	A numeric input in pixels.
-#' @parama height	A numeric input in pixels.
+#' @param height	A numeric input in pixels.
 #' 
 #' @examples 
 #' 
@@ -299,6 +304,8 @@ hc_elementId <- function(hc, id = NULL) {
 #' 
 #' @export
 hc_size <- function(hc, width = NULL, height = NULL) {
+  
+  assertthat::assert_that(.is_highchart(hc))
   
   if(!is.null(width))
     hc$width <- width

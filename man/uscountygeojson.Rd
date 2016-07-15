@@ -12,8 +12,5 @@ uscountygeojson
 This data comes from the \url{https://code.highcharts.com/mapdata/countries/us/us-all-all.js}
 and is used in highmaps examples.
 }
-\examples{
-data(uscountygeojson)
-head(uscountygeojson)
-}
+\keyword{datasets}
 

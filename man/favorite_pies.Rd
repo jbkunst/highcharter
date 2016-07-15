@@ -21,8 +21,5 @@ Data from How I met Your Mother: Marshall's Favorite Pies
 
 }
 }
-\examples{
-data(favorite_pies)
-favorite_pies
-}
+\keyword{datasets}
 

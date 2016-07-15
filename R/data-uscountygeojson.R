@@ -7,7 +7,4 @@
 #' @name uscountygeojson
 #' @usage uscountygeojson
 #' @format A \code{list} in geojson format.
-#' @examples
-#' data(uscountygeojson)
-#' head(uscountygeojson)
-NULL
+"uscountygeojson"

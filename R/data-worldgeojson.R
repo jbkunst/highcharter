@@ -7,7 +7,4 @@
 #' @name worldgeojson
 #' @usage worldgeojson
 #' @format A \code{list} in geojson format.
-#' @examples
-#' data(worldgeojson)
-#' head(worldgeojson)
-NULL
+"worldgeojson"

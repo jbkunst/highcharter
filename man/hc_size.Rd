@@ -2,15 +2,19 @@
 % Please edit documentation in R/api-hc-extras.R
 \name{hc_size}
 \alias{hc_size}
-\title{Changing the size}
+\title{Changing the size of a \code{highchart} object}
 \usage{
 hc_size(hc, width = NULL, height = NULL)
 }
 \arguments{
+\item{hc}{A \code{highchart} \code{htmlwidget} object.}
+
 \item{width}{A numeric input in pixels.}
+
+\item{height}{A numeric input in pixels.}
 }
 \description{
-Changing the size
+Changing the size of a \code{highchart} object
 }
 \examples{
 
