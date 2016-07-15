@@ -38,7 +38,7 @@ hchart.data.frame <- function(object, type = NULL, ...){
   hc <- highchart() 
   
   if (opts$add_colorAxis) 
-    hc <- hc_colorAxis(hc, stops = color_stops())
+    hc <- hc_colorAxis(hc, auxpar = NULL)
   
   hc %>% 
     hc_add_series_list(series) %>% 
