@@ -1,13 +1,5 @@
-## Resubmission: Adding imports
+## Updating the package
 
-* According the email I added import to setNames and head.
-
-
-## Updating the package and fix build
-
-* Uploading to 0.3.0 (prevous 0.2.0)
-
-* Removing run code (using quantmod package) which throw
-and error un build procedure.
+* Uploading to 0.4.0 (previous 0.3.0)
 
 Thanks and regards!

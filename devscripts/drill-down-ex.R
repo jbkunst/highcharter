@@ -22,8 +22,8 @@ hc <- highchart() %>%
       dataLabels = list(enabled = TRUE)
     )
   ) %>%
-  hc_add_series_df(
-    data = df,
+  hc_add_series(
+    data = list_parse(df),
     name = "Things",
     colorByPoint = TRUE
   )

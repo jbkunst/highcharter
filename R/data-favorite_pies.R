@@ -15,7 +15,4 @@
 #' @name favorite_pies
 #' @usage favorite_pies
 #' @format A \code{data frame} with 5 observations and 2 variables.
-#' @examples
-#' data(favorite_pies)
-#' favorite_pies
-NULL
+"favorite_pies"
