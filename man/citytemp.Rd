@@ -24,8 +24,5 @@ This data comes from the \url{http://www.highcharts.com/} examples.
 
 }
 }
-\examples{
-data(citytemp)
-citytemp
-}
+\keyword{datasets}
 

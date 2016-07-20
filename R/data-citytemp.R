@@ -18,7 +18,4 @@
 #' @name citytemp
 #' @usage citytemp
 #' @format A \code{data frame} with 12 observations and 5 variables.
-#' @examples
-#' data(citytemp)
-#' citytemp
-NULL
+"citytemp"

@@ -7,3 +7,4 @@ devscripts/
 .lintr
 fort.6
 ^CONDUCT\.md$
+^data-raw$

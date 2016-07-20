@@ -7,7 +7,4 @@
 #' @name usgeojson
 #' @usage usgeojson
 #' @format A \code{list} in geojson format.
-#' @examples
-#' data(usgeojson)
-#' usgeojson
-NULL
+"usgeojson"

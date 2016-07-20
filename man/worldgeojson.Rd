@@ -12,8 +12,5 @@ worldgeojson
 This data comes from the \url{https://code.highcharts.com/mapdata/custom/world.js}
 and is used in highmaps examples.#'
 }
-\examples{
-data(worldgeojson)
-head(worldgeojson)
-}
+\keyword{datasets}
 

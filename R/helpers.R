@@ -19,7 +19,10 @@ list_parse <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  setNames(list.parse(df), NULL)
+  map_if(df, is.factor, as.character) %>% 
+    as_data_frame() %>% 
+    list.parse() %>% 
+    setNames(NULL)
   
 }
 
@@ -30,13 +33,8 @@ list_parse2 <- function(df) {
   
   assertthat::assert_that(is.data.frame(df))
   
-  res <- df %>% 
-    map_if(is.factor, as.character) %>% 
-    map(identity) %>%  
-    transpose() %>% 
+  list_parse(df) %>% 
     map(setNames, NULL)
-  
-  res
   
 }
 
@@ -534,5 +532,35 @@ get_hc_options_from_df <- function(data, type) {
   }
   
   opts
+  
+}
+
+#' Check if a string vector is in hexadecimal color format
+#' 
+#' @param x A string vectors
+#' 
+#' @examples 
+#' 
+#' x <- c("#f0f0f0", "#FFf", "#99990000", "#00FFFFFF")
+#' 
+#' is.hexcolor(x)
+#' 
+#' are.hexcolor(x)
+#' @export
+is.hexcolor <- function(x) {
+  
+  assertthat::assert_that(is.character(x))
+  
+  pattern <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$"
+  
+  str_detect(x, pattern)
+  
+}
+
+#' @rdname is.hexcolor
+#' @export
+are.hexcolor <- function(x) {
+  
+  all(is.hexcolor(x))
   
 }

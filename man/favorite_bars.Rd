@@ -21,8 +21,5 @@ Data from How I met Your Mother: Marshall's Favorite Bars.
 
 }
 }
-\examples{
-data(favorite_bars)
-favorite_bars
-}
+\keyword{datasets}
 
