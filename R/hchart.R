@@ -54,8 +54,7 @@ hchart.data.frame <- function(object, type = NULL, ...){
         marker = list(enabled = opts$series_marker_enabled)
       ),
       scatter = list(marker = list(symbol = "circle")),
-      bubble = list(minSize = 5, maxSize = 25),
-      treemap = list(layoutAlgorithm = "squarified")
+      bubble = list(minSize = 5, maxSize = 25)
     )
 }
 

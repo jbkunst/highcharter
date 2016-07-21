@@ -28,7 +28,7 @@ hcwaffle(c("nice", "good"), c(10, 20), size = 10)
 
 hcwaffle(c("nice", "good"), c(100, 200), icons = "child")
 
-hcwaffle(c("car", "truck", "plane"), c(50, 20, 10), icons = c("car", "truck", "plane"))
+hcwaffle(c("car", "truck", "plane"), c(75, 30, 20), icons = c("car", "truck", "plane"))
 
 }
 

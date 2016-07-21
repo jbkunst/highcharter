@@ -27,14 +27,25 @@ hchist <- function(x, ...) {
 }
 
 #' Function to make a boxplot
-#' @rdname hc_add_series_boxplot
+#' @param x A numeric vector.
+#' @param by A string vector same length of x.
+#' @param outliers A boolean value to show or not the outliers.
+#' @param horizontal A boolean value indicating if the boxplots should be horizontal.
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @export
-hcboxplot <- function(x, by = NULL, outliers = TRUE, ...) {
+hcboxplot <- function(x, by = NULL, outliers = TRUE, horizontal = TRUE, ...) {
   stopifnot(is.numeric(x))
+  hc <- highchart()
   if (is.null(by))
-    hc_add_series_boxplot(highchart(), x, outliers = outliers, ...)
+    hc <- hc_add_series_boxplot(hc, x, outliers = outliers, ...)
   else
-    hc_add_series_boxplot(highchart(), x, by = by, outliers = outliers, ...)
+    hc <- hc_add_series_boxplot(hc, x, by = by, outliers = outliers, ...)
+  
+  if (horizontal)
+    hc <- hc_chart(hc, type = "bar")
+  
+  hc
+  
 }
 
 #' Function to make time or line charts
@@ -69,7 +80,7 @@ hcdensity <- function(x, area = FALSE, ...) {
 #' 
 #' hcwaffle(c("nice", "good"), c(100, 200), icons = "child")
 #' 
-#' hcwaffle(c("car", "truck", "plane"), c(50, 20, 10), icons = c("car", "truck", "plane"))
+#' hcwaffle(c("car", "truck", "plane"), c(75, 30, 20), icons = c("car", "truck", "plane"))
 #' 
 #' @importFrom dplyr ungroup group_by_
 #' @export

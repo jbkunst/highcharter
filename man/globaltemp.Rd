@@ -4,7 +4,7 @@
 \name{globaltemp}
 \alias{globaltemp}
 \title{globaltemp}
-\format{A \code{data frame} with 166 observations and 4 variables.}
+\format{A \code{data frame} with 1992 observations and 4 variables.}
 \source{
 \url{http://www.climate-lab-book.ac.uk/2016/spiralling-global-temperatures/}
 }
@@ -19,9 +19,9 @@ Temperature information by years.
 
 \itemize{
 
- \item \code{year}: Year.
+ \item \code{date}: Date.
  \item \code{lower}: Minimum temperature.
- \item \code{median}: median temperature.
+ \item \code{median}: Median temperature.
  \item \code{upper}: Maximun temperature.
 }
 }

@@ -9,9 +9,12 @@
 .onAttach <- function(libname = find.package("highcharter"),
                       pkgname = "highcharter") {
 
-  packageStartupMessage("Highcharts (www.highcharts.com) is a")
-  packageStartupMessage("Highsoft software product which is")
-  packageStartupMessage("not free for commercial and Governmental use")
+  packageStartupMessage(
+    "Highcharts (www.highcharts.com) is a Highsoft software product which is"
+    )
+  packageStartupMessage(
+    "not free for commercial and Governmental use"
+    )
   
 }
 
@@ -77,7 +80,8 @@
       plotOptions = list(
         series = list(
           turboThreshold = 0
-          )
+          ),
+        treemap = list(layoutAlgorithm = "squarified")
         )
       )
     )
