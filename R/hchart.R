@@ -106,7 +106,7 @@ hchart.character <- function(object, type = "column", ...) {
     setNames(c("name", "y"))
   
   highchart() %>% 
-    hc_add_series(data = list_parse(df), type = "column", ...) %>% 
+    hc_add_series(data = list_parse(df), type = type, ...) %>% 
     hc_xAxis(type = "category")
 }
 
