@@ -1,3 +1,30 @@
+#' Function to make spkarlines
+#' @param x A numeric vector.
+#' @param type Type sparkline: line, bar, etc.
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' 
+#' @examples
+#' 
+#' set.seed(123)
+#' x <- cumsum(rnorm(10))
+#' 
+#' hcspark(x) 
+#' hcspark(x, "column")
+#' hcspark(c(1, 4, 5), "pie")
+#' hcspark(x, type = "area")
+#'    
+#' @export
+hcspark <- function(x = NULL, type = NULL, ...) {
+  stopifnot(is.numeric(x))
+  highchart() %>% 
+    hc_plotOptions(
+      series = list(showInLegend = FALSE),
+      line = list(marker = list(enabled = FALSE))) %>% 
+    hc_add_series(data = x, type = type, ...) %>% 
+    hc_add_theme(hc_theme_sparkline())
+}
+
+
 #' Function to make a bar chart
 #' 
 #' @param x A character or factor vector.
