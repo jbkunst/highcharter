@@ -4,7 +4,8 @@
 
 # html and rpubs
 devscripts/*.html
-*/rsconnect/*
+devscripts/issues/*.html
+devscripts/issues/rsconnect/*
 
 # RStudio files
 .Rproj.user/
