@@ -3,12 +3,16 @@
     function symbolWrap(proceed, symbol, x, y, w, h, options) {
         if (symbol.indexOf('text:') === 0) {
             var text = unescape(JSON.parse('"\\u' + symbol.split(':')[1] + '"')),
-                svgElem = this.text(text, x - h*0.75, y + h)
-                .css({
+                svgElem = this.text(text, x, y)
+                  .attr({
+                    translateY: h,
+                    translateX: -1
+                  })
+                  .css({
                     fontFamily: 'FontAwesome',
                     fontSize: h * 2
-                });
-            
+                  });
+                
             if (svgElem.renderer.isVML) {
                 svgElem.fillSetter = function (value, key, element) {
                     element.style.color = H.Color(value).get('rgb');
