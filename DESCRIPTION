@@ -29,7 +29,7 @@ Imports:
     assertthat,
     zoo,
     dplyr,
-    tibble,
+    tibble (>= 1.1),
     stringr,
     broom,
     viridisLite,
