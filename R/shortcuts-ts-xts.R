@@ -23,12 +23,13 @@
 #' }
 #' 
 #' @importFrom zoo as.Date
-#' @importFrom assertthat is.date assert_that
+#' @importFrom assertthat assert_that is.date
+#' @importFrom lubridate is.timepoint
 #' 
 #' @export 
 hc_add_series_times_values <- function(hc, dates, values, ...) {
   
-  assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.date(dates))
+  assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.timepoint(dates))
   
   timestamps <- datetime_to_timestamp(dates)
   
