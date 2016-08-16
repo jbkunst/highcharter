@@ -82,6 +82,9 @@
           turboThreshold = 0
           ),
         treemap = list(layoutAlgorithm = "squarified")
+        ),
+      annotationsOptions = list(
+        enabledButtons = FALSE
         )
       )
     )

@@ -2,9 +2,12 @@
 % Please edit documentation in R/api-hc-extras.R
 \name{hc_annotations}
 \alias{hc_annotations}
+\alias{hc_annotationsOptions}
 \title{Adding annotations to highcharts objects}
 \usage{
 hc_annotations(hc, ...)
+
+hc_annotationsOptions(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

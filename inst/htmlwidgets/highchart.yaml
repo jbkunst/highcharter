@@ -30,6 +30,7 @@ dependencies:
     - plugins/pattern-fill-v2.js
     - plugins/text-symbols.js
     - plugins/symbols-extra.js
+    - plugins/annotations.js
     stylesheet:
     - css/motion.css
   - name: fontawesome

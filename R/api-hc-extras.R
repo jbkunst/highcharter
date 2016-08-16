@@ -238,6 +238,13 @@ hc_annotations <- function(hc, ...) {
   
 }
 
+#' @rdname hc_annotations
+#' @export
+hc_annotationsOptions <- function(hc, ...) {
+  
+  .hc_opt(hc, "annotationsOptions", ...)
+  
+}
 
 #' Adding annotations to highcharts objects
 #' 
