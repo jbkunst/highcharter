@@ -13,7 +13,7 @@ Authors@R: c(
   person("Dean", "Kilfoyle", role = c("ctb"), comment  = "First version hc_add_series_boxplot"),
   person("Adline", "Dsilva", role = c("ctb"), comment  = "First version Matrix heatmap")
   )  
-Date: 2016-07-14
+Date: 2016-09-05
 URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 Maintainer: Joshua Kunst <jbkunst@gmail.com>
