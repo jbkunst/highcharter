@@ -10,4 +10,5 @@ devscripts/
 .lintr
 fort.6
 ^CONDUCT\.md$
+^CONTRIBUTING\.md$
 ^data-raw$
