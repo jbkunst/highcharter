@@ -1,4 +1,6 @@
-## Issues
+The github issues feature is reserved for bug reports and feature requests only.
+You can search in stackoverflow or post your question. I usually look the `r` 
+and `highcharts` tags.
 
 For bug reports, please provide a minimal reproducible example. By "minimal", I
 mean you should reduce your example as much as possible right before the problem
