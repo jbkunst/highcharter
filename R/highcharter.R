@@ -65,6 +65,13 @@ highchart <- function(hc_opts = list(),
   )
 }
 
+#' eports whether x is a highchart object
+#' 
+#' @param x An object to test
+is.highchart <- function(x) {
+  inherits(x, "highchart")
+}
+
 #' Widget output function for use in Shiny
 #'
 #' @param outputId The name of the input.

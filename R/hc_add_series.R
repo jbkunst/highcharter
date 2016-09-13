@@ -6,13 +6,13 @@
 #' @export
 hc_rm_series <- function(hc, names = NULL) {
   
-  stopifnot(!is.null(name))
+  stopifnot(!is.null(names))
   
   positions <- hc$x$hc_opts$series %>%
     map("name") %>%
     unlist()
   
-  position <- which(positions %in% name)
+  position <- which(positions %in% names)
   
   hc$x$hc_opts$series[position] <- NULL
   
@@ -38,7 +38,7 @@ hc_rm_series <- function(hc, names = NULL) {
 #' 
 #' hc %>% 
 #'   hc_add_series(name = "London", data = citytemp$london, type = "area") %>% 
-#'   hc_rm_series(name = "New York")
+#'   hc_rm_series(names = c("New York", "Tokyo"))
 #'
 #' @export
 hc_add_series <- function(hc, ...) {
