@@ -27,7 +27,7 @@ hc
 
 hc \%>\% 
   hc_add_series(name = "London", data = citytemp$london, type = "area") \%>\% 
-  hc_rm_series(name = "New York")
+  hc_rm_series(names = c("New York", "Tokyo"))
 
 }
 

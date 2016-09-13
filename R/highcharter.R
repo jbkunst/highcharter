@@ -65,9 +65,10 @@ highchart <- function(hc_opts = list(),
   )
 }
 
-#' eports whether x is a highchart object
+#' Reports whether x is a highchart object
 #' 
 #' @param x An object to test
+#' @export
 is.highchart <- function(x) {
   inherits(x, "highchart")
 }
