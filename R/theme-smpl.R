@@ -15,7 +15,6 @@ hc_theme_smpl <- function(...){
   
   theme <-
     hc_theme_merge(
-      hc_theme_google(),
       hc_theme(
         colors =  c( "#d35400",
                      "#2980b9",
@@ -45,6 +44,21 @@ hc_theme_smpl <- function(...){
         legend = list(
           align = "right",
           verticalAlign = "bottom"
+        ),
+        xAxis = list(
+          gridLineWidth = 1,
+          gridLineColor = "#F3F3F3",
+          lineColor = "#F3F3F3",
+          minorGridLineColor = "#F3F3F3",
+          tickColor = "#F3F3F3",
+          tickWidth = 1
+        ),
+        yAxis = list(
+          gridLineColor = "#F3F3F3",
+          lineColor = "#F3F3F3",
+          minorGridLineColor = "#F3F3F3",
+          tickColor = "#F3F3F3",
+          tickWidth = 1
         )
       )
     )
