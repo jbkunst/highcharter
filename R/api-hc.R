@@ -23,7 +23,7 @@ validate_args <- function(name, lstargs) {
 #' @importFrom rlist list.merge
 .hc_opt <- function(hc, name, ...) {
   
-  assertthat::assert_that(.is_highchart(hc))
+  assertthat::assert_that(is.highchart(hc))
   
   validate_args(name, eval(substitute(alist(...))))
   

@@ -70,7 +70,7 @@ highchart <- function(hc_opts = list(),
 #' @param x An object to test
 #' @export
 is.highchart <- function(x) {
-  inherits(x, "highchart")
+  inherits(x, "highchart") || inherits(x, "highchart2")
 }
 
 #' Widget output function for use in Shiny
