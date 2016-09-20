@@ -154,3 +154,19 @@ highchart2 <- function(hc_opts = list(),
       )
   )
 }
+
+#' @rdname highchartOutput
+#' @export
+highchartOutput2 <- function(outputId, width = "100%", height = "400px"){
+  shinyWidgetOutput(outputId, "highchart2", width, height,
+                    package = "highcharter")
+}
+
+#' @rdname renderHighchart
+#' @export
+renderHighchart2 <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, highchartOutput2, env, quoted = TRUE)
+}
