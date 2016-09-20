@@ -16,7 +16,7 @@
 #' @export
 hc_add_series_list <- function(hc, lst) {
   
-  assertthat::assert_that(.is_highchart(hc), is.list(lst))
+  assertthat::assert_that(is.highchart(hc), is.list(lst))
                           
   hc$x$hc_opts$series <- append(
     hc$x$hc_opts$series,
@@ -116,7 +116,7 @@ hc_add_series_list <- function(hc, lst) {
 hc_add_series_df <- function(hc, data, type = NULL, ...) {
   
   # check data
-  assertthat::assert_that(.is_highchart(hc))
+  assertthat::assert_that(is.highchart(hc))
   
   series <- get_hc_series_from_df(data, type = type, ...)
   
@@ -164,7 +164,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
                                   label = NULL, showInLegend = FALSE,
                                   ...) {
   
-  assertthat::assert_that(.is_highchart(hc), length(x) == length(y),
+  assertthat::assert_that(is.highchart(hc), length(x) == length(y),
                           is.numeric(x), is.numeric(y))
   
   df <- data_frame(x, y)
@@ -258,7 +258,7 @@ hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
 hc_add_series_labels_values <- function(hc, labels, values,
                                         colors = NULL, ...) {
   
-  assertthat::assert_that(.is_highchart(hc),
+  assertthat::assert_that(is.highchart(hc),
                           is.numeric(values),
                           length(labels) == length(values))
 
@@ -321,7 +321,7 @@ hc_add_series_labels_values <- function(hc, labels, values,
 #' @export 
 hc_add_series_treemap <- function(hc, tm, ...) {
   
-  assertthat::assert_that(.is_highchart(hc), is.list(tm))
+  assertthat::assert_that(is.highchart(hc), is.list(tm))
   
   df <- tm$tm %>% 
     tbl_df() %>% 
@@ -436,7 +436,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
-  assertthat::assert_that(.is_highchart(hc),
+  assertthat::assert_that(is.highchart(hc),
                           is.list(map),
                           is.data.frame(df),
                           value %in% names(df),
@@ -556,7 +556,7 @@ hc_add_series_density <- function(hc, x, area = FALSE, ...) {
 
 hc_add_series_df_old <- function(hc, data, ...) {
   
-  assertthat::assert_that(.is_highchart(hc), is.data.frame(data))
+  assertthat::assert_that(is.highchart(hc), is.data.frame(data))
   
   hc <- hc %>%
     hc_add_series(data = list_parse(data), ...)

@@ -29,7 +29,7 @@
 #' @export 
 hc_add_series_times_values <- function(hc, dates, values, ...) {
   
-  assertthat::assert_that(.is_highchart(hc), is.numeric(values), is.timepoint(dates))
+  assertthat::assert_that(is.highchart(hc), is.numeric(values), is.timepoint(dates))
   
   timestamps <- datetime_to_timestamp(dates)
   
@@ -71,7 +71,7 @@ hc_add_series_times_values <- function(hc, dates, values, ...) {
 #' @export 
 hc_add_series_ts <- function(hc, ts, ...) {
   
-  assertthat::assert_that(is.ts(ts), .is_highchart(hc))
+  assertthat::assert_that(is.ts(ts), is.highchart(hc))
   
   # http://stackoverflow.com/questions/29202021/
   dates <- time(ts) %>% 
@@ -112,7 +112,7 @@ hc_add_series_ts <- function(hc, ts, ...) {
 #' @export
 hc_add_series_xts <- function(hc, x, ...) {
   
-  assertthat::assert_that(.is_highchart(hc), is.xts(x))
+  assertthat::assert_that(is.highchart(hc), is.xts(x))
   
   hc$x$type <- "stock"
   
@@ -169,7 +169,7 @@ hc_add_series_xts <- function(hc, x, ...) {
 #' @export
 hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
-  assertthat::assert_that(.is_highchart(hc), is.xts(x), is.OHLC(x))
+  assertthat::assert_that(is.highchart(hc), is.xts(x), is.OHLC(x))
   
   hc$x$type <- "stock"
   
@@ -230,7 +230,7 @@ hc_add_series_flags <- function(hc, dates,
                                 text = title,
                                 id = NULL, ...) {
   
-  assertthat::assert_that(.is_highchart(hc), is.date(dates))
+  assertthat::assert_that(is.highchart(hc), is.date(dates))
   
   dfflags <- data_frame(x = datetime_to_timestamp(dates),
                         title = title, text = text)

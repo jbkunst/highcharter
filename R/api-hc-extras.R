@@ -292,7 +292,7 @@ hc_motion <- function(hc, ...) {
 #' @export
 hc_elementId <- function(hc, id = NULL) {
   
-  assertthat::assert_that(.is_highchart(hc))
+  assertthat::assert_that(is.highchart(hc))
   
   hc$elementId <- as.character(id)
   
@@ -312,7 +312,7 @@ hc_elementId <- function(hc, id = NULL) {
 #' @export
 hc_size <- function(hc, width = NULL, height = NULL) {
   
-  assertthat::assert_that(.is_highchart(hc))
+  assertthat::assert_that(is.highchart(hc))
   
   if(!is.null(width))
     hc$width <- width
