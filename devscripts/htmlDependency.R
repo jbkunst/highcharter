@@ -5,7 +5,8 @@ library(htmltools)
 hc <- highchart() %>% 
   hc_chart(type = "column") %>% 
   hc_title(text = "MyGraph") %>% 
-  hc_add_series(data = c(4, 14, 18, 5, 6, 5, 14, 15, 18)) %>% 
+  hc_add_series(data = c(4, 14, 18, 5, 6, 5, 14, 15, 18)) %>%
+  hc_add_series(data = c(6, 5, 14, 15, 18, 4, 14, 18, 5)) %>% 
   hc_xAxis(categories = list(
     list(
       name =  "Fruit",
