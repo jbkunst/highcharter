@@ -1,6 +1,6 @@
+#' From https://gist.github.com/jcheng5/c084a59717f18e947a17955007dc5f92
 library(highcharter)
 library(htmltools)
-
 
 hc <- highchart() %>% 
   hc_chart(type = "column") %>% 
