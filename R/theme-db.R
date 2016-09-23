@@ -14,7 +14,7 @@ hc_theme_db <- function(...){
   
   theme <- 
     list(
-      colors = c("#FFFFFF", "#A9CF54", "#C23C2A", "#979797", "#FBB829"),
+      colors = c("#A9CF54", "#C23C2A", "#FFFFFF", "#979797", "#FBB829"),
       chart = list(  
         backgroundColor = "#242F39"
         ),
