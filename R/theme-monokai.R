@@ -71,10 +71,3 @@ hc_theme_monokai <- function(...){
   theme
   
 }
-
-highcharts_demo() %>%
-  hc_add_theme(hc_theme_monokai())
-
-
-
-

@@ -65,11 +65,3 @@ hc_theme_ffx <- function(...){
   theme
   
 }
-
-
-
-
-highcharts_demo() %>%
-  hc_add_theme(hc_theme_ffx())
-
-

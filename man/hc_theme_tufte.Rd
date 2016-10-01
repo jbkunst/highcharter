@@ -21,7 +21,6 @@ n <- 15
 dta <- dplyr::data_frame(
   x = rnorm(n),
   y = 1.5 * x + rnorm(n))
-   
 highchart() \%>\%
   hc_chart(type = "scatter") \%>\% 
   hc_add_series(data = list_parse(dta)) \%>\% 
