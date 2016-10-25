@@ -322,23 +322,30 @@ hc_legend <- function(hc, ...) {
 #' @examples 
 #' 
 #' 
-#' data(citytemp)
-#' 
-#' highchart() %>% 
-#'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_series(name = "London", data = citytemp$london) %>% 
-#'   hc_tooltip(crosshairs = TRUE, backgroundColor = "gray",
-#'              headerFormat = "This is a custom header<br>",
-#'              shared = TRUE, borderWidth = 5)
+#' highcharts_demo() %>%
+#'   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 
 #'              
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}. 
+#' @param sort Logical value to implement sort according \code{this.point}
+#'   \url{http://stackoverflow.com/a/16954666/829971}.
+#' @param table Logical value to implement table in tooltip: 
+#'   \url{http://stackoverflow.com/a/22327749/829971}.
 #'
 #' @export
-hc_tooltip <- function(hc, ...) {
+hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
   
-  .hc_opt(hc, "tooltip", ...)
+  if(sort)
+    hc <- .hc_tooltip_sort(hc)
+  
+  if(table)
+    hc <- .hc_tooltip_table(hc)
+  
+  if(length(list(...))) 
+    hc <- highcharter:::.hc_opt(hc, "tooltip", ...)
+  
+  hc
+  
   
 }
 
