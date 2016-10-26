@@ -342,10 +342,9 @@ hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
     hc <- .hc_tooltip_table(hc)
   
   if(length(list(...))) 
-    hc <- highcharter:::.hc_opt(hc, "tooltip", ...)
+    hc <- .hc_opt(hc, "tooltip", ...)
   
-  hc
-  
+  hc  
   
 }
 
