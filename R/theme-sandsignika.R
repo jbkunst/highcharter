@@ -1,7 +1,5 @@
 #' Sand Signika theme for highcharts
 #' 
-#' Sand Signika theme for highcharts
-#' 
 #' @param ... Named argument to modify the theme
 #' 
 #' @examples 

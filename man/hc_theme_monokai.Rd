@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme-monokai.R
 \name{hc_theme_monokai}
 \alias{hc_theme_monokai}
-\title{Monokai}
+\title{Monokai theme for highcharts}
 \usage{
 hc_theme_monokai(...)
 }
@@ -10,7 +10,7 @@ hc_theme_monokai(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Monokai
+A well know text editor theme
 }
 \examples{
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme-ffx.R
 \name{hc_theme_ffx}
 \alias{hc_theme_ffx}
-\title{Firefox}
+\title{Firefox theme for highcharts}
 \usage{
 hc_theme_ffx(...)
 }
@@ -10,7 +10,7 @@ hc_theme_ffx(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Firefox
+Theme inspired by https://www.mozilla.org/en-US/styleguide/
 }
 \examples{
 

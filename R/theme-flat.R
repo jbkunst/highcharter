@@ -1,6 +1,6 @@
-#' Base16 Insipred theme
+#' Flat theme for highcharts
 #' 
-#' Theme inspired by https://github.com/chriskempson/base16 and
+#' Base16 Insipred theme https://github.com/chriskempson/base16 and
 #' https://github.com/cttobin/ggthemr#flat
 #' 
 #' @param ... Named argument to modify the theme
@@ -58,8 +58,6 @@ hc_theme_flat <- function(...){
   theme
   
 }
-
-
 
 #' @rdname hc_theme_flat
 #' 

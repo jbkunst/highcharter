@@ -3,7 +3,7 @@
 \name{hc_theme_tufte}
 \alias{hc_theme_tufte}
 \alias{hc_theme_tufte2}
-\title{Tufte Theme}
+\title{Tufte theme for highcharts}
 \usage{
 hc_theme_tufte(...)
 

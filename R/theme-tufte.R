@@ -1,4 +1,4 @@
-#' Tufte Theme
+#' Tufte theme for highcharts
 #' 
 #' Desing inspired by Edward Tufte style.
 #' 

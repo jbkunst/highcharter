@@ -10,7 +10,7 @@ hc_theme_darkunica(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Dark unica theme for highcharts
+Dark Unica theme for highcharts
 }
 \examples{
 

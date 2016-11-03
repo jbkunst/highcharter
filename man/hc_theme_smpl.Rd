@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme-smpl.R
 \name{hc_theme_smpl}
 \alias{hc_theme_smpl}
-\title{Simple Theme}
+\title{Simple theme for highcharts}
 \usage{
 hc_theme_smpl(...)
 }

@@ -1,4 +1,6 @@
-#' Monokai 
+#' Monokai theme for highcharts
+#' 
+#' A well know text editor theme 
 #' 
 #' @param ... Named argument to modify the theme
 #' 

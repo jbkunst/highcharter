@@ -1,7 +1,5 @@
 #' Dotabuff theme for highcharts
 #' 
-#' Dotabuff theme for highcharts
-#' 
 #' @param ... Named argument to modify the theme
 #' 
 #' @examples 

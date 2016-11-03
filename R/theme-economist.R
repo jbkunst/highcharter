@@ -1,7 +1,5 @@
 #' Economist theme for highcharts
 #' 
-#' Economist theme for highcharts
-#' 
 #' @param ... Named argument to modify the theme
 #' 
 #' @examples 

@@ -1,7 +1,5 @@
 #'Dark Unica theme for highcharts
 #'
-#'Dark unica theme for highcharts
-#'
 #'@param ... Named argument to modify the theme
 #'
 #'@examples 

@@ -1,7 +1,5 @@
 #' Fivethirtyeight theme for highcharts
 #' 
-#' Fivethirtyeight theme for highcharts
-#' 
 #' @param ... Named argument to modify the theme
 #' 
 #' @examples 

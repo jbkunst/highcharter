@@ -1,7 +1,5 @@
 #' Financial Times theme for highcharts
 #' 
-#' Financial Times theme for highcharts
-#' 
 #' @param ... Named argument to modify the theme
 #' 
 #' @examples 
