@@ -3,10 +3,10 @@ library("dplyr")
 library("treemap")
 
 
-data(GNI2010)
-head(GNI2010)
+data(GNI2014)
+head(GNI2014)
 
-tm <- treemap(GNI2010,
+tm <- treemap(GNI2014,
         index=c("continent", "iso3"),
         vSize="population",
         vColor="GNI",
@@ -17,8 +17,7 @@ highchart() %>%
   hc_add_series_treemap(tm, allowDrillToNode = TRUE) %>% 
   hc_title(text = "GNI World Data") %>% 
   hc_subtitle(text = "Gross national income in dollars per country in 2010") %>% 
-  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
-             Population {point.value:,.1f}")
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>Population {point.value:,.1f}")
 
 
 #### ####

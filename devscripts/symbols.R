@@ -6,22 +6,21 @@ library(dplyr)
 #+include=TRUE
 options(highcharter.theme = hc_theme_smpl())
 
-dss <- map(c("square", "triangle",  "cross", "plus"), function(s){
+dss <- map(c("cross", "plus"), function(s){
   
   x <- rnorm(20, runif(1)*2)
   y <- (rnorm(1) + 1)*x + runif(20)
   
   list(name = s,
+       type = "scatter",
        data = list_parse(data_frame(x, y)),
-       marker = list(symbol = s, enabled = TRUE), lineColor = NULL)
+       marker = list(symbol = s, enabled = TRUE))
   
 })
 
 
 highchart() %>% 
-  hc_chart(type = "scatter") %>% 
   hc_add_series_list(dss)
-
 
 library(survival)
 

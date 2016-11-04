@@ -85,6 +85,9 @@
         ),
       annotationsOptions = list(
         enabledButtons = FALSE
+        ),
+      tooltip = list(
+        delayForDisplay = 10
         )
       )
     )

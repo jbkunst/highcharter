@@ -3,34 +3,40 @@ dependencies:
     version: 1.11.1
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
-  - name: underscore
-    version: 1.8.3
-    src: "htmlwidgets/lib/underscore-1.8.3"
-    script: underscore-min.js    
+  #- name: underscore
+    #version: 1.8.3
+    #src: "htmlwidgets/lib/underscore-1.8.3"
+    #script: underscore-min.js   
   - name: highcharts
-    version: 4.2.6
-    src: "htmlwidgets/lib/highcharts-4.2.6"
+    version: 5.0.2
+    src: "htmlwidgets/lib/highcharts-5.0.2"
     script:
     - highstock.js
-    - highcharts-more.js
     - highcharts-3d.js
-    - modules/exporting.js
-    - modules/drilldown.js
+    - highcharts-more.js
+    - modules/annotations.js
+    - modules/broken-axis.js
     - modules/data.js
+    - modules/drilldown.js
+    - modules/exporting.js
+    - modules/funnel.js
     - modules/heatmap.js
     - modules/map.js
-    - modules/treemap.js
-    - modules/funnel.js
-    - modules/solid-gauge.js
     - modules/no-data-to-display.js
-    - modules/reset.js
-    - plugins/motion.js    
-    - plugins/draggable-points.js
-    - plugins/draggable-legend.js
-    - plugins/pattern-fill-v2.js
-    - plugins/text-symbols.js
-    - plugins/symbols-extra.js
+    - modules/offline-exporting.js
+    - modules/solid-gauge.js
+    - modules/treemap.js
     - plugins/annotations.js
+    - plugins/draggable-legend.js
+    - plugins/draggable-points.js
+    - plugins/export-csv.js
+    - plugins/grouped-categories.js
+    - plugins/motion.js
+    - plugins/pattern-fill-v2.js
+    - plugins/tooltip-delay.js
+    - custom/reset.js
+    - custom/symbols-extra.js
+    - custom/text-symbols.js
     stylesheet:
     - css/motion.css
   - name: fontawesome

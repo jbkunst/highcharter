@@ -20,30 +20,35 @@ highchart() %>%
 #' # Ex 2 
 n <- 3
 set.seed(100)
-ds2 <- map(seq(n), function(x){
+
+data <- map(seq(n), function(x){
   xc <- round(rnorm(1, sd = 2), 2)
   yc <- round(rnorm(1, sd = 2), 2)
   dt <- cbind(rnorm(200, xc), rnorm(200, yc))
-  dt <- convex_hull(dt)
-  dt <- list_parse2(as.data.frame(dt$rescoords))
-  list(data = dt, name = sprintf("%s, %s", xc, yc), type = "polygon", id = n)
+  dt <- tbl_df(dt)
+  setNames(dt, c("x", "y"))
+  dt
 })
 
-set.seed(100)
-ds3 <- map(seq(n), function(x){
-  xc <- round(rnorm(1, sd = 2), 2)
-  yc <- round(rnorm(1, sd = 2), 2)
-  dt <- cbind(rnorm(200, xc), rnorm(200, yc))
+ds1 <- map(seq(n), function(x){
+  dt <- data[[x]]
+  dt <- convex_hull(as.matrix(dt))
+  dt <- list_parse2(as.data.frame(dt$rescoords))
+  list(data = dt, name = sprintf("polygon %s", x), type = "polygon", id = paste0("s", x))
+})
+
+ds2 <- map(seq(n), function(x){
+  dt <- data[[x]]
   dt <- list_parse2(as.data.frame(dt))
-  list(data = dt, name = sprintf("%s, %s", xc, yc), type = "scatter", linkedTo = n)
+  list(data = dt, name = sprintf("points %s", x), type = "scatter", linkedTo = paste0("s", x))
 })
 
 cols <- hex_to_rgba(substr(viridis(n), 0, 7), alpha = 0.5)
 
 highchart() %>% 
   hc_colors(colors = cols) %>% 
-  hc_add_series_list(ds2) %>% 
-  hc_add_series_list(ds3)
+  hc_add_series_list(ds1) %>% 
+  hc_add_series_list(ds2)
 
 
 #' # Ex 3 

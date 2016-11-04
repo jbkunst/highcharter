@@ -1,65 +1,56 @@
+# packages ----------------------------------------------------------------
 library(purrr)
+library(rvest)
+library(stringr)
 
-version <- "4.2.6"
-path <- sprintf("inst/htmlwidgets/lib/highcharts-%s/", version)
-try(dir.create(path))
+# settings ----------------------------------------------------------------
+version <- "5.0.2"
+hccodeurl <- "http://code.highcharts.com"
+path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
-
-# MAIN FILES --------------------------------------------------------------
-files <- c(
-  "http://code.highcharts.com/highcharts.js",
-  "http://code.highcharts.com/stock/highstock.js",
-  "http://code.highcharts.com/highcharts-more.js",
-  "http://code.highcharts.com/highcharts-3d.js"
-)
-
-file.path(path, basename(files))
-
-map2(files, file.path(path, basename(files)), download.file)
+# creating folder structure
+folders <- c("", "modules", "plugins", "css", "custom")
+try(map(file.path(path, folders), dir.create))
 
 
-# MODULES -----------------------------------------------------------------
-url <- "http://code.highcharts.com/modules"
-files <- c(
-  "exporting.js",
-  "boost.js",
-  "drilldown.js",
-  "data.js",
-  "heatmap.js",
-  "treemap.js",
-  "funnel.js",
-  "solid-gauge.js",
-  "no-data-to-display.js"
-  )
+# main files --------------------------------------------------------------
+hchtml <- read_html(hccodeurl)
 
-try(dir.create(file.path(path, basename(url))))
+hclnks <- hchtml %>% 
+  html_node("ul") %>% # first list
+  html_nodes("li") %>% 
+  html_text() %>% 
+  .[!str_detect(., "src.js")] %>% 
+  str_replace("^.*com\\/", "")
 
 map2(
-  file.path(url, files),
-  file.path(path, basename(url), basename(files)),
+  file.path(hccodeurl, hclnks),
+  file.path(path, hclnks),
   download.file
 )
 
-# MAP ---------------------------------------------------------------------
-url <- "http://code.highcharts.com/maps/modules"
-files <- c("map.js")
-
+# stock & map
+hclnks <- c("http://code.highcharts.com/stock/highstock.js",
+            "http://code.highcharts.com/maps/modules/map.js") %>% 
+  str_replace("^.*com\\/", "")
+  
 map2(
-  file.path(url, files),
-  file.path(path, basename(url), basename(files)),
+  file.path(hccodeurl, hclnks),
+  str_replace(file.path(path, hclnks), "stock/|maps/", ""),
   download.file
-)
+)  
 
 
-# PLUGINS -----------------------------------------------------------------
-try(dir.create(file.path(path, "plugins")))
-
+# plugins -----------------------------------------------------------------
 files <- c(
   "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
-  "https://rawgit.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
+  "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
   "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
   "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
-  "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js"
+  "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
+  "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
+  "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",
+  "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js"
   )
 
 map2(
@@ -68,13 +59,23 @@ map2(
   download.file
 )
 
-try(dir.create(file.path(path, "css")))
-
-# MY SCRIPTS --------------------------------------------------------------
+# my customs --------------------------------------------------------------
 message("PLZ DON'T FORGET!")
 message("symbols-extras.js")
+message("text-symbols.js")
 message("reset.js")
 message("motion.css")
+
+# for yaml ----------------------------------------------------------------
+path %>% 
+  dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>% 
+  setdiff(file.path(path, "modules", c("accessibility.js", "boost.js", "canvas-tools.js"))) %>% 
+  str_replace(path, "    - ") %>% 
+  str_replace("/", "") %>% 
+  paste0(collapse = "\n") %>% 
+  cat()
+  
+
 
 
 
