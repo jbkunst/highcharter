@@ -4,10 +4,12 @@
 \alias{hc_add_series}
 \title{Adding and removing series from highchart objects}
 \usage{
-hc_add_series(hc, ...)
+hc_add_series(hc, data, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
+
+\item{data}{An R object like numeric, list, ts, xts, etc.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 }

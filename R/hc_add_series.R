@@ -23,6 +23,7 @@ hc_rm_series <- function(hc, names = NULL) {
 #' Adding and removing series from highchart objects
 #'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data An R object like numeric, list, ts, xts, etc.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #'
 #' @examples
@@ -41,66 +42,106 @@ hc_rm_series <- function(hc, names = NULL) {
 #'   hc_rm_series(names = c("New York", "Tokyo"))
 #'
 #' @export
-hc_add_series <- function(hc, ...) {
+hc_add_series <- function(hc, data, ...){
+  
+  UseMethod("hc_add_series", data)
+  
+}
+
+#' @export
+hc_add_series.default <- function(hc, ...) {
+  
+  assertthat::assert_that(is.highchart(hc))
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.default")
   
   validate_args("add_series", eval(substitute(alist(...))))
   
-  dots <- list(...)
-  
-  if (is.numeric(dots$data) & length(dots$data) == 1) {
-    dots$data <- list(dots$data)
-  }
-  
-  lst <- do.call(list, dots)
-  
-  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(lst))
+  # dots <- list(...)
+  # 
+  # if (is.numeric(dots$data) & length(dots$data) == 1) {
+  #   dots$data <- list(dots$data)
+  # }
+  # 
+  # lst <- do.call(list, dots)
+  # 
+  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
   
   hc
   
 }
 
+#' @export
+hc_add_series.numeric <- function(hc, data, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.numeric")
+  
+  if(length(data) == 1)
+    data <- list(data)
+  
+  hc_add_series.default(hc, data = data, ...)
+  
+}
+
+#' @importFrom zoo as.Date
+#' @importFrom stats time
+#' @export
+hc_add_series.ts <- function(hc, data, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.ts")
+  
+  # http://stackoverflow.com/questions/29202021/
+  timestamps <- data %>% 
+    stats::time() %>% 
+    zoo::as.Date() %>% 
+    datetime_to_timestamp()
+  
+  series <- list_parse2(data.frame(timestamps, as.vector(data)))
+  
+  hc_add_series(hc, data = series, ...)
+  
+}
+
+#' @importFrom xts is.xts
+#' @importFrom quantmod is.OHLC
+#' @export
+hc_add_series.xts <- function(hc, data, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.xts")
+  
+  if(is.OHLC(data))
+    return(hc_add_series.ohlc(hc, data, ...))
+  
+  timestamps <- datetime_to_timestamp(time(data))
+  
+  series <- list_parse2(data.frame(timestamps, as.vector(data)))
+  
+  hc_add_series(hc, data = series, ...)
+  
+}
+
+#' @importFrom stringr str_extract
+#' @export
+hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.xts.ohlc")
+  
+  time <- datetime_to_timestamp(time(data))
+  xdf <- cbind(time, as.data.frame(data))
+  xds <- list_parse2(xdf)
+  
+  nm <- ifelse(!is.null(list(...)[["name"]]),
+               list(...)[["name"]],
+               str_extract(names(data)[1], "^[A-Za-z]+"))
+  
+  hc_add_series(hc, data = xds, name = nm, type = type, ...)
+  
+}
 
 
-# hc_add_series2 <- function(hc, data, ...){
-#   UseMethod("hc_add_series2", data)
-# }
-# 
-# hc_add_series2.default <- function(hc, data, ...) {
-#   
-#   # validate_args("add_series", eval(substitute(alist(...))))
-#   
-#   dots <- list(...)
-#   
-#   if (is.numeric(data) & length(data) == 1) {
-#     data <- list(data)
-#   }
-#   
-#   dots <- append(list(data = data), dots)
-#   
-#   lst <- do.call(list, dots)
-#   
-#   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(lst))
-#   
-#   hc
-#   
-# }
-# 
-# hc_add_series2.numeric <- function(hc, data, ...) {
-#   print("numeric function")
-#   hc_add_series2.default(hc, data, ...)
-# }
-# 
-# hc_add_series2.ts <- function(hc, data, ...) {
-#   print("ts function")
-#   hc_add_series_ts(hc, ts = data, ...)
-# }
-# 
-# 
-# highchart() %>% 
-#   hc_add_series2(data = c(4)) %>% 
-#   hc_add_series2(data = rnorm(5), type = "column", color = "red", name = "asd") 
-#   
-#   
-# highchart() %>% 
-#   hc_add_series2(data = AirPassengers) %>% 
-#   hc_add_series2(data = AirPassengers + 3000, color = "red", name = "asd")
+

@@ -98,5 +98,8 @@
       )
     )
   
- 
+  options(
+    highcharter.verbose = FALSE
+  )
+  
 }

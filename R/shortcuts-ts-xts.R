@@ -22,12 +22,11 @@
 #'                            name = "Personal Savings Rate")
 #' }
 #' 
-#' @importFrom zoo as.Date
 #' @importFrom assertthat assert_that is.date
 #' @importFrom lubridate is.timepoint
-#' 
-#' @export 
 hc_add_series_times_values <- function(hc, dates, values, ...) {
+  
+  .Deprecated("hc_add_series")
   
   assertthat::assert_that(is.highchart(hc), is.numeric(values), is.timepoint(dates))
   
@@ -73,6 +72,8 @@ hc_add_series_ts <- function(hc, ts, ...) {
   
   assertthat::assert_that(is.ts(ts), is.highchart(hc))
   
+  .Deprecated("hc_add_series")
+  
   # http://stackoverflow.com/questions/29202021/
   dates <- time(ts) %>% 
     zoo::as.Date()
@@ -111,6 +112,8 @@ hc_add_series_ts <- function(hc, ts, ...) {
 #' @importFrom xts is.xts
 #' @export
 hc_add_series_xts <- function(hc, x, ...) {
+  
+  .Deprecated("hc_add_series")
   
   assertthat::assert_that(is.highchart(hc), is.xts(x))
   
@@ -168,6 +171,8 @@ hc_add_series_xts <- function(hc, x, ...) {
 #' @importFrom stringr str_extract
 #' @export
 hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
+  
+  .Deprecated("hc_add_series")
   
   assertthat::assert_that(is.highchart(hc), is.xts(x), is.OHLC(x))
   

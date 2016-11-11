@@ -1,46 +1,46 @@
-hc_add_series <- function(hc, x, ...){
+options(highcharter.verbose = TRUE)
+
+#' work with length(data) == 1
+highchart() %>%
+  hc_add_series(data = 1)
+
+highchart() %>%
+  hc_add_series(data = list(1))
+
+# numeric and lists  
+highchart() %>%
+  hc_add_series(data = abs(rnorm(5))) %>%
+  hc_add_series(data = abs(rnorm(5)), type = "column", color = "red", name = "asd") %>% 
+  hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue", name = "dsa")
+
+
+# time series
+highchart() %>%
+  hc_xAxis(type = "datetime") %>% 
+  hc_add_series(data = AirPassengers) %>%
+  hc_add_series(data = AirPassengers + 3000, color = "red", name = "asd")
+
+
+# xts
+library("quantmod")
+usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
+
+highchart(type = "stock") %>%
+  hc_add_series(usdjpy, id = "usdjpy") %>%
+  hc_add_series(data = eurkpw, id = "eurkpw")
+
+# ohlc
+library("quantmod")
+x <- getSymbols("GOOG", auto.assign = FALSE)
+y <- getSymbols("SPY", auto.assign = FALSE)
+
+highchart(type = "stock") %>%
+  hc_add_series(x) %>%
+  hc_add_series(y) %>% 
+  hc_add_series(data = eurkpw, id = "eurkpw")
   
-  clssx <- class(x)
-  
-  if(clssx %in% "list")
-    
-    hc <- hc %>% hc_add_series_list(data = x, ...)
-  
-  else if (clssx %in% c("data.frame", "tbl_df"))
-    
-    hc <- hc %>% hc_add_series(data = list_parse(x), ...)
-  
-  else if (clssx %in% "ts")
-    
-    hc <- hc %>% hc_add_series_ts(x, ...)
-  
-  else {
-    # stop("xs of class/type ", paste(class(x), collapse = "/"),
-    #      " are not supported by hchart (yet).", call. = FALSE)
-    validate_args("add_series", eval(substitute(alist(...))))
-    hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
-    hc
-  }
-  
-  hc
-    
-}
+highchart(type = "stock") %>%
+  hc_add_series_ohlc(x) %>% 
+  hc_add_series_ohlc(y)
 
-library("highcharter")
-
-hc <- highchart()
-
-class(AirPassengers)
-
-hc %>%  hc_add_seriesg(AirPassengers)
-
-
-library("dplyr")
-data <- data_frame(x = rnorm(100),
-                   y = x*2 + 3 + rnorm(100)*2,
-                   color = colorize(x))
-
-hc %>%
-  hc_add_seriesg(data, type = "scatter")
-
-hc_add_series

@@ -2,12 +2,9 @@
 % Please edit documentation in R/theme-flat.R
 \name{hc_theme_flat}
 \alias{hc_theme_flat}
-\alias{hc_theme_flatdark}
 \title{Flat theme for highcharts}
 \usage{
 hc_theme_flat(...)
-
-hc_theme_flatdark(...)
 }
 \arguments{
 \item{...}{Named argument to modify the theme}
@@ -20,10 +17,6 @@ https://github.com/cttobin/ggthemr#flat
 
 highcharts_demo() \%>\% 
   hc_add_theme(hc_theme_flat())
-
-
-highcharts_demo() \%>\% 
-  hc_add_theme(hc_theme_flatdark())
 
 }
 
