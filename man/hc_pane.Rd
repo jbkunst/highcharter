@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-extras.R
 \name{hc_pane}
 \alias{hc_pane}
-\title{Adding annotations to highcharts objects}
+\title{Adding panes}
 \usage{
 hc_pane(hc, ...)
 }

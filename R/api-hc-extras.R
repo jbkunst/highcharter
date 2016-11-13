@@ -156,7 +156,7 @@ hc_drilldown <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#scrollbar}. 
 #' 
 #' @export
-hc_scrollbar  <- function(hc, ...) {
+hc_scrollbar <- function(hc, ...) {
   
   .hc_opt(hc, "scrollbar", ...)
   
@@ -246,7 +246,7 @@ hc_annotationsOptions <- function(hc, ...) {
   
 }
 
-#' Adding annotations to highcharts objects
+#' Adding panes
 #' 
 #' Applies only to polar charts and angular gauges. This configuration object
 #' holds general options for the combined X and Y axes set. Each xAxis or
@@ -274,52 +274,5 @@ hc_pane <- function(hc, ...) {
 hc_motion <- function(hc, ...) {
   
   .hc_opt(hc, "motion", ...)
-  
-}
-
-#' Setting elementId
-#' 
-#' Function to modify the \code{id} for the container.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param id A string
-#' 
-#' @examples 
-#' 
-#' hchart(rnorm(10)) %>% 
-#'   hc_elementId("newid")
-#' 
-#' @export
-hc_elementId <- function(hc, id = NULL) {
-  
-  assertthat::assert_that(is.highchart(hc))
-  
-  hc$elementId <- as.character(id)
-  
-  hc
-}
-
-#' Changing the size of a \code{highchart} object
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param width	A numeric input in pixels.
-#' @param height	A numeric input in pixels.
-#' 
-#' @examples 
-#' 
-#' hc_size(hcts(rnorm(100)), 400, 200)
-#' 
-#' @export
-hc_size <- function(hc, width = NULL, height = NULL) {
-  
-  assertthat::assert_that(is.highchart(hc))
-  
-  if(!is.null(width))
-    hc$width <- width
-  
-  if(!is.null(height))
-    hc$height <- height
-  
-  hc
   
 }

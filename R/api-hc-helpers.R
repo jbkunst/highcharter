@@ -1,3 +1,50 @@
+#' Setting elementId
+#' 
+#' Function to modify the \code{id} for the container.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param id A string
+#' 
+#' @examples 
+#' 
+#' hchart(rnorm(10)) %>% 
+#'   hc_elementId("newid")
+#' 
+#' @export
+hc_elementId <- function(hc, id = NULL) {
+  
+  assertthat::assert_that(is.highchart(hc))
+  
+  hc$elementId <- as.character(id)
+  
+  hc
+}
+
+#' Changing the size of a \code{highchart} object
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param width	A numeric input in pixels.
+#' @param height	A numeric input in pixels.
+#' 
+#' @examples 
+#' 
+#' hc_size(hcts(rnorm(100)), 400, 200)
+#' 
+#' @export
+hc_size <- function(hc, width = NULL, height = NULL) {
+  
+  assertthat::assert_that(is.highchart(hc))
+  
+  if(!is.null(width))
+    hc$width <- width
+  
+  if(!is.null(height))
+    hc$height <- height
+  
+  hc
+  
+}
+
 .hc_tooltip_table <- function(hc, ...) {
   # http://stackoverflow.com/a/22327749/829971
   hc %>% 
@@ -36,3 +83,5 @@
         }"))
   
 }
+
+
