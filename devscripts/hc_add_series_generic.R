@@ -49,7 +49,7 @@ library(forecast)
 
 x <- AirPassengers
 object <- forecast(x)
-
+object <- forecast(auto.arima(x))
 hchart(object)
 
 
