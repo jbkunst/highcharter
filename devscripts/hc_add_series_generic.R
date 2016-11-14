@@ -1,5 +1,5 @@
 options(highcharter.verbose = TRUE)
-
+options(highcharter.theme = hc_theme_smpl())
 #' work with length(data) == 1
 highchart() %>%
   hc_add_series(data = 1)
@@ -9,8 +9,8 @@ highchart() %>%
 
 # numeric and lists  
 highchart() %>%
+  hc_add_series(data = abs(rnorm(5)), type = "column", name = "asd") %>% 
   hc_add_series(data = abs(rnorm(5))) %>%
-  hc_add_series(data = abs(rnorm(5)), type = "column", color = "red", name = "asd") %>% 
   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue", name = "dsa")
 
 
@@ -18,7 +18,7 @@ highchart() %>%
 highchart() %>%
   hc_xAxis(type = "datetime") %>% 
   hc_add_series(data = AirPassengers) %>%
-  hc_add_series(data = AirPassengers + 3000, color = "red", name = "asd")
+  hc_add_series(data = AirPassengers + rnorm(length(AirPassengers), sd = sd(AirPassengers)/2), name = "asd")
 
 
 # xts
@@ -43,4 +43,15 @@ highchart(type = "stock") %>%
 highchart(type = "stock") %>%
   hc_add_series_ohlc(x) %>% 
   hc_add_series_ohlc(y)
+
+# forecast
+library(forecast)
+
+x <- AirPassengers
+object <- forecast(x)
+
+hchart(object)
+
+
+
 

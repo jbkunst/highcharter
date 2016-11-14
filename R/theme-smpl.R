@@ -53,6 +53,11 @@ hc_theme_smpl <- function(...){
         minorGridLineColor = "#F3F3F3",
         tickColor = "#F3F3F3",
         tickWidth = 1
+      ),
+      plotOptions = list(
+        line = list(
+          marker = list(enabled = FALSE)
+        )
       )
     )
 
