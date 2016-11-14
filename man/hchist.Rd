@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hchist}
 \alias{hchist}
-\title{Function to make an histogram}
+\title{Shorcut to make an histogram}
 \usage{
 hchist(x, ...)
 }
@@ -12,6 +12,6 @@ hchist(x, ...)
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
-Function to make an histogram
+Shorcut to make an histogram
 }
 

@@ -49,6 +49,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
   # http://stackoverflow.com/a/22327749/829971
   hc %>% 
     highcharter::hc_tooltip(
+      shared = TRUE,
       useHTML = TRUE,
       headerFormat = '<small>{point.key}</small><table>',
       pointFormat = '<tr><td style="color: {series.color}">{series.name}: </td><td style="text-align: right"><b>{point.y}</b></td></tr>',

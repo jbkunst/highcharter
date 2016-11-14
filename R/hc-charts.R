@@ -1,4 +1,57 @@
-#' Function to make spkarlines
+#' Shorcut to make a bar chart
+#' @param x A character or factor vector.
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @export
+hcbar <- function(x, ...) {
+  stopifnot(is.character(x) | is.factor(x))
+  hchart(x, ...)
+}
+
+#' Shorcut to make a pie chart
+#' @param x A character o factor vector.
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @export
+hcpie <- function(x, ...) {
+  stopifnot(is.character(x) | is.factor(x))
+  hchart(x, type = "pie", ...)
+}
+
+#' Shorcut to make an histogram
+#' @param x A numeric vector.
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @export
+hchist <- function(x, ...) {
+  stopifnot(is.numeric(x))
+  hchart(x, ...)
+}
+
+#' Shorcut to make time series or line charts
+#' @param x A numeric vector or a time series object.
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @importFrom stats as.ts
+#' @export
+hcts <- function(x, ...) {
+  hchart(as.ts(x), ...)
+}
+
+#' Shorcut to make density charts
+#' @param x A numeric vector or a density object.
+#' @param type Type of chart
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @importFrom stats density
+#' @export
+hcdensity <- function(x, type = "areaspline", ...) {
+  
+  stopifnot(inherits(x, "density") || inherits(x, "numeric"))
+  
+  if(class(x) == "numeric")
+    x <- density(x)
+  
+  hchart(x, type = type, ...)
+  
+}
+
+#' Shorcut to make spkarlines
 #' @param x A numeric vector.
 #' @param type Type sparkline: line, bar, etc.
 #' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
@@ -24,36 +77,7 @@ hcspark <- function(x = NULL, type = NULL, ...) {
     hc_add_theme(hc_theme_sparkline())
 }
 
-
-#' Function to make a bar chart
-#' 
-#' @param x A character or factor vector.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
-#' @export
-hcbar <- function(x, ...) {
-  stopifnot(is.character(x) | is.factor(x))
-  hchart(x, ...)
-}
-
-#' Function to make a pie chart
-#' @param x A character o factor vector.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
-#' @export
-hcpie <- function(x, ...) {
-  stopifnot(is.character(x) | is.factor(x))
-  hchart(x, type = "pie", ...)
-}
-
-#' Function to make an histogram
-#' @param x A numeric vector.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
-#' @export
-hchist <- function(x, ...) {
-  stopifnot(is.numeric(x))
-  hchart(x, ...)
-}
-
-#' Function to make a boxplot
+#' Shortcut to make a boxplot
 #' @param x A numeric vector.
 #' @param by A string vector same length of x.
 #' @param outliers A boolean value to show or not the outliers.
@@ -75,24 +99,7 @@ hcboxplot <- function(x, by = NULL, outliers = TRUE, horizontal = TRUE, ...) {
   
 }
 
-#' Function to make time or line charts
-#' @param x A numeric vector or a time series object.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
-#' @importFrom stats as.ts
-#' @export
-hcts <- function(x, ...) {
-  hchart(as.ts(x), ...)
-}
-
-#' @rdname hc_add_series_density
-#' @export
-hcdensity <- function(x, area = FALSE, ...) {
-  stopifnot(inherits(density(x), "density") || inherits(x, "numeric"))
-  hchart.density(x, area = area, ...)
-}
-
-#' Function to create  waffle charts
-#' 
+#' Shorcut to make waffle charts
 #' @param labels A character vector
 #' @param counts A integer vector
 #' @param rows A integer to set 
@@ -178,12 +185,3 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   hc
   
 }
-
-#' #' Function to chart coefficients from glms
-#' #' 
-#' #' @param glm A \code{glm} object.
-#' #' @export
-#' hccoef <- function(glm){
-#'   stopifnot(inherits(glm, "glm"))
-#'   hchart.glm(gml)
-#' }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hcpie}
 \alias{hcpie}
-\title{Function to make a pie chart}
+\title{Shorcut to make a pie chart}
 \usage{
 hcpie(x, ...)
 }
@@ -12,6 +12,6 @@ hcpie(x, ...)
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
-Function to make a pie chart
+Shorcut to make a pie chart
 }
 

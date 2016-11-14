@@ -25,21 +25,9 @@ hc_rm_series <- function(hc, names = NULL) {
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data An R object like numeric, list, ts, xts, etc.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
-#'
 #' @examples
 #' 
-#' data("citytemp")
 #' 
-#' hc <- highchart() %>% 
-#'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_series(name = "New York", data = citytemp$new_york) 
-#' 
-#' hc 
-#' 
-#' hc %>% 
-#'   hc_add_series(name = "London", data = citytemp$london, type = "area") %>% 
-#'   hc_rm_series(names = c("New York", "Tokyo"))
 #'
 #' @export
 hc_add_series <- function(hc, data, ...){
@@ -57,34 +45,34 @@ hc_add_series.default <- function(hc, ...) {
     message("hc_add_series.default")
   
   validate_args("add_series", eval(substitute(alist(...))))
-  
-  # dots <- list(...)
-  # 
-  # if (is.numeric(dots$data) & length(dots$data) == 1) {
-  #   dots$data <- list(dots$data)
-  # }
-  # 
-  # lst <- do.call(list, dots)
-  # 
+
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
   
   hc
   
 }
 
+#' `hc_add_series` for numeric objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A numeric object
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
 hc_add_series.numeric <- function(hc, data, ...) {
   
   if(getOption("highcharter.verbose"))
     message("hc_add_series.numeric")
   
-  if(length(data) == 1)
-    data <- list(data)
+  data <- fix_1_length_data(data)
   
   hc_add_series.default(hc, data = data, ...)
   
 }
 
+
+#' hc_add_series for time series objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A time series object. Class \code{ts} object.
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @importFrom zoo as.Date
 #' @importFrom stats time
 #' @export
@@ -105,6 +93,10 @@ hc_add_series.ts <- function(hc, data, ...) {
   
 }
 
+#' hc_add_series for xts objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A \code{xts} object.
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @importFrom xts is.xts
 #' @importFrom quantmod is.OHLC
 #' @export
@@ -124,6 +116,7 @@ hc_add_series.xts <- function(hc, data, ...) {
   
 }
 
+#' @rdname hc_add_series.xts
 #' @importFrom stringr str_extract
 #' @export
 hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
@@ -143,5 +136,98 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
   
 }
 
+#' hc_add_series for forecast objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A \code{forecast} object.
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @export
+hc_add_series.forecast <- function(hc, data, addOriginal = FALSE, addLevels = TRUE,
+                                   fillOpacity = 0.1, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.forecast")
+  
+  rid <- random_id()
+  method <- data$method
+  
+  # hc <- highchart() %>% hc_title(text = "LALALA")
+  # ... <- NULL
+  
+  if(addOriginal)
+    hc <- hc_add_series(hc, data$x, name = "Series", zIndex = 3, ...)
+  
+  
+  hc <- hc_add_series(hc, data$mean, name = method,  zIndex = 2, id = rid, ...)
+  
+  
+  if(addLevels){
+    
+    tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
+    nmf <- paste(method, "level", data$level)
+    
+    for (m in seq(ncol(data$upper))) { # m <- 1
+      
+      dfbands <- data_frame(
+        t = tmf,
+        u = as.vector(data$upper[, m]),
+        l = as.vector(data$lower[, m])
+      )
+      
+      hc <- hc %>%
+        hc_add_series(
+          data = list_parse2(dfbands),
+          name = nmf[m],
+          type = "arearange",
+          fillOpacity = fillOpacity,
+          zIndex = 1,
+          lineWidth = 0,
+          linkedTo = rid,
+          ...)
+    }
+  }
+  
+  
+  hc
+  
+
+}
 
 
+#' hc_add_series for density objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A \code{density} object.
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @export
+hc_add_series.density <- function(hc, data, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.density")
+  
+  data <- list_parse(data.frame(cbind(x = data$x, y = data$y)))
+  
+  hc_add_series(hc, data = data, ...)
+}
+
+
+#' hc_add_series for character and factor objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A \code{character} or \code{factor} object.
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @export
+hc_add_series.character <- function(hc, data, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.character")
+  
+  series <- data %>% 
+    table() %>% 
+    as.data.frame(stringsAsFactors = FALSE) %>% 
+    setNames(c("name", "y")) %>% 
+    list_parse()
+  
+  hc_add_series(hc, data = series, ...)
+  
+}
+
+#' @export
+hc_add_series.factor <- hc_add_series.character

@@ -564,3 +564,30 @@ are.hexcolor <- function(x) {
   all(is.hexcolor(x))
   
 }
+
+#' Function to generate iids
+#' @param n Number of ids
+#' @param length Length of ids
+#' @export
+random_id <- function(n = 1, length = 10){
+  
+  source <- c(seq(0, 9), letters)
+  
+  replicate(n, paste0(sample(x = source, size = length, replace = TRUE), collapse = ""))
+  
+}
+
+#' Function to avoid the jsonlite::auto_unbox default
+#' @param x And element, numeric or character
+#' @export
+fix_1_length_data <- function(x) {
+  
+  if(getOption("highcharter.verbose"))
+    message("fix_1_length")
+  
+  if(class(x) != "list" & length(x) == 1)
+    x <- list(x)
+  x
+}
+
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hcbar}
 \alias{hcbar}
-\title{Function to make a bar chart}
+\title{Shorcut to make a bar chart}
 \usage{
 hcbar(x, ...)
 }
@@ -12,6 +12,6 @@ hcbar(x, ...)
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
-Function to make a bar chart
+Shorcut to make a bar chart
 }
 

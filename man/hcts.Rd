@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hcts}
 \alias{hcts}
-\title{Function to make time or line charts}
+\title{Shorcut to make time series or line charts}
 \usage{
 hcts(x, ...)
 }
@@ -12,6 +12,6 @@ hcts(x, ...)
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
-Function to make time or line charts
+Shorcut to make time series or line charts
 }
 

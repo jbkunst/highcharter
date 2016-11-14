@@ -18,18 +18,7 @@ Adding and removing series from highchart objects
 }
 \examples{
 
-data("citytemp")
 
-hc <- highchart() \%>\% 
-  hc_xAxis(categories = citytemp$month) \%>\% 
-  hc_add_series(name = "Tokyo", data = citytemp$tokyo) \%>\% 
-  hc_add_series(name = "New York", data = citytemp$new_york) 
-
-hc 
-
-hc \%>\% 
-  hc_add_series(name = "London", data = citytemp$london, type = "area") \%>\% 
-  hc_rm_series(names = c("New York", "Tokyo"))
 
 }
 

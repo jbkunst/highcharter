@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hcboxplot}
 \alias{hcboxplot}
-\title{Function to make a boxplot}
+\title{Shortcut to make a boxplot}
 \usage{
 hcboxplot(x, by = NULL, outliers = TRUE, horizontal = TRUE, ...)
 }
@@ -18,6 +18,6 @@ hcboxplot(x, by = NULL, outliers = TRUE, horizontal = TRUE, ...)
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
-Function to make a boxplot
+Shortcut to make a boxplot
 }
 

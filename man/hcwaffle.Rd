@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hcwaffle}
 \alias{hcwaffle}
-\title{Function to create  waffle charts}
+\title{Shorcut to make waffle charts}
 \usage{
 hcwaffle(labels, counts, rows = NULL, icons = NULL, size = 4)
 }
@@ -18,7 +18,7 @@ hcwaffle(labels, counts, rows = NULL, icons = NULL, size = 4)
 \item{size}{Font size}
 }
 \description{
-Function to create  waffle charts
+Shorcut to make waffle charts
 }
 \examples{
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hc-charts.R
 \name{hcspark}
 \alias{hcspark}
-\title{Function to make spkarlines}
+\title{Shorcut to make spkarlines}
 \usage{
 hcspark(x = NULL, type = NULL, ...)
 }
@@ -14,7 +14,7 @@ hcspark(x = NULL, type = NULL, ...)
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
-Function to make spkarlines
+Shorcut to make spkarlines
 }
 \examples{
 
