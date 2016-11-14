@@ -12,6 +12,12 @@
 
 \item{data}{A \code{forecast} object.}
 
+\item{addOriginal}{Logical value to add the original series or not.}
+
+\item{addLevels}{Logical value to show predicctions bands.}
+
+\item{fillOpacity}{The opacity of bands}
+
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 }
 \description{

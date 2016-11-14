@@ -117,6 +117,7 @@ hc_add_series.xts <- function(hc, data, ...) {
 }
 
 #' @rdname hc_add_series.xts
+#' @param type The type of wayto show the \code{xts} object. Can be 'candlestick' or 'ohlc'.
 #' @importFrom stringr str_extract
 #' @export
 hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
@@ -139,6 +140,9 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
 #' hc_add_series for forecast objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data A \code{forecast} object.
+#' @param addOriginal Logical value to add the original series or not.
+#' @param addLevels Logical value to show predicctions bands.
+#' @param fillOpacity The opacity of bands
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
 hc_add_series.forecast <- function(hc, data, addOriginal = FALSE, addLevels = TRUE,

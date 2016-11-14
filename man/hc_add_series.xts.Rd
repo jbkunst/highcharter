@@ -15,6 +15,8 @@
 \item{data}{A \code{xts} object.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
+
+\item{type}{The type of wayto show the \code{xts} object. Can be 'candlestick' or 'ohlc'.}
 }
 \description{
 hc_add_series for xts objects
