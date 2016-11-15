@@ -27,6 +27,154 @@ hc_add_series_list <- function(hc, lst) {
   
 }
 
+#' Shorcut for add flags to highstock chart
+#'
+#' This function helps to add flags highstock charts created from \code{xts} objects.
+#' 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param dates Date vector.
+#' @param title A character vector with titles.
+#' @param text A character vector with the description.
+#' @param id The name of the series to add the flags. A previous series
+#'   must be added whith this \code{id}. 
+#' @param ... Aditional shared arguments for the *flags* data series
+#'   (\url{http://api.highcharts.com/highstock#plotOptions.flags})
+#'   
+#' @examples
+#' 
+#' 
+#' \dontrun{
+#' 
+#' library("quantmod")
+#' 
+#' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+#' 
+#' dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
+# 
+#' highchart(type = "stock") %>% 
+#'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+#'   hc_add_series_flags(dates,
+#'                       title = c("E1", "E2"), 
+#'                       text = c("This is event 1", "This is the event 2"),
+#'                       id = "usdjpy") 
+#' }
+#'                       
+#' @export
+hc_add_series_flags <- function(hc, dates,
+                                title = LETTERS[seq(length(dates))],
+                                text = title,
+                                id = NULL, ...) {
+  
+  assertthat::assert_that(is.highchart(hc), is.date(dates))
+  
+  dfflags <- data_frame(x = datetime_to_timestamp(dates),
+                        title = title, text = text)
+  
+  dsflags <- list_parse(dfflags)
+  
+  hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags", ...)
+  
+}
+
+#' Shorcut for add series for pie, bar and column charts
+#'
+#' This function add data to plot pie, bar and column charts.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param labels A vector of labels. 
+#' @param values A numeric vector. Same length of \code{labels}.
+#' @param colors A not required color vector (hexadecimal format). Same length of \code{labels}.
+#' @param ... Aditional shared arguments for the data series 
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#' 
+#' @examples 
+#' 
+#' data("favorite_bars")
+#' data("favorite_pies")
+#' 
+#' highchart() %>% 
+#'   hc_title(text = "This is a bar graph describing my favorite pies
+#'                    including a pie chart describing my favorite bars") %>%
+#'   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
+#'   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
+#'                              colorByPoint = TRUE, type = "column") %>% 
+#'   hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
+#'                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
+#'                              name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
+#'                              size = 100, dataLabels = list(enabled = FALSE)) %>% 
+#'   hc_yAxis(title = list(text = "percentage of tastiness"),
+#'            labels = list(format = "{value}%"), max = 100) %>% 
+#'   hc_xAxis(categories = favorite_pies$pie) %>% 
+#'   hc_legend(enabled = FALSE) %>% 
+#'   hc_tooltip(pointFormat = "{point.y}%")
+#' 
+#' 
+#' @export
+hc_add_series_labels_values <- function(hc, labels, values,
+                                        colors = NULL, ...) {
+  
+  assertthat::assert_that(is.highchart(hc),
+                          is.numeric(values),
+                          length(labels) == length(values))
+  
+  df <- data_frame(name = labels, y = values)
+  
+  if (!is.null(colors)) {
+    assert_that(length(labels) == length(colors))
+    
+    df <- mutate(df, color = colors)
+    
+  }
+  
+  ds <- list_parse(df)
+  
+  hc <- hc %>% hc_add_series(data = ds, ...)
+  
+  hc
+  
+}
+
+#' Shorcut for create/add time series from times and values
+#'
+#' This function add a time series to a \code{highchart} object. 
+#' 
+#' This function \bold{modify} the type of \code{chart} to \code{datetime}
+#'  
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param dates  A date vector (same length as \code{values})
+#' @param values A numeric vector
+#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' require("ggplot2")
+#' data(economics, package = "ggplot2")
+#' 
+#' hc_add_series_times_values(hc = highchart(),
+#'                            dates = economics$date,
+#'                            values = economics$psavert, 
+#'                            name = "Personal Savings Rate")
+#' }
+#' 
+#' @importFrom assertthat assert_that is.date
+#' @importFrom lubridate is.timepoint
+hc_add_series_times_values <- function(hc, dates, values, ...) {
+  
+  assertthat::assert_that(is.highchart(hc), is.numeric(values), is.timepoint(dates))
+  
+  timestamps <- datetime_to_timestamp(dates)
+  
+  ds <- list_parse2(data.frame(timestamps, values))
+  
+  hc %>% 
+    hc_xAxis(type = "datetime") %>% 
+    hc_add_series(marker = list(enabled = FALSE), data = ds, ...)
+  
+}
+
 #' Shorcut for tidy data frame a la ggplot2/qplot
 #' 
 #' Function to create chart from tidy data frames. As same as qplot
@@ -117,6 +265,8 @@ hc_add_series_list <- function(hc, lst) {
 #' @export
 hc_add_series_df <- function(hc, data, type = NULL, ...) {
   
+  .Deprecated("hc_add_series")
+  
   # check data
   assertthat::assert_that(is.highchart(hc))
   
@@ -126,160 +276,8 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
   
 }
 
-#' Shorcut for create scatter plots
-#'
-#' This function helps to create scatter plot from two numerics vectors. Options
-#' argumets like size, color and label for points are added. 
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param x A numeric vector. 
-#' @param y A numeric vector. Same length of \code{x}.
-#' @param z A numeric vector for size. Same length of \code{x}.
-#' @param color A vector to color the points.
-#' @param label A vector to put names in the dots if you enable the datalabels.
-#' @param showInLegend Logical value to show or not the data in the legend box.
-#' @param ... Aditional shared arguments for the data series 
-#'   (\url{http://api.highcharts.com/highcharts#series}).
-#' 
-#' @examples 
-#' 
-#' \dontrun{
-#' hc <- highchart()
-#' 
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg)
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat)
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$am)
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec)
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec, rownames(mtcars))
-#' 
-#' # Add named attributes to data (attributes length needs to match number of rows)
-#' hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec,
-#'                       name = rownames(mtcars), gear = mtcars$gear) %>%
-#'   hc_tooltip(pointFormat = "<b>{point.name}</b><br/>Gear: {point.gear}")
-#'   
-#' }
-#' 
-#' @importFrom dplyr mutate do data_frame
-#' 
-#' @export 
-hc_add_series_scatter <- function(hc, x, y, z = NULL, color = NULL,
-                                  label = NULL, showInLegend = FALSE,
-                                  ...) {
-  
-  assertthat::assert_that(is.highchart(hc), length(x) == length(y),
-                          is.numeric(x), is.numeric(y))
-  
-  df <- data_frame(x, y)
-  
-  if (!is.null(z)) {
-    assert_that(length(x) == length(z))
-    df <- df %>% mutate(z = z)
-  }
-  
-  if (!is.null(color)) {
-    
-    assert_that(length(x) == length(color))
 
-    cols <- colorize(color)
-    
-    df <- df %>% mutate(valuecolor = color,
-                        color = cols)
-  }
-  
-  if (!is.null(label)) {
-    assert_that(length(x) == length(label))
-    df <- df %>% mutate(label = label)
-  }
-  
-  # Add arguments to data points if they match the length of the data
-  args <- list(...)
-  for (i in seq_along(args)) {
-    if (length(x) == length(args[[i]]) && names(args[i]) != "name") {
-      attr <- list(args[i])
-      names(attr) <- names(args)[i]
-      df <- cbind(df, attr)
-      # Used argument is set to zero length
-      args[[i]] <- character(0)
-    }
-  }
-  # Remove already used arguments
-  args <- Filter(length, args)
-  
-  ds <- list_parse(df)
-  
-  type <- ifelse(!is.null(z), "bubble", "scatter")
-  
-  if (!is.null(label)) {
-    dlopts <- list(enabled = TRUE, format = "{point.label}")
-  } else {
-    dlopts <- list(enabled = FALSE)
-  }
-  
-  do.call("hc_add_series", c(list(hc,
-                                  data = ds, 
-                                  type = type, 
-                                  showInLegend = showInLegend, 
-                                  dataLabels = dlopts),
-                             args))
-}
 
-#' Shorcut for add series for pie, bar and column charts
-#'
-#' This function add data to plot pie, bar and column charts.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param labels A vector of labels. 
-#' @param values A numeric vector. Same length of \code{labels}.
-#' @param colors A not required color vector (hexadecimal format). Same length of \code{labels}.
-#' @param ... Aditional shared arguments for the data series 
-#'   (\url{http://api.highcharts.com/highcharts#series}).
-#' 
-#' @examples 
-#' 
-#' data("favorite_bars")
-#' data("favorite_pies")
-#' 
-#' highchart() %>% 
-#'   hc_title(text = "This is a bar graph describing my favorite pies
-#'                    including a pie chart describing my favorite bars") %>%
-#'   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
-#'   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
-#'                              colorByPoint = TRUE, type = "column") %>% 
-#'   hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
-#'                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
-#'                              name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
-#'                              size = 100, dataLabels = list(enabled = FALSE)) %>% 
-#'   hc_yAxis(title = list(text = "percentage of tastiness"),
-#'            labels = list(format = "{value}%"), max = 100) %>% 
-#'   hc_xAxis(categories = favorite_pies$pie) %>% 
-#'   hc_legend(enabled = FALSE) %>% 
-#'   hc_tooltip(pointFormat = "{point.y}%")
-#' 
-#' 
-#' @export
-hc_add_series_labels_values <- function(hc, labels, values,
-                                        colors = NULL, ...) {
-  
-  assertthat::assert_that(is.highchart(hc),
-                          is.numeric(values),
-                          length(labels) == length(values))
-
-  df <- data_frame(name = labels, y = values)
-  
-  if (!is.null(colors)) {
-    assert_that(length(labels) == length(colors))
-    
-    df <- mutate(df, color = colors)
-    
-  }
-  
-  ds <- list_parse(df)
-  
-  hc <- hc %>% hc_add_series(data = ds, ...)
-  
-  hc
-                      
-}
 
 #' Shorcut for create treemaps
 #'
@@ -322,6 +320,8 @@ hc_add_series_labels_values <- function(hc, labels, values,
 #' 
 #' @export 
 hc_add_series_treemap <- function(hc, tm, ...) {
+  
+  .Deprecated("hctreemap")
   
   assertthat::assert_that(is.highchart(hc), is.list(tm))
   
@@ -470,13 +470,17 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' @examples
 #' 
+#' \dontrun{
 #' highchart() %>% 
 #'   hc_add_series_boxplot(x = iris$Sepal.Length, by = iris$Species, name = "length") 
+#' }
 #'   
 #' @importFrom grDevices boxplot.stats
 #' @importFrom purrr map2_df
 #' @export
 hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
+  
+  .Deprecated("hcboxplot")
   
   if (is.null(by)) {
     by <- "value"
@@ -524,14 +528,4 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
   
   hc
   
-}
-
-hc_add_series_df_old <- function(hc, data, ...) {
-  
-  assertthat::assert_that(is.highchart(hc), is.data.frame(data))
-  
-  hc <- hc %>%
-    hc_add_series(data = list_parse(data), ...)
-  
-  hc
 }

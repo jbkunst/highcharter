@@ -23,8 +23,10 @@ Shorcut for create boxplot
 }
 \examples{
 
+\dontrun{
 highchart() \%>\% 
   hc_add_series_boxplot(x = iris$Sepal.Length, by = iris$Species, name = "length") 
+}
   
 }
 
