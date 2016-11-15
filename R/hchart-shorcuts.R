@@ -36,11 +36,10 @@ hcts <- function(x, ...) {
 
 #' Shorcut to make density charts
 #' @param x A numeric vector or a density object.
-#' @param type Type of chart
 #' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @importFrom stats density
 #' @export
-hcdensity <- function(x, type = "areaspline", ...) {
+hcdensity <- function(x, ...) {
   
   stopifnot(inherits(x, "density") || inherits(x, "numeric"))
   

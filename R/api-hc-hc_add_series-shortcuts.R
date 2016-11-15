@@ -276,9 +276,6 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
   
 }
 
-
-
-
 #' Shorcut for create treemaps
 #'
 #' This function helps to create higcharts treemaps from \code{treemap} objects
