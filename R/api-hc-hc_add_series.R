@@ -27,7 +27,9 @@ hc_rm_series <- function(hc, names = NULL) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @examples
 #' 
-#' 
+#'  highchart() %>%
+#'    hc_add_series(data = abs(rnorm(5)), type = "column") %>% 
+#'    hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue")
 #'
 #' @export
 hc_add_series <- function(hc, data, ...){

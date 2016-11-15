@@ -82,6 +82,7 @@ hcdensity(density(rexp(500, 1)))
 hcdensity(rexp(500, 1))
 
 # character
+library(dplyr)
 data <- sample(LETTERS[1:6], 50, replace = T)
 data2 <- sample(LETTERS[4:10], 50, replace = T)
 data3 <- sample(LETTERS[3:7], 50, replace = T)
@@ -95,6 +96,7 @@ hc <- highchart() %>%
   hc_add_series(data) %>% 
   hc_add_series(data2) %>% 
   hc_add_series(data3)
+
 hc
 
 hc %>%
@@ -102,3 +104,6 @@ hc %>%
   hc_plotOptions(column = list(stacking = "normal"))
 
 hchart(data)
+
+hcpie(data)
+
