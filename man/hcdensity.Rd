@@ -4,12 +4,10 @@
 \alias{hcdensity}
 \title{Shorcut to make density charts}
 \usage{
-hcdensity(x, type = "areaspline", ...)
+hcdensity(x, ...)
 }
 \arguments{
 \item{x}{A numeric vector or a density object.}
-
-\item{type}{Type of chart}
 
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }

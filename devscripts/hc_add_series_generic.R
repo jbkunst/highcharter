@@ -20,16 +20,16 @@ highchart() %>%
 
 # time series
 highchart() %>%
-  hc_xAxis(type = "datetime") %>% 
-  hc_add_series(data = mdeaths) %>%
-  hc_add_series(data = ldeaths)
+  hc_xAxis(type = "datetime") %>% # important
+  hc_add_series(data = mdeaths, lineWidth = 5) %>%
+  hc_add_series(data = fdeaths, name = "Other Series")
+
+hchart(ldeaths)
 
 # xts
 library("quantmod")
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
 eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
-
-hchart(eurkpw)
 
 highchart(type = "stock") %>%
   hc_add_series(usdjpy, id = "usdjpy") %>%
@@ -76,7 +76,7 @@ highchart() %>%
   hc_add_series(data = density(rbeta(1000, 5,  1)), type = "area") %>% 
   hc_add_series(data = density(rbeta(1000, 1, 5)), type = "areaspline")
 
-hchart(density(rnorm(200), bw = 2))
+hchart(density(rnorm(200), bw = 2), type = "area")
 
 hcdensity(density(rexp(500, 1)))
 hcdensity(rexp(500, 1))

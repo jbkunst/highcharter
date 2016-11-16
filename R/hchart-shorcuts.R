@@ -46,7 +46,7 @@ hcdensity <- function(x, ...) {
   if(class(x) == "numeric")
     x <- density(x)
   
-  hchart(x, type = type, ...)
+  hchart(x, ...)
   
 }
 
