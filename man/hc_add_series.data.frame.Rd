@@ -11,7 +11,7 @@
 
 \item{data}{A \code{data.frame} object.}
 
-\item{mappings}{Mappings, same idea as \code{ggplot2}}
+\item{mappings}{Mappings, same idea as \code{ggplot2}.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 }

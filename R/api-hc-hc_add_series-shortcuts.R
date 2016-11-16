@@ -161,6 +161,7 @@ hc_add_series_labels_values <- function(hc, labels, values,
 #' 
 #' @importFrom assertthat assert_that is.date
 #' @importFrom lubridate is.timepoint
+#' @export
 hc_add_series_times_values <- function(hc, dates, values, ...) {
   
   assertthat::assert_that(is.highchart(hc), is.numeric(values), is.timepoint(dates))

@@ -229,7 +229,7 @@ hc_add_series.factor <- hc_add_series.character
 #' hc_add_series for data frames objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data A \code{data.frame} object.
-#' @param mappings Mappings, same idea as \code{ggplot2}
+#' @param mappings Mappings, same idea as \code{ggplot2}.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
 hc_add_series.data.frame <- function(hc, data, mappings = list(), ...) {
@@ -240,7 +240,7 @@ hc_add_series.data.frame <- function(hc, data, mappings = list(), ...) {
   if(length(mappings) == 0)
     return(hc_add_series(hc, data = list_parse(data), ...))
   
-  hc
+  hc 
   
 }
 
