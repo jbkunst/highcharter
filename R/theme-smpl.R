@@ -56,7 +56,8 @@ hc_theme_smpl <- function(...){
       ),
       plotOptions = list(
         line = list(
-          marker = list(enabled = FALSE)
+          marker = list(enabled = FALSE),
+          states = list(hover = list(lineWidthPlus = 1))
         )
       )
     )
