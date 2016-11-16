@@ -11,21 +11,31 @@ highchart() %>%
   hc_add_series(data = list(1)) %>% 
   hc_add_theme(hc_theme_538())
 
-# numeric and lists  
+# data.frame --------------------------------------------------------------
+data <- mtcars %>% mutate(x = hp, y = disp)
+
+highchart() %>% 
+  hc_add_series(data = data, type = "scatter")
+
+# numeric and lists -------------------------------------------------------
 highchart() %>%
   hc_add_series(data = abs(rnorm(5)), type = "column", name = "asd") %>% 
   hc_add_series(data = abs(rnorm(5))) %>%
   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue", name = "dsa")
 
 
-# time series
-highchart() %>%
+
+# time series -------------------------------------------------------------
+hc <- highchart() %>%
   hc_xAxis(type = "datetime") %>% # important
   hc_add_series(data = mdeaths, lineWidth = 5) %>%
-  hc_add_series(data = fdeaths, name = "Other Series")
+  hc_add_series(data = fdeaths, name = "Other Series") %>% 
+  hc_add_series(data = ldeaths)
 
 hchart(ldeaths)
 
+
+# xts ---------------------------------------------------------------------
 # xts
 library("quantmod")
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
@@ -48,9 +58,10 @@ highchart(type = "stock") %>%
 hchart(x, type = "ohlc")
 hchart(y, type = "candlestick")
 
-# forecast
+# 
 library(forecast)
 
+# forecast ----------------------------------------------------------------
 x <- log(AirPassengers)
 object1 <- forecast(auto.arima(x), level = 90)
 object2 <- forecast(stl(x, s.window = 12), level = 90)
@@ -70,7 +81,7 @@ highchart() %>%
   hc_add_series(data = object3, addLevels = TRUE, color = "#0000FF") 
 
 
-# density
+# density -----------------------------------------------------------------
 highchart() %>% 
   hc_add_series(data = density(rbeta(1000, 5, 5)), type = "line") %>% 
   hc_add_series(data = density(rbeta(1000, 5,  1)), type = "area") %>% 
@@ -81,7 +92,7 @@ hchart(density(rnorm(200), bw = 2), type = "area")
 hcdensity(density(rexp(500, 1)))
 hcdensity(rexp(500, 1))
 
-# character
+# character ---------------------------------------------------------------
 library(dplyr)
 data <- sample(LETTERS[1:6], 50, replace = T)
 data2 <- sample(LETTERS[4:10], 50, replace = T)
@@ -106,4 +117,3 @@ hc %>%
 hchart(data)
 
 hcpie(data)
-

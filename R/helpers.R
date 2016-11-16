@@ -180,6 +180,7 @@ highcharts_demo <- function() {
     hc_title(text = "Monthly Average Temperature") %>% 
     hc_subtitle(text = "Source: WorldClimate.com") %>% 
     hc_yAxis(title = list(text = "Temperature")) %>% 
+    hc_xAxis(title = list(text = "Months")) %>% 
     hc_xAxis(categories = dtemp$month) %>% 
     hc_add_series(name = "Tokyo", data = dtemp$tokyo) %>% 
     hc_add_series(name = "London", data = dtemp$london) %>% 

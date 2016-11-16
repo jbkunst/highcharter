@@ -9,7 +9,7 @@
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{data}{A time series object. Class \code{ts} object.}
+\item{data}{A time series \code{ts} object.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 }

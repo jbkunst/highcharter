@@ -1,25 +1,3 @@
-#' Removing series to highchart objects
-#'
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param names The series's names to delete.
-#' 
-#' @export
-hc_rm_series <- function(hc, names = NULL) {
-  
-  stopifnot(!is.null(names))
-  
-  positions <- hc$x$hc_opts$series %>%
-    map("name") %>%
-    unlist()
-  
-  position <- which(positions %in% names)
-  
-  hc$x$hc_opts$series[position] <- NULL
-  
-  hc
-  
-}
-
 #' Adding and removing series from highchart objects
 #'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -34,9 +12,12 @@ hc_rm_series <- function(hc, names = NULL) {
 #' @export
 hc_add_series <- function(hc, data, ...){
   
+  assertthat::assert_that(is.highchart(hc))
+  
   UseMethod("hc_add_series", data)
   
 }
+
 
 #' @export
 hc_add_series.default <- function(hc, ...) {
@@ -53,6 +34,7 @@ hc_add_series.default <- function(hc, ...) {
   hc
   
 }
+
 
 #' `hc_add_series` for numeric objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -73,7 +55,7 @@ hc_add_series.numeric <- function(hc, data, ...) {
 
 #' hc_add_series for time series objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A time series object. Class \code{ts} object.
+#' @param data A time series \code{ts} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @importFrom zoo as.Date
 #' @importFrom stats time
@@ -94,6 +76,7 @@ hc_add_series.ts <- function(hc, data, ...) {
   hc_add_series(hc, data = series, ...)
   
 }
+
 
 #' hc_add_series for xts objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -118,6 +101,7 @@ hc_add_series.xts <- function(hc, data, ...) {
   
 }
 
+
 #' @rdname hc_add_series.xts
 #' @param type The type of wayto show the \code{xts} object. Can be 'candlestick' or 'ohlc'.
 #' @importFrom stringr str_extract
@@ -138,6 +122,7 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
   hc_add_series(hc, data = xds, name = nm, type = type, ...)
   
 }
+
 
 #' hc_add_series for forecast objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
@@ -235,5 +220,50 @@ hc_add_series.character <- function(hc, data, ...) {
   
 }
 
+
+#' @rdname hc_add_series.character
 #' @export
 hc_add_series.factor <- hc_add_series.character
+
+
+#' hc_add_series for data frames objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A \code{data.frame} object.
+#' @param mappings Mappings, same idea as \code{ggplot2}
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @export
+hc_add_series.data.frame <- function(hc, data, mappings = list(), ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.data.frame")
+
+  if(length(mappings) == 0)
+    return(hc_add_series(hc, data = list_parse(data), ...))
+  
+  hc
+  
+}
+
+
+#' Removing series to highchart objects
+#'
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param names The series's names to delete.
+#' 
+#' @export
+hc_rm_series <- function(hc, names = NULL) {
+  
+  stopifnot(!is.null(names))
+  
+  positions <- hc$x$hc_opts$series %>%
+    map("name") %>%
+    unlist()
+  
+  position <- which(positions %in% names)
+  
+  hc$x$hc_opts$series[position] <- NULL
+  
+  hc
+  
+}
+

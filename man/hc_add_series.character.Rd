@@ -2,9 +2,12 @@
 % Please edit documentation in R/api-hc-hc_add_series.R
 \name{hc_add_series.character}
 \alias{hc_add_series.character}
+\alias{hc_add_series.factor}
 \title{hc_add_series for character and factor objects}
 \usage{
 \method{hc_add_series}{character}(hc, data, ...)
+
+\method{hc_add_series}{factor}(hc, data, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
