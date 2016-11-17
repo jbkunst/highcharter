@@ -1,3 +1,5 @@
+library(tidyverse)
+
 hc_aes <- function (x, y, ...) {
   mapping <- structure(as.list(match.call()[-1]), class = "uneval")
   mapping <- mapping[names(mapping) != ""]
@@ -39,7 +41,7 @@ options_mapping <- function(data, mapping) {
 }
 
 mapping <- hc_aes(hp, disp^2, color = wt)
-data <- head(mtcars)
+data <- tbl_df(head(mtcars))
 data
 
 mutate_mapping(data, mapping)
