@@ -23,8 +23,7 @@ highchart <- function(hc_opts = list(),
                       type = "chart",
                       width = NULL,
                       height = NULL,
-                      elementId = NULL,
-                      debug = FALSE) {
+                      elementId = NULL) {
   
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
   
@@ -44,9 +43,10 @@ highchart <- function(hc_opts = list(),
     conf_opts = opts,
     type = type,
     fonts = unfonts,
-    debug = debug
-    
+    debug = getOption("highcharter.debug")
   )
+  
+  attr(x, 'TOJSON_ARGS') <- list(pretty = getOption("highcharter.debug"))
   
   # create widget
   htmlwidgets::createWidget(

@@ -102,4 +102,7 @@
     highcharter.verbose = FALSE
   )
   
+  options(
+    highcharter.debug = FALSE
+  )
 }
