@@ -229,18 +229,26 @@ hc_add_series.factor <- hc_add_series.character
 #' hc_add_series for data frames objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data A \code{data.frame} object.
-#' @param mappings Mappings, same idea as \code{ggplot2}.
+#' @param mapping The mapping, same idea as \code{ggplot2}.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
-hc_add_series.data.frame <- function(hc, data, mappings = list(), ...) {
+hc_add_series.data.frame <- function(hc, data, type = "line", mapping = list(), ...) {
   
   if(getOption("highcharter.verbose"))
     message("hc_add_series.data.frame")
 
-  if(length(mappings) == 0)
+  if(length(mappings) == 0) {
+    
     return(hc_add_series(hc, data = list_parse(data), ...))
+    
+  }
+  data <- mutate_mapping(data, mapping)
+  data <- mutate_mapping_to_series(data, mapping, type)
+  series <- create_series_from_mapping(data, mapping, ...)
   
-  hc 
+  
+  
+  
   
 }
 
