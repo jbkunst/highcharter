@@ -9,9 +9,4 @@ dash_styles()
 \description{
 Get dash style to use on highcharts objects.
 }
-\examples{
-
-dash_styles()[1:5]
-
-}
 

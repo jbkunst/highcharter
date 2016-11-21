@@ -11,7 +11,6 @@ library(ggplot2)
 library(broom)
 
 
-rm(list = ls())
 options(highcharter.theme = hc_theme_smpl())
 
 #### DATAS ####
@@ -26,47 +25,49 @@ data(txhousing, package = "ggplot2")
 #### TESTS 1 ####
 set.seed(123)
 data <- sample_n(diamonds, 300)
+diamonds$color <- NULL
 
-hchart(data, "scatter", x = carat, y = price)
-hchart(data, "scatter", x = carat, y = price, color = depth)
-hchart(data, "scatter", x = carat, y = price, group = cut)
-hchart(data, "scatter", x = carat, y = price, group = cut, size = z)
+hchart(data, "scatter", hcaes(x = carat, y = price))
+hchart(data, "scatter", hcaes(x = carat, y = price, color = depth))
+hchart(data, "scatter", hcaes(x = carat, y = price, group = cut))
+hchart(data, "scatter", hcaes(x = carat, y = price, group = cut, size = z))
 
-hchart(mpg, "scatter", x = displ, y = cty, color = hwy)
-hchart(mpg, "scatter", x = displ, y = cty, size = hwy, group = manufacturer)
-hchart(mpg, "scatter", x = displ, y = cty, size = hwy, color = class, group = year)
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, color = hwy))
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, size = hwy, group = manufacturer))
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, size = hwy, color = class, group = year))
 
 mpgman <- count(mpg, manufacturer)
-hchart(mpgman, "bar", x = manufacturer, y = n)
-hchart(mpgman, "treemap", x = manufacturer, value = n)
+hchart(mpgman, "bar", hcaes(x = manufacturer, y = n))
+hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n))
 
 mpgman2 <- count(mpg, manufacturer, year)
-hchart(mpgman2, "bar", x = manufacturer, y = n, group = year)
+hchart(mpgman2, "bar", hcaes(x = manufacturer, y = n, group = year))
 
 mpgman3 <- group_by(mpg, manufacturer) %>% 
   summarise(n = n(), unique = length(unique(model))) %>% 
   arrange(-n, -unique)
-hchart(mpgman3, "treemap", x = manufacturer, value = n, color = unique)
 
+hchart(mpgman3, "treemap", hcaes(x = manufacturer, value = n, color = unique))
 
-hchart(economics, "line", x = date, y = unemploy)
-hchart(economics, "columnrange", x = date, low = psavert - 2, high = psavert + 2, color = unemploy)
+hchart(economics, "line", hcaes(x = date, y = unemploy))
+hchart(economics, "columnrange", hcaes(x = date, low = psavert - 2, high = psavert + 2, color = unemploy),
+       name = "ColumRange Series")
 
 economics_long2 <- filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
-hchart(economics_long2, "line", x = date, y = value01, group = variable)
+hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 
 txhousing %>% 
-  filter(city %in% sample(city, size = 20)) %>% 
+  filter(city %in% sample(city, size = 30)) %>% 
   group_by(city, year) %>% 
   summarize(median = median(median)) %>% 
-  hchart("spline", x = year, y = median, group = city) %>% 
-  hc_legend(align = "left", layout = "vertical")
+  hchart("spline", hcaes(x = year, y = median, group = city)) %>% 
+  hc_legend(align = "left", layout = "vertical", verticalAlign = "top")
 
-dfdiam <- group_by(diamonds, cut, color) %>% summarize(price = median(price))
-hchart(dfdiam, "heatmap", x = cut, y = color, value = price) 
+dfdiam <- group_by(diamonds, cut, clarity) %>% summarize(price = median(price))
+hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price)) 
 
 dfmanclass <- count(mpg, manufacturer, class)
-hchart(dfmanclass, "heatmap", x = manufacturer, y = class, value = n) 
+hchart(dfmanclass, "heatmap", hcaes(x = manufacturer, y = class, value = n))
 
 
 #### BROOM A LA GGPLOT I ####
@@ -76,18 +77,21 @@ fit <- augment(modlss) %>% arrange(carat)
 head(data)
 head(fit)
 
-hchart(data, type = "scatter", x = carat, y = price) %>%
-  hc_add_series_df(fit, type = "arearange",x = carat,
-                   low = .fitted - .se.fit, high = .fitted + .se.fit)
+highchart() %>% 
+  hc_add_series(data, type = "scatter",
+                hcaes(x = carat, y = price), name = "Data") %>%
+  hc_add_series(fit, type = "arearange",
+                hcaes(x = carat, low = .fitted - .se.fit*2, high = .fitted + .se.fit*2),
+                name = "Fit")
 
 #### BROOM A LA GGPLOT II ####
 # this can be hchart.gml
 modlm <- step(lm(mpg ~ ., data = mtcars), trace = FALSE)
 moddf <- tidy(modlm)
 
-hchart(moddf, "errorbar",
-       x = term, low = estimate - std.error, high = estimate + std.error) %>% 
-  hc_add_series_df(moddf, "point", x = term, y = estimate) %>% 
+highchart() %>% 
+  hc_add_series(moddf, "point", hcaes(x = term, y = estimate)) %>% 
+  hc_add_series(moddf, "errorbar", hcaes(x = term, low = estimate - std.error, high = estimate + std.error)) %>% 
   hc_chart(type = "bar")
 
 

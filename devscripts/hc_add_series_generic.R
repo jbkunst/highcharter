@@ -1,7 +1,3 @@
-library(highcharter)
-options(highcharter.verbose = TRUE)
-options(highcharter.theme = hc_theme_smpl())
-
 #' work with length(data) == 1
 highchart() %>%
   hc_add_series(data = 1) %>% 

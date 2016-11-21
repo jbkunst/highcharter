@@ -232,23 +232,21 @@ hc_add_series.factor <- hc_add_series.character
 #' @param mapping The mapping, same idea as \code{ggplot2}.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
-hc_add_series.data.frame <- function(hc, data, type = "line", mapping = list(), ...) {
+hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes, ...) {
   
   if(getOption("highcharter.verbose"))
     message("hc_add_series.data.frame")
 
-  if(length(mappings) == 0) {
+  if(length(mapping) == 0) {
     
-    return(hc_add_series(hc, data = list_parse(data), ...))
+    return(hc_add_series(hc, data = list_parse(data), type = type, ...))
     
   }
+  
   data <- mutate_mapping(data, mapping)
-  data <- mutate_mapping_to_series(data, mapping, type)
-  series <- create_series_from_mapping(data, mapping, ...)
-  
-  
-  
-  
+  series <- data_to_series(data, mapping, type = type, ...)
+
+  hc_add_series_list(hc, series)
   
 }
 

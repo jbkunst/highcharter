@@ -21,34 +21,35 @@ df <- data_frame(xval = 1:10) %>%
     col = yval,
     nm = paste("point", xval)
   )
-df
+
+head(df)
 
 ##### x, y, name, color #### 
 # x: 1,
 # y: 9,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "column", x = xval, y = yval, color = col, name = nm)
-hchart(df, "column", x = nm, y = yval, color = col, name = nm)
+hchart(df, "column", hcaes(x = xval, y = yval, color = col, name = nm))
+hchart(df, "column", hcaes(x = nm, y = yval, color = col, name = nm))
 
-hchart(df, "point", x = xval, y = yval, color = col, name = nm)
-hchart(df, "point", x = nm, y = yval, color = col, name = nm)
+hchart(df, "point", hcaes(x = xval, y = yval, color = col, name = nm))
+hchart(df, "point", hcaes(x = nm, y = yval, color = col, name = nm))
 
-hchart(df, "line", x = xval, y = yval, color = col, name = nm)
+hchart(df, "line", hcaes(x = xval, y = yval, color = col, name = nm))
 
-hchart(df, "scatter", x = xval, y = yval, color = col, name = nm)
-hchart(df, "point", x = xval, y = yval, color = col, name = nm)
+hchart(df, "scatter", hcaes(x = xval, y = yval, color = col, name = nm))
+hchart(df, "point", hcaes(x = xval, y = yval, color = col, name = nm))
 
-hchart(df, "spline", x = xval, y = yval, color = col, name = nm)
-hchart(df, "area", x = xval, y = yval, color = col, name = nm)
-hchart(df, "areaspline", x = xval, y = yval, color = col, name = nm)
+hchart(df, "spline", hcaes(x = xval, y = yval, color = col, name = nm))
+hchart(df, "area", hcaes(x = xval, y = yval, color = col, name = nm))
+hchart(df, "areaspline", hcaes(x = xval, y = yval, color = col, name = nm))
 
-hchart(df, "bar", x = xval, y = yval, color = col, name = nm)
-hchart(df, "bar", x = nm, y = yval, color = col, name = nm)
+hchart(df, "bar", hcaes(x = xval, y = yval, color = col, name = nm))
+hchart(df, "bar", hcaes(x = nm, y = yval, color = col, name = nm))
 
-hchart(df, "polygon", x = xval, y = yval, color = col, name = nm)
+hchart(df, "polygon", hcaes(x = xval, y = yval, color = col, name = nm))
 
-hchart(df, "waterfall", x = xval, y = yval, color = col, name = nm)
+hchart(df, "waterfall", hcaes(x = xval, y = yval, color = col, name = nm))
 
 #### x, y, z, name, color ####
 # x: 1,
@@ -56,17 +57,17 @@ hchart(df, "waterfall", x = xval, y = yval, color = col, name = nm)
 # z: 1,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "bubble", x = xval, y = yval, size = zval, name = nm, color = col)
-hchart(df, "point", x = xval, y = yval, size = zval, name = nm, color = col)
-hchart(df, "scatter", x = xval, y = yval, size = zval, name = nm, color = col)
+hchart(df, "bubble", hcaes(x = xval, y = yval, size = zval, name = nm, color = col))
+hchart(df, "point", hcaes(x = xval, y = yval, size = zval, name = nm, color = col))
+hchart(df, "scatter", hcaes(x = xval, y = yval, size = zval, name = nm, color = col))
 
 #### y, name, color ####
 # y: 3,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "funnel", y = yval, name = nm, color = col)
-hchart(df, "pie", y = yval, name = nm, color = col)
-hchart(df, "pyramid", y = yval, name = nm, color = col)
+hchart(df, "funnel", hcaes(y = yval, name = nm, color = col))
+hchart(df, "pie", hcaes(y = yval, name = nm, color = col))
+hchart(df, "pyramid", hcaes(y = yval, name = nm, color = col))
 
 # hchart(df, "gauge", y = yval, name = nm, color = col)
 # hchart(df, "solidgauge", y = yval, name = nm, color = col)
@@ -77,11 +78,11 @@ hchart(df, "pyramid", y = yval, name = nm, color = col)
 # high: 0,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "arearange", x = xval, low = l, high = h, name = nm, color = col)
-hchart(df, "areasplinerange", x = xval, low = l, high = h, name = nm, color = col)
-hchart(df, "columnrange", x = xval, low = l, high = h, name = nm, color = col)
-hchart(df, "errorbar", x = xval, low = l, high = h, name = nm, color = col)
-hchart(df, "errorbar", x = nm, low = l, high = h, name = nm, color = col)
+hchart(df, "arearange", hcaes(x = xval, low = l, high = h, name = nm, color = col))
+hchart(df, "areasplinerange", hcaes(x = xval, low = l, high = h, name = nm, color = col))
+hchart(df, "columnrange", hcaes(x = xval, low = l, high = h, name = nm, color = col))
+hchart(df, "errorbar", hcaes(x = xval, low = l, high = h, name = nm, color = col))
+hchart(df, "errorbar", hcaes(x = nm, low = l, high = h, name = nm, color = col))
 
 #### x, low, q1, median, q3, high, name, color #### 
 # x: 1,
@@ -93,10 +94,10 @@ hchart(df, "errorbar", x = nm, low = l, high = h, name = nm, color = col)
 # name: "Point2",
 # color: "#00FF00"
 hchart(df %>% mutate(qq1 = yval - er/2, qq3 = yval + er/2), "boxplot",
-       x = xval, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval)
+       hcaes(x = xval, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval))
 
 hchart(df %>% mutate(qq1 = yval - er/2, qq3 = yval + er/2), "boxplot",
-       x = nm, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval)
+       hcaes(x = nm, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval))
 
 #### x, y, value, name, color ####
 # x: 1,
@@ -106,16 +107,16 @@ hchart(df %>% mutate(qq1 = yval - er/2, qq3 = yval + er/2), "boxplot",
 # color: "#00FF00"
 data(diamonds, package = "ggplot2")
 df2 <- group_by(diamonds, cut, color) %>% summarize(price = median(price))
-hchart(df2, "heatmap", x = cut, y = color, value = price) 
+hchart(df2, "heatmap", hcaes(x = cut, y = color, value = price))
 
 data(mpg, package = "ggplot2")
 df2 <- count(mpg, manufacturer, class)
 # data <- mutate(df2, x = manufacturer, y = class, value = hwy)
-hchart(df2, "heatmap", x = manufacturer, y = class, value = n) 
+hchart(df2, "heatmap", hcaes(x = manufacturer, y = class, value = n))
 
 #### value, name, color ####
 # value: 7,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "treemap", value = yval, name = nm, color = col)
-hchart(df, "treemap", value = yval, name = nm)
+hchart(df, "treemap", hcaes(value = yval, name = nm, color = col))
+hchart(df, "treemap", hcaes(value = yval, name = nm))

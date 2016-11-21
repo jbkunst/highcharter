@@ -58,6 +58,18 @@ hc_theme_smpl <- function(...){
         line = list(
           marker = list(enabled = FALSE),
           states = list(hover = list(lineWidthPlus = 1))
+        ),
+        spline = list(
+          marker = list(enabled = FALSE),
+          states = list(hover = list(lineWidthPlus = 1))
+        ),
+        area = list(
+          marker = list(enabled = FALSE),
+          states = list(hover = list(lineWidthPlus = 1))
+        ),
+        areaspline = list(
+          marker = list(enabled = FALSE),
+          states = list(hover = list(lineWidthPlus = 1))
         )
       )
     )
