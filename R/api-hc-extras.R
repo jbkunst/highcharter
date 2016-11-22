@@ -224,28 +224,6 @@ hc_defs <- function(hc, ...) {
   
 }
 
-#' Adding annotations to highcharts objects
-#' 
-#' Helper function to add annotations to highcharts library.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}. 
-#' 
-#' @export
-hc_annotations <- function(hc, ...) {
-  
-  .hc_opt(hc, "annotations", ...)
-  
-}
-
-#' @rdname hc_annotations
-#' @export
-hc_annotationsOptions <- function(hc, ...) {
-  
-  .hc_opt(hc, "annotationsOptions", ...)
-  
-}
-
 #' Adding panes
 #' 
 #' Applies only to polar charts and angular gauges. This configuration object
@@ -274,5 +252,63 @@ hc_pane <- function(hc, ...) {
 hc_motion <- function(hc, ...) {
   
   .hc_opt(hc, "motion", ...)
+  
+}
+
+#' Adding annotations to highcharts objects
+#' 
+#' Helper function to add annotations to highcharts library.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}. 
+#' 
+#' @export
+hc_annotations <- function(hc, ...) {
+  
+  .hc_opt(hc, "annotations", ...)
+  
+}
+
+#' @rdname hc_annotations
+#' @export
+hc_add_annotation <- function(hc, ...) {
+  
+  assertthat::assert_that(is.highchart(hc))
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.default")
+  
+  # validate_args("add_series", eval(substitute(alist(...))))
+  
+  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], list(list(...)))
+  
+  hc
+  
+}
+
+#' @rdname hc_annotations
+#' @param x A \code{list} or a \code{data.frame} of annotations.
+#' @details The \code{x} elemens must have \code{xValue} and \code{yValue} elements
+#' @export
+hc_add_annotations <- function(hc, x) {
+  
+  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  
+  if(is.data.frame(x))
+    x <- list_parse(x)
+  
+  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], x)
+  
+  hc
+  
+}
+
+#' Setting Annotations Options
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Options defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.
+#' @export
+hc_annotationsOptions <- function(hc, ...) {
+  
+  .hc_opt(hc, "annotationsOptions", ...)
   
 }

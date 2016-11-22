@@ -4,12 +4,12 @@
 \alias{hc_add_series_list}
 \title{Shorcut for data series from a list of data series}
 \usage{
-hc_add_series_list(hc, lst)
+hc_add_series_list(hc, x)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{lst}{A list of data series.}
+\item{x}{A \code{list} or a \code{data.frame} of series.}
 }
 \description{
 Shorcut for data series from a list of data series

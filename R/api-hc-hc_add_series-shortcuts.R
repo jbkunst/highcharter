@@ -1,7 +1,7 @@
 #' Shorcut for data series from a list of data series
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param lst A list of data series.
+#' @param x A \code{list} or a \code{data.frame} of series.
 #' 
 #' @examples 
 #' 
@@ -14,14 +14,14 @@
 #'   hc_add_series_list(ds)
 #'   
 #' @export
-hc_add_series_list <- function(hc, lst) {
+hc_add_series_list <- function(hc, x) {
   
-  assertthat::assert_that(is.highchart(hc), is.list(lst))
+  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  
+  if(is.data.frame(x))
+    x <- list_parse(x)
                           
-  hc$x$hc_opts$series <- append(
-    hc$x$hc_opts$series,
-    lst
-  )
+  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)
   
   hc
   
