@@ -408,30 +408,19 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 #'   hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
 #'   hc_mapNavigation(enabled = TRUE) 
 #' 
-#' \dontrun{
 #' 
-#' library("viridisLite")
-#' library("dplyr")
-#' data(unemployment)
-#' data(uscountygeojson)
-#'  
-#' dclass <- data_frame(from = seq(0, 10, by = 2),
-#'                      to = c(seq(2, 10, by = 2), 50),
-#'                      color = substring(viridis(length(from), option = "C"), 0, 7))
-#'  dclass <- list_parse(dclass)
-# 
-#' highchart() %>% 
-#'   hc_title(text = "US Counties unemployment rates, April 2015") %>% 
-#'   hc_add_series_map(uscountygeojson, unemployment,
-#'                     value = "value", joinBy = "code") %>%
-#'   hc_colorAxis(dataClasses = dclass) %>%
-#'   hc_legend(layout = "vertical", align = "right",
-#'             floating = TRUE, valueDecimals = 0,
-#'             valueSuffix = "%") %>%
-#'   hc_mapNavigation(enabled = TRUE)
+#' 
+#' data(worldgeojson, package = "highcharter")
+#' data("GNI2014", package = "treemap")
+#' 
+#' highchart(type = "map") %>% 
+#'   hc_add_series_map(map = worldgeojson, df = GNI2014, value = "GNI", joinBy = "iso3") %>% 
+#'   hc_colorAxis(stops = color_stops()) %>% 
+#'   hc_tooltip(useHTML = TRUE, headerFormat = "",
+#'   pointFormat = "this is {point.name} and have {point.population} people with gni of {point.GNI}")
 #'   
-#' }
 #'   
+#' @details This function force the highchart object to be map type.
 #' @importFrom utils tail
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
@@ -444,9 +433,8 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
   joindf <- tail(joinBy, 1)
   
-  ddta <- data_frame(value = df[[value]],
-                     code = df[[joindf]]) %>% 
-    list_parse()
+  ddta <- mutate_(df, "value" = value, "code" = joindf)
+  ddta <- list_parse(ddta)
   
   hc$x$type <- "map"
   
