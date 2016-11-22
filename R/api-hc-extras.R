@@ -275,11 +275,6 @@ hc_add_annotation <- function(hc, ...) {
   
   assertthat::assert_that(is.highchart(hc))
   
-  if(getOption("highcharter.verbose"))
-    message("hc_add_series.default")
-  
-  # validate_args("add_series", eval(substitute(alist(...))))
-  
   hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], list(list(...)))
   
   hc
