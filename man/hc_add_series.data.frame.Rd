@@ -12,6 +12,8 @@
 
 \item{data}{A \code{data.frame} object.}
 
+\item{type}{The type of the series: line, bar, etc.}
+
 \item{mapping}{The mapping, same idea as \code{ggplot2}.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}

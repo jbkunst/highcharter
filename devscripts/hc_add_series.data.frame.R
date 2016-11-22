@@ -2,7 +2,7 @@ library(tidyverse)
 library(lubridate)
 library(highcharter)
 # do_cbind ----------------------------------------------------------------
-add_ellipsis_to_dataframe <- function(data, ...) {
+add_arg_to_df <- function(data, ...) {
   
   datal <- as.list(data)
   
@@ -14,9 +14,9 @@ add_ellipsis_to_dataframe <- function(data, ...) {
 
 }
 
-add_ellipsis_to_dataframe(head(mtcars), algo = 4, otracosa = 1:6)
-# add_ellipsis_to_dataframe(head(mtcars), algo = 4, otracosa = 1:5)
-s <- add_ellipsis_to_dataframe(head(mtcars), algo = 4, otracosa = 1:6, l = list(a = 3, otra = TRUE))
+add_arg_to_df(head(mtcars), algo = 4, otracosa = 1:6)
+# add_arg_to_df(head(mtcars), algo = 4, otracosa = 1:5)
+s <- add_arg_to_df(head(mtcars), algo = 4, otracosa = 1:6, l = list(a = 3, otra = TRUE))
 
 s$l[[1]]
 
@@ -125,7 +125,7 @@ data_to_series <- function(data, mapping, type, ...) {
   
 
   if(length(list(...)) > 0)
-    data <- add_ellipsis_to_dataframe(data, ...)
+    data <- add_arg_to_df(data, ...)
 
   message("add ..."); print(data)
   

@@ -229,6 +229,7 @@ hc_add_series.factor <- hc_add_series.character
 #' hc_add_series for data frames objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data A \code{data.frame} object.
+#' @param type The type of the series: line, bar, etc.
 #' @param mapping The mapping, same idea as \code{ggplot2}.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
@@ -247,6 +248,122 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes, ...
   series <- data_to_series(data, mapping, type = type, ...)
 
   hc_add_series_list(hc, series)
+  
+}
+
+#' Define aesthetic mappings.
+#' Similar in spirit to \code{ggplot2::aes}
+#' @param x,y,... List of name value pairs giving aesthetics to map to
+#'   variables. The names for x and y aesthetics are typically omitted because
+#'   they are so common; all other aesthetics must be named.
+#' @export
+hcaes <- function (x, y, ...) {
+  mapping <- structure(as.list(match.call()[-1]), class = "uneval")
+  mapping <- mapping[names(mapping) != ""]
+  class(mapping) <- c("hcaes", class(mapping))
+  mapping
+}
+
+#' @importFrom lazyeval interp
+#' @importFrom stats as.formula
+mutate_mapping <- function(data, mapping) {
+  
+  stopifnot(is.data.frame(data), inherits(mapping, "hcaes"))
+  
+  # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
+  mutate_call <- mapping %>% 
+    as.character() %>% 
+    map(function(x) paste("~ ", x)) %>% 
+    map(as.formula) %>% 
+    map(lazyeval::interp)
+  
+  mutate_(data, .dots = mutate_call)
+  
+}
+
+add_arg_to_df <- function(data, ...) {
+  
+  datal <- as.list(data)
+  
+  l <- map_if(list(...), function(x) is.list(x), list)
+  
+  datal <- append(datal, l)
+  
+  as_data_frame(datal)
+  
+}
+
+data_to_series <- function(data, mapping, type, ...) {
+  
+  # check type and fix
+  type <- ifelse(type == "point", "scatter", type)
+  type <- ifelse((has_name(mapping, "size") | has_name(mapping, "z")) & type == "scatter",
+                 "bubble", type)
+  
+  # heatmap
+  if (type == "heatmap") {
+    if (!is.numeric(data[["x"]])) {
+      data[["xf"]] <- as.factor(data[["x"]])
+      data[["x"]] <- as.numeric(as.factor(data[["x"]])) - 1
+    }
+    if (!is.numeric(data[["y"]])) {
+      data[["yf"]] <- as.factor(data[["y"]])
+      data[["y"]] <- as.numeric(as.factor(data[["y"]])) - 1
+    }
+  }
+  
+  # x
+  if (has_name(mapping, "x")) {
+    if (is.Date(data[["x"]])) {
+      data[["x"]] <- datetime_to_timestamp(data[["x"]])
+      
+    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
+      data[["name"]] <- data[["x"]]
+      data[["x"]] <- NULL
+    } 
+  }
+  
+  # color
+  if (has_name(mapping, "color")) {
+    
+    if (type == "treemap") {
+      data <- rename_(data, "colorValue" = "color")
+    } else {
+      data  <- mutate_(data, "colorv" = "color",
+                       "color" = "highcharter::colorize(color)")  
+    }
+  } else if (has_name(data, "color")) {
+    data <- rename_(data, "colorv" = "color")
+  }
+  
+  # size
+  if (type %in% c("bubble", "scatter")) {
+    
+    if(has_name(mapping, "size"))
+      data <- mutate_(data, "z" = "size")
+    
+  }
+  
+  # group 
+  if (!has_name(mapping, "group"))
+    data[["group"]] <- "group"
+  
+  data <- data %>% 
+    group_by_("group") %>% 
+    do(data = list_parse(select_(., quote(-group)))) %>% 
+    ungroup()
+
+  data$type <- type
+  
+  if(length(list(...)) > 0)
+    data <- add_arg_to_df(data, ...)
+  
+  if(has_name(mapping, "group") & !has_name(list(...), "name"))
+    data <- rename_(data, "name" = "group")  
+  
+  series <- list_parse(data)
+  
+  series
   
 }
 

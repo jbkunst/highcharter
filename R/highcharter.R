@@ -12,8 +12,6 @@
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
-#' @param debug A boolean value if you want to print in the browser console the 
-#'    parameters given to \code{highchart}.
 #'      
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #'
