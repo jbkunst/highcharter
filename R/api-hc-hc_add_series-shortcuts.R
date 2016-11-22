@@ -408,7 +408,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 #'   hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
 #'   hc_mapNavigation(enabled = TRUE) 
 #' 
-#' 
+#' \dontrun{
 #' 
 #' data(worldgeojson, package = "highcharter")
 #' data("GNI2014", package = "treemap")
@@ -419,6 +419,7 @@ hc_add_series_treemap <- function(hc, tm, ...) {
 #'   hc_tooltip(useHTML = TRUE, headerFormat = "",
 #'   pointFormat = "this is {point.name} and have {point.population} people with gni of {point.GNI}")
 #'   
+#'  }
 #'   
 #' @details This function force the highchart object to be map type.
 #' @importFrom utils tail
