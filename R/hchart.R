@@ -43,19 +43,20 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
   hc <- hc %>% 
     hc_add_series_list(series) %>% 
     hc_xAxis(type = opts$xAxis_type,
-             title = list(text = mapping$x),
+             title = list(text = as.character(mapping$x)),
              categories = opts$xAxis_categories) %>% 
     hc_yAxis(type = opts$yAxis_type,
-             title = list(text = mapping$y),
+             title = list(text = as.character(mapping$y)),
              categories = opts$yAxis_categories) %>% 
     hc_plotOptions(
       series = list(
         showInLegend = opts$series_plotOptions_showInLegend,
         marker = list(enabled = opts$series_marker_enabled)
       ),
-      scatter = list(marker = list(symbol = "circle")),
-      bubble = list(minSize = 5, maxSize = 25)
+      scatter = list(marker = list(symbol = "circle"))
     )
+  
+  hc
 }
 
 #' @export

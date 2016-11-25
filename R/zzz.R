@@ -81,7 +81,8 @@
         series = list(
           turboThreshold = 0
           ),
-        treemap = list(layoutAlgorithm = "squarified")
+        treemap = list(layoutAlgorithm = "squarified"),
+        bubble = list(minSize = 5, maxSize = 25)
         ),
       annotationsOptions = list(
         enabledButtons = FALSE
