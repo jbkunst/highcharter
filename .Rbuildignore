@@ -12,3 +12,4 @@ fort.6
 ^CONDUCT\.md$
 ^CONTRIBUTING\.md$
 ^data-raw$
+^appveyor\.yml$

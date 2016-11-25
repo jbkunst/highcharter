@@ -1,9 +1,11 @@
 # [highcharter](http://jkunst.com/highcharter/)
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/highcharter)](https://cran.r-project.org/package=highcharter)
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
+[![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&svg=true)](https://ci.appveyor.com/project/jbkunst/highcharter)
+
 
 R wrapper for highcharts. `highcharter` bring all the highcharts capabilites
 so it is recommended know how highcharts API works to take a major advantage of 
