@@ -24,29 +24,29 @@ hchart.default <- function(object, ...) {
 }
 
 #' @export
-hchart.data.frame <- function(object, type = NULL, ...){
+hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
   
-  pars <- eval(substitute(alist(...)))
-  parsc <- map(pars, as.character)
+  if(getOption("highcharter.verbose"))
+    message("hchart.data.frame")
   
-  object <- mutate(object, ...)
-  object <- ungroup(object)
+  data <- mutate_mapping(object, mapping)
   
-  series <- get_hc_series_from_df(object, type = type, ...)
-  opts <- get_hc_options_from_df(object, type)
+  series <- data_to_series(data, mapping, type = type, ...)
+
+  opts <- data_to_options(data, type)
   
   hc <- highchart() 
   
   if (opts$add_colorAxis) 
     hc <- hc_colorAxis(hc, auxpar = NULL)
   
-  hc %>% 
+  hc <- hc %>% 
     hc_add_series_list(series) %>% 
     hc_xAxis(type = opts$xAxis_type,
-             title = list(text = parsc$x),
+             title = list(text = mapping$x),
              categories = opts$xAxis_categories) %>% 
     hc_yAxis(type = opts$yAxis_type,
-             title = list(text = parsc$y),
+             title = list(text = mapping$y),
              categories = opts$yAxis_categories) %>% 
     hc_plotOptions(
       series = list(

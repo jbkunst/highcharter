@@ -3,9 +3,9 @@
 .Rapp.history
 
 # html and rpubs
-devscripts/*.html
-devscripts/issues/*.html
-devscripts/issues/rsconnect/*
+dev/*.html
+dev/issues/*.html
+dev/issues/rsconnect/*
 
 # RStudio files
 .Rproj.user/

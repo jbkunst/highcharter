@@ -233,7 +233,7 @@ hc_add_series.factor <- hc_add_series.character
 #' @param mapping The mapping, same idea as \code{ggplot2}.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
-hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes, ...) {
+hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), ...) {
   
   if(getOption("highcharter.verbose"))
     message("hc_add_series.data.frame")
@@ -364,6 +364,56 @@ data_to_series <- function(data, mapping, type, ...) {
   series <- list_parse(data)
   
   series
+  
+}
+
+data_to_options <- function(data, type) {
+  
+  opts <- list()
+  
+  # x
+  if (has_name(data, "x")) {
+    if (is.Date(data[["x"]])) {
+      opts$xAxis_type <- "datetime"
+    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
+      opts$xAxis_type <- "category"
+    } else {
+      opts$xAxis_type <- "linear"
+    }
+  }
+  
+  # y
+  if (has_name(data, "x")) {
+    if (is.Date(data[["y"]])) {
+      opts$yAxis_type <- "datetime"
+    } else if (is.character(data[["y"]]) | is.factor(data[["y"]])) {
+      opts$yAxis_type <- "category"
+    } else {
+      opts$yAxis_type <- "linear"
+    }
+  }  
+  
+  # showInLegend
+  opts$series_plotOptions_showInLegend <- "group" %in% names(data)
+  
+  # colorAxis
+  opts$add_colorAxis <- 
+    (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
+  
+  # series marker enabled
+  opts$series_marker_enabled <- !(type %in% c("line", "spline"))
+  
+  # heatmap
+  if (type == "heatmap") {
+    if (!is.numeric(data[["x"]])) {
+      opts$xAxis_categories <- levels(as.factor(data[["x"]]))
+    }
+    if (!is.numeric(data[["y"]])) {
+      opts$yAxis_categories <- levels(as.factor(data[["y"]]))
+    }
+  }
+  
+  opts
   
 }
 

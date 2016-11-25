@@ -483,58 +483,6 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   
 }
 
-#' @rdname get_hc_series_from_df
-#' @export
-get_hc_options_from_df <- function(data, type) {
-  
-  opts <- list()
-  
-  # x
-  if (has_name(data, "x")) {
-    if (is.Date(data[["x"]])) {
-      opts$xAxis_type <- "datetime"
-    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-      opts$xAxis_type <- "category"
-    } else {
-      opts$xAxis_type <- "linear"
-    }
-  }
-  
-  # y
-  if (has_name(data, "x")) {
-    if (is.Date(data[["y"]])) {
-      opts$yAxis_type <- "datetime"
-    } else if (is.character(data[["y"]]) | is.factor(data[["y"]])) {
-      opts$yAxis_type <- "category"
-    } else {
-      opts$yAxis_type <- "linear"
-    }
-  }  
-  
-  # showInLegend
-  opts$series_plotOptions_showInLegend <- "group" %in% names(data)
-  
-  # colorAxis
-  opts$add_colorAxis <- 
-    (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
-  
-  # series marker enabled
-  opts$series_marker_enabled <- !(type %in% c("line", "spline"))
-  
-  # heatmap
-  if (type == "heatmap") {
-    if (!is.numeric(data[["x"]])) {
-      opts$xAxis_categories <- levels(as.factor(data[["x"]]))
-    }
-    if (!is.numeric(data[["y"]])) {
-      opts$yAxis_categories <- levels(as.factor(data[["y"]]))
-    }
-  }
-  
-  opts
-  
-}
-
 #' Check if a string vector is in hexadecimal color format
 #' 
 #' @param x A string vectors
