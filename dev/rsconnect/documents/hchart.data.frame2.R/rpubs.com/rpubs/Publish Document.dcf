@@ -1,0 +1,8 @@
+name: Publish Document
+title:
+account: rpubs
+server: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/230276/37a43f8c91cf42b792ba150a3832d916
+bundleId: https://api.rpubs.com/api/v1/document/230276/37a43f8c91cf42b792ba150a3832d916
+url: http://rpubs.com/jbkunst/230276/edit
+when: 1480135816.1084

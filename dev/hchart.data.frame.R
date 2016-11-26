@@ -1,14 +1,15 @@
 #' ---
+#' title: highcharter-hchart-data-frames
 #' output: html_document
 #' ---
 #+ warning=FALSE, message=FALSE
 #### PACAKGES ####
 library(highcharter)
 library(dplyr)
-library(purrr)
-library(lubridate)
-library(ggplot2)
-library(broom)
+# library(purrr)
+# library(lubridate)
+# library(ggplot2)
+
 
 
 options(highcharter.theme = hc_theme_smpl())
@@ -18,6 +19,7 @@ data(diamonds, package = "ggplot2")
 data(economics_long, package = "ggplot2")
 data(economics, package = "ggplot2")
 data(txhousing, package = "ggplot2")
+data(mpg, package = "ggplot2")
 
 #### FUNCTIONS ####
 # in package
@@ -35,7 +37,7 @@ hchart(data, "scatter", hcaes(x = carat, y = price, group = cut, size = z))
 
 hchart(mpg, "scatter", hcaes(x = displ, y = cty, color = hwy))
 hchart(mpg, "scatter", hcaes(x = displ, y = cty, size = hwy, group = manufacturer))
-hchart(mpg, "scatter", hcaes(x = displ, y = cty, size = hwy, color = class, group = year))
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, size = hwy, group = year))
 
 mpgman <- count(mpg, manufacturer)
 hchart(mpgman, "column", hcaes(x = manufacturer, y = n))
@@ -74,7 +76,9 @@ txhousing %>%
   hc_tooltip(sort = TRUE, table = TRUE)
 
 
-dfdiam <- group_by(diamonds, cut, clarity) %>% summarize(price = median(price))
+dfdiam <- group_by(diamonds, cut, clarity) %>%
+  summarize(price = median(price)) %>% 
+  ungroup()
 hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price)) 
 
 dfmanclass <- count(mpg, manufacturer, class)
@@ -82,6 +86,8 @@ hchart(dfmanclass, "heatmap", hcaes(x = manufacturer, y = class, value = n))
 
 
 #### BROOM A LA GGPLOT I ####
+library(broom)
+
 modlss <- loess(price ~ carat, data = data)
 fit <- augment(modlss) %>% arrange(carat)
 
@@ -90,8 +96,7 @@ head(fit)
 
 highchart() %>% 
   hc_add_series(data, type = "scatter", hcaes(x = carat, y = price), name = "Data") %>%
-  hc_add_series(fit, type = "spline", hcaes(x = carat, y = .fitted), name = "Fit",
-                id = "fit") %>% 
+  hc_add_series(fit, type = "spline", hcaes(x = carat, y = .fitted), name = "Fit", id = "fit") %>% 
   hc_add_series(fit, type = "arearange",
                 hcaes(x = carat, low = .fitted - .se.fit*2, high = .fitted + .se.fit*2),
                 linkedTo = "fit")

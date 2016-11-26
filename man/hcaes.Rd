@@ -16,4 +16,9 @@ they are so common; all other aesthetics must be named.}
 Define aesthetic mappings.
 Similar in spirit to \code{ggplot2::aes}
 }
+\examples{
+
+hcaes(x = xval, color = colorvar, group = grvar)
+
+}
 

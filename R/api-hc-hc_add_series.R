@@ -256,6 +256,10 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), .
 #' @param x,y,... List of name value pairs giving aesthetics to map to
 #'   variables. The names for x and y aesthetics are typically omitted because
 #'   they are so common; all other aesthetics must be named.
+#' @examples 
+#' 
+#' hcaes(x = xval, color = colorvar, group = grvar)
+#' 
 #' @export
 hcaes <- function (x, y, ...) {
   mapping <- structure(as.list(match.call()[-1]), class = "uneval")
@@ -264,20 +268,35 @@ hcaes <- function (x, y, ...) {
   mapping
 }
 
-#' @importFrom lazyeval interp
-#' @importFrom stats as.formula
+#' Modify data frame accoring to mapping
+#' @param data A data frame object.
+#' @param mapping A mapping from \code{hcaes} function.
+#' @examples 
+#' 
+#' mutate_mapping(data = head(mtcars), mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
+#' 
+#' @export
 mutate_mapping <- function(data, mapping) {
   
   stopifnot(is.data.frame(data), inherits(mapping, "hcaes"))
   
   # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
-  mutate_call <- mapping %>% 
-    as.character() %>% 
-    map(function(x) paste("~ ", x)) %>% 
-    map(as.formula) %>% 
-    map(lazyeval::interp)
+  tran <- as.character(mapping)
+  newv <- names(mapping)
+   
+  setNames(tran, newv)
+
+  data <- dplyr::mutate_(data, .dots = setNames(tran, newv))
   
-  mutate_(data, .dots = mutate_call)
+  # mutate_call <- mapping %>% 
+  #   as.character() %>% 
+  #   map(function(x) paste("~ ", x)) %>% 
+  #   map(as.formula) %>% 
+  #   map(lazyeval::interp)
+  # 
+  # mutate_(data, .dots = mutate_call)
+  
+  data
   
 }
 

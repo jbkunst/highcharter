@@ -39,8 +39,7 @@ Imports:
     htmltools,
     jsonlite,
     igraph,
-    lubridate,
-    lazyeval
+    lubridate
 Suggests:
     knitr,
     rmarkdown,

@@ -1,15 +1,22 @@
 #' ---
+#' title: highcharter-hchart-data-frames-2
 #' output: html_document
 #' ---
 #+ warning=FALSE, message=FALSE
 #+ warning=FALSE, message=FALSE
 #### PACAKGES ####
+rm(list = ls())
 library(highcharter)
 library(dplyr)
+# library(purrr)
+# library(lubridate)
+# library(ggplot2)
+# library(broom)
+
 options(highcharter.theme = hc_theme_smpl())
 
 #### DATA ####
-df <- data_frame(xval = 1:10) %>% 
+df <- data.frame(xval = 1:10) %>% 
   mutate(
     yval = 10 + xval + 10 * sin(xval),
     yval = round(yval, 1),
@@ -106,7 +113,7 @@ hchart(df %>% mutate(qq1 = yval - er/2, qq3 = yval + er/2), "boxplot",
 # name: "Point2",
 # color: "#00FF00"
 data(diamonds, package = "ggplot2")
-df2 <- group_by(diamonds, cut, color) %>% summarize(price = median(price))
+df2 <- group_by(diamonds, cut, color) %>% summarize(price = median(price)) %>% ungroup()
 hchart(df2, "heatmap", hcaes(x = cut, y = color, value = price))
 
 data(mpg, package = "ggplot2")
