@@ -72,12 +72,12 @@ hchart(df, "scatter", hcaes(x = xval, y = yval, size = zval, name = nm, color = 
 # y: 3,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "funnel", hcaes(y = yval, name = nm, color = col))
-hchart(df, "pie", hcaes(y = yval, name = nm, color = col))
-hchart(df, "pyramid", hcaes(y = yval, name = nm, color = col))
+# hchart(df, "funnel", hcaes(y = yval, name = nm, color = col))
+# hchart(df, "pie", hcaes(y = yval, name = nm, color = col))
+# hchart(df, "pyramid", hcaes(y = yval, name = nm, color = col))
 
-# hchart(df, "gauge", y = yval, name = nm, color = col)
-# hchart(df, "solidgauge", y = yval, name = nm, color = col)
+# hchart(df, "gauge", hcaes(y = yval, name = nm, color = col))
+# hchart(df, "solidgauge", hcaes(y = yval, name = nm, color = col))
 
 ##### x, low, high, name, color ####
 # x: 1,
@@ -100,10 +100,11 @@ hchart(df, "errorbar", hcaes(x = nm, low = l, high = h, name = nm, color = col))
 # high: 10,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df %>% mutate(qq1 = yval - er/2, qq3 = yval + er/2), "boxplot",
+df <- mutate(df, qq1 = yval - er/2, qq3 = yval + er/2)
+hchart(df, "boxplot",
        hcaes(x = xval, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval))
 
-hchart(df %>% mutate(qq1 = yval - er/2, qq3 = yval + er/2), "boxplot",
+hchart(df, "boxplot",
        hcaes(x = nm, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval))
 
 #### x, y, value, name, color ####
