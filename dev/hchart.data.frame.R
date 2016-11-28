@@ -10,8 +10,6 @@ library(dplyr)
 # library(lubridate)
 # library(ggplot2)
 
-
-
 options(highcharter.theme = hc_theme_smpl())
 
 #### DATAS ####
@@ -55,13 +53,13 @@ mpgman3 <- group_by(mpg, manufacturer) %>%
 hchart(mpgman3, "treemap", hcaes(x = manufacturer, value = n, color = unique))
 
 hchart(economics, "line", hcaes(x = date, y = unemploy))
+
 hchart(economics, "columnrange", hcaes(x = date, low = psavert - 2, high = psavert + 2, color = unemploy),
        name = "ColumRange Series")
 
 economics_long2 <- filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable)) %>% 
   hc_tooltip(sort = TRUE, table = TRUE)
-
 
 
 cities <- count(txhousing, city, sort = TRUE)[1:30, 1][[1]]

@@ -4,7 +4,7 @@ library(rvest)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "5.0.2"
+version <- "5.0.4"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 

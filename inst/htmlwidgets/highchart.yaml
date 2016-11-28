@@ -3,13 +3,9 @@ dependencies:
     version: 1.11.1
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
-  #- name: underscore
-    #version: 1.8.3
-    #src: "htmlwidgets/lib/underscore-1.8.3"
-    #script: underscore-min.js   
   - name: highcharts
-    version: 5.0.2
-    src: "htmlwidgets/lib/highcharts-5.0.2"
+    version: 5.0.4
+    src: "htmlwidgets/lib/highcharts-5.0.4"
     script:
     - highstock.js
     - highcharts-3d.js
