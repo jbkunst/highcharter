@@ -39,8 +39,7 @@ fontawesome, url-pattern, annotations.
 
 ## Licence 
 
-The libraries are available under different licenses depending on whether it is 
-intended for commercial/government use, or for a personal or non-profit project.
+Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.
 
 **Highcharts (http://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.**
 
