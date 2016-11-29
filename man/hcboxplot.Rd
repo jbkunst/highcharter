@@ -4,16 +4,16 @@
 \alias{hcboxplot}
 \title{Shortcut to make a boxplot}
 \usage{
-hcboxplot(x, by = NULL, outliers = TRUE, horizontal = TRUE, ...)
+hcboxplot(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{by}{A string vector same length of x.}
+\item{var}{A string vector same length of x.}
+
+\item{var2}{A string vector same length of x.}
 
 \item{outliers}{A boolean value to show or not the outliers.}
-
-\item{horizontal}{A boolean value indicating if the boxplots should be horizontal.}
 
 \item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }

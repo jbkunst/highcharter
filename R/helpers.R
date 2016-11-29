@@ -70,9 +70,10 @@ list.parse3 <- function(df) {
 #' @export
 str_to_id <- function(x) {
   
-  assertthat::assert_that(is.character(x))
+  assertthat::assert_that(is.character(x) | is.factor(x))
   
   x %>% 
+    as.character() %>% 
     str_trim() %>%
     str_to_lower() %>% 
     str_replace_all("\\s+", "_") %>% 

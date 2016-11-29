@@ -14,7 +14,7 @@ c("highcharter", "rbokeh", "dygraphs", "plotly",
   group_by(package) %>% 
   filter(row_number() != n()) %>%
   arrange(date) %>% 
-  hchart(type = "line", x = date, y = count, group = package) %>% 
+  hchart(type = "line", hcaes(x = date, y = count, group = package)) %>% 
   hc_tooltip(sort = TRUE, table = TRUE) %>% 
   hc_add_theme(hc_theme_smpl())
 

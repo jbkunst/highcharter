@@ -782,19 +782,3 @@ hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
   hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation,
              choices = choices, scale = scale, ...)
 }
-
-#' @importFrom broom tidy
-#' @export
-hchart.glm <- function(object, ...) {
-  
-  term <- estimate <- std.error <- NULL
-  
-  moddf <- tidy(object)
-  hchart(
-    moddf, "errorbar",
-    x = term, low = estimate - std.error,
-    high = estimate + std.error) %>% 
-    hc_add_series_df(moddf, "point", x = term, y = estimate) %>% 
-    hc_chart(type = "bar")
-  
-}
