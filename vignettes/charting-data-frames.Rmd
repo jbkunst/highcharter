@@ -1,0 +1,52 @@
+---
+title: "Charting Data Frames"
+author: "Joshua Kunst"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Replicating Highcharts Demos}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+We chart data. Data can come in different ways: numeric or character vectors,
+as time series objects, etc. but the most common object with data is a data 
+frame. So, why can chart this type of object in __highcharter__?
+
+Highcharter have two main functions to chart data.
+
+1. `hchart`: A generic function which take an object like vector, time series,
+data frames, likert object and return a `highchart` object (chart)
+2. `hc_add_series`: Another generic function which add data to a existing
+`highchart` object depending the type (class) of the data.
+
+
+This 3 functions are inspired in __ggplot2__ package. So:
+
+- `hchart` works like ggplot2's `qplot`.
+- `hc_add_series` works like ggplot2's `geom_`s.
+- `hcaes` works like ggplot2's `aes`.
+
+The main differences with ggplot2 are here we need explicit the data and the
+aesthetics in every highchart functions. Lets see example to be more clear.
+
+```{r, message=FALSE}
+library(highcharter)
+options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE) # we'll use a custom theme
+```
+
+```{r}
+data("mpg", package = "ggplot2")
+head(mpg)
+```
+
+```{r}
+hchart(mpg, "point", hcaes(x = displ, y = cty))
+```
+
+The previous code is same as:
+
+```{r}
+highchart() %>% 
+  hc_add_series(mpg, "point", hcaes(x = displ, y = cty))
+```
+
