@@ -4,8 +4,8 @@ dependencies:
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
   - name: highcharts
-    version: 5.0.4
-    src: "htmlwidgets/lib/highcharts-5.0.4"
+    version: 5.0.5
+    src: "htmlwidgets/lib/highcharts-5.0.5"
     script:
     - highcharts.js
     - modules/boost.src.js
