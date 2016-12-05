@@ -43,6 +43,10 @@ Highcharter has a dependency on Highcharts, a commercial JavaScript charting lib
 
 **Highcharts (http://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.**
 
+## Discount for highcharter users
+
+Highsoft provide a discount to the highcharter users. It is a 50% discount on our Single Developer license. More details in http://announcements.highcharts.com/foss/.
+
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
