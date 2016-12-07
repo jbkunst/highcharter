@@ -494,26 +494,14 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
 #' 
 #' is.hexcolor(x)
 #' 
-#' are.hexcolor(x)
 #' @export
 is.hexcolor <- function(x) {
-  
-  assertthat::assert_that(is.character(x))
   
   pattern <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$"
   
   str_detect(x, pattern)
   
 }
-
-#' @rdname is.hexcolor
-#' @export
-are.hexcolor <- function(x) {
-  
-  all(is.hexcolor(x))
-  
-}
-
 #' Function to generate iids
 #' @param n Number of ids
 #' @param length Length of ids

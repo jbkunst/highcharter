@@ -376,7 +376,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
                }")
   
   hc <- highchart() %>% 
-    hc_add_series_df(data = ds, type = "heatmap") %>% 
+    hc_add_series(data = list_parse(ds), type = "heatmap") %>% 
     hc_plotOptions(
       series = list(
         showInLegend = showInLegend,
