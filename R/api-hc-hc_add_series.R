@@ -347,16 +347,10 @@ data_to_series <- function(data, mapping, type, ...) {
     
     if (type == "treemap") {
       data <- rename_(data, "colorValue" = "color")
-    } else {
-      
-      dplyr::glimpse(data)
-      
-      if(!all(is.hexcolor(data[["color"]]))){
-        data  <- mutate_(data, "colorv" = "color",
-                         "color" = "highcharter::colorize(color)")  
-      }
-    
+    } else if (!all(is.hexcolor(data[["color"]]))){ 
+      data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")  
     }
+    
   } else if (has_name(data, "color")) {
     data <- rename_(data, "colorv" = "color")
   }
