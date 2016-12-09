@@ -245,7 +245,7 @@
             a.href = href;
             a.target = '_blank';
             a.download = name + '.' + extension;
-            document.body.appendChild(a);
+            chart.container.append(a); // #111
             a.click();
             a.remove();
 

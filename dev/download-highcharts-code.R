@@ -4,7 +4,7 @@ library(rvest)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "5.0.5"
+version <- "5.0.6"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -59,13 +59,6 @@ map2(
   download.file
 )
 
-# my customs --------------------------------------------------------------
-message("PLZ DON'T FORGET!")
-message("symbols-extras.js")
-message("text-symbols.js")
-message("reset.js")
-message("motion.css")
-
 # for yaml ----------------------------------------------------------------
 path %>% 
   dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>% 
@@ -75,7 +68,12 @@ path %>%
   paste0(collapse = "\n") %>% 
   cat()
   
-
+# my customs --------------------------------------------------------------
+message("PLZ DON'T FORGET!")
+message("symbols-extras.js")
+message("text-symbols.js")
+message("reset.js")
+message("motion.css")
 
 
 
