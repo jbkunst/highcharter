@@ -119,7 +119,7 @@ hcmap(map = "countries/us/us-all")
 hcmap(map = "countries/us/us-all-all")
 hcmap(map = "countries/us/custom/us-all-territories")
 
-hcmap("countries/us/us-ca-all") %>% 
+hcmap("countries/us/us-ca-all", download_map_data = TRUE) %>% 
   hc_title(text = "California")
 
 hcmap("countries/cl/cl-all") %>% 

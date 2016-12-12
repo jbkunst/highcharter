@@ -70,7 +70,7 @@ hcspark <- function(x = NULL, type = NULL, ...) {
   stopifnot(is.numeric(x))
   highchart() %>% 
     hc_plotOptions(
-      series = list(showInLegend = FALSE),
+      series = list(showInLegend = FALSE, dataLabels = list(enabled = FALSE)),
       line = list(marker = list(enabled = FALSE))) %>% 
     hc_add_series(data = x, type = type, ...) %>% 
     hc_add_theme(hc_theme_sparkline())
