@@ -1,0 +1,34 @@
+---
+title: "Charting Maps"
+author: "Joshua Kunst"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Replicating Highcharts Demos}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(highcharter)
+options(highcharter.theme = hc_theme_smpl(),
+        highcharter.download_map_data = TRUE)
+```
+
+## Basics
+
+The easiest way to chart a map with highcharter is select a map (a url) 
+from the highmaps list https://code.highcharts.com/mapdata/. Then use
+the `hcmap` function.
+
+```{r, warning=FALSE, message=FALSE}
+hcmap("countries/nz/nz-all")
+hcmap("custom/usa-and-canada")
+```
+
+__Note__: The copyright information is added to the chart credits by default, 
+but please be aware that you will have to display this information somewhere 
+else if you choose to disable chart credits. Copyright information for each map
+can be found as properties in the GeoJSON and Javascript files.
+
+What about add data to get a choropleth? Every map downloaded from the 
+highcharts maps collection have key to join data.

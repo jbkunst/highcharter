@@ -4,20 +4,22 @@
 \alias{hcmap}
 \title{Shorcut for create map}
 \usage{
-hcmap(map = "custom/world", data = NULL, value = NULL,
-  joinBy = "hc-key", download_map_data = FALSE, ...)
+hcmap(map = "custom/world",
+  download_map_data = getOption("highcharter.download_map_data"),
+  data = NULL, value = NULL, joinBy = "hc-key", ...)
 }
 \arguments{
-\item{map}{String indicating what map to chart}
+\item{map}{String indicating what map to chart.}
+
+\item{download_map_data}{A logical value whether to download
+(add as a depedeny) the map. Default \code{FALSE}.}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
 
 \item{value}{A string value with the name of the column to chart.}
 
-\item{joinBy}{What property to join the  \code{map} and \code{df}.}
-
-\item{download_map_data}{A logical value to download or not (add as a depedeny)
+\item{joinBy}{What property to join the  \code{map} and \code{df}.
 the map.}
 
 \item{...}{Aditional shared arguments for the data series

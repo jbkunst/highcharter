@@ -70,12 +70,14 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 
 #' Shorcut for create map
 #' 
-#' @param map String indicating what map to chart
+#' @param map String indicating what map to chart.
+#' @param download_map_data A logical value whether to download
+#'   (add as a depedeny) the map. Default \code{FALSE}.
 #' @param data Optional data to make a choropleth, in case of use
 #'   the joinBy and value are needed.
 #' @param value A string value with the name of the column to chart.
 #' @param joinBy What property to join the  \code{map} and \code{df}.
-#' @param download_map_data A logical value to download or not (add as a depedeny)
+
 #'   the map.
 #' @param ... Aditional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
@@ -98,13 +100,11 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @importFrom htmltools htmlDependency
 #' @export
 hcmap <- function(map = "custom/world",
+                  download_map_data = getOption("highcharter.download_map_data"),
                   data = NULL, value = NULL, joinBy = "hc-key", 
-                  download_map_data = FALSE, ...) {
+                  ...) {
   
-  url <- "https://code.highcharts.com/mapdata"
-  map <- str_replace(map, "\\.js", "")
-  map <- str_replace(map, "https://code\\.highcharts\\.com/mapdata/", "")
-  mapfile <- sprintf("%s.js", map)
+  map <- fix_map_name(map)
   
   hc <- highchart(type = "map")
   
@@ -117,7 +117,7 @@ hcmap <- function(map = "custom/world",
     dep <-  htmlDependency(
       name = basename(map),
       version = "0.1.0",
-      src = c(href = url),
+      src = c(href = "https://code.highcharts.com/mapdata"),
       script = mapfile
     )
     
@@ -162,8 +162,11 @@ hcmap <- function(map = "custom/world",
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file
 #' @export
-download_map_data <- function(url = "https://code.highcharts.com/mapdata/custom/world.js",
+download_map_data <- function(url = "custom/world.js",
                               showinfo = FALSE) {
+  
+  url <- sprintf("https://code.highcharts.com/mapdata/%s",
+                 fix_map_name(url))
   
   tmpfile <- tempfile(fileext = ".js")
   download.file(url, tmpfile)
@@ -194,3 +197,16 @@ get_data_from_map <- function(mapdata) {
     map("properties") %>%
     map_df(function(x){ x[!map_lgl(x, is.null)] })
 }
+
+#' @examples 
+#' fix_map_name("custom/world")
+#' fix_map_name("custom/world.js")
+#' fix_map_name("https://code.highcharts.com/mapdata/custom/world.js")
+fix_map_name <- function(x = "custom/world") {
+  x <- str_replace(x, "\\.js$", "")
+  x <- str_replace(x, "https://code\\.highcharts\\.com/mapdata/", "")
+  x <- sprintf("%s.js", x)
+  x
+}
+
+
