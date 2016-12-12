@@ -5,9 +5,7 @@
 \title{Auxilar function to download the map data form a url
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.}
 \usage{
-
-  download_map_data(url = "https://code.highcharts.com/mapdata/custom/world.js",
-  showinfo = FALSE)
+download_map_data(url = "custom/world.js", showinfo = FALSE)
 }
 \arguments{
 \item{url}{The map's url.}
