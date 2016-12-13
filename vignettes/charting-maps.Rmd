@@ -74,5 +74,11 @@ counties %>%
   hc_add_theme(hc_theme_db())
 ```
 
+## API
+
+If the map that you want there's no in the collection? You can always can use
+the implemented API. For example:
+
+
 
 

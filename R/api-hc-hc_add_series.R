@@ -10,7 +10,7 @@
 #'    hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue")
 #'
 #' @export
-hc_add_series <- function(hc, data, ...){
+hc_add_series <- function(hc, data = NULL, ...){
   
   assertthat::assert_that(is.highchart(hc))
   

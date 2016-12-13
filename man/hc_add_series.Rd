@@ -4,7 +4,7 @@
 \alias{hc_add_series}
 \title{Adding and removing series from highchart objects}
 \usage{
-hc_add_series(hc, data, ...)
+hc_add_series(hc, data = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
