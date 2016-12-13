@@ -100,7 +100,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @export
 hcmap <- function(map = "custom/world",
                   download_map_data = getOption("highcharter.download_map_data"),
-                  data = NULL, value = NULL, joinBy = "hc-key", 
+                  data = NULL, value = NULL, joinBy = NULL, 
                   ...) {
   
   map <- fix_map_name(map)
@@ -135,7 +135,6 @@ hcmap <- function(map = "custom/world",
     
   } else {
     
-    stopifnot(joinBy %in% names(data))
     data <- mutate_(data, "value" = value)
     
     hc <- hc %>% 

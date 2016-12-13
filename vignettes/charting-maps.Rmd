@@ -10,14 +10,14 @@ vignette: >
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(highcharter)
-options(highcharter.theme = hc_theme_smpl(),
-        highcharter.download_map_data = TRUE)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+options(highcharter.download_map_data = TRUE)
 ```
 
 ## Basics
 
 The easiest way to chart a map with highcharter is select a map (a url) 
-from the highmaps list https://code.highcharts.com/mapdata/. Then use
+from the highmaps collection https://code.highcharts.com/mapdata/. Then use
 the `hcmap` function.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -25,10 +25,54 @@ hcmap("countries/nz/nz-all")
 hcmap("custom/usa-and-canada")
 ```
 
-__Note__: The copyright information is added to the chart credits by default, 
+__Note__: _The copyright information is added to the chart credits by default, 
 but please be aware that you will have to display this information somewhere 
 else if you choose to disable chart credits. Copyright information for each map
-can be found as properties in the GeoJSON and Javascript files.
+can be found as properties in the GeoJSON and Javascript files_.
+
+## Choropleths
 
 What about add data to get a choropleth? Every map downloaded from the 
-highcharts maps collection have key to join data.
+highcharts maps collection have keys to join data. There are 2 functions
+to help to know what are the regions coded to know how to join the map
+and data:
+
+- `download_map_data`: Download the geojson data from the highcharts collection.
+- `get_data_from_map`: Get the properties  for each region in the map, as the keys
+from the map data.
+
+```{r}
+require(dplyr)
+
+mapdata <- get_data_from_map(download_map_data("countries/us/us-all-all"))
+glimpse(mapdata)
+
+data(unemployment)
+glimpse(unemployment)
+```
+
+If we compare this 2 data frames the `hc-key` is same code that
+`code`. So we'll use these columns as keys:
+
+```{r}
+counties <- hcmap("countries/us/us-all-all",
+                  data = unemployment, value = "value", joinBy = c("hc-key", "code"),
+                  borderColor = "transparent", name = "Unemployment")
+```
+
+Remember, the map is a highchart object so we can use the other 
+function from the higcharts API to customize the chart.
+
+```{r}
+counties %>% 
+  hc_title(text = "Unemployment Rate") %>%
+  hc_subtitle(text = "US Counties") %>% 
+  hc_colorAxis(dataClasses = color_classes(c(seq(0, 10, by = 2), 50))) %>% 
+  hc_legend(layout = "vertical", align = "right",
+            floating = TRUE, valueDecimals = 0,
+            valueSuffix = "%") %>%
+  hc_add_theme(hc_theme_db())
+```
+
+
+

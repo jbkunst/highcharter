@@ -6,7 +6,7 @@
 \usage{
 hcmap(map = "custom/world",
   download_map_data = getOption("highcharter.download_map_data"),
-  data = NULL, value = NULL, joinBy = "hc-key", ...)
+  data = NULL, value = NULL, joinBy = NULL, ...)
 }
 \arguments{
 \item{map}{String indicating what map to chart.}
