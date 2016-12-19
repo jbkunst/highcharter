@@ -22,13 +22,12 @@ density, factors, ts, mts, xts, stl, ohlc, acf, forecast, mforecast, ets,
 igraph, dist, dendrogram, phylo, survfit classes.
 - Support [Highstock charts](http://jkunst.com/highcharter/highstock.html). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
 - Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
-- [Piping styling](http://jkunst.com/highcharter/).
 - [Themes](http://jkunst.com/highcharter/themes.html): you configurate your 
 chart in multiples ways. There are implemented themes like economist, financial 
 times, google, 538 among others.
 - [Plugins](http://jkunst.com/highcharter/plugins.html): motion, drag points, 
 fontawesome, url-pattern, annotations.
-- <3 to Highcharts.com
+- <3 and respect to Highcharts team.
 
 ## Resources
 
