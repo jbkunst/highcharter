@@ -74,7 +74,53 @@ counties %>%
   hc_add_theme(hc_theme_db())
 ```
 
-## API
+## Adding More Data
+
+
+
+```{r}
+aus <- hcmap("countries/au/au-all", showInLegend = FALSE, nullColor = "#A9CF54")
+aus
+
+```
+
+```{r}
+library(readr)
+library(rvest)
+library(geojsonio)
+
+# http://openflights.org/data.html
+airports <- read_csv("https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat",
+                     col_names = FALSE)
+
+tblnames <- read_html("http://openflights.org/data.html") %>% 
+  html_node("table") %>% 
+  html_table(fill = TRUE)
+
+airports <- setNames(airports, str_to_id(tblnames$X1))
+
+airportsmin <- airports %>% 
+  filter(country == "Australia", tz_database_time_zone != "\\N") %>% 
+  select(name, latitude, longitude, altitude) 
+
+airpjson <- geojson_json(airportsmin, lat = "latitude", lon = "longitude")
+
+
+aus %>% 
+  hc_title(text = "Airports in Australia") %>% 
+  hc_add_series(data = airpjson, type = "mappoint", dataLabels = list(enabled = FALSE),
+                name = "Airports", color = 'red',
+                tooltip = list(pointFormat = "{point.properties.name}: {point.properties.altitude} fts")) %>% 
+  hc_add_theme(hc_theme_db())
+
+
+
+```
+
+
+
+
+## Using the API
 
 If the map that you want there's no in the collection? You can always can use
 the implemented API. For example:

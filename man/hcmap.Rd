@@ -2,7 +2,9 @@
 % Please edit documentation in R/highmaps.R
 \name{hcmap}
 \alias{hcmap}
-\title{Shorcut for create map}
+\title{Shorcut for create map
+Shorcut for create map from \url{https://code.highcharts.com/mapdata/}
+collection.}
 \usage{
 hcmap(map = "custom/world",
   download_map_data = getOption("highcharter.download_map_data"),
@@ -27,6 +29,8 @@ the map.}
 }
 \description{
 Shorcut for create map
+Shorcut for create map from \url{https://code.highcharts.com/mapdata/}
+collection.
 }
 \examples{
 require(dplyr) 

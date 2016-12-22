@@ -69,6 +69,8 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 }
 
 #' Shorcut for create map
+#' Shorcut for create map from \url{https://code.highcharts.com/mapdata/}
+#' collection.
 #' @param map String indicating what map to chart.
 #' @param download_map_data A logical value whether to download
 #'   (add as a depedeny) the map. Default \code{FALSE}.
