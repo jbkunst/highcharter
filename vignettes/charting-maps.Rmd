@@ -10,8 +10,10 @@ vignette: >
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(highcharter)
+set.seed(123)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
-options(highcharter.download_map_data = TRUE)
+options(highcharter.download_map_data = TRUE,
+        highcharter.theme = hc_theme_smpl())
 ```
 
 ## Basics
@@ -49,7 +51,7 @@ glimpse(mapdata)
 
 data_fake <- mapdata %>% 
   select(code = `hc-a2`) %>% 
-  mutate(value = rexp(nrow(.)))
+  mutate(value = abs(rt(nrow(.), df = 10)))
 
 glimpse(data_fake)
 ```
@@ -60,8 +62,10 @@ If we compare this 2 data frames the `hc-key` is same code that
 ```{r}
 hcmap("countries/us/us-all", data = data_fake, value = "value",
       joinBy = c("hc-a2", "code"), name = "Unemployment",
+      dataLabels = list(enabled = TRUE, format = '{point.code}'),
       borderColor = "#FAFAFA", borderWidth = 0.1) %>% 
-  hc_colorAxis(stops = color_stops())
+  hc_colorAxis(stops = color_stops()) %>% 
+  hc_add_theme(hc_theme_db())
 ```
 
 ## Adding More Data
@@ -78,10 +82,18 @@ glimpse(cities)
 
 hcmap("countries/gb/gb-all", showInLegend = FALSE) %>% 
   hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = '10%') %>% 
-  hc_mapNavigation(enabled = TRUE) # Zoom
+  hc_mapNavigation(enabled = TRUE) 
 ```
 
+## Advanced Maps & `geojsonio` Package
+
+Highcharts support `geo_json` classes from the `geojsonio` package. 
+
+A good resource for geojson countries is https://github.com/johan/world.geo.json.
+
 ```{r}
+library(geojsonio)
+
 getContent <- function(url) {
   httr::content(httr::GET(url))
 }
@@ -92,24 +104,48 @@ world <- jsonlite::fromJSON(world, simplifyVector = FALSE)
 
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
 marine <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
+marine <- geojsonio::as.json(marine)
+
 
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
 plates <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
+plates <- geojsonio::as.json(plates)
 
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
 volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
+volcano <- geojsonio::as.json(volcano)
 
 highchart(type = "map") %>%
   hc_title(text = "Marine Currents, Plates & Volcanos") %>%
   hc_add_series(mapData = world, showInLegend = FALSE) %>%
-  hc_add_series(data = marine, type = "mapline", geojson = TRUE,
+  hc_add_series(data = marine, type = "mapline", 
                 name = "Marine currents", tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-  hc_add_series(data = plates, type = "mapline", geojson = TRUE, lineWidth = 2, zIndex = 0,
+  hc_add_series(data = plates, type = "mapline", lineWidth = 2, zIndex = 0,
                 name = "Plates", tooltip = list(pointFormat = "{point.properties.TIPO}")) %>%
-  hc_add_series(data = volcano, type = "mappoint", geojson = TRUE, color = hex_to_rgba("#434348", 0.4),
-                name = "Volcanos", tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-  hc_add_theme(hc_theme_smpl())
+  hc_add_series(data = volcano, type = "mappoint", color = hex_to_rgba("darkred", 0.2),
+                name = "Volcanos", tooltip = list(pointFormat = "{point.properties.NOMBRE}"))
 ```
 
+```{r}
+library(readr)
+library(geojsonio)
+
+ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
+ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
+ausgeojson <- geojsonio::as.json(ausgeojson)
+
+# http://openflights.org/data.html
+airports <- read_csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
+airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+
+airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
+
+highchart(type = "map") %>% 
+  hc_add_series(mapData = ausgeojson, showInLegend = FALSE, nullColor = "#A9CF54") %>%
+  hc_add_series(data = airp_geojson, type = "mappoint", dataLabels = list(enabled = FALSE),
+                name = "Airports", color = 'rgba(250, 250, 250, 0.7)',
+                tooltip = list(pointFormat = "{point.name}")) %>% 
+  hc_add_theme(hc_theme_db())
+```
 
 
