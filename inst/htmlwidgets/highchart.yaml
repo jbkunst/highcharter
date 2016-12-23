@@ -3,6 +3,10 @@ dependencies:
     version: 1.11.1
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
+  - name: proj4js
+    version: 2.3.15
+    src: "htmlwidgets/lib/proj4js"
+    script: proj4.js
   - name: highcharts
     version: 5.0.6
     src: "htmlwidgets/lib/highcharts-5.0.6"
@@ -45,3 +49,4 @@ dependencies:
     src: "htmlwidgets/lib/htmlwdgtgrid"
     stylesheet:
     - htmlwdgtgrid.css
+

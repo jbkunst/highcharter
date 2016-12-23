@@ -124,8 +124,7 @@ hcmap <- function(map = "custom/world",
     
     hc$dependencies <- c(hc$dependencies, list(dep))
     
-    mapdata <- JS(sprintf("Highcharts.geojson(Highcharts.maps['%s'])", 
-                          str_replace(map, "\\.js$", "")))
+    mapdata <- JS(sprintf("Highcharts.maps['%s']", str_replace(map, "\\.js$", "")))
     
   }
   
