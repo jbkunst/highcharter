@@ -79,39 +79,20 @@ counties %>%
 
 
 ```{r}
-aus <- hcmap("countries/au/au-all", showInLegend = FALSE, nullColor = "#A9CF54")
-aus
-
+gb <- hcmap("countries/gb/gb-all", showInLegend = FALSE, nullColor = "rgba(200, 200, 200, 0.3)")
+gb
 ```
 
 ```{r}
-library(readr)
-library(rvest)
-library(geojsonio)
-
-# http://openflights.org/data.html
-airports <- read_csv("https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat",
-                     col_names = FALSE)
-
-tblnames <- read_html("http://openflights.org/data.html") %>% 
-  html_node("table") %>% 
-  html_table(fill = TRUE)
-
-airports <- setNames(airports, str_to_id(tblnames$X1))
-
-airportsmin <- airports %>% 
-  filter(country == "Australia", tz_database_time_zone != "\\N") %>% 
-  select(name, latitude, longitude, altitude) 
-
-airpjson <- geojson_json(airportsmin, lat = "latitude", lon = "longitude")
+cities <- data_frame(
+  name = c("London", "Birmingham"),
+  lat = c(51.507222, 52.483056),
+  lon = c(-0.1275, -1.893611)
+)
 
 
-aus %>% 
-  hc_title(text = "Airports in Australia") %>% 
-  hc_add_series(data = airpjson, type = "mappoint", dataLabels = list(enabled = FALSE),
-                name = "Airports", color = 'red',
-                tooltip = list(pointFormat = "{point.properties.name}: {point.properties.altitude} fts")) %>% 
-  hc_add_theme(hc_theme_db())
+gb %>% 
+  hc_add_series(data = cities, color = "red", type = "mappoint", name = "Cities")
 
 
 

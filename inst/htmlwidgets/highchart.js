@@ -73,7 +73,7 @@ HTMLWidgets.widget({
         }
         return e;
       });
-      */
+
       
       x.hc_opts.series = x.hc_opts.series.map(function(e){
         if(!(e.type === undefined)) {
@@ -81,19 +81,19 @@ HTMLWidgets.widget({
         }
         return e;
       });
+      */
       
       $("#" + el.id).highcharts('Map', x.hc_opts);  
       
       
       if(x.hc_opts.mapNavigation != undefined && x.hc_opts.mapNavigation.enabled === true){
-        /* if have navigation option and enabled true */
-        /* http://stackoverflow.com/questions/7600454 */
+        /* if have navigation option and enabled true: http://stackoverflow.com/questions/7600454 */
         $("#" + el.id).bind( 'mousewheel DOMMouseScroll', function ( e ) {
           var e0 = e.originalEvent,
           delta = e0.wheelDelta || -e0.detail;
           this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
           e.preventDefault();
-          
+
         });
         
       }
