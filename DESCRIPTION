@@ -45,7 +45,6 @@ Suggests:
     rmarkdown,
     survival,
     ggplot2,
-    geojsonio,
     httr
 VignetteBuilder: knitr
 LazyData: true 

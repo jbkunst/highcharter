@@ -92,7 +92,7 @@ Highcharts support `geo_json` classes from the `geojsonio` package.
 A good resource for geojson countries is https://github.com/johan/world.geo.json.
 
 ```{r}
-library(geojsonio)
+# library(geojsonio)
 
 getContent <- function(url) {
   library(httr)
@@ -105,47 +105,47 @@ world <- jsonlite::fromJSON(world, simplifyVector = FALSE)
 
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
 marine <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
-marine <- geojsonio::as.json(marine)
+# marine <- geojsonio::as.json(marine)
 
 
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
 plates <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
-plates <- geojsonio::as.json(plates)
+# plates <- geojsonio::as.json(plates)
 
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
 volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
-volcano <- geojsonio::as.json(volcano)
+# volcano <- geojsonio::as.json(volcano)
 
 highchart(type = "map") %>%
   hc_title(text = "Marine Currents, Plates & Volcanos") %>%
   hc_add_series(mapData = world, showInLegend = FALSE) %>%
-  hc_add_series(data = marine, type = "mapline", 
+  hc_add_series(data = marine, type = "mapline", geojson = TRUE,
                 name = "Marine currents", tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-  hc_add_series(data = plates, type = "mapline", lineWidth = 2, zIndex = 0,
+  hc_add_series(data = plates, type = "mapline", lineWidth = 2, zIndex = 0, geojson = TRUE,
                 name = "Plates", tooltip = list(pointFormat = "{point.properties.TIPO}")) %>%
-  hc_add_series(data = volcano, type = "mappoint", color = hex_to_rgba("darkred", 0.2),
+  hc_add_series(data = volcano, type = "mappoint", color = hex_to_rgba("darkred", 0.2), geojson = TRUE,
                 name = "Volcanos", tooltip = list(pointFormat = "{point.properties.NOMBRE}"))
 ```
 
 ```{r}
-library(geojsonio)
-
-ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
-ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
-ausgeojson <- geojsonio::as.json(ausgeojson)
-
-# http://openflights.org/data.html
-airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
-airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
-
-airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
-
-highchart(type = "map") %>% 
-  hc_add_series(mapData = ausgeojson, showInLegend = FALSE, nullColor = "#A9CF54") %>%
-  hc_add_series(data = airp_geojson, type = "mappoint", dataLabels = list(enabled = FALSE),
-                name = "Airports", color = 'rgba(250, 250, 250, 0.7)',
-                tooltip = list(pointFormat = "{point.name}")) %>% 
-  hc_add_theme(hc_theme_db())
+# library(geojsonio)
+# 
+# ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
+# ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
+# ausgeojson <- geojsonio::as.json(ausgeojson)
+# 
+# # http://openflights.org/data.html
+# airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
+# airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+# 
+# airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
+# 
+# highchart(type = "map") %>% 
+#   hc_add_series(mapData = ausgeojson, showInLegend = FALSE, nullColor = "#A9CF54") %>%
+#   hc_add_series(data = airp_geojson, type = "mappoint", dataLabels = list(enabled = FALSE),
+#                 name = "Airports", color = 'rgba(250, 250, 250, 0.7)',
+#                 tooltip = list(pointFormat = "{point.name}")) %>% 
+#   hc_add_theme(hc_theme_db())
 ```
 
 
