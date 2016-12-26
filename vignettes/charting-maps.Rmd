@@ -95,7 +95,8 @@ A good resource for geojson countries is https://github.com/johan/world.geo.json
 library(geojsonio)
 
 getContent <- function(url) {
-  httr::content(httr::GET(url))
+  library(httr)
+  content(GET(url))
 }
 
 world <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json")
@@ -127,7 +128,6 @@ highchart(type = "map") %>%
 ```
 
 ```{r}
-library(readr)
 library(geojsonio)
 
 ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
@@ -135,7 +135,7 @@ ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
 ausgeojson <- geojsonio::as.json(ausgeojson)
 
 # http://openflights.org/data.html
-airports <- read_csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
+airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
 airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
 
 airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
