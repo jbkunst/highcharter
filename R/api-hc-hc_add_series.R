@@ -225,19 +225,33 @@ hc_add_series.character <- function(hc, data, ...) {
 #' @export
 hc_add_series.factor <- hc_add_series.character
 
-#' hc_add_series for geo_json objects
+#' hc_add_series for geo_json & geo_list objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A \code{geo_json} object.
+#' @param data A \code{geo_json} or \code{geo_list} object.
+#' @param type Type of series. Can be 'mapline', 'mapoint'.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
-hc_add_series.geo_json <- function(hc, data, ...) {
+hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
   
   if(getOption("highcharter.verbose"))
     message("hc_add_series.geo_json")  
   
-  stopifnot(hc$x$type == "map")
+  stopifnot(hc$x$type == "map", !is.null(type))
 
-  hc_add_series.default(hc, data = data, geojson = TRUE, ...)
+  hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
+  
+}
+
+#' @rdname hc_add_series.geo_json
+#' @export
+hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
+  
+  if(getOption("highcharter.verbose"))
+    message("hc_add_series.geo_list")  
+  
+  stopifnot(hc$x$type == "map", !is.null(type))
+  
+  hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
   
 }
 
