@@ -68,7 +68,7 @@ HTMLWidgets.widget({
 
       x.hc_opts.series = x.hc_opts.series.map(function(e){
         if(e.geojson === true) {
-          if(x.debug) console.log("geojson");
+          if(x.debug) console.log("geojson\n\t", e.type, "\n\t", typeof(e.series));
           e.data = Highcharts.geojson(e.data, e.type);
         }
         return e;
