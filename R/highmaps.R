@@ -145,7 +145,8 @@ hcmap <- function(map = "custom/world",
     
   }
   
-  hc
+  hc %>% 
+    hc_credits(enabled = TRUE)
   
 }
 

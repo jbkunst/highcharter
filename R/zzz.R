@@ -97,6 +97,6 @@
     highcharter.theme = hc_theme(chart = list(backgroundColor = "transparent")),
     highcharter.verbose = FALSE,
     highcharter.debug = FALSE,
-    highcharter.download_map_data = FALSE
+    highcharter.download_map_data = TRUE
     )
 }

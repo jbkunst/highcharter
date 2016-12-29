@@ -2,18 +2,23 @@
 % Please edit documentation in R/api-hc-hc_add_series.R
 \name{hc_add_series.geo_json}
 \alias{hc_add_series.geo_json}
-\title{hc_add_series for geo_json objects}
+\alias{hc_add_series.geo_list}
+\title{hc_add_series for geo_json & geo_list objects}
 \usage{
-\method{hc_add_series}{geo_json}(hc, data, ...)
+\method{hc_add_series}{geo_json}(hc, data, type = NULL, ...)
+
+\method{hc_add_series}{geo_list}(hc, data, type = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{data}{A \code{geo_json} object.}
+\item{data}{A \code{geo_json} or \code{geo_list} object.}
+
+\item{type}{Type of series. Can be 'mapline', 'mapoint'.}
 
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
 }
 \description{
-hc_add_series for geo_json objects
+hc_add_series for geo_json & geo_list objects
 }
 
