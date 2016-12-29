@@ -52,7 +52,7 @@ set.seed(1234)
 
 data_fake <- mapdata %>% 
   select(code = `hc-a2`) %>% 
-  mutate(value = abs(rt(nrow(.), df = 10)))
+  mutate(value = 1e5 * abs(rt(nrow(.), df = 10)))
 
 glimpse(data_fake)
 ```
@@ -62,9 +62,10 @@ If we compare this 2 data frames the `hc-key` is same code that
 
 ```{r}
 hcmap("countries/us/us-all", data = data_fake, value = "value",
-      joinBy = c("hc-a2", "code"), name = "Unemployment",
+      joinBy = c("hc-a2", "code"), name = "Fake data",
       dataLabels = list(enabled = TRUE, format = '{point.name}'),
-      borderColor = "#FAFAFA", borderWidth = 0.1) 
+      borderColor = "#FAFAFA", borderWidth = 0.1,
+      tooltip = list(valueDecimals = 2, valuePrefix = "$", valueSuffix = " USD")) 
 ```
 
 ## Adding More Data

@@ -399,15 +399,15 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
       hc_yAxis(categories = ynm, title = list(text = ""), reversed = TRUE)
   }
   
+  # correlogram
   if (-1 <= min(object) & min(object) < 0 & max(object) <= 1) {
     
-    cor_colr <- color_stops(3, c("#FF5733", "#F8F5F5", "#2E86C1"))
-    hc <- hc_colorAxis(hc, stops = cor_colr)
+    hc <- hc_colorAxis(hc, stops = color_stops(3, c("#FF5733", "#F8F5F5", "#2E86C1")),
+                       min = -1, max = 1)
     
   } else {
     
-    cor_colr <- color_stops(10, viridis(10, option = "B"))
-    hc <- hc_colorAxis(hc, stops = cor_colr) 
+    hc <- hc_colorAxis(hc, nullpar = NULL) 
     
   }
   

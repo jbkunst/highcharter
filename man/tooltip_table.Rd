@@ -9,7 +9,7 @@ tooltip_table(x, y, title = NULL, img = NULL, ...)
 \arguments{
 \item{x}{A string vector with description text}
 
-\item{y}{A string with accesors ex: \code{point.series.name}, 
+\item{y}{A string with accesors ex: \code{point.series.name},
 \code{point.x}}
 
 \item{title}{A title tag with accessor or string}

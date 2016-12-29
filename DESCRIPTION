@@ -32,7 +32,6 @@ Imports:
     tibble (>= 1.1),
     stringr,
     broom,
-    viridisLite,
     xts,
     quantmod,
     tidyr,
@@ -45,6 +44,7 @@ Suggests:
     rmarkdown,
     survival,
     ggplot2,
-    httr
+    httr,
+    viridisLite
 VignetteBuilder: knitr
 LazyData: true 
