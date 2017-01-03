@@ -18,12 +18,15 @@ options(highcharter.theme = hc_theme_smpl())
 
 The easiest way to chart a map with highcharter is using `hcmap` function.
 Select a map (a url) from the highmaps collection https://code.highcharts.com/mapdata/.
-and use the url as a map in `hcmap` function.
+and use the url as a map in `hcmap` function. This will download the map
+and create a \code{highchart} object using the info as a `mapData` argument.
 
 
 ```{r, warning=FALSE, message=FALSE}
 hcmap("countries/nz/nz-all")
 hcmap("custom/usa-and-canada", showInLegend = FALSE)
+hcmap("countries/us/us-ca-all") %>% 
+  hc_title("California")
 ```
 
 __Note__: _The copyright information is added to the chart credits by default, 
