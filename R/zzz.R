@@ -99,7 +99,7 @@
     highcharter.debug = FALSE,
     highcharter.download_map_data = TRUE,
     # gsub("FF$", "", viridisLite::viridis(10, option = "B", begin = 0.2))
-    highcharter.color_palett = c("#420A68", "#66166E", "#8B226A", "#AE305C", "#CF4446",
-                                 "#E8602C", "#F8850F", "#FCAF13", "#F5DC4D", "#FCFFA4")
+    highcharter.color_palette = c("#420A68", "#66166E", "#8B226A", "#AE305C", "#CF4446",
+                                  "#E8602C", "#F8850F", "#FCAF13", "#F5DC4D", "#FCFFA4")
     )
 }

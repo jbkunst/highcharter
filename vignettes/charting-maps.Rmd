@@ -25,8 +25,8 @@ and create a \code{highchart} object using the info as a `mapData` argument.
 ```{r, warning=FALSE, message=FALSE}
 hcmap("countries/nz/nz-all")
 hcmap("custom/usa-and-canada", showInLegend = FALSE)
-hcmap("countries/us/us-ca-all") %>% 
-  hc_title("California")
+hcmap("countries/us/us-ca-all") %>%
+  hc_title(text = "California")
 ```
 
 __Note__: _The copyright information is added to the chart credits by default, 
