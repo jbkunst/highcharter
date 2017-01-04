@@ -1,3 +1,13 @@
+# highcharter 0.5.0
+
+## New Funcionalities
+
+## Changes
+
+## Bug fixes
+
+## Others
+
 # highcharter 0.4.0
 
 ## New Funcionalities
