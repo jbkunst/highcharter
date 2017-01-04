@@ -141,34 +141,6 @@ highchart(type = "map") %>%
                 marker = list(lineWidth = 0, radius = 2))
 ```
 
-## `geojsonio` Package
-
-Highcharts support `geo_json` classes from the `geojsonio` package. So you 
-can use `hc_add_series` as usual without use `geojson = TRUE` parameter/argument.
-
-
-```{r, echo=TRUE, eval=TRUE}
-library(geojsonio)
-
-ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
-ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
-ausgeojson <- geojsonio::as.json(ausgeojson)
-class(ausgeojson)
-
-# http://openflights.org/data.html
-airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
-airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
-
-airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
-class(airp_geojson)
-
-highchart(type = "map") %>%
-  hc_add_series(mapData = ausgeojson, showInLegend = FALSE) %>%
-  hc_add_series(data = airp_geojson, type = "mappoint",
-                dataLabels = list(enabled = FALSE),
-                name = "Airports", tooltip = list(pointFormat = "{point.name}")) 
-```
-
 ## Motion Plugin
 
 ```{r}
@@ -197,6 +169,34 @@ hcmap() %>%
             loop = TRUE, autoPlay = TRUE, 
             updateInterval = 1000, magnet = list(step =  1)) %>% 
   hc_plotOptions(series = list(showInLegend = FALSE))
+```
+
+## `geojsonio` Package
+
+Highcharts support `geo_json` classes from the `geojsonio` package. So you 
+can use `hc_add_series` as usual without use `geojson = TRUE` parameter/argument.
+
+
+```{r, echo=TRUE, eval=FALSE}
+library(geojsonio)
+
+ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
+ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
+ausgeojson <- geojsonio::as.json(ausgeojson)
+class(ausgeojson)
+
+# http://openflights.org/data.html
+airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
+airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+
+airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
+class(airp_geojson)
+
+highchart(type = "map") %>%
+  hc_add_series(mapData = ausgeojson, showInLegend = FALSE) %>%
+  hc_add_series(data = airp_geojson, type = "mappoint",
+                dataLabels = list(enabled = FALSE),
+                name = "Airports", tooltip = list(pointFormat = "{point.name}")) 
 ```
 
 
