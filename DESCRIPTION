@@ -45,6 +45,7 @@ Suggests:
     survival,
     ggplot2,
     httr,
-    viridisLite
+    viridisLite,
+    geojsonio
 VignetteBuilder: knitr
 LazyData: true 

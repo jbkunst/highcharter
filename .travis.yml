@@ -3,8 +3,11 @@ language: r
 os:
  - linux
 
-r_packages:
-  - testthat
+r_check_args: "--no-build-vignettes --no-manual"
+r_build_args: "--no-build-vignettes --no-manual"
+
+repos:
+  CRAN: https://cran.rstudio.com
   
 warnings_are_errors: false
 
