@@ -1,4 +1,4 @@
-#' Grid Light theme for highchart
+#' Grid Light theme for highcharts
 #' 
 #' @param ... Named argument to modify the theme
 #' 
