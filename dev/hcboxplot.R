@@ -1,17 +1,19 @@
 library(tidyverse)
 options(highcharter.theme = hc_theme_smpl())
 
-data(mpg, package = "ggplot2")
+data("diamonds", package = "ggplot2")
+diamonds2 <- diamonds %>% 
+  sample_n(1000) %>% 
+  filter(color %in% c("H", "J", "E"))
 
-diamonds <- sample_n(diamonds, 1000)
 
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   
   stopifnot(!is.null(x))
   
-  if(is.null(var))
+  if (is.null(var))
     var <- NA
-  if(is.null(var2))
+  if (is.null(var2))
     var2 <- NA
   
   df <- data_frame(x, g1 = var, g2 = var2)
@@ -35,10 +37,12 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
     unnest() %>% 
     group_by(g2) %>% 
     do(data = list_parse(rename(select(., -g2), name = g1))) %>% 
-    rename(name = g2) %>% 
+    # rename(name = g2) %>% 
     mutate(type = "boxplot",
-           id = str_to_id(as.character(name)))
+           id = str_to_id(as.character(g2)))
   
+  if (length(list(...)) > 0)
+    series_box <- add_arg_to_df(series_box, ...)
   
   series_out <- df %>% 
     group_by(g1, g2) %>%  
@@ -46,16 +50,27 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
     unnest() %>% 
     group_by(g2) %>% 
     do(data = list_parse(select(., name = g1, y = data))) %>% 
-    rename(name = g2) %>% 
+    # rename(name = g2) %>% 
     mutate(type = "scatter",
-           linkedTo = str_to_id(as.character(name)))
+           linkedTo = str_to_id(as.character(g2)))
   
-  colors <- colorize(seq(1, nrow(series_box)))
-  colors <- hex_to_rgba(colors, alpha = 0.75)
+  if (length(list(...)) > 0)
+    series_out <- add_arg_to_df(series_out, ...)
+  
+  if (!has_name(list(...), "color")) {
+    colors <- colorize(seq(1, nrow(series_box)))
+    colors <- hex_to_rgba(colors, alpha = 0.75)  
+  }
+  
+  if (!has_name(list(...), "name")) {
+    series_box <- rename_(series_box, "name" = "g2")
+    series_out <- rename_(series_out, "name" = "g2")
+  }
+  
   
   hc <- highchart() %>% 
     hc_chart(type = "bar") %>% 
-    hc_colors(colors) %>% 
+    # hc_colors(colors) %>% 
     hc_xAxis(type = "category") %>% 
     hc_plotOptions(series = list(
       marker = list(
@@ -77,12 +92,18 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   
   hc
 }
-diamonds
 
-hcboxplot(diamonds$price)
-hcboxplot(diamonds$price, var = diamonds$cut)
-hcboxplot(diamonds$price, var = diamonds$cut, var2 = diamonds$color)
 
-hcboxplot(diamonds$price, outliers = FALSE)
-hcboxplot(diamonds$price, var = diamonds$cut, outliers = FALSE)
-hcboxplot(diamonds$price, var = diamonds$cut, var2 = diamonds$color, outliers = FALSE)
+hcboxplot(diamonds2$price)
+hcboxplot(diamonds2$price, var = diamonds2$cut)
+hcboxplot(diamonds2$price, var = diamonds2$cut, var2 = diamonds2$color)
+
+hcboxplot(diamonds2$price, outliers = FALSE)
+hcboxplot(diamonds2$price, var = diamonds2$cut, outliers = FALSE)
+hcboxplot(diamonds2$price, var = diamonds2$cut, var2 = diamonds2$color, outliers = FALSE)
+
+hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
+
+
+hcboxplot(diamonds2$price, var = diamonds2$cut, var2 = diamonds2$color, outliers = FALSE,
+          color = c("red", "pink", "darkred"))
