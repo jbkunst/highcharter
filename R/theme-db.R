@@ -60,8 +60,8 @@ hc_theme_db <- function(...){
           ),
         lineColor = "#2E3740",
         tickColor = "#2E3740",
-        title = list(  
-          style = list(  
+        title = list(
+          style = list(
             color = "#FFFFFF"
             ),
           text = NULL

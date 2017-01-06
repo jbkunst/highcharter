@@ -526,5 +526,3 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   hc %>% hc_add_series(data = ds, type = "treemap", ...)
   
 }
-
-

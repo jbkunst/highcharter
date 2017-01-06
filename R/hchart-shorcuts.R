@@ -43,7 +43,7 @@ hcdensity <- function(x, ...) {
   
   stopifnot(inherits(x, "density") || inherits(x, "numeric"))
   
-  if(class(x) == "numeric")
+  if (class(x) == "numeric")
     x <- density(x)
   
   hchart(x, ...)
@@ -89,14 +89,14 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   
   stopifnot(!is.null(x))
   
-  if(is.null(var))
+  if (is.null(var))
     var <- NA
-  if(is.null(var2))
+  if (is.null(var2))
     var2 <- NA
   
   df <- data_frame(x, "g1" = var, "g2" = var2)
   
-  get_box_values <- function(x){ 
+  get_box_values <- function(x) { 
     
     boxplot.stats(x)$stats %>% 
       t() %>% 
@@ -105,7 +105,7 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
     
   }
   
-  get_outliers_values <- function(x) {
+  get_outliers_values <- function(x){
     boxplot.stats(x)$out
   }
   
@@ -133,14 +133,14 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   
   hc <- hc_add_series_list(hc, list_parse(series_box))
   
-  if(is.na(var2) || is.na(var)) {
+  if (is.na(var2) || is.na(var)) {
     hc <- hc %>% 
       hc_xAxis(categories = "") %>% 
       hc_plotOptions(series = list(showInLegend = FALSE))
   }
   
   
-  if(outliers){
+  if (outliers){
     
     series_out <- df %>% 
       group_by_("g1", "g2") %>%  

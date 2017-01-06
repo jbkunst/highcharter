@@ -40,7 +40,7 @@
 #' hc_colorAxis(hc, stops = stops, max = 75) 
 #' 
 #' @export
-hc_colorAxis  <- function(hc, ...) {
+hc_colorAxis  <- function(hc, ...){
   
   .hc_opt(hc, "colorAxis", ...)
   
@@ -141,7 +141,7 @@ hc_colorAxis  <- function(hc, ...) {
 #' hc
 #' 
 #' @export
-hc_drilldown <- function(hc, ...) {
+hc_drilldown <- function(hc, ...){
   
   .hc_opt(hc, "drilldown", ...)
   
@@ -156,7 +156,7 @@ hc_drilldown <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#scrollbar}. 
 #' 
 #' @export
-hc_scrollbar <- function(hc, ...) {
+hc_scrollbar <- function(hc, ...){
   
   .hc_opt(hc, "scrollbar", ...)
   
@@ -171,7 +171,7 @@ hc_scrollbar <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#navigator}. 
 #' 
 #' @export
-hc_navigator <- function(hc, ...) {
+hc_navigator <- function(hc, ...){
   
   .hc_opt(hc, "navigator", ...)
   
@@ -189,7 +189,7 @@ hc_navigator <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#rangeSelector}. 
 #' 
 #' @export
-hc_rangeSelector <- function(hc, ...) {
+hc_rangeSelector <- function(hc, ...){
   
   .hc_opt(hc, "rangeSelector", ...)
   
@@ -204,7 +204,7 @@ hc_rangeSelector <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highmaps#mapNavigation}. 
 #' 
 #' @export
-hc_mapNavigation <- function(hc, ...) {
+hc_mapNavigation <- function(hc, ...){
   
   .hc_opt(hc, "mapNavigation", ...)
   
@@ -218,7 +218,7 @@ hc_mapNavigation <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}. 
 #' 
 #' @export
-hc_defs <- function(hc, ...) {
+hc_defs <- function(hc, ...){
   
   .hc_opt(hc, "defs", ...)
   
@@ -234,7 +234,7 @@ hc_defs <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#pane}. 
 #' 
 #' @export
-hc_pane <- function(hc, ...) {
+hc_pane <- function(hc, ...){
   
   .hc_opt(hc, "pane", ...)
   
@@ -263,7 +263,7 @@ hc_motion <- function(hc, ...) {
 #' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}. 
 #' 
 #' @export
-hc_annotations <- function(hc, ...) {
+hc_annotations <- function(hc, ...){
   
   .hc_opt(hc, "annotations", ...)
   
@@ -271,11 +271,12 @@ hc_annotations <- function(hc, ...) {
 
 #' @rdname hc_annotations
 #' @export
-hc_add_annotation <- function(hc, ...) {
+hc_add_annotation <- function(hc, ...){
   
   assertthat::assert_that(is.highchart(hc))
   
-  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], list(list(...)))
+  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]],
+                                          list(list(...)))
   
   hc
   
@@ -283,13 +284,14 @@ hc_add_annotation <- function(hc, ...) {
 
 #' @rdname hc_annotations
 #' @param x A \code{list} or a \code{data.frame} of annotations.
-#' @details The \code{x} elemens must have \code{xValue} and \code{yValue} elements
+#' @details The \code{x} elemens must have \code{xValue} and \code{yValue} 
+#'   elements
 #' @export
-hc_add_annotations <- function(hc, x) {
+hc_add_annotations <- function(hc, x){
   
   assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
   
-  if(is.data.frame(x))
+  if (is.data.frame(x))
     x <- list_parse(x)
   
   hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], x)
@@ -302,7 +304,7 @@ hc_add_annotations <- function(hc, x) {
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Options defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.
 #' @export
-hc_annotationsOptions <- function(hc, ...) {
+hc_annotationsOptions <- function(hc, ...){
   
   .hc_opt(hc, "annotationsOptions", ...)
   

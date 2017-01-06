@@ -24,7 +24,7 @@ hc_add_series.default <- function(hc, ...) {
   
   assertthat::assert_that(is.highchart(hc))
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.default")
   
   validate_args("add_series", eval(substitute(alist(...))))
@@ -43,7 +43,7 @@ hc_add_series.default <- function(hc, ...) {
 #' @export
 hc_add_series.numeric <- function(hc, data, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.numeric")
   
   data <- fix_1_length_data(data)
@@ -62,7 +62,7 @@ hc_add_series.numeric <- function(hc, data, ...) {
 #' @export
 hc_add_series.ts <- function(hc, data, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.ts")
   
   # http://stackoverflow.com/questions/29202021/
@@ -87,10 +87,10 @@ hc_add_series.ts <- function(hc, data, ...) {
 #' @export
 hc_add_series.xts <- function(hc, data, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.xts")
   
-  if(is.OHLC(data))
+  if (is.OHLC(data))
     return(hc_add_series.ohlc(hc, data, ...))
   
   timestamps <- datetime_to_timestamp(time(data))
@@ -108,7 +108,7 @@ hc_add_series.xts <- function(hc, data, ...) {
 #' @export
 hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.xts.ohlc")
   
   time <- datetime_to_timestamp(time(data))
@@ -130,12 +130,13 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
 #' @param addOriginal Logical value to add the original series or not.
 #' @param addLevels Logical value to show predicctions bands.
 #' @param fillOpacity The opacity of bands
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @param ... Arguments defined in
+#'   \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
-hc_add_series.forecast <- function(hc, data, addOriginal = FALSE, addLevels = TRUE,
-                                   fillOpacity = 0.1, ...) {
+hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
+                                   addLevels = TRUE, fillOpacity = 0.1, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.forecast")
   
   rid <- random_id()
@@ -144,20 +145,20 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE, addLevels = TR
   # hc <- highchart() %>% hc_title(text = "LALALA")
   # ... <- NULL
   
-  if(addOriginal)
+  if (addOriginal)
     hc <- hc_add_series(hc, data$x, name = "Series", zIndex = 3, ...)
   
   
   hc <- hc_add_series(hc, data$mean, name = method,  zIndex = 2, id = rid, ...)
   
   
-  if(addLevels){
+  if (addLevels){
     
     tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
     nmf <- paste(method, "level", data$level)
     
-    for (m in seq(ncol(data$upper))) { # m <- 1
-      
+    for (m in seq(ncol(data$upper))){ 
+      # m <- 1
       dfbands <- data_frame(
         t = tmf,
         u = as.vector(data$upper[, m]),
@@ -191,7 +192,7 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE, addLevels = TR
 #' @export
 hc_add_series.density <- function(hc, data, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.density")
   
   data <- list_parse(data.frame(cbind(x = data$x, y = data$y)))
@@ -207,7 +208,7 @@ hc_add_series.density <- function(hc, data, ...) {
 #' @export
 hc_add_series.character <- function(hc, data, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.character")
   
   series <- data %>% 
@@ -233,7 +234,7 @@ hc_add_series.factor <- hc_add_series.character
 #' @export
 hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.geo_json")  
   
   stopifnot(hc$x$type == "map", !is.null(type))
@@ -246,7 +247,7 @@ hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
 #' @export
 hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.geo_list")  
   
   stopifnot(hc$x$type == "map", !is.null(type))
@@ -260,14 +261,16 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
 #' @param data A \code{data.frame} object.
 #' @param type The type of the series: line, bar, etc.
 #' @param mapping The mapping, same idea as \code{ggplot2}.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @param ... Arguments defined in 
+#'   \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
-hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), ...) {
+hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
+                                     ...) {
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hc_add_series.data.frame")
 
-  if(length(mapping) == 0) {
+  if (length(mapping) == 0) {
     
     return(hc_add_series(hc, data = list_parse(data), type = type, ...))
     
@@ -376,7 +379,7 @@ data_to_series <- function(data, mapping, type, ...) {
     
     if (type == "treemap") {
       data <- rename_(data, "colorValue" = "color")
-    } else if (!all(is.hexcolor(data[["color"]]))){ 
+    } else if (!all(is.hexcolor(data[["color"]]))) { 
       data  <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")  
     }
     
@@ -387,7 +390,7 @@ data_to_series <- function(data, mapping, type, ...) {
   # size
   if (type %in% c("bubble", "scatter")) {
     
-    if(has_name(mapping, "size"))
+    if (has_name(mapping, "size"))
       data <- mutate_(data, "z" = "size")
     
   }
@@ -403,10 +406,10 @@ data_to_series <- function(data, mapping, type, ...) {
 
   data$type <- type
   
-  if(length(list(...)) > 0)
+  if (length(list(...)) > 0)
     data <- add_arg_to_df(data, ...)
   
-  if(has_name(mapping, "group") & !has_name(list(...), "name"))
+  if (has_name(mapping, "group") & !has_name(list(...), "name"))
     data <- rename_(data, "name" = "group")  
   
   series <- list_parse(data)
@@ -487,4 +490,3 @@ hc_rm_series <- function(hc, names = NULL) {
   hc
   
 }
-

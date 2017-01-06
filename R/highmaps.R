@@ -109,7 +109,7 @@ hcmap <- function(map = "custom/world",
   
   hc <- highchart(type = "map")
   
-  if(download_map_data) {
+  if (download_map_data) {
     
     mapdata <- download_map_data(map)
     
@@ -127,7 +127,7 @@ hcmap <- function(map = "custom/world",
     
   }
   
-  if(is.null(data)) {
+  if (is.null(data)) {
     
     hc <- hc %>% 
       hc_add_series.default(
@@ -162,8 +162,7 @@ hcmap <- function(map = "custom/world",
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file
 #' @export
-download_map_data <- function(url = "custom/world.js",
-                              showinfo = FALSE) {
+download_map_data <- function(url = "custom/world.js", showinfo = FALSE) {
   
   url <- sprintf("https://code.highcharts.com/mapdata/%s",
                  fix_map_name(url))
@@ -175,7 +174,7 @@ download_map_data <- function(url = "custom/world.js",
   mapdata <- paste(mapdata, collapse = "\n")
   mapdata <- jsonlite::fromJSON(mapdata, simplifyVector = FALSE)
   
-  if(showinfo) {
+  if (showinfo) {
     glimpse(get_data_from_map(mapdata))
   }
   
@@ -195,7 +194,9 @@ download_map_data <- function(url = "custom/world.js",
 get_data_from_map <- function(mapdata) {
   mapdata$features %>%
     map("properties") %>%
-    map_df(function(x){ x[!map_lgl(x, is.null)] })
+    map_df(function(x) {
+      x[!map_lgl(x, is.null)]
+      })
 }
 
 
@@ -205,5 +206,3 @@ fix_map_name <- function(x = "custom/world") {
   x <- sprintf("%s.js", x)
   x
 }
-
-

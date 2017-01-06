@@ -23,6 +23,7 @@ hc_add_annotations(hc, x)
 Helper function to add annotations to highcharts library.
 }
 \details{
-The \code{x} elemens must have \code{xValue} and \code{yValue} elements
+The \code{x} elemens must have \code{xValue} and \code{yValue} 
+  elements
 }
 

@@ -1,4 +1,4 @@
-# highcharter 0.5.0
+# highcharter 0.5.0 
 
 ## Breaking changes
 

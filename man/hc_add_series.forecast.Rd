@@ -18,7 +18,8 @@
 
 \item{fillOpacity}{The opacity of bands}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
+\item{...}{Arguments defined in
+\url{http://api.highcharts.com/highcharts#chart}.}
 }
 \description{
 hc_add_series for forecast objects

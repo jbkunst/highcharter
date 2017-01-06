@@ -18,7 +18,7 @@ hc_add_series_list <- function(hc, x) {
   
   assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
   
-  if(is.data.frame(x))
+  if (is.data.frame(x))
     x <- list_parse(x)
                           
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)

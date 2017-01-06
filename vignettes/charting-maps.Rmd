@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
+```{r, warning = FALSE, message = FALSE, echo = FALSE}
 library(highcharter)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 options(highcharter.theme = hc_theme_smpl())
@@ -17,7 +17,8 @@ options(highcharter.theme = hc_theme_smpl())
 ## Basics
 
 The easiest way to chart a map with highcharter is using `hcmap` function.
-Select a map (a url) from the highmaps collection https://code.highcharts.com/mapdata/.
+Select a map (a url) from the highmaps collection 
+https://code.highcharts.com/mapdata/.
 and use the url as a map in `hcmap` function. This will download the map
 and create a \code{highchart} object using the info as a `mapData` argument.
 
@@ -42,8 +43,8 @@ to help to know what are the regions coded to know how to join the map
 and data:
 
 - `download_map_data`: Download the geojson data from the highcharts collection.
-- `get_data_from_map`: Get the properties  for each region in the map, as the keys
-from the map data.
+- `get_data_from_map`: Get the properties  for each region in the map, as 
+the keys from the map data.
 
 ```{r}
 require(dplyr)
@@ -66,26 +67,34 @@ If we compare this 2 data frames the `hc-key` is same code that
 ```{r}
 hcmap("countries/us/us-all", data = data_fake, value = "value",
       joinBy = c("hc-a2", "code"), name = "Fake data",
-      dataLabels = list(enabled = TRUE, format = '{point.name}'),
+      dataLabels = list(enabled = TRUE, format = "{point.name}"),
       borderColor = "#FAFAFA", borderWidth = 0.1,
-      tooltip = list(valueDecimals = 2, valuePrefix = "$", valueSuffix = " USD")) 
+      tooltip = list(valueDecimals = 2, valuePrefix = "$", valueSuffix = "USD")) 
 ```
 
 ## Adding More Data
 
+With highcharter is possible add data as points or bubbles. For this it is 
+necessary a data frame with `lat`, `lon` columns, and `name`, `z`  are
+optional:
+
 ```{r}
-cities <- data_frame(
-  name = c("London", "Birmingham", "Glasgow", "Liverpool"),
-  lat = c(51.507222, 52.483056,  55.858, 53.4),
-  lon = c(-0.1275, -1.893611, -4.259, -3),
-  z = c(1, 2, 3, 2)
-)
+data("quakes")
 
-glimpse(cities)
+quakes <- quakes %>% 
+  rename(lon = long) %>% 
+  mutate(z = mag,
+         color = colorize(depth)) %>% 
+  filter(z > 5)
 
-hcmap("countries/gb/gb-all", showInLegend = FALSE) %>% 
-  hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = '10%') %>% 
-  hc_mapNavigation(enabled = TRUE) 
+glimpse(quakes)
+
+hcmap("countries/fj/fj-all", name = "Fiji") %>% 
+  hc_add_series(data = quakes, type = "mapbubble",
+                name = "Quakes", maxSize = "10") %>% 
+  hc_title(text = "Locations of Earthquakes off Fiji") %>% 
+  hc_subtitle(text = "Locations of seismic events of MB > 5.0. The events 
+              occurred in a cube near Fiji since 1964")
 ```
 
 ## Advanced Maps
@@ -122,7 +131,8 @@ volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=E
 
 ```
 
-The data is ready. Remember you can keep using the rest of the API to customize your map.
+The data is ready. Remember you can keep using the rest of the API to 
+customize your map.
 
 ```{r}
 highchart(type = "map") %>%
@@ -132,10 +142,12 @@ highchart(type = "map") %>%
   hc_add_series(data = marine, type = "mapline", geojson = TRUE,
                 color = "#2980b9", name = "Marine currents",
                 tooltip = list(pointFormat = "{point.properties.NOMBRE}")) %>%
-  hc_add_series(data = plates, type = "mapline", lineWidth = 2, zIndex = -1, geojson = TRUE,
+  hc_add_series(data = plates, type = "mapline", lineWidth = 2, zIndex = -1,
+                geojson = TRUE,
                 color = "#d35400", name = "Plates",
                 tooltip = list(pointFormat = "{point.properties.TIPO}")) %>%
-  hc_add_series(data = volcano, type = "mappoint", color = hex_to_rgba("#f1c40f", 0.4),
+  hc_add_series(data = volcano, type = "mappoint",
+                color = hex_to_rgba("#f1c40f", 0.4),
                 geojson = TRUE, name = "Volcanos",
                 tooltip = list(pointFormat = "{point.properties.NOMBRE}"),
                 marker = list(lineWidth = 0, radius = 2))
@@ -174,7 +186,8 @@ hcmap() %>%
 ## `geojsonio` Package
 
 Highcharts support `geo_json` classes from the `geojsonio` package. So you 
-can use `hc_add_series` as usual without use `geojson = TRUE` parameter/argument.
+can use `hc_add_series` as usual without use `geojson = TRUE` 
+parameter/argument.
 
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -187,7 +200,9 @@ class(ausgeojson)
 
 # http://openflights.org/data.html
 airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
-airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+airports <- filter(airports,
+                   country == "Australia", 
+                   name != "Roma Street Railway Station")
 
 airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
 class(airp_geojson)

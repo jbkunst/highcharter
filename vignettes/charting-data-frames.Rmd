@@ -8,6 +8,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, warning = FALSE, message = FALSE, echo = FALSE}
+library(highcharter)
+options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
+```
+
 We chart data. Data can come in different ways: numeric or character vectors,
 as time series objects, etc. but the most common object with data is a data 
 frame. So, why can chart this type of object in __highcharter__?
@@ -30,11 +35,6 @@ are inspired in __ggplot2__ package. So:
 
 The main differences with ggplot2 are here we need the data and the aesthetics
 explicit in every highchart functions. Lets see example to be more clear.
-
-```{r, message=FALSE}
-library(highcharter)
-options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE) # we'll use a custom theme
-```
 
 ```{r}
 data("mpg", package = "ggplot2")
@@ -72,11 +72,13 @@ fit <- arrange(augment(modlss), carat)
 head(fit)
 
 highchart() %>% 
-  hc_add_series(data, type = "scatter", hcaes(x = carat, y = price, size = depth, group = cut)) %>%
+  hc_add_series(data, type = "scatter",
+                hcaes(x = carat, y = price, size = depth, group = cut)) %>%
   hc_add_series(fit, type = "spline", hcaes(x = carat, y = .fitted),
                 name = "Fit", id = "fit") %>% 
   hc_add_series(fit, type = "arearange",
-                hcaes(x = carat, low = .fitted - .se.fit*2, high = .fitted + .se.fit*2),
+                hcaes(x = carat, low = .fitted - 2*.se.fit,
+                      high = .fitted + 2*.se.fit),
                 linkedTo = "fit")
 
 ```
@@ -95,7 +97,8 @@ hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price))
 ```{r}
 data(economics_long, package = "ggplot2")
 
-economics_long2 <- filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
+economics_long2 <- filter(economics_long,
+                          variable %in% c("pop", "uempmed", "unemploy"))
 
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ```

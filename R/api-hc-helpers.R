@@ -35,10 +35,10 @@ hc_size <- function(hc, width = NULL, height = NULL) {
   
   assertthat::assert_that(is.highchart(hc))
   
-  if(!is.null(width))
+  if (!is.null(width))
     hc$width <- width
   
-  if(!is.null(height))
+  if (!is.null(height))
     hc$height <- height
   
   hc
@@ -51,9 +51,9 @@ hc_size <- function(hc, width = NULL, height = NULL) {
     highcharter::hc_tooltip(
       shared = TRUE,
       useHTML = TRUE,
-      headerFormat = '<small>{point.key}</small><table>',
-      pointFormat = '<tr><td style="color: {series.color}">{series.name}: </td><td style="text-align: right"><b>{point.y}</b></td></tr>',
-      footerFormat = '</table>'
+      headerFormat = "<small>{point.key}</small><table>",
+      pointFormat = "<tr><td style=\"color: {series.color}\">{series.name}: </td><td style=\"text-align: right\"><b>{point.y}</b></td></tr>",
+      footerFormat = "</table>"
     )
 }
 
@@ -84,5 +84,3 @@ hc_size <- function(hc, width = NULL, height = NULL) {
         }"))
   
 }
-
-

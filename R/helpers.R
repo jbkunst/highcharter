@@ -484,10 +484,10 @@ random_id <- function(n = 1, length = 10){
 #' @export
 fix_1_length_data <- function(x) {
 
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("fix_1_length")
 
-  if(class(x) != "list" & length(x) == 1)
+  if (class(x) != "list" & length(x) == 1)
     x <- list(x)
   x
 }

@@ -26,7 +26,7 @@ hchart.default <- function(object, ...) {
 #' @export
 hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
   
-  if(getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose"))
     message("hchart.data.frame")
   
   data <- mutate_mapping(object, mapping)
@@ -246,7 +246,8 @@ hchart.acf <- function(object, ...){
 }
 
 #' @export
-hchart.mts <- function(object, ..., separate = TRUE, heights =  rep(1, ncol(object))) {
+hchart.mts <- function(object, ..., separate = TRUE,
+                       heights =rep(1, ncol(object))) {
   
   if (separate) {
     hc <- hchart.mts2(object, heights = heights, ...)
@@ -274,7 +275,7 @@ hchart.mts1 <- function(object, ...) {
   
 }
 
-hchart.mts2 <- function(object, ..., heights =  rep(1, ncol(object)), sep = 0.01) {
+hchart.mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01) {
   
   ntss <- ncol(object)
   
@@ -749,7 +750,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
   mc <- max(abs(dfcomp)) 
   
   dfcomp <- dfcomp %>% 
-  { . / mc * mx } %>% 
+    { . / mc * mx } %>% 
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
     rownames_to_column("name") %>%  

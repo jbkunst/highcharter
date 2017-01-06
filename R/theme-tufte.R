@@ -72,7 +72,7 @@ hc_theme_tufte <- function(...){
 hc_theme_tufte2 <- function(...) {
   
   theme <- hc_theme_tufte(
-    xAxis = list(tickWidth = 0, lineWidth = 1,lineColor = "#737373"),
+    xAxis = list(tickWidth = 0, lineWidth = 1, lineColor = "#737373"),
     yAxis = list(tickWidth = 0, lineWidth = 1, gridLineColor = "white", gridZIndex = 4)
   )
   
@@ -86,6 +86,3 @@ hc_theme_tufte2 <- function(...) {
   theme
   
 }
-
-
-

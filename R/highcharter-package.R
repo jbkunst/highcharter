@@ -37,4 +37,4 @@ NULL
 #' @rdname highcarter-exports
 NULL
 
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+if (getRversion() >= "2.15.1")  utils::globalVariables(c("."))

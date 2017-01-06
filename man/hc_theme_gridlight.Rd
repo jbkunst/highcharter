@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme-gridlight.R
 \name{hc_theme_gridlight}
 \alias{hc_theme_gridlight}
-\title{Grid Light theme for highchart}
+\title{Grid Light theme for highcharts}
 \usage{
 hc_theme_gridlight(...)
 }
@@ -10,7 +10,7 @@ hc_theme_gridlight(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Grid Light theme for highchart
+Grid Light theme for highcharts
 }
 \examples{
 
