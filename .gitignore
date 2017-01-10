@@ -6,6 +6,7 @@
 dev/*.dcf
 dev/*.html
 dev/issues/*.html
+dev/stackoverflow/*.html
 dev/issues/rsconnect/*
 dev/rsconnect/*
 
