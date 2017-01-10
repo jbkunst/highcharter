@@ -6,6 +6,7 @@ diamonds2 <- diamonds %>%
   sample_n(1000) %>% 
   filter(color %in% c("H", "J", "E"))
 
+add_arg_to_df <- highcharter:::add_arg_to_df
 
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   
@@ -93,7 +94,6 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   hc
 }
 
-
 hcboxplot(diamonds2$price)
 hcboxplot(diamonds2$price, var = diamonds2$cut)
 hcboxplot(diamonds2$price, var = diamonds2$cut, var2 = diamonds2$color)
@@ -103,7 +103,6 @@ hcboxplot(diamonds2$price, var = diamonds2$cut, outliers = FALSE)
 hcboxplot(diamonds2$price, var = diamonds2$cut, var2 = diamonds2$color, outliers = FALSE)
 
 hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
-
 
 hcboxplot(diamonds2$price, var = diamonds2$cut, var2 = diamonds2$color, outliers = FALSE,
           color = c("red", "pink", "darkred"))

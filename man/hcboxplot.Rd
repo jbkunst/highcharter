@@ -20,4 +20,7 @@ hcboxplot(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...)
 \description{
 Shortcut to make a boxplot
 }
+\examples{
+hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
+}
 
