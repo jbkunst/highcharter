@@ -98,11 +98,11 @@ hchart.histogram <- function(object, ...) {
 }
 
 #' @export
-hchart.character <- function(object, ...) {
+hchart.character <- function(object, type = "column", ...) {
   
   highchart() %>% 
     hc_xAxis(type = "category") %>% 
-    hc_add_series(data = object, ...)
+    hc_add_series(data = object, type = type, ...)
     
 }
 
