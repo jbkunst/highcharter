@@ -38,7 +38,7 @@ export_hc <- function(hc, filename = NULL) {
     filename <- str_c(filename, ".js")
 
   jslns <- hc$x$hc_opts %>% 
-    toJSON(pretty = TRUE, auto_unbox = TRUE, force = TRUE) %>% 
+    toJSON(pretty = TRUE, auto_unbox = TRUE, force = TRUE, null = "null") %>% 
     str_split("\n") %>% 
     head(1) %>%
     unlist() %>% 
