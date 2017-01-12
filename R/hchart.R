@@ -340,6 +340,9 @@ hchart.ets <- function(object, ...){
 #' @export
 hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   
+  if (getOption("highcharter.verbose"))
+    message("hchart.maxtrix")
+  
   stopifnot(is.numeric(object))
   
   df <- as.data.frame(object)
