@@ -174,26 +174,33 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 }
 
 
-#' Shorcut to make waffle charts
+#' Shorcut to make icon arrays charts
 #' @param labels A character vector
 #' @param counts A integer vector
 #' @param rows A integer to set 
 #' @param icons A character vector same length (o length 1) as labels
 #' @param size Font size
-#' 
+#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
 #' @examples
 #' 
-#' hcwaffle(c("nice", "good"), c(10, 20))
+#' hciconarray(c("nice", "good"), c(10, 20))
 #' 
-#' hcwaffle(c("nice", "good"), c(10, 20), size = 10)
+#' hciconarray(c("nice", "good"), c(10, 20), size = 10)
 #' 
-#' hcwaffle(c("nice", "good"), c(100, 200), icons = "child")
+#' hciconarray(c("nice", "good"), c(100, 200), icons = "child")
 #' 
-#' hcwaffle(c("car", "truck", "plane"), c(75, 30, 20), icons = c("car", "truck", "plane"))
+#'  hciconarray(c("car", "truck", "plane"), c(75, 30, 20), icons = c("car", "truck", "plane")) %>%
+#'    hc_add_theme(
+#'      hc_theme_merge(
+#'        hc_theme_flatdark(),
+#'        hc_theme_null(chart = list(backgroundColor = "#34495e"))
+#'      )
+#'    )
 #' 
 #' @importFrom dplyr ungroup group_by_
 #' @export
-hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
+hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
+                        ...){
   
   # library(dplyr);library(purrr)
   # data(diamonds, package = "ggplot2")
@@ -206,8 +213,6 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
   # size <- 4; icon <- "diamond"
   
   assertthat::assert_that(length(counts) == length(labels))
-  
-  hc <- highchart() 
   
   if (is.null(rows)) {
     
@@ -233,7 +238,8 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
     ungroup() %>% 
     left_join(data_frame(labels = as.character(labels), counts),
               by = c("name" = "labels")) %>% 
-    arrange_("-counts") 
+    arrange_("-counts") %>% 
+    mutate_("percent" = "counts/sum(counts)*100")
   
   if (!is.null(icons)) {
     
@@ -250,13 +256,27 @@ hcwaffle <- function(labels, counts, rows = NULL, icons = NULL, size = 4){
     
   }
   
-  hc <- hc %>% 
-    hc_chart(type = "scatter") %>% 
-    hc_add_series_list(list_parse(ds)) %>% 
-    hc_plotOptions(series = list(marker = list(radius = size))) %>% 
-    hc_tooltip(pointFormat = "{point.series.options.counts}") %>%
-    hc_add_theme(hc_theme_null())
+  ds <- mutate(ds, ...)
   
+  hc <- highchart()  %>% 
+    hc_chart(type = "scatter") %>% 
+    hc_add_series_list(ds) %>% 
+    hc_plotOptions(series = 
+                     list(
+                       cursor = "default",
+                       marker = list(radius = size),
+                       states = list(hover = list(enabled = FALSE)),
+                       events = list(
+                         legendItemClick = JS("function () { return false; }")
+                       )
+                     )) %>%  
+    hc_tooltip(pointFormat = "{point.series.options.counts} ({point.series.options.percent:.2f}%)") %>%
+    hc_add_theme(
+      hc_theme_merge(
+        getOption("highcharter.theme"),
+        hc_theme_null()
+        )
+      )
   hc
   
 }
