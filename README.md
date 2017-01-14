@@ -12,7 +12,7 @@ so it is recommended know how highcharts API works to take a major advantage of
 this package. You can look  some [demos](http://www.highcharts.com/demo) charts
 and explore chart types, syntax and all what highcharts can do.
 
-## Why highcharter?
+## Highlights
 
 - [Various](http://jkunst.com/highcharter/) chart type with the same style: 
 scatters, bubble, line, time series, heatmaps, treemap, bar charts, networks.
