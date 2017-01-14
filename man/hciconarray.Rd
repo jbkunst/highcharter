@@ -4,7 +4,7 @@
 \alias{hciconarray}
 \title{Shorcut to make icon arrays charts}
 \usage{
-hciconarray(labels, counts, rows = NULL, icons = NULL, size = 4)
+hciconarray(labels, counts, rows = NULL, icons = NULL, size = 4, ...)
 }
 \arguments{
 \item{labels}{A character vector}
@@ -16,6 +16,8 @@ hciconarray(labels, counts, rows = NULL, icons = NULL, size = 4)
 \item{icons}{A character vector same length (o length 1) as labels}
 
 \item{size}{Font size}
+
+\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
 }
 \description{
 Shorcut to make icon arrays charts
