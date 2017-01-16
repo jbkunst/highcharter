@@ -21,3 +21,6 @@ inst/doc
 
 # seasonal
 fort.6
+
+# rev deps
+^revdep$
