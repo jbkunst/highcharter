@@ -14,3 +14,4 @@ fort.6
 ^CONTRIBUTING\.md$
 ^data-raw$
 ^appveyor\.yml$
+^revdep$

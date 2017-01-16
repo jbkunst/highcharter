@@ -2,13 +2,70 @@
 
 ## Breaking changes
 
+ * `hchart.data.frame` now gains a new `mapping` argument  using `hcaes` function to 
+ define the aesthetics. After `hchart(df, "line", x = xvar, yvar, group = othervar)` 
+ now: `hchart(df, "line", hcaes(x = xvar, yvar, color = othervar), ...)` and therefore
+ `...` are used like other highcharter functions for give highcharts arguments 
+ to the series. See _charting data frames_ vignette.
+ 
 ## New Funcionalities
+
+ * `hc_add_series` is a generic generic function (#213). 
+ 
+ * New `hcmap` function to chart maps (#218). And use remote sources (#215).
+ 
+ * New _charting data frames_ vignette (http://rpubs.com/jbkunst/230276) (#220). 
+ 
+ * New _charting maps_ vignette (http://jkunst.com/highcharter/highmaps.html) (#218). 
+ 
+ * `debug` as an option instead of argument. Example `options(highcharter.debug = TRUE)` (#216).
+ 
+ * Upgrade to highcharts V5 (#154) (#208). 
+ 
+ * Added helpers & shorcuts for tooltip: sort and table (#206).
+ 
+ * Added export-csv plugin to export chart data to CSV, XLS, HTML or JS array (#178). 
+ 
+ * Added Grouped Categories pluging (#172) (#193). 
+ 
+ * Added Tooltip delay pluging  (#181). 
+ 
+ * Added `is.highchart` according with _Best practices_ in http://adv-r.had.co.nz/S3.html (#179). 
+ 
+ * New themes:  `theme_firefox` (#191), `theme_tufte` (#190). `hc_theme_elementary` (#184). 
+ 
+ * `hchart.data.frame` doesn't override the color if the colum var have a hexadecimal color
+   format (#148).
+   
+ * Added `hc_size` function to change width and height (#146). 
+ 
+ * Add more data for nice examples: vaccines, weather radials, pkmn (#145). 
 
 ## Changes
 
+ * renaming `hcwaffle` to hciconarray. The `hcwaffle` do not make a waffle!  (#242). 
+ 
+ * removing colize_vector function (#237). 
+ 
+ * `viridisLite` moved from imports to suggests (#236). 
+
 ## Bug fixes
 
+ * Fix map using `mapbubble` (#209). 
+ 
+ * `hc_add_series_map` don't remove additional data (#188) (#189).
+ 
+ * `hc_annotations` accept multiple arguments (#171).
+ 
+ * Adding specific version of tibble (#159).
+ 
+ * `hchart.data.frame` allow change stops in `hc_colorAxis` (#147). 
+ 
+
 ## Others
+
+ * Remove underscore as dependencies (#214) (#210). 
+
 
 # highcharter 0.4.0
 

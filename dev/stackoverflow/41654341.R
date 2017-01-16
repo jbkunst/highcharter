@@ -18,6 +18,7 @@ mydata
 
 library(tidyr)
 library(dplyr)
+library(dtplyr)
 
 mydata2 <- gather(mydata, key, value, -year, -car)
 mydata2 <- tbl_df(mydata2)
@@ -34,7 +35,8 @@ myseries <- mutate(
   auxvar = rep(c(TRUE, FALSE), 3), # auxiliar var
   id = ifelse(auxvar, tolower(name), NA),
   linkedTo = ifelse(!auxvar, tolower(name), NA),
-  yAxis = ifelse(!auxvar, 0, 1)
+  yAxis = ifelse(!auxvar, 0, 1),
+  color = colorize(name)
   )
 
 myseries
