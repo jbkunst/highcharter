@@ -23,4 +23,4 @@ inst/doc
 fort.6
 
 # rev deps
-^revdep$
+revdep/*
