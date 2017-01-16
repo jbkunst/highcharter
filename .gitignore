@@ -4,11 +4,9 @@
 
 # html and rpubs
 dev/*.dcf
-dev/*.html
-dev/issues/*.html
-dev/stackoverflow/*.html
-dev/issues/rsconnect/*
-dev/rsconnect/*
+dev/*/*.html
+dev/*/rsconnect/
+dev/*/rsconnect/*
 
 # RStudio files
 .Rproj.user/
