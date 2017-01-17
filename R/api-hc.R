@@ -234,7 +234,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
   
   dfaxis <- data_frame(height = heights, top = tops, offset = offset)
 
-  dfaxis <- dfaxis %>% dplyr::filter(seq(1:nrow(dfaxis)) %% 2 != 0)
+  dfaxis <- dfaxis %>% dplyr::filter(seq_len(nrow(dfaxis)) %% 2 != 0)
   
   if (turnopposite) {
     ops <- rep_len(c(FALSE, TRUE), length.out = nrow(dfaxis))

@@ -350,11 +350,11 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   ismatrix <- is.null(colnames(object)) & is.null(rownames(object))
   pos <- ifelse(ismatrix, 0, 1)
   
-  xnm <- if (is.null(colnames(object))) 1:ncol(object) else colnames(object)
+  xnm <- if (is.null(colnames(object))) seq_len(ncol(object)) else colnames(object)
   xnm <- as.character(xnm)
   xid <- seq(length(xnm)) - pos
   
-  ynm <- if (is.null(rownames(object))) 1:nrow(object) else rownames(object)
+  ynm <- if (is.null(rownames(object))) seq_len(ncol(object)) else rownames(object)
   ynm <- as.character(ynm)
   yid <- seq(length(ynm)) - pos
   

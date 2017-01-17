@@ -15,10 +15,10 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
   
   params <- list()
   
-  for (i in 1:length(input_list)) {
+  for (i in seq_len(length(input_list))) {
     x <- eval.parent(input_list[[i]])
     if (any(class(x) == "list")) {
-      for (j in 1:length(x)) {
+      for (j in seq_len(length(x))) {
         y <- eval(x[[j]])
         params[[length(params) + 1]] <- y
       }
