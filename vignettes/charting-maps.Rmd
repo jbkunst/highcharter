@@ -3,7 +3,7 @@ title: "Charting Maps"
 author: "Joshua Kunst"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Replicating Highcharts Demos}
+  %\VignetteIndexEntry{Charting Maps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
