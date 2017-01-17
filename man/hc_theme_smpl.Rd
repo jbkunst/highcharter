@@ -10,7 +10,7 @@ hc_theme_smpl(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Desing inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/ggplot.r}
+Desing inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r}
 and color by \url{https://www.materialui.co/flatuicolors}
 }
 \examples{
