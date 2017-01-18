@@ -5,8 +5,8 @@
 [![downloads](http://cranlogs.r-pkg.org/badges/highcharter)](http://www.r-pkg.org/pkg/highcharter)
 [![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&svg=true)](https://ci.appveyor.com/project/jbkunst/highcharter)
-[![GitHub issues](https://img.shields.io/github/issues/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![GitHub issues](https://img.shields.io/github/issues-closed/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+[![GitHub issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+[![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
 
 R wrapper for highcharts. `highcharter` bring all the highcharts capabilites
