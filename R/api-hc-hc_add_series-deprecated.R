@@ -526,3 +526,55 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   hc %>% hc_add_series(data = ds, type = "treemap", ...)
   
 }
+
+#' Shorcut for add flags to highstock chart
+#'
+#' This function helps to add flags highstock charts created from \code{xts} objects.
+#' 
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param dates Date vector.
+#' @param title A character vector with titles.
+#' @param text A character vector with the description.
+#' @param id The name of the series to add the flags. A previous series
+#'   must be added whith this \code{id}. 
+#' @param ... Aditional shared arguments for the *flags* data series
+#'   (\url{http://api.highcharts.com/highstock#plotOptions.flags})
+#'   
+#' @examples
+#' 
+#' 
+#' \dontrun{
+#' 
+#' library("quantmod")
+#' 
+#' usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
+#' 
+#' dates <- as.Date(c("2015-05-08", "2015-09-12"), format = "%Y-%m-%d")
+# 
+#' highchart(type = "stock") %>% 
+#'   hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
+#'   hc_add_series_flags(dates,
+#'                       title = c("E1", "E2"), 
+#'                       text = c("This is event 1", "This is the event 2"),
+#'                       id = "usdjpy") 
+#' }
+#'                       
+#' @export
+hc_add_series_flags <- function(hc, dates,
+                                title = LETTERS[seq(length(dates))],
+                                text = title,
+                                id = NULL, ...) {
+  
+  .Deprecated("hc_add_series")
+  
+  assertthat::assert_that(is.highchart(hc), is.date(dates))
+  
+  dfflags <- data_frame(x = datetime_to_timestamp(dates),
+                        title = title, text = text)
+  
+  dsflags <- list_parse(dfflags)
+  
+  hc %>% hc_add_series(data = dsflags, onSeries = id, type = "flags", ...)
+  
+}
