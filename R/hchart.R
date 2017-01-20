@@ -354,7 +354,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   xnm <- as.character(xnm)
   xid <- seq(length(xnm)) - pos
   
-  ynm <- if (is.null(rownames(object))) seq_len(ncol(object)) else rownames(object)
+  ynm <- if (is.null(rownames(object))) seq_len(nrow(object)) else rownames(object)
   ynm <- as.character(ynm)
   yid <- seq(length(ynm)) - pos
   
