@@ -269,14 +269,18 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
   
   if (getOption("highcharter.verbose"))
     message("hc_add_series.data.frame")
-
+  
   if (length(mapping) == 0) {
+    
+    if(has_name(data, "series"))
+      data <- rename_(data, "seriess" = "series")
     
     return(hc_add_series(hc, data = list_parse(data), type = type, ...))
     
   }
   
   data <- mutate_mapping(data, mapping)
+  
   series <- data_to_series(data, mapping, type = type, ...)
 
   hc_add_series_list(hc, series)
@@ -320,13 +324,9 @@ mutate_mapping <- function(data, mapping) {
 
   data <- dplyr::mutate_(data, .dots = setNames(tran, newv))
   
-  # mutate_call <- mapping %>% 
-  #   as.character() %>% 
-  #   map(function(x) paste("~ ", x)) %>% 
-  #   map(as.formula) %>% 
-  #   map(lazyeval::interp)
-  # 
-  # mutate_(data, .dots = mutate_call)
+  # Reserverd  highcharts names (#241)
+  if(has_name(data, "series"))
+    data <- rename_(data, "seriess" = "series")
   
   data
   
