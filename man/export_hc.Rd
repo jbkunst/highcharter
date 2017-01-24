@@ -14,8 +14,8 @@ export_hc(hc, filename = NULL, as = "is", name = NULL)
 \item{as}{String to define how to save the configuration options.
 One of 'is', 'container', 'variable'.}
 
-\item{name}{Name of the generated object. Only used if \code{as} is
-\code{'variable'}.}
+\item{name}{A variable used to put as name of the generated object if \code{as} is
+\code{'variable'} and the css/js selector if is \code{as} is container.}
 }
 \description{
 Function to export js file the configuration options
@@ -40,8 +40,8 @@ hc <- highcharts_demo() \%>\%
  )
 
 export_hc(hc, filename = "~/hc_is.js", as = "is")
-export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "im_a_js_obj")
-export_hc(hc, filename = "~/hc_ct.js", as = "container")
+export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "objectname")
+export_hc(hc, filename = "~/hc_ct.js", as = "container", name = "#selectorid")
 
 }
 

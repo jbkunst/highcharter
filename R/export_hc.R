@@ -3,8 +3,8 @@
 #' @param filename String of the exported file.
 #' @param as String to define how to save the configuration options.
 #'   One of 'is', 'container', 'variable'.
-#' @param name Name of the generated object. Only used if \code{as} is
-#' \code{'variable'}.
+#' @param name A variable used to put as name of the generated object if \code{as} is
+#' \code{'variable'} and the css/js selector if is \code{as} is container.
 #' 
 #' @examples 
 #' 
@@ -26,8 +26,8 @@
 #'  )
 #' 
 #' export_hc(hc, filename = "~/hc_is.js", as = "is")
-#' export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "im_a_js_obj")
-#' export_hc(hc, filename = "~/hc_ct.js", as = "container")
+#' export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "objectname")
+#' export_hc(hc, filename = "~/hc_ct.js", as = "container", name = "#selectorid")
 #' 
 #' @importFrom jsonlite toJSON
 #' @importFrom stringr str_split str_c str_detect str_replace
@@ -72,7 +72,7 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
   tmpl <- switch(
     as,
     is = "%s",
-    container = "$(function () {\n\t$('#container').highcharts(\n%s\n);\n});",
+    container = sprintf("$(function(){\n\t$('%s').highcharts(\n%%s\n);\n});", name),
     variable = sprintf("%s = %%s", name)
   )
 
