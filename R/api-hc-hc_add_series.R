@@ -304,6 +304,39 @@ hcaes <- function (x, y, ...) {
   mapping
 }
 
+#' Define aesthetic mappings using strings.
+#' Similar in spirit to \code{ggplot2::aes_string}
+#' @param x,y,... List of name value pairs giving aesthetics to map to
+#'   variables. The names for x and y aesthetics are typically omitted because
+#'   they are so common; all other aesthetics must be named.
+#' @examples
+#'
+#' hcaes_string(x = 'xval', color = 'colorvar', group = 'grvar')
+#'
+#' @export
+
+hcaes_string <- function (x, y, ...)
+{
+  mapping <- list(...)
+  if (!missing(x))
+    mapping["x"] <- list(x)
+  if (!missing(y))
+    mapping["y"] <- list(y)
+  mapping <- lapply(mapping, function(x) {
+    if (is.character(x)) {
+      parse(text = x)[[1]]
+    }
+    else {
+      x
+    }
+  })
+  mapping <- structure(mapping, class = "uneval")
+  mapping <- mapping[names(mapping) != ""]
+  class(mapping) <- c("hcaes", class(mapping))
+  mapping
+}
+
+
 #' Modify data frame accoring to mapping
 #' @param data A data frame object.
 #' @param mapping A mapping from \code{hcaes} function.
