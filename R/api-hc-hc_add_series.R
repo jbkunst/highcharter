@@ -310,18 +310,20 @@ hcaes <- function (x, y, ...) {
 #'   variables. The names for x and y aesthetics are typically omitted because
 #'   they are so common; all other aesthetics must be named.
 #' @examples
-#'
+#' hchart(mtcars, "point", hcaes_string("hp", "mpg", group = "cyl"))
+#' 
 #' hcaes_string(x = 'xval', color = 'colorvar', group = 'grvar')
-#'
 #' @export
-
-hcaes_string <- function (x, y, ...)
-{
+hcaes_string <- function (x, y, ...){
+  
   mapping <- list(...)
+  
   if (!missing(x))
     mapping["x"] <- list(x)
+  
   if (!missing(y))
     mapping["y"] <- list(y)
+  
   mapping <- lapply(mapping, function(x) {
     if (is.character(x)) {
       parse(text = x)[[1]]
@@ -330,11 +332,19 @@ hcaes_string <- function (x, y, ...)
       x
     }
   })
+  
   mapping <- structure(mapping, class = "uneval")
+  
   mapping <- mapping[names(mapping) != ""]
+  
   class(mapping) <- c("hcaes", class(mapping))
+  
   mapping
 }
+
+#' @rdname hcaes_string
+#' @export
+hcaes_ <- hcaes_string
 
 
 #' Modify data frame accoring to mapping

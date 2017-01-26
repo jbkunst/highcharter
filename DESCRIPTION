@@ -8,7 +8,8 @@ Description: A wrapper for the 'Highcharts' library including
   numerous chart types with a simple configuration syntax.
 Authors@R: c(
   person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
-  person("Nuno", "Agostinho", role = c("ctb"), comment  = "hchart.survfit, densities and hc_add_series_scatter"),  
+  person("Nuno", "Agostinho", role = c("ctb"), comment  = "hchart.survfit, densities and hc_add_series_scatter"),
+  person("Danton", "Noriega", role = c("ctb"), comment  = "hcaes_"),
   person("Eduardo", "Flores", role = c("ctb"), comment  = "First version hc_add_series_df_tidy"),
   person("Dean", "Kilfoyle", role = c("ctb"), comment  = "First version hc_add_series_boxplot"),
   person("Adline", "Dsilva", role = c("ctb"), comment  = "First version Matrix heatmap")
