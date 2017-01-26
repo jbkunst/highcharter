@@ -1,42 +1,42 @@
-#' Shorcut to make a bar chart
+#' Shortcut to make a bar chart
 #' @param x A character or factor vector.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @export
 hcbar <- function(x, ...) {
   stopifnot(is.character(x) | is.factor(x))
   hchart(x, ...)
 }
 
-#' Shorcut to make a pie chart
+#' Shortcut to make a pie chart
 #' @param x A character o factor vector.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @export
 hcpie <- function(x, ...) {
   stopifnot(is.character(x) | is.factor(x))
   hchart(x, type = "pie", ...)
 }
 
-#' Shorcut to make an histogram
+#' Shortcut to make an histogram
 #' @param x A numeric vector.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @export
 hchist <- function(x, ...) {
   stopifnot(is.numeric(x))
   hchart(x, ...)
 }
 
-#' Shorcut to make time series or line charts
+#' Shortcut to make time series or line charts
 #' @param x A numeric vector or a time series object.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @importFrom stats as.ts
 #' @export
 hcts <- function(x, ...) {
   hchart(as.ts(x), ...)
 }
 
-#' Shorcut to make density charts
+#' Shortcut to make density charts
 #' @param x A numeric vector or a density object.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @importFrom stats density
 #' @export
 hcdensity <- function(x, ...) {
@@ -50,10 +50,10 @@ hcdensity <- function(x, ...) {
   
 }
 
-#' Shorcut to make spkarlines
+#' Shortcut to make spkarlines
 #' @param x A numeric vector.
 #' @param type Type sparkline: line, bar, etc.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' 
 #' @examples
 #' 
@@ -61,7 +61,7 @@ hcdensity <- function(x, ...) {
 #' x <- cumsum(rnorm(10))
 #' 
 #' hcspark(x) 
-#' hcspark(x, "column")
+#' hcspark(x, "columnn")
 #' hcspark(c(1, 4, 5), "pie")
 #' hcspark(x, type = "area")
 #'    
@@ -81,7 +81,7 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @param var A string vector same length of x.
 #' @param var2 A string vector same length of x.
 #' @param outliers A boolean value to show or not the outliers.
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @examples 
 #' hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
 #' @importFrom dplyr rename_ data_frame_
@@ -174,13 +174,13 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 }
 
 
-#' Shorcut to make icon arrays charts
+#' Shortcut to make icon arrays charts
 #' @param labels A character vector
 #' @param counts A integer vector
 #' @param rows A integer to set 
 #' @param icons A character vector same length (o length 1) as labels
 #' @param size Font size
-#' @param ... Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).
+#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @examples
 #' 
 #' hciconarray(c("nice", "good"), c(10, 20))
@@ -281,13 +281,13 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
   
 }
 
-#' Shorcut for create treemaps
+#' Shortcut for create treemaps
 #'
-#' This function helps to create higcharts treemaps from \code{treemap} objects
+#' This function helps to create highcharts treemaps from \code{treemap} objects
 #' from the package \code{treemap}.
 #' 
 #' @param tm A \code{treemap} object from the treemap package.
-#' @param ... Aditional shared arguments for the data series
+#' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 

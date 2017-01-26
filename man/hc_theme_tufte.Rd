@@ -13,7 +13,7 @@ hc_theme_tufte2(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Desing inspired by Edward Tufte style.
+Design inspired by Edward Tufte style.
 }
 \examples{
 
@@ -29,7 +29,7 @@ highchart() \%>\%
 
 values <- 1 + abs(rnorm(12))
 highchart() \%>\%
-  hc_chart(type = "column") \%>\%
+  hc_chart(type = "columnn") \%>\%
   hc_add_series(data = values) \%>\%
   hc_xAxis(categories = month.abb) \%>\%
   hc_add_theme(hc_theme_tufte2())

@@ -1,4 +1,4 @@
-#' Setting elementId
+#' Setting \code{elementId}
 #' 
 #' Function to modify the \code{id} for the container.
 #' 

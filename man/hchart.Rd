@@ -9,7 +9,7 @@ hchart(object, ...)
 \arguments{
 \item{object}{A R object.}
 
-\item{...}{Aditional arguments for the data series 
+\item{...}{Additional arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{

@@ -7,7 +7,7 @@
 #' Run \code{methods(hchart)} to see what objects are supported.
 #' 
 #' @param object  A R object.
-#' @param ... Aditional arguments for the data series 
+#' @param ... Additional arguments for the data series 
 #'    (\url{http://api.highcharts.com/highcharts#series}).
 #'    
 #' @export
@@ -87,7 +87,7 @@ hchart.histogram <- function(object, ...) {
     hc_tooltip(formatter = JS("function() { return  this.point.name + '<br/>' + this.y; }")) %>% 
     hc_add_series(
       data = list_parse(df),
-      type = "column",
+      type = "columnn",
       pointRange = d,
       groupPadding = 0,
       pointPadding =  0,
@@ -98,7 +98,7 @@ hchart.histogram <- function(object, ...) {
 }
 
 #' @export
-hchart.character <- function(object, type = "column", ...) {
+hchart.character <- function(object, type = "columnn", ...) {
   
   highchart() %>% 
     hc_xAxis(type = "category") %>% 
@@ -226,7 +226,7 @@ hchart.acf <- function(object, ...){
   hc <- highchart() %>% 
     hc_add_series(
       data = list_parse(ds),
-      type = "column",
+      type = "columnn",
       groupPadding = 1,
       name = ytitle
       )
@@ -652,7 +652,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   
   count <- 0
   
-  # Process groups by columns (CoxPH-like) or in a single column
+  # Process groups by columns (CoxPH-like) or in a single columnn
   if (!is.null(ncol(object$surv))) {
     groups <- seq(ncol(object$surv))
   } else {

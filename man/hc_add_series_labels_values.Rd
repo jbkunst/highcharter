@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-shortcuts.R
 \name{hc_add_series_labels_values}
 \alias{hc_add_series_labels_values}
-\title{Shorcut for add series for pie, bar and column charts}
+\title{Shortcut for add series for pie, bar and columnn charts}
 \usage{
 hc_add_series_labels_values(hc, labels, values, colors = NULL, ...)
 }
@@ -15,11 +15,11 @@ hc_add_series_labels_values(hc, labels, values, colors = NULL, ...)
 
 \item{colors}{A not required color vector (hexadecimal format). Same length of \code{labels}.}
 
-\item{...}{Aditional shared arguments for the data series 
+\item{...}{Additional shared arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This function add data to plot pie, bar and column charts.
+This function add data to plot pie, bar and columnn charts.
 }
 \examples{
 
@@ -31,7 +31,7 @@ highchart() \%>\%
                    including a pie chart describing my favorite bars") \%>\%
   hc_subtitle(text = "In percentage of tastiness and awesomeness") \%>\% 
   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
-                             colorByPoint = TRUE, type = "column") \%>\% 
+                             colorByPoint = TRUE, type = "columnn") \%>\% 
   hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
                              name = "Bar", colorByPoint = TRUE, center = c('35\%', '10\%'),

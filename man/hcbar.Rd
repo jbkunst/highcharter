@@ -2,16 +2,16 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hcbar}
 \alias{hcbar}
-\title{Shorcut to make a bar chart}
+\title{Shortcut to make a bar chart}
 \usage{
 hcbar(x, ...)
 }
 \arguments{
 \item{x}{A character or factor vector.}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make a bar chart
+Shortcut to make a bar chart
 }
 

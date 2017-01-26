@@ -1,6 +1,6 @@
 #' Elementary (OS) theme for highcharts
 #' 
-#' Elementary (OS) theme for highcharts based on https://elementary.io
+#' Elementary (OS) theme for highcharts based on \url{https://elementary.io}
 #' 
 #' @param ... Named argument to modify the theme
 #' 

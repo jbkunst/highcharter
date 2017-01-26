@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-helpers.R
 \name{hc_elementId}
 \alias{hc_elementId}
-\title{Setting elementId}
+\title{Setting \code{elementId}}
 \usage{
 hc_elementId(hc, id = NULL)
 }

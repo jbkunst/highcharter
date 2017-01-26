@@ -2,16 +2,16 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hchist}
 \alias{hchist}
-\title{Shorcut to make an histogram}
+\title{Shortcut to make an histogram}
 \usage{
 hchist(x, ...)
 }
 \arguments{
 \item{x}{A numeric vector.}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make an histogram
+Shortcut to make an histogram
 }
 

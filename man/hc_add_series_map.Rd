@@ -14,11 +14,11 @@ hc_add_series_map(hc, map, df, value, joinBy, ...)
 \item{df}{A \code{data.frame} object with data to chart. Code region and value are
 required.}
 
-\item{value}{A string value with the name of the column to chart.}
+\item{value}{A string value with the name of the columnn to chart.}
 
 \item{joinBy}{What property to join the  \code{map} and \code{df}}
 
-\item{...}{Aditional shared arguments for the data series
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{

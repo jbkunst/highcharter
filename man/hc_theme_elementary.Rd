@@ -10,7 +10,7 @@ hc_theme_elementary(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Elementary (OS) theme for highcharts based on https://elementary.io
+Elementary (OS) theme for highcharts based on \url{https://elementary.io}
 }
 \examples{
 

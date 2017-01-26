@@ -1,6 +1,7 @@
 #' Chalk theme for highcharts
 #' 
-#' Chalk theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/chalk/
+#' Chalk theme for highcharts. Inspired by
+#' \url{https://www.amcharts.com/inspiration/hand-drawn/}.
 #' 
 #' @param ... Named argument to modify the theme
 #' 

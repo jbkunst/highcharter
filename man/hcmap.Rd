@@ -2,8 +2,8 @@
 % Please edit documentation in R/highmaps.R
 \name{hcmap}
 \alias{hcmap}
-\title{Shorcut for create map
-Shorcut for create map from \url{https://code.highcharts.com/mapdata/}
+\title{Shortcut for create map
+Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 collection.}
 \usage{
 hcmap(map = "custom/world",
@@ -14,22 +14,22 @@ hcmap(map = "custom/world",
 \item{map}{String indicating what map to chart.}
 
 \item{download_map_data}{A logical value whether to download
-(add as a depedeny) the map. Default \code{FALSE}.}
+(add as a dependency) the map. Default \code{FALSE}.}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
 
-\item{value}{A string value with the name of the column to chart.}
+\item{value}{A string value with the name of the columnn to chart.}
 
 \item{joinBy}{What property to join the  \code{map} and \code{df}.
 the map.}
 
-\item{...}{Aditional shared arguments for the data series
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-Shorcut for create map
-Shorcut for create map from \url{https://code.highcharts.com/mapdata/}
+Shortcut for create map
+Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 collection.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_treemap}
 \alias{hc_add_series_treemap}
-\title{Shorcut for create treemaps}
+\title{Shortcut  for create treemaps}
 \usage{
 hc_add_series_treemap(hc, tm, ...)
 }
@@ -11,11 +11,11 @@ hc_add_series_treemap(hc, tm, ...)
 
 \item{tm}{A \code{treemap} object from the treemap package.}
 
-\item{...}{Aditional shared arguments for the data series
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-This function helps to create higcharts treemaps from \code{treemap} objects
+This function helps to create highcharts treemaps from \code{treemap} objects
 from the package \code{treemap}.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series.R
 \name{mutate_mapping}
 \alias{mutate_mapping}
-\title{Modify data frame accoring to mapping}
+\title{Modify data frame according to mapping}
 \usage{
 mutate_mapping(data, mapping)
 }
@@ -12,7 +12,7 @@ mutate_mapping(data, mapping)
 \item{mapping}{A mapping from \code{hcaes} function.}
 }
 \description{
-Modify data frame accoring to mapping
+Modify data frame according to mapping
 }
 \examples{
 

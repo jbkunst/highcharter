@@ -2,7 +2,7 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hcspark}
 \alias{hcspark}
-\title{Shorcut to make spkarlines}
+\title{Shortcut to make spkarlines}
 \usage{
 hcspark(x = NULL, type = NULL, ...)
 }
@@ -11,10 +11,10 @@ hcspark(x = NULL, type = NULL, ...)
 
 \item{type}{Type sparkline: line, bar, etc.}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make spkarlines
+Shortcut to make spkarlines
 }
 \examples{
 
@@ -22,7 +22,7 @@ set.seed(123)
 x <- cumsum(rnorm(10))
 
 hcspark(x) 
-hcspark(x, "column")
+hcspark(x, "columnn")
 hcspark(c(1, 4, 5), "pie")
 hcspark(x, type = "area")
    

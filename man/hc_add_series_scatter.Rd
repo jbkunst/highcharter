@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_scatter}
 \alias{hc_add_series_scatter}
-\title{Shorcut for create scatter plots}
+\title{Shortcut  for create scatter plots}
 \usage{
 hc_add_series_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
   showInLegend = FALSE, ...)
@@ -22,12 +22,12 @@ hc_add_series_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
 
 \item{showInLegend}{Logical value to show or not the data in the legend box.}
 
-\item{...}{Aditional shared arguments for the data series 
+\item{...}{Additional shared arguments for the data series 
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
 This function helps to create scatter plot from two numerics vectors. Options
-argumets like size, color and label for points are added.
+arguments like size, color and label for points are added.
 }
 \examples{
 

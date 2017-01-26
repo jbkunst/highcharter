@@ -1,6 +1,6 @@
 #' Convert an object to list with identical structure
 #'
-#' This functions are similiar to \code{rlist::list.parse} but this removes
+#' This functions are similar to \code{rlist::list.parse} but this removes
 #' names.
 #'
 #' @param df A data frame to parse to list
@@ -84,7 +84,7 @@ str_to_id <- function(x) {
 
 }
 
-#' Date to Timesstamps
+#' Date to timestamps
 #'
 #' Turn a date time vector to \code{timestamp} format
 #'
@@ -110,7 +110,7 @@ datetime_to_timestamp <- function(dt) {
 
 }
 
-#' Transform colors from hexadeximal format to rgba hc notation
+#' Transform colors from hexadecimal format to rgba hc notation
 #'
 #' @param x colors in hexadecimal format
 #' @param alpha alpha
@@ -238,10 +238,10 @@ fa_icon_mark <- function(iconname = "circle"){
 #' parameter in \code{hc_tooltip}
 #'
 #' @param x A string vector with description text
-#' @param y A string with accesors ex: \code{point.series.name},
+#' @param y A string with accessors example: \code{point.series.name},
 #'   \code{point.x}
-#' @param title A title tag with accessor or string
-#' @param img Img tag
+#' @param title A title tag with accessors or string
+#' @param img Image tag
 #' @param ... html attributes for the table element
 #'
 #' @examples
@@ -367,7 +367,7 @@ color_classes <- function(breaks = NULL,
 #' This function is used in hchart.data.frame and hc_add_series_df
 #'
 #' @param data A \code{data.frame} object.
-#' @param type The type of chart. Possible values are line, scatter, point, column.
+#' @param type The type of chart. Possible values are line, scatter, point, columnn.
 #' @param ... Aesthetic mappings as \code{x y group color low high}.
 #'
 #' @examples

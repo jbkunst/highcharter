@@ -1,6 +1,6 @@
 #' Google theme for highcharts
 #' 
-#' Google theme for highcharts based on https://books.google.com/ngrams/
+#' Google theme for highcharts based on \url{https://books.google.com/ngrams/}.
 #' 
 #' @param ... Named argument to modify the theme
 #' 

@@ -10,7 +10,8 @@ hc_theme_handdrawn(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Hand Drawn theme for highcharts. Inspirated by https://www.amcharts.com/inspiration/hand-drawn/
+Hand Drawn theme for highcharts. Inspired by
+\url{https://www.amcharts.com/inspiration/hand-drawn/}.
 }
 \examples{
 

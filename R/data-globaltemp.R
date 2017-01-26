@@ -9,7 +9,7 @@
 #'  \item \code{date}: Date.
 #'  \item \code{lower}: Minimum temperature.
 #'  \item \code{median}: Median temperature.
-#'  \item \code{upper}: Maximun temperature.
+#'  \item \code{upper}: Maximum temperature.
 #' }
 #'
 #' @docType data

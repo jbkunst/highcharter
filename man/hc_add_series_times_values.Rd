@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-shortcuts.R
 \name{hc_add_series_times_values}
 \alias{hc_add_series_times_values}
-\title{Shorcut for create/add time series from times and values}
+\title{Shortcut for create/add time series from times and values}
 \usage{
 hc_add_series_times_values(hc, dates, values, ...)
 }
@@ -13,7 +13,7 @@ hc_add_series_times_values(hc, dates, values, ...)
 
 \item{values}{A numeric vector}
 
-\item{...}{Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
+\item{...}{Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
 This function add a time series to a \code{highchart} object.

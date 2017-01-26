@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{datetime_to_timestamp}
 \alias{datetime_to_timestamp}
-\title{Date to Timesstamps}
+\title{Date to timestamps}
 \usage{
 datetime_to_timestamp(dt)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/highmaps.R
 \name{get_data_from_map}
 \alias{get_data_from_map}
-\title{Auxilar function to get the data inside the map data
+\title{Helper function to get the data inside the map data
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.}
 \usage{
 get_data_from_map(mapdata)
@@ -11,7 +11,7 @@ get_data_from_map(mapdata)
 \item{mapdata}{A list obtained from \code{\link{download_map_data}}.}
 }
 \description{
-Auxilar function to get the data inside the map data
+Helper function to get the data inside the map data
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 }
 \examples{

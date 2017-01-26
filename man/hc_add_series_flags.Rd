@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_flags}
 \alias{hc_add_series_flags}
-\title{Shorcut for add flags to highstock chart}
+\title{Shortcut for add flags to highstock chart}
 \usage{
 hc_add_series_flags(hc, dates, title = LETTERS[seq(length(dates))],
   text = title, id = NULL, ...)
@@ -17,9 +17,9 @@ hc_add_series_flags(hc, dates, title = LETTERS[seq(length(dates))],
 \item{text}{A character vector with the description.}
 
 \item{id}{The name of the series to add the flags. A previous series
-must be added whith this \code{id}.}
+must be added with this \code{id}.}
 
-\item{...}{Aditional shared arguments for the *flags* data series
+\item{...}{Additional shared arguments for the *flags* data series
 (\url{http://api.highcharts.com/highstock#plotOptions.flags})}
 }
 \description{

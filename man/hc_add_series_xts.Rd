@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_xts}
 \alias{hc_add_series_xts}
-\title{Shorcut for create highstock chart from \code{xts} object}
+\title{Shortcut  for create highstock chart from \code{xts} object}
 \usage{
 hc_add_series_xts(hc, x, ...)
 }
@@ -11,7 +11,7 @@ hc_add_series_xts(hc, x, ...)
 
 \item{x}{A \code{xts} object from the \pkg{quantmod} package.}
 
-\item{...}{Aditional shared arguments for the data series
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{

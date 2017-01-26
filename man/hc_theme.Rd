@@ -13,7 +13,7 @@ hc_theme(...)
 Function to create highcharts themes.
 }
 \details{
-More examples are in http://www.highcharts.com/docs/chart-design-and-style/themes.
+More examples are in \url{http://www.highcharts.com/docs/chart-design-and-style/themes}.
 }
 \examples{
 

@@ -1,4 +1,4 @@
-#' Shorcut for create/add time series charts from a ts object
+#' Shortcut  for create/add time series charts from a ts object
 #'
 #' This function add a time series to a \code{highchart} object
 #' from a \code{ts} object. 
@@ -7,7 +7,7 @@
 #'  
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ts A time series object.
-#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' @param ... Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
 #' 
@@ -44,7 +44,7 @@ hc_add_series_ts <- function(hc, ts, ...) {
   
 }
 
-#' Shorcut for create highstock chart from \code{xts} object
+#' Shortcut  for create highstock chart from \code{xts} object
 #'
 #' This function helps to create highstock charts from \code{xts} objects
 #' obtaining by \code{getSymbols} function from the  \pkg{quantmod}.
@@ -52,7 +52,7 @@ hc_add_series_ts <- function(hc, ts, ...) {
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A \code{xts} object from the \pkg{quantmod} package.
-#' @param ... Aditional shared arguments for the data series
+#' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples 
@@ -87,7 +87,7 @@ hc_add_series_xts <- function(hc, x, ...) {
   
 }
 
-#' Shorcut for create candlestick charts
+#' Shortcut  for create candlestick charts
 #'
 #' This function helps to create candlestick from \code{xts} objects
 #' obtaining by \code{getSymbols} function from the  \pkg{quantmod}.
@@ -96,7 +96,7 @@ hc_add_series_xts <- function(hc, x, ...) {
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A \code{OHLC} object from the \pkg{quantmod} package.
 #' @param type The type of chart. Can be \code{candlestick} or \code{ohlc}.
-#' @param ... Aditional shared arguments for the data series
+#' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples   
@@ -156,10 +156,10 @@ hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
   
 }
 
-#' Shorcut for create scatter plots
+#' Shortcut  for create scatter plots
 #'
 #' This function helps to create scatter plot from two numerics vectors. Options
-#' argumets like size, color and label for points are added. 
+#' arguments like size, color and label for points are added. 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param x A numeric vector. 
@@ -168,7 +168,7 @@ hc_add_series_ohlc <- function(hc, x, type = "candlestick", ...){
 #' @param color A vector to color the points.
 #' @param label A vector to put names in the dots if you enable the datalabels.
 #' @param showInLegend Logical value to show or not the data in the legend box.
-#' @param ... Aditional shared arguments for the data series 
+#' @param ... Additional shared arguments for the data series 
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
@@ -267,13 +267,13 @@ hc_add_series_df_old <- function(hc, data, ...) {
   hc
 }
 
-#' Shorcut for create boxplot 
+#' Shortcut  for create boxplot 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param x A numerci vector
+#' @param x A numeric vector
 #' @param by A string vector same length of \code{x}
 #' @param outliers A boolean value to show or not the outliers
-#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' @param ... Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
 #' @examples
 #' 
 #' \dontrun{
@@ -336,13 +336,13 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
   
 }
 
-#' Shorcut for tidy data frame a la ggplot2/qplot
+#' Shortcut  for tidy data frame a la ggplot2/qplot
 #' 
 #' Function to create chart from tidy data frames. As same as qplot
 #' you can use aesthetic including the group variable
 #' 
-#' The types supported are line, column, point, polygon,
-#' columrange, spline, areaspline among others.
+#' The types supported are line, columnn, point, polygon,
+#' columnrange, spline, areaspline among others.
 #' 
 #' Automatically parsed de data frame (to a list o series). You
 #' you can use the  default parameters of highcharts such as \code{x}, \code{y},
@@ -352,8 +352,8 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param data A \code{data.frame} object.
-#' @param type The type of chart. Possible values are line, scatter, point, colum,
-#'   columnrange, etc. See \url{http://api.highcharts.com/highcharts#series}.
+#' @param type The type of chart. Possible values are line, scatter, point, column,
+#'   columnnrange, etc. See \url{http://api.highcharts.com/highcharts#series}.
 #' @param ... Aesthetic mappings, \code{x y group color low high}.
 #'   
 #' @examples 
@@ -382,7 +382,7 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
 #'   n = paste("I'm point ", var)
 #' )
 #' 
-#' hc_add_series_df(highchart(), data = df2, type = "columnrange",
+#' hc_add_series_df(highchart(), data = df2, type = "columnnrange",
 #'                  x = var, low = l, high = h, name = n, color = var)
 #' 
 #' hc_add_series_df(highchart(), iris, "point",
@@ -398,7 +398,7 @@ hc_add_series_boxplot <- function(hc, x, by = NULL, outliers = TRUE, ...) {
 #'      
 #' 
 #' mpgman <- count(mpg, manufacturer)
-#' hc_add_series_df(highchart(), mpgman, "column", x = manufacturer, y = n) %>% 
+#' hc_add_series_df(highchart(), mpgman, "columnn", x = manufacturer, y = n) %>% 
 #'   hc_xAxis(type = "category")
 #' 
 #' mpgman2 <- count(mpg, manufacturer, year)
@@ -437,14 +437,14 @@ hc_add_series_df <- function(hc, data, type = NULL, ...) {
   
 }
 
-#' Shorcut for create treemaps
+#' Shortcut  for create treemaps
 #'
-#' This function helps to create higcharts treemaps from \code{treemap} objects
+#' This function helps to create highcharts treemaps from \code{treemap} objects
 #' from the package \code{treemap}.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param tm A \code{treemap} object from the treemap package.
-#' @param ... Aditional shared arguments for the data series
+#' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
@@ -527,18 +527,17 @@ hc_add_series_treemap <- function(hc, tm, ...) {
   
 }
 
-#' Shorcut for add flags to highstock chart
+#' Shortcut for add flags to highstock chart
 #'
 #' This function helps to add flags highstock charts created from \code{xts} objects.
-#' 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param dates Date vector.
 #' @param title A character vector with titles.
 #' @param text A character vector with the description.
 #' @param id The name of the series to add the flags. A previous series
-#'   must be added whith this \code{id}. 
-#' @param ... Aditional shared arguments for the *flags* data series
+#'   must be added with this \code{id}. 
+#' @param ... Additional shared arguments for the *flags* data series
 #'   (\url{http://api.highcharts.com/highstock#plotOptions.flags})
 #'   
 #' @examples

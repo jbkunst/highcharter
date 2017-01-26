@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_df}
 \alias{hc_add_series_df}
-\title{Shorcut for tidy data frame a la ggplot2/qplot}
+\title{Shortcut  for tidy data frame a la ggplot2/qplot}
 \usage{
 hc_add_series_df(hc, data, type = NULL, ...)
 }
@@ -11,8 +11,8 @@ hc_add_series_df(hc, data, type = NULL, ...)
 
 \item{data}{A \code{data.frame} object.}
 
-\item{type}{The type of chart. Possible values are line, scatter, point, colum,
-columnrange, etc. See \url{http://api.highcharts.com/highcharts#series}.}
+\item{type}{The type of chart. Possible values are line, scatter, point, column,
+columnnrange, etc. See \url{http://api.highcharts.com/highcharts#series}.}
 
 \item{...}{Aesthetic mappings, \code{x y group color low high}.}
 }
@@ -21,8 +21,8 @@ Function to create chart from tidy data frames. As same as qplot
 you can use aesthetic including the group variable
 }
 \details{
-The types supported are line, column, point, polygon,
-columrange, spline, areaspline among others.
+The types supported are line, columnn, point, polygon,
+columnrange, spline, areaspline among others.
 
 Automatically parsed de data frame (to a list o series). You
 you can use the  default parameters of highcharts such as \code{x}, \code{y},
@@ -56,7 +56,7 @@ df2 <- data_frame(
   n = paste("I'm point ", var)
 )
 
-hc_add_series_df(highchart(), data = df2, type = "columnrange",
+hc_add_series_df(highchart(), data = df2, type = "columnnrange",
                  x = var, low = l, high = h, name = n, color = var)
 
 hc_add_series_df(highchart(), iris, "point",
@@ -72,7 +72,7 @@ hc_add_series_df(highchart(), mpg, "point", x = displ, y = cty,
      
 
 mpgman <- count(mpg, manufacturer)
-hc_add_series_df(highchart(), mpgman, "column", x = manufacturer, y = n) \%>\% 
+hc_add_series_df(highchart(), mpgman, "columnn", x = manufacturer, y = n) \%>\% 
   hc_xAxis(type = "category")
 
 mpgman2 <- count(mpg, manufacturer, year)

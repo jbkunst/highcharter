@@ -10,8 +10,8 @@ hc_theme_flat(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Base16 Insipred theme https://github.com/chriskempson/base16 and
-https://github.com/cttobin/ggthemr#flat
+Base16 inspired theme \url{https://github.com/chriskempson/base16} and
+\url{https://github.com/cttobin/ggthemr#flat}
 }
 \examples{
 

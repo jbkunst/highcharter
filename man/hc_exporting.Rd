@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_exporting}
 \alias{hc_exporting}
-\title{Exporting options for higcharts objects}
+\title{Exporting options for highcharts objects}
 \usage{
 hc_exporting(hc, ...)
 }
@@ -12,7 +12,7 @@ hc_exporting(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#exporting}.}
 }
 \description{
-Exporting options for higcharts objects. You can define the file's name
+Exporting options for highcharts objects. You can define the file's name
 or the output format.
 }
 \examples{

@@ -19,7 +19,7 @@ list.parse3(df)
 \item{df}{A data frame to parse to list}
 }
 \description{
-This functions are similiar to \code{rlist::list.parse} but this removes
+This functions are similar to \code{rlist::list.parse} but this removes
 names.
 }
 \examples{

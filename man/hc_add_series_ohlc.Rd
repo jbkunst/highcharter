@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_ohlc}
 \alias{hc_add_series_ohlc}
-\title{Shorcut for create candlestick charts}
+\title{Shortcut  for create candlestick charts}
 \usage{
 hc_add_series_ohlc(hc, x, type = "candlestick", ...)
 }
@@ -13,7 +13,7 @@ hc_add_series_ohlc(hc, x, type = "candlestick", ...)
 
 \item{type}{The type of chart. Can be \code{candlestick} or \code{ohlc}.}
 
-\item{...}{Aditional shared arguments for the data series
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{

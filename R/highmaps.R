@@ -4,9 +4,9 @@
 #' @param map A \code{list} object loaded from a geojson file.
 #' @param df A \code{data.frame} object with data to chart. Code region and value are
 #'   required.
-#' @param value A string value with the name of the column to chart.
+#' @param value A string value with the name of the columnn to chart.
 #' @param joinBy What property to join the  \code{map} and \code{df}
-#' @param ... Aditional shared arguments for the data series
+#' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples 
@@ -68,19 +68,19 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
 }
 
-#' Shorcut for create map
-#' Shorcut for create map from \url{https://code.highcharts.com/mapdata/}
+#' Shortcut for create map
+#' Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 #' collection.
 #' @param map String indicating what map to chart.
 #' @param download_map_data A logical value whether to download
-#'   (add as a depedeny) the map. Default \code{FALSE}.
+#'   (add as a dependency) the map. Default \code{FALSE}.
 #' @param data Optional data to make a choropleth, in case of use
 #'   the joinBy and value are needed.
-#' @param value A string value with the name of the column to chart.
+#' @param value A string value with the name of the columnn to chart.
 #' @param joinBy What property to join the  \code{map} and \code{df}.
 
 #'   the map.
-#' @param ... Aditional shared arguments for the data series
+#' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples
@@ -150,7 +150,7 @@ hcmap <- function(map = "custom/world",
   
 }
 
-#' Auxilar function to download the map data form a url
+#' Helper function to download the map data form a url
 #' The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 #' @param url The map's url.
 #' @param showinfo Show the properties of the downloaded map to know how
@@ -182,7 +182,7 @@ download_map_data <- function(url = "custom/world.js", showinfo = FALSE) {
   
 }
 
-#' Auxilar function to get the data inside the map data
+#' Helper function to get the data inside the map data
 #' The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 #' @param mapdata A list obtained from \code{\link{download_map_data}}.
 #' @examples

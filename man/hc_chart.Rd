@@ -24,7 +24,7 @@ hc <- highchart() \%>\%
   hc_add_series(name = "London", data = citytemp$london)
 
 hc \%>\% 
-  hc_chart(type = "column",
+  hc_chart(type = "columnn",
            options3d = list(enabled = TRUE, beta = 15, alpha = 15))
 
 

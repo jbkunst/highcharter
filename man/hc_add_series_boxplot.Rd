@@ -2,23 +2,23 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_boxplot}
 \alias{hc_add_series_boxplot}
-\title{Shorcut for create boxplot}
+\title{Shortcut  for create boxplot}
 \usage{
 hc_add_series_boxplot(hc, x, by = NULL, outliers = TRUE, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{x}{A numerci vector}
+\item{x}{A numeric vector}
 
 \item{by}{A string vector same length of \code{x}}
 
 \item{outliers}{A boolean value to show or not the outliers}
 
-\item{...}{Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
+\item{...}{Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-Shorcut for create boxplot
+Shortcut  for create boxplot
 }
 \examples{
 

@@ -60,7 +60,7 @@ validate_args <- function(name, lstargs) {
 #'   hc_add_series(name = "London", data = citytemp$london)
 #' 
 #' hc %>% 
-#'   hc_chart(type = "column",
+#'   hc_chart(type = "columnn",
 #'            options3d = list(enabled = TRUE, beta = 15, alpha = 15))
 #' 
 #' 
@@ -208,8 +208,8 @@ hc_yAxis_multiples <- function(hc, ...) {
 #'   hc_yAxis_multiples(create_yaxis(naxis = 3, lineWidth = 2, title = list(text = NULL))) %>% 
 #'   hc_add_series(data = c(1,3,2)) %>% 
 #'   hc_add_series(data = c(20, 40, 10), yAxis = 1) %>% 
-#'   hc_add_series(data = c(200, 400, 500), type = "column", yAxis = 2) %>% 
-#'   hc_add_series(data = c(500, 300, 400), type = "column", yAxis = 2)  
+#'   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) %>% 
+#'   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)  
 #'    
 #' @importFrom dplyr bind_cols
 #' @export
@@ -266,7 +266,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
 #' highchart() %>% 
 #'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
-#'                         type = "column") %>% 
+#'                         type = "columnn") %>% 
 #'   hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
 #'            margin = 20, align = "left",
 #'            style = list(color = "#90ed7d", useHTML = TRUE)) %>%
@@ -350,7 +350,7 @@ hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
 
 #' Adding plot options to highchart objects
 #'
-#' The plotOptions is a wrapper object for config objects for each series type. The config 
+#' The plotOptions is a wrapper object for config objects for each series type. The configuration 
 #' objects for each series can also be overridden for each series item as given in the series array.
 #' 
 #' Configuration options for the series are given in three levels. Options for all series in a 
@@ -420,9 +420,9 @@ hc_credits <- function(hc, ...) {
   
 }
 
-#' Exporting options for higcharts objects
+#' Exporting options for highcharts objects
 #'
-#' Exporting options for higcharts objects. You can define the file's name
+#' Exporting options for highcharts objects. You can define the file's name
 #' or the output format.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 

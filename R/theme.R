@@ -2,7 +2,7 @@
 #' 
 #' Function to create highcharts themes.
 #' 
-#' More examples are in http://www.highcharts.com/docs/chart-design-and-style/themes.
+#' More examples are in \url{http://www.highcharts.com/docs/chart-design-and-style/themes}.
 #' 
 #' @param ... A named parameters.
 #' 
@@ -61,7 +61,7 @@ hc_theme <- function(...){
 #' highchart() %>% 
 #'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'                         26.5, 23.3, 18.3, 13.9, 9.6),
-#'                         type = "column") %>% 
+#'                         type = "columnn") %>% 
 #'   hc_add_theme(hc_theme_sandsignika())
 #'   
 #' @export

@@ -1,4 +1,4 @@
-#' Shorcut for data series from a list of data series
+#' Shortcut for data series from a list of data series
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param x A \code{list} or a \code{data.frame} of series.
@@ -27,15 +27,15 @@ hc_add_series_list <- function(hc, x) {
   
 }
 
-#' Shorcut for add series for pie, bar and column charts
+#' Shortcut for add series for pie, bar and columnn charts
 #'
-#' This function add data to plot pie, bar and column charts.
+#' This function add data to plot pie, bar and columnn charts.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param labels A vector of labels. 
 #' @param values A numeric vector. Same length of \code{labels}.
 #' @param colors A not required color vector (hexadecimal format). Same length of \code{labels}.
-#' @param ... Aditional shared arguments for the data series 
+#' @param ... Additional shared arguments for the data series 
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
@@ -48,7 +48,7 @@ hc_add_series_list <- function(hc, x) {
 #'                    including a pie chart describing my favorite bars") %>%
 #'   hc_subtitle(text = "In percentage of tastiness and awesomeness") %>% 
 #'   hc_add_series_labels_values(favorite_pies$pie, favorite_pies$percent, name = "Pie",
-#'                              colorByPoint = TRUE, type = "column") %>% 
+#'                              colorByPoint = TRUE, type = "columnn") %>% 
 #'   hc_add_series_labels_values(favorite_bars$bar, favorite_bars$percent,
 #'                              colors = substr(terrain.colors(5), 0 , 7), type = "pie",
 #'                              name = "Bar", colorByPoint = TRUE, center = c('35%', '10%'),
@@ -85,7 +85,7 @@ hc_add_series_labels_values <- function(hc, labels, values,
   
 }
 
-#' Shorcut for create/add time series from times and values
+#' Shortcut for create/add time series from times and values
 #'
 #' This function add a time series to a \code{highchart} object. 
 #' 
@@ -94,7 +94,7 @@ hc_add_series_labels_values <- function(hc, labels, values,
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param dates  A date vector (same length as \code{values})
 #' @param values A numeric vector
-#' @param ... Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
+#' @param ... Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).
 #' 
 #' @examples 
 #' 

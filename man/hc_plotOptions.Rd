@@ -12,7 +12,7 @@ hc_plotOptions(hc, ...)
 \item{...}{Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.}
 }
 \description{
-The plotOptions is a wrapper object for config objects for each series type. The config 
+The plotOptions is a wrapper object for config objects for each series type. The configuration 
 objects for each series can also be overridden for each series item as given in the series array.
 }
 \details{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hciconarray}
 \alias{hciconarray}
-\title{Shorcut to make icon arrays charts}
+\title{Shortcut to make icon arrays charts}
 \usage{
 hciconarray(labels, counts, rows = NULL, icons = NULL, size = 4, ...)
 }
@@ -17,10 +17,10 @@ hciconarray(labels, counts, rows = NULL, icons = NULL, size = 4, ...)
 
 \item{size}{Font size}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make icon arrays charts
+Shortcut to make icon arrays charts
 }
 \examples{
 

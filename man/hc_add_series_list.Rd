@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-shortcuts.R
 \name{hc_add_series_list}
 \alias{hc_add_series_list}
-\title{Shorcut for data series from a list of data series}
+\title{Shortcut for data series from a list of data series}
 \usage{
 hc_add_series_list(hc, x)
 }
@@ -12,7 +12,7 @@ hc_add_series_list(hc, x)
 \item{x}{A \code{list} or a \code{data.frame} of series.}
 }
 \description{
-Shorcut for data series from a list of data series
+Shortcut for data series from a list of data series
 }
 \examples{
 

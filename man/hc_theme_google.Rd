@@ -10,7 +10,7 @@ hc_theme_google(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Google theme for highcharts based on https://books.google.com/ngrams/
+Google theme for highcharts based on \url{https://books.google.com/ngrams/}.
 }
 \examples{
 

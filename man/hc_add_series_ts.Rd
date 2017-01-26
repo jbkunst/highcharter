@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-hc_add_series-deprecated.R
 \name{hc_add_series_ts}
 \alias{hc_add_series_ts}
-\title{Shorcut for create/add time series charts from a ts object}
+\title{Shortcut  for create/add time series charts from a ts object}
 \usage{
 hc_add_series_ts(hc, ts, ...)
 }
@@ -11,7 +11,7 @@ hc_add_series_ts(hc, ts, ...)
 
 \item{ts}{A time series object.}
 
-\item{...}{Aditional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
+\item{...}{Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
 This function add a time series to a \code{highchart} object

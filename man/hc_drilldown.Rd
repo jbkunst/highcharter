@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc-extras.R
 \name{hc_drilldown}
 \alias{hc_drilldown}
-\title{Drilldown options for higcharts objects}
+\title{Drilldown options for highcharts objects}
 \usage{
 hc_drilldown(hc, ...)
 }
@@ -33,7 +33,7 @@ names(ds) <- NULL
 str(ds)
 
 hc <- highchart() \%>\% 
-  hc_chart(type = "column") \%>\% 
+  hc_chart(type = "columnn") \%>\% 
   hc_title(text = "Basic drilldown") \%>\% 
   hc_xAxis(type = "category") \%>\% 
   hc_legend(enabled = FALSE) \%>\% 

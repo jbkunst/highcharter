@@ -9,7 +9,7 @@
 stars
 }
 \description{
-A sample using by Nadieg Bremer blocks. \url{http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47}.
+A sample using by Nadieh Bremer blocks. \url{http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47}.
 }
 \section{Variables}{
 

@@ -2,16 +2,16 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hcpie}
 \alias{hcpie}
-\title{Shorcut to make a pie chart}
+\title{Shortcut to make a pie chart}
 \usage{
 hcpie(x, ...)
 }
 \arguments{
 \item{x}{A character o factor vector.}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make a pie chart
+Shortcut to make a pie chart
 }
 

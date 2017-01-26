@@ -7,7 +7,7 @@
 export_hc(hc, filename = NULL, as = "is", name = NULL)
 }
 \arguments{
-\item{hc}{A \code{highcarts object}.}
+\item{hc}{A \code{Highcharts object}.}
 
 \item{filename}{String of the exported file.}
 

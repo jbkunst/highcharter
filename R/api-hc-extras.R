@@ -46,7 +46,7 @@ hc_colorAxis  <- function(hc, ...){
   
 }
 
-#' Drilldown options for higcharts objects
+#' Drilldown options for highcharts objects
 #'
 #' Options for drill down, the concept of inspecting increasingly high 
 #' resolution data through clicking on chart items like columns or pie slices.
@@ -72,7 +72,7 @@ hc_colorAxis  <- function(hc, ...){
 #' str(ds)
 #' 
 #' hc <- highchart() %>% 
-#'   hc_chart(type = "column") %>% 
+#'   hc_chart(type = "columnn") %>% 
 #'   hc_title(text = "Basic drilldown") %>% 
 #'   hc_xAxis(type = "category") %>% 
 #'   hc_legend(enabled = FALSE) %>% 
@@ -212,7 +212,7 @@ hc_mapNavigation <- function(hc, ...){
 
 #' Adding patterns to be used in highcharts series
 #' 
-#' Helper function to use the fill patter plugin http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill.
+#' Helper function to use the fill patter plugin \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}. 
@@ -284,7 +284,7 @@ hc_add_annotation <- function(hc, ...){
 
 #' @rdname hc_annotations
 #' @param x A \code{list} or a \code{data.frame} of annotations.
-#' @details The \code{x} elemens must have \code{xValue} and \code{yValue} 
+#' @details The \code{x} elements must have \code{xValue} and \code{yValue} 
 #'   elements
 #' @export
 hc_add_annotations <- function(hc, x){

@@ -2,7 +2,7 @@
 % Please edit documentation in R/highmaps.R
 \name{download_map_data}
 \alias{download_map_data}
-\title{Auxilar function to download the map data form a url
+\title{Helper function to download the map data form a url
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.}
 \usage{
 download_map_data(url = "custom/world.js", showinfo = FALSE)
@@ -14,7 +14,7 @@ download_map_data(url = "custom/world.js", showinfo = FALSE)
 are the keys to add data in \code{hcmap}.}
 }
 \description{
-Auxilar function to download the map data form a url
+Helper function to download the map data form a url
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 }
 \examples{

@@ -2,16 +2,16 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hcdensity}
 \alias{hcdensity}
-\title{Shorcut to make density charts}
+\title{Shortcut to make density charts}
 \usage{
 hcdensity(x, ...)
 }
 \arguments{
 \item{x}{A numeric vector or a density object.}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make density charts
+Shortcut to make density charts
 }
 

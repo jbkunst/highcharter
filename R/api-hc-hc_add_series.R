@@ -6,7 +6,7 @@
 #' @examples
 #' 
 #'  highchart() %>%
-#'    hc_add_series(data = abs(rnorm(5)), type = "column") %>% 
+#'    hc_add_series(data = abs(rnorm(5)), type = "columnn") %>% 
 #'    hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue")
 #'
 #' @export
@@ -103,7 +103,7 @@ hc_add_series.xts <- function(hc, data, ...) {
 
 
 #' @rdname hc_add_series.xts
-#' @param type The type of wayto show the \code{xts} object. Can be 'candlestick' or 'ohlc'.
+#' @param type The way to show the \code{xts} object. Can be 'candlestick' or 'ohlc'.
 #' @importFrom stringr str_extract
 #' @export
 hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
@@ -128,7 +128,7 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data A \code{forecast} object.
 #' @param addOriginal Logical value to add the original series or not.
-#' @param addLevels Logical value to show predicctions bands.
+#' @param addLevels Logical value to show predictions bands.
 #' @param fillOpacity The opacity of bands
 #' @param ... Arguments defined in
 #'   \url{http://api.highcharts.com/highcharts#chart}. 
@@ -347,7 +347,7 @@ hcaes_string <- function (x, y, ...){
 hcaes_ <- hcaes_string
 
 
-#' Modify data frame accoring to mapping
+#' Modify data frame according to mapping
 #' @param data A data frame object.
 #' @param mapping A mapping from \code{hcaes} function.
 #' @examples 

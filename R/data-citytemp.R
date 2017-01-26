@@ -8,9 +8,9 @@
 #'
 #'  \item \code{month}: The months.
 #'  \item \code{tokyo}: Tokyo's temperatures.
-#'  \item \code{new_york}: New york's temperatures.
+#'  \item \code{new_york}: New York's temperatures.
 #'  \item \code{berlin}: Berlin's temperatures.
-#'  \item \code{london}: Londo's temperatures.
+#'  \item \code{london}: London's temperatures.
 #'
 #' }
 #'

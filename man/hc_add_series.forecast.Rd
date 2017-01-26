@@ -14,7 +14,7 @@
 
 \item{addOriginal}{Logical value to add the original series or not.}
 
-\item{addLevels}{Logical value to show predicctions bands.}
+\item{addLevels}{Logical value to show predictions bands.}
 
 \item{fillOpacity}{The opacity of bands}
 

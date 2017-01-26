@@ -2,16 +2,16 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hcts}
 \alias{hcts}
-\title{Shorcut to make time series or line charts}
+\title{Shortcut to make time series or line charts}
 \usage{
 hcts(x, ...)
 }
 \arguments{
 \item{x}{A numeric vector or a time series object.}
 
-\item{...}{Aditional arguments for the data series (http://api.highcharts.com/highcharts#series).}
+\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
 }
 \description{
-Shorcut to make time series or line charts
+Shortcut to make time series or line charts
 }
 
