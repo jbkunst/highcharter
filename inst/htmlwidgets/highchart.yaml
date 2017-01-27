@@ -34,6 +34,7 @@ dependencies:
     - plugins/motion.js
     - plugins/pattern-fill-v2.js
     - plugins/tooltip-delay.js
+    - plugins/multicolor_series.js
     - custom/reset.js
     - custom/symbols-extra.js
     - custom/text-symbols.js
