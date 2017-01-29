@@ -6,7 +6,7 @@
 #'
 #' @param hc_opts A \code{list} object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
-#' @param theme A \code{hc_theme} class object
+#' @param theme A \code{hc_theme} class object-
 #' @param type A character value to set if use Highchart, Highstock or
 #'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.
 #' @param width A numeric input in pixels.

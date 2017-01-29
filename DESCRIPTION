@@ -38,7 +38,8 @@ Imports:
     htmltools,
     jsonlite,
     igraph,
-    lubridate
+    lubridate,
+    crosstalk
 Suggests:
     knitr,
     rmarkdown,
