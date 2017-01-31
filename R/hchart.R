@@ -30,7 +30,20 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
     message("hchart.data.frame")
   
   data <- mutate_mapping(object, mapping)
-  
+    
+  mapping_attributes <- attributes(mapping)
+  mapping = lapply(mapping, function(x){
+    if(is.symbol(x) == FALSE & is.language(x)){
+      t_eval = tryCatch({eval(x)}, 
+                        error = function(cond){
+                          return(x)
+                        })
+    }else{
+      return(x)
+    }
+  })
+  attributes(mapping) = mapping_attributes
+    
   series <- data_to_series(data, mapping, type = type, ...)
 
   opts <- data_to_options(data, type)
