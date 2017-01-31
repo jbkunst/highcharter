@@ -359,6 +359,19 @@ mutate_mapping <- function(data, mapping) {
   
   stopifnot(is.data.frame(data), inherits(mapping, "hcaes"))
   
+  mapping_attributes <- attributes(mapping)
+  mapping = lapply(mapping, function(x){
+    if(is.symbol(x) == FALSE & is.language(x)){
+      t_eval = tryCatch({eval(x)}, 
+                        error = function(cond){
+                          return(x)
+                        })
+    }else{
+      return(x)
+    }
+  })
+  attributes(mapping) = mapping_attributes
+  
   # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
   tran <- as.character(mapping)
   newv <- names(mapping)
