@@ -38,7 +38,7 @@ hc_add_point_event <- function(hc, series = "series", event = "click", inputanme
   
   fun <- "function(){
   var pointinfo = {series: this.series.name, seriesid: this.series.id,
-  name: this.point.name, x: this.x, y: this.y, category: this.category.name }
+  name: this.name, x: this.x, y: this.y, category: this.category.name }
   window.x = this;
   console.log(pointinfo);
   
@@ -73,9 +73,8 @@ hc_add_point_event <- function(hc, series = "series", event = "click", inputanme
 hc <- highcharts_demo() 
 
 
-data("mpg", package = "ggplot2")
-hc_base <- hchart(mpg, "scatter", hcaes(x = cty, y = displ, group = class))
-
+hc_base <- hchart(mpg, "scatter", hcaes(x = cty, y = displ, group = class, name = model))
+hc_base %>% hc_add_point_event()
 
 ui <- fluidPage(
   h2("Highcharter as Shiny Inputs"),
