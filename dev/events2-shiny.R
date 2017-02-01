@@ -1,123 +1,131 @@
 rm(list = ls())
-library("shiny")
-library("highcharter")
-library("purrr")
+library(shiny)
+library(highcharter)
+library(tidyverse)
+
+hc_add_series_event <- function(hc, series = "series", event = "click", inputanme = NULL){
+  
+  fun <- "function(){
+  var seriesinfo = {name: this.name }
+  console.log(seriesinfo);
+  window.x = this;
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id, seriesinfo); }
+  
+}"
+  fun <- JS(fun)
+  
+  eventobj <- structure(
+    list(structure(
+      list(structure(
+        list(fun),
+        .Names = event)
+      ),
+      .Names = "events")
+    ),
+    .Names = series
+  )
+  
+  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+    hc$x$hc_opts$plotOptions,
+    eventobj
+  )
+  
+  hc
+  
+  }
+
+hc_add_point_event <- function(hc, series = "series", event = "click", inputanme = NULL){
+  
+  fun <- "function(){
+  var pointinfo = {series: this.series.name, seriesid: this.series.id,
+  name: this.point.name, x: this.x, y: this.y, category: this.category.name }
+  window.x = this;
+  console.log(pointinfo);
+  
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id, pointinfo); } 
+}"
+  
+  fun <- JS(fun)
+  
+  eventobj <- structure(
+    list(structure(
+      list(structure(
+        list(structure(
+          list(fun),
+          .Names = event)
+        ),
+        .Names = "events")
+      ),
+      .Names = "point")
+    ),
+    .Names = series
+  )
+  
+  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+    hc$x$hc_opts$plotOptions,
+    eventobj
+  )
+  
+  hc
+  
+  }
+
+hc <- highcharts_demo() 
+
+
+data("mpg", package = "ggplot2")
+hc_base <- hchart(mpg, "scatter", hcaes(x = cty, y = displ, group = class))
+
 
 ui <- fluidPage(
-  theme = shinytheme("flatly"),
   h2("Highcharter as Shiny Inputs"),
-  tabsetPanel(
-    tabPanel("Draggable",
-             fluidRow(
-               column(width = 6, highchartOutput("hcontainer")),
-               column(width = 6, verbatimTextOutput("hcinputout"))
-               )
-             ),
-    tabPanel("Scatter",
-             fluidRow(
-               column(width = 6, highchartOutput("hcontainer2")),
-               column(width = 6, verbatimTextOutput("hcinputout2"))
-               )
-             )
+  fluidRow(
+    column(6, highchartOutput("hc_1")),
+    column(6, verbatimTextOutput("hc_1_input"))
+    ),
+  fluidRow(
+    column(6, highchartOutput("hc_2")),
+    column(6, verbatimTextOutput("hc_2_input"))
     )
   )
 
 server = function(input, output) {
   
-  output$hcontainer <- renderHighchart({
-    fn <- "function(){
-       console.log('Category: ' + this.category + ', value: ' + this.y + ', series: ' + this.series.name);
-       ds = this.series.data.map(function(e){ return {x: e.x, y: e.y  }  }); 
-       Shiny.onInputChange('hcinput', {category: this.category, name: this.series.name, data: ds, type: this.series.type})
-       }"
+  output$hc_1 <- renderHighchart({
 
-    hc <- highchart() %>%
-      hc_add_series(data = c(3.9,  4.2, 5.7, 8.5), type = "column",
-                    name = "draggable", draggableY = TRUE, dragMinY = 0) %>% 
-      hc_add_series(data = 2*c(7, 6.9,  9.5, 14), type = "scatter",
-                    name = "draggable too!", draggableX = TRUE, draggableY = TRUE) %>%
-      hc_add_series(data = 3*c(2,  0.6, 3.5, 8), type  = "spline") %>% 
+    hc <- hc_base %>% 
       hc_plotOptions(
         series = list(
-          cursor = "pointer",
-          point = list(
-            events = list(
-              click = JS(fn),
-              drop = JS(fn)
-            )
-          )
+          cursor = "pointer"
         )
-      ) 
+      ) %>% 
+      hc_add_point_event(event = "mouseOver")
     
     hc
     
   })
   
-  output$hcinputout <- renderPrint({
-    
-    inputaux <- input$hcinput
-    
-    if (!is.null(inputaux))
-      inputaux$data <- map_df(inputaux$data, as_data_frame)
-    
-    inputaux
-    
-  })
+  output$hc_1_input <- renderPrint({ input$hc_1 })
   
-  output$hcontainer2 <- renderHighchart({
+  output$hc_2 <- renderHighchart({
     
-    ds <- mtcars %>% 
-      mutate(x = mpg, y = wt, name = rownames(.)) %>% 
-      list_parse()
-    
-    nms <- names(ds[[1]])
-    obj <- paste("{", paste0(nms, ": this.", nms, collapse = ", "), "}")
-    
-    fn <- "function() {
-                console.log(this);                
-                console.log(typeof(this)); 
-                Shiny.onInputChange('hcinput2',  %s)
-            }" %>% sprintf(obj)
-    
-    # highchart() %>%
-    #   hc_add_series(data = ds, type = "scatter") %>%
-    #   hc_plotOptions(
-    #     series = list(
-    #       cursor = "pointer",
-    #       point = list(
-    #         events = list(
-    #           click = JS(fn)
-    #         )
-    #       )
-    #     )
-    #   )
-    
-    highchart() %>%
-      hc_add_series(data = ds, type = "scatter") %>%
+    hc <- hc_base %>% 
       hc_plotOptions(
         series = list(
-          cursor = "pointer",
-          point = list(
-            events = list(
-              click = JS(fn)
-            )
+          cursor = "pointer"
           )
-        )
-      )
+        ) %>%
+      hc_add_series_event(event = "click")
+    
+    hc
+    
   })
   
-  output$hcinputout2 <- renderPrint({
-    
-    inputaux <- input$hcinput2
-    
-    if (!is.null(inputaux))
-      inputaux <- as_data_frame(inputaux) %>% tidyr::gather(key, values)
-    
-    inputaux
-    
-  })
+  output$hc_2_input <- renderPrint({ input$hc_2 })
   
   
 }
 
-shinyApp(ui = ui, server = server, options = list(launch.browser = FALSE))
+shinyApp(ui = ui, server = server)
+
+
