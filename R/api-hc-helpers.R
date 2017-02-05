@@ -1,9 +1,10 @@
 #' Helpers to use highcharter as input in shiny apps
 #' 
 #' When you use highcharter in a shiny app, for example
-#' \code{renderHighcharter("my_chart")} and then use the \code{hc_add_event_point}
-#' function you can get the information of the point when the event is triggered
-#' vía \code{input$my_chart}. So the highcharter can be used as an input.
+#' \code{renderHighcharter('my_chart')}, you can access to the actions of hte
+#' user using and then use the \code{hc_add_event_point} via the 
+#' \code{my_chart} input (\code{input$my_chart}). That's a way you can
+#' use a chart as an input.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param series The name of type of series to apply the event.
