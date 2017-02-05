@@ -106,7 +106,7 @@ internally transform the list in a format usable for highcharts.
 
 Let's download some geojson file and make a map.
 
-```{r}
+```{r, eval=FALSE}
 getContent <- function(url) {
   library(httr)
   content(GET(url))
@@ -134,7 +134,7 @@ volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=E
 The data is ready. Remember you can keep using the rest of the API to 
 customize your map.
 
-```{r}
+```{r, eval=FALSE}
 highchart(type = "map") %>%
   hc_chart(backgroundColor = "#161C20") %>% 
   hc_add_series(mapData = world, showInLegend = FALSE, nullColor = "#424242",
