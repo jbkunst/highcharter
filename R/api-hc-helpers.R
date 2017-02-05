@@ -1,3 +1,88 @@
+#' Helpers to use highcharter as input in shiny apps
+#' 
+#' When you use highcharter in a shiny app, for example
+#' \code{renderHighcharter("my_chart")} and then use the \code{hc_add_event_point}
+#' function you can get the information of the point when the event is triggered
+#' vía \code{input$my_chart}. So the highcharter can be used as an input.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param series The name of type of series to apply the event.
+#' @param event The name of event: click, mouseOut,  mouseOver. See 
+#'   \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
+#'   for more details.
+#' 
+#' @export
+hc_add_event_point <- function(hc, series = "series", event = "click"){
+  
+  fun <- "function(){
+  var pointinfo = {series: this.series.name, seriesid: this.series.id,
+  name: this.name, x: this.x, y: this.y, category: this.category.name }
+  window.x = this;
+  console.log(pointinfo);
+  
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id, pointinfo); } 
+}"
+  
+  fun <- JS(fun)
+  
+  eventobj <- structure(
+    list(structure(
+      list(structure(
+        list(structure(
+          list(fun),
+          .Names = event)
+        ),
+        .Names = "events")
+      ),
+      .Names = "point")
+    ),
+    .Names = series
+  )
+  
+  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+    hc$x$hc_opts$plotOptions,
+    eventobj
+  )
+  
+  hc
+  
+  }
+
+#' @rdname hc_add_event_point
+#' @export
+hc_add_event_series <- function(hc, series = "series", event = "click"){
+  
+  fun <- "function(){
+  var seriesinfo = {name: this.name }
+  console.log(seriesinfo);
+  window.x = this;
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id, seriesinfo); }
+  
+}"
+  fun <- JS(fun)
+  
+  eventobj <- structure(
+    list(structure(
+      list(structure(
+        list(fun),
+        .Names = event)
+      ),
+      .Names = "events")
+    ),
+    .Names = series
+  )
+  
+  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+    hc$x$hc_opts$plotOptions,
+    eventobj
+  )
+  
+  hc
+  
+  }
+
+
+
 #' Setting \code{elementId}
 #' 
 #' Function to modify the \code{id} for the container.

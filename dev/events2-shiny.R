@@ -3,78 +3,11 @@ library(shiny)
 library(highcharter)
 library(tidyverse)
 
-hc_add_series_event <- function(hc, series = "series", event = "click", inputanme = NULL){
-  
-  fun <- "function(){
-  var seriesinfo = {name: this.name }
-  console.log(seriesinfo);
-  window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id, seriesinfo); }
-  
-}"
-  fun <- JS(fun)
-  
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(fun),
-        .Names = event)
-      ),
-      .Names = "events")
-    ),
-    .Names = series
-  )
-  
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-  
-  hc
-  
-  }
-
-hc_add_point_event <- function(hc, series = "series", event = "click", inputanme = NULL){
-  
-  fun <- "function(){
-  var pointinfo = {series: this.series.name, seriesid: this.series.id,
-  name: this.name, x: this.x, y: this.y, category: this.category.name }
-  window.x = this;
-  console.log(pointinfo);
-  
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id, pointinfo); } 
-}"
-  
-  fun <- JS(fun)
-  
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(structure(
-          list(fun),
-          .Names = event)
-        ),
-        .Names = "events")
-      ),
-      .Names = "point")
-    ),
-    .Names = series
-  )
-  
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-  
-  hc
-  
-  }
 
 hc <- highcharts_demo() 
 
-
 hc_base <- hchart(mpg, "scatter", hcaes(x = cty, y = displ, group = class, name = model))
-hc_base %>% hc_add_point_event()
+
 
 ui <- fluidPage(
   h2("Highcharter as Shiny Inputs"),
@@ -98,7 +31,7 @@ server = function(input, output) {
           cursor = "pointer"
         )
       ) %>% 
-      hc_add_point_event(event = "mouseOver")
+      hc_add_event_point(event = "mouseOver")
     
     hc
     
@@ -114,7 +47,7 @@ server = function(input, output) {
           cursor = "pointer"
           )
         ) %>%
-      hc_add_series_event(event = "click")
+      hc_add_event_series(event = "click")
     
     hc
     
