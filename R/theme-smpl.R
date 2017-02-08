@@ -56,20 +56,16 @@ hc_theme_smpl <- function(...){
       ),
       plotOptions = list(
         line = list(
-          marker = list(enabled = FALSE),
-          states = list(hover = list(lineWidthPlus = 1))
+          marker = list(enabled = FALSE)
         ),
         spline = list(
-          marker = list(enabled = FALSE),
-          states = list(hover = list(lineWidthPlus = 1))
+          marker = list(enabled = FALSE)
         ),
         area = list(
-          marker = list(enabled = FALSE),
-          states = list(hover = list(lineWidthPlus = 1))
+          marker = list(enabled = FALSE)
         ),
         areaspline = list(
-          marker = list(enabled = FALSE),
-          states = list(hover = list(lineWidthPlus = 1))
+          marker = list(enabled = FALSE)
         )
       )
     )
