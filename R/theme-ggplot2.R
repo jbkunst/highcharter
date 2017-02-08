@@ -24,6 +24,8 @@ hc_theme_ggplot2 <- function(...) {
     xAxis = list(
       labels = list(style = list(color = "#666666")),
       title = list(style = list(color = "#000000")),
+      startOnTick = FALSE,
+      endOnTick = FALSE,
       gridLineColor = "#FFFFFF",
       gridLineWidth = 1.5,
       tickWidth = 1.5,
@@ -37,6 +39,7 @@ hc_theme_ggplot2 <- function(...) {
       labels = list(style = list(color = "#666666")),
       title = list(style = list(color = "#000000")),
       startOnTick = FALSE,
+      endOnTick = FALSE,
       gridLineColor = "#FFFFFF",
       gridLineWidth = 1.5,
       tickWidth = 1.5,
