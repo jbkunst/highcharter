@@ -26,25 +26,23 @@ dependencies:
     - modules/offline-exporting.js
     - modules/solid-gauge.js
     - modules/treemap.js
-    - plugins/annotations.js
-    - plugins/draggable-legend.js
+#    - modules/accessibility.js    
+#    - modules/canvas-tools.js
+#    - modules/boost.js
     - plugins/draggable-points.js
     - plugins/export-csv.js
     - plugins/grouped-categories.js
     - plugins/motion.js
-    - plugins/pattern-fill-v2.js
-    - plugins/tooltip-delay.js
     - plugins/multicolor_series.js
+#    - plugins/pattern-fill-v2.js
+#    - plugins/tooltip-delay.js
+#    - plugins/annotations.js
+#    - plugins/draggable-legend.js
     - custom/reset.js
     - custom/symbols-extra.js
     - custom/text-symbols.js
     stylesheet:
     - css/motion.css
-  - name: fontawesome
-    version: 4.5.0
-    src: "htmlwidgets/lib/font-awesome-4.5.0"
-    stylesheet:
-    - font-awesome.min.css
   - name: htmlwdgtgrid
     version: 1.0
     src: "htmlwidgets/lib/htmlwdgtgrid"

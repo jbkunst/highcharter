@@ -39,13 +39,16 @@ Imports:
     jsonlite,
     igraph,
     lubridate,
-    crosstalk
+    crosstalk,
+    yaml
 Suggests:
     knitr,
     rmarkdown,
     survival,
     ggplot2,
     httr,
-    viridisLite
+    viridisLite,
+    shiny,
+    MASS
 VignetteBuilder: knitr
 LazyData: true 

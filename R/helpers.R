@@ -2,15 +2,11 @@
 #'
 #' This functions are similar to \code{rlist::list.parse} but this removes
 #' names.
-#'
 #' @param df A data frame to parse to list
-#'
 #' @examples
 #'
 #' x <- data.frame(a=1:3, type=c('A','C','B'), stringsAsFactors = FALSE)
-#'
 #' list_parse(x)
-#'
 #' list_parse2(x)
 #'
 #' @importFrom purrr transpose
@@ -36,24 +32,6 @@ list_parse2 <- function(df) {
   list_parse(df) %>%
     map(setNames, NULL)
 
-}
-
-#' @rdname list_parse
-#' @export
-list.parse2 <- function(df) {
-
-  .Deprecated("list_parse2")
-
-  list_parse2(df)
-}
-
-#' @rdname list_parse
-#' @export
-list.parse3 <- function(df) {
-
-  .Deprecated("list_parse")
-
-  list_parse(df)
 }
 
 #' String to 'id' format
@@ -118,7 +96,6 @@ datetime_to_timestamp <- function(dt) {
 #' @examples
 #'
 #' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725"))
-#'
 #'
 #' @importFrom grDevices col2rgb
 #' @importFrom tidyr unite_
@@ -185,50 +162,6 @@ highcharts_demo <- function() {
     hc_add_series(name = "Tokyo", data = dtemp$tokyo) %>%
     hc_add_series(name = "London", data = dtemp$london) %>%
     hc_add_series(name = "Berlin", data = dtemp$berlin)
-
-}
-
-#' Helpers functions to get FontAwesome icons code
-#'
-#' Helpers functions to get FontAwesome icons code
-#'
-#' @param iconname The icon's name
-#'
-#' @examples
-#'
-#' fa_icon("car")
-#'
-#' @export
-fa_icon <- function(iconname = "circle") {
-
-  faicos <- readRDS(system.file("extdata/faicos.rds", package = "highcharter"))
-
-  stopifnot(iconname %in% faicos$name)
-
-  sprintf("<i class=\"fa fa-%s\"></i>", iconname)
-}
-
-#' @rdname fa_icon
-#'
-#' @examples
-#'
-#' fa_icon_mark("car")
-#'
-#' fa_icon_mark(iconname = c("car", "plane", "car"))
-#'
-#' @export
-fa_icon_mark <- function(iconname = "circle"){
-
-  faicos <- readRDS(system.file("extdata/faicos.rds", package = "highcharter"))
-
-  stopifnot(all(iconname %in% faicos$name))
-
-  idx <- purrr::map_int(iconname, function(icn) which(faicos$name %in% icn))
-
-  cod <- faicos$code[idx]
-
-  # this is for the plugin: need the text:code to parse
-  paste0("text:", cod)
 
 }
 
