@@ -29,6 +29,7 @@ dependencies:
 #    - modules/accessibility.js    
 #    - modules/canvas-tools.js
 #    - modules/boost.js
+    - plugins/highcharts-regression.js
     - plugins/draggable-points.js
     - plugins/export-csv.js
     - plugins/grouped-categories.js
