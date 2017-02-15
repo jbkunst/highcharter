@@ -5,7 +5,7 @@
 #' charting library. Highcharts provide a various type of charts, from
 #' scatters to heatmaps or treemaps. 
 #' 
-#' @name higcharter
+#' @name highcharter
 #' @docType package
 #' @author Joshua Kunst (@@jbkunst)
 NULL
