@@ -362,8 +362,6 @@ mutate_mapping <- function(data, mapping) {
   # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
   tran <- as.character(mapping)
   newv <- names(mapping)
-   
-  setNames(tran, newv)
 
   data <- dplyr::mutate_(data, .dots = setNames(tran, newv))
   

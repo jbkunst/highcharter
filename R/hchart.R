@@ -28,7 +28,9 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
   
   if (getOption("highcharter.verbose"))
     message("hchart.data.frame")
-  
+
+  object <- as.data.frame(object)
+    
   data <- mutate_mapping(object, mapping)
   
   series <- data_to_series(data, mapping, type = type, ...)
