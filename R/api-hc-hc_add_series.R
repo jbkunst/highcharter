@@ -256,6 +256,41 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
   
 }
 
+#' hc_add_series for lm and loess objects
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param data A \code{lm} or \code{loess} object.
+#' @param type The type of the series: line, spline.
+#' @param color A stringr color.
+#' @param fillOpacity fillOpacity to the confidence interval.
+#' @param ... Arguments defined in 
+#'   \url{http://api.highcharts.com/highcharts#chart}. 
+#' @importFrom broom augment
+#' @export
+hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpacity = 0.1, ...) {
+  
+  if (getOption("highcharter.verbose"))
+    message(sprintf("hc_add_series.%s", class(data)))
+  
+  data2 <- augment(data)
+  data2 <- arrange_(data2, .dots = names(data2)[2])
+  data2 <- mutate_(data2, .dots = c("x" = names(data2)[2]))
+  
+  rid <- random_id()
+  
+  hc %>% 
+    hc_add_series(data2, type = type, hcaes_(names(data2)[2], ".fitted"), 
+                  id = rid, color = color, ...) %>% 
+    hc_add_series(data2, type = "arearange",
+                  hcaes_(names(data2)[2], low = ".fitted - .se.fit",
+                         high = ".fitted + .se.fit"), color = hex_to_rgba(color, fillOpacity),
+                  linkedTo = rid, zIndex = -2, ...)
+  
+}
+
+#' @rdname hc_add_series.lm
+hc_add_series.loess <- hc_add_series.lm
+
+
 #' hc_add_series for data frames objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
 #' @param data A \code{data.frame} object.
