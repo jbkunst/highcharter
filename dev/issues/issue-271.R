@@ -27,7 +27,7 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
   if (getOption("highcharter.verbose"))
     message(sprintf("hc_add_series.%s", class(data)))
   
-  data2 <- augment(data)
+  data2 <- as_data_frame(augment(data))
   data2 <- arrange_(data2, .dots = names(data2)[2])
   data2 <- mutate_(data2, .dots = c("x" = names(data2)[2]))
   
@@ -37,8 +37,8 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
     hc_add_series(data2, type = type, hcaes_(names(data2)[2], ".fitted"), 
                   id = rid, color = color, ...) %>% 
     hc_add_series(data2, type = "arearange",
-                  hcaes_(names(data2)[2], low = ".fitted - .se.fit",
-                         high = ".fitted + .se.fit"), color = hex_to_rgba(color, fillOpacity),
+                  hcaes_(names(data2)[2], low = ".fitted - 2*.se.fit",
+                         high = ".fitted + 2*.se.fit"), color = hex_to_rgba(color, fillOpacity),
                   linkedTo = rid, zIndex = -2, ...)
   
 }
@@ -56,6 +56,13 @@ loessmodel <- loess(dist ~ speed, data = cars, span = 0.5)
 highchart() %>%
   hc_add_series(cars, "point", hcaes(speed, dist), name = "Some points") %>% 
   hc_add_series(loessmodel, name = "Loess")
+
+
+highchart() %>%
+  hc_add_series(cars, "point", hcaes(speed, dist), name = "Some points") %>% 
+  hc_add_series(loess(dist ~ speed, data = cars, span = 0.5), name = "Loess 0.5") %>% 
+  hc_add_series(loess(dist ~ speed, data = cars, span = 5), name = "Loess 5", color = "green") %>% 
+  hc_add_series(loess(dist ~ speed, data = cars, span = 1), name = "Loess 1", color = "gray")
 
 
 hc %>% 

@@ -281,8 +281,10 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
     hc_add_series(data2, type = type, hcaes_(names(data2)[2], ".fitted"), 
                   id = rid, color = color, ...) %>% 
     hc_add_series(data2, type = "arearange",
-                  hcaes_(names(data2)[2], low = ".fitted - .se.fit",
-                         high = ".fitted + .se.fit"), color = hex_to_rgba(color, fillOpacity),
+                  hcaes_(names(data2)[2],
+                         low = ".fitted - 2 * .se.fit",
+                         high = ".fitted + 2 * .se.fit"),
+                  color = hex_to_rgba(color, fillOpacity),
                   linkedTo = rid, zIndex = -2, ...)
   
 }
