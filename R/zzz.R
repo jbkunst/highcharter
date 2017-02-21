@@ -81,14 +81,10 @@
         series = list(
           turboThreshold = 0
           ),
-        treemap = list(layoutAlgorithm = "squarified"),
-        bubble = list(minSize = 5, maxSize = 25)
+        treemap = list(layoutAlgorithm = "squarified")
         ),
       annotationsOptions = list(
         enabledButtons = FALSE
-        ),
-      tooltip = list(
-        delayForDisplay = 10
         )
       )
     )

@@ -10,4 +10,4 @@ dependencies:
     - highcharts.js
     - modules/boost.src.js
     - modules/exporting.js
-    - modules/reset.js
+    - custom/reset.js    
