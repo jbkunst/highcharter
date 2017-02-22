@@ -29,7 +29,6 @@ dependencies:
 #    - modules/accessibility.js    
 #    - modules/canvas-tools.js
 #    - modules/boost.js
-    - plugins/draggable-points.js
     - plugins/export-csv.js
     - plugins/grouped-categories.js
     - plugins/motion.js
@@ -39,6 +38,7 @@ dependencies:
 #    - plugins/tooltip-delay.js
 #    - plugins/annotations.js
 #    - plugins/draggable-legend.js
+#    - plugins/draggable-points.js
     - custom/reset.js
     - custom/symbols-extra.js
     - custom/text-symbols.js
