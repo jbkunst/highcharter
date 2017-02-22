@@ -66,6 +66,9 @@ hc_theme_smpl <- function(...){
         ),
         areaspline = list(
           marker = list(enabled = FALSE)
+        ),
+        bubble = list(
+          maxSize = "10%"
         )
       )
     )
