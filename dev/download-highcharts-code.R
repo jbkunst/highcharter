@@ -2,15 +2,25 @@
 library(purrr)
 library(rvest)
 library(stringr)
+library(yaml)
+library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "5.0.6"
+version <- "5.0.7"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
+
+yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
+yml <- yaml.load_file(yml)[[1]]
+version_old <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts"]
+path_old <- str_replace(path, version, version_old)
+
+
 
 # creating folder structure
 folders <- c("", "modules", "plugins", "css", "custom")
 try(map(file.path(path, folders), dir.create))
+
 
 
 # main files --------------------------------------------------------------
@@ -54,28 +64,41 @@ files <- c(
   "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
   )
+# 
+# map2(
+#   files,
+#   file.path(path, "plugins", basename(files)),
+#   download.file
+# )
 
-map2(
-  files,
+file.copy(
+  file.path(path_old, "plugins", basename(files)),
   file.path(path, "plugins", basename(files)),
-  download.file
+  overwrite = TRUE
 )
 
+
 # for yaml ----------------------------------------------------------------
-path %>% 
-  dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>% 
-  setdiff(file.path(path, "modules", c("accessibility.js", "boost.js", "canvas-tools.js"))) %>% 
-  str_replace(path, "    - ") %>% 
-  str_replace("/", "") %>% 
-  paste0(collapse = "\n") %>% 
-  cat()
+# path %>% 
+#   dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>% 
+#   setdiff(file.path(path, "modules", c("accessibility.js", "boost.js", "canvas-tools.js"))) %>% 
+#   str_replace(path, "    - ") %>% 
+#   str_replace("/", "") %>% 
+#   paste0(collapse = "\n") %>% 
+#   cat()
   
 # my customs --------------------------------------------------------------
-message("PLZ DON'T FORGET!")
-message("symbols-extras.js")
-message("text-symbols.js")
-message("reset.js")
-message("motion.css")
+file.copy(
+  dir(file.path(path_old, "custom"), full.names = TRUE),
+  str_replace(dir(file.path(path_old, "custom"), full.names = TRUE), version_old, version),
+  overwrite = TRUE
+)
+
+file.copy(
+  dir(file.path(path_old, "css"), full.names = TRUE),
+  str_replace(dir(file.path(path_old, "css"), full.names = TRUE), version_old, version),
+  overwrite = TRUE
+)
 
 
 
