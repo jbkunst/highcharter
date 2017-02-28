@@ -45,9 +45,14 @@ HTMLWidgets.widget({
       
       if(x.theme.chart.divBackgroundImage !== null){
         
-        Highcharts.wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
+        Highcharts.wrap(Highcharts.Chart.prototype, "getContainer", function (proceed) {
           proceed.call(this);
-          $("#" + el.id).css('background-image', 'url(' + x.theme.chart.divBackgroundImage + ')');
+          $("#" + el.id).css("background-image", "url(" + x.theme.chart.divBackgroundImage + ")");
+          
+          $("#" + el.id).css("-webkit-background-size", "cover");
+          $("#" + el.id).css("-moz-background-size", "cover");
+          $("#" + el.id).css("-o-background-size", "cover");
+          $("#" + el.id).css("background-size", "cover");
           
         });
         
