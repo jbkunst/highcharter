@@ -41,24 +41,34 @@ HTMLWidgets.widget({
     
     if(x.theme !== null) {
       
+      if(x.debug) console.log("adding THEME");
+      
       Highcharts.setOptions(x.theme);
       
-      if(x.theme.chart.divBackgroundImage !== null){
+    }
+    
+    
+    if((x.theme && x.theme.chart.divBackgroundImage !== undefined) |
+         (x.hc_opts.chart  && x.hc_opts.chart.divBackgroundImage !== undefined)) {
+           
+      if(x.debug) console.log("adding BackgroundImage");     
+           
+      var bkgrnd = x.theme.chart.divBackgroundImage || x.hc_opts.chart.divBackgroundImage;
+      
+      Highcharts.wrap(Highcharts.Chart.prototype, "getContainer", function (proceed) {
         
-        Highcharts.wrap(Highcharts.Chart.prototype, "getContainer", function (proceed) {
-          proceed.call(this);
-          $("#" + el.id).css("background-image", "url(" + x.theme.chart.divBackgroundImage + ")");
-          
-          $("#" + el.id).css("-webkit-background-size", "cover");
-          $("#" + el.id).css("-moz-background-size", "cover");
-          $("#" + el.id).css("-o-background-size", "cover");
-          $("#" + el.id).css("background-size", "cover");
-          
-        });
+        proceed.call(this);
         
-      }
+        $("#" + el.id).css("background-image", "url(" + bkgrnd + ")");
+        $("#" + el.id).css("-webkit-background-size", "cover");
+        $("#" + el.id).css("-moz-background-size", "cover");
+        $("#" + el.id).css("-o-background-size", "cover");
+        $("#" + el.id).css("background-size", "cover");
+        
+      });
       
     }
+    
     
     Highcharts.setOptions(x.conf_opts);
     
