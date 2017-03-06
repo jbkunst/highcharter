@@ -114,6 +114,7 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   series_box <- df %>%
     group_by_("g1", "g2") %>%  
     do(data = get_box_values(.$x)) %>% 
+    ungroup() %>% 
     unnest() %>% 
     group_by_("g2") %>% 
     do(data = list_parse(rename_(select_(., "-g2"), "name" = "g1"))) %>% 

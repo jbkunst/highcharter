@@ -271,17 +271,22 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
   if (getOption("highcharter.verbose"))
     message(sprintf("hc_add_series.%s", class(data)))
   
-  data2 <- augment(data)
+  data2 <- data %>% 
+    augment() %>% 
+    as.matrix.data.frame() %>% 
+    as.data.frame() %>% 
+    tbl_df()
   data2 <- arrange_(data2, .dots = names(data2)[2])
   data2 <- mutate_(data2, .dots = c("x" = names(data2)[2]))
+  data2 <- select_(data2, .dots = c(names(data2)[1]), "x", ".fitted", ".se.fit")
   
   rid <- random_id()
   
   hc %>% 
-    hc_add_series(data2, type = type, hcaes_(names(data2)[2], ".fitted"), 
+    hc_add_series(data2, type = type, hcaes_("x", ".fitted"), 
                   id = rid, color = color, ...) %>% 
     hc_add_series(data2, type = "arearange",
-                  hcaes_(names(data2)[2],
+                  hcaes_("x",
                          low = ".fitted - 2 * .se.fit",
                          high = ".fitted + 2 * .se.fit"),
                   color = hex_to_rgba(color, fillOpacity),
@@ -290,8 +295,8 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
 }
 
 #' @rdname hc_add_series.lm
+#' @export
 hc_add_series.loess <- hc_add_series.lm
-
 
 #' hc_add_series for data frames objects
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
