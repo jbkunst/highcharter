@@ -1,7 +1,7 @@
 #' Helpers to use highcharter as input in shiny apps
 #' 
 #' When you use highcharter in a shiny app, for example
-#' \code{renderHighcharter('my_chart')}, you can access to the actions of hte
+#' \code{renderHighcharter('my_chart')}, you can access to the actions of the
 #' user using and then use the \code{hc_add_event_point} via the 
 #' \code{my_chart} input (\code{input$my_chart}). That's a way you can
 #' use a chart as an input.
@@ -11,19 +11,22 @@
 #' @param event The name of event: click, mouseOut,  mouseOver. See 
 #'   \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
 #'   for more details.
+#'   
+#' @note Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
+#'     and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
 #' 
 #' @export
 hc_add_event_point <- function(hc, series = "series", event = "click"){
-  
-  fun <- "function(){
+
+  fun <- paste0("function(){
   var pointinfo = {series: this.series.name, seriesid: this.series.id,
-  name: this.name, x: this.x, y: this.y, category: this.category.name }
+  name: this.name, x: this.x, y: this.y, category: this.category.name}
   window.x = this;
   console.log(pointinfo);
-  
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id, pointinfo); } 
-}"
-  
+
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
+}")
+
   fun <- JS(fun)
   
   eventobj <- structure(
@@ -53,13 +56,13 @@ hc_add_event_point <- function(hc, series = "series", event = "click"){
 #' @export
 hc_add_event_series <- function(hc, series = "series", event = "click"){
   
-  fun <- "function(){
+  fun <- paste0("function(){
   var seriesinfo = {name: this.name }
   console.log(seriesinfo);
   window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id, seriesinfo); }
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id, + '_' + '", event, "', seriesinfo); }
   
-}"
+}")
   fun <- JS(fun)
   
   eventobj <- structure(
