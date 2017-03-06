@@ -13,12 +13,14 @@ hc_base <- hchart(mpg, "scatter", hcaes(x = cty, y = displ, group = class, name 
 ui <- fluidPage(
   h2("Highcharter as Shiny Inputs"),
   fluidRow(
-    column(6, highchartOutput("hc_1")),
-    column(6, verbatimTextOutput("hc_1_input"))
+    column(6, h3("Point Event"), highchartOutput("hc_1")),
+    column(3, h3("MouseOver"), verbatimTextOutput("hc_1_input1")),
+    column(3, h3("Click"), verbatimTextOutput("hc_1_input2"))
     ),
   fluidRow(
-    column(6, highchartOutput("hc_2")),
-    column(6, verbatimTextOutput("hc_2_input"))
+    column(6, h3("Series Event"), highchartOutput("hc_2")),
+    column(3, h3("MouseOver"), verbatimTextOutput("hc_2_input1")),
+    column(3, h3("Click"), verbatimTextOutput("hc_2_input2"))
     )
   )
 
@@ -32,13 +34,14 @@ server = function(input, output) {
           cursor = "pointer"
         )
       ) %>% 
-      hc_add_event_point(event = "mouseOver")
-    
+      hc_add_event_point(event = "mouseOver") %>% 
+      hc_add_event_point(event = "click")
     hc
     
   })
   
-  output$hc_1_input <- renderPrint({ input$hc_1 })
+  output$hc_1_input1 <- renderPrint({ input$hc_1_mouseOver })
+  output$hc_1_input2 <- renderPrint({ input$hc_1_click })
   
   output$hc_2 <- renderHighchart({
     
@@ -48,13 +51,15 @@ server = function(input, output) {
           cursor = "pointer"
           )
         ) %>%
+      hc_add_event_series(event = "mouseOver") %>% 
       hc_add_event_series(event = "click")
     
     hc
     
   })
   
-  output$hc_2_input <- renderPrint({ input$hc_2 })
+  output$hc_2_input1 <- renderPrint({ input$hc_2_mouseOver })
+  output$hc_2_input2 <- renderPrint({ input$hc_2_click })
   
   
 }

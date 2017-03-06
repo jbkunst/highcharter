@@ -60,7 +60,7 @@ hc_add_event_series <- function(hc, series = "series", event = "click"){
   var seriesinfo = {name: this.name }
   console.log(seriesinfo);
   window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id, + '_' + '", event, "', seriesinfo); }
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
   
 }")
   fun <- JS(fun)
