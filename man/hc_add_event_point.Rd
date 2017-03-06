@@ -20,9 +20,13 @@ for more details.}
 }
 \description{
 When you use highcharter in a shiny app, for example
-\code{renderHighcharter('my_chart')}, you can access to the actions of hte
+\code{renderHighcharter('my_chart')}, you can access to the actions of the
 user using and then use the \code{hc_add_event_point} via the 
 \code{my_chart} input (\code{input$my_chart}). That's a way you can
 use a chart as an input.
+}
+\note{
+Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
+    and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
 }
 
