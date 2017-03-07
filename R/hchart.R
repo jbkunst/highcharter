@@ -508,7 +508,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   vattrs <- setdiff(names(dfv), c("x", "y", "z", "color", "label", "name"))
   
   tltip_fmt <- tooltip_table(
-    str_to_title(str_replace(vattrs, "_", " ")),
+    str_to_title(str_replace_all(vattrs, "_", " ")),
     sprintf("{point.%s}", vattrs))
   
   hc <- highchart() %>% 
