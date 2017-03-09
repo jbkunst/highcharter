@@ -5,6 +5,8 @@
 }
 
 #play-controls {
+    position: absolute;
+    bottom: 0px;
     text-align: center;
     min-width: 310px;
     max-width: 800px;
