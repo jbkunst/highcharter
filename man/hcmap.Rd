@@ -48,4 +48,3 @@ hcmap(map = "countries/us/us-all", data = USArrests,
       download_map_data = TRUE) 
   
 }
-

@@ -20,4 +20,3 @@ generic that other classes and packages can extend.
 \details{
 Run \code{methods(hchart)} to see what objects are supported.
 }
-

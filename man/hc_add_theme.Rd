@@ -23,4 +23,3 @@ highchart() \%>\%
   hc_add_theme(hc_theme_sandsignika())
   
 }
-

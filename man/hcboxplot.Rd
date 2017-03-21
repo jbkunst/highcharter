@@ -23,4 +23,3 @@ Shortcut to make a boxplot
 \examples{
 hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
 }
-

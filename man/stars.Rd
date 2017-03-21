@@ -24,5 +24,5 @@ A sample using by Nadieh Bremer blocks. \url{http://bl.ocks.org/nbremer/eb0d1fd4
  \item \code{distance}: Distance
 }
 }
-\keyword{datasets}
 
+\keyword{datasets}

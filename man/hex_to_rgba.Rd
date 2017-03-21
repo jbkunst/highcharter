@@ -19,4 +19,3 @@ Transform colors from hexadecimal format to rgba hc notation
 hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725"))
 
 }
-

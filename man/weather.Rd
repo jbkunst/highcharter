@@ -22,5 +22,5 @@ Temperature information of San Francisco.
  \item \code{mean_temperaturec}: Mean temperature.
 }
 }
-\keyword{datasets}
 
+\keyword{datasets}

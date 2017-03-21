@@ -14,4 +14,3 @@ hc_rm_series(hc, names = NULL)
 \description{
 Removing series to highchart objects
 }
-

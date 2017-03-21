@@ -21,4 +21,3 @@ Similar in spirit to \code{ggplot2::aes}
 hcaes(x = xval, color = colorvar, group = grvar)
 
 }
-

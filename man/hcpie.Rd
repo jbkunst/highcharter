@@ -14,4 +14,3 @@ hcpie(x, ...)
 \description{
 Shortcut to make a pie chart
 }
-

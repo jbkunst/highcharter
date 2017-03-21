@@ -13,4 +13,3 @@ This data comes from the \url{https://code.highcharts.com/mapdata/countries/us/u
 and is used in highmaps examples.
 }
 \keyword{datasets}
-

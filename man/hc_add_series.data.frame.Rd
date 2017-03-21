@@ -22,4 +22,3 @@
 \description{
 hc_add_series for data frames objects
 }
-
