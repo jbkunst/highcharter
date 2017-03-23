@@ -14,7 +14,10 @@ hc_theme_db <- function(...){
     list(
       colors = c("#A9CF54", "#C23C2A", "#FFFFFF", "#979797", "#FBB829"),
       chart = list(  
-        backgroundColor = "#242F39"
+        backgroundColor = "#242F39",
+        style = list(
+          color = "white"
+        )
         ),
       legend = list(
         enabled = TRUE,

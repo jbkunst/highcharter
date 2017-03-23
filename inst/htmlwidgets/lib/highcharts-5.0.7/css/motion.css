@@ -20,6 +20,7 @@
 }
 
 #play-pause-button {
+    color: #666666;
     width: 30px;
     height: 30px;
     text-align: center;
@@ -36,5 +37,6 @@
 }
 
 #play-output {
+    color: #666666;
     font-family: Arial, Helvetica, sans-serif;
 }

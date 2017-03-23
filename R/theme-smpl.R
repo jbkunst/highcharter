@@ -19,7 +19,8 @@ hc_theme_smpl <- function(...){
                  "#f1c40f", "#2c3e50", "#7f8c8d"),
       chart = list(
         style = list(
-          fontFamily = "Roboto"
+          fontFamily = "Roboto",
+          color = "#666666"
         )
       ),
       title = list(

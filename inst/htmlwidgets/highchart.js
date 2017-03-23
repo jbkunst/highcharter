@@ -16,6 +16,7 @@ HTMLWidgets.widget({
     
     if(x.debug) {
       window.xclone = JSON.parse(JSON.stringify(x));
+      window.elclone = $(el);
       console.log(el);
       console.log("hc_opts", x.hc_opts);
       console.log("theme", x.theme);
@@ -47,7 +48,6 @@ HTMLWidgets.widget({
       
     }
     
-    
     if((x.theme && x.theme.chart.divBackgroundImage !== undefined) |
          (x.hc_opts.chart  && x.hc_opts.chart.divBackgroundImage !== undefined)) {
            
@@ -68,7 +68,6 @@ HTMLWidgets.widget({
       });
       
     }
-    
     
     Highcharts.setOptions(x.conf_opts);
     
@@ -104,6 +103,21 @@ HTMLWidgets.widget({
       }
       
     }
+    
+    if(x.hc_opts.motion !== undefined) {
+      
+      if(x.debug) console.log("setting MOTION options");
+      
+      var pc = $($("#" + el.id).find("#play-controls")[0]);
+      
+      var ct = x.theme.chart;
+      
+      if(ct.backgroundColor !== undefined) $(pc.find("#play-pause-button")[0]).css({backgroundColor : x.theme.chart.backgroundColor});
+      if(ct.style !== undefined)  $(pc.find("#play-output")[0]).css(x.theme.chart.style);
+      if(ct.style !== undefined && ct.style.color !== undefined) $(pc.find("#play-pause-button")[0]).css({color : x.theme.chart.style.color});
+      
+      
+    } 
     
   },
 
