@@ -251,7 +251,11 @@ hc_pane <- function(hc, ...){
 #' @export
 hc_motion <- function(hc, ...) {
   
-  .hc_opt(hc, "motion", ...)
+  hc <- .hc_opt(hc, "motion", ...)
+  
+  hc <- hc_add_dependency_fa(hc)
+  
+  hc
   
 }
 
