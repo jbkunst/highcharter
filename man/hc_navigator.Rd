@@ -15,3 +15,4 @@ hc_navigator(hc, ...)
 Options regarding the navigator: The miniseries below chart 
 in a highstock chart.
 }
+

@@ -49,3 +49,4 @@ stops <- list_parse2(stops)
 hc_colorAxis(hc, stops = stops, max = 75) 
 
 }
+

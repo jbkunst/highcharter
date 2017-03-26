@@ -27,3 +27,4 @@ hcspark(c(1, 4, 5), "pie")
 hcspark(x, type = "area")
    
 }
+

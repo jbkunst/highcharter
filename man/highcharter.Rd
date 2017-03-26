@@ -14,3 +14,4 @@ scatters to heatmaps or treemaps.
 \author{
 Joshua Kunst (@jbkunst)
 }
+

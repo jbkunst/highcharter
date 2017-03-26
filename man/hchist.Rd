@@ -14,3 +14,4 @@ hchist(x, ...)
 \description{
 Shortcut to make an histogram
 }
+

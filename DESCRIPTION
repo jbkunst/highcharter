@@ -3,9 +3,9 @@ Type: Package
 Version: 0.5.0.9999
 Title: A Wrapper for the 'Highcharts' Library
 Description: A wrapper for the 'Highcharts' library including
-  shortcut functions to plot R objects. 'Highcharts' 
-  <http://www.highcharts.com/> is a charting library offering
-  numerous chart types with a simple configuration syntax.
+    shortcut functions to plot R objects. 'Highcharts'
+    <http://www.highcharts.com/> is a charting library offering
+    numerous chart types with a simple configuration syntax.
 Authors@R: c(
   person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
   person("Nuno", "Agostinho", role = c("ctb"), comment  = "hchart.survfit, densities and hc_add_series_scatter"),
@@ -14,12 +14,12 @@ Authors@R: c(
   person("Eduardo", "Flores", role = c("ctb"), comment  = "First version hc_add_series_df_tidy"),
   person("Dean", "Kilfoyle", role = c("ctb"), comment  = "First version hc_add_series_boxplot"),
   person("Adline", "Dsilva", role = c("ctb"), comment  = "First version Matrix heatmap")
-  )  
+  )
 URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 Maintainer: Joshua Kunst <jbkunst@gmail.com>
 License: MIT + file LICENSE
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1
 Depends:
     R (>= 2.10)
 Imports:
@@ -52,4 +52,4 @@ Suggests:
     shiny,
     MASS
 VignetteBuilder: knitr
-LazyData: true 
+LazyData: true

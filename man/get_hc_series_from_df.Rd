@@ -21,3 +21,4 @@ This function is used in hchart.data.frame and hc_add_series_df
 get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 
 }
+

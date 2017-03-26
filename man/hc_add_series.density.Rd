@@ -16,3 +16,4 @@
 \description{
 hc_add_series for density objects
 }
+

@@ -30,3 +30,4 @@ This function creates a Highchart chart using \pkg{htmlwidgets}. The
 widget can be rendered on HTML pages generated from R Markdown, Shiny, or
 other applications.
 }
+

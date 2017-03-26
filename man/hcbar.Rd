@@ -14,3 +14,4 @@ hcbar(x, ...)
 \description{
 Shortcut to make a bar chart
 }
+

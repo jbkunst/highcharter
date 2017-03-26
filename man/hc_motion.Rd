@@ -15,3 +15,4 @@ hc_motion(hc, ...)
 The Motion Highcharts Plugin adds an interactive HTML5 player
 to any Highcharts chart (Highcharts, Highmaps and Highstock).
 }
+

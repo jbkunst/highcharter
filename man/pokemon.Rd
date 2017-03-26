@@ -40,5 +40,5 @@ Information about 718 pokemon.
  \item \code{url_image}:
 }
 }
-
 \keyword{datasets}
+

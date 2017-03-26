@@ -33,3 +33,4 @@ highchart(type = "stock") \%>\%
 }
 
 }
+

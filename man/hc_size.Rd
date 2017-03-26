@@ -21,3 +21,4 @@ Changing the size of a \code{highchart} object
 hc_size(hcts(rnorm(100)), 400, 200)
 
 }
+

@@ -12,3 +12,4 @@ fix_1_length_data(x)
 \description{
 Function to avoid the jsonlite::auto_unbox default
 }
+

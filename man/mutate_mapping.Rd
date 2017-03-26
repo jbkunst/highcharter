@@ -19,3 +19,4 @@ Modify data frame according to mapping
 mutate_mapping(data = head(mtcars), mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
 
 }
+

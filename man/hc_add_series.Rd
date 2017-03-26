@@ -23,3 +23,4 @@ Adding and removing series from highchart objects
    hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue")
 
 }
+

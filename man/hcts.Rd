@@ -14,3 +14,4 @@ hcts(x, ...)
 \description{
 Shortcut to make time series or line charts
 }
+

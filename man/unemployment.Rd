@@ -27,5 +27,5 @@ and is used in highmaps examples.
 
 }
 }
-
 \keyword{datasets}
+

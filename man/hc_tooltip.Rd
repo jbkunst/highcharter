@@ -27,3 +27,4 @@ highcharts_demo() \%>\%
   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 
              
 }
+

@@ -14,3 +14,4 @@ hcdensity(x, ...)
 \description{
 Shortcut to make density charts
 }
+

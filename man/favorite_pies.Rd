@@ -21,5 +21,5 @@ Data from How I met Your Mother: Marshall's Favorite Pies
 
 }
 }
-
 \keyword{datasets}
+

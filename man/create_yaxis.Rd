@@ -39,3 +39,4 @@ highchart() \%>\%
   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)  
    
 }
+

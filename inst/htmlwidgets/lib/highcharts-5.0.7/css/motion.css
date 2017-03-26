@@ -1,3 +1,9 @@
+/* $("div:has(#play-controls)").css({"position" : "relative"})
+div:has(#play-controls) {
+  position : relative;
+}
+ */
+ 
 .loading {
     margin-top: 10em;
     text-align: center;
@@ -6,7 +12,7 @@
 
 #play-controls {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     text-align: center;
     min-width: 310px;
     max-width: 800px;

@@ -19,3 +19,4 @@
 \description{
 hc_add_series for character and factor objects
 }
+

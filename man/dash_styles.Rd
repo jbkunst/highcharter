@@ -9,3 +9,4 @@ dash_styles()
 \description{
 Get dash style to use on highcharts objects.
 }
+

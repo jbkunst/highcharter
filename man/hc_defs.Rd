@@ -14,3 +14,4 @@ hc_defs(hc, ...)
 \description{
 Helper function to use the fill patter plugin \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.
 }
+

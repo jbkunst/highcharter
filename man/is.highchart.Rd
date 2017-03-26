@@ -12,3 +12,4 @@ is.highchart(x)
 \description{
 Reports whether x is a highchart object
 }
+
