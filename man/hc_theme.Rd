@@ -52,4 +52,3 @@ thm <- hc_theme(
 hc \%>\% hc_add_theme(thm)
 
 }
-

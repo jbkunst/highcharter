@@ -20,4 +20,3 @@ hchart(rnorm(10)) \%>\%
   hc_elementId("newid")
 
 }
-

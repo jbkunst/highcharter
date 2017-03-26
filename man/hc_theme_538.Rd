@@ -26,4 +26,3 @@ highcharts_demo() \%>\%
   )
 
 }
-

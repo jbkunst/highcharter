@@ -25,5 +25,5 @@ Temperature information by years.
  \item \code{upper}: Maximum temperature.
 }
 }
-\keyword{datasets}
 
+\keyword{datasets}

@@ -19,4 +19,3 @@ Function to create \code{stops} argument in \code{hc_colorAxis}
 color_stops(5)
 
 }
-

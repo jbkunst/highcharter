@@ -15,4 +15,3 @@ hc_scrollbar(hc, ...)
 Options regarding the scrollbar which is a means of panning 
 over the X axis of a chart.
 }
-

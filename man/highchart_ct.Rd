@@ -25,4 +25,3 @@ highchart_ct(data = NULL, hc_opts = list(),
 \description{
 Highcharter Crosstalk Widget
 }
-

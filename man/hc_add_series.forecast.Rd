@@ -24,4 +24,3 @@
 \description{
 hc_add_series for forecast objects
 }
-

@@ -37,4 +37,3 @@ highchart() \%>\%
  hc_add_dependency(name = "plugins/pattern-fill-v2.js")
 
 }
-

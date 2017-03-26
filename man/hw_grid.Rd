@@ -20,4 +20,3 @@ and \code{list}s of \code{highchart} objects.}
 Lays out highchart widgets into a "grid", similar to
 \code{grid.arrange} from \code{gridExtra}
 }
-

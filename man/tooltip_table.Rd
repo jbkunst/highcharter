@@ -31,4 +31,3 @@ y <- c("$ {point.y}", "{point.series.options.extra.genre}",
 tooltip_table(x, y)
 
 }
-

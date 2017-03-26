@@ -24,4 +24,3 @@ str(mpdta, 1)
 \seealso{
 \code{\link{hcmap}}
 }
-

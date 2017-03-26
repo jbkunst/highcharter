@@ -61,4 +61,3 @@ highchart(type = "map") \%>\%
  }
   
 }
-

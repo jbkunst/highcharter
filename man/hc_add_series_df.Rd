@@ -96,4 +96,3 @@ hc_add_series_df(highchart(), economics_long2, "line", x = date,
 }
 
 }
-

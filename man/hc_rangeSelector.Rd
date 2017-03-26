@@ -18,4 +18,3 @@ to select preconfigured ranges in the chart, like 1 day, 1 week, 1 month
 etc. It also provides input boxes where min and max dates can be manually
 input.
 }
-

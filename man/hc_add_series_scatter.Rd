@@ -48,4 +48,3 @@ hc_add_series_scatter(hc, mtcars$wt, mtcars$mpg, mtcars$drat, mtcars$qsec,
 }
 
 }
-

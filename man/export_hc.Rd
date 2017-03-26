@@ -44,4 +44,3 @@ export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "objectname")
 export_hc(hc, filename = "~/hc_ct.js", as = "container", name = "#selectorid")
 
 }
-

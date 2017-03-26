@@ -15,4 +15,3 @@ hc_mapNavigation(hc, ...)
 Options regarding the mapNavigation: A collection of options for zooming 
 and panning in a map.
 }
-

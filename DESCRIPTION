@@ -19,7 +19,7 @@ URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 Maintainer: Joshua Kunst <jbkunst@gmail.com>
 License: MIT + file LICENSE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1.9000
 Depends:
     R (>= 2.10)
 Imports:

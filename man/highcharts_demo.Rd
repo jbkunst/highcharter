@@ -14,4 +14,3 @@ Chart a demo for testing themes
 highcharts_demo()
 
 }
-

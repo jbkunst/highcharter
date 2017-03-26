@@ -21,4 +21,3 @@
 \description{
 hc_add_series for geo_json & geo_list objects
 }
-

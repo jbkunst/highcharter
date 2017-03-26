@@ -25,4 +25,3 @@ highchart() \%>\%
   hc_add_series_list(ds)
   
 }
-

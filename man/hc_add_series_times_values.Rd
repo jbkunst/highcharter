@@ -35,4 +35,3 @@ hc_add_series_times_values(hc = highchart(),
 }
 
 }
-

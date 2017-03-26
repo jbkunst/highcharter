@@ -31,4 +31,3 @@ thm <- hc_theme_merge(
 )
 
 }
-

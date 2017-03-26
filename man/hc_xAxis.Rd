@@ -53,4 +53,3 @@ highchart() \%>\%
    hc_add_series(data = rexp(10), type = "spline", yAxis = 1)
             
 }
-

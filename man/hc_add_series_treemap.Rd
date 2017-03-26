@@ -45,4 +45,3 @@ highchart(height = 800) \%>\%
 }
 
 }
-

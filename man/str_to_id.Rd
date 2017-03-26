@@ -17,4 +17,3 @@ Turn a string to \code{id} format used in treemaps.
 str_to_id(" A string _ with sd / sdg    Underscores \\   ")
 
 }
-

@@ -28,4 +28,3 @@
 \description{
 hc_add_series for lm and loess objects
 }
-

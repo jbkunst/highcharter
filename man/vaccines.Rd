@@ -23,5 +23,5 @@ all 50 states. From the WSJ analysis: \url{http://graphics.wsj.com/infectious-di
 
 }
 }
-\keyword{datasets}
 
+\keyword{datasets}

@@ -14,4 +14,3 @@ hc_annotationsOptions(hc, ...)
 \description{
 Setting Annotations Options
 }
-

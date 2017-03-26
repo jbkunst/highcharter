@@ -39,4 +39,3 @@ hciconarray(c("nice", "good"), c(100, 200), icons = "child")
    )
 
 }
-

@@ -19,4 +19,3 @@ datetime_to_timestamp(
   format = "\%Y-\%m-\%d"))
 
 }
-

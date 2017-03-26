@@ -21,4 +21,3 @@ get_data_from_map(dta)
 \seealso{
 \code{\link{download_map_data}}
 }
-

@@ -27,4 +27,3 @@ highchart() \%>\%
              href = "http://www.htmlwidgets.org/")
              
 }
-
