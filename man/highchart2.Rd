@@ -2,10 +2,14 @@
 % Please edit documentation in R/highcharter.R
 \name{highchart2}
 \alias{highchart2}
+\alias{highchartzero}
 \title{Create a Highcharts chart widget}
 \usage{
 highchart2(hc_opts = list(), theme = NULL, width = NULL, height = NULL,
   elementId = NULL, debug = FALSE)
+
+highchartzero(hc_opts = list(), theme = NULL, width = NULL,
+  height = NULL, elementId = NULL)
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as 

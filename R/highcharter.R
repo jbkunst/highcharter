@@ -68,7 +68,7 @@ highchart <- function(hc_opts = list(),
 #' @param x An object to test
 #' @export
 is.highchart <- function(x) {
-  inherits(x, "highchart") || inherits(x, "highchart2")
+  inherits(x, "highchart") || inherits(x, "highchart2") || inherits(x, "highchartzero")
 }
 
 #' Widget output function for use in Shiny
@@ -168,3 +168,35 @@ renderHighchart2 <- function(expr, env = parent.frame(), quoted = FALSE) {
   } # force quoted
   shinyRenderWidget(expr, highchartOutput2, env, quoted = TRUE)
 }
+
+#' @rdname highchart2 
+#' @export
+highchartzero <- function(hc_opts = list(),
+                          theme = NULL,
+                          width = NULL,
+                          height = NULL,
+                          elementId = NULL) {
+  
+  # unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme))) 
+  # forward options using x
+  x <- list(
+    hc_opts = hc_opts
+  )
+  
+  # create widget
+  htmlwidgets::createWidget(
+    name = "highchartzero",
+    x,
+    width = width,
+    height = height,
+    package = "highcharter",
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      defaultWidth = "100%",
+      knitr.figure = FALSE,
+      knitr.defaultWidth = "100%",
+      browser.fill = TRUE
+    )
+  )
+}
+
