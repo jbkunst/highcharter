@@ -106,6 +106,8 @@ HTMLWidgets.widget({
     
     if(x.hc_opts.motion !== undefined) {
       
+      $("#" + el.id).css({"position" : "relative" });
+      
       if(x.debug) console.log("setting MOTION options");
       
       var pc = $($("#" + el.id).find("#play-controls")[0]);

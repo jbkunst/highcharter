@@ -1,0 +1,10 @@
+dependencies:
+  - name: jquery
+    version: 1.11.1
+    src: "htmlwidgets/lib/jquery"
+    script: jquery.min.js
+  - name: highcharts
+    version: 5.0.7
+    src: "htmlwidgets/lib/highcharts-5.0.7"
+    script:
+    - highcharts.js
