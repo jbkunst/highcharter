@@ -246,12 +246,14 @@ hc_pane <- function(hc, ...){
 #' to any Highcharts chart (Highcharts, Highmaps and Highstock).
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param enabled Enable the motion plugin.
+#' @param startIndex start index, default to 0.
 #' @param ... Arguments defined in \url{https://github.com/larsac07/Motion-Highcharts-Plugin/wiki}. 
 #' 
 #' @export
-hc_motion <- function(hc, ...) {
+hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   
-  hc <- .hc_opt(hc, "motion", ...)
+  hc <- .hc_opt(hc, "motion", enabled = enabled, startIndex = startIndex, ...)
   
   hc <- hc_add_dependency_fa(hc)
   
