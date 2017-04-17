@@ -21,3 +21,5 @@ tm <- treemap(df,
 
 
 tmdata <- tbl_df(tm$tm)
+
+tmdata

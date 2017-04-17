@@ -1,6 +1,10 @@
+rm(list = ls())
+library(tidyverse)
 library(tidyr)
 
-rm(list = ls())
+data("GNI2014", package = "treemap")
+
+data <- GNI2014
 
 df <- structure(
   list(
@@ -25,6 +29,7 @@ df <- structure(
   row.names = c(NA, -20L), class = "data.frame")
 
 df <- tbl_df(df)
+head(df)
 
 vars <- c("Costcenter", "Vendor", "Tool")
 attr <- "value"
@@ -41,7 +46,7 @@ library("data.table")
 s <- as.Node(df ,mode="table")
 
 #create values for parent nodes, by aggregation of children values
-s$Do(function(node) node$value <- Aggregate(node , attribute = attr, aggFun = aggf), traversal = "post-order")
+s$Do(function(node) node$value <- Aggregate(node, attribute = attr, aggFun = aggf), traversal = "post-order")
 
 
 # assign ids to all nodes
@@ -50,23 +55,55 @@ s$Set(id = 1:s$totalCount)
 s$Set(parent1 = c(function(self) GetAttribute(self$parent, "id", format = identity)))
 
 class(s)
-data.tree:::print.Node
 # copy the data tree structure to a data.frame
 test <- print(s, "Costcenter","Vendor","Tool","value", "level", "id", "parent1")
-test <- data.table(test)
 
-#manip to get the correct level name
+test <- data.table(test)
 test[,name:= gsub("[^[:alnum:]]", " ", levelName)]
 test[,name:= trimws(name)]
-
 test[,parent:= as.character(parent1)] # parent and ids should be of character for highcharts
 test[,id:=as.character(id)] # parent and ids should be of character for highcharts
-
 test[,value:= as.numeric(trimws(value))]
 
-library(rCharts)
+test2 <- print(s, "Costcenter","Vendor","Tool","value", "level", "id", "parent1")
+head(test2)
+
+
+flds <- c("levelName", "Costcenter","Vendor","Tool","value", "level", "id", "parent1")
+
+test3 <- map(flds, function(f){ message(f); s$Get(f) }) %>% 
+  map(setNames, NULL) %>% 
+  map(as.vector) %>% 
+  setNames(flds) %>% 
+  map_df(identity) %>% 
+  tbl_df() %>% 
+  mutate(name = gsub("[^[:alnum:]]", " ", levelName),
+         name = trimws(name),
+         parent = as.character(parent1),
+         id = as.character(id),
+         value = as.numeric(trimws(value))) %>% 
+  filter(level != 1) %>% 
+  mutate(level = level - 1) %>% 
+  arrange(level) %>% 
+  mutate(parent = ifelse(level == 1, NA, parent),
+         colorValue = value)
+test3
+
+plot(s)
+
+test <- data.table(test)
+test[,name:= gsub("[^[:alnum:]]", " ", levelName)]
+test[,name:= trimws(name)]
+test[,parent:= as.character(parent1)] # parent and ids should be of character for highcharts
+test[,id:=as.character(id)] # parent and ids should be of character for highcharts
+test[,value:= as.numeric(trimws(value))]
+
+
+# library(rCharts)
 list <- list_parse(test)
-str(list)
+list2 <- list_parse(test2)
+list3 <- list_parse(test3)
+
 
 #list[[1]]$parent <- NULL
 #list[[1]]$value <- NULL
@@ -74,7 +111,7 @@ str(list)
 highchart() %>% 
   hc_add_series(
     type = "treemap",
-    layoutAlgorithm = "squarified",
+    #layoutAlgorithm = "squarified",
     allowDrillToNode = TRUE,
     levels = list(
       list(
@@ -92,5 +129,7 @@ highchart() %>%
         borderWidth = 2
       )
     ),
-    data= list
-  ) 
+    data= list3
+  ) %>% 
+  hc_colorAxis()
+
