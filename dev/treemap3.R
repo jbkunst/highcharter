@@ -1,6 +1,7 @@
 rm(list = ls())
 library(tidyverse)
 library(tidyr)
+library(highcharter)
 
 data("GNI2014", package = "treemap")
 
@@ -43,12 +44,10 @@ df <- df %>%
 
 library("data.tree")
 library("data.table")
-s <- as.Node(df ,mode="table")
+s <- as.Node(df, mode="table")
 
 #create values for parent nodes, by aggregation of children values
 s$Do(function(node) node$value <- Aggregate(node, attribute = attr, aggFun = aggf), traversal = "post-order")
-
-
 # assign ids to all nodes
 s$Set(id = 1:s$totalCount)
 # calculate parent ids for all children, using parent1 as parent is system reserved by data.tree
