@@ -37,6 +37,8 @@ fontawesome, url-pattern, annotations.
 ## Resources
 
 - Official package website: http://jkunst.com/highcharter/.
+- [Highcharts API and highcharter](http://ultinomics.org/2017/04/05/thinking-in-highcharter---how-to-build-any-highcharts-plot-in-r/#highcharts-api-and-highcharter-functions) by
+@ultinomics. 
 - Replicating Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
 - Shiny demo code https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
@@ -45,7 +47,7 @@ fontawesome, url-pattern, annotations.
 
 Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.
 
-**Highcharts (http://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.**
+Highcharts (http://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.
 
 ## Discount for highcharter users
 

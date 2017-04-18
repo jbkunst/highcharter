@@ -4,10 +4,14 @@
 \alias{hc_motion}
 \title{Adding options to Motion options to highcharts objects}
 \usage{
-hc_motion(hc, ...)
+hc_motion(hc, enabled = TRUE, startIndex = 0, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
+
+\item{enabled}{Enable the motion plugin.}
+
+\item{startIndex}{start index, default to 0.}
 
 \item{...}{Arguments defined in \url{https://github.com/larsac07/Motion-Highcharts-Plugin/wiki}.}
 }
