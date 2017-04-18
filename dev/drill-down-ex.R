@@ -23,7 +23,7 @@ hc <- highchart() %>%
     )
   ) %>%
   hc_add_series(
-    data = list_parse(df),
+    data = df,
     name = "Things",
     colorByPoint = TRUE
   )
@@ -64,3 +64,27 @@ hc <- hc %>%
   )
 
 hc
+
+highchart()
+
+data(GNI2014)
+df1 <- tbl_df(GNI2014) %>% 
+  group_by(name = continent, id = continent, drilldown = continent) %>% 
+  summarise(y = sum(population)) %>% 
+  arrange(desc(y))
+
+df2 <- tbl_df(GNI2014) %>% 
+  group_by(id = continent) %>% 
+  do(data = list_parse2(select(., name = country, value = population)))
+
+
+highchart() %>% 
+  hc_chart(type = "column") %>%
+  hc_add_series(data = df1, name = "Continents") %>% 
+  hc_legend(enabled = FALSE) %>%
+  hc_xAxis(type = "category") %>% 
+  hc_drilldown(
+    allowPointDrilldown = TRUE,
+    series = list_parse(df2)
+  )
+
