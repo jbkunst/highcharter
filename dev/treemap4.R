@@ -55,7 +55,6 @@ datalist <- map(vars2, function(f){ message(f); s$Get(f) }) %>%
   mutate(parent = ifelse(level == 1, NA, parent)) %>% 
   rename_(.dots = list(value = sizeValue)) %>%
   rename_(.dots = list(colorValue = colorValue)) 
-  
 
 glimpse(datalist)
 
@@ -65,7 +64,7 @@ list3 <- list_parse(datalist)
 highchart() %>% 
   hc_add_series(
     type = "bar",
-    # layoutAlgorithm = "squarified",
+    layoutAlgorithm = "squarified",
     allowDrillToNode = TRUE,
     levels = list(
       list(
@@ -87,5 +86,4 @@ highchart() %>%
   ) %>% 
   hc_colorAxis() %>% 
   hc_add_theme(hc_theme_smpl())
-
 
