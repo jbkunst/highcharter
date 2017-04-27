@@ -1,12 +1,14 @@
 rm(list = ls())
-data(GNI2014, business, package = "treemap")
 library(dplyr)
 library(tidyr)
 library(purrr)
 library(highcharter)
 library(data.tree)
+options(highcharter.debug = TRUE)
 
 data(GNI2014, package = "treemap")
+
+
 # ... <- NULL
 # data <- tbl_df(GNI2014)
 # vars <- c("continent", "country")
@@ -72,9 +74,16 @@ hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum
     filter(level != 1) %>% 
     mutate(level = level - 1) %>% 
     arrange(level) %>% 
-    mutate(parent = ifelse(level == 1, NA, parent))
+    mutate(parent = ifelse(level == 1, NA, parent)) %>% 
+    select(-levelName)
   
-  datalist
+  # datalist %>% 
+  #   group_by(type_1) %>% 
+  #   summarise(
+  #     n = n(),
+  #     m = sum(value)
+  #   )
+  #   
   
   if(!is.null(colorvar)) datalist <- mutate_(datalist, .dots = list(colorValue = colorvar))
   
@@ -83,7 +92,7 @@ hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum
       type = "treemap",
       allowDrillToNode = TRUE,
       data = list_parse(datalist),
-      ...,
+      ...
     )
   
   if(!is.null(colorvar)) hc <- hc_colorAxis(hc, enabled = TRUE)
@@ -101,6 +110,31 @@ hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "sliceA
 hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "stripes")
 hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "strip")
 
-
 hctreemap2(GNI2014, c("continent", "country"), "population")
 hctreemap2(GNI2014, c("continent", "country"), "population", "GNI")
+
+data("pokemon")
+pokemon <- pokemon %>% 
+  mutate(type_2 = ifelse(is.na(type_2), paste("only", type_1), type_2),
+         count = 5)
+
+hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count")
+hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count", aggfun = max)
+hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count", aggfun = length)
+
+# ... <- NULL
+# data <- pokemon
+# vars <- c("type_1", "type_2", "pokemon")
+# aggfun <- function(x) sum(x, na.rm = TRUE)
+# sizevar <- "count"
+# colovar <- "count"
+
+
+
+hctreemap2(pokemonc, c("type_1", "type_2",  ""), "n")
+
+
+data("diamonds")
+dc <- ungroup(count(diamonds, cut, c = color, clarity))
+hctreemap2(dc, c("cut", "c", "clarity"), "n", colorvar = "n")
+
