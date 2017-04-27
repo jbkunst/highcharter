@@ -52,8 +52,7 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
              categories = opts$yAxis_categories) %>% 
     hc_plotOptions(
       series = list(
-        showInLegend = opts$series_plotOptions_showInLegend,
-        marker = list(enabled = opts$series_marker_enabled)
+        showInLegend = opts$series_plotOptions_showInLegend
       ),
       scatter = list(marker = list(symbol = "circle"))
     )

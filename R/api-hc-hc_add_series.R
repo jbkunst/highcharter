@@ -535,7 +535,7 @@ data_to_options <- function(data, type) {
     (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
   
   # series marker enabled
-  opts$series_marker_enabled <- !(type %in% c("line", "spline"))
+  # opts$series_marker_enabled <- !(type %in% c("line", "spline"))
   
   # heatmap
   if (type == "heatmap") {
