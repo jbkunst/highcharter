@@ -29,7 +29,7 @@ hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum
   s$Set(id = 1:s$totalCount)
   s$Set(parent1 = c(function(self) GetAttribute(self$parent, "id", format = identity)))
   
-  vars2 <- c(vars, sizevar, "levelName", "id", "level", "parent1", "value")
+  vars2 <- c(vars, sizevar, "levelName", "id", "level", "value", "parent1")
   
   if(!is.null(colorvar)) vars2 <- c(vars2, colorvar)
   
@@ -58,6 +58,12 @@ hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum
   #     )
   #   )
   
+  datavalues <- data %>% 
+    select_(.dots = c(vars, sizevar)) %>% 
+    group_by_(.dots = vars) %>% 
+    summarise_all(.funs = aggfun) %>% 
+    rename_(.dots = list(value = sizevar))
+  
   datalist <- map(vars2, function(f){ s$Get(f) }) %>% 
     map(setNames, NULL) %>% 
     map(as.vector) %>% 
@@ -75,7 +81,9 @@ hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum
     mutate(level = level - 1) %>% 
     arrange(level) %>% 
     mutate(parent = ifelse(level == 1, NA, parent)) %>% 
-    select(-levelName)
+    select(-levelName) %>% 
+    select(-value) %>% 
+    left_join(datavalues)
   
   # datalist %>% 
   #   group_by(type_1) %>% 
@@ -116,11 +124,7 @@ hctreemap2(GNI2014, c("continent", "country"), "population", "GNI")
 data("pokemon")
 pokemon <- pokemon %>% 
   mutate(type_2 = ifelse(is.na(type_2), paste("only", type_1), type_2),
-         count = 5)
-
-hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count")
-hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count", aggfun = max)
-hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count", aggfun = length)
+         count = 1)
 
 # ... <- NULL
 # data <- pokemon
@@ -130,11 +134,15 @@ hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count", aggfun = length)
 # colovar <- "count"
 
 
+hctreemap2(pokemon, c("type_1"), "count")
+hctreemap2(pokemon, c("type_1", "type_2"), "count")
+hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count")
 
-hctreemap2(pokemonc, c("type_1", "type_2",  ""), "n")
+pokemon %>% 
+  mutate(color = color_f) %>% 
+  hctreemap2(c("type_1", "type_2", "pokemon"), "count")
 
 
-data("diamonds")
-dc <- ungroup(count(diamonds, cut, c = color, clarity))
-hctreemap2(dc, c("cut", "c", "clarity"), "n", colorvar = "n")
+
+
 
