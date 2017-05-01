@@ -115,6 +115,261 @@ hc_colors <- function(hc, colors) {
   
 }
 
+#' Adding credits options to highchart objects
+#'
+#' \code{highcarter} by default don't put credits in the chart.
+#' You can add credits using these options.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#credits}. 
+#' 
+#' @examples 
+#' 
+#' 
+#' data("citytemp")
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo, type = "bar") %>% 
+#'   hc_credits(enabled = TRUE, text = "htmlwidgets.org",
+#'              href = "http://www.htmlwidgets.org/")
+#'              
+#' @export
+hc_credits <- function(hc, ...) {
+  
+  .hc_opt(hc, "credits", ...)
+  
+}
+
+#' Exporting options for highcharts objects
+#'
+#' Exporting options for highcharts objects. You can define the file's name
+#' or the output format.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#exporting}. 
+#' 
+#' @examples
+#' 
+#' require("dplyr")
+#' 
+#' data("citytemp")
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london) %>% 
+#'   hc_exporting(enabled = TRUE,
+#'                filename = "custom-file-name")
+#' 
+#' @export
+hc_exporting  <- function(hc, ...) {
+  
+  .hc_opt(hc, "exporting", ...)
+  
+}
+
+#' Adding legend options to highchart objects
+#'
+#' Function to modify styles for the box containing the symbol, name and color for
+#' each item or point item in the chart.
+#' 
+#' @examples 
+#' 
+#' 
+#' data(citytemp)
+#' 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london) %>%
+#'   hc_legend(align = "left", verticalAlign = "top",
+#'             layout = "vertical", x = 0, y = 100) 
+#'             
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}. 
+#'
+#' @export
+hc_legend <- function(hc, ...) {
+  
+  .hc_opt(hc, "legend", ...)
+  
+}
+
+#' Adding plot options to highchart objects
+#'
+#' The plotOptions is a wrapper object for config objects for each series type. The configuration 
+#' objects for each series can also be overridden for each series item as given in the series array.
+#' 
+#' Configuration options for the series are given in three levels. Options for all series in a 
+#' chart are given with the \code{hc_plotOptions} function. Then options for all series of a specific
+#' type are given in the plotOptions of that type, for example  \code{hc_plotOptions(line = list(...))}.
+#' Next, options for one single series are given in the series array.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.
+#' 
+#' @examples 
+#' 
+#' 
+#' data(citytemp)
+#' 
+#' hc <- highchart() %>% 
+#'   hc_plotOptions(line = list(color = "blue",
+#'                              marker = list(
+#'                                fillColor = "white",
+#'                                lineWidth = 2,
+#'                                lineColor = NULL
+#'                                )
+#'   )) %>%  
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+#'   hc_add_series(name = "London", data = citytemp$london,
+#'                marker = list(fillColor = "black"))
+#' 
+#' 
+#' hc
+#' 
+#' # override the `blue` option with the explicit parameter
+#' hc %>% 
+#'   hc_add_series(name = "London",
+#'                data = citytemp$new_york,
+#'                color = "red")
+#'
+#' @export
+hc_plotOptions  <- function(hc, ...) {
+  
+  .hc_opt(hc, "plotOptions", ...)
+  
+}
+
+#' Adding responsive options to highchart objects
+#'
+#' Allows setting a set of rules to apply for different screen or chart sizes.
+#' Each rule specifies additional chart options.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/responsive}. 
+#' 
+#' @examples 
+#' 
+#' leg_500_opts <- list(enabled = FALSE)
+#' leg_900_opts <- list(align = "right", verticalAlign = "middle",  layout = "vertical")
+#' 
+#' highcharts_demo() %>% 
+#'   hc_responsive(
+#'     rules = list(
+#'       # remove legend if there is no much space
+#'       list(
+#'         condition = list(maxWidth  = 500),
+#'         chartOptions = list(legend = leg_500_opts)
+#'       ),
+#'       # put legend right when there is much space
+#'       list(
+#'         condition = list(minWidth  = 900),
+#'         chartOptions = list(legend = leg_900_opts)
+#'       )
+#'     )
+#'   )
+#'              
+#' @export
+hc_responsive <- function(hc, ...) {
+  
+  .hc_opt(hc, "responsive", ...)
+  
+}
+
+#' Series options from highchart objects
+#'
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#series}. 
+#'
+#' @examples
+#' 
+#' highchart() %>%  
+#'   hc_series(
+#'     list(
+#'       name = "Tokyo",
+#'       data = c(7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
+#'     ),
+#'     list(
+#'       name = "London",
+#'       data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)
+#'     )
+#'   )
+#'
+#' @export
+hc_series <- function(hc, ...) {
+  
+  .hc_opt(hc, "series", ...)
+  
+}
+
+#' Adding title and subtitle options to highchart objects
+#'
+#' Function to add and change title and subtitle'a style.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#title}. 
+#'
+#' @examples 
+#' 
+#' highchart() %>% 
+#'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+#'                         26.5, 23.3, 18.3, 13.9, 9.6),
+#'                         type = "columnn") %>% 
+#'   hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
+#'            margin = 20, align = "left",
+#'            style = list(color = "#90ed7d", useHTML = TRUE)) %>%
+#'   hc_subtitle(text = "And this is a subtitle with more information",
+#'               align = "left", style = list(color = "#2b908f", fontWeight = "bold")) 
+#'
+#' @export
+hc_title <- function(hc, ...) {
+  
+  .hc_opt(hc, "title", ...)
+  
+}
+
+#' @rdname hc_title
+#' @export
+hc_subtitle <- function(hc, ...) {
+  
+  .hc_opt(hc, "subtitle", ...)
+  
+}
+
+#' Adding tooltip options to highchart objects
+#'
+#' Options for the tooltip that appears when the user hovers over a series or point.
+#' 
+#' @examples 
+#' 
+#' 
+#' highcharts_demo() %>%
+#'   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 
+#'              
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}. 
+#' @param sort Logical value to implement sort according \code{this.point}
+#'   \url{http://stackoverflow.com/a/16954666/829971}.
+#' @param table Logical value to implement table in tooltip: 
+#'   \url{http://stackoverflow.com/a/22327749/829971}.
+#'
+#' @export
+hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
+  
+  if (sort)
+    hc <- .hc_tooltip_sort(hc)
+  
+  if (table)
+    hc <- .hc_tooltip_table(hc)
+  
+  if (length(list(...))) 
+    hc <- .hc_opt(hc, "tooltip", ...)
+  
+  hc  
+  
+}
 
 #' Adding axis options to highchart objects
 #'
@@ -187,6 +442,14 @@ hc_yAxis_multiples <- function(hc, ...) {
   
 }
 
+#' @rdname hc_xAxis
+#' @export
+hc_zAxis  <- function(hc, ...) {
+  
+  .hc_opt(hc, "zAxis", ...)
+  
+}
+
 #' Creating multiples yAxis for add a highcharts
 #' 
 #' @param naxis Number of axis an integer.
@@ -251,225 +514,5 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
   class(yaxis) <- "hc_yaxis_list"
   
   yaxis
-  
-}
-
-#' Adding title and subtitle options to highchart objects
-#'
-#' Function to add and change title and subtitle'a style.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#title}. 
-#'
-#' @examples 
-#' 
-#' highchart() %>% 
-#'   hc_add_series(data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-#'                         26.5, 23.3, 18.3, 13.9, 9.6),
-#'                         type = "columnn") %>% 
-#'   hc_title(text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
-#'            margin = 20, align = "left",
-#'            style = list(color = "#90ed7d", useHTML = TRUE)) %>%
-#'   hc_subtitle(text = "And this is a subtitle with more information",
-#'               align = "left", style = list(color = "#2b908f", fontWeight = "bold")) 
-#'
-#' @export
-hc_title <- function(hc, ...) {
-  
-  .hc_opt(hc, "title", ...)
-  
-}
-
-#' @rdname hc_title
-#' @export
-hc_subtitle <- function(hc, ...) {
-  
-  .hc_opt(hc, "subtitle", ...)
-  
-}
-
-#' Adding legend options to highchart objects
-#'
-#' Function to modify styles for the box containing the symbol, name and color for
-#' each item or point item in the chart.
-#' 
-#' @examples 
-#' 
-#' 
-#' data(citytemp)
-#' 
-#' highchart() %>% 
-#'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_series(name = "London", data = citytemp$london) %>%
-#'   hc_legend(align = "left", verticalAlign = "top",
-#'             layout = "vertical", x = 0, y = 100) 
-#'             
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}. 
-#'
-#' @export
-hc_legend <- function(hc, ...) {
-  
-  .hc_opt(hc, "legend", ...)
-  
-}
-
-#' Adding tooltip options to highchart objects
-#'
-#' Options for the tooltip that appears when the user hovers over a series or point.
-#' 
-#' @examples 
-#' 
-#' 
-#' highcharts_demo() %>%
-#'   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 
-#'              
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}. 
-#' @param sort Logical value to implement sort according \code{this.point}
-#'   \url{http://stackoverflow.com/a/16954666/829971}.
-#' @param table Logical value to implement table in tooltip: 
-#'   \url{http://stackoverflow.com/a/22327749/829971}.
-#'
-#' @export
-hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
-  
-  if (sort)
-    hc <- .hc_tooltip_sort(hc)
-  
-  if (table)
-    hc <- .hc_tooltip_table(hc)
-  
-  if (length(list(...))) 
-    hc <- .hc_opt(hc, "tooltip", ...)
-  
-  hc  
-  
-}
-
-#' Adding plot options to highchart objects
-#'
-#' The plotOptions is a wrapper object for config objects for each series type. The configuration 
-#' objects for each series can also be overridden for each series item as given in the series array.
-#' 
-#' Configuration options for the series are given in three levels. Options for all series in a 
-#' chart are given with the \code{hc_plotOptions} function. Then options for all series of a specific
-#' type are given in the plotOptions of that type, for example  \code{hc_plotOptions(line = list(...))}.
-#' Next, options for one single series are given in the series array.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.
-#' 
-#' @examples 
-#' 
-#' 
-#' data(citytemp)
-#' 
-#' hc <- highchart() %>% 
-#'   hc_plotOptions(line = list(color = "blue",
-#'                              marker = list(
-#'                                fillColor = "white",
-#'                                lineWidth = 2,
-#'                                lineColor = NULL
-#'                                )
-#'   )) %>%  
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_series(name = "London", data = citytemp$london,
-#'                marker = list(fillColor = "black"))
-#' 
-#' 
-#' hc
-#' 
-#' # override the `blue` option with the explicit parameter
-#' hc %>% 
-#'   hc_add_series(name = "London",
-#'                data = citytemp$new_york,
-#'                color = "red")
-#'
-#' @export
-hc_plotOptions  <- function(hc, ...) {
-  
-  .hc_opt(hc, "plotOptions", ...)
-  
-}
-
-#' Adding credits options to highchart objects
-#'
-#' \code{highcarter} by default don't put credits in the chart.
-#' You can add credits using these options.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#credits}. 
-#' 
-#' @examples 
-#' 
-#' 
-#' data("citytemp")
-#' 
-#' highchart() %>% 
-#'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo, type = "bar") %>% 
-#'   hc_credits(enabled = TRUE, text = "htmlwidgets.org",
-#'              href = "http://www.htmlwidgets.org/")
-#'              
-#' @export
-hc_credits <- function(hc, ...) {
-  
-  .hc_opt(hc, "credits", ...)
-  
-}
-
-#' Exporting options for highcharts objects
-#'
-#' Exporting options for highcharts objects. You can define the file's name
-#' or the output format.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#exporting}. 
-#' 
-#' @examples
-#' 
-#' require("dplyr")
-#' 
-#' data("citytemp")
-#' 
-#' highchart() %>% 
-#'   hc_xAxis(categories = citytemp$month) %>% 
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
-#'   hc_add_series(name = "London", data = citytemp$london) %>% 
-#'   hc_exporting(enabled = TRUE,
-#'                filename = "custom-file-name")
-#' 
-#' @export
-hc_exporting  <- function(hc, ...) {
-  
-  .hc_opt(hc, "exporting", ...)
-  
-}
-
-#' Series options from highchart objects
-#'
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#series}. 
-#'
-#' @examples
-#' 
-#' highchart() %>%  
-#'   hc_series(
-#'     list(
-#'       name = "Tokyo",
-#'       data = c(7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6)
-#'     ),
-#'     list(
-#'       name = "London",
-#'       data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)
-#'     )
-#'   )
-#'
-#' @export
-hc_series <- function(hc, ...) {
-  
-  .hc_opt(hc, "series", ...)
   
 }

@@ -1,48 +1,14 @@
-#' Adding Color Axis options to highchart objects
-#'
-#' Function to set the axis color to highcharts objects.
+#' Adding patterns to be used in highcharts series
+#' 
+#' Helper function to use the fill patter plugin \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highmaps#colorAxis}. 
-#' 
-#' @examples 
-#' 
-#' 
-#' nyears <- 5
-#' 
-#' df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
-#' df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
-#' df$value <- round(df$value, 2)
-#' ds <- list_parse2(df)
-#' 
-#' 
-#' hc <- highchart() %>% 
-#'   hc_chart(type = "heatmap") %>% 
-#'   hc_title(text = "Simulated values by years and months") %>% 
-#'   hc_xAxis(categories = month.abb) %>% 
-#'   hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
-#'   hc_add_series(name = "value", data = ds)
-#' 
-#' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
-#' 
-#' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348",
-#'              type = "logarithmic") 
-#' 
-#' 
-#' require("viridisLite")
-#' 
-#' n <- 4
-#' stops <- data.frame(q = 0:n/n,
-#'                     c = substring(viridis(n + 1), 0, 7),
-#'                     stringsAsFactors = FALSE)
-#' stops <- list_parse2(stops)
-#' 
-#' hc_colorAxis(hc, stops = stops, max = 75) 
+#' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}. 
 #' 
 #' @export
-hc_colorAxis  <- function(hc, ...){
+hc_defs <- function(hc, ...){
   
-  .hc_opt(hc, "colorAxis", ...)
+  .hc_opt(hc, "defs", ...)
   
 }
 
@@ -147,6 +113,70 @@ hc_drilldown <- function(hc, ...){
   
 }
 
+#' Adding panes
+#' 
+#' Applies only to polar charts and angular gauges. This configuration object
+#' holds general options for the combined X and Y axes set. Each xAxis or
+#' yAxis can reference the pane by index.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#pane}. 
+#' 
+#' @export
+hc_pane <- function(hc, ...){
+  
+  .hc_opt(hc, "pane", ...)
+  
+}
+
+#' Adding Color Axis options to highchart objects
+#'
+#' Function to set the axis color to highcharts objects.
+#' 
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highmaps#colorAxis}. 
+#' 
+#' @examples 
+#' 
+#' 
+#' nyears <- 5
+#' 
+#' df <- expand.grid(seq(12) - 1, seq(nyears) - 1)
+#' df$value <- abs(seq(nrow(df)) + 10 * rnorm(nrow(df))) + 10
+#' df$value <- round(df$value, 2)
+#' ds <- list_parse2(df)
+#' 
+#' 
+#' hc <- highchart() %>% 
+#'   hc_chart(type = "heatmap") %>% 
+#'   hc_title(text = "Simulated values by years and months") %>% 
+#'   hc_xAxis(categories = month.abb) %>% 
+#'   hc_yAxis(categories = 2016 - nyears + seq(nyears)) %>% 
+#'   hc_add_series(name = "value", data = ds)
+#' 
+#' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
+#' 
+#' hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348",
+#'              type = "logarithmic") 
+#' 
+#' 
+#' require("viridisLite")
+#' 
+#' n <- 4
+#' stops <- data.frame(q = 0:n/n,
+#'                     c = substring(viridis(n + 1), 0, 7),
+#'                     stringsAsFactors = FALSE)
+#' stops <- list_parse2(stops)
+#' 
+#' hc_colorAxis(hc, stops = stops, max = 75) 
+#' 
+#' @export
+hc_colorAxis  <- function(hc, ...){
+  
+  .hc_opt(hc, "colorAxis", ...)
+  
+}
+
 #' Adding scrollbar options to highstock objects
 #' 
 #' Options regarding the scrollbar which is a means of panning 
@@ -207,36 +237,6 @@ hc_rangeSelector <- function(hc, ...){
 hc_mapNavigation <- function(hc, ...){
   
   .hc_opt(hc, "mapNavigation", ...)
-  
-}
-
-#' Adding patterns to be used in highcharts series
-#' 
-#' Helper function to use the fill patter plugin \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}. 
-#' 
-#' @export
-hc_defs <- function(hc, ...){
-  
-  .hc_opt(hc, "defs", ...)
-  
-}
-
-#' Adding panes
-#' 
-#' Applies only to polar charts and angular gauges. This configuration object
-#' holds general options for the combined X and Y axes set. Each xAxis or
-#' yAxis can reference the pane by index.
-#' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#pane}. 
-#' 
-#' @export
-hc_pane <- function(hc, ...){
-  
-  .hc_opt(hc, "pane", ...)
   
 }
 
