@@ -30,7 +30,7 @@ HTMLWidgets.widget({
         var urlfont = 'https://fonts.googleapis.com/css?family=' + s;
         // http://stackoverflow.com/questions/4724606 
         if (!$("link[href='" + urlfont + "']").length) {
-          $('<link href="' + urlfont + '" rel="stylesheet" type="">').appendTo("head");
+          $('<link href="' + urlfont + '" rel="stylesheet" type="text/css">').appendTo("head");
         }
         
       });
