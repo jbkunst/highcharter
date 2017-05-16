@@ -43,6 +43,21 @@ fontawesome, url-pattern, annotations.
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
 - Shiny demo code https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
 
+## Installation:
+
+
+CRAN version:
+```r
+install.packages("highcharter")
+```
+
+Development version:
+```r
+devtools::install_github("jbkunst/highcharter")
+
+source("https://install-github.me/jbkunst/highcharter")
+```
+
 ## Licence 
 
 Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.

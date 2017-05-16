@@ -385,7 +385,7 @@ hctreemap <- function(tm, ...) {
 #' iris <- sample_n(iris, 60)
 #' 
 #' hcparcords(iris, color = colorize(iris$Species))
-#' @importFrom purrr dmap_if
+#' @importFrom dplyr mutate_if
 #' @export
 hcparcords <- function(df, ...) {
   
@@ -404,7 +404,7 @@ hcparcords <- function(df, ...) {
   # Add row identifier
   df <- rownames_to_column(df, ".row")
   
-  df <- dmap_if(df, is.numeric, rescale01)
+  df <- mutate_if(df, is.numeric, rescale01)
   
   df <- tidyr::gather_(df, "var", "val", setdiff(names(df), ".row"))
   

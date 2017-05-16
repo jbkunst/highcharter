@@ -28,7 +28,7 @@ highcharts_demo() \%>\%
         condition = list(maxWidth  = 500),
         chartOptions = list(legend = leg_500_opts)
       ),
-      # put legend right when there is much space
+      # put legend on the right when there is much space
       list(
         condition = list(minWidth  = 900),
         chartOptions = list(legend = leg_900_opts)
