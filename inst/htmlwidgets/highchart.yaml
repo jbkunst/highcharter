@@ -19,6 +19,7 @@ dependencies:
     - modules/data.js
     - modules/drilldown.js
     - modules/exporting.js
+    - modules/accessibility.js   
     - modules/funnel.js
     - modules/heatmap.js
     - modules/map.js
@@ -26,7 +27,6 @@ dependencies:
     - modules/offline-exporting.js
     - modules/solid-gauge.js
     - modules/treemap.js
-#    - modules/accessibility.js    
 #    - modules/canvas-tools.js
 #    - modules/boost.js
     - plugins/export-csv.js

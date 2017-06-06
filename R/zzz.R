@@ -84,7 +84,10 @@
         treemap = list(layoutAlgorithm = "squarified")
         ),
       accessibility = list(
-        enabled = TRUE
+        enabled = TRUE,
+        keyboardNavigation = list(
+          enabled = TRUE
+          )
         )
       )
     )

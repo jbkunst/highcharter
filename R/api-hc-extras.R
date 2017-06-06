@@ -315,3 +315,16 @@ hc_annotationsOptions <- function(hc, ...){
   .hc_opt(hc, "annotationsOptions", ...)
   
 }
+
+
+#' Setting Accessibility
+#' Options for configuring accessibility for the chart. Requires the accessibility module to be loaded.
+#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param ... Options defined in \url{http://api.highcharts.com/highcharts/accessibility}.
+#' @export
+hc_accessibility <- function(hc, ...){
+  
+  .hc_opt(hc, "accessibility", ...)
+  
+}
+
