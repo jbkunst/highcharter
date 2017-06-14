@@ -128,7 +128,9 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   series_out <- df %>% 
     group_by_("g1", "g2") %>%  
     do(data = get_outliers_values(.$x)) %>% 
-    unnest() %>% 
+    ungroup() %>% 
+    # mutate_if(is.list, unlist) %>% 
+    # unnest() %>% 
     group_by_("g2") %>% 
     do(data = list_parse(select_(., "name" = "g1", "y" = "data"))) %>% 
     # rename(name = g2) %>% 
@@ -167,13 +169,11 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
       hc_plotOptions(series = list(showInLegend = FALSE))
   }
   
-  
   if(outliers)
     hc <- hc_add_series_list(hc, list_parse(series_out))
   
   hc
 }
-
 
 #' Shortcut to make icon arrays charts
 #' @param labels A character vector
