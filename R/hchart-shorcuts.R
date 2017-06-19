@@ -320,6 +320,8 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
 #' @export 
 hctreemap <- function(tm, ...) {
   
+  .Deprecated("hctreemap2")
+  
   assertthat::assert_that(is.list(tm))
   
   df <- tm$tm %>% 
@@ -364,6 +366,86 @@ hctreemap <- function(tm, ...) {
   
   hc_add_series(highchart(), data = ds, type = "treemap", ...)
   
+}
+
+#' Shortcut to create treemaps.
+#' 
+#' This function helps create highcharts treemaps from data frames.
+#'
+#' @param data data frame containing variables to organize each level of the treemap on
+#' @param group_vars vector of strings containing column names of variables to generate treemap levels from. the first listed column will specify the top level of the treemap. the unique values in each of these columns must have no intersection (including NAs).
+#' @param size_var string name of column containing numeric data to aggregate by
+#' @param color_var string name of column containing numeric data to color by. defaults to same column as \code{size_var}
+#' @param ... ... additional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'
+#' @return highchart plot object
+#' @export
+#'
+#' @examples
+#' 
+#' \dontrun{
+#' 
+#' data <- data.frame(
+#'   index1 = sample(LETTERS[10:15], 100, replace = T),
+#'   index2 = sample(LETTERS[16:21], 100, replace = T),
+#'   index3 = sample(LETTERS[22:26], 100, replace = T),
+#'   x = abs(rnorm(100)),
+#'   y = rpois(100, lambda = 3)
+#' )
+#' 
+#' hctreemap3(data,
+#'            c("index1", "index2", "index3"),
+#'            "x",
+#'            "y",
+#'            layoutAlgorithm = "squarified",
+#'            levelIsConstant = FALSE,
+#'            levels = list(
+#'              list(level = 1, dataLabels = list(enabled = TRUE)),
+#'              list(level = 2, dataLabels = list(enabled = FALSE)),
+#'              list(level = 3, dataLabels = list(enabled = FALSE))
+#'            ))
+#' }
+#' 
+hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
+  
+  group_syms <- rlang::syms(group_vars)
+  size_sym <- rlang::sym(size_var)
+  color_sym <- rlang::sym(ifelse(is.null(color_var), size_var, color_var))
+  
+  if (data %>%
+      select(!!!group_syms) %>%
+      map(unique) %>%
+      unlist() %>%
+      anyDuplicated()) stop("Treemap data uses same category name at multiple levels.")
+  
+  data_at_depth <- function(depth) {
+    data %>%
+      group_by(!!!group_syms[1:depth]) %>%
+      summarise(size = sum(!!size_sym), colorValue = sum(!!color_sym)) %>%
+      ungroup() %>%
+      mutate(value = size, name = !!group_syms[[depth]], level = depth) %>%
+      {
+        if (depth == 1) mutate(., parent = NA, id = paste0(name, 1))
+        else {
+          mutate(., 
+                 parent = paste(!!!group_syms[1:depth-1], 1:(depth-1), sep = "_"),
+                 id = paste(parent, paste0(name, depth), sep = "_")
+          )
+        }
+      } %>%
+      mutate_at(vars(name, parent, id), as.character)
+  }
+  
+  hd <- 1:length(group_vars) %>%
+    map(data_at_depth) %>%
+    bind_rows() %>%
+    highcharter::list_parse() %>%
+    purrr::map(~.[!is.na(.)])
+  
+  highchart() %>%
+    hc_add_series(data = hd, type = "treemap", allowDrillToNode = TRUE, ...) %>%
+    hc_colorAxis(enabled = TRUE)
 }
 
 #' Shortcut for create parallel coordinates

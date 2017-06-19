@@ -1,0 +1,86 @@
+---
+title: "Demostration of New Function `hctreemap2`"
+author: "Alex Hayes"
+date: "June 18, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(highcharter)
+library(highcharter)
+library(data.tree)
+library(treemap)
+data(GNI2014, "treemap")
+rm(list = ls())
+options(highcharter.debug = TRUE)
+```
+
+This pull request is to address the following issues in Highcharter:
+
+* hctreemap() fails to render with cellnames repeated across levels #310
+* bug in treemap when index variables have same values #32
+* Does not work correctly for 3 level Treemaps #117
+* hc_add_series_treemap - naming of the color value variable #98
+* review/rework treemap fns #110
+
+# Interface Change and Old Interface Deprecation
+
+# Example Use
+
+# hctreemap2 tests
+
+# single level treemap
+
+# two level treemap
+
+# three level treemap
+
+# throws non-unique labelling error
+
+dup_data <- data.frame(
+  index1 = sample(LETTERS[1:6], 500, replace = T),
+  index2 = sample(LETTERS[1:6], 500, replace = T),
+  index3 = sample(LETTERS[1:6], 500, replace = T),
+  x = abs(rnorm(500))
+)
+
+dup_data <- data.frame(
+  index1 = c(1, NA), #sample(NA, 500, replace = T),
+  index2 = c(NA, 2), #sample(NA, 500, replace = T),
+  x = abs(rnorm(500))
+)
+
+hctreemap2(dup_data, c("index1", "index2", "index3"), "x")
+
+# color schemes: user must specify the color gradient to hc_colorAxis
+
+# speed test compared to proposed development version
+
+# current development version seems to have an error using color var
+
+
+treemap(GNI2014, index = c("continent", "iso3"),
+              vSize = "population", vColor = "GNI",
+              type = "comp",
+              draw = FALSE) %>%
+hctreemap(allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
+     hc_title(text = "Gross National Income World Data") %>%
+     hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+                               Pop: {point.value:,.0f}<br>
+                               GNI: {point.valuecolor:,.0f}")
+
+# issue: does not work with treemap objects created by treemap package
+
+hc_colorAxis(minColor = tm$tm$color[which.min(tm$tm$vColorValue)],
+             maxColor = tm$tm$color[which.max(tm$tm$vColorValue)])
+
+# speed tests
+big_tree <- data.frame(
+  index1 = sample(LETTERS[10:16], 500, replace = T),
+  index2 = sample(LETTERS[16:22], 500, replace = T),
+  index3 = sample(LETTERS[22:26], 500, replace = T),
+  x = abs(rnorm(500)),
+  y = rpois(500, lambda = 3)
+)
