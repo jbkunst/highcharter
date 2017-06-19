@@ -5,19 +5,16 @@ date: "June 18, 2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(highcharter)
-library(highcharter)
-library(data.tree)
 library(treemap)
-data(GNI2014, "treemap")
-rm(list = ls())
-options(highcharter.debug = TRUE)
+library(RColorBrewer)
+data(GNI2014)
 ```
 
-This pull request is to address the following issues in Highcharter:
+This pull request is to address the following issues in the Highcharter function `hctreemap`:
 
 * hctreemap() fails to render with cellnames repeated across levels #310
 * bug in treemap when index variables have same values #32
@@ -25,62 +22,112 @@ This pull request is to address the following issues in Highcharter:
 * hc_add_series_treemap - naming of the color value variable #98
 * review/rework treemap fns #110
 
+# New Dependencies
+
+* `dplyr` >= 0.5.0.9005
+* `rlang` >= 0.1.1
+
+Both of these are included in the latest release of the `tidyverse` to CRAN. I got a R CMD Check Note for using NSE, which I resolved by adding
+
+`if (getRversion() >= "2.15.1")  utils::globalVariables(c(".", "colorValue", "level", "name", "parent"))`
+
+to the `highcharter-package.R` file. This is new to me, so I figured if you have a preference for how to sort this out you'll know how to change this better than I do.
+
 # Interface Change and Old Interface Deprecation
 
-# Example Use
+This pull request includes the function `hctreemap2` which has the following interface
 
-# hctreemap2 tests
+`hctreemap2(data, group_vars, size_var, color_var = NULL, ...)`
 
-# single level treemap
+Note that this function accepts a dataframe rather than a `treemap::treemap` object. `hctreemap` remains unaltered, albeit with a deprecation warning.
 
-# two level treemap
+The old interface looks like this
 
-# three level treemap
+```{r, fig.keep = "none", warn = FALSE}
+treemap(GNI2014,
+        index = c("continent", "iso3"),
+        vSize = "population",
+        vColor = "GNI",
+        type = "value",
+        draw = FALSE) %>% 
+  hctreemap(allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+                            Pop: {point.value:,.0f}<br>
+                            GNI: {point.valuecolor:,.0f}")
+```
 
-# throws non-unique labelling error
+and the new interface looks very similar
 
-dup_data <- data.frame(
+```{r}
+hctreemap2(data = GNI2014,
+           group_vars = c("continent", "iso3"),
+           size_var = "population",
+           color_var = "GNI",
+           layoutAlgorithm = "squarified",
+           levelIsConstant = FALSE,
+           levels = list(
+             list(level = 1, dataLabels = list(enabled = TRUE)),
+             list(level = 2, dataLabels = list(enabled = FALSE)),
+             list(level = 3, dataLabels = list(enabled = FALSE))
+           )) %>% 
+  hc_colorAxis(minColor = brewer.pal(7, "Greens")[1],
+               maxColor = brewer.pal(7, "Greens")[7]) %>% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+                            Pop: {point.value:,.0f}<br>
+                            GNI: {point.colorValue:,.0f}")
+```
+
+Likely the biggest difference for users will be that they'll need to specify the color palette themselves via `hc_colorAxis` rather than being able to make use of the `palette` argument in `treemap::treemap`. By default, `hctreemap2` enables a color axis with minimum and maximum values determined by at the lowest depth in the treemap, in keeping with `treemap::treemap`. I've included the above as an example in the function documentation, so hopefully people will get the hint about how to use `RColorBrewer` to make their lives better.
+
+If the user doesn't specify a variable for the color mapping, the variable for the size mapping is used by default. Additionally, `allowDrillToNode` defaults to `TRUE`.
+
+We can make a rather boring three level treemap to demonstrate that three level treemaps work
+
+```{r}
+data.frame(index1 = sample(LETTERS[1:3], 500, replace = T),
+           index2 = sample(LETTERS[4:6], 500, replace = T),
+           index3 = sample(LETTERS[7:9], 500, replace = T),
+           value = rpois(500, 5)) %>%
+  hctreemap2(
+    group_vars = c("index1", "index2", "index3"),
+    size_var = "value"
+  )
+```
+
+# Non-Unique Cells Names Throw An Error
+
+```{r, error = TRUE}
+set.seed(27)
+
+data.frame(
   index1 = sample(LETTERS[1:6], 500, replace = T),
   index2 = sample(LETTERS[1:6], 500, replace = T),
-  index3 = sample(LETTERS[1:6], 500, replace = T),
-  x = abs(rnorm(500))
-)
+  value = abs(rnorm(500))) %>% 
+  hctreemap2(c("index1", "index2"), "value")
 
-dup_data <- data.frame(
-  index1 = c(1, NA), #sample(NA, 500, replace = T),
-  index2 = c(NA, 2), #sample(NA, 500, replace = T),
-  x = abs(rnorm(500))
-)
+```
 
-hctreemap2(dup_data, c("index1", "index2", "index3"), "x")
+The error checking also catches missing data:
 
-# color schemes: user must specify the color gradient to hc_colorAxis
+```{r, error = TRUE}
+data.frame(
+  index1 = c(1, NA),
+  index2 = c(NA, 2),
+  value = abs(rnorm(500))) %>% 
+  hctreemap2(c("index1", "index2"), "value")
 
-# speed test compared to proposed development version
+```
 
-# current development version seems to have an error using color var
+This forces users to recode their data before continuing and should allow arbitrary depth treemaps. Lastly, a single level treemap just as another example
 
+```{r}
+hctreemap2(data = GNI2014,
+           group_vars = "continent",
+           size_var = "population") %>% 
+  hc_colorAxis(minColor = brewer.pal(7, "Greens")[1],
+               maxColor = brewer.pal(7, "Greens")[7]) %>% 
+  hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+                            Pop: {point.value:,.0f}<br>
+                            GNI: {point.colorValue:,.0f}")
+```
 
-treemap(GNI2014, index = c("continent", "iso3"),
-              vSize = "population", vColor = "GNI",
-              type = "comp",
-              draw = FALSE) %>%
-hctreemap(allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>% 
-     hc_title(text = "Gross National Income World Data") %>%
-     hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
-                               Pop: {point.value:,.0f}<br>
-                               GNI: {point.valuecolor:,.0f}")
-
-# issue: does not work with treemap objects created by treemap package
-
-hc_colorAxis(minColor = tm$tm$color[which.min(tm$tm$vColorValue)],
-             maxColor = tm$tm$color[which.max(tm$tm$vColorValue)])
-
-# speed tests
-big_tree <- data.frame(
-  index1 = sample(LETTERS[10:16], 500, replace = T),
-  index2 = sample(LETTERS[16:22], 500, replace = T),
-  index3 = sample(LETTERS[22:26], 500, replace = T),
-  x = abs(rnorm(500)),
-  y = rpois(500, lambda = 3)
-)
