@@ -10,7 +10,7 @@ dev/
 ^\.travis\.yml$
 .lintr
 fort.6
-^CONDUCT\.md$
+^CODE_OF_CONDUCT\.md$
 ^CONTRIBUTING\.md$
 ^data-raw$
 ^appveyor\.yml$
