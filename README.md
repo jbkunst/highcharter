@@ -41,7 +41,7 @@ fontawesome, url-pattern, annotations.
 @ultinomics. 
 - Replicating Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
-- Shiny demo code https://github.com/jbkunst/shiny-apps/tree/master/highcharter.
+- Some Shiny demos [here](http://104.140.247.162:3838/shiny-apps-highcharter/) and code [there](https://github.com/jbkunst/shiny-apps-highcharter).
 
 ## Installation:
 
