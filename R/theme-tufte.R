@@ -48,9 +48,6 @@ hc_theme_tufte <- function(...){
         # extra to yAxis
         tickWidth = 1,
         gridLineColor = "transparent"
-      ),
-      legend = list(
-        enabled = FALSE
       )
     )
 
