@@ -49,7 +49,7 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL) {
     
   })
   
-  divgrid <- tags$div(class = "grid grid-pad", style = "with:100%", divs)
+  divgrid <- tags$div(class = "grid grid-pad", divs)
   
   class(divgrid) <- c(class(divgrid), "htmlwdwtgrid")
   
