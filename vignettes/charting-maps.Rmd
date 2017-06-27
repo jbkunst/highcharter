@@ -79,23 +79,38 @@ necessary a data frame with `lat`, `lon` columns, and `name`, `z`  are
 optional:
 
 ```{r}
-data("quakes")
+cities <- data.frame(
+  name = c("London", "Birmingham", "Glasgow", "Liverpool"),
+  lat = c(51.507222, 52.483056, 55.858, 53.4),
+  lon = c(-0.1275, -1.893611, -4.259, -3),
+  z = c(1, 2, 3, 2)
+)
 
-quakes <- quakes %>% 
-  rename(lon = long) %>% 
-  mutate(z = mag,
-         color = colorize(depth)) %>% 
-  filter(z > 5)
-
-glimpse(quakes)
-
-hcmap("countries/fj/fj-all", name = "Fiji") %>% 
-  hc_add_series(data = quakes, type = "mapbubble",
-                name = "Quakes", maxSize = "10") %>% 
-  hc_title(text = "Locations of Earthquakes off Fiji") %>% 
-  hc_subtitle(text = "Locations of seismic events of MB > 5.0. The events 
-              occurred in a cube near Fiji since 1964")
+hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
+  hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = '10%') %>%
+  hc_mapNavigation(enabled = TRUE)
 ```
+
+Another example:
+
+
+```{r}
+airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
+airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+
+airports <- rename(airports, lat = latitude, lon = longitude)
+
+glimpse(airports)
+
+hcmap("countries/au/au-all", name = "Australia") %>% 
+  hc_add_series(data = airports, type = "mappoint",
+                name = "Airports", maxSize = "10", 
+                 tooltip = list(pointFormat = "{point.name}: {point.altitude:,.0f} feets")) %>% 
+  hc_chart(zoomType = "xy")
+
+```
+
+
 
 ## Advanced Maps
 
@@ -163,16 +178,15 @@ parameter/argument.
 ```{r, echo=TRUE, eval=FALSE}
 library(geojsonio)
 
-ausgeojson <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
+ausgeojson <- httr::GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json")
+ausgeojson <- httr::content(ausgeojson)
 ausgeojson <- jsonlite::fromJSON(ausgeojson, simplifyVector = FALSE)
 ausgeojson <- geojsonio::as.json(ausgeojson)
 class(ausgeojson)
 
 # http://openflights.org/data.html
 airports <- read.csv("https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv")
-airports <- filter(airports,
-                   country == "Australia", 
-                   name != "Roma Street Railway Station")
+airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
 
 airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
 class(airp_geojson)

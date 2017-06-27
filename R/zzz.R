@@ -82,13 +82,13 @@
           turboThreshold = 0
           ),
         treemap = list(layoutAlgorithm = "squarified")
-        ),
-      accessibility = list(
-        enabled = TRUE,
-        keyboardNavigation = list(
-          enabled = TRUE
-          )
         )
+      # accessibility = list(
+      #   enabled = TRUE,
+      #   keyboardNavigation = list(
+      #     enabled = TRUE
+      #     )
+      #   )
       )
     )
   
