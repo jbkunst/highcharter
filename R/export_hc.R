@@ -25,9 +25,11 @@
 #'    )
 #'  )
 #' 
+#' \dontrun{
 #' export_hc(hc, filename = "~/hc_is.js", as = "is")
 #' export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "objectname")
 #' export_hc(hc, filename = "~/hc_ct.js", as = "container", name = "#selectorid")
+#' }
 #' 
 #' @importFrom jsonlite toJSON
 #' @importFrom stringr str_split str_c str_detect str_replace
