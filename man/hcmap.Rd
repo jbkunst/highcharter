@@ -2,8 +2,7 @@
 % Please edit documentation in R/highmaps.R
 \name{hcmap}
 \alias{hcmap}
-\title{Shortcut for create map
-Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
+\title{Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 collection.}
 \usage{
 hcmap(map = "custom/world",
@@ -11,40 +10,41 @@ hcmap(map = "custom/world",
   data = NULL, value = NULL, joinBy = NULL, ...)
 }
 \arguments{
-\item{map}{String indicating what map to chart.}
+\item{map}{String indicating what map to chart, a list from 
+\url{https://code.highcharts.com/mapdata/}. See examples.}
 
 \item{download_map_data}{A logical value whether to download
-(add as a dependency) the map. Default \code{FALSE}.}
+(add as a dependency) the map. Default \code{TRUE} via
+\code{getOption("highcharter.download_map_data")}.}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
 
 \item{value}{A string value with the name of the columnn to chart.}
 
-\item{joinBy}{What property to join the  \code{map} and \code{df}.
-the map.}
+\item{joinBy}{What property to join the \code{map} and \code{df}.}
 
 \item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-Shortcut for create map
 Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 collection.
 }
 \examples{
-require(dplyr) 
 hcmap(nullColor = "#DADADA")
-hcmap(nullColor = "#DADADA", download_map_data = TRUE)
+hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 
+require(dplyr) 
 data("USArrests", package = "datasets")
 USArrests <- mutate(USArrests, "woe-name" = rownames(USArrests))
 
 hcmap(map = "countries/us/us-all", data = USArrests,
       joinBy = "woe-name", value = "UrbanPop", name = "Urban Population")
       
+# download_map_data = FALSE        
 hcmap(map = "countries/us/us-all", data = USArrests,
       joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
-      download_map_data = TRUE) 
+      download_map_data = FALSE) 
   
 }

@@ -68,35 +68,35 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
 }
 
-#' Shortcut for create map
 #' Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 #' collection.
-#' @param map String indicating what map to chart.
+#' @param map String indicating what map to chart, a list from 
+#'   \url{https://code.highcharts.com/mapdata/}. See examples.
 #' @param download_map_data A logical value whether to download
-#'   (add as a dependency) the map. Default \code{FALSE}.
+#'   (add as a dependency) the map. Default \code{TRUE} via
+#'   \code{getOption("highcharter.download_map_data")}.
 #' @param data Optional data to make a choropleth, in case of use
 #'   the joinBy and value are needed.
 #' @param value A string value with the name of the columnn to chart.
-#' @param joinBy What property to join the  \code{map} and \code{df}.
-
-#'   the map.
+#' @param joinBy What property to join the \code{map} and \code{df}.
 #' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples
-#' require(dplyr) 
 #' hcmap(nullColor = "#DADADA")
-#' hcmap(nullColor = "#DADADA", download_map_data = TRUE)
+#' hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 #' 
+#' require(dplyr) 
 #' data("USArrests", package = "datasets")
 #' USArrests <- mutate(USArrests, "woe-name" = rownames(USArrests))
 #' 
 #' hcmap(map = "countries/us/us-all", data = USArrests,
 #'       joinBy = "woe-name", value = "UrbanPop", name = "Urban Population")
 #'       
+#' # download_map_data = FALSE        
 #' hcmap(map = "countries/us/us-all", data = USArrests,
 #'       joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
-#'       download_map_data = TRUE) 
+#'       download_map_data = FALSE) 
 #'   
 #' @importFrom htmltools htmlDependency
 #' @export
@@ -151,6 +151,7 @@ hcmap <- function(map = "custom/world",
 }
 
 #' Helper function to download the map data form a url
+#' 
 #' The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 #' @param url The map's url.
 #' @param showinfo Show the properties of the downloaded map to know how
@@ -198,7 +199,6 @@ get_data_from_map <- function(mapdata) {
       x[!map_lgl(x, is.null)]
       })
 }
-
 
 fix_map_name <- function(x = "custom/world") {
   x <- str_replace(x, "\\.js$", "")
