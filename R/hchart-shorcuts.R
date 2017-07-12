@@ -278,6 +278,11 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
         hc_theme_null()
         )
       )
+  
+  if(!is.null(icons)) {
+    hc <- hc %>% hc_add_dependency_fa()
+  }
+    
   hc
   
 }
