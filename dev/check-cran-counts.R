@@ -1,10 +1,12 @@
-library("dplyr")
-library("lubridate")
-library("cranlogs")
-library("highcharter")
+library(dplyr)
+library(lubridate)
+library(cranlogs)
+library(highcharter)
 
-c("highcharter", "rbokeh", "dygraphs", "plotly",
-  "ggvis", "metricsgraphics", "rAmCharts") %>% 
+pcks <- c("highcharter", "rbokeh", "dygraphs", "plotly",
+  "ggvis", "metricsgraphics", "rAmCharts") 
+
+pcks %>% 
   cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
   tbl_df() %>% 
   mutate(date = floor_date(date, unit="week")) %>% 
@@ -18,5 +20,13 @@ c("highcharter", "rbokeh", "dygraphs", "plotly",
   hchart(type = "line", hcaes(x = date, y = count, group = package)) %>% 
   hc_tooltip(sort = TRUE, table = TRUE) %>% 
   hc_add_theme(hc_theme_smpl())
+
+
+# devtools::install_github("ropenscilabs/packagemetrics")
+library(packagemetrics)
+
+pkg_df <- package_list_metrics(pcks)
+ft <- metrics_table(pkg_df)
+ft
 
 
