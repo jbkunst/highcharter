@@ -724,8 +724,8 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 #' @importFrom tibble rownames_to_column
 #' @export
 
-hchart.density <- function(object, ...) { 
-  hc_add_series(highchart(), data = object, ...)
+hchart.density <- function(object, type = "area", ...) { 
+  hc_add_series(highchart(), data = object, type = type, ...)
 }
 
 #' @importFrom dplyr as_data_frame
