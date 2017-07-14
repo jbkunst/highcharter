@@ -1,45 +1,100 @@
 library(highcharter)
 library(gapminder)
 library(dplyr)
-data("gapminder")
-gapminder
+library(purrr)
+data(gapminder, package = "gapminder")
+glimpse(gapminder)
 
+gp <- gapminder %>% 
+  arrange(desc(year)) %>% 
+  distinct(country, .keep_all = TRUE)
+gp
 
-dim(gapminder)
-dim(gapminder_unfiltered)
+hc <- hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent))
 
-data_strt <- distinct(gapminder_unfiltered, country, continent, .keep_all = TRUE) %>% 
-  mutate(x = lifeExp, y = gdpPercap, z = pop) %>% 
-  left_join(
-    data_frame(
-      continent = names(continent_colors),
-      color = continent_colors
-      )
-  ) %>% 
-  mutate(color = colorize(continent))
+hc %>% 
+  hc_yAxis(type = "logarithmic")
 
-data_seqc <- gapminder_unfiltered %>% 
-  arrange(country, year) %>% 
+gp2 <- gapminder %>% 
   group_by(country) %>% 
-  do(sequence = list_parse(select(., x = lifeExp, y = gdpPercap, z = pop)))
-  
+  do(lifeexpdata = .$lifeExp)
+gp2
 
-data <- left_join(data_strt, data_seqc)  
-data
+gp <- left_join(gp, gp2)
 
-data$sequence[[1]]
 
-summarise_if(gapminder, is.numeric, funs(min, max)) %>% 
-  tidyr::gather(key, value) %>% 
-  arrange(key)
+hc <- hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent)) %>% 
+  hc_yAxis(type = "logarithmic")
 
-highchart() %>% 
-  hc_add_series(data = data, type = "bubble",
-                minSize = 0, maxSize = 30) %>% 
-  hc_motion(enabled = TRUE, series = 0, labels = unique(gapminder$year),
-            loop = TRUE, autoPlay = TRUE, 
-            updateInterval = 1000, magnet = list(step =  1)) %>% 
-  hc_plotOptions(series = list(showInLegend = FALSE)) %>% 
+hc
+
+minichart <- "function(){
+var thiz = this;
+console.log(thiz);
+setTimeout(function() {
+$('#minichart').highcharts({
+title : {
+text: ''
+},
+subtitle: {
+text: thiz.country,
+align: 'left'
+},
+exporting: {
+enabled: false
+},
+legend: {
+enabled : false
+},
+series: [{
+animation: false,
+color: thiz.color,
+pointStart: 1952,
+data: thiz.lifeexpdata
+}],
+yAxis: {
+title: ''
+},
+xAxis: {
+}
+});
+}, 0);
+return '<div id=\"minichart\" style=\"width: 250px; height: 150px;\"></div>';
+}                        
+"
+
+hc <- hc %>% 
+  hc_tooltip(
+    useHTML = TRUE,
+    positioner = JS("function () { return { x: this.chart.plotLeft + 0, y: 0 }; }"),
+    headerFormat = "{point.country}",
+    pointFormatter = JS(minichart)
+  )
+hc
+
+gp3 <- gapminder %>% 
+  select(country, x = lifeExp, y = gdpPercap, z = pop) %>% 
+  nest(-country) %>% 
+  rename(sequence = data) %>% 
+  mutate(sequence = map(sequence, list_parse))
+
+gp <- left_join(gp, gp3)
+
+hc <- hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent)) %>% 
+  hc_yAxis(type = "logarithmic")
+
+hc
+
+hc <- hc %>% 
+  hc_motion(enabled = TRUE, series = 0:4, labels = sort(unique(gapminder$year)),
+            loop = FALSE, autoPlay = TRUE, 
+            updateInterval = 500, magnet = list(step =  1)) %>% 
   hc_xAxis(min = 20, max = 90) %>% 
   hc_yAxis(type = "logarithmic", min = 100, max = 100000) %>% 
-  hc_add_theme(hc_theme_smpl())
+  hc_tooltip(
+    useHTML = TRUE,
+    positioner = JS("function () { return { x: this.chart.plotLeft + 0, y: 0 }; }"),
+    headerFormat = "{point.country}",
+    pointFormatter = JS(minichart)
+  )
+hc
