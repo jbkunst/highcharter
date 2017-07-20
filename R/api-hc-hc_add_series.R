@@ -392,14 +392,18 @@ hcaes_ <- hcaes_string
 #' Modify data frame according to mapping
 #' @param data A data frame object.
 #' @param mapping A mapping from \code{hcaes} function.
+#' @param drop A logical argument to you drop variables or not. Default is
+#'   \code{FALSE}
 #' @examples 
 #' 
-#' mutate_mapping(data = head(mtcars), mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
+#' df <- head(mtcars)
+#' mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
+#' mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt), drop = TRUE)
 #' 
 #' @export
-mutate_mapping <- function(data, mapping) {
+mutate_mapping <- function(data, mapping, drop = FALSE) {
   
-  stopifnot(is.data.frame(data), inherits(mapping, "hcaes"))
+  stopifnot(is.data.frame(data), inherits(mapping, "hcaes"), inherits(drop, "logical"))
   
   # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
   tran <- as.character(mapping)
@@ -410,6 +414,9 @@ mutate_mapping <- function(data, mapping) {
   # Reserverd  highcharts names (#241)
   if(has_name(data, "series"))
     data <- rename_(data, "seriess" = "series")
+  
+  if(drop)
+    data <- select_(data, .dots = names(mapping))
   
   data
   

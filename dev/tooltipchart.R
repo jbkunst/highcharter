@@ -2,63 +2,84 @@ library(highcharter)
 library(gapminder)
 library(dplyr)
 library(purrr)
+library(tidyr)
+library(rlang)
 data(gapminder, package = "gapminder")
 glimpse(gapminder)
 
+
+# data --------------------------------------------------------------------
 gp <- gapminder %>% 
   arrange(desc(year)) %>% 
   distinct(country, .keep_all = TRUE)
 gp
 
-hc <- hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent))
 
-hc %>% 
-  hc_yAxis(type = "logarithmic")
+gpmini <- ""
 
-gp2 <- gapminder %>% 
-  group_by(country) %>% 
-  do(lifeexpdata = .$lifeExp)
-gp2
+data <- gapminder
 
-gp <- left_join(gp, gp2)
+mppng <- hcaes(x = year, y = lifeExp)
 
 
-hc <- hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent)) %>% 
-  hc_yAxis(type = "logarithmic")
+gpmini <- gapminder %>% 
+  arrange(year) %>%
+  nest(-country) %>% 
+  mutate(data = map(data, mutate_mapping, hcaes(x = year, y = lifeExp), drop = TRUE),
+         data = map(data, list_parse)) %>% 
+  rename(tooltipdata = data)
+
+gptot <- left_join(gp, gpmini)
+
+gptot
+
+hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent)) %>% 
+  hc_yAxis(type = "logarithmic") %>% 
 
 hc
+
+point_formatter_minichart <- 
+  function(
+    hc_opts = list(
+      series = list(list(data = JS("thiz.tooltipdata"))),
+      legend = list(enabled = FALSE)
+      ),
+    width = 250,
+    height = 150
+    ) {
+  
+  
+  id <- highcharter:::random_id()
+  
+  hcopts <- toJSON(hc_opts, pretty = TRUE, auto_unbox = TRUE, force = TRUE, null = "null", na = "null")
+  hcopts <- as.character(hcopts)
+  
+  jss <- sprintf("function() {
+  var thiz = this;
+  setTimeout(function() {
+
+    $('tooltipchart-%s').highcharts({%s})
+
+  }, 0)
+
+  return '<div id=\"tooltipchart-%s\" style=\"width: %s; height: %s;\"></div>';
+
+  }", id, hcopts, id, width, height)
+  
+  jss
+  
+}
+
+library(highcharter)
+point_formatter_minichart()
+
+
+
 
 minichart <- "function(){
 var thiz = this;
 console.log(thiz);
-setTimeout(function() {
-$('#minichart').highcharts({
-title : {
-text: ''
-},
-subtitle: {
-text: thiz.country,
-align: 'left'
-},
-exporting: {
-enabled: false
-},
-legend: {
-enabled : false
-},
-series: [{
-animation: false,
-color: thiz.color,
-pointStart: 1952,
-data: thiz.lifeexpdata
-}],
-yAxis: {
-title: ''
-},
-xAxis: {
-}
-});
-}, 0);
+setTimeout(function() {$('#minichart').highcharts({});}, 0);
 return '<div id=\"minichart\" style=\"width: 250px; height: 150px;\"></div>';
 }                        
 "
