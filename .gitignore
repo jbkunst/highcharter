@@ -4,6 +4,7 @@
 
 # html and rpubs
 dev/*.dcf
+dev/*.html
 dev/*/*.html
 dev/rsconnect/*
 dev/*/rsconnect/
