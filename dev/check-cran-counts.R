@@ -2,6 +2,7 @@ library(dplyr)
 library(lubridate)
 library(cranlogs)
 library(highcharter)
+library(forcats)
 
 pcks <- c("highcharter", "rbokeh", "dygraphs", "plotly",
   "ggvis", "metricsgraphics", "rAmCharts") 
@@ -13,6 +14,7 @@ pcks %>%
   group_by(date, package) %>% 
   summarize(count = sum(count)) %>% 
   ungroup() %>% 
+  mutate(package = fct_reorder(package, -count)) %>% 
   group_by(package) %>% 
   arrange(date) %>% 
   filter(row_number() != n()) %>%
