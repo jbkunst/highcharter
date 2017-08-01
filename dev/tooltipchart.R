@@ -10,7 +10,7 @@ library(whisker)
 library(stringr)
 data(gapminder, package = "gapminder")
 glimpse(gapminder)
-options(highcharter.theme = hc_theme_smpl())
+options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 
 # data --------------------------------------------------------------------
 data(gapminder, package = "gapminder")
@@ -31,7 +31,6 @@ gp2 <- gapminder %>%
   do(minidata = .$lifeExp)
 gp2
 
-
 gp2 <- gapminder %>% 
   nest(-country) %>% 
   mutate(data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
@@ -41,6 +40,7 @@ gp2
 
 gptot <- left_join(gp, gp2)
 
+gptot$minidata[[1]]
 
 hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) %>% 
   hc_yAxis(type = "logarithmic")
@@ -89,31 +89,37 @@ point_formatter_minichart <- function(
   
   hc_opts <- rlist::list.merge(
     getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
+    list(chart = list(backgroundColor = "transparent")),
     list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
     hc_opts
   )
   
   if(!has_name(hc_opts[["series"]][[1]], "color")) hc_opts[["series"]][[1]][["color"]] <- "point.color"
   
-  
   hcopts <- toJSON(hc_opts, pretty = TRUE, auto_unbox = TRUE, force = TRUE, null = "null", na = "null")
   hcopts <- as.character(hcopts)
   cat(hcopts)
   
-  ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") %>%  unlist()
+  # fix point.color
+  hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
+  
+  # remove "\"" to have access to the point object
+  ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") %>% unlist()
   for(t in ts) hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
-
+  
+  # remove "\"" in the options 
   ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") %>%  unlist()
   for(t in ts) {
     t2 <- str_replace_all(t, "\"", "")
     # t2 <- str_replace(t2, ":", "")
     hcopts <- str_replace(hcopts, t, t2)
   }
-  
+  cat(hcopts)
   
   jss <- "function() {
   var point = this;
   console.log(point);
+  console.log(point.{{accesor}});
   setTimeout(function() {
 
     $(\"#tooltipchart-{{id}}\").highcharts(hcopts);
@@ -128,7 +134,7 @@ point_formatter_minichart <- function(
 
   jsss <- whisker.render(
     jss,
-    list(id = highcharter:::random_id(), w = width, h = height)
+    list(id = highcharter:::random_id(), w = width, h = height, accesor = accesor)
     )
   cat(jsss)
 
@@ -156,6 +162,13 @@ hc %>%
 hc %>% 
   hc_tooltip(
     useHTML = TRUE,
+    pointFormatter = point_formatter_minichart(type = "line", hc_opts = NULL)
+  )
+
+
+hc %>% 
+  hc_tooltip(
+    useHTML = TRUE,
     pointFormatter = point_formatter_minichart(
       type = "line",
       hc_opts = list(
@@ -165,4 +178,27 @@ hc %>%
       )
     )
 
+data(iris)
+iris <- tbl_df(iris)
+# iris <- head(iris, 10)
 
+iris <- mutate(iris, id = seq_along(Species))
+irismini <- iris %>%
+  select(-Species) %>% 
+  gather(x, y, -id) %>% 
+  mutate(x = str_replace(x, "\\.", "_"),
+         x = str_to_lower(x)) %>% 
+  group_by(id) %>% 
+  do(minidata = list_parse2(select(., -id))) 
+
+iristot <- left_join(iris, irismini)
+
+iristot$minidata[[1]]
+
+hchart(iristot, "point", hcaes(x = Sepal.Length, y = Sepal.Width, group = Species)) %>% 
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormatter = point_formatter_minichart()
+  )
+
+cat(point_formatter_minichart())
