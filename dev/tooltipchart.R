@@ -47,44 +47,42 @@ hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = po
 
 hc
 
-minichart <- "function(){
-  var point = this;
-  console.log(point);
-  setTimeout(function() {
-    $(\"#minichart\").highcharts({
-      series: [{
-      animation: false,
-      type: \"scatter\",
-      name: point.name,
-      data: point.minidata
-      }]
-    });
-  }, 0);
-  return '<div id=\"minichart\" style=\"width: 250px; height: 150px;\"></div>';
-}                        
-"
+# minichart <- "function(){
+#   var point = this;
+#   console.log(point);
+#   setTimeout(function() {
+#     $(\"#minichart\").highcharts({
+#       series: [{
+#       animation: false,
+#       type: \"scatter\",
+#       name: point.name,
+#       data: point.minidata
+#       }]
+#     });
+#   }, 0);
+#   return '<div id=\"minichart\" style=\"width: 250px; height: 150px;\"></div>';
+# }                        
+# "
 
-hc %>% 
-  hc_tooltip(
-    useHTML = TRUE,
-    positioner = JS("function () { return { x: this.chart.plotLeft + 0, y: 0 }; }"),
-    pointFormatter = JS(minichart)
-      )
+# hc %>% 
+#   hc_tooltip(
+#     useHTML = TRUE,
+#     pointFormatter = JS(minichart)
+#       )
 
 point_formatter_minichart <- function(
   accesor = "minidata",
-  type = "column",
-  # hc_opts = NULL,
-  hc_opts = list(series = list(list(color = "{point.color}"))),
+  hc_opts = NULL,
   width = 250,
   height = 150
 ) {
 
   if(is.null(hc_opts)) {
-    hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor), type = type, color = "point.color")
+    hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor))
   } else {
+    if(!has_name(hc_opts, "series"))
+      hc_opts[["series"]][[1]] <- list()
     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
-    hc_opts[["series"]][[1]][["type"]] <- type
   }
   
   hc_opts <- rlist::list.merge(
@@ -147,30 +145,31 @@ point_formatter_minichart <- function(
 
 pfmc <-  point_formatter_minichart()
 
-cat(minichart)
 cat(pfmc)
 
 hc %>% 
   hc_tooltip(useHTML = TRUE, pointFormatter = point_formatter_minichart())
 
 hc %>% 
-  hc_tooltip(
-    useHTML = TRUE,
-    pointFormatter = point_formatter_minichart(type = "line")
-    )
+  hc_tooltip(useHTML = TRUE, pointFormatter = point_formatter_minichart(
+    hc_opts = list(chart = list(type = "column"))
+  ))
 
 hc %>% 
   hc_tooltip(
     useHTML = TRUE,
-    pointFormatter = point_formatter_minichart(type = "line", hc_opts = NULL)
-  )
-
+    positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
+    pointFormatter = point_formatter_minichart(
+      hc_opts = list(
+        title = list(text = "point.country"),
+        xAxis = list(title = list(text = "lifeExp")),
+        yAxis = list(title = list(text = "gdpPercap")))
+      ))
 
 hc %>% 
   hc_tooltip(
     useHTML = TRUE,
     pointFormatter = point_formatter_minichart(
-      type = "line",
       hc_opts = list(
         legend = list(enabled = TRUE),
         series = list(list(color = "gray", name = "point.name"))
@@ -180,7 +179,6 @@ hc %>%
 
 data(iris)
 iris <- tbl_df(iris)
-# iris <- head(iris, 10)
 
 iris <- mutate(iris, id = seq_along(Species))
 irismini <- iris %>%
@@ -195,10 +193,15 @@ iristot <- left_join(iris, irismini)
 
 iristot$minidata[[1]]
 
-hchart(iristot, "point", hcaes(x = Sepal.Length, y = Sepal.Width, group = Species)) %>% 
-  hc_tooltip(
-    useHTML = TRUE,
-    pointFormatter = point_formatter_minichart()
+pfmc <- point_formatter_minichart(
+  hc_opts = list(
+    xAxis = list(type = "category")
   )
+)
 
-cat(point_formatter_minichart())
+cat(pfmc)
+
+hchart(iristot, "point", hcaes(x = Sepal.Length, y = Sepal.Width, group = Species)) %>% 
+  hc_tooltip(useHTML = TRUE, pointFormatter = pfmc)
+
+
