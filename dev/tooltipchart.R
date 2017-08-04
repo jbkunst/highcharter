@@ -1,51 +1,11 @@
 rm(list  = ls())
 library(highcharter)
 library(gapminder)
-library(dplyr)
-library(purrr)
-library(tidyr)
-library(rlang)
+library(tidyverse)
 library(jsonlite)
 library(whisker)
 library(stringr)
-data(gapminder, package = "gapminder")
-glimpse(gapminder)
 options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
-
-# data --------------------------------------------------------------------
-data(gapminder, package = "gapminder")
-glimpse(gapminder)
-
-gp <- gapminder %>% 
-  arrange(desc(year)) %>% 
-  distinct(country, .keep_all = TRUE)
-gp
-
-hc <- hchart(gp, "point", hcaes(lifeExp, gdpPercap, size = pop, group = continent))
-
-hc %>% 
-  hc_yAxis(type = "logarithmic")
-
-gp2 <- gapminder %>% 
-  group_by(country) %>% 
-  do(minidata = .$lifeExp)
-gp2
-
-gp2 <- gapminder %>% 
-  nest(-country) %>% 
-  mutate(data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
-         data = map(data, list_parse)) %>% 
-  rename(minidata = data)
-gp2
-
-gptot <- left_join(gp, gp2)
-
-gptot$minidata[[1]]
-
-hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) %>% 
-  hc_yAxis(type = "logarithmic")
-
-hc
 
 # minichart <- "function(){
 #   var point = this;
@@ -143,6 +103,37 @@ point_formatter_minichart <- function(
 
 }
 
+
+# example 1 ---------------------------------------------------------------
+data(gapminder, package = "gapminder")
+glimpse(gapminder)
+
+gp <- gapminder %>% 
+  arrange(desc(year)) %>% 
+  distinct(country, .keep_all = TRUE)
+gp
+
+gp2 <- gapminder %>% 
+  group_by(country) %>% 
+  do(minidata = .$lifeExp)
+gp2
+
+gp2 <- gapminder %>% 
+  nest(-country) %>% 
+  mutate(data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
+         data = map(data, list_parse)) %>% 
+  rename(minidata = data)
+gp2
+
+gptot <- left_join(gp, gp2)
+
+gptot$minidata[[1]]
+
+hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) %>% 
+  hc_yAxis(type = "logarithmic")
+
+hc
+
 pfmc <-  point_formatter_minichart()
 
 cat(pfmc)
@@ -177,6 +168,7 @@ hc %>%
       )
     )
 
+# example 2 ---------------------------------------------------------------
 data(iris)
 iris <- tbl_df(iris)
 
@@ -203,5 +195,30 @@ cat(pfmc)
 
 hchart(iristot, "point", hcaes(x = Sepal.Length, y = Sepal.Width, group = Species)) %>% 
   hc_tooltip(useHTML = TRUE, pointFormatter = pfmc)
+
+
+# example 3 ---------------------------------------------------------------
+data(unemployment)
+
+unemployment <- unemployment %>% 
+  mutate(val = map(nrow(.), ~ data_frame(x = c(1, 2, 3), y = c(2, 3, 5)))) %>% 
+  mutate(val = map(val, list_parse))
+
+hcmap("countries/us/us-all-all", data = unemployment,
+      download_map_data = FALSE,
+      name = "Unemployment", value = "value",
+      joinBy = c("hc-key", "code"),
+      borderColor = "transparent") %>%
+  hc_colorAxis(dataClasses = color_classes(c(seq(0, 10, by = 2), 50))) %>% 
+  hc_legend(layout = "vertical", align = "right",
+            floating = TRUE, valueDecimals = 0, valueSuffix = "%") %>% 
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormatter = point_formatter_minichart(
+      accesor = "val",
+      hc_opts = list(title = list(text = "point.name"))
+    )
+  )
+
 
 
