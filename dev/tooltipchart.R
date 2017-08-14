@@ -16,14 +16,14 @@ options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 #       animation: false,
 #       type: \"scatter\",
 #       name: point.name,
-#       data: point.minidata
+#       data: point.ttdata
 #       }]
 #     });
 #   }, 0);
 #   return '<div id=\"minichart\" style=\"width: 250px; height: 150px;\"></div>';
 # }                        
 # "
-
+#
 # hc %>% 
 #   hc_tooltip(
 #     useHTML = TRUE,
@@ -31,7 +31,7 @@ options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 #       )
 
 point_formatter_minichart <- function(
-  accesor = "minidata",
+  accesor = "ttdata",
   hc_opts = NULL,
   width = 250,
   height = 150
@@ -56,7 +56,7 @@ point_formatter_minichart <- function(
   
   hcopts <- toJSON(hc_opts, pretty = TRUE, auto_unbox = TRUE, force = TRUE, null = "null", na = "null")
   hcopts <- as.character(hcopts)
-  cat(hcopts)
+  # cat(hcopts)
   
   # fix point.color
   hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
@@ -72,7 +72,7 @@ point_formatter_minichart <- function(
     # t2 <- str_replace(t2, ":", "")
     hcopts <- str_replace(hcopts, t, t2)
   }
-  cat(hcopts)
+  # cat(hcopts)
   
   jss <- "function() {
   var point = this;
@@ -87,17 +87,16 @@ point_formatter_minichart <- function(
   return '<div id=\"tooltipchart-{{id}}\" style=\"width: {{w}}px; height: {{h}}px;\"></div>';
 
   }"
-
-  cat(jss)
+  # cat(jss)
 
   jsss <- whisker.render(
     jss,
     list(id = highcharter:::random_id(), w = width, h = height, accesor = accesor)
     )
-  cat(jsss)
+  # cat(jsss)
 
   jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
-  cat(jsss)
+  # cat(jsss)
 
   JS(jsss)
 
@@ -115,19 +114,19 @@ gp
 
 gp2 <- gapminder %>% 
   group_by(country) %>% 
-  do(minidata = .$lifeExp)
+  do(ttdata = .$lifeExp)
 gp2
 
 gp2 <- gapminder %>% 
   nest(-country) %>% 
   mutate(data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
          data = map(data, list_parse)) %>% 
-  rename(minidata = data)
+  rename(ttdata = data)
 gp2
 
 gptot <- left_join(gp, gp2)
 
-gptot$minidata[[1]]
+gptot$ttdata[[1]]
 
 hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) %>% 
   hc_yAxis(type = "logarithmic")
@@ -179,11 +178,11 @@ irismini <- iris %>%
   mutate(x = str_replace(x, "\\.", "_"),
          x = str_to_lower(x)) %>% 
   group_by(id) %>% 
-  do(minidata = list_parse2(select(., -id))) 
+  do(ttdata = list_parse2(select(., -id))) 
 
 iristot <- left_join(iris, irismini)
 
-iristot$minidata[[1]]
+iristot$ttdata[[1]]
 
 pfmc <- point_formatter_minichart(
   hc_opts = list(
@@ -204,7 +203,10 @@ unemployment <- unemployment %>%
   mutate(val = map(nrow(.), ~ data_frame(x = c(1, 2, 3), y = c(2, 3, 5)))) %>% 
   mutate(val = map(val, list_parse))
 
-hcmap("countries/us/us-all-all", data = unemployment,
+hist(unemployment$value)
+quantile(unemployment$value)
+
+hcm <- hcmap("countries/us/us-all-all", data = unemployment,
       download_map_data = FALSE,
       name = "Unemployment", value = "value",
       joinBy = c("hc-key", "code"),
@@ -220,5 +222,4 @@ hcmap("countries/us/us-all-all", data = unemployment,
     )
   )
 
-
-
+# hcm

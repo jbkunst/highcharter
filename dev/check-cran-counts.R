@@ -20,7 +20,8 @@ pcks %>%
   filter(row_number() != n()) %>%
   # mutate(count = cumsum(count)) %>%
   hchart(type = "line", hcaes(x = date, y = count, group = package)) %>% 
-  hc_tooltip(sort = TRUE, table = TRUE) %>% 
+  hc_tooltip(sort = TRUE, table = TRUE) %>%
+  hc_tooltip(split = TRUE) %>%
   hc_add_theme(hc_theme_smpl())
 
 
