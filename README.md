@@ -37,8 +37,8 @@ fontawesome, url-pattern, annotations.
 ## Resources
 
 - Official package website: http://jkunst.com/highcharter/.
-- [Highcharts API and highcharter](http://ultinomics.org/2017/04/05/thinking-in-highcharter---how-to-build-any-highcharts-plot-in-r/#highcharts-api-and-highcharter-functions) by
-@ultinomics. 
+- [Highcharts API and highcharter](https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html) by
+@dantonnoriega. 
 - Replicating Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
 - Some Shiny demos [here](http://104.140.247.162:3838/shiny-apps-highcharter/) and code [there](https://github.com/jbkunst/shiny-apps-highcharter).
