@@ -14,7 +14,7 @@ hctreemap(tm, ...)
 }
 \description{
 This function helps to create highcharts treemaps from \code{treemap} objects
-from the package \code{treemap}.
+from the package \code{treemap}. NOTE: This function is deprecated. Please use \code{hctreemap2} instead.
 }
 \examples{
  

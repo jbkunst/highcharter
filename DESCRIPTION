@@ -29,7 +29,7 @@ Imports:
     rlist,
     assertthat,
     zoo,
-    dplyr,
+    dplyr (>= 0.5.0.9005),
     tibble (>= 1.1),
     stringr,
     broom,
@@ -41,7 +41,8 @@ Imports:
     igraph,
     lubridate,
     crosstalk,
-    yaml
+    yaml,
+    rlang(>= 0.1.1)
 Suggests:
     knitr,
     rmarkdown,
