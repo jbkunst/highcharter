@@ -9,7 +9,7 @@ hc_credits(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#credits}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/credits}.}
 }
 \description{
 \code{highcarter} by default don't put credits in the chart.

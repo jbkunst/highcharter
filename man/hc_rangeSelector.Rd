@@ -12,9 +12,9 @@ hc_rangeSelector(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highstock#rangeSelector}.}
 }
 \description{
-Options to edit the range selector which is The range selector is a tool 
-for selecting ranges to display within the chart. It provides buttons 
-to select preconfigured ranges in the chart, like 1 day, 1 week, 1 month 
+Options to edit the range selector which is The range selector is a tool
+for selecting ranges to display within the chart. It provides buttons
+to select preconfigured ranges in the chart, like 1 day, 1 week, 1 month
 etc. It also provides input boxes where min and max dates can be manually
 input.
 }

@@ -9,7 +9,7 @@ hc_chart(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 Options regarding the chart area and plot area as well as general chart options.

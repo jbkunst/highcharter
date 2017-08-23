@@ -12,6 +12,6 @@ hc_mapNavigation(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highmaps#mapNavigation}.}
 }
 \description{
-Options regarding the mapNavigation: A collection of options for zooming 
+Options regarding the mapNavigation: A collection of options for zooming
 and panning in a map.
 }

@@ -48,7 +48,7 @@ validate_args <- function(name, lstargs) {
 #' Options regarding the chart area and plot area as well as general chart options. 
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#chart}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' 
 #' @examples 
 #' 
@@ -121,7 +121,7 @@ hc_colors <- function(hc, colors) {
 #' You can add credits using these options.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#credits}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/credits}. 
 #' 
 #' @examples 
 #' 
@@ -147,7 +147,7 @@ hc_credits <- function(hc, ...) {
 #' or the output format.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#exporting}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/exporting}. 
 #' 
 #' @examples
 #' 
@@ -281,7 +281,7 @@ hc_responsive <- function(hc, ...) {
 #' Series options from highchart objects
 #'
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#series}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/series}. 
 #'
 #' @examples
 #' 
@@ -376,7 +376,7 @@ hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
 #' Change axis labels or style. Add lines or band to charts.
 #' 
 #' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#xAxis}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/xAxis}. 
 #' 
 #' @examples 
 #' 
@@ -457,7 +457,7 @@ hc_zAxis  <- function(hc, ...) {
 #' @param sep A numeric value for the separation (in percentage) for the panes.
 #' @param offset A numeric value (in percentage).
 #' @param turnopposite A logical value to turn the side of each axis or not.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts#yAxis}. 
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}. 
 #' 
 #' @examples 
 #' 

@@ -11,7 +11,7 @@ hc_add_series(hc, data = NULL, ...)
 
 \item{data}{An R object like numeric, list, ts, xts, etc.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#chart}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 Adding and removing series from highchart objects

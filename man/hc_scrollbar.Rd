@@ -12,6 +12,6 @@ hc_scrollbar(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highstock#scrollbar}.}
 }
 \description{
-Options regarding the scrollbar which is a means of panning 
+Options regarding the scrollbar which is a means of panning
 over the X axis of a chart.
 }

@@ -12,6 +12,6 @@ hc_navigator(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highstock#navigator}.}
 }
 \description{
-Options regarding the navigator: The miniseries below chart 
+Options regarding the navigator: The miniseries below chart
 in a highstock chart.
 }

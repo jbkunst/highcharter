@@ -9,10 +9,10 @@ hc_drilldown(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#drilldown}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/drilldown}.}
 }
 \description{
-Options for drill down, the concept of inspecting increasingly high 
+Options for drill down, the concept of inspecting increasingly high
 resolution data through clicking on chart items like columns or pie slices.
 }
 \examples{
@@ -32,17 +32,17 @@ ds <- list_parse(df)
 names(ds) <- NULL
 str(ds)
 
-hc <- highchart() \%>\% 
-  hc_chart(type = "columnn") \%>\% 
-  hc_title(text = "Basic drilldown") \%>\% 
-  hc_xAxis(type = "category") \%>\% 
-  hc_legend(enabled = FALSE) \%>\% 
+hc <- highchart() \%>\%
+  hc_chart(type = "columnn") \%>\%
+  hc_title(text = "Basic drilldown") \%>\%
+  hc_xAxis(type = "category") \%>\%
+  hc_legend(enabled = FALSE) \%>\%
   hc_plotOptions(
     series = list(
       boderWidth = 0,
       dataLabels = list(enabled = TRUE)
     )
-  ) \%>\% 
+  ) \%>\%
   hc_add_series(
     name = "Things",
     colorByPoint = TRUE,
@@ -61,16 +61,16 @@ dffru <- data_frame(
 
 dfcar <- data_frame(
   name = c("Toyota", "Opel", "Volkswage"),
-  value = c(4, 2, 2) 
+  value = c(4, 2, 2)
 )
 
 second_el_to_numeric <- function(ls){
-  
+
   map(ls, function(x){
     x[[2]] <- as.numeric(x[[2]])
     x
   })
-  
+
 }
 
 dsan <- second_el_to_numeric(list_parse2(dfan))
@@ -80,7 +80,7 @@ dsfru <- second_el_to_numeric(list_parse2(dffru))
 dscar <- second_el_to_numeric(list_parse2(dfcar))
 
 
-hc <- hc \%>\% 
+hc <- hc \%>\%
   hc_drilldown(
     allowPointDrilldown = TRUE,
     series = list(

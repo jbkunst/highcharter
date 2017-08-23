@@ -9,7 +9,7 @@ hc_series(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#series}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/series}.}
 }
 \description{
 Series options from highchart objects

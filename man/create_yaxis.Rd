@@ -18,7 +18,7 @@ create_yaxis(naxis = 2, heights = 1, sep = 0.01, offset = 0,
 
 \item{turnopposite}{A logical value to turn the side of each axis or not.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#yAxis}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}.}
 }
 \description{
 Creating multiples yAxis for add a highcharts

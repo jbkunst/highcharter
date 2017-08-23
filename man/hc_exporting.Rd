@@ -9,7 +9,7 @@ hc_exporting(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#exporting}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/exporting}.}
 }
 \description{
 Exporting options for highcharts objects. You can define the file's name

@@ -9,7 +9,7 @@ hc_pane(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#pane}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/pane}.}
 }
 \description{
 Applies only to polar charts and angular gauges. This configuration object

@@ -25,17 +25,17 @@ df$value <- round(df$value, 2)
 ds <- list_parse2(df)
 
 
-hc <- highchart() \%>\% 
-  hc_chart(type = "heatmap") \%>\% 
-  hc_title(text = "Simulated values by years and months") \%>\% 
-  hc_xAxis(categories = month.abb) \%>\% 
-  hc_yAxis(categories = 2016 - nyears + seq(nyears)) \%>\% 
+hc <- highchart() \%>\%
+  hc_chart(type = "heatmap") \%>\%
+  hc_title(text = "Simulated values by years and months") \%>\%
+  hc_xAxis(categories = month.abb) \%>\%
+  hc_yAxis(categories = 2016 - nyears + seq(nyears)) \%>\%
   hc_add_series(name = "value", data = ds)
 
 hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348")
 
 hc_colorAxis(hc, minColor = "#FFFFFF", maxColor = "#434348",
-             type = "logarithmic") 
+             type = "logarithmic")
 
 
 require("viridisLite")
@@ -46,6 +46,6 @@ stops <- data.frame(q = 0:n/n,
                     stringsAsFactors = FALSE)
 stops <- list_parse2(stops)
 
-hc_colorAxis(hc, stops = stops, max = 75) 
+hc_colorAxis(hc, stops = stops, max = 75)
 
 }

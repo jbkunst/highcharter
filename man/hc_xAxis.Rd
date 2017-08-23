@@ -18,7 +18,7 @@ hc_zAxis(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts#xAxis}.}
+\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/xAxis}.}
 }
 \description{
 Change axis labels or style. Add lines or band to charts.
