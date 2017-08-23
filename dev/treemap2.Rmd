@@ -3,6 +3,8 @@ title: "Demostration of New Function `hctreemap2`"
 author: "Alex Hayes"
 date: "June 18, 2017"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
