@@ -30,12 +30,14 @@ options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 #     pointFormatter = JS(minichart)
 #       )
 
-point_formatter_minichart <- function(
-  accesor = "ttdata",
+tooltip_chart <- function(
+  accesor = NULL,
   hc_opts = NULL,
   width = 250,
   height = 150
 ) {
+  
+  assertthat::assert_that(assertthat::is.string(accesor))
 
   if(is.null(hc_opts)) {
     hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor))
@@ -102,7 +104,6 @@ point_formatter_minichart <- function(
 
 }
 
-
 # example 1 ---------------------------------------------------------------
 data(gapminder, package = "gapminder")
 glimpse(gapminder)
@@ -133,15 +134,16 @@ hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = po
 
 hc
 
-pfmc <-  point_formatter_minichart()
+pfmc <-  tooltip_chart(accesor = "ttdata")
 
 cat(pfmc)
 
 hc %>% 
-  hc_tooltip(useHTML = TRUE, pointFormatter = point_formatter_minichart())
+  hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(accesor = "ttdata"))
 
 hc %>% 
-  hc_tooltip(useHTML = TRUE, pointFormatter = point_formatter_minichart(
+  hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(
+    accesor = "ttdata",
     hc_opts = list(chart = list(type = "column"))
   ))
 
@@ -149,7 +151,8 @@ hc %>%
   hc_tooltip(
     useHTML = TRUE,
     positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
-    pointFormatter = point_formatter_minichart(
+    pointFormatter = tooltip_chart(
+      accesor = "ttdata",
       hc_opts = list(
         title = list(text = "point.country"),
         xAxis = list(title = list(text = "lifeExp")),
@@ -159,7 +162,8 @@ hc %>%
 hc %>% 
   hc_tooltip(
     useHTML = TRUE,
-    pointFormatter = point_formatter_minichart(
+    pointFormatter = tooltip_chart(
+      accesor = "ttdata",
       hc_opts = list(
         legend = list(enabled = TRUE),
         series = list(list(color = "gray", name = "point.name"))
@@ -172,25 +176,25 @@ data(iris)
 iris <- tbl_df(iris)
 
 iris <- mutate(iris, id = seq_along(Species))
+
 irismini <- iris %>%
   select(-Species) %>% 
   gather(x, y, -id) %>% 
   mutate(x = str_replace(x, "\\.", "_"),
          x = str_to_lower(x)) %>% 
   group_by(id) %>% 
-  do(ttdata = list_parse2(select(., -id))) 
+  do(tooltipdata = list_parse2(select(., -id))) 
 
 iristot <- left_join(iris, irismini)
 
-iristot$ttdata[[1]]
+iristot$tooltipdata[[1]]
 
-pfmc <- point_formatter_minichart(
+pfmc <- tooltip_chart(
+  accesor = "tooltipdata",
   hc_opts = list(
     xAxis = list(type = "category")
   )
 )
-
-cat(pfmc)
 
 hchart(iristot, "point", hcaes(x = Sepal.Length, y = Sepal.Width, group = Species)) %>% 
   hc_tooltip(useHTML = TRUE, pointFormatter = pfmc)
@@ -216,10 +220,10 @@ hcm <- hcmap("countries/us/us-all-all", data = unemployment,
             floating = TRUE, valueDecimals = 0, valueSuffix = "%") %>% 
   hc_tooltip(
     useHTML = TRUE,
-    pointFormatter = point_formatter_minichart(
+    pointFormatter = tooltip_chart(
       accesor = "val",
       hc_opts = list(title = list(text = "point.name"))
     )
   )
 
-# hcm
+hcm

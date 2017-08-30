@@ -42,7 +42,8 @@ Imports:
     lubridate,
     crosstalk,
     yaml,
-    rlang(>= 0.1.1)
+    rlang(>= 0.1.1),
+    whisker
 Suggests:
     knitr,
     rmarkdown,
@@ -51,6 +52,7 @@ Suggests:
     httr,
     viridisLite,
     shiny,
-    MASS
+    MASS,
+    gapminder
 VignetteBuilder: knitr
 LazyData: true

@@ -14,14 +14,14 @@ hc_add_event_series(hc, series = "series", event = "click")
 
 \item{series}{The name of type of series to apply the event.}
 
-\item{event}{The name of event: click, mouseOut,  mouseOver. See 
+\item{event}{The name of event: click, mouseOut,  mouseOver. See
 \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
 for more details.}
 }
 \description{
 When you use highcharter in a shiny app, for example
 \code{renderHighcharter('my_chart')}, you can access to the actions of the
-user using and then use the \code{hc_add_event_point} via the 
+user using and then use the \code{hc_add_event_point} via the
 \code{my_chart} input (\code{input$my_chart}). That's a way you can
 use a chart as an input.
 }
