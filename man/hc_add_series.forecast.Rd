@@ -5,7 +5,7 @@
 \title{hc_add_series for forecast objects}
 \usage{
 \method{hc_add_series}{forecast}(hc, data, addOriginal = FALSE,
-  addLevels = TRUE, fillOpacity = 0.1, ...)
+  addLevels = TRUE, fillOpacity = 0.1, name = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
@@ -16,7 +16,9 @@
 
 \item{addLevels}{Logical value to show predictions bands.}
 
-\item{fillOpacity}{The opacity of bands}
+\item{fillOpacity}{The opacity of bands.}
+
+\item{name}{The name of the series.}
 
 \item{...}{Arguments defined in
 \url{http://api.highcharts.com/highcharts#chart}.}

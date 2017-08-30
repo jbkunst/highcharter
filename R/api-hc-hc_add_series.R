@@ -129,12 +129,13 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
 #' @param data A \code{forecast} object.
 #' @param addOriginal Logical value to add the original series or not.
 #' @param addLevels Logical value to show predictions bands.
-#' @param fillOpacity The opacity of bands
+#' @param fillOpacity The opacity of bands.
+#' @param name The name of the series.
 #' @param ... Arguments defined in
 #'   \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
 hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
-                                   addLevels = TRUE, fillOpacity = 0.1, ...) {
+                                   addLevels = TRUE, fillOpacity = 0.1, name = NULL, ...) {
   
   if (getOption("highcharter.verbose"))
     message("hc_add_series.forecast")
@@ -146,16 +147,16 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
   # ... <- NULL
   
   if (addOriginal)
-    hc <- hc_add_series(hc, data$x, name = "Series", zIndex = 3, ...)
+    hc <- hc_add_series(hc, data$x, name = ifelse(is.null(name), method, name), zIndex = 3, ...)
   
   
-  hc <- hc_add_series(hc, data$mean, name = method,  zIndex = 2, id = rid, ...)
+  hc <- hc_add_series(hc, data$mean, name = ifelse(is.null(name), method, name),  zIndex = 2, id = rid, ...)
   
   
   if (addLevels){
     
     tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
-    nmf <- paste(method, "level", data$level)
+    nmf <- paste(ifelse(is.null(name), method, name), "level", data$level)
     
     for (m in seq(ncol(data$upper))){ 
       # m <- 1
