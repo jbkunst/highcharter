@@ -16,8 +16,8 @@ Data from How I met Your Mother: Marshall's Favorite Bars.
 
 \itemize{
 
- \item \code{bar}: Bar's name.
- \item \code{percent}: In percentage of awesomeness
+\item \code{bar}: Bar's name.
+\item \code{percent}: In percentage of awesomeness
 
 }
 }

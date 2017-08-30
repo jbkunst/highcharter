@@ -8,7 +8,7 @@ highchart(hc_opts = list(), theme = getOption("highcharter.theme"),
   type = "chart", width = NULL, height = NULL, elementId = NULL)
 }
 \arguments{
-\item{hc_opts}{A \code{list} object containing options defined as 
+\item{hc_opts}{A \code{list} object containing options defined as
 \url{http://api.highcharts.com/highcharts}.}
 
 \item{theme}{A \code{hc_theme} class object-}

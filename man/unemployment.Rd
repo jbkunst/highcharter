@@ -12,7 +12,7 @@
 unemployment
 }
 \description{
-This data comes from the 
+This data comes from the
 \url{https://www.highcharts.com/samples/data/jsonp.php?filename=us-counties-unemployment.json}
 and is used in highmaps examples.
 }
@@ -21,9 +21,9 @@ and is used in highmaps examples.
 
 \itemize{
 
- \item \code{code}: The county code.
- \item \code{name}: The county name.
- \item \code{value}: The unemployment.
+\item \code{code}: The county code.
+\item \code{name}: The county name.
+\item \code{value}: The unemployment.
 
 }
 }

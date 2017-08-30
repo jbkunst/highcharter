@@ -1,6 +1,6 @@
 #' Adding and removing series from highchart objects
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param data An R object like numeric, list, ts, xts, etc.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' @examples
@@ -37,7 +37,7 @@ hc_add_series.default <- function(hc, ...) {
 
 
 #' `hc_add_series` for numeric objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param data A numeric object
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' @export
@@ -54,8 +54,8 @@ hc_add_series.numeric <- function(hc, data, ...) {
 
 
 #' hc_add_series for time series objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A time series \code{ts} object.
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param data A time series `ts` object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' @importFrom zoo as.Date
 #' @importFrom stats time
@@ -79,8 +79,8 @@ hc_add_series.ts <- function(hc, data, ...) {
 
 
 #' hc_add_series for xts objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A \code{xts} object.
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param data A `xts` object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' @importFrom xts is.xts
 #' @importFrom quantmod is.OHLC
@@ -103,7 +103,7 @@ hc_add_series.xts <- function(hc, data, ...) {
 
 
 #' @rdname hc_add_series.xts
-#' @param type The way to show the \code{xts} object. Can be 'candlestick' or 'ohlc'.
+#' @param type The way to show the `xts` object. Can be 'candlestick' or 'ohlc'.
 #' @importFrom stringr str_extract
 #' @export
 hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
@@ -125,8 +125,8 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
 
 
 #' hc_add_series for forecast objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A \code{forecast} object.
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param data A `forecast` object.
 #' @param addOriginal Logical value to add the original series or not.
 #' @param addLevels Logical value to show predictions bands.
 #' @param fillOpacity The opacity of bands.
@@ -187,8 +187,8 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
 
 
 #' hc_add_series for density objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A \code{density} object.
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param data A `density` object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' @export
 hc_add_series.density <- function(hc, data, ...) {
@@ -203,7 +203,7 @@ hc_add_series.density <- function(hc, data, ...) {
 
 
 #' hc_add_series for character and factor objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param data A \code{character} or \code{factor} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' @export
@@ -228,7 +228,7 @@ hc_add_series.character <- function(hc, data, ...) {
 hc_add_series.factor <- hc_add_series.character
 
 #' hc_add_series for geo_json & geo_list objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param data A \code{geo_json} or \code{geo_list} object.
 #' @param type Type of series. Can be 'mapline', 'mapoint'.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
@@ -258,7 +258,7 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
 }
 
 #' hc_add_series for lm and loess objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param data A \code{lm} or \code{loess} object.
 #' @param type The type of the series: line, spline.
 #' @param color A stringr color.
@@ -300,8 +300,8 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
 hc_add_series.loess <- hc_add_series.lm
 
 #' hc_add_series for data frames objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param data A \code{data.frame} object.
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param data A `data.frame` object.
 #' @param type The type of the series: line, bar, etc.
 #' @param mapping The mapping, same idea as \code{ggplot2}.
 #' @param ... Arguments defined in 
@@ -562,7 +562,7 @@ data_to_options <- function(data, type) {
 
 #' Removing series to highchart objects
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param names The series's names to delete.
 #' 
 #' @export

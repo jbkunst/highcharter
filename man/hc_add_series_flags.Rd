@@ -19,7 +19,7 @@ hc_add_series_flags(hc, dates, title = LETTERS[seq(length(dates))],
 \item{id}{The name of the series to add the flags. A previous series
 must be added with this \code{id}.}
 
-\item{...}{Additional shared arguments for the *flags* data series
+\item{...}{Additional shared arguments for the \emph{flags} data series
 (\url{http://api.highcharts.com/highstock#plotOptions.flags})}
 }
 \description{

@@ -1,4 +1,4 @@
-#' An \code{htmlwidget} interface to the
+#' An `htmlwidget` interface to the
 #' Highcharts javascript chart library
 #' 
 #' Highcharts \url{http://www.highcharts.com/} is a mature javascript

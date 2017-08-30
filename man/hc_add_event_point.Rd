@@ -27,5 +27,5 @@ use a chart as an input.
 }
 \note{
 Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
-    and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
+and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
 }

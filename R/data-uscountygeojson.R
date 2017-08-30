@@ -6,5 +6,5 @@
 #' @docType data
 #' @name uscountygeojson
 #' @usage uscountygeojson
-#' @format A \code{list} in geojson format.
+#' @format A `list` in geojson format.
 "uscountygeojson"

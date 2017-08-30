@@ -6,7 +6,7 @@
 #' \code{my_chart} input (\code{input$my_chart}). That's a way you can
 #' use a chart as an input.
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param hc A `highchart` `htmlwidget` object.
 #' @param series The name of type of series to apply the event.
 #' @param event The name of event: click, mouseOut,  mouseOver. See
 #'   \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
@@ -91,7 +91,7 @@ hc_add_event_series <- function(hc, series = "series", event = "click"){
 #'
 #' Function to modify the \code{id} for the container.
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param hc A `highchart` `htmlwidget` object.
 #' @param id A string
 #'
 #' @examples
@@ -109,9 +109,9 @@ hc_elementId <- function(hc, id = NULL) {
   hc
 }
 
-#' Changing the size of a \code{highchart} object
+#' Changing the size of a `highchart` object
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param hc A `highchart` `htmlwidget` object.
 #' @param width	A numeric input in pixels.
 #' @param height	A numeric input in pixels.
 #'
@@ -177,8 +177,8 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 
 #' Helper to create charts in tooltips.
 #'
-#' This function needs to be used in the `pointFormatter` argument
-#' inside of `hc_tooltip` function.
+#' @details This function needs to be used in the `pointFormatter` argument
+#' inside of `hc_tooltip` function an `useHTML = TRUE` option.
 #'
 #' @param accesor A string indicating the name of the column where the data is.
 #' @param hc_opts A list of options using the  \url{http://api.highcharts.com/highcharts}
@@ -186,7 +186,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #' @param width	A numeric input in pixels indicating the with of the tooltip.
 #' @param height	A numeric input in pixels indicating the height of the tooltip.
 #'
-#' @importFrom whisker whisker.render 
+#' @importFrom whisker whisker.render
 #' @examples
 #'
 #' require(dplyr)

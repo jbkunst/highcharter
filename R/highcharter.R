@@ -4,7 +4,7 @@
 #' widget can be rendered on HTML pages generated from R Markdown, Shiny, or
 #' other applications.
 #'
-#' @param hc_opts A \code{list} object containing options defined as 
+#' @param hc_opts A `list` object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
 #' @param theme A \code{hc_theme} class object-
 #' @param type A character value to set if use Highchart, Highstock or
@@ -108,14 +108,14 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' widget can be rendered on HTML pages generated from R Markdown, Shiny, or
 #' other applications.
 #'
-#' @param hc_opts A \code{list} object containing options defined as 
+#' @param hc_opts A `list` object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
 #' @param theme A \code{hc_theme} class object
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
 #' @param debug A boolean value if you want to print in the browser console the 
-#'    parameters given to \code{highchart}.
+#'    parameters given to `highchart`.
 #'
 #' @export
 highchart2 <- function(hc_opts = list(),

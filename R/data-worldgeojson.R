@@ -6,5 +6,5 @@
 #' @docType data
 #' @name worldgeojson
 #' @usage worldgeojson
-#' @format A \code{list} in geojson format.
+#' @format A `list` in geojson format.
 "worldgeojson"

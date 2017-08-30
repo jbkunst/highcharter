@@ -9,7 +9,7 @@ hc_add_series_ohlc(hc, x, type = "candlestick", ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{x}{A \code{OHLC} object from the \pkg{quantmod} package.}
+\item{x}{A \code{ohlc} object from the \pkg{quantmod} package.}
 
 \item{type}{The type of chart. Can be \code{candlestick} or \code{ohlc}.}
 

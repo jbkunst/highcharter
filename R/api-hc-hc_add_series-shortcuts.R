@@ -1,7 +1,7 @@
 #' Shortcut for data series from a list of data series
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param x A \code{list} or a \code{data.frame} of series.
+#' @param hc A `highchart` `htmlwidget` object.
+#' @param x A `list` or a `data.frame` of series.
 #' 
 #' @examples 
 #' 
@@ -31,10 +31,10 @@ hc_add_series_list <- function(hc, x) {
 #'
 #' This function add data to plot pie, bar and columnn charts.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param labels A vector of labels. 
-#' @param values A numeric vector. Same length of \code{labels}.
-#' @param colors A not required color vector (hexadecimal format). Same length of \code{labels}.
+#' @param values A numeric vector. Same length of `labels`.
+#' @param colors A not required color vector (hexadecimal format). Same length of `labels`.
 #' @param ... Additional shared arguments for the data series 
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #' 
@@ -87,11 +87,11 @@ hc_add_series_labels_values <- function(hc, labels, values,
 
 #' Shortcut for create/add time series from times and values
 #'
-#' This function add a time series to a \code{highchart} object. 
+#' This function add a time series to a `highchart` object. 
 #' 
-#' This function \bold{modify} the type of \code{chart} to \code{datetime}
+#' This function \bold{modify} the type of `chart` to `datetime`
 #'  
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param dates  A date vector (same length as \code{values})
 #' @param values A numeric vector
 #' @param ... Additional arguments for the data series (\url{http://api.highcharts.com/highcharts#series}).

@@ -16,8 +16,8 @@ Data from How I met Your Mother: Marshall's Favorite Pies
 
 \itemize{
 
- \item \code{pie}: Bar's name.
- \item \code{percent}: In percentage of tastiness
+\item \code{pie}: Bar's name.
+\item \code{percent}: In percentage of tastiness
 
 }
 }

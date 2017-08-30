@@ -16,10 +16,10 @@ Temperature information of San Francisco.
 
 \itemize{
 
- \item \code{date}: Day in date format.
- \item \code{min_temperaturec}: Minimum temperature.
- \item \code{max_temperaturec}: Maximun temperature.
- \item \code{mean_temperaturec}: Mean temperature.
+\item \code{date}: Day in date format.
+\item \code{min_temperaturec}: Minimum temperature.
+\item \code{max_temperaturec}: Maximun temperature.
+\item \code{mean_temperaturec}: Mean temperature.
 }
 }
 

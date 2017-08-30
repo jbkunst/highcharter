@@ -216,7 +216,7 @@ tooltip_table <- function(x, y,
 #' Create vector of color from vector
 #'
 #' @param x A numeric, character or factor object.
-#' @param colors A character string of colors (ordered) to colorize \code{x}
+#' @param colors A character string of colors (ordered) to colorize `x`
 #' @examples
 #'
 #' colorize(runif(10))
@@ -299,7 +299,7 @@ color_classes <- function(breaks = NULL,
 #'
 #' This function is used in hchart.data.frame and hc_add_series_df
 #'
-#' @param data A \code{data.frame} object.
+#' @param data A `data.frame` object.
 #' @param type The type of chart. Possible values are line, scatter, point, columnn.
 #' @param ... Aesthetic mappings as \code{x y group color low high}.
 #'

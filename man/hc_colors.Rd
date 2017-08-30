@@ -12,7 +12,7 @@ hc_colors(hc, colors)
 \item{colors}{A vector of colors.}
 }
 \description{
-An array containing the default colors for the chart's series. When all 
+An array containing the default colors for the chart's series. When all
 colors are used, new colors are pulled from the start again.
 }
 \examples{

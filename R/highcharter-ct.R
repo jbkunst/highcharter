@@ -1,6 +1,6 @@
 #' Highcharter Crosstalk Widget
 #' @param data Data frame 
-#' @param hc_opts A \code{list} object containing options defined as 
+#' @param hc_opts A `list` object containing options defined as 
 #'    \url{http://api.highcharts.com/highcharts}.
 #' @param theme A \code{hc_theme} class object.
 #' @param width A numeric input in pixels.

@@ -16,11 +16,11 @@ This data comes from the \url{http://www.highcharts.com/} examples.
 
 \itemize{
 
- \item \code{month}: The months.
- \item \code{tokyo}: Tokyo's temperatures.
- \item \code{new_york}: New York's temperatures.
- \item \code{berlin}: Berlin's temperatures.
- \item \code{london}: London's temperatures.
+\item \code{month}: The months.
+\item \code{tokyo}: Tokyo's temperatures.
+\item \code{new_york}: New York's temperatures.
+\item \code{berlin}: Berlin's temperatures.
+\item \code{london}: London's temperatures.
 
 }
 }

@@ -15,7 +15,7 @@ hc_add_series_labels_values(hc, labels, values, colors = NULL, ...)
 
 \item{colors}{A not required color vector (hexadecimal format). Same length of \code{labels}.}
 
-\item{...}{Additional shared arguments for the data series 
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{

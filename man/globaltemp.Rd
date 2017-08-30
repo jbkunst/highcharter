@@ -19,10 +19,10 @@ Temperature information by years.
 
 \itemize{
 
- \item \code{date}: Date.
- \item \code{lower}: Minimum temperature.
- \item \code{median}: Median temperature.
- \item \code{upper}: Maximum temperature.
+\item \code{date}: Date.
+\item \code{lower}: Minimum temperature.
+\item \code{median}: Median temperature.
+\item \code{upper}: Maximum temperature.
 }
 }
 

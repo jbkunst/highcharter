@@ -16,12 +16,12 @@ A sample using by Nadieh Bremer blocks. \url{http://bl.ocks.org/nbremer/eb0d1fd4
 
 \itemize{
 
- \item \code{bv}: BV
- \item \code{absmag}: Magnitude
- \item \code{lum}: Luminosity
- \item \code{temp}: Temperature
- \item \code{radiussun}: Radius
- \item \code{distance}: Distance
+\item \code{bv}: BV
+\item \code{absmag}: Magnitude
+\item \code{lum}: Luminosity
+\item \code{temp}: Temperature
+\item \code{radiussun}: Radius
+\item \code{distance}: Distance
 }
 }
 

@@ -26,8 +26,8 @@ columnrange, spline, areaspline among others.
 
 Automatically parsed de data frame (to a list o series). You
 you can use the  default parameters of highcharts such as \code{x}, \code{y},
-\code{z}, \code{color}, \code{name}, \code{low}, \code{high} for 
-each series, for example check 
+\code{z}, \code{color}, \code{name}, \code{low}, \code{high} for
+each series, for example check
 \url{http://api.highcharts.com/highcharts#series<bubble>.data}.
 }
 \examples{

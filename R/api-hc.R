@@ -47,7 +47,7 @@ validate_args <- function(name, lstargs) {
 #' 
 #' Options regarding the chart area and plot area as well as general chart options. 
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
 #' 
 #' @examples 
@@ -87,7 +87,7 @@ hc_chart <- function(hc, ...) {
 #' An array containing the default colors for the chart's series. When all 
 #' colors are used, new colors are pulled from the start again. 
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param colors A vector of colors. 
 #' 
 #' @examples 
@@ -120,7 +120,7 @@ hc_colors <- function(hc, colors) {
 #' \code{highcarter} by default don't put credits in the chart.
 #' You can add credits using these options.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/credits}. 
 #' 
 #' @examples 
@@ -146,7 +146,7 @@ hc_credits <- function(hc, ...) {
 #' Exporting options for highcharts objects. You can define the file's name
 #' or the output format.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/exporting}. 
 #' 
 #' @examples
@@ -186,7 +186,7 @@ hc_exporting  <- function(hc, ...) {
 #'   hc_legend(align = "left", verticalAlign = "top",
 #'             layout = "vertical", x = 0, y = 100) 
 #'             
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#legend}. 
 #'
 #' @export
@@ -206,7 +206,7 @@ hc_legend <- function(hc, ...) {
 #' type are given in the plotOptions of that type, for example  \code{hc_plotOptions(line = list(...))}.
 #' Next, options for one single series are given in the series array.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.
 #' 
 #' @examples 
@@ -247,7 +247,7 @@ hc_plotOptions  <- function(hc, ...) {
 #' Allows setting a set of rules to apply for different screen or chart sizes.
 #' Each rule specifies additional chart options.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/responsive}. 
 #' 
 #' @examples 
@@ -280,7 +280,7 @@ hc_responsive <- function(hc, ...) {
 
 #' Series options from highchart objects
 #'
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/series}. 
 #'
 #' @examples
@@ -308,7 +308,7 @@ hc_series <- function(hc, ...) {
 #'
 #' Function to add and change title and subtitle'a style.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#title}. 
 #'
 #' @examples 
@@ -348,7 +348,7 @@ hc_subtitle <- function(hc, ...) {
 #' highcharts_demo() %>%
 #'   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 
 #'              
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#tooltip}. 
 #' @param sort Logical value to implement sort according \code{this.point}
 #'   \url{http://stackoverflow.com/a/16954666/829971}.
@@ -375,7 +375,7 @@ hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
 #'
 #' Change axis labels or style. Add lines or band to charts.
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/xAxis}. 
 #' 
 #' @examples 

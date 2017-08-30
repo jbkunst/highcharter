@@ -14,7 +14,7 @@ hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 \item{sort}{Logical value to implement sort according \code{this.point}
 \url{http://stackoverflow.com/a/16954666/829971}.}
 
-\item{table}{Logical value to implement table in tooltip: 
+\item{table}{Logical value to implement table in tooltip:
 \url{http://stackoverflow.com/a/22327749/829971}.}
 }
 \description{

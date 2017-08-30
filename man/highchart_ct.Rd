@@ -11,7 +11,7 @@ highchart_ct(data = NULL, hc_opts = list(),
 \arguments{
 \item{data}{Data frame}
 
-\item{hc_opts}{A \code{list} object containing options defined as 
+\item{hc_opts}{A \code{list} object containing options defined as
 \url{http://api.highcharts.com/highcharts}.}
 
 \item{theme}{A \code{hc_theme} class object.}

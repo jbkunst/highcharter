@@ -22,7 +22,7 @@ hc_add_series_scatter(hc, x, y, z = NULL, color = NULL, label = NULL,
 
 \item{showInLegend}{Logical value to show or not the data in the legend box.}
 
-\item{...}{Additional shared arguments for the data series 
+\item{...}{Additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{

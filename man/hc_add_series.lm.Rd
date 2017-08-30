@@ -22,7 +22,7 @@
 
 \item{fillOpacity}{fillOpacity to the confidence interval.}
 
-\item{...}{Arguments defined in 
+\item{...}{Arguments defined in
 \url{http://api.highcharts.com/highcharts#chart}.}
 }
 \description{

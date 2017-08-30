@@ -9,7 +9,7 @@
 vaccines
 }
 \description{
-The number of infected people by Measles, measured over 70-some years and across 
+The number of infected people by Measles, measured over 70-some years and across
 all 50 states. From the WSJ analysis: \url{http://graphics.wsj.com/infectious-diseases-and-vaccines/}
 }
 \section{Variables}{
@@ -17,9 +17,9 @@ all 50 states. From the WSJ analysis: \url{http://graphics.wsj.com/infectious-di
 
 \itemize{
 
- \item \code{year}: Year
- \item \code{state}: Name of the state
- \item \code{count}: Number of cases per 100,000 people. If the value is NA the count was 0.
+\item \code{year}: Year
+\item \code{state}: Name of the state
+\item \code{count}: Number of cases per 100,000 people. If the value is NA the count was 0.
 
 }
 }

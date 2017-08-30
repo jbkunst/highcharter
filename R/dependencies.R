@@ -1,5 +1,5 @@
 #' Add modules or plugin dependencies to highcharts objects
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @param name The partial path to the plugin or module,
 #'   example: \code{""plugins/annotations.js""}
 #' @examples 
@@ -53,7 +53,7 @@ hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
 }
 
 #' Helpers functions to get FontAwesome icons code
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
+#' @param hc A `highchart` `htmlwidget` object. 
 #' @examples 
 #' 
 #' dcars <- data.frame(x = runif(10), y = runif(10))

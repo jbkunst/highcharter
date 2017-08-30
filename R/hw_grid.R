@@ -1,9 +1,9 @@
 #' Lays out highchart widgets into a "grid", similar to
 #' \code{grid.arrange} from \code{gridExtra}
 #'
-#' @param ... either individual \code{highchart} objects or a mixture of
-#'     individual \code{highchart} objects
-#' and \code{list}s of \code{highchart} objects.
+#' @param ... either individual `highchart` objects or a mixture of
+#'     individual `highchart` objects
+#' and `list`s of `highchart` objects.
 #' @param ncol how many columns in the grid
 #' @param rowheight Height in px.
 #' 

@@ -10,7 +10,7 @@ hcmap(map = "custom/world",
   data = NULL, value = NULL, joinBy = NULL, ...)
 }
 \arguments{
-\item{map}{String indicating what map to chart, a list from 
+\item{map}{String indicating what map to chart, a list from
 \url{https://code.highcharts.com/mapdata/}. See examples.}
 
 \item{download_map_data}{A logical value whether to download

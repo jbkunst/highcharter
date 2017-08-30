@@ -17,8 +17,11 @@ syntax.}
 \item{height}{A numeric input in pixels indicating the height of the tooltip.}
 }
 \description{
-This function needs to be used in the `pointFormatter` argument
-inside of `hc_tooltip` function.
+Helper to create charts in tooltips.
+}
+\details{
+This function needs to be used in the \code{pointFormatter} argument
+inside of \code{hc_tooltip} function an \code{useHTML = TRUE} option.
 }
 \examples{
 

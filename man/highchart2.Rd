@@ -12,7 +12,7 @@ highchartzero(hc_opts = list(), theme = NULL, width = NULL,
   height = NULL, elementId = NULL)
 }
 \arguments{
-\item{hc_opts}{A \code{list} object containing options defined as 
+\item{hc_opts}{A \code{list} object containing options defined as
 \url{http://api.highcharts.com/highcharts}.}
 
 \item{theme}{A \code{hc_theme} class object}
@@ -23,7 +23,7 @@ highchartzero(hc_opts = list(), theme = NULL, width = NULL,
 
 \item{elementId}{Use an explicit element ID for the widget.}
 
-\item{debug}{A boolean value if you want to print in the browser console the 
+\item{debug}{A boolean value if you want to print in the browser console the
 parameters given to \code{highchart}.}
 }
 \description{

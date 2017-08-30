@@ -9,12 +9,12 @@ hchart(object, ...)
 \arguments{
 \item{object}{A R object.}
 
-\item{...}{Additional arguments for the data series 
+\item{...}{Additional arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}
 }
 \description{
-\code{hchart} uses \code{highchart} to draw a particular plot for an 
-object of a particular class in a single command. This defines the S3 
+\code{hchart} uses \code{highchart} to draw a particular plot for an
+object of a particular class in a single command. This defines the S3
 generic that other classes and packages can extend.
 }
 \details{

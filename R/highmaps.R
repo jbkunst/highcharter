@@ -1,8 +1,8 @@
 #' Add a map series
 #' 
-#' @param hc A \code{highchart} \code{htmlwidget} object. 
-#' @param map A \code{list} object loaded from a geojson file.
-#' @param df A \code{data.frame} object with data to chart. Code region and value are
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param map A `list` object loaded from a geojson file.
+#' @param df A `data.frame` object with data to chart. Code region and value are
 #'   required.
 #' @param value A string value with the name of the columnn to chart.
 #' @param joinBy What property to join the  \code{map} and \code{df}
