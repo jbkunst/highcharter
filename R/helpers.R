@@ -165,54 +165,6 @@ highcharts_demo <- function() {
 
 }
 
-#' Helper for make table in tooltips
-#'
-#' Helper to make table in tooltips for the \code{pointFormat}
-#' parameter in \code{hc_tooltip}
-#'
-#' @param x A string vector with description text
-#' @param y A string with accessors example: \code{point.series.name},
-#'   \code{point.x}
-#' @param title A title tag with accessors or string
-#' @param img Image tag
-#' @param ... html attributes for the table element
-#'
-#' @examples
-#'
-#' x <- c("Income:", "Genre", "Runtime")
-#' y <- c("$ {point.y}", "{point.series.options.extra.genre}",
-#'        "{point.series.options.extra.runtime}")
-#'
-#' tooltip_table(x, y)
-#'
-#' @importFrom purrr map2
-#' @importFrom htmltools tags tagList
-#' @export
-tooltip_table <- function(x, y,
-                          title = NULL,
-                          img = NULL, ...) {
-
-  assertthat::assert_that(length(x) == length(y))
-
-  tbl <- map2(x, y, function(x, y){
-    tags$tr(
-      tags$th(x),
-      tags$td(y)
-    )
-  })
-
-  tbl <- tags$table(tbl, ...)
-
-  if (!is.null(title))
-    tbl <- tagList(title, tbl)
-
-  if (!is.null(img))
-    tbl <- tagList(tbl, img)
-
-  as.character(tbl)
-
-}
-
 #' Create vector of color from vector
 #'
 #' @param x A numeric, character or factor object.
