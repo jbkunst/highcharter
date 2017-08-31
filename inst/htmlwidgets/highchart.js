@@ -8,7 +8,7 @@ HTMLWidgets.widget({
 
     return {
       // TODO: add instance fields as required
-    }
+    };
 
   },
 
@@ -28,8 +28,8 @@ HTMLWidgets.widget({
       x.fonts = ((typeof(x.fonts) == "string") ? [x.fonts] : x.fonts);
     
       x.fonts.forEach(function(s){
-        var urlfont = 'https://fonts.googleapis.com/css?family=' + s;
         /* http://stackoverflow.com/questions/4724606 */
+        var urlfont = 'https://fonts.googleapis.com/css?family=' + s;
         if (!$("link[href='" + urlfont + "']").length) {
           $('<link href="' + urlfont + '" rel="stylesheet" type="text/css">').appendTo("head");
         }
