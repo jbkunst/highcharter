@@ -162,8 +162,8 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
       # m <- 1
       dfbands <- data_frame(
         t = tmf,
-        u = as.vector(data$upper[, m]),
-        l = as.vector(data$lower[, m])
+        l = as.vector(data$lower[, m]),
+        u = as.vector(data$upper[, m])
       )
       
       hc <- hc %>%
