@@ -581,3 +581,32 @@ hc_rm_series <- function(hc, names = NULL) {
   hc
   
 }
+
+#' Shortcut for data series from a list of data series
+#' 
+#' @param hc A `highchart` `htmlwidget` object.
+#' @param x A `list` or a `data.frame` of series.
+#' 
+#' @examples 
+#' 
+#' ds <- lapply(seq(5), function(x){
+#'   list(data = cumsum(rnorm(100, 2, 5)), name = x)
+#' })
+#' 
+#' highchart() %>% 
+#'   hc_plotOptions(series = list(marker = list(enabled = FALSE))) %>% 
+#'   hc_add_series_list(ds)
+#'   
+#' @export
+hc_add_series_list <- function(hc, x) {
+  
+  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  
+  if (is.data.frame(x))
+    x <- list_parse(x)
+  
+  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)
+  
+  hc
+  
+}
