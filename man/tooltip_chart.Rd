@@ -43,7 +43,17 @@ gp2 <- gapminder \%>\%
 
 gptot <- left_join(gp, gp2)
 
-hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) \%>\%
+hc <- hchart(
+        gptot,
+        "point",
+        hcaes(
+          lifeExp,
+          gdpPercap,
+          name = country,
+          size = pop,
+          group = continent
+          )
+       ) \%>\%
   hc_yAxis(type = "logarithmic")
 
 hc \%>\%
