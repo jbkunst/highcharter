@@ -152,7 +152,6 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
   
   hc <- hc_add_series(hc, data$mean, name = ifelse(is.null(name), method, name),  zIndex = 2, id = rid, ...)
   
-  
   if (addLevels){
     
     tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
