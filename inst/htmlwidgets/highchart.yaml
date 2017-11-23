@@ -8,10 +8,10 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 5.0.14
-    src: "htmlwidgets/lib/highcharts-5.0.14"
+    version: 6.0.3
+    src: "htmlwidgets/lib/highcharts-6.0.3"
     script:
-    - highstock.js
+    - stock/highstock.js
     - highcharts-3d.js
     - highcharts-more.js
     - modules/annotations.js
@@ -21,7 +21,7 @@ dependencies:
     - modules/exporting.js
     - modules/funnel.js
     - modules/heatmap.js
-    - modules/map.js
+    - maps/modules/map.js
     - modules/no-data-to-display.js
     - modules/offline-exporting.js
     - modules/solid-gauge.js

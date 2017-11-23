@@ -1,7 +1,7 @@
 rm(list = ls())
 library(highcharter)
 library(tidyverse)
-
+library(magrittr)
 # example by @dimitris1ps
 # https://dimitris1ps.github.io/hc_motion/
 

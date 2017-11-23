@@ -88,7 +88,7 @@ HTMLWidgets.widget({
         return e;
       });
       
-      $("#" + el.id).highcharts('Map', x.hc_opts);  
+      $("#" + el.id).highcharts('Map', x.hc_opts); 
       
       if(x.hc_opts.mapNavigation !== undefined && x.hc_opts.mapNavigation.enabled === true){
         /* if have navigation option and enabled true: http://stackoverflow.com/questions/7600454 */

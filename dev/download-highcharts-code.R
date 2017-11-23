@@ -6,7 +6,7 @@ library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "5.0.14"
+version <- "6.0.3"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -15,13 +15,9 @@ yml <- yaml.load_file(yml)[[1]]
 version_old <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts"]
 path_old <- str_replace(path, version, version_old)
 
-
-
 # creating folder structure
-folders <- c("", "modules", "plugins", "css", "custom")
+folders <- c("", "modules", "plugins", "css", "custom", "maps", "maps/modules", "stock")
 try(map(file.path(path, folders), dir.create))
-
-
 
 # main files --------------------------------------------------------------
 hchtml <- read_html(hccodeurl)
@@ -31,7 +27,14 @@ hclnks <- hchtml %>%
   html_nodes("li") %>% 
   html_text() %>% 
   .[!str_detect(., "src.js")] %>% 
-  str_replace("^.*com\\/", "")
+  # .[!str_detect(., "\\d.\\d")] %>% 
+  # .[!str_detect(., "stock/modules")] %>% 
+  # .[!str_detect(., "js/")] %>% 
+  # .[!str_detect(., "master")] %>% 
+  str_replace("^.*com\\/", "") %>% 
+  c(., "stock/highstock.js", "maps/modules/map.js")
+
+hclnks
 
 map2(
   file.path(hccodeurl, hclnks),
@@ -40,15 +43,15 @@ map2(
 )
 
 # stock & map
-hclnks <- c("http://code.highcharts.com/stock/highstock.js",
-            "http://code.highcharts.com/maps/modules/map.js") %>% 
-  str_replace("^.*com\\/", "")
-  
-map2(
-  file.path(hccodeurl, hclnks),
-  str_replace(file.path(path, hclnks), "stock/|maps/", ""),
-  download.file
-)  
+# hclnks <- c("http://code.highcharts.com/stock/highstock.js",
+#             "http://code.highcharts.com/maps/modules/map.js") %>% 
+#   str_replace("^.*com\\/", "")
+#   
+# map2(
+#   file.path(hccodeurl, hclnks),
+#   str_replace(file.path(path, hclnks), "stock/|maps/", ""),
+#   download.file
+# )  
 
 
 # plugins -----------------------------------------------------------------

@@ -26,10 +26,9 @@ pcks %>%
 
 
 # devtools::install_github("ropenscilabs/packagemetrics")
-library(packagemetrics)
-
-pkg_df <- package_list_metrics(pcks)
-ft <- metrics_table(pkg_df)
-ft
+# library(packagemetrics)
+# pkg_df <- package_list_metrics(pcks)
+# ft <- metrics_table(pkg_df)
+# ft
 
 
