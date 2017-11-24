@@ -143,6 +143,7 @@ pokemon %>%
   hctreemap2(c("type_1", "type_2", "pokemon"), "count")
 
 
-
-
+hc <- hctreemap2(GNI2014, c("continent", "country"), "population", "GNI")
+hc$x$hc_opts$series[[1]]$type <- "sunburst"
+hc
 

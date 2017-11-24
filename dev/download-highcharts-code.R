@@ -27,32 +27,33 @@ hclnks <- hchtml %>%
   html_nodes("li") %>% 
   html_text() %>% 
   .[!str_detect(., "src.js")] %>% 
-  # .[!str_detect(., "\\d.\\d")] %>% 
-  # .[!str_detect(., "stock/modules")] %>% 
-  # .[!str_detect(., "js/")] %>% 
-  # .[!str_detect(., "master")] %>% 
-  str_replace("^.*com\\/", "") %>% 
-  c(., "stock/highstock.js", "maps/modules/map.js")
+  str_replace("^.*com\\/", "") 
 
-hclnks
+hclnks <- c(hclnks, "stock/highstock.js", "maps/modules/map.js")
+
+modules <- c(
+  "sunburst.js",
+  "wordcloud.js",
+  "xrange.js",
+  "windbarb.js",
+  "vector.js",
+  "variwide.js",
+  "variable-pie.js",
+  "sankey.js",
+  "parallel-coordinates.js",
+  "bullet.js",
+  "histogram-bellcurve.js",
+  "tilemap.js"
+  ) %>% 
+  file.path("modules", .)
+
+hclnks <- c(hclnks, modules)
 
 map2(
   file.path(hccodeurl, hclnks),
   file.path(path, hclnks),
   download.file
 )
-
-# stock & map
-# hclnks <- c("http://code.highcharts.com/stock/highstock.js",
-#             "http://code.highcharts.com/maps/modules/map.js") %>% 
-#   str_replace("^.*com\\/", "")
-#   
-# map2(
-#   file.path(hccodeurl, hclnks),
-#   str_replace(file.path(path, hclnks), "stock/|maps/", ""),
-#   download.file
-# )  
-
 
 # plugins -----------------------------------------------------------------
 files <- c(
@@ -67,7 +68,7 @@ files <- c(
   "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
   )
-# 
+
 # map2(
 #   files,
 #   file.path(path, "plugins", basename(files)),
@@ -82,12 +83,12 @@ file.copy(
 
 
 # for yaml ----------------------------------------------------------------
-# path %>% 
-#   dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>% 
-#   setdiff(file.path(path, "modules", c("accessibility.js", "boost.js", "canvas-tools.js"))) %>% 
-#   str_replace(path, "    - ") %>% 
-#   str_replace("/", "") %>% 
-#   paste0(collapse = "\n") %>% 
+# path %>%
+#   dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>%
+#   setdiff(file.path(path, "modules", c("accessibility.js", "boost.js", "canvas-tools.js"))) %>%
+#   str_replace(path, "    - ") %>%
+#   str_replace("/", "") %>%
+#   paste0(collapse = "\n") %>%
 #   cat()
   
 # my customs --------------------------------------------------------------

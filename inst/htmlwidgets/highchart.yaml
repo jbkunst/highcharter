@@ -21,14 +21,26 @@ dependencies:
     - modules/exporting.js
     - modules/funnel.js
     - modules/heatmap.js
-    - maps/modules/map.js
     - modules/no-data-to-display.js
     - modules/offline-exporting.js
     - modules/solid-gauge.js
     - modules/treemap.js
+    - modules/sunburst.js
+    - modules/wordcloud.js
+    - modules/xrange.js
+    - modules/vector.js
+    - modules/sankey.js
+    - modules/parallel-coordinates.js
+    - modules/bullet.js
+    - modules/tilemap.js    
+#    - modules/windbarb.js    
+#    - modules/variwide.js
+#    - modules/variable-pie.js    
+#    - modules/histogram-bellcurve.js    
 #    - modules/canvas-tools.js
 #    - modules/boost.js
 #    - modules/accessibility.js   
+    - maps/modules/map.js
     - plugins/export-csv.js
     - plugins/grouped-categories.js
     - plugins/motion.js
