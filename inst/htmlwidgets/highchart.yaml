@@ -24,8 +24,6 @@ dependencies:
     - modules/data.js
     - modules/drag-panes.js
     - modules/drilldown.js
-    - modules/export-data.js
-    - modules/exporting.js
     - modules/funnel.js
     - modules/grid-axis.js
     - modules/item-series.js
@@ -42,6 +40,8 @@ dependencies:
     - modules/vector.js
     - modules/wordcloud.js
     - modules/xrange.js 
+    - modules/exporting.js
+    - modules/export-data.js    
 #    - modules/accessibility.js
 #    - modules/boost-canvas.js
 #    - modules/gantt.js

@@ -5,17 +5,32 @@ library(tidyverse)
 
 options(highcharter.theme = hc_theme_smpl())
 
+
+# bullet ------------------------------------------------------------------
+highchartzero() %>% 
+  hc_add_dependency("modules/bullet.js") %>% 
+  hc_chart(
+    type = "bullet",
+    inverted = TRUE
+  ) %>% 
+  hc_add_series(
+    data = list(y = 275, target = 250)
+  )
+
+
+
 # streamgraph -------------------------------------------------------------
 # install.packages("ggplot2movies")
-
 df <- ggplot2movies::movies %>%
   select(year, Action, Animation, Comedy, Drama, Documentary, Romance, Short) %>%
   tidyr::gather(genre, value, -year) %>%
   group_by(year, genre) %>%
-  tally(wt=value)
+  summarise(n = sum(value)) %>% 
+  ungroup()
 df
 
-hchart(df, "streamgraph", hcaes(year, n, group = genre))
+hchart(df, "streamgraph", hcaes(year, n, group = genre)) %>% 
+  hc_yAxis(visible = FALSE)
 
 
 # sankey ------------------------------------------------------------------
