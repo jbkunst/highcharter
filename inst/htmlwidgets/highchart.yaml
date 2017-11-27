@@ -11,35 +11,46 @@ dependencies:
     version: 6.0.3
     src: "htmlwidgets/lib/highcharts-6.0.3"
     script:
-    - stock/highstock.js
+    - highcharts.js
     - highcharts-3d.js
     - highcharts-more.js
+    - modules/stock.js
+    - modules/heatmap.js
+    - modules/treemap.js
     - modules/annotations.js
+    - modules/boost.js
     - modules/broken-axis.js
+    - modules/bullet.js
     - modules/data.js
+    - modules/drag-panes.js
     - modules/drilldown.js
+    - modules/export-data.js
     - modules/exporting.js
     - modules/funnel.js
-    - modules/heatmap.js
-    - modules/no-data-to-display.js
+    - modules/grid-axis.js
+    - modules/item-series.js
     - modules/offline-exporting.js
-    - modules/solid-gauge.js
-    - modules/treemap.js
-    - modules/sunburst.js
-    - modules/wordcloud.js
-    - modules/xrange.js
-    - modules/vector.js
-    - modules/sankey.js
+    - modules/overlapping-datalabels.js
     - modules/parallel-coordinates.js
-    - modules/bullet.js
-    - modules/tilemap.js    
-#    - modules/windbarb.js    
+    - modules/pareto.js
+    - modules/sankey.js
+    - modules/series-label.js
+    - modules/solid-gauge.js
+    - modules/static-scale.js
+    - modules/streamgraph.js
+    - modules/sunburst.js
+    - modules/vector.js
+    - modules/wordcloud.js
+    - modules/xrange.js 
+#    - modules/accessibility.js
+#    - modules/boost-canvas.js
+#    - modules/gantt.js
+#    - modules/histogram-bellcurve.js
+#    - modules/no-data-to-display.js
+#    - modules/oldie.js
+#    - modules/variable-pie.js
 #    - modules/variwide.js
-#    - modules/variable-pie.js    
-#    - modules/histogram-bellcurve.js    
-#    - modules/canvas-tools.js
-#    - modules/boost.js
-#    - modules/accessibility.js   
+#    - modules/windbarb.js
     - maps/modules/map.js
     - plugins/export-csv.js
     - plugins/grouped-categories.js

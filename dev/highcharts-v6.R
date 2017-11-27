@@ -3,6 +3,20 @@ library(highcharter)
 library(tidyverse)
 # https://www.highcharts.com/documentation/changelog
 
+options(highcharter.theme = hc_theme_smpl())
+
+# streamgraph -------------------------------------------------------------
+# install.packages("ggplot2movies")
+
+df <- ggplot2movies::movies %>%
+  select(year, Action, Animation, Comedy, Drama, Documentary, Romance, Short) %>%
+  tidyr::gather(genre, value, -year) %>%
+  group_by(year, genre) %>%
+  tally(wt=value)
+df
+
+hchart(df, "streamgraph", hcaes(year, n, group = genre))
+
 
 # sankey ------------------------------------------------------------------
 UKvisits <- data.frame(origin=c(
@@ -26,19 +40,17 @@ energy <- paste0(
   "https://cdn.rawgit.com/christophergandrud/networkD3/",
   "master/JSONdata/energy.json"
   ) %>% 
-  jsonlite::fromJSON(URL)
+  jsonlite::fromJSON()
 
 dfnodes <- energy$nodes %>% 
   map_df(as_data_frame) %>% 
   mutate(id = row_number() - 1)
 
-dflinks <- energy$links %>% 
-  map_df(as_data_frame)
+dflinks <- tbl_df(energy$links)
 
 dflinks <- dflinks %>% 
-  left_join(dfnodes %>% rename(from = name), by = c("source" = "id")) %>% 
-  left_join(dfnodes %>% rename(to = name), by = c("target" = "id")) 
-
+  left_join(dfnodes %>% rename(from = value), by = c("source" = "id")) %>% 
+  left_join(dfnodes %>% rename(to = value), by = c("target" = "id")) 
 
 hchart(dflinks, "sankey", hcaes(from = from, to = to, weight = value))
 
@@ -53,8 +65,7 @@ df <- expand.grid(x = x, y = x) %>%
 
 hchart(df, "vector", hcaes(x, y, length = l, direction = d),
        color = "black", name = "Sample vector field")  %>% 
-  hc_yAxis(min = 0, max = 100) %>% 
-  hc_add_theme(hc_theme_null())
+  hc_yAxis(min = 0, max = 100)
 
 # xrange ------------------------------------------------------------------
 library(lubridate)
