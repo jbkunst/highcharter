@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_defs}
 \alias{hc_defs}
-\title{Adding patterns to be used in highcharts series}
+\title{Setting patterns to be used in highcharts series}
 \usage{
 hc_defs(hc, ...)
 }

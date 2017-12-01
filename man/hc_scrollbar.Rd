@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_scrollbar}
 \alias{hc_scrollbar}
-\title{Adding scrollbar options to highstock objects}
+\title{Setting scrollbar options to highstock objects}
 \usage{
 hc_scrollbar(hc, ...)
 }

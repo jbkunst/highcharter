@@ -3,20 +3,26 @@ library(highcharter)
 library(tidyverse)
 # https://www.highcharts.com/documentation/changelog
 
-options(highcharter.theme = hc_theme_smpl())
+options(highcharter.theme = hc_theme_smpl(), highcharter.debug = FALSE)
 
+# annotation --------------------------------------------------------------
+df <- ggplot2movies::movies %>% 
+  mutate(year = round(year/10)*10) %>% 
+  count(year) %>% 
+  mutate(year = year - min(year))
 
-# bullet ------------------------------------------------------------------
-highchartzero() %>% 
-  hc_add_dependency("modules/bullet.js") %>% 
-  hc_chart(
-    type = "bullet",
-    inverted = TRUE
-  ) %>% 
-  hc_add_series(
-    data = list(y = 275, target = 250)
-  )
-
+hchart(df, "area", hcaes(year, n)) %>% 
+  hc_annotations(
+    list(
+      # labelOptions = list(
+      #   backgroundColor = "rgba(255,255,255,0.5)",
+      #   verticalAlign = "top"
+        # ),
+      labels = list(
+        list(point = list(x = 50, y = 5157, xAxis = 0, yAxis = 0), text = "Arbois")
+        )
+      )
+    )
 
 
 # streamgraph -------------------------------------------------------------
@@ -135,3 +141,57 @@ hc <- hctreemap2(GNI2014, c("continent", "country"), "population", "GNI")
 hc$x$hc_opts$series[[1]]$type <- "sunburst"
 hc
 
+# boost -------------------------------------------------------------------
+N <- 1000000
+n <- 5
+s <- seq(n)
+s <- s/(max(s) + min(s))
+s <- round(s, 2)
+
+series <- s %>% 
+  map(~ arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 10) %>% 
+  map(as.vector) %>% 
+  map(round, 2) %>% 
+  map(~ list(data = .x))
+
+highchart() %>% 
+  hc_add_series_list(series) %>% 
+  hc_chart(zoomType = "x")
+
+df <- map2_df(s, series, ~ data_frame(y = unlist(.y), x = seq(length(y)), group = .x))
+
+hchart(df, "line", hcaes(x, y, group = group)) %>% 
+  hc_chart(zoomType = "x")
+
+
+set.seed(123)
+N <- 1000000
+df <- data_frame(
+  x = rnorm(N),
+  y = x + rnorm(N, sd = 0.5)
+) %>% 
+  mutate_all(round, 4)
+
+df %>% 
+  mutate_all(abs) %>% 
+  summarise_all(max)
+
+highchart() %>% 
+  hc_add_series(
+    data = list_parse2(df), type = "scatter", marker = list(radius = 0.2),
+    tooltip = list(followPointer = FALSE) 
+  ) %>% 
+  hc_chart(zoomType = "yx") %>% 
+  hc_xAxis(min = -5, max = 5) %>% 
+  hc_yAxis(min = -5, max = 5)
+
+# bullet ------------------------------------------------------------------
+highchartzero() %>% 
+  hc_add_dependency("modules/bullet.js") %>% 
+  hc_chart(
+    type = "bullet",
+    inverted = TRUE
+  ) %>% 
+  hc_add_series(
+    data = list(y = 275, target = 250)
+  )

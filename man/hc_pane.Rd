@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_pane}
 \alias{hc_pane}
-\title{Adding panes}
+\title{Setting panes options to highchart objects}
 \usage{
 hc_pane(hc, ...)
 }

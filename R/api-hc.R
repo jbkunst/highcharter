@@ -37,19 +37,17 @@ validate_args <- function(name, lstargs) {
     
   }
   
-  # adding fonts
+  # Setting fonts
   hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc$x$hc_opts)))
   
   hc
 }
 
-#' Adding chart options to highchart objects
+#' Setting chart options to highchart objects
 #' 
 #' Options regarding the chart area and plot area as well as general chart options. 
-#' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}. 
-#' 
 #' @examples 
 #' 
 #' data(citytemp)
@@ -82,14 +80,12 @@ hc_chart <- function(hc, ...) {
   
 }
 
-#' Adding color options to highchart objects
+#' Setting color options to highchart objects
 #' 
 #' An array containing the default colors for the chart's series. When all 
 #' colors are used, new colors are pulled from the start again. 
-#' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param colors A vector of colors. 
-#' 
 #' @examples 
 #' 
 #' library("viridisLite")
@@ -115,16 +111,13 @@ hc_colors <- function(hc, colors) {
   
 }
 
-#' Adding credits options to highchart objects
-#'
+#' Setting credits options to highchart objects
+#' 
 #' \code{highcarter} by default don't put credits in the chart.
 #' You can add credits using these options.
-#' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/credits}. 
-#' 
 #' @examples 
-#' 
 #' 
 #' data("citytemp")
 #' 
@@ -141,11 +134,10 @@ hc_credits <- function(hc, ...) {
   
 }
 
-#' Exporting options for highcharts objects
-#'
+#' Setting exporting options for highcharts objects
+#' 
 #' Exporting options for highcharts objects. You can define the file's name
 #' or the output format.
-#' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/exporting}. 
 #' 
@@ -169,13 +161,11 @@ hc_exporting  <- function(hc, ...) {
   
 }
 
-#' Adding legend options to highchart objects
-#'
+#' Setting legend options to highchart objects
+#' 
 #' Function to modify styles for the box containing the symbol, name and color for
 #' each item or point item in the chart.
-#' 
 #' @examples 
-#' 
 #' 
 #' data(citytemp)
 #' 
@@ -196,8 +186,8 @@ hc_legend <- function(hc, ...) {
   
 }
 
-#' Adding plot options to highchart objects
-#'
+#' Setting plot options to highchart objects
+#' 
 #' The plotOptions is a wrapper object for config objects for each series type. The configuration 
 #' objects for each series can also be overridden for each series item as given in the series array.
 #' 
@@ -205,12 +195,9 @@ hc_legend <- function(hc, ...) {
 #' chart are given with the \code{hc_plotOptions} function. Then options for all series of a specific
 #' type are given in the plotOptions of that type, for example  \code{hc_plotOptions(line = list(...))}.
 #' Next, options for one single series are given in the series array.
-#' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#plotOptions}.
-#' 
 #' @examples 
-#' 
 #' 
 #' data(citytemp)
 #' 
@@ -242,14 +229,12 @@ hc_plotOptions  <- function(hc, ...) {
   
 }
 
-#' Adding responsive options to highchart objects
-#'
+#' Setting responsive options to highchart objects
+#' 
 #' Allows setting a set of rules to apply for different screen or chart sizes.
 #' Each rule specifies additional chart options.
-#' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/responsive}. 
-#' 
 #' @examples 
 #' 
 #' leg_500_opts <- list(enabled = FALSE)
@@ -278,11 +263,9 @@ hc_responsive <- function(hc, ...) {
   
 }
 
-#' Series options from highchart objects
-#'
+#' Setting series/data options from highchart objects
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/series}. 
-#'
 #' @examples
 #' 
 #' highchart() %>%  
@@ -304,13 +287,11 @@ hc_series <- function(hc, ...) {
   
 }
 
-#' Adding title and subtitle options to highchart objects
-#'
-#' Function to add and change title and subtitle'a style.
+#' Setting title and subtitle options to highchart objects
 #' 
+#' Function to add and change title and subtitle'a style.
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments are defined in \url{http://api.highcharts.com/highcharts#title}. 
-#'
 #' @examples 
 #' 
 #' highchart() %>% 
@@ -338,12 +319,10 @@ hc_subtitle <- function(hc, ...) {
   
 }
 
-#' Adding tooltip options to highchart objects
-#'
+#' Setting tooltip options to highchart objects
+#' 
 #' Options for the tooltip that appears when the user hovers over a series or point.
-#' 
 #' @examples 
-#' 
 #' 
 #' highcharts_demo() %>%
 #'   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 
@@ -371,13 +350,11 @@ hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
   
 }
 
-#' Adding axis options to highchart objects
-#'
-#' Change axis labels or style. Add lines or band to charts.
+#' Setting axis options to highchart objects
 #' 
+#' Change axis labels or style. Add lines or band to charts.
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/xAxis}. 
-#' 
 #' @examples 
 #' 
 #' highchart() %>% 
@@ -450,15 +427,13 @@ hc_zAxis  <- function(hc, ...) {
   
 }
 
-#' Creating multiples yAxis for add a highcharts
-#' 
+#' Creating multiples yAxis t use with highcharts
 #' @param naxis Number of axis an integer.
 #' @param heights A numeric vector. This values will be normalized.
 #' @param sep A numeric value for the separation (in percentage) for the panes.
 #' @param offset A numeric value (in percentage).
 #' @param turnopposite A logical value to turn the side of each axis or not.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}. 
-#' 
 #' @examples 
 #' 
 #' highchart() %>% 
@@ -466,7 +441,6 @@ hc_zAxis  <- function(hc, ...) {
 #'    hc_add_series(data = c(1,3,2), yAxis = 0) %>% 
 #'    hc_add_series(data = c(20, 40, 10), yAxis = 1)
 #'    
-#' 
 #' highchart() %>% 
 #'   hc_yAxis_multiples(create_yaxis(naxis = 3, lineWidth = 2, title = list(text = NULL))) %>% 
 #'   hc_add_series(data = c(1,3,2)) %>% 
@@ -517,13 +491,11 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
   
 }
 
-#' Adding patterns to be used in highcharts series
-#'
+#' Setting patterns to be used in highcharts series
+#' 
 #' Helper function to use the fill patter plugin \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill}.
-#'
 #' @export
 hc_defs <- function(hc, ...){
   
@@ -531,14 +503,12 @@ hc_defs <- function(hc, ...){
   
 }
 
-#' Drilldown options for highcharts objects
-#'
+#' Setting drilldown options for highcharts objects
+#' 
 #' Options for drill down, the concept of inspecting increasingly high
 #' resolution data through clicking on chart items like columns or pie slices.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/drilldown}. 
-#'
 #' @examples
 #'
 #' library("dplyr")
@@ -632,15 +602,13 @@ hc_drilldown <- function(hc, ...){
   
 }
 
-#' Adding panes
-#'
+#' Setting panes options to highchart objects
+#' 
 #' Applies only to polar charts and angular gauges. This configuration object
 #' holds general options for the combined X and Y axes set. Each xAxis or
 #' yAxis can reference the pane by index.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/pane}.
-#'
 #' @export
 hc_pane <- function(hc, ...){
   
@@ -648,15 +616,11 @@ hc_pane <- function(hc, ...){
   
 }
 
-#' Adding Color Axis options to highchart objects
-#'
+#' Setting color Axis options to highchart objects
 #' Function to set the axis color to highcharts objects.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param ... Arguments are defined in \url{http://api.highcharts.com/highmaps#colorAxis}.
-#'
+#' @param ... Arguments are defined in \url{http://api.highcharts.com/highmaps/colorAxis}.
 #' @examples
-#'
 #'
 #' nyears <- 5
 #'
@@ -696,14 +660,12 @@ hc_colorAxis  <- function(hc, ...){
   
 }
 
-#' Adding scrollbar options to highstock objects
-#'
+#' Setting scrollbar options to highstock objects
+#' 
 #' Options regarding the scrollbar which is a means of panning
 #' over the X axis of a chart.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#scrollbar}.
-#'
 #' @export
 hc_scrollbar <- function(hc, ...){
   
@@ -711,14 +673,11 @@ hc_scrollbar <- function(hc, ...){
   
 }
 
-#' Adding navigator options to highstock charts
-#'
+#' Setting navigator options to highstock charts
 #' Options regarding the navigator: The miniseries below chart
 #' in a highstock chart.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#navigator}.
-#'
 #' @export
 hc_navigator <- function(hc, ...){
   
@@ -726,14 +685,13 @@ hc_navigator <- function(hc, ...){
   
 }
 
-#' Adding scrollbar options to highstock charts
-#'
+#' Setting scrollbar options to highstock charts
+#' 
 #' Options to edit the range selector which is The range selector is a tool
 #' for selecting ranges to display within the chart. It provides buttons
 #' to select preconfigured ranges in the chart, like 1 day, 1 week, 1 month
 #' etc. It also provides input boxes where min and max dates can be manually
 #' input.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highstock#rangeSelector}.
 #'
@@ -744,11 +702,10 @@ hc_rangeSelector <- function(hc, ...){
   
 }
 
-#' Adding mapNavigation options to highmaps charts
-#'
+#' Setting mapNavigation options to highmaps charts
+#' 
 #' Options regarding the mapNavigation: A collection of options for zooming
 #' and panning in a map.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highmaps#mapNavigation}.
 #'
@@ -759,7 +716,7 @@ hc_mapNavigation <- function(hc, ...){
   
 }
 
-#' Adding options to Motion options to highcharts objects
+#' Setting Motion options to highcharts objects
 #'
 #' The Motion Highcharts Plugin adds an interactive HTML5 player
 #' to any Highcharts chart (Highcharts, Highmaps and Highstock).
@@ -780,12 +737,11 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   
 }
 
-#' Adding annotations to highcharts objects
-#'
+#' Setting annotations to highcharts objects
+#' 
 #' Helper function to add annotations to highcharts library.
-#'
 #' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param ... Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.
+#' @param ... Arguments defined in \url{https://www.highcharts.com/docs/advanced-chart-features/annotations-module}.
 #'
 #' @export
 hc_annotations <- function(hc, ...){
@@ -825,18 +781,20 @@ hc_add_annotations <- function(hc, x){
   
 }
 
-#' Setting Annotations Options
+#' Setting annotations options to highcharts objects
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Options defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.
 #' @export
 hc_annotationsOptions <- function(hc, ...){
   
+  .Deprecated("hc_add_series", msg = "Now highcharts use annotation module instead of the pluging")
+  
   .hc_opt(hc, "annotationsOptions", ...)
   
 }
 
-
-#' Setting Accessibility
+#' Setting accessibility options to highcharts objects
+#' 
 #' Options for configuring accessibility for the chart. Requires the accessibility module to be loaded.
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param ... Options defined in \url{http://api.highcharts.com/highcharts/accessibility}.
@@ -844,6 +802,22 @@ hc_annotationsOptions <- function(hc, ...){
 hc_accessibility <- function(hc, ...){
   
   .hc_opt(hc, "accessibility", ...)
+  
+}
+
+#' Setting boost module options to highcharts objects
+#' 
+#' Options for the Boost module. The Boost module allows certain series types to
+#' be rendered by WebGL instead of the default SVG. This allows hundreds of 
+#' thousands of data points to be rendered in milliseconds. In addition to the
+#' WebGL rendering it saves time by skipping processing and inspection of the 
+#' data wherever possible.
+#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param ... Options defined in \url{https://api.highcharts.com/highcharts/boost}.
+#' @export
+hc_boost <- function(hc, ...){
+  
+  .hc_opt(hc, "boost", ...)
   
 }
 

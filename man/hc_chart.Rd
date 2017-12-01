@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_chart}
 \alias{hc_chart}
-\title{Adding chart options to highchart objects}
+\title{Setting chart options to highchart objects}
 \usage{
 hc_chart(hc, ...)
 }

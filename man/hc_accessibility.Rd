@@ -2,8 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_accessibility}
 \alias{hc_accessibility}
-\title{Setting Accessibility
-Options for configuring accessibility for the chart. Requires the accessibility module to be loaded.}
+\title{Setting accessibility options to highcharts objects}
 \usage{
 hc_accessibility(hc, ...)
 }
@@ -13,6 +12,5 @@ hc_accessibility(hc, ...)
 \item{...}{Options defined in \url{http://api.highcharts.com/highcharts/accessibility}.}
 }
 \description{
-Setting Accessibility
 Options for configuring accessibility for the chart. Requires the accessibility module to be loaded.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_motion}
 \alias{hc_motion}
-\title{Adding options to Motion options to highcharts objects}
+\title{Setting Motion options to highcharts objects}
 \usage{
 hc_motion(hc, enabled = TRUE, startIndex = 0, ...)
 }

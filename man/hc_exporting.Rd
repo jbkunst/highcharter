@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_exporting}
 \alias{hc_exporting}
-\title{Exporting options for highcharts objects}
+\title{Setting exporting options for highcharts objects}
 \usage{
 hc_exporting(hc, ...)
 }

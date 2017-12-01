@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_plotOptions}
 \alias{hc_plotOptions}
-\title{Adding plot options to highchart objects}
+\title{Setting plot options to highchart objects}
 \usage{
 hc_plotOptions(hc, ...)
 }
@@ -22,7 +22,6 @@ type are given in the plotOptions of that type, for example  \code{hc_plotOption
 Next, options for one single series are given in the series array.
 }
 \examples{
-
 
 data(citytemp)
 

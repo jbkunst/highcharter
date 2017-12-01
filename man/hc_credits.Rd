@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_credits}
 \alias{hc_credits}
-\title{Adding credits options to highchart objects}
+\title{Setting credits options to highchart objects}
 \usage{
 hc_credits(hc, ...)
 }
@@ -16,7 +16,6 @@ hc_credits(hc, ...)
 You can add credits using these options.
 }
 \examples{
-
 
 data("citytemp")
 

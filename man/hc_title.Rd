@@ -3,7 +3,7 @@
 \name{hc_title}
 \alias{hc_title}
 \alias{hc_subtitle}
-\title{Adding title and subtitle options to highchart objects}
+\title{Setting title and subtitle options to highchart objects}
 \usage{
 hc_title(hc, ...)
 

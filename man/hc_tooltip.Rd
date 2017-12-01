@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_tooltip}
 \alias{hc_tooltip}
-\title{Adding tooltip options to highchart objects}
+\title{Setting tooltip options to highchart objects}
 \usage{
 hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 }
@@ -21,7 +21,6 @@ hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 Options for the tooltip that appears when the user hovers over a series or point.
 }
 \examples{
-
 
 highcharts_demo() \%>\%
   hc_tooltip(crosshairs = TRUE, borderWidth = 5, sort = TRUE, table = TRUE) 

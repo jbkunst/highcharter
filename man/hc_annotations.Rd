@@ -4,7 +4,7 @@
 \alias{hc_annotations}
 \alias{hc_add_annotation}
 \alias{hc_add_annotations}
-\title{Adding annotations to highcharts objects}
+\title{Setting annotations to highcharts objects}
 \usage{
 hc_annotations(hc, ...)
 
@@ -15,7 +15,7 @@ hc_add_annotations(hc, x)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.}
+\item{...}{Arguments defined in \url{https://www.highcharts.com/docs/advanced-chart-features/annotations-module}.}
 
 \item{x}{A \code{list} or a \code{data.frame} of annotations.}
 }

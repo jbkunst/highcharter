@@ -5,7 +5,7 @@
 \alias{hc_yAxis}
 \alias{hc_yAxis_multiples}
 \alias{hc_zAxis}
-\title{Adding axis options to highchart objects}
+\title{Setting axis options to highchart objects}
 \usage{
 hc_xAxis(hc, ...)
 

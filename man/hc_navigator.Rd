@@ -2,7 +2,9 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_navigator}
 \alias{hc_navigator}
-\title{Adding navigator options to highstock charts}
+\title{Setting navigator options to highstock charts
+Options regarding the navigator: The miniseries below chart
+in a highstock chart.}
 \usage{
 hc_navigator(hc, ...)
 }
@@ -12,6 +14,7 @@ hc_navigator(hc, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highstock#navigator}.}
 }
 \description{
+Setting navigator options to highstock charts
 Options regarding the navigator: The miniseries below chart
 in a highstock chart.
 }

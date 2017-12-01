@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{create_yaxis}
 \alias{create_yaxis}
-\title{Creating multiples yAxis for add a highcharts}
+\title{Creating multiples yAxis t use with highcharts}
 \usage{
 create_yaxis(naxis = 2, heights = 1, sep = 0.01, offset = 0,
   turnopposite = TRUE, ...)
@@ -21,7 +21,7 @@ create_yaxis(naxis = 2, heights = 1, sep = 0.01, offset = 0,
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}.}
 }
 \description{
-Creating multiples yAxis for add a highcharts
+Creating multiples yAxis t use with highcharts
 }
 \examples{
 
@@ -30,7 +30,6 @@ highchart() \%>\%
    hc_add_series(data = c(1,3,2), yAxis = 0) \%>\% 
    hc_add_series(data = c(20, 40, 10), yAxis = 1)
    
-
 highchart() \%>\% 
   hc_yAxis_multiples(create_yaxis(naxis = 3, lineWidth = 2, title = list(text = NULL))) \%>\% 
   hc_add_series(data = c(1,3,2)) \%>\% 

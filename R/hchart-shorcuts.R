@@ -129,13 +129,14 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
     group_by_("g1", "g2") %>%  
     do(data = get_outliers_values(.$x)) %>% 
     ungroup() %>% 
+    filter(map_lgl(data, ~ length(.x) != 0)) %>% 
     # mutate_if(is.list, unlist) %>% 
     # unnest() %>% 
     group_by_("g2") %>% 
     do(data = list_parse(select_(., "name" = "g1", "y" = "data"))) %>% 
     # rename(name = g2) %>% 
     mutate(type = "scatter") %>% 
-    mutate("linkedTo" = "as.character(g2)")
+    mutate_("linkedTo" = "as.character(g2)")
   
   if (length(list(...)) > 0)
     series_out <- add_arg_to_df(series_out, ...)

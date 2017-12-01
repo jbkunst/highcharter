@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_legend}
 \alias{hc_legend}
-\title{Adding legend options to highchart objects}
+\title{Setting legend options to highchart objects}
 \usage{
 hc_legend(hc, ...)
 }
@@ -16,7 +16,6 @@ Function to modify styles for the box containing the symbol, name and color for
 each item or point item in the chart.
 }
 \examples{
-
 
 data(citytemp)
 

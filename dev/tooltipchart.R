@@ -139,7 +139,7 @@ pfmc <-  tooltip_chart(accesor = "ttdata")
 cat(pfmc)
 
 hc %>% 
-  hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(accesor = "ttdata"))
+  hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(accesor = "ttdata", hc_opts = list(plotOptions = list(series = list(label = list(enabled = FALSE))))))
 
 hc %>% 
   hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(

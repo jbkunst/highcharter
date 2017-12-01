@@ -79,6 +79,8 @@
         ),
       plotOptions = list(
         series = list(
+          # start disabled series-label.js module https://api.highcharts.com/highcharts/plotOptions.series.label
+          label = list(enabled = FALSE),
           turboThreshold = 0
           ),
         treemap = list(layoutAlgorithm = "squarified")

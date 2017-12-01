@@ -19,22 +19,16 @@ dependencies:
     - modules/treemap.js
     - modules/annotations.js
     - modules/boost.js
-    - modules/broken-axis.js
-    - modules/bullet.js
     - modules/data.js
     - modules/drag-panes.js
     - modules/drilldown.js
     - modules/funnel.js
-    - modules/grid-axis.js
     - modules/item-series.js
     - modules/offline-exporting.js
     - modules/overlapping-datalabels.js
     - modules/parallel-coordinates.js
-    - modules/pareto.js
     - modules/sankey.js
-    - modules/series-label.js
     - modules/solid-gauge.js
-    - modules/static-scale.js
     - modules/streamgraph.js
     - modules/sunburst.js
     - modules/vector.js
@@ -42,6 +36,12 @@ dependencies:
     - modules/xrange.js 
     - modules/exporting.js
     - modules/export-data.js    
+#    - modules/static-scale.js
+#    - modules/grid-axis.js
+#    - modules/broken-axis.js
+#    - modules/series-label.js
+#    - modules/pareto.js    
+#    - modules/bullet.js    
 #    - modules/accessibility.js
 #    - modules/boost-canvas.js
 #    - modules/gantt.js

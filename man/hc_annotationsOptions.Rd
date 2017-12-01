@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-hc.R
 \name{hc_annotationsOptions}
 \alias{hc_annotationsOptions}
-\title{Setting Annotations Options}
+\title{Setting annotations options to highcharts objects}
 \usage{
 hc_annotationsOptions(hc, ...)
 }
@@ -12,5 +12,5 @@ hc_annotationsOptions(hc, ...)
 \item{...}{Options defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.}
 }
 \description{
-Setting Annotations Options
+Setting annotations options to highcharts objects
 }

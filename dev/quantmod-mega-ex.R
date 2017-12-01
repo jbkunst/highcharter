@@ -35,13 +35,13 @@ hc <- highchart() %>%
     list(title = list(text = NULL), height = "25%", top = "75%")
   ) %>% 
   # series :D
-  hc_add_series_ohlc(SPY, yAxis = 0, name = "SPY") %>% 
-  hc_add_series_xts(SPY.SMA.10, yAxis = 0, name = "Fast MA") %>% 
-  hc_add_series_xts(SPY.SMA.200, yAxis = 0, name = "Slow MA") %>% 
-  hc_add_series_xts(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") %>% 
-  hc_add_series_xts(SPY.RSI.14, yAxis = 2, name = "Osciallator") %>% 
-  hc_add_series_xts(SPY.RSI.SellLevel, color = "red", yAxis = 2, name = "Sell level", enableMouseTracking = FALSE) %>% 
-  hc_add_series_xts(SPY.RSI.BuyLevel, color = "blue", yAxis = 2, name = "Buy level", enableMouseTracking = FALSE) %>% 
+  hc_add_series(SPY, yAxis = 0, name = "SPY") %>% 
+  hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") %>% 
+  hc_add_series(SPY.SMA.200, yAxis = 0, name = "Slow MA") %>% 
+  hc_add_series(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") %>% 
+  hc_add_series(SPY.RSI.14, yAxis = 2, name = "Osciallator") %>% 
+  hc_add_series(SPY.RSI.SellLevel, color = "red", yAxis = 2, name = "Sell level", enableMouseTracking = FALSE) %>% 
+  hc_add_series(SPY.RSI.BuyLevel, color = "blue", yAxis = 2, name = "Buy level", enableMouseTracking = FALSE) %>% 
   # I <3 themes
   hc_add_theme(hc_theme_smpl())
 
