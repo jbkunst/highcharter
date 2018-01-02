@@ -3,7 +3,8 @@ library(highcharter)
 library(tidyverse)
 # https://www.highcharts.com/documentation/changelog
 
-options(highcharter.theme = hc_theme_smpl(), highcharter.debug = FALSE)
+options(highcharter.theme = hc_theme_smpl())
+# options(highcharter.debug = FALSE)
 
 # annotation --------------------------------------------------------------
 df <- ggplot2movies::movies %>% 
