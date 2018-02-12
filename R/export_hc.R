@@ -19,7 +19,7 @@
 #'       cursor = "pointer",
 #'         point = list(
 #'           events = list(
-#'             click = JS(fn)
+#'             click = json_verbatim(fn)
 #'          )
 #'        )
 #'    )
@@ -45,31 +45,10 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
   if (!str_detect(filename, ".js$"))
     filename <- str_c(filename, ".js")
 
-  jslns <- toJSON(hc$x$hc_opts, pretty = TRUE, auto_unbox = TRUE,
-                  force = TRUE, null = "null", na = "null") 
-  
-  jslns <- unlist(str_split(jslns, "\n"))
-  
-  # remove quotes from elements
-  jslns <- jslns %>% 
-    str_replace('"', "") %>% 
-    str_replace("\":", ":")
-  
-  # function thing 
-  fflag <- str_detect(jslns, "function")
-  
-  if (any(fflag)) {
-    
-    # remove 1st quote
-    jslns <- ifelse(fflag, str_replace(jslns, "\"function", "function"), jslns)
-    
-    # remove last quote
-    jslns <- ifelse(fflag, str_replace(jslns, "\",$", ","), jslns)
-    jslns <- ifelse(fflag, str_replace(jslns, "\"$", ""), jslns)
-    
-    # fix eol for functions with more than 1 line
-    jslns <- unlist(str_split(jslns, "\\\\n"))
-  }
+  js <- toJSON(
+    x = hc$x$hc_opts, pretty = TRUE, auto_unbox = TRUE, json_verbatim = TRUE,
+    force = TRUE, null = "null", na = "null"
+  ) 
 
   tmpl <- switch(
     as,
@@ -78,8 +57,7 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
     variable = sprintf("%s = %%s", name)
   )
 
-  jslns <- str_c(jslns, collapse = "\n")
-  jslns <- sprintf(tmpl, jslns)
+  js <- sprintf(tmpl, js)
   
   # this try to pretty export_hc(hchart(AirPassengers))
   # jslns <- str_replace_all(jslns, "\n\\s{4,}\\]\\,\n\\s{4,}\\[\n\\s{4,}", "],[")
@@ -90,6 +68,6 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
   if(getOption("highcharter.verbose"))
     message(sprintf("saving file in '%s'", filename))
   
-  writeLines(jslns, filename)
+  writeLines(js, filename)
   
 }

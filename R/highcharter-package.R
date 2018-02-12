@@ -25,12 +25,6 @@ NULL
 #' @rdname highcharter-exports
 NULL
 
-#' @importFrom htmlwidgets JS
-#' @name JS
-#' @export
-#' @rdname highcharter-exports
-NULL
-
 #' @importFrom htmltools tags
 #' @name tags
 #' @export
