@@ -14,8 +14,9 @@ export_hc(hc, filename = NULL, as = "is", name = NULL)
 \item{as}{String to define how to save the configuration options.
 One of 'is', 'container', 'variable'.}
 
-\item{name}{A variable used to put as name of the generated object if \code{as} is
-\code{'variable'} and the css/js selector if is \code{as} is container.}
+\item{name}{A variable used to put as name of the generated object if
+\code{as} is \code{'variable'} and the css/js selector if is \code{as} is
+container.}
 }
 \description{
 Function to export js file the configuration options
@@ -33,7 +34,7 @@ hc <- highcharts_demo() \%>\%
       cursor = "pointer",
         point = list(
           events = list(
-            click = JS(fn)
+            click = json_verbatim(fn)
          )
        )
    )

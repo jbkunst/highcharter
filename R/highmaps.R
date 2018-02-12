@@ -157,8 +157,10 @@ hcmap <- function(map = "custom/world",
 #' @param showinfo Show the properties of the downloaded map to know how
 #'   are the keys to add data in \code{hcmap}.
 #' @examples
+#' \dontrun{
 #' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
 #' str(mpdta, 1)
+#' }
 #' @seealso \code{\link{hcmap}}
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file
