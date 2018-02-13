@@ -123,7 +123,7 @@ hcmap <- function(map = "custom/world",
     )
     
     hc$dependencies <- c(hc$dependencies, list(dep))
-    mapdata <- JS(sprintf("Highcharts.maps['%s']", str_replace(map, "\\.js$", "")))
+    mapdata <- json_verbatim(sprintf("Highcharts.maps['%s']", str_replace(map, "\\.js$", "")))
     
   }
   
@@ -157,8 +157,10 @@ hcmap <- function(map = "custom/world",
 #' @param showinfo Show the properties of the downloaded map to know how
 #'   are the keys to add data in \code{hcmap}.
 #' @examples
+#' \dontrun{
 #' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
 #' str(mpdta, 1)
+#' }
 #' @seealso \code{\link{hcmap}}
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file

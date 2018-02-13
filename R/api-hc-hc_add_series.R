@@ -104,7 +104,6 @@ hc_add_series.xts <- function(hc, data, ...) {
 
 #' @rdname hc_add_series.xts
 #' @param type The way to show the `xts` object. Can be 'candlestick' or 'ohlc'.
-#' @importFrom stringr str_extract
 #' @export
 hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...){
   

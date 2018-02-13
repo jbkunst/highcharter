@@ -85,7 +85,7 @@ hchart.histogram <- function(object, ...) {
   
   highchart() %>%
     hc_chart(zoomType = "x") %>% 
-    hc_tooltip(formatter = JS("function() { return  this.point.name + '<br/>' + this.y; }")) %>% 
+    hc_tooltip(formatter = json_verbatim("function() { return  this.point.name + '<br/>' + this.y; }")) %>% 
     hc_add_series(
       data = list_parse(df),
       type = "column",
@@ -375,7 +375,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
     mutate_("name" = "paste(xnm, ynm, sep = ' ~ ')") %>% 
     select_("x" = "xid", "y" = "yid", "value", "name")
   
-  fntltp <- JS("function(){
+  fntltp <- json_verbatim("function(){
                  return this.point.name + ': ' +
                    Highcharts.numberFormat(this.point.value, 2)
                }")
@@ -429,7 +429,6 @@ hchart.dist <- function(object, ...) {
 }
 
 #' @importFrom igraph vertex_attr edge_attr get.edgelist layout_nicely
-#' @importFrom stringr str_to_title
 #' @importFrom stats setNames
 #' @export
 hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
@@ -692,7 +691,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
     hc <- hc %>%
       hc_add_series(
         data = c(first, ls), step = "left", name = name, zIndex = 1,
-        color = JS("Highcharts.getOptions().colors[", count, "]"),
+        color = json_verbatim(sprintf("Highcharts.getOptions().colors[%s]", count)),
         ...)
     
     if (ranges && !is.null(object$upper)) {
@@ -705,7 +704,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
           data = range, step = "left", name = "Ranges",
           type = "arearange", zIndex = 0, linkedTo = ":previous",
           fillOpacity = rangesOpacity, lineWidth = 0,
-          color = JS("Highcharts.getOptions().colors[", count, "]"),
+          color = json_verbatim(sprintf("Highcharts.getOptions().colors[%s]", count)),
           ...)
     }
     count <- count + 1

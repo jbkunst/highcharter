@@ -269,7 +269,7 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
                        marker = list(radius = size),
                        states = list(hover = list(enabled = FALSE)),
                        events = list(
-                         legendItemClick = JS("function () { return false; }")
+                         legendItemClick = json_verbatim("function () { return false; }")
                        )
                      )) %>%  
     hc_tooltip(pointFormat = "{point.series.options.counts} ({point.series.options.percent:.2f}%)") %>%

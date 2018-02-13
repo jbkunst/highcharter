@@ -8,6 +8,9 @@
 #' @name highcharter
 #' @docType package
 #' @author Joshua Kunst (@@jbkunst)
+#' @importFrom utils data
+#' @importFrom stringr str_c str_detect str_extract str_replace str_replace_all
+#'      str_trim str_to_lower str_to_title
 NULL
 
 #' highcharter exported operators and S3 methods
@@ -21,12 +24,6 @@ NULL
 
 #' @importFrom magrittr %>%
 #' @name %>%
-#' @export
-#' @rdname highcharter-exports
-NULL
-
-#' @importFrom htmlwidgets JS
-#' @name JS
 #' @export
 #' @rdname highcharter-exports
 NULL

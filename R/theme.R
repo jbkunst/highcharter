@@ -114,7 +114,6 @@ hc_theme_merge <- function(...){
   
 }
 
-#' @importFrom stringr str_replace_all str_trim
 .hc_get_fonts <- function(lst){
   
   unls <- unlist(lst)

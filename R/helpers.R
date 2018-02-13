@@ -44,7 +44,6 @@ list_parse2 <- function(df) {
 #'
 #' str_to_id(" A string _ with sd / sdg    Underscores \   ")
 #'
-#' @importFrom stringr str_to_lower str_replace_all
 #' @export
 str_to_id <- function(x) {
 
@@ -374,5 +373,22 @@ fix_1_length_data <- function(x) {
 
   if (class(x) != "list" & length(x) == 1)
     x <- list(x)
+  x
+}
+
+#' Set the class to "json", so it can be interpreted verbatim by
+#' \code{jsonlite::toJSON}.
+#' @param x A string.
+#' @examples
+#' jsonlite::toJSON(
+#'   x = list(
+#'     click = json_verbatim("function() { alert('click') }")
+#'   ),
+#'   auto_unbox = TRUE,
+#'   json_verbatim = TRUE
+#' )
+#' @export
+json_verbatim <- function(x) {
+  class(x) <- "json"
   x
 }
