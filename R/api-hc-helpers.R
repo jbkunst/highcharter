@@ -187,6 +187,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #' @param height	A numeric input in pixels indicating the height of the tooltip.
 #'
 #' @importFrom whisker whisker.render
+#' @importFrom htmlwidgets JS
 #' @examples
 #'
 #' require(dplyr)

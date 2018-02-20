@@ -23,6 +23,12 @@ NULL
 #' @name highcharter-exports
 NULL
 
+#' @importFrom htmlwidgets JS
+#' @name JS
+#' @export
+#' @rdname highcharter-exports
+NULL
+
 #' @importFrom magrittr %>%
 #' @name %>%
 #' @export

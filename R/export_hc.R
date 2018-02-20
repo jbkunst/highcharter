@@ -20,7 +20,7 @@
 #'       cursor = "pointer",
 #'         point = list(
 #'           events = list(
-#'             click = htmlwidgets::JS(fn)
+#'             click = JS(fn)
 #'          )
 #'        )
 #'    )
