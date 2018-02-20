@@ -376,19 +376,3 @@ fix_1_length_data <- function(x) {
   x
 }
 
-#' Set the class to "json", so it can be interpreted verbatim by
-#' \code{jsonlite::toJSON}.
-#' @param x A string.
-#' @examples
-#' jsonlite::toJSON(
-#'   x = list(
-#'     click = json_verbatim("function() { alert('click') }")
-#'   ),
-#'   auto_unbox = TRUE,
-#'   json_verbatim = TRUE
-#' )
-#' @export
-json_verbatim <- function(x) {
-  class(x) <- "json"
-  x
-}

@@ -27,7 +27,7 @@ hc_add_event_point <- function(hc, series = "series", event = "click"){
   if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
 }")
 
-  fun <- json_verbatim(fun)
+  fun <- JS(fun)
 
   eventobj <- structure(
     list(structure(
@@ -63,7 +63,7 @@ hc_add_event_series <- function(hc, series = "series", event = "click"){
   if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
 
 }")
-  fun <- json_verbatim(fun)
+  fun <- JS(fun)
 
   eventobj <- structure(
     list(structure(
@@ -151,7 +151,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
   hc %>%
     highcharter::hc_tooltip(
       shared = TRUE,
-      formatter = json_verbatim(
+      formatter = JS(
         "function(tooltip){
           function isArray(obj) {
           return Object.prototype.toString.call(obj) === '[object Array]';
@@ -232,7 +232,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #' hc %>%
 #'   hc_tooltip(
 #'     useHTML = TRUE,
-#'     positioner = json_verbatim("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
+#'     positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
 #'     pointFormatter = tooltip_chart(
 #'       accesor = "ttdata",
 #'       hc_opts = list(
@@ -328,7 +328,7 @@ tooltip_chart <- function(
   jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
   # cat(jsss)
 
-  json_verbatim(jsss)
+  JS(jsss)
 
 }
 

@@ -20,7 +20,7 @@
 #'       cursor = "pointer",
 #'         point = list(
 #'           events = list(
-#'             click = json_verbatim(fn)
+#'             click = JS(fn)
 #'          )
 #'        )
 #'    )
@@ -37,15 +37,24 @@
 #' @export 
 export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
   
-  # filename <- "~/tets.js"
-  # load("~/hc.Rdata")
-  
   stopifnot(!is.null(filename))
   stopifnot(as %in% c("is", "container", "variable"))
   
   if (as != "is") {
     stopifnot(!is.null(name))
   }
+  
+  JS_to_json <- function(x) {
+    class(x) <- "json"
+    return(x)
+  }
+
+  hc$x$hc_opts <- rapply(
+    object = hc$x$hc_opts,
+    f = JS_to_json,
+    classes = "JS_EVAL",
+    how = "replace"
+  )
   
   js <- toJSON(
     x = hc$x$hc_opts, pretty = TRUE, auto_unbox = TRUE, json_verbatim = TRUE,
