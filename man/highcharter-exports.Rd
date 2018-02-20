@@ -2,6 +2,7 @@
 % Please edit documentation in R/highcharter-package.R
 \name{highcharter-exports}
 \alias{highcharter-exports}
+\alias{JS}
 \alias{\%>\%}
 \alias{tags}
 \title{highcharter exported operators and S3 methods}

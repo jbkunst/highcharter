@@ -68,7 +68,7 @@ hc \%>\%
 hc \%>\%
   hc_tooltip(
     useHTML = TRUE,
-    positioner = json_verbatim("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
+    positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
     pointFormatter = tooltip_chart(
       accesor = "ttdata",
       hc_opts = list(

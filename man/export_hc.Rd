@@ -34,7 +34,7 @@ hc <- highcharts_demo() \%>\%
       cursor = "pointer",
         point = list(
           events = list(
-            click = json_verbatim(fn)
+            click = JS(fn)
          )
        )
    )
