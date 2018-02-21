@@ -52,10 +52,10 @@ dependencies:
 #    - modules/variwide.js
 #    - modules/windbarb.js
     - maps/modules/map.js
-    - plugins/export-csv.js
     - plugins/grouped-categories.js
     - plugins/motion.js
     - plugins/multicolor_series.js
+#    - plugins/export-csv.js    
 #    - plugins/highcharts-regression.js    
 #    - plugins/pattern-fill-v2.js
 #    - plugins/tooltip-delay.js
