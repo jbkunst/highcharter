@@ -1,5 +1,5 @@
-## Resubmission
+## Package update
 
-* fix url with 404 in `hc_theme_sml`
+* New contains the information about the update
 
 Thanks!

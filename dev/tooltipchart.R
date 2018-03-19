@@ -30,79 +30,79 @@ options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 #     pointFormatter = JS(minichart)
 #       )
 
-tooltip_chart <- function(
-  accesor = NULL,
-  hc_opts = NULL,
-  width = 250,
-  height = 150
-) {
-  
-  assertthat::assert_that(assertthat::is.string(accesor))
-
-  if(is.null(hc_opts)) {
-    hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor))
-  } else {
-    if(!has_name(hc_opts, "series"))
-      hc_opts[["series"]][[1]] <- list()
-    hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
-  }
-  
-  hc_opts <- rlist::list.merge(
-    getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
-    list(chart = list(backgroundColor = "transparent")),
-    list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
-    hc_opts
-  )
-  
-  if(!has_name(hc_opts[["series"]][[1]], "color")) hc_opts[["series"]][[1]][["color"]] <- "point.color"
-  
-  hcopts <- toJSON(hc_opts, pretty = TRUE, auto_unbox = TRUE, force = TRUE, null = "null", na = "null")
-  hcopts <- as.character(hcopts)
-  # cat(hcopts)
-  
-  # fix point.color
-  hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
-  
-  # remove "\"" to have access to the point object
-  ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") %>% unlist()
-  for(t in ts) hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
-  
-  # remove "\"" in the options 
-  ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") %>%  unlist()
-  for(t in ts) {
-    t2 <- str_replace_all(t, "\"", "")
-    # t2 <- str_replace(t2, ":", "")
-    hcopts <- str_replace(hcopts, t, t2)
-  }
-  # cat(hcopts)
-  
-  jss <- "function() {
-  var point = this;
-  console.log(point);
-  console.log(point.{{accesor}});
-  setTimeout(function() {
-
-    $(\"#tooltipchart-{{id}}\").highcharts(hcopts);
-
-  }, 0);
-
-  return '<div id=\"tooltipchart-{{id}}\" style=\"width: {{w}}px; height: {{h}}px;\"></div>';
-
-  }"
-  # cat(jss)
-
-  jsss <- whisker.render(
-    jss,
-    list(id = highcharter:::random_id(), w = width, h = height, accesor = accesor)
-    )
-  # cat(jsss)
-
-  jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
-  # cat(jsss)
-
-  JS(jsss)
-
-}
+# tooltip_chart <- function(
+#   accesor = NULL,
+#   hc_opts = NULL,
+#   width = 250,
+#   height = 150
+# ) {
+#   
+#   assertthat::assert_that(assertthat::is.string(accesor))
+# 
+#   if(is.null(hc_opts)) {
+#     hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor))
+#   } else {
+#     if(!has_name(hc_opts, "series"))
+#       hc_opts[["series"]][[1]] <- list()
+#     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
+#   }
+#   
+#   hc_opts <- rlist::list.merge(
+#     getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
+#     list(chart = list(backgroundColor = "transparent")),
+#     list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
+#     hc_opts
+#   )
+#   
+#   if(!has_name(hc_opts[["series"]][[1]], "color")) hc_opts[["series"]][[1]][["color"]] <- "point.color"
+#   
+#   hcopts <- toJSON(hc_opts, pretty = TRUE, auto_unbox = TRUE, force = TRUE, null = "null", na = "null")
+#   hcopts <- as.character(hcopts)
+#   # cat(hcopts)
+#   
+#   # fix point.color
+#   hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
+#   
+#   # remove "\"" to have access to the point object
+#   ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") %>% unlist()
+#   for(t in ts) hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
+#   
+#   # remove "\"" in the options 
+#   ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") %>%  unlist()
+#   for(t in ts) {
+#     t2 <- str_replace_all(t, "\"", "")
+#     # t2 <- str_replace(t2, ":", "")
+#     hcopts <- str_replace(hcopts, t, t2)
+#   }
+#   # cat(hcopts)
+#   
+#   jss <- "function() {
+#   var point = this;
+#   console.log(point);
+#   console.log(point.{{accesor}});
+#   setTimeout(function() {
+# 
+#     $(\"#tooltipchart-{{id}}\").highcharts(hcopts);
+# 
+#   }, 0);
+# 
+#   return '<div id=\"tooltipchart-{{id}}\" style=\"width: {{w}}px; height: {{h}}px;\"></div>';
+# 
+#   }"
+#   # cat(jss)
+# 
+#   jsss <- whisker.render(
+#     jss,
+#     list(id = highcharter:::random_id(), w = width, h = height, accesor = accesor)
+#     )
+#   # cat(jsss)
+# 
+#   jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
+#   # cat(jsss)
+# 
+#   JS(jsss)
+# 
+# }
 
 # example 1 ---------------------------------------------------------------
 data(gapminder, package = "gapminder")
@@ -111,7 +111,12 @@ glimpse(gapminder)
 gp <- gapminder %>% 
   arrange(desc(year)) %>% 
   distinct(country, .keep_all = TRUE)
-gp
+
+gppop <- gapminder %>% 
+  select(country, x = year, y = pop) %>% 
+  nest(-country) %>% 
+  mutate(data = map(data, list_parse)) %>% 
+  rename(ttdata = data)
 
 gp2 <- gapminder %>% 
   group_by(country) %>% 
@@ -125,9 +130,7 @@ gp2 <- gapminder %>%
   rename(ttdata = data)
 gp2
 
-gptot <- left_join(gp, gp2)
-
-gptot$ttdata[[1]]
+gptot <- left_join(gp, gpop)
 
 hc <- hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) %>% 
   hc_yAxis(type = "logarithmic")
@@ -150,7 +153,7 @@ hc %>%
 hc %>% 
   hc_tooltip(
     useHTML = TRUE,
-    positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
+    # positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
     pointFormatter = tooltip_chart(
       accesor = "ttdata",
       hc_opts = list(
@@ -158,6 +161,7 @@ hc %>%
         xAxis = list(title = list(text = "lifeExp")),
         yAxis = list(title = list(text = "gdpPercap")))
       ))
+
 
 hc %>% 
   hc_tooltip(
@@ -170,6 +174,26 @@ hc %>%
         )
       )
     )
+
+
+# example 1.5 -------------------------------------------------------------
+gp <- gapminder %>% 
+  arrange(desc(year)) %>% 
+  distinct(country, .keep_all = TRUE)
+
+gppop <- gapminder %>% 
+  select(country, x = year, y = pop) %>% 
+  nest(-country) %>% 
+  mutate(data = map(data, list_parse)) %>% 
+  rename(ttdata = data)
+
+gptot <- left_join(gp, gppop)
+
+hchart(gptot, "point", hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)) %>% 
+  hc_yAxis(type = "logarithmic") %>% 
+  hc_tooltip(useHTML = TRUE,
+             pointFormatter = tooltip_chart(accesor = "ttdata", hc_opts = list(plotOptions = list(series = list(label = list(enabled = FALSE))))))
+
 
 # example 2 ---------------------------------------------------------------
 data(iris)
@@ -186,8 +210,6 @@ irismini <- iris %>%
   do(tooltipdata = list_parse2(select(., -id))) 
 
 iristot <- left_join(iris, irismini)
-
-iristot$tooltipdata[[1]]
 
 pfmc <- tooltip_chart(
   accesor = "tooltipdata",
