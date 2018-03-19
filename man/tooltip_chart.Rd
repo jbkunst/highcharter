@@ -25,6 +25,8 @@ inside of \code{hc_tooltip} function an \code{useHTML = TRUE} option.
 }
 \examples{
 
+
+\dontrun{
 require(dplyr)
 require(purrr)
 require(tidyr)
@@ -89,5 +91,6 @@ hc \%>\%
       )
     )
   )
+ }
 
 }

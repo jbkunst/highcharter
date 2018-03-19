@@ -741,7 +741,7 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
 #' 
 #' Helper function to add annotations to highcharts library.
 #' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param ... Arguments defined in \url{https://www.highcharts.com/docs/advanced-chart-features/annotations-module}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}.
 #'
 #' @export
 hc_annotations <- function(hc, ...){

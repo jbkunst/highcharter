@@ -15,7 +15,7 @@ hc_add_annotations(hc, x)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://www.highcharts.com/docs/advanced-chart-features/annotations-module}.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}.}
 
 \item{x}{A \code{list} or a \code{data.frame} of annotations.}
 }

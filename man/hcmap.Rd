@@ -32,6 +32,9 @@ Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 collection.
 }
 \examples{
+
+\dontrun{
+
 hcmap(nullColor = "#DADADA")
 hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 
@@ -47,4 +50,5 @@ hcmap(map = "countries/us/us-all", data = USArrests,
       joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
       download_map_data = FALSE) 
   
+}
 }

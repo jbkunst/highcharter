@@ -83,6 +83,9 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'   
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' hcmap(nullColor = "#DADADA")
 #' hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 #' 
@@ -98,6 +101,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'       joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
 #'       download_map_data = FALSE) 
 #'   
+#' }
 #' @importFrom htmltools htmlDependency
 #' @export
 hcmap <- function(map = "custom/world",

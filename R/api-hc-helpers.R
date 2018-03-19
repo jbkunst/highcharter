@@ -190,6 +190,8 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #' @importFrom htmlwidgets JS
 #' @examples
 #'
+#'
+#' \dontrun{
 #' require(dplyr)
 #' require(purrr)
 #' require(tidyr)
@@ -254,6 +256,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #'       )
 #'     )
 #'   )
+#'  }
 #'
 #' @export
 tooltip_chart <- function(
