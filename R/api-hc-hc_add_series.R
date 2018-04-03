@@ -391,8 +391,9 @@ hcaes_ <- hcaes_string
 #' Modify data frame according to mapping
 #' @param data A data frame object.
 #' @param mapping A mapping from \code{hcaes} function.
-#' @param drop A logical argument to you drop variables or not. Default is
-#'   \code{FALSE}
+#' @param drop A logical argument to you drop variables or not. Default is 
+#' \code{FALSE}
+#' @importFrom rlang "!!!" "!!" ":=" parse_quosure quos
 #' @examples 
 #' 
 #' df <- head(mtcars)
@@ -404,18 +405,23 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
   
   stopifnot(is.data.frame(data), inherits(mapping, "hcaes"), inherits(drop, "logical"))
   
-  # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
+  # https://stackoverflow.com/questions/45359917/dplyr-0-7-equivalent-for-deprecated-mutate
+  # https://www.johnmackintosh.com/2018-02-19-theory-free-tidyeval/
+  
   tran <- as.character(mapping)
   newv <- names(mapping)
-
-  data <- dplyr::mutate_(data, .dots = setNames(tran, newv))
+  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quosure)
   
+  data <- dplyr::mutate(data, !!! list_names)
   # Reserverd  highcharts names (#241)
   if(has_name(data, "series"))
-    data <- rename_(data, "seriess" = "series")
+    #old <- "seriess"
+    #new <- "series"
+    data <- dplyr::rename(data, "seriess" = "series")
   
   if(drop)
-    data <- select_(data, .dots = names(mapping))
+    newv <- quos(names(mapping))
+    data <- dplyr::select(data, !!! newv)
   
   data
   

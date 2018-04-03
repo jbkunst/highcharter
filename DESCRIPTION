@@ -31,7 +31,7 @@ Imports:
     rlist,
     assertthat,
     zoo,
-    dplyr (>= 0.5.1),
+    dplyr (>= 0.7.0),
     tibble (>= 1.1),
     stringr,
     broom,
