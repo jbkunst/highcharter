@@ -333,15 +333,22 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
 #' @param x,y,... List of name value pairs giving aesthetics to map to
 #'   variables. The names for x and y aesthetics are typically omitted because
 #'   they are so common; all other aesthetics must be named.
+#' @importFrom rlang enexprs is_missing
 #' @examples 
 #' 
 #' hcaes(x = xval, color = colorvar, group = grvar)
 #' 
 #' @export
 hcaes <- function (x, y, ...) {
-  mapping <- structure(as.list(match.call()[-1]), class = "uneval")
-  mapping <- mapping[names(mapping) != ""]
+  #taken from https://github.com/tidyverse/ggplot2/commit/d69762269787ed0799ab4fb1f35638cc46b5b7e6
+  exprs <- rlang::enexprs(x = x, y = y, ...)
+  
+  is_missing <- vapply(exprs, rlang::is_missing, logical(1))
+  
+  mapping <- structure(exprs[!is_missing], class = "uneval")
+
   class(mapping) <- c("hcaes", class(mapping))
+  
   mapping
 }
 
