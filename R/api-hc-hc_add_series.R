@@ -400,7 +400,7 @@ hcaes_ <- hcaes_string
 #' @param mapping A mapping from \code{hcaes} function.
 #' @param drop A logical argument to you drop variables or not. Default is 
 #' \code{FALSE}
-#' @importFrom rlang "!!!" "!!" ":=" parse_quosure quos
+#' @importFrom rlang "!!!" "!!" ":=" parse_quosure syms
 #' @examples 
 #' 
 #' df <- head(mtcars)
@@ -427,7 +427,7 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
     data <- dplyr::rename(data, "seriess" = "series")
   
   if(drop)
-    newv <- quos(names(mapping))
+    newv <- rlang::syms(newv)
     data <- dplyr::select(data, !!! newv)
   
   data
