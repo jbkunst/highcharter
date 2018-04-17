@@ -333,15 +333,22 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
 #' @param x,y,... List of name value pairs giving aesthetics to map to
 #'   variables. The names for x and y aesthetics are typically omitted because
 #'   they are so common; all other aesthetics must be named.
+#' @importFrom rlang enexprs is_missing
 #' @examples 
 #' 
 #' hcaes(x = xval, color = colorvar, group = grvar)
 #' 
 #' @export
 hcaes <- function (x, y, ...) {
-  mapping <- structure(as.list(match.call()[-1]), class = "uneval")
-  mapping <- mapping[names(mapping) != ""]
+  #taken from https://github.com/tidyverse/ggplot2/commit/d69762269787ed0799ab4fb1f35638cc46b5b7e6
+  exprs <- rlang::enexprs(x = x, y = y, ...)
+  
+  is_missing <- vapply(exprs, rlang::is_missing, logical(1))
+  
+  mapping <- structure(exprs[!is_missing], class = "uneval")
+
   class(mapping) <- c("hcaes", class(mapping))
+  
   mapping
 }
 
@@ -391,8 +398,9 @@ hcaes_ <- hcaes_string
 #' Modify data frame according to mapping
 #' @param data A data frame object.
 #' @param mapping A mapping from \code{hcaes} function.
-#' @param drop A logical argument to you drop variables or not. Default is
-#'   \code{FALSE}
+#' @param drop A logical argument to you drop variables or not. Default is 
+#' \code{FALSE}
+#' @importFrom rlang "!!!" "!!" ":=" parse_quosure syms
 #' @examples 
 #' 
 #' df <- head(mtcars)
@@ -404,18 +412,23 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
   
   stopifnot(is.data.frame(data), inherits(mapping, "hcaes"), inherits(drop, "logical"))
   
-  # http://rmhogervorst.nl/cleancode/blog/2016/06/13/NSE_standard_evaluation_dplyr.html
+  # https://stackoverflow.com/questions/45359917/dplyr-0-7-equivalent-for-deprecated-mutate
+  # https://www.johnmackintosh.com/2018-02-19-theory-free-tidyeval/
+  
   tran <- as.character(mapping)
   newv <- names(mapping)
-
-  data <- dplyr::mutate_(data, .dots = setNames(tran, newv))
+  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quosure)
   
+  data <- dplyr::mutate(data, !!! list_names)
   # Reserverd  highcharts names (#241)
   if(has_name(data, "series"))
-    data <- rename_(data, "seriess" = "series")
+    #old <- "seriess"
+    #new <- "series"
+    data <- dplyr::rename(data, "seriess" = "series")
   
   if(drop)
-    data <- select_(data, .dots = names(mapping))
+    newv <- rlang::syms(newv)
+    data <- dplyr::select(data, !!! newv)
   
   data
   
