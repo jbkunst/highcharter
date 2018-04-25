@@ -15,7 +15,8 @@ Authors@R: c(
   person("Dean", "Kilfoyle", role = c("ctb"), comment  = "First version hc_add_series_boxplot"),
   person("Adline", "Dsilva", role = c("ctb"), comment  = "First version Matrix heatmap"),
   person("Kamil", "Slowikowski", role = c("ctb"), comment = c(ORCID = "0000-0002-2843-6370")),
-  person("Christian", "Minich", role = c("ctb"), comment  = "hcaes mutate_mapping improvement")
+  person("Christian", "Minich", role = c("ctb"), comment  = "hcaes mutate_mapping improvement"),
+  person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix")
   )
 URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
