@@ -426,10 +426,11 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
     #new <- "series"
     data <- dplyr::rename(data, "seriess" = "series")
   
-  if(drop)
+  if(drop) {
     newv <- rlang::syms(newv)
     data <- dplyr::select(data, !!! newv)
-  
+  }
+
   data
   
 }
