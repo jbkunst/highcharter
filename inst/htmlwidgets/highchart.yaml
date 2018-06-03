@@ -67,9 +67,9 @@ dependencies:
     - custom/text-symbols.js
     stylesheet:
     - css/motion.css
-  - name: htmlwdgtgrid
-    version: 1.0
-    src: "htmlwidgets/lib/htmlwdgtgrid"
-    stylesheet:
-    - htmlwdgtgrid.css
+#  - name: htmlwdgtgrid
+#    version: 1.0
+#    src: "htmlwidgets/lib/htmlwdgtgrid"
+#    stylesheet:
+#    - htmlwdgtgrid.css
 
