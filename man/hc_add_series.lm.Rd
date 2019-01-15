@@ -8,8 +8,8 @@
 \method{hc_add_series}{lm}(hc, data, type = "line", color = "#5F83EE",
   fillOpacity = 0.1, ...)
 
-\method{hc_add_series}{loess}(hc, data, type = "line", color = "#5F83EE",
-  fillOpacity = 0.1, ...)
+\method{hc_add_series}{loess}(hc, data, type = "line",
+  color = "#5F83EE", fillOpacity = 0.1, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

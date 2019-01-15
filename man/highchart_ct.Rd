@@ -5,8 +5,8 @@
 \title{Highcharter Crosstalk Widget}
 \usage{
 highchart_ct(data = NULL, hc_opts = list(),
-  theme = getOption("highcharter.theme"), width = NULL, height = NULL,
-  elementId = NULL)
+  theme = getOption("highcharter.theme"), width = NULL,
+  height = NULL, elementId = NULL)
 }
 \arguments{
 \item{data}{Data frame}

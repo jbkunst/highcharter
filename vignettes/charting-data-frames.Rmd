@@ -1,5 +1,5 @@
 ---
-title: "Charting Maps"
+title: "Charting Data Frames"
 author: "Joshua Kunst"
 output: rmarkdown::html_vignette
 vignette: >

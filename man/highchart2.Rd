@@ -5,8 +5,8 @@
 \alias{highchartzero}
 \title{Create a Highcharts chart widget}
 \usage{
-highchart2(hc_opts = list(), theme = NULL, width = NULL, height = NULL,
-  elementId = NULL, debug = FALSE)
+highchart2(hc_opts = list(), theme = NULL, width = NULL,
+  height = NULL, elementId = NULL, debug = FALSE)
 
 highchartzero(hc_opts = list(), theme = NULL, width = NULL,
   height = NULL, elementId = NULL)

@@ -10,7 +10,7 @@ vignette: >
 
 ```{r, warning = FALSE, message = FALSE, echo = FALSE}
 library(highcharter)
-knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, eval=FALSE)
 options(highcharter.theme = hc_theme_smpl())
 ```
 

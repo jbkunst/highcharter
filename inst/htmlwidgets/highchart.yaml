@@ -8,8 +8,8 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 6.0.3
-    src: "htmlwidgets/lib/highcharts-6.0.3"
+    version: 7.0.1
+    src: "htmlwidgets/lib/highcharts-7.0.1"
     script:
     - highcharts.js
     - highcharts-3d.js
@@ -51,7 +51,7 @@ dependencies:
 #    - modules/variable-pie.js
 #    - modules/variwide.js
 #    - modules/windbarb.js
-    - maps/modules/map.js
+    - modules/map.js
     - plugins/grouped-categories.js
     - plugins/motion.js
     - plugins/multicolor_series.js
@@ -67,6 +67,7 @@ dependencies:
     - custom/text-symbols.js
     stylesheet:
     - css/motion.css
+    - css/htmlwdgtgrid.css
 #  - name: htmlwdgtgrid
 #    version: 1.0
 #    src: "htmlwidgets/lib/htmlwdgtgrid"

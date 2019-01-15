@@ -4,8 +4,8 @@
 \alias{hc_add_series.data.frame}
 \title{hc_add_series for data frames objects}
 \usage{
-\method{hc_add_series}{data.frame}(hc, data, type = NULL, mapping = hcaes(),
-  ...)
+\method{hc_add_series}{data.frame}(hc, data, type = NULL,
+  mapping = hcaes(), ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
