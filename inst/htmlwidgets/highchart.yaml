@@ -15,18 +15,20 @@ dependencies:
     - highcharts-3d.js
     - highcharts-more.js
     - modules/stock.js
-    - modules/heatmap.js
-    - modules/treemap.js
+    - modules/map.js
     - modules/annotations.js
     - modules/boost.js
     - modules/data.js
     - modules/drag-panes.js
     - modules/drilldown.js
-    - modules/funnel.js
     - modules/item-series.js
     - modules/offline-exporting.js
     - modules/overlapping-datalabels.js
-    - modules/parallel-coordinates.js
+    - modules/exporting.js
+    - modules/export-data.js
+    - modules/funnel.js
+    - modules/heatmap.js
+    - modules/treemap.js
     - modules/sankey.js
     - modules/solid-gauge.js
     - modules/streamgraph.js
@@ -34,43 +36,51 @@ dependencies:
     - modules/vector.js
     - modules/wordcloud.js
     - modules/xrange.js 
-    - modules/exporting.js
-    - modules/export-data.js    
+    - modules/tilemap.js
+    - modules/venn.js
+    - modules/gantt.js
+    - modules/timeline.js
+    - modules/parallel-coordinates.js
 #    - modules/static-scale.js
 #    - modules/grid-axis.js
 #    - modules/broken-axis.js
 #    - modules/series-label.js
 #    - modules/pareto.js    
-#    - modules/bullet.js    
 #    - modules/accessibility.js
 #    - modules/boost-canvas.js
-#    - modules/gantt.js
 #    - modules/histogram-bellcurve.js
 #    - modules/no-data-to-display.js
 #    - modules/oldie.js
 #    - modules/variable-pie.js
 #    - modules/variwide.js
 #    - modules/windbarb.js
-    - modules/map.js
+#    - modules/annotations-advanced.js
+#    - modules/arrow-symbols.js
+#    - modules/bullet.js
+#    - modules/current-date-indicator.js
+#    - modules/cylinder.js
+#    - modules/debugger.js
+#    - modules/draggable-points.js
+#    - modules/full-screen.js
+#    - modules/networkgraph.js
+#    - modules/oldie-polyfills.js
+#    - modules/pathfinder.js
+#    - modules/pattern-fill.js
+#    - modules/price-indicator.js
+#    - modules/sonification.js
+#    - modules/stock-tools.js
+#    - modules/treegrid.js
     - plugins/grouped-categories.js
     - plugins/motion.js
     - plugins/multicolor_series.js
-#    - plugins/export-csv.js    
 #    - plugins/highcharts-regression.js    
 #    - plugins/pattern-fill-v2.js
 #    - plugins/tooltip-delay.js
 #    - plugins/annotations.js
 #    - plugins/draggable-legend.js
-#    - plugins/draggable-points.js
     - custom/reset.js
     - custom/symbols-extra.js
     - custom/text-symbols.js
     stylesheet:
     - css/motion.css
     - css/htmlwdgtgrid.css
-#  - name: htmlwdgtgrid
-#    version: 1.0
-#    src: "htmlwidgets/lib/htmlwdgtgrid"
-#    stylesheet:
-#    - htmlwdgtgrid.css
-

@@ -1,6 +1,6 @@
 #' ggplot2 theme for highcharts
 #' 
-#' Based on \url{http://ggplot2.org/}.
+#' Based on \url{https://ggplot2.tidyverse.org/}.
 #' 
 #' @param ... Named argument to modify the theme
 #' 

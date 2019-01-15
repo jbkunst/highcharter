@@ -3,7 +3,7 @@ title: "Charting Data Frames"
 author: "Joshua Kunst"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Charting Maps}
+  %\VignetteIndexEntry{Charting Data Frames}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

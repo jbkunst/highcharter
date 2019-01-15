@@ -25,7 +25,6 @@ hchart(df, "area", hcaes(year, n)) %>%
       )
     )
 
-
 # streamgraph -------------------------------------------------------------
 # install.packages("ggplot2movies")
 df <- ggplot2movies::movies %>%
@@ -38,7 +37,6 @@ df
 
 hchart(df, "streamgraph", hcaes(year, n, group = genre)) %>% 
   hc_yAxis(visible = FALSE)
-
 
 # sankey ------------------------------------------------------------------
 UKvisits <- data.frame(origin=c(
@@ -121,11 +119,12 @@ data <- texts %>%
   unlist() %>% 
   data_frame(word = .) %>% 
   count(word, sort = TRUE) %>% 
-  anti_join(tidytext::stop_words)
+  anti_join(tidytext::stop_words) %>% 
+  head(50)
 
 data
 
-hchart(data, "wordcloud", hcaes(name = word, weight = log(n)))
+hchart(data, "wordcloud", hcaes(name = word, weight = n))
 
 
 # sunburst ----------------------------------------------------------------
@@ -187,7 +186,7 @@ highchart() %>%
   hc_yAxis(min = -5, max = 5)
 
 # bullet ------------------------------------------------------------------
-highchartzero() %>% 
+highchart() %>% 
   hc_add_dependency("modules/bullet.js") %>% 
   hc_chart(
     type = "bullet",

@@ -75,15 +75,37 @@ file.copy(
   overwrite = TRUE
 )
 
+# check what modules are missing in yaml
+modules <- dir(file.path(path, "modules")) 
+modules
+
+modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") %>% 
+  str_subset("modules/") %>%
+  str_extract("modules/.*") %>% 
+  str_trim() %>% 
+  basename()
+
+setdiff(modules, modules_yalm) %>% 
+  str_c("#    - ", ., "\n") %>% 
+  cat()
+
+# sobran
+setdiff(modules_yalm, modules)
+
+# repetidos en yalm
+data_frame(m = modules_yalm) %>% 
+  count(m, sort = TRUE) %>% 
+  filter(n > 1)
+
 # plugins -----------------------------------------------------------------
 files <- c(
-  "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
+  # "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
+  # "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
+  # "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
   "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
   "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
   "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
-  "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
   "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
-  "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
   "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",
   "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"

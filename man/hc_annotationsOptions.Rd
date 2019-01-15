@@ -9,7 +9,7 @@ hc_annotationsOptions(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Options defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.}
+\item{...}{Options defined in \url{https://www.highcharts.com/products/plugin-registry/single/17/Annotations}.}
 }
 \description{
 Setting annotations options to highcharts objects

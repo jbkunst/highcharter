@@ -783,7 +783,7 @@ hc_add_annotations <- function(hc, x){
 
 #' Setting annotations options to highcharts objects
 #' @param hc A \code{highchart} \code{htmlwidget} object.
-#' @param ... Options defined in \url{http://www.highcharts.com/plugin-registry/single/17/Annotations}.
+#' @param ... Options defined in \url{https://www.highcharts.com/products/plugin-registry/single/17/Annotations}.
 #' @export
 hc_annotationsOptions <- function(hc, ...){
   

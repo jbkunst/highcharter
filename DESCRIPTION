@@ -20,7 +20,6 @@ Authors@R: c(
   )
 URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
-Maintainer: Joshua Kunst <jbkunst@gmail.com>
 License: MIT + file LICENSE
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

@@ -6,23 +6,23 @@
 #' ---
 
 #+ message=FALSE, warning=FALSE, echo=FALSE, results=FALSE
-library("highcharter")
-library("dplyr")
+library(highcharter)
+library(dplyr)
 options(highcharter.theme = hc_theme_smpl())
 
 #' ### data.frame
 data(mpg, package = "ggplot2")
 data(diamonds, package = "ggplot2")
 
-hchart(mpg, "point", x = displ, y = hwy)
-hchart(mpg, "point", x = displ, y = hwy, group = class)
+hchart(mpg, "point", hcaes(x = displ, y = hwy))
+hchart(mpg, "point", hcaes(x = displ, y = hwy, group = class))
 
 mpgman <- count(mpg, manufacturer)
-hchart(mpgman, "bar", x = manufacturer, y = n)
-hchart(mpgman, "treemap", x = manufacturer, value = n)
+hchart(mpgman, "bar", hcaes(x = manufacturer, y = n))
+hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n))
 
 mpgman2 <- count(mpg, manufacturer, year)
-hchart(mpgman2, "bar", x = manufacturer, y = n, group = year)
+hchart(mpgman2, "bar", hcaes(x = manufacturer, y = n, group = year))
 
 #' ### numeric
 hchart(c(rnorm(500), rnorm(500, 6, 2)))
@@ -40,12 +40,12 @@ hchart(diamonds$cut)
 hchart(LakeHuron)
 
 #' ### xts
-library("quantmod")
+library(quantmod)
 options(download.file.method = "libcurl")
 
 hchart(getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE))
 
-hchart(getSymbols("YHOO", auto.assign = FALSE))
+# hchart(getSymbols("YHOO", auto.assign = FALSE))
 
 #' ### forecast
 library("forecast")

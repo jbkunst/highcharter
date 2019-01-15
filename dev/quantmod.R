@@ -1,22 +1,18 @@
-rm(list = ls())
-require("quantmod")
-
+library(quantmod)
 
 x <- getSymbols("AAPL", auto.assign = FALSE)
 y <- getSymbols("SPY", auto.assign = FALSE)
 
-highchart() %>% 
-  hc_add_series_ohlc(x) %>% 
-  hc_add_series_ohlc(y)
-
+highchart(type = "stock") %>% 
+  hc_add_series(x) %>% 
+  hc_add_series(y)
 
 usdjpy <- getSymbols("USD/JPY", src="oanda", auto.assign = FALSE)
 eurkpw <- getSymbols("EUR/KPW", src="oanda", auto.assign = FALSE)
 
-
-hc <- highchart(highstock = TRUE) %>% 
-  hc_add_series_xts(usdjpy, id = "usdjpy") %>% 
-  hc_add_series_xts(eurkpw, id = "eurkpw")
+hc <- highchart(type = "stock") %>% 
+  hc_add_series(usdjpy, id = "usdjpy") %>% 
+  hc_add_series(eurkpw, id = "eurkpw")
 
 hc
 
