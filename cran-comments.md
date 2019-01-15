@@ -1,7 +1,7 @@
-## Resubmission
+## Submission 
 
-* 2 (of 3) Notes haev benn fixed.
-* The Note about the installed package size is know due the vignettes
-download some geojson data.
+For highcharter v0.7.0
 
-Thanks again!
+* 2 notes in my development setup (htmlwidgets folder have more than 3mb).
+
+Thanks!
