@@ -186,12 +186,3 @@ highchart() %>%
   hc_yAxis(min = -5, max = 5)
 
 # bullet ------------------------------------------------------------------
-highchart() %>% 
-  hc_add_dependency("modules/bullet.js") %>% 
-  hc_chart(
-    type = "bullet",
-    inverted = TRUE
-  ) %>% 
-  hc_add_series(
-    data = list(y = 275, target = 250)
-  )
