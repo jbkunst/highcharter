@@ -35,7 +35,7 @@ Imports:
     zoo,
     dplyr (>= 0.7.0),
     tibble (>= 1.1),
-    stringr,
+    stringr (>= 1.3.0),
     broom,
     xts,
     quantmod,
@@ -46,8 +46,7 @@ Imports:
     lubridate,
     crosstalk,
     yaml,
-    rlang(>= 0.1.1),
-    whisker
+    rlang(>= 0.1.1)
 Suggests:
     knitr,
     rmarkdown,

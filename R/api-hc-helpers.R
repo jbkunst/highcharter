@@ -186,7 +186,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #' @param width	A numeric input in pixels indicating the with of the tooltip.
 #' @param height	A numeric input in pixels indicating the height of the tooltip.
 #'
-#' @importFrom whisker whisker.render
+#' @importFrom stringr str_glue
 #' @importFrom htmlwidgets JS
 #' @examples
 #'
@@ -256,6 +256,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #'       )
 #'     )
 #'   )
+#'   
 #'  }
 #'
 #' @export
@@ -308,27 +309,29 @@ tooltip_chart <- function(
   }
   # cat(hcopts)
 
-  jss <- "function() {
+  jss <- "function() {{
   var point = this;
   console.log(point);
-  console.log(point.{{accesor}});
-  setTimeout(function() {
+  console.log(point.{accesor});
+  setTimeout(function() {{
 
-  $(\"#tooltipchart-{{id}}\").highcharts(hcopts);
+  $(\"#tooltipchart-{id}\").highcharts(hcopts);
 
   }, 0);
 
-  return '<div id=\"tooltipchart-{{id}}\" style=\"width: {{w}}px; height: {{h}}px;\"></div>';
+  return '<div id=\"tooltipchart-{id}\" style=\"width: {w}px; height: {h}px;\"></div>';
 
-  }"
+  }}"
   # cat(jss)
 
-  jsss <- whisker.render(
-    jss,
-    list(id = random_id(), w = width, h = height, accesor = accesor)
-  )
+  # jsss <- whisker.render(
+  #   jss,
+  #   list(id = random_id(), w = width, h = height, accesor = accesor)
+  # )
   # cat(jsss)
 
+  jsss <- stringr::str_glue(jss, id = random_id(), w = width, h = height, accesor = accesor)
+  
   jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
   # cat(jsss)
 

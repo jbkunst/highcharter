@@ -1,3 +1,10 @@
+# highcharter 0.7.1
+
+## Changes
+
+* Removing whisker package dependency (#415)
+
+
 # highcharter 0.7.0 
 
 ## Changes
