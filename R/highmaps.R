@@ -164,13 +164,14 @@ hcmap <- function(map = "custom/world",
 #' @examples
 #' \dontrun{
 #' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
+#' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js", quiet = TRUE)
 #' str(mpdta, 1)
 #' }
 #' @seealso \code{\link{hcmap}}
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file
 #' @export
-download_map_data <- function(url = "custom/world.js", showinfo = FALSE, 
+download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
                               quiet = FALSE) {
   
   url <- sprintf("https://code.highcharts.com/mapdata/%s",

@@ -4,7 +4,7 @@
 
 * Removing whisker package dependency (#415).
 * Bullet chart is supported. Added `bullet.js` module to `highchart.yalm` (#482).
-
+* Add parameter `quiet` to `download_map_data`. Thanks to @DavidBreuer (#450).
 
 # highcharter 0.7.0 
 
