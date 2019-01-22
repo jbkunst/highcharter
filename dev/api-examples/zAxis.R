@@ -1,7 +1,7 @@
 df <- data.frame(
-  x = sample(1 = 5),
-  y = sample(1 = 5),
-  z = sample(1 = 5)
+  x = sample(1:5),
+  y = sample(1:5),
+  z = sample(1:5)
 )
 
 # Note the 3d requiere highchart2() due have the 3d module

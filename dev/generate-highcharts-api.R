@@ -57,6 +57,12 @@ txt <- c(
   ""
 )
 
+# run examples to check at least don't have errores
+# dfopts %>% 
+#   pull(option) %>% 
+#   str_c("dev/api-examples/", ., ".R") %>% 
+#   map(source, echo = FALSE)
+
 write_lines(txt, fout)
 
 dfopts %>% 
