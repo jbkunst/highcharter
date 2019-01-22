@@ -6,14 +6,15 @@ highchart() %>%
   hc_yAxis(
     title = list(text = "y Axis at right"),
     opposite = TRUE,
+    alternateGridColor = "#FAFAFA",
     minorTickInterval = "auto",
     minorGridLineDashStyle = "LongDashDotDot",
     showFirstLabel = FALSE,
     showLastLabel = FALSE,
     plotBands = list(
       list(
-        from = 25,
-        to = 80,
+        from = 13,
+        to = 17,
         color = "rgba(100, 0, 0, 0.1)",
         label = list(text = "This is a plotBand")
         )

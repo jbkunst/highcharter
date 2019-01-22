@@ -18,7 +18,15 @@ access to the axis.
 }
 \examples{
 
-highchart() \%>\%
+df <- data.frame(
+  x = sample(1 = 5),
+  y = sample(1 = 5),
+  z = sample(1 = 5)
+)
+
+# Note the 3d requiere highchart2() due have the 3d module
+highchart2() \%>\%
+  hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) \%>\% 
   hc_chart(
     type = "scatter3d",
     options3d = list(
@@ -26,24 +34,23 @@ highchart() \%>\%
       alpha = 20,
       beta = 30,
       depth = 200,
-      viewDistance = 5
-    )
-  ) \%>\% 
-  hc_add_series(
-    data = list(
-      list(
-        list(1, 2, 3),
-        list(2, 3, 4)
+      viewDistance = 5,
+      frame = list(
+        bottom = list(
+          size = 1,
+          color = "rgba(0,0,0,0.05)"
+        )
       )
     )
   ) \%>\% 
   hc_zAxis(
+    title = list(text = "Z axis is here"),
     startOnTick = FALSE,
     tickInterval = 2,
     tickLength = 4,
     tickWidth = 1,
-    gridLineColor = "#A00000",
-    gridLineDashStyle = "dot"  
+    gridLineColor = "red",
+    gridLineDashStyle = "dot"
   )
 
 }
