@@ -1,4 +1,5 @@
 #' Function to export js file the configuration options
+#' 
 #' @param hc A \code{Highcharts object}.
 #' @param filename String of the exported file.
 #' @param as String to define how to save the configuration options.

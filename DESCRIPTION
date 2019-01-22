@@ -45,7 +45,6 @@ Imports:
     jsonlite,
     igraph,
     lubridate,
-    crosstalk,
     yaml,
     rlang(>= 0.1.1)
 Suggests:

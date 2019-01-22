@@ -1,137 +1,46 @@
-#' Helpers to use highcharter as input in shiny apps
-#'
-#' When you use highcharter in a shiny app, for example
-#' \code{renderHighcharter('my_chart')}, you can access to the actions of the
-#' user using and then use the \code{hc_add_event_point} via the
-#' \code{my_chart} input (\code{input$my_chart}). That's a way you can
-#' use a chart as an input.
-#'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param series The name of type of series to apply the event.
-#' @param event The name of event: click, mouseOut,  mouseOver. See
-#'   \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
-#'   for more details.
-#'
-#' @note Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
-#'     and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
-#'
-#' @export
-hc_add_event_point <- function(hc, series = "series", event = "click"){
-
-  fun <- paste0("function(){
-  var pointinfo = {series: this.series.name, seriesid: this.series.id,
-  name: this.name, x: this.x, y: this.y, category: this.category.name}
-  window.x = this;
-  console.log(pointinfo);
-
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
-}")
-
-  fun <- JS(fun)
-
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(structure(
-          list(fun),
-          .Names = event)
-        ),
-        .Names = "events")
-      ),
-      .Names = "point")
-    ),
-    .Names = series
-  )
-
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-
-  hc
-
+validate_args <- function(name, lstargs) {
+  
+  lstargsnn <- lstargs[which(names(lstargs) == "")]
+  lenlst <- length(lstargsnn)
+  
+  if (lenlst != 0) {
+    
+    chrargs <- lstargsnn %>% 
+      unlist() %>% 
+      as.character()
+    
+    chrargs <- paste0("'", chrargs, "'", collapse = ", ")
+    
+    txt <- ifelse(lenlst == 1, " is ", "s are ")
+    
+    stop(chrargs, " argument", txt, "not named in ", paste0("hc_", name),
+         call. = FALSE)
+    
+  }
+  
 }
 
-#' @rdname hc_add_event_point
-#' @export
-hc_add_event_series <- function(hc, series = "series", event = "click"){
-
-  fun <- paste0("function(){
-  var seriesinfo = {name: this.name }
-  console.log(seriesinfo);
-  window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
-
-}")
-  fun <- JS(fun)
-
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(fun),
-        .Names = event)
-      ),
-      .Names = "events")
-    ),
-    .Names = series
-  )
-
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-
-  hc
-
-}
-
-
-
-#' Setting \code{elementId}
-#'
-#' Function to modify the \code{id} for the container.
-#'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param id A string
-#'
-#' @examples
-#'
-#' hchart(rnorm(10)) %>%
-#'   hc_elementId("newid")
-#'
-#' @export
-hc_elementId <- function(hc, id = NULL) {
-
+#' @importFrom rlist list.merge
+.hc_opt <- function(hc, name, ...) {
+  
   assertthat::assert_that(is.highchart(hc))
-
-  hc$elementId <- as.character(id)
-
+  
+  validate_args(name, eval(substitute(alist(...))))
+  
+  if (is.null(hc$x$hc_opts[[name]])) {
+    
+    hc$x$hc_opts[[name]] <- list(...)
+    
+  } else {
+    
+    hc$x$hc_opts[[name]] <- list.merge(hc$x$hc_opts[[name]], list(...))
+    
+  }
+  
+  # Setting fonts
+  hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc$x$hc_opts)))
+  
   hc
-}
-
-#' Changing the size of a `highchart` object
-#'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param width	A numeric input in pixels.
-#' @param height	A numeric input in pixels.
-#'
-#' @examples
-#'
-#' hc_size(hcts(rnorm(100)), 400, 200)
-#'
-#' @export
-hc_size <- function(hc, width = NULL, height = NULL) {
-
-  assertthat::assert_that(is.highchart(hc))
-
-  if (!is.null(width))
-    hc$width <- width
-
-  if (!is.null(height))
-    hc$height <- height
-
-  hc
-
 }
 
 .hc_tooltip_table <- function(hc, ...) {
@@ -171,9 +80,8 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 
           return tooltip.defaultFormatter.call(this, tooltip);
         }"))
-
+  
 }
-
 
 #' Helper to create charts in tooltips.
 #'
@@ -266,9 +174,9 @@ tooltip_chart <- function(
   width = 250,
   height = 150
 ) {
-
+  
   assertthat::assert_that(assertthat::is.string(accesor))
-
+  
   if(is.null(hc_opts)) {
     hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor))
   } else {
@@ -276,30 +184,30 @@ tooltip_chart <- function(
       hc_opts[["series"]][[1]] <- list()
     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
   }
-
+  
   hc_opts <- rlist::list.merge(
     getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
     list(chart = list(backgroundColor = "transparent")),
     list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
     hc_opts
   )
-
+  
   if(!has_name(hc_opts[["series"]][[1]], "color")) hc_opts[["series"]][[1]][["color"]] <- "point.color"
-
+  
   hcopts <- toJSON(
     x = hc_opts, pretty = TRUE, auto_unbox = TRUE, json_verbatim = TRUE,
     force = TRUE, null = "null", na = "null"
   )
   hcopts <- as.character(hcopts)
   # cat(hcopts)
-
+  
   # fix point.color
   hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
-
+  
   # remove "\"" to have access to the point object
   ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") %>% unlist()
   for(t in ts) hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
-
+  
   # remove "\"" in the options
   ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") %>%  unlist()
   for(t in ts) {
@@ -308,7 +216,7 @@ tooltip_chart <- function(
     hcopts <- str_replace(hcopts, t, t2)
   }
   # cat(hcopts)
-
+  
   jss <- "function() {{
   var point = this;
   console.log(point);
@@ -323,20 +231,20 @@ tooltip_chart <- function(
 
   }}"
   # cat(jss)
-
+  
   # jsss <- whisker.render(
   #   jss,
   #   list(id = random_id(), w = width, h = height, accesor = accesor)
   # )
   # cat(jsss)
-
+  
   jsss <- stringr::str_glue(jss, id = random_id(), w = width, h = height, accesor = accesor)
   
   jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
   # cat(jsss)
-
+  
   JS(jsss)
-
+  
 }
 
 #' Helper for make table in tooltips
@@ -384,5 +292,156 @@ tooltip_table <- function(x, y,
     tbl <- tagList(tbl, img)
   
   as.character(tbl)
+  
+}
+
+#' Setting \code{elementId}
+#'
+#' Function to modify the \code{id} for the container.
+#'
+#' @param hc A `highchart` `htmlwidget` object.
+#' @param id A string
+#'
+#' @examples
+#'
+#' hchart(rnorm(10)) %>%
+#'   hc_elementId("newid")
+#'
+#' @export
+hc_elementId <- function(hc, id = NULL) {
+
+  assertthat::assert_that(is.highchart(hc))
+
+  hc$elementId <- as.character(id)
+
+  hc
+}
+
+#' Changing the size of a `highchart` object
+#'
+#' @param hc A `highchart` `htmlwidget` object.
+#' @param width	A numeric input in pixels.
+#' @param height	A numeric input in pixels.
+#'
+#' @examples
+#'
+#' hc_size(hcts(rnorm(100)), 400, 200)
+#'
+#' @export
+hc_size <- function(hc, width = NULL, height = NULL) {
+
+  assertthat::assert_that(is.highchart(hc))
+
+  if (!is.null(width))
+    hc$width <- width
+
+  if (!is.null(height))
+    hc$height <- height
+
+  hc
+
+}
+
+#' Setting Motion options to highcharts objects
+#'
+#' The Motion Highcharts Plugin adds an interactive HTML5 player
+#' to any Highcharts chart (Highcharts, Highmaps and Highstock).
+#'
+#' @param hc A \code{highchart} \code{htmlwidget} object.
+#' @param enabled Enable the motion plugin.
+#' @param startIndex start index, default to 0.
+#' @param ... Arguments defined in \url{https://github.com/larsac07/Motion-Highcharts-Plugin/wiki}.
+#'
+#' @export
+hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
+  
+  hc <- .hc_opt(hc, "motion", enabled = enabled, startIndex = startIndex, ...)
+  
+  hc <- hc_add_dependency_fa(hc)
+  
+  hc
+  
+}
+
+
+
+#' @rdname hc_xAxis
+#' @export
+hc_yAxis_multiples <- function(hc, ...) {
+  
+  # print(length(list(...)));  print(length(list(...)[[1]]));
+  # print(class(list(...)));  print(class(list(...)[[1]]))
+  
+  if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_yaxis_list") {
+    hc$x$hc_opts$yAxis <- list(...)[[1]]
+  } else {
+    hc$x$hc_opts$yAxis <- list(...)
+  }
+  
+  hc
+  
+}
+
+#' Creating multiples yAxis t use with highcharts
+#' @param naxis Number of axis an integer.
+#' @param heights A numeric vector. This values will be normalized.
+#' @param sep A numeric value for the separation (in percentage) for the panes.
+#' @param offset A numeric value (in percentage).
+#' @param turnopposite A logical value to turn the side of each axis or not.
+#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}. 
+#' @examples 
+#' 
+#' highchart() %>% 
+#'    hc_yAxis_multiples(create_yaxis(naxis = 2, heights = c(2, 1))) %>% 
+#'    hc_add_series(data = c(1,3,2), yAxis = 0) %>% 
+#'    hc_add_series(data = c(20, 40, 10), yAxis = 1)
+#'    
+#' highchart() %>% 
+#'   hc_yAxis_multiples(create_yaxis(naxis = 3, lineWidth = 2, title = list(text = NULL))) %>% 
+#'   hc_add_series(data = c(1,3,2)) %>% 
+#'   hc_add_series(data = c(20, 40, 10), yAxis = 1) %>% 
+#'   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) %>% 
+#'   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)  
+#'    
+#' @importFrom dplyr bind_cols
+#' @export
+create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
+                         offset = 0, turnopposite = TRUE, ...) {
+  
+  pcnt <- function(x) paste0(x * 100, "%")
+  
+  heights <- rep(heights, length = naxis)
+  
+  heights <- (heights / sum(heights)) %>% 
+    map(function(x) c(x, sep)) %>% 
+    unlist() %>% 
+    head(-1) %>%
+    { . / sum(.) } %>% 
+    round(5) 
+  
+  tops <- cumsum(c(0, head(heights, -1)))
+  
+  tops <- pcnt(tops)
+  heights <- pcnt(heights)
+  
+  dfaxis <- data_frame(height = heights, top = tops, offset = offset)
+  
+  dfaxis <- dfaxis %>% dplyr::filter(seq_len(nrow(dfaxis)) %% 2 != 0)
+  
+  if (turnopposite) {
+    ops <- rep_len(c(FALSE, TRUE), length.out = nrow(dfaxis))
+    dfaxis <- dfaxis %>%
+      mutate(opposite = ops)
+  }
+  
+  dfaxis <- bind_cols(dfaxis, data_frame(nid = seq(naxis), ...))
+  
+  yaxis <- list_parse(dfaxis)
+  
+  # yaxis <- map(yaxis, function(x) c(x, ...))
+  
+  class(yaxis) <- "hc_yaxis_list"
+  
+  yaxis
   
 }

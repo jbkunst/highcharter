@@ -111,21 +111,6 @@ hex_to_rgba <- function(x, alpha = 1) {
 
 }
 
-#' Get dash styles
-#'
-#' Get dash style to use on highcharts objects.
-#'
-#'
-#' @export
-dash_styles <- function() {
-
-  .Deprecated()
-
-  c("Solid", "ShortDash", "ShortDot", "ShortDashDot", "ShortDashDotDot",
-    "Dot", "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
-
-}
-
 #' Chart a demo for testing themes
 #'
 #' Chart a demo for testing themes

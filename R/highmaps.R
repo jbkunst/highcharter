@@ -47,11 +47,13 @@
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   
-  assertthat::assert_that(is.highchart(hc),
-                          is.list(map),
-                          is.data.frame(df),
-                          value %in% names(df),
-                          tail(joinBy, 1) %in% names(df))
+  assertthat::assert_that(
+    is.highchart(hc),
+    is.list(map),
+    is.data.frame(df),
+    value %in% names(df),
+    tail(joinBy, 1) %in% names(df)
+    )
   
   joindf <- tail(joinBy, 1)
   

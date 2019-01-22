@@ -400,6 +400,7 @@ hcaes_ <- hcaes_string
 #' @param mapping A mapping from \code{hcaes} function.
 #' @param drop A logical argument to you drop variables or not. Default is 
 #' \code{FALSE}
+#' @importFrom lubridate is.Date
 #' @importFrom rlang "!!!" "!!" ":=" parse_quosure syms
 #' @examples 
 #' 
@@ -618,6 +619,190 @@ hc_add_series_list <- function(hc, x) {
     x <- list_parse(x)
   
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)
+  
+  hc
+  
+}
+
+#' Helpers to use highcharter as input in shiny apps
+#'
+#' When you use highcharter in a shiny app, for example
+#' \code{renderHighcharter('my_chart')}, you can access to the actions of the
+#' user using and then use the \code{hc_add_event_point} via the
+#' \code{my_chart} input (\code{input$my_chart}). That's a way you can
+#' use a chart as an input.
+#'
+#' @param hc A `highchart` `htmlwidget` object.
+#' @param series The name of type of series to apply the event.
+#' @param event The name of event: click, mouseOut,  mouseOver. See
+#'   \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
+#'   for more details.
+#'
+#' @note Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
+#'     and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
+#'
+#' @export
+hc_add_event_point <- function(hc, series = "series", event = "click"){
+  
+  fun <- paste0("function(){
+  var pointinfo = {series: this.series.name, seriesid: this.series.id,
+  name: this.name, x: this.x, y: this.y, category: this.category.name}
+  window.x = this;
+  console.log(pointinfo);
+
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
+}")
+  
+  fun <- JS(fun)
+  
+  eventobj <- structure(
+    list(structure(
+      list(structure(
+        list(structure(
+          list(fun),
+          .Names = event)
+        ),
+        .Names = "events")
+      ),
+      .Names = "point")
+    ),
+    .Names = series
+  )
+  
+  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+    hc$x$hc_opts$plotOptions,
+    eventobj
+  )
+  
+  hc
+  
+}
+
+#' @rdname hc_add_event_point
+#' @export
+hc_add_event_series <- function(hc, series = "series", event = "click"){
+  
+  fun <- paste0("function(){
+  var seriesinfo = {name: this.name }
+  console.log(seriesinfo);
+  window.x = this;
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
+
+}")
+  fun <- JS(fun)
+  
+  eventobj <- structure(
+    list(structure(
+      list(structure(
+        list(fun),
+        .Names = event)
+      ),
+      .Names = "events")
+    ),
+    .Names = series
+  )
+  
+  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+    hc$x$hc_opts$plotOptions,
+    eventobj
+  )
+  
+  hc
+  
+}
+
+#' @rdname hc_annotations
+#' @export
+hc_add_annotation <- function(hc, ...){
+  
+  assertthat::assert_that(is.highchart(hc))
+  
+  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]],
+                                          list(list(...)))
+  
+  hc
+  
+}
+
+#' @rdname hc_annotations
+#' @param x A \code{list} or a \code{data.frame} of annotations.
+#' @details The \code{x} elements must have \code{xValue} and \code{yValue}
+#'   elements
+#' @export
+hc_add_annotations <- function(hc, x){
+  
+  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  
+  if (is.data.frame(x))
+    x <- list_parse(x)
+  
+  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], x)
+  
+  hc
+  
+}
+
+#' Add modules or plugin dependencies to highcharts objects
+#' 
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param name The partial path to the plugin or module,
+#'   example: `"plugins/annotations.js"`
+#' @examples 
+#' 
+#' highchart() %>% 
+#'  hc_title(text = "I'm a pirate looking chart") %>% 
+#'  hc_xAxis(categories = month.abb) %>% 
+#'  hc_defs(
+#'    patterns = list(
+#'      list(
+#'        id = "custom-pattern",
+#'        path = list(d = "M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11",
+#'                  stroke = "black", strokeWidth = 1
+#'        )
+#'      )
+#'    )
+#'  ) %>% 
+#'  hc_add_series(data = 10 * dt(1 + 1:12 - mean(1:12), df = 2),
+#'                type = "area",
+#'                fillColor = "url(#custom-pattern)") %>% 
+#'  hc_add_theme(hc_theme_handdrawn()) %>% 
+#'  hc_add_dependency(name = "plugins/pattern-fill-v2.js")
+#'  
+#' data(mpg, package = "ggplot2")  
+#'  
+#' hchart(mpg, "point", hcaes(displ, hwy), regression = TRUE,
+#'        regressionSettings = list(type = "polynomial", order = 5, hideInLegend = TRUE)) %>%
+#'   hc_add_dependency("plugins/highcharts-regression.js")
+#'   
+#' hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) %>% 
+#'   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>% 
+#'   hc_add_dependency("plugins/highcharts-regression.js")
+#'    
+#' 
+#' @importFrom purrr map_chr
+#' @importFrom htmltools htmlDependency
+#' @importFrom yaml yaml.load_file
+#' @export
+hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
+  
+  stopifnot(!is.null(name))
+  
+  yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
+  yml <- yaml.load_file(yml)[[1]]
+  
+  hc_ver <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts"]
+  
+  dep <- htmlDependency(
+    name = basename(name),
+    version = hc_ver,
+    src = c(file = system.file(
+      sprintf("htmlwidgets/lib/highcharts-%s/%s", hc_ver, dirname(name)),
+      package = "highcharter")
+    ),
+    script = basename(name)
+  )
+  
+  hc$dependencies <- c(hc$dependencies, list(dep))
   
   hc
   

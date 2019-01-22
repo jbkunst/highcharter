@@ -1,33 +1,47 @@
 library(tidyverse)
 library(rvest)
 
-fout <- "dev/docs-and-examples/api-hc.R"
+fout <- "dev/docs-and-examples/highcharts-api.R"
 
-url <- "https://api.highcharts.com/highcharts"
+get_options <- function(url) {
 
-apihmtl <- read_html(url)
+  apihmtl <- read_html(url)
+  
+  opts <- apihmtl %>% 
+    html_node("#options") %>% 
+    html_nodes(".title")
+  
+  opts_text <- html_text(opts) %>% 
+    str_trim() %>% 
+    str_remove_all(":") 
+  
+  opts_url <- html_attr(opts, "href")
+  
+  dfopts <- tibble(
+    option = opts_text,
+    url = file.path(url, opts_url)
+  )
+    
+}
 
-opts <- apihmtl %>% 
-  html_node("#options") %>% 
-  html_nodes(".title")
+dfopts <- c(
+  "https://api.highcharts.com/highcharts",
+  "https://api.highcharts.com/highstock",
+  "https://api.highcharts.com/highmaps"
+) %>% 
+  map_df(get_options)
 
-opts_text <- html_text(opts) %>% 
-  str_trim() %>% 
-  str_remove_all(":") 
+dfopts %>% 
+  count(option) %>% 
+  arrange(n)
 
-opts_url <- html_attr(opts, "href")
+dfopts <- distinct(dfopts, option, .keep_all = TRUE)
 
-dfopts <- tibble(
- option = opts_text,
- url = file.path(url, opts_url)
-)
-
-rm(opts, opts_text, opts_url, apihmtl, url)
-
-dfopts
-
-opts_to_remove <- c("colors", "global", "lang", "noDate", "defs", "data",
-                    "loading", "accessibility")
+opts_to_remove <- c(
+  "global", "lang", "noData",
+  "defs", "data", "loading", "accessibility",
+  "labels", "stockTools", "navigation"
+  )
 
 dfopts <- dfopts %>% 
   filter(!option %in% opts_to_remove)
@@ -46,7 +60,6 @@ txt <- c(
 write_lines(txt, fout)
 
 dfopts %>% 
-  sample_frac(1) %>%
   pmap(function(option, url){
     
     # url <- "https://api.highcharts.com/highcharts/drilldown"
@@ -69,13 +82,48 @@ dfopts %>%
     
     roxy1 
     
-    roxy2 <- str_glue(
-"#' @param hc A `highchart` `htmlwidget` object. 
+    if(option == "tooltip") {
+      
+      roxy2 <- str_glue(
+        "#' @param hc A `highchart` `htmlwidget` object. 
+#' @param ... Arguments defined in { url }. 
+#' @param sort Logical value to implement sort according `this.point`
+#'   http://stackoverflow.com/a/16954666/829971.
+#' @param table Logical value to implement table in tooltip: 
+#'   http://stackoverflow.com/a/22327749/829971.
+#' 
+#' @examples
+#' ",
+        url = url
+      ) 
+      
+    } else if (option == "colors") {
+      
+      
+      roxy2 <- c(
+        "#' Setting color options to highchart objects
+#' 
+#' An array containing the default colors for the chart's series. When all 
+#' colors are used, new colors are pulled from the start again. 
+#' 
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param colors A vector of colors. 
+#' 
+#' @examples
+#' ") 
+      
+    } else {
+      
+      roxy2 <- str_glue(
+        "#' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in { url }. 
 #' 
-#' @examples",
-url = url
-    ) 
+#' @examples
+#' ",
+        url = url
+      ) 
+      
+    }
     
     roxy2
     
@@ -85,8 +133,50 @@ url = url
     
     roxy3
     
-    fun <- str_glue(
-"#' 
+    if(option == "tooltip") {
+      
+      fun <- "#' 
+#' @export
+hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
+  
+  if (sort)
+    hc <- .hc_tooltip_sort(hc)
+  
+  if (table)
+    hc <- .hc_tooltip_table(hc)
+  
+  if (length(list(...))) 
+    hc <- .hc_opt(hc, \"tooltip\", ...)
+  
+  hc  
+  
+}
+
+"
+      
+    } else if (option == "colors") {
+      
+      fun <- "#' 
+#' @export
+hc_colors <- function(hc, colors) {
+  
+  assertthat::assert_that(is.vector(colors))
+  
+  if (length(colors) == 1)
+    colors <- list(colors)
+
+  hc$x$hc_opts$colors <- colors
+  
+  hc
+  
+}
+
+"
+      
+    } else {
+      
+      fun <- str_glue(
+        "#' 
 #' @export
 hc_{ opt }  <- function(hc, ...) {{
   
@@ -95,7 +185,9 @@ hc_{ opt }  <- function(hc, ...) {{
 }}
 
 ",
-opt = option)
+        opt = option)
+      
+    }
     
     fun
     
@@ -110,4 +202,3 @@ opt = option)
       )
     
   })
-
