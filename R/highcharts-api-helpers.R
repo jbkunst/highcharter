@@ -424,7 +424,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
   tops <- pcnt(tops)
   heights <- pcnt(heights)
   
-  dfaxis <- data_frame(height = heights, top = tops, offset = offset)
+  dfaxis <- tibble(height = heights, top = tops, offset = offset)
   
   dfaxis <- dfaxis %>% dplyr::filter(seq_len(nrow(dfaxis)) %% 2 != 0)
   
@@ -434,7 +434,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
       mutate(opposite = ops)
   }
   
-  dfaxis <- bind_cols(dfaxis, data_frame(nid = seq(naxis), ...))
+  dfaxis <- bind_cols(dfaxis, tibble(nid = seq(naxis), ...))
   
   yaxis <- list_parse(dfaxis)
   

@@ -40,7 +40,7 @@ dfopts <- distinct(dfopts, option, .keep_all = TRUE)
 opts_to_remove <- c(
   "global", "lang", "noData",
   "defs", "data", "loading", "accessibility",
-  "labels", "stockTools", "navigation"
+  "labels", "stockTools", "navigation", "time"
   )
 
 dfopts <- dfopts %>% 
@@ -62,22 +62,35 @@ write_lines(txt, fout)
 dfopts %>% 
   pmap(function(option, url){
     
-    # url <- "https://api.highcharts.com/highcharts/drilldown"
-    # option <- "drilldown"
+    # url <- "https://api.highcharts.com/highcharts/time"
+    # option <- "colors"
     message(option, ": ", url)
     
-    doc <- read_html(url) 
-    
-    roxy1 <- doc %>% 
-      html_node("#option-list") %>% 
-      html_node("div") %>% 
-      html_text() %>% 
-      str_trim() %>% 
-      str_split("\n", simplify = TRUE) %>% 
-      str_trim() %>% 
-      c("") %>% 
-      str_c("#' ", .)
-    
+    if(option == "colors") {
+      
+      roxy1 <- c("#' colors",
+"#' ",
+"#' An array containing the default colors for the chart's series. When all ",
+"#' colors are used, new colors are pulled from the start again.",
+"#' ")
+      
+    } else {
+      
+      doc <- read_html(url) 
+      
+      roxy1 <- doc %>% 
+        html_node("#option-list") %>% 
+        html_node("div") %>% 
+        html_text() %>% 
+        str_trim() %>% 
+        str_split("\n", simplify = TRUE) %>% 
+        str_trim() %>% 
+        c("") %>% 
+        str_c("#' ", .)
+      
+      
+    }
+      
     roxy1[1] <- str_c(roxy1[1], " options for highcharter objects")
     
     roxy1 
@@ -101,12 +114,7 @@ dfopts %>%
       
       
       roxy2 <- c(
-        "#' Setting color options to highchart objects
-#' 
-#' An array containing the default colors for the chart's series. When all 
-#' colors are used, new colors are pulled from the start again. 
-#' 
-#' @param hc A `highchart` `htmlwidget` object. 
+        "#' @param hc A `highchart` `htmlwidget` object. 
 #' @param colors A vector of colors. 
 #' 
 #' @examples

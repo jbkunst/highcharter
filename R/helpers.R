@@ -16,7 +16,7 @@ list_parse <- function(df) {
   assertthat::assert_that(is.data.frame(df))
 
   map_if(df, is.factor, as.character) %>%
-    as_data_frame() %>%
+    as_tibble() %>%
     list.parse() %>%
     setNames(NULL)
 

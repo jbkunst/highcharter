@@ -16,25 +16,6 @@ example: \code{"plugins/annotations.js"}}
 Add modules or plugin dependencies to highcharts objects
 }
 \examples{
-
-highchart() \%>\% 
- hc_title(text = "I'm a pirate looking chart") \%>\% 
- hc_xAxis(categories = month.abb) \%>\% 
- hc_defs(
-   patterns = list(
-     list(
-       id = "custom-pattern",
-       path = list(d = "M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11",
-                 stroke = "black", strokeWidth = 1
-       )
-     )
-   )
- ) \%>\% 
- hc_add_series(data = 10 * dt(1 + 1:12 - mean(1:12), df = 2),
-               type = "area",
-               fillColor = "url(#custom-pattern)") \%>\% 
- hc_add_theme(hc_theme_handdrawn()) \%>\% 
- hc_add_dependency(name = "plugins/pattern-fill-v2.js")
  
 data(mpg, package = "ggplot2")  
  

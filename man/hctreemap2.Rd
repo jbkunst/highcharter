@@ -32,7 +32,7 @@ library(tidyverse)
 library(highcharter)
 library(RColorBrewer)
 
-data_frame(
+tibble(
   index1 = sample(LETTERS[1:5], 500, replace = T),
   index2 = sample(LETTERS[6:10], 500, replace = T),
   index3 = sample(LETTERS[11:15], 500, replace = T),

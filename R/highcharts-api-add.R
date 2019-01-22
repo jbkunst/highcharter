@@ -158,7 +158,7 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
     
     for (m in seq(ncol(data$upper))){ 
       # m <- 1
-      dfbands <- data_frame(
+      dfbands <- tibble(
         t = tmf,
         l = as.vector(data$lower[, m]),
         u = as.vector(data$upper[, m])
@@ -444,10 +444,12 @@ add_arg_to_df <- function(data, ...) {
   
   datal <- append(datal, l)
   
-  as_data_frame(datal)
+  as_tibble(datal)
   
 }
 
+#' @importFrom dplyr mutate do arrange_
+#' @importFrom tibble tibble tibble_
 data_to_series <- function(data, mapping, type, ...) {
   
   # check type and fix
@@ -748,25 +750,6 @@ hc_add_annotations <- function(hc, x){
 #' @param name The partial path to the plugin or module,
 #'   example: `"plugins/annotations.js"`
 #' @examples 
-#' 
-#' highchart() %>% 
-#'  hc_title(text = "I'm a pirate looking chart") %>% 
-#'  hc_xAxis(categories = month.abb) %>% 
-#'  hc_defs(
-#'    patterns = list(
-#'      list(
-#'        id = "custom-pattern",
-#'        path = list(d = "M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11",
-#'                  stroke = "black", strokeWidth = 1
-#'        )
-#'      )
-#'    )
-#'  ) %>% 
-#'  hc_add_series(data = 10 * dt(1 + 1:12 - mean(1:12), df = 2),
-#'                type = "area",
-#'                fillColor = "url(#custom-pattern)") %>% 
-#'  hc_add_theme(hc_theme_handdrawn()) %>% 
-#'  hc_add_dependency(name = "plugins/pattern-fill-v2.js")
 #'  
 #' data(mpg, package = "ggplot2")  
 #'  

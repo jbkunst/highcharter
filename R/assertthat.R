@@ -1,4 +1,4 @@
-#' @importFrom assertthat are_equal on_failure
+#' @importFrom assertthat are_equal on_failure assert_that
 .is_hc_theme <- function(hc_theme){
   are_equal(class(hc_theme), "hc_theme")
 }
