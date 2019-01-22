@@ -34,10 +34,6 @@ hc_gen_arimaproces <- function(x) {
   
 }
 
-ts <- 
-  
-  data.frame()
-
 highchart() %>% 
   hc_add_series(data = as.numeric(ts)) %>% 
   hc_navigator(enabled = TRUE) %>% 
