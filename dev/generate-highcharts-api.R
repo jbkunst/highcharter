@@ -1,5 +1,6 @@
 library(tidyverse)
 library(rvest)
+library(highcharter)
 
 fout <- "dev/highcharts-api.R"
 
@@ -60,7 +61,7 @@ txt <- c(
 # run examples to check at least don't have errores
 out <- dfopts %>%
   pull(option) %>%
-  str_c("dev/api-examples/", ., ".R") %>%
+  str_c("dev/examples-api/", ., ".R") %>%
   map(source, echo = FALSE)
 
 write_lines(txt, fout)
@@ -141,7 +142,7 @@ dfopts %>%
     
     roxy2
     
-    roxy3 <- read_lines(str_glue("dev/api-examples/{ opt }.R", opt = option)) %>% 
+    roxy3 <- read_lines(str_glue("dev/examples-api/{ opt }.R", opt = option)) %>% 
       str_c("", ., "") %>% 
       str_c("#' ", .)
     
@@ -192,7 +193,7 @@ hc_colors <- function(hc, colors) {
       fun <- str_glue(
         "#' 
 #' @export
-hc_{ opt }  <- function(hc, ...) {{
+hc_{ opt } <- function(hc, ...) {{
   
   .hc_opt(hc, \"{ opt }\", ...)
   

@@ -24,8 +24,7 @@ highchart() %>%
     )
   ) %>% 
   hc_tooltip(yDecimals = 2) %>% 
-  hc_add_series(
-    data = citytemp$tokyo,
+  hc_add_series(data = sample(1:12),
     draggableY = TRUE,
     dragMinY = 0,
     type = "column",

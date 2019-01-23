@@ -50,12 +50,12 @@ hc <- highchart() \%>\%
     colorByPoint = TRUE
   )
 
-dfan <- data_frame(
+dfan <- data.frame(
   name = c("Cats", "Dogs", "Cows", "Sheep", "Pigs"),
   value = c(4, 3, 1, 2, 1)
 )
 
-dffru <- data_frame(
+dffru <- data.frame(
   name = c("Apple", "Organes"),
   value = c(4, 2)
 )
