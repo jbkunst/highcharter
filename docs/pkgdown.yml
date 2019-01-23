@@ -1,0 +1,9 @@
+pandoc: 1.19.2.1
+pkgdown: 1.3.0.9000
+pkgdown_sha: 2f40b4769ea9ad2312aa4cc93f27ab116461543b
+articles:
+  charting-data-frames: charting-data-frames.html
+  charting-maps: charting-maps.html
+  replicating-highcharts-demos: replicating-highcharts-demos.html
+  shiny-events-demo: shiny-events-demo.html
+
