@@ -25,6 +25,10 @@ highchartzero(hc_opts = list(), theme = NULL, width = NULL,
 
 \item{debug}{A boolean value if you want to print in the browser console the
 parameters given to \code{highchart}.}
+
+\item{id}{An \code{highcharter} plot id.}
+
+\item{session}{A Shiny session.}
 }
 \description{
 This widgets don't support options yet.

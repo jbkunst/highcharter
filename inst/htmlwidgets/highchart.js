@@ -1,3 +1,5 @@
+var Highcharts;
+
 HTMLWidgets.widget({
 
   name: 'highchart',
@@ -7,7 +9,6 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     return {
-      // TODO: add instance fields as required
     };
 
   },
@@ -134,3 +135,14 @@ HTMLWidgets.widget({
   }
 
 });
+
+if (HTMLWidgets.shinyMode) {
+  
+  // DRAW
+  Shiny.addCustomMessageHandler('highchart_hide',
+    function(data) {
+      var chart = $("#" + data.id).highcharts();
+      chart.series[0].hide();
+  });
+
+}

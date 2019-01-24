@@ -116,6 +116,8 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param elementId	Use an explicit element ID for the widget.
 #' @param debug A boolean value if you want to print in the browser console the 
 #'    parameters given to `highchart`.
+#' @param id An \code{highcharter} plot id.
+#' @param session A Shiny session.
 #'
 #' @export
 highchart2 <- function(hc_opts = list(),
@@ -200,3 +202,12 @@ highchartzero <- function(hc_opts = list(),
   )
 }
 
+#' @rdname highchartproxy
+#' @export
+highchartProxy <- function(id, session = shiny::getDefaultReactiveDomain()){
+  
+  proxy <- list(id = id, session = session)
+  class(proxy) <- "highchartProxy"
+  
+  return(proxy)
+}
