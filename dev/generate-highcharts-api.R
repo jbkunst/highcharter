@@ -41,7 +41,7 @@ dfopts <- distinct(dfopts, option, .keep_all = TRUE)
 opts_to_remove <- c(
   "global", "lang", "noData",
   "defs", "data", "loading", "accessibility",
-  "labels", "stockTools", "navigation", "time"
+  "stockTools", "navigation", "time"
   )
 
 dfopts <- dfopts %>% 
