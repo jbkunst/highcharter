@@ -18,3 +18,4 @@ fort.6
 ^data-raw$
 ^appveyor\.yml$
 ^revdep$
+index.Rmd

@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css?family=Alegreya+Sans|Alegreya+Sans+SC");
+
+@font-face {
+  font-family: 'Datalegreya-Gradient';
+  src: url('http://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Gradient.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  -moz-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  -ms-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* navbar and container things */
+.main-container, .container-fluid {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* footer icons */
+footer i {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* content things */
+#content {
+  padding-top: 80px;
+}
+
+#brand {
+  font-family: 'Datalegreya-Gradient', sans-serif;
+  font-size: 3em;
+  text-align:center;
+  vertical-align:middle;
+  display: table;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+.highchart {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* printable sheet */
+@media print {
+  header {display:none;}
+  footer {display:none;}
+}

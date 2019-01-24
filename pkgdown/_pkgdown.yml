@@ -1,0 +1,7 @@
+template:
+  params:
+    bootswatch: lumen
+
+authors:
+  Joshua Kunst:
+    href: http://jkunst.com

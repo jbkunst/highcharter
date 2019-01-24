@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function to generate iids — random_id • highcharter</title>
+<title>labels options for highcharter objects — hc_labels • highcharter</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Function to generate iids — random_id" />
+<meta property="og:title" content="labels options for highcharter objects — hc_labels" />
 
-<meta property="og:description" content="Function to generate iids" />
+<meta property="og:description" content="HTML labels that can be positioned anywhere in the chart area." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,39 +120,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function to generate iids</h1>
+    <h1>labels options for highcharter objects</h1>
     
-    <div class="hidden name"><code>random_id.Rd</code></div>
+    <div class="hidden name"><code>hc_labels.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to generate iids</p>
+    <p>HTML labels that can be positioned anywhere in the chart area.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>random_id</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>hc_labels</span>(<span class='no'>hc</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>n</th>
-      <td><p>Number of ids</p></td>
+      <th>hc</th>
+      <td><p>A <code>highchart</code> <code>htmlwidget</code> object.</p></td>
     </tr>
     <tr>
-      <th>length</th>
-      <td><p>Length of ids</p></td>
+      <th>...</th>
+      <td><p>Arguments defined in https://api.highcharts.com/highcharts/labels.</p></td>
     </tr>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>12</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>hc_labels</span>(
+    <span class='kw'>items</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+        <span class='kw'>html</span> <span class='kw'>=</span> <span class='st'>"&lt;p&gt;Some &lt;b&gt;important&lt;/b&gt;&lt;br&gt;text&lt;/p&gt;"</span> ,
+        <span class='kw'>style</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+          <span class='kw'>left</span> <span class='kw'>=</span> <span class='st'>"150%"</span>,
+          <span class='kw'>top</span> <span class='kw'>=</span> <span class='st'>"150%"</span>
+        )
+      )
+    )
+  )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

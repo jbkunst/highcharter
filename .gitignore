@@ -26,3 +26,6 @@ fort.6
 
 # rev deps
 revdep/*
+
+# logs
+*debug.log

@@ -6,10 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Wrapper for the 'Highcharts' Library • highcharter</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="A Wrapper for the 'Highcharts' Library">
+<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="A Wrapper for the 'Highcharts' Library">
 <meta property="og:description" content="A wrapper for the 'Highcharts' library including
     shortcut functions to plot R objects. 'Highcharts'
     &lt;http://www.highcharts.com/&gt; is a charting library offering
@@ -21,7 +22,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -83,72 +84,20 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
+    
 
+    
+    
 
-<hr>
-<p><a href="https://cran.r-project.org/package=highcharter"><img src="http://www.r-pkg.org/badges/version/highcharter?color=brightgreen" alt="CRAN_Status_Badge"></a> <a href="http://www.r-pkg.org/pkg/highcharter"><img src="http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen" alt="CRAN downloads"></a> <a href="https://travis-ci.org/jbkunst/highcharter"><img src="https://api.travis-ci.org/jbkunst/highcharter.svg" alt="travis-status"></a> <a href="https://ci.appveyor.com/project/jbkunst/highcharter"><img src="https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a> <a href="https://github.com/jbkunst/highcharter/issues"><img src="https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg" alt="GitHub closed issues"></a> <a href="https://github.com/jbkunst/highcharter/issues"><img src="https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg" alt="GitHub issues"></a> <a href="https://github.com/jbkunst/highcharter"><img src="https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&amp;label=Github" alt="Github Stars"></a></p>
-<hr>
-<p>R wrapper for highcharts. <code>highcharter</code> bring all the highcharts capabilites so it is recommended know how highcharts API works to take a major advantage of this package. You can look some <a href="http://www.highcharts.com/demo">demos</a> charts and explore chart types, syntax and all what highcharts can do.</p>
-<div id="highlights" class="section level2">
-<h2 class="hasAnchor">
-<a href="#highlights" class="anchor"></a>Highlights</h2>
-<ul>
-<li>
-<a href="http://jkunst.com/highcharter/">Various</a> chart type with the same style: scatters, bubble, line, time series, heatmaps, treemap, bar charts, networks.</li>
-<li>Chart various R object with <a href="http://jkunst.com/highcharter/hchart.html">one function</a>. With <code><a href="reference/hchart.html">hchart(x)</a></code> you can chart: data.frames, numeric, histogram, character, density, factors, ts, mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist, dendrogram, phylo, survfit classes.</li>
-<li>Support <a href="http://jkunst.com/highcharter/highstock.html">Highstock charts</a>. You can create a candlestick charts in 2 lines of code. Support <code>xts</code> objects from the quantmod package.</li>
-<li>Support <a href="http://jkunst.com/highcharter/highmaps.html">Highmaps charts</a>. It’s easy to create choropleths or add information in geojson format.</li>
-<li>
-<a href="http://jkunst.com/highcharter/themes.html">Themes</a>: you configurate your chart in multiples ways. There are implemented themes like economist, financial times, google, 538 among others.</li>
-<li>
-<a href="http://jkunst.com/highcharter/plugins.html">Plugins</a>: motion, drag points, fontawesome, url-pattern, annotations.</li>
-<li>&lt;3 and respect to Highcharts team.</li>
-</ul>
+<div class="page-header"><h1>
+<div id="brand">
+h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}
 </div>
-<div id="resources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#resources" class="anchor"></a>Resources</h2>
-<ul>
-<li>Official package website: <a href="http://jkunst.com/highcharter/" class="uri">http://jkunst.com/highcharter/</a>.</li>
-<li>
-<a href="https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html">Highcharts API and highcharter</a> by</li>
-</ul>
-<p>@dantonnoriega.</p>
-<ul>
-<li>Replicating Highcharts Demos: <a href="https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html" class="uri">https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html</a>
-</li>
-<li>CRAN site <a href="https://cran.r-project.org/web/packages/highcharter/" class="uri">https://cran.r-project.org/web/packages/highcharter/</a>.</li>
-<li>Some Shiny demos <a href="http://104.140.247.162:3838/shiny-apps-highcharter/">here</a> and code <a href="https://github.com/jbkunst/shiny-apps-highcharter">there</a>.</li>
-</ul>
-</div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation:</h2>
-<p>CRAN version:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"highcharter"</span>)</code></pre></div>
-<p>Development version:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jbkunst/highcharter"</span>)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/source">source</a></span>(<span class="st">"https://install-github.me/jbkunst/highcharter"</span>)</code></pre></div>
-</div>
-<div id="licence" class="section level2">
-<h2 class="hasAnchor">
-<a href="#licence" class="anchor"></a>Licence</h2>
-<p>Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the <code>highcharter</code> license neither provides nor implies a license for Highcharts.</p>
-<p>Highcharts (<a href="http://highcharts.com" class="uri">http://highcharts.com</a>) is a Highsoft product which is not free for commercial and Governmental use.</p>
-</div>
-<div id="discount-for-highcharter-users" class="section level2">
-<h2 class="hasAnchor">
-<a href="#discount-for-highcharter-users" class="anchor"></a>Discount for highcharter users</h2>
-<p>Highsoft provide a discount to the highcharter users. It is a 50% discount on our Single Developer license. More details in <a href="http://announcements.highcharts.com/foss/" class="uri">http://announcements.highcharts.com/foss/</a>.</p>
-</div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that this project is released with a <a href="CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
-</div>
-
+</h1></div>
+<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
+<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -172,22 +121,31 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Joshua Kunst <br><small class="roles"> Author, maintainer </small>  </li>
+<li>
+<a href="http://jkunst.com">Joshua Kunst</a> <br><small class="roles"> Author, maintainer </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="http://jkunst.com/highcharter/"><img src="https://raw.githubusercontent.com/jbkunst/highcharter/master/highcharter-logo.png"></a></li>
+<li><a href="https://cran.r-project.org/package=highcharter"><img src="http://www.r-pkg.org/badges/version/highcharter?color=brightgreen" alt="CRAN_Status_Badge"></a></li>
+<li><a href="http://www.r-pkg.org/pkg/highcharter"><img src="http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen" alt="CRAN downloads"></a></li>
+<li><a href="https://travis-ci.org/jbkunst/highcharter"><img src="https://api.travis-ci.org/jbkunst/highcharter.svg" alt="travis-status"></a></li>
+<li><a href="https://ci.appveyor.com/project/jbkunst/highcharter"><img src="https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://github.com/jbkunst/highcharter/issues"><img src="https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg" alt="GitHub closed issues"></a></li>
+<li><a href="https://github.com/jbkunst/highcharter/issues"><img src="https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg" alt="GitHub issues"></a></li>
+<li><a href="https://github.com/jbkunst/highcharter"><img src="https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&amp;label=Github" alt="Github Stars"></a></li>
 </ul>
 </div>
 </div>
+
 </div>
 
+
       <footer><div class="copyright">
-  <p>Developed by Joshua Kunst.</p>
+  <p>Developed by <a href="http://jkunst.com">Joshua Kunst</a>.</p>
 </div>
 
 <div class="pkgdown">
