@@ -3,6 +3,7 @@
 #' highcharter proxy example.
 #' 
 #' @param proxy An object of class \code{highchartProxy} as returned by \code{\link{highchartProxy}}.
+#' @param ... Whatever, this is not being used.
 #' 
 #' @examples 
 #' library(shiny)
