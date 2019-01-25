@@ -1,7 +1,15 @@
 template:
   params:
     bootswatch: lumen
+    docsearch:
+      api_key: API_KEY
+      index_name: INDEX_NAME
 
 authors:
   Joshua Kunst:
     href: http://jkunst.com
+
+navbar:
+  right:
+    - icon: fa-github-alt
+      href: https://github.com/jbkunst/highcharter
