@@ -19,6 +19,6 @@ fort.6
 ^appveyor\.yml$
 ^revdep$
 index.Rmd
-*debug.log
+.*debug.log
 
 
