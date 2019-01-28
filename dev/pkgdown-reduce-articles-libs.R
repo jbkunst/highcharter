@@ -43,11 +43,12 @@ map2(
     
     write_lines(x = new_lines, path = f)
     
-    f %>% 
-      str_remove(".html") %>% 
-      str_c("_files/") %>% 
-      fs::dir_delete() %>% 
-      try()
+    try(
+      f %>% 
+        str_remove(".html") %>% 
+        str_c("_files/") %>% 
+        fs::dir_delete()
+    )
     
   }
 )
