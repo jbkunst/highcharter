@@ -1,0 +1,244 @@
+---
+title: <i class="fa fa-map-o"></i> Charting Maps
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+library(highcharter)
+options(highcharter.download_map_data = TRUE)
+```
+
+## Basics
+
+The easiest way to chart a map with highcharter is using `hcmap` function.
+Select a map (a url) from the highmaps collection 
+https://code.highcharts.com/mapdata/.
+and use the url as a map in `hcmap` function. This will download the map
+and create a \code{highchart} object using the info as a `mapData` argument.
+
+
+```{r, warning=FALSE, message=FALSE}
+library(highcharter)
+hcmap("countries/nz/nz-all")
+hcmap("custom/usa-and-canada", showInLegend = FALSE)
+hcmap("countries/us/us-ca-all") %>%
+  hc_title(text = "California")
+```
+
+__Note__: _The copyright information is added to the chart credits by default, 
+but please be aware that you will have to display this information somewhere 
+else if you choose to disable chart credits. Copyright information for each map
+can be found as properties in the GeoJSON and Javascript files_.
+
+## Choropleths
+
+What about add data to get a choropleth? Every map downloaded from the 
+highcharts maps collection have keys to join data. There are 2 functions
+to help to know what are the regions coded to know how to join the map
+and data:
+
+- `download_map_data`: Download the geojson data from the highcharts collection.
+- `get_data_from_map`: Get the properties  for each region in the map, as 
+the keys from the map data.
+
+```{r}
+require(dplyr)
+
+mapdata <- get_data_from_map(download_map_data("custom/usa-and-canada"))
+
+glimpse(mapdata)
+
+data_fake <- mapdata %>% 
+  select(code = `hc-a2`) %>% 
+  mutate(value = 1e5 * abs(rt(nrow(.), df = 10)))
+
+glimpse(data_fake)
+```
+
+If we compare this 2 data frames the `hc-key` is same code that
+`code`. So we'll use these columns as keys:
+
+```{r}
+hcmap(
+  "custom/usa-and-canada",
+  data = data_fake,
+  value = "value",
+  joinBy = c("hc-a2", "code"),
+  name = "Fake data",
+  dataLabels = list(enabled = TRUE, format = "{point.name}"),
+  borderColor = "#FAFAFA",
+  borderWidth = 0.1,
+  tooltip = list(
+    valueDecimals = 2,
+    valuePrefix = "$",
+    valueSuffix = "USD"
+  )
+) 
+```
+
+## Adding Points
+
+With highcharter is possible add data as points or bubbles. For this it is 
+necessary a data frame with `lat`, `lon` columns, and `name`, `z`  are
+optional:
+
+```{r}
+cities <- data.frame(
+  name = c("London", "Birmingham", "Glasgow", "Liverpool"),
+  lat = c(51.507222, 52.483056, 55.858, 53.4),
+  lon = c(-0.1275, -1.893611, -4.259, -3),
+  z = c(1, 2, 3, 2)
+)
+
+hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
+  hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = '10%') %>%
+  hc_mapNavigation(enabled = TRUE)
+```
+
+Another example:
+
+
+```{r}
+library(tidyverse)
+
+airports <- read_csv("https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv")
+
+airports <- airports %>%
+  filter(country %in% c("Brazil", "Ecuador", "Venezuela", "Chile", "Argentina", "Peru", 
+"Uruguay", "Paraguay", "Bolivia", "Suriname", "Guyana", "Colombia"
+)) %>% 
+  rename(lat = latitude, lon = longitude) %>% 
+  filter(lon < -30)
+
+hcmap(
+  "custom/south-america",
+  name = "South America",
+  showInLegend = FALSE
+  ) %>%
+  hc_add_series(
+    data = airports,
+    type = "mappoint",
+    name = "Airports",
+    color = hex_to_rgba("darkred", alpha = 0.3),
+    maxSize = "10",
+    tooltip = list(
+      pointFormat = "{point.name}: {point.altitude:,.0f} feets <br>
+      ({point.lat:,.2f}, {point.lon:,.2f})"
+      )
+  ) %>%
+  hc_chart(zoomType = "xy")
+```
+
+## `geojsonio` Package
+
+Highcharts support `geo_json` classes from the `geojsonio` package. So you 
+can use `hc_add_series` as usual without use `geojson = TRUE` 
+parameter/argument.
+
+
+```{r}
+library(httr)
+library(jsonlite)
+library(geojsonio)
+
+ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json") %>% 
+  content() %>% 
+  fromJSON(simplifyVector = FALSE) %>% 
+  as.json()
+
+ausmap <- highchart(type = "map") %>%
+  hc_add_series(mapData = ausgeojson, showInLegend = FALSE)
+ausmap
+```
+
+We can still adding data:
+
+
+```{r}
+airports <- read.csv("https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv")
+airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+
+airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
+class(airp_geojson)
+
+ausmap %>%
+  hc_add_series(
+    data = airp_geojson,
+    type = "mappoint",
+    dataLabels = list(enabled = FALSE),
+    name = "Airports",
+    tooltip = list(pointFormat = "{point.name}")
+  ) 
+```
+
+## An Advanced Example
+
+Let's download some geojson files and make a map.
+
+```{r}
+getContent <- function(url) {
+  library(httr)
+  content(GET(url))
+}
+
+world <- getContent("https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json")
+# is text
+world <- jsonlite::fromJSON(world, simplifyVector = FALSE)
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas
+marine <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_corrientes_maritimas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
+# marine <- geojsonio::as.json(marine)
+
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas
+plates <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_limites_placas&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
+# plates <- geojsonio::as.json(plates)
+
+# http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
+volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
+# volcano <- geojsonio::as.json(volcano)
+```
+
+The data is ready. Remember you can keep using the rest of the API to 
+customize your map.
+
+```{r}
+highchart(type = "map") %>%
+  hc_chart(backgroundColor = "#161C20") %>%
+  hc_add_series(
+    mapData = world,
+    showInLegend = FALSE,
+    nullColor = "#424242",
+    borderWidth = 0
+  ) %>%
+  hc_add_series(
+    data = marine,
+    type = "mapline",
+    geojson = TRUE,
+    color = "#2980b9",
+    name = "Marine currents",
+    tooltip = list(pointFormat = "{point.properties.NOMBRE}")
+  ) %>%
+  hc_add_series(
+    data = plates,
+    type = "mapline",
+    lineWidth = 2,
+    zIndex = -1,
+    geojson = TRUE,
+    color = "#d35400",
+    name = "Plates",
+    tooltip = list(pointFormat = "{point.properties.TIPO}")
+  ) %>%
+  hc_add_series(
+    data = volcano,
+    type = "mappoint",
+    color = hex_to_rgba("#f1c40f", 0.4),
+    geojson = TRUE,
+    name = "Volcanos",
+    tooltip = list(pointFormat = "{point.properties.NOMBRE}"),
+    marker = list(lineWidth = 0, radius = 2)
+  )
+```

@@ -9,7 +9,9 @@ authors:
   Joshua Kunst:
     href: http://jkunst.com
 
+name: "my-website"
 navbar:
+  title: "My Website"
   right:
     - icon: fa-github-alt
       href: https://github.com/jbkunst/highcharter

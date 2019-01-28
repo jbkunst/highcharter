@@ -227,9 +227,107 @@ divplots
 ```
 
 
+Highcharter is a [R](https://cran.r-project.org/) wrapper for 
+**[Highcharts](https://www.highcharts.com/)**  javascript libray and its modules.
+Highcharts is very mature and flexible javascript charting library and 
+it has a great and powerful API^[See http://www.highcharts.com/demo].
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+The main features of this package are:
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+* Various chart type: scatters, bubble, line, 
+time series, heatmaps, treemap, bar charts, networks.
+* Chart various R object with one function. With hchart(x) you can 
+chart: data.frames, numeric, histogram, character, density, factors, ts,
+ mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist,
+  dendrogram, phylo, survfit classes.
+* Support Highstock charts. You can create a candlestick charts in 2 lines 
+of code. Support xts objects from the quantmod package.
+* Support Highmaps charts. It's easy to create choropleths or add 
+information in geojson format.
+* Themes: you configurate your chart in multiples ways. There are
+ implemented themes like economist, financial times, google, 538 among 
+ others.
+* A lot of Plugins: motion, drag points, fontawesome, url-pattern, annotations.
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+## Highcharts: Hello World Example 
+
+This is a simple example using `hchart` function.
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+options(highcharter.theme = hc_theme_smpl())
+```
+
+```{r}
+library(highcharter)
+data(diamonds, mpg, package = "ggplot2")
+
+hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+```
+
+Among its features highcharter can chart various objects depending of
+its class with the generic^[I want to say *magic*]  `hchart` function.
+
+```{r}
+x <- c(rnorm(1000), rnorm(500, 5))
+
+hchart(x, name = "data") 
+```
+
+One of the nicest class which `hchart` can plot is the `forecast`
+class from the forecast package.
+
+```{r}
+library(forecast)
+
+airforecast <- forecast(auto.arima(AirPassengers), level = 95)
+
+hchart(airforecast)
+```
+
+## Highstock
+
+With highcharter you can use the highstock library which 
+include sophisticated navigation options like a small navigator 
+series, preset date ranges, date picker, scrolling and panning.
+With highcarter it's easy make candlesticks or ohlc charts using
+time series data. For example data from [quantmod](http://www.quantmod.com/)
+package.
+
+```{r}
+library(quantmod)
+
+x <- getSymbols("GOOG", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
+
+hc <- hchart(x)
+hc
+```
+
+If you need to add new data you can use `hc_add_series` function.
+
+```{r}
+hc %>% 
+  hc_add_series(y, type = "ohlc")
+```
+
+## Highmaps
+
+You can chart maps and choropleth using the highmaps module.
+
+```{r}
+data(GNI2014, package = "treemap")
+
+hcmap(
+  "custom/world-robinson-lowres",data = GNI2014,
+  name = "GNI",
+  value = "GNI",
+  joinBy = c("iso-a3", "iso3"),
+  ) %>%
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
+    type = "logarithmic"
+    ) 
+```
+

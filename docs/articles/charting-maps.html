@@ -9,7 +9,9 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Charting Maps">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -71,8 +73,21 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/jbkunst/highcharter">
+    <span class="fa fa-github-alt"></span>
+     
+  </a>
+</li>
+      </ul>
+<form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
+      </form>
+      
+    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -98,10 +113,10 @@
 <h2 class="hasAnchor">
 <a href="#basics" class="anchor"></a>Basics</h2>
 <p>The easiest way to chart a map with highcharter is using <code>hcmap</code> function. Select a map (a url) from the highmaps collection <a href="https://code.highcharts.com/mapdata/" class="uri">https://code.highcharts.com/mapdata/</a>. and use the url as a map in <code>hcmap</code> function. This will download the map and create a  object using the info as a <code>mapData</code> argument.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/nz/nz-all"</span>)
-<span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"custom/usa-and-canada"</span>, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>)
-<span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/us/us-ca-all"</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_title.html">hc_title</a></span>(<span class="dt">text =</span> <span class="st">"California"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/nz/nz-all"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"custom/usa-and-canada"</span>, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/us/us-ca-all"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/hc_title.html">hc_title</a></span>(<span class="dt">text =</span> <span class="st">"California"</span>)</a></code></pre></div>
 <p><strong>Note</strong>: <em>The copyright information is added to the chart credits by default, but please be aware that you will have to display this information somewhere else if you choose to disable chart credits. Copyright information for each map can be found as properties in the GeoJSON and Javascript files</em>.</p>
 </div>
 <div id="choropleths" class="section level2">
@@ -114,121 +129,121 @@
 <li>
 <code>get_data_from_map</code>: Get the properties for each region in the map, as the keys from the map data.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(dplyr)
-
-mapdata &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data_from_map.html">get_data_from_map</a></span>(<span class="kw"><a href="../reference/download_map_data.html">download_map_data</a></span>(<span class="st">"countries/us/us-all"</span>))
-<span class="kw">glimpse</span>(mapdata)
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)
-
-data_fake &lt;-<span class="st"> </span>mapdata <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">code =</span> <span class="st">`</span><span class="dt">hc-a2</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="fl">1e5</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/TDist">rt</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(.), <span class="dt">df =</span> <span class="dv">10</span>)))
-
-<span class="kw">glimpse</span>(data_fake)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">mapdata &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data_from_map.html">get_data_from_map</a></span>(<span class="kw"><a href="../reference/download_map_data.html">download_map_data</a></span>(<span class="st">"countries/us/us-all"</span>))</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">glimpse</span>(mapdata)</a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8">data_fake &lt;-<span class="st"> </span>mapdata <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">select</span>(<span class="dt">code =</span> <span class="st">`</span><span class="dt">hc-a2</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="fl">1e5</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/TDist">rt</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(.), <span class="dt">df =</span> <span class="dv">10</span>)))</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="kw">glimpse</span>(data_fake)</a></code></pre></div>
 <p>If we compare this 2 data frames the <code>hc-key</code> is same code that <code>code</code>. So we’ll use these columns as keys:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/us/us-all"</span>, <span class="dt">data =</span> data_fake, <span class="dt">value =</span> <span class="st">"value"</span>,
-      <span class="dt">joinBy =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hc-a2"</span>, <span class="st">"code"</span>), <span class="dt">name =</span> <span class="st">"Fake data"</span>,
-      <span class="dt">dataLabels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">enabled =</span> <span class="ot">TRUE</span>, <span class="dt">format =</span> <span class="st">"{point.name}"</span>),
-      <span class="dt">borderColor =</span> <span class="st">"#FAFAFA"</span>, <span class="dt">borderWidth =</span> <span class="fl">0.1</span>,
-      <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">valueDecimals =</span> <span class="dv">2</span>, <span class="dt">valuePrefix =</span> <span class="st">"$"</span>, <span class="dt">valueSuffix =</span> <span class="st">"USD"</span>)) </code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/us/us-all"</span>, <span class="dt">data =</span> data_fake, <span class="dt">value =</span> <span class="st">"value"</span>,</a>
+<a class="sourceLine" id="cb3-2" title="2">      <span class="dt">joinBy =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"hc-a2"</span>, <span class="st">"code"</span>), <span class="dt">name =</span> <span class="st">"Fake data"</span>,</a>
+<a class="sourceLine" id="cb3-3" title="3">      <span class="dt">dataLabels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">enabled =</span> <span class="ot">TRUE</span>, <span class="dt">format =</span> <span class="st">"{point.name}"</span>),</a>
+<a class="sourceLine" id="cb3-4" title="4">      <span class="dt">borderColor =</span> <span class="st">"#FAFAFA"</span>, <span class="dt">borderWidth =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb3-5" title="5">      <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">valueDecimals =</span> <span class="dv">2</span>, <span class="dt">valuePrefix =</span> <span class="st">"$"</span>, <span class="dt">valueSuffix =</span> <span class="st">"USD"</span>)) </a></code></pre></div>
 </div>
 <div id="adding-more-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adding-more-data" class="anchor"></a>Adding More Data</h2>
 <p>With highcharter is possible add data as points or bubbles. For this it is necessary a data frame with <code>lat</code>, <code>lon</code> columns, and <code>name</code>, <code>z</code> are optional:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cities &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(
-  <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"London"</span>, <span class="st">"Birmingham"</span>, <span class="st">"Glasgow"</span>, <span class="st">"Liverpool"</span>),
-  <span class="dt">lat =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">51.507222</span>, <span class="fl">52.483056</span>, <span class="fl">55.858</span>, <span class="fl">53.4</span>),
-  <span class="dt">lon =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1275</span>, <span class="op">-</span><span class="fl">1.893611</span>, <span class="op">-</span><span class="fl">4.259</span>, <span class="op">-</span><span class="dv">3</span>),
-  <span class="dt">z =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)
-)
-
-<span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/gb/gb-all"</span>, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> cities, <span class="dt">type =</span> <span class="st">"mapbubble"</span>, <span class="dt">name =</span> <span class="st">"Cities"</span>, <span class="dt">maxSize =</span> <span class="st">'10%'</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_mapNavigation.html">hc_mapNavigation</a></span>(<span class="dt">enabled =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">cities &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"London"</span>, <span class="st">"Birmingham"</span>, <span class="st">"Glasgow"</span>, <span class="st">"Liverpool"</span>),</a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">lat =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">51.507222</span>, <span class="fl">52.483056</span>, <span class="fl">55.858</span>, <span class="fl">53.4</span>),</a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">lon =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1275</span>, <span class="fl">-1.893611</span>, <span class="fl">-4.259</span>, <span class="dv">-3</span>),</a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="dt">z =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb4-6" title="6">)</a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/gb/gb-all"</span>, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> cities, <span class="dt">type =</span> <span class="st">"mapbubble"</span>, <span class="dt">name =</span> <span class="st">"Cities"</span>, <span class="dt">maxSize =</span> <span class="st">'10%'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/hc_mapNavigation.html">hc_mapNavigation</a></span>(<span class="dt">enabled =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>Another example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv"</span>)
-airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(airports, country <span class="op">==</span><span class="st"> "Australia"</span>, name <span class="op">!=</span><span class="st"> "Roma Street Railway Station"</span>)
-
-airports &lt;-<span class="st"> </span><span class="kw">rename</span>(airports, <span class="dt">lat =</span> latitude, <span class="dt">lon =</span> longitude)
-
-<span class="kw">glimpse</span>(airports)
-
-<span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/au/au-all"</span>, <span class="dt">name =</span> <span class="st">"Australia"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> airports, <span class="dt">type =</span> <span class="st">"mappoint"</span>,
-                <span class="dt">name =</span> <span class="st">"Airports"</span>, <span class="dt">maxSize =</span> <span class="st">"10"</span>, 
-                 <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.name}: {point.altitude:,.0f} feets"</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_chart.html">hc_chart</a></span>(<span class="dt">zoomType =</span> <span class="st">"xy"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(airports, country <span class="op">==</span><span class="st"> "Australia"</span>, name <span class="op">!=</span><span class="st"> "Roma Street Railway Station"</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4">airports &lt;-<span class="st"> </span><span class="kw">rename</span>(airports, <span class="dt">lat =</span> latitude, <span class="dt">lon =</span> longitude)</a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw">glimpse</span>(airports)</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="kw"><a href="../reference/hcmap.html">hcmap</a></span>(<span class="st">"countries/au/au-all"</span>, <span class="dt">name =</span> <span class="st">"Australia"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> airports, <span class="dt">type =</span> <span class="st">"mappoint"</span>,</a>
+<a class="sourceLine" id="cb5-10" title="10">                <span class="dt">name =</span> <span class="st">"Airports"</span>, <span class="dt">maxSize =</span> <span class="st">"10"</span>, </a>
+<a class="sourceLine" id="cb5-11" title="11">                 <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.name}: {point.altitude:,.0f} feets"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw"><a href="../reference/hc_chart.html">hc_chart</a></span>(<span class="dt">zoomType =</span> <span class="st">"xy"</span>)</a></code></pre></div>
 </div>
 <div id="advanced-maps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#advanced-maps" class="anchor"></a>Advanced Maps</h2>
 <p>Sometime you will need to use other source of maps. You can load geojson as a list. For example a good resource for geojson countries is <a href="https://github.com/johan/world.geo.json" class="uri">https://github.com/johan/world.geo.json</a>. Just ensure use <code>geojson = TRUE</code> to internally transform the list in a format usable for highcharts.</p>
 <p>Let’s download some geojson file and make a map.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">getContent &lt;-<span class="st"> </span><span class="cf">function</span>(url) {
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(httr)
-  <span class="kw">content</span>(<span class="kw">GET</span>(url))
-}
-
-world &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"</span>)
-<span class="co"># is text</span>
-world &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>(world, <span class="dt">simplifyVector =</span> <span class="ot">FALSE</span>)
-
-<span class="co"># http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas</span>
-marine &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&amp;typename=geonode%3Amundo_corrientes_maritimas&amp;outputFormat=json&amp;version=1.0.0&amp;service=WFS&amp;request=GetFeature"</span>)
-<span class="co"># marine &lt;- geojsonio::as.json(marine)</span>
-
-
-<span class="co"># http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas</span>
-plates &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&amp;typename=geonode%3Amundo_limites_placas&amp;outputFormat=json&amp;version=1.0.0&amp;service=WFS&amp;request=GetFeature"</span>)
-<span class="co"># plates &lt;- geojsonio::as.json(plates)</span>
-
-<span class="co"># http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes</span>
-volcano &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&amp;typename=geonode%3Amundo_volcanes&amp;outputFormat=json&amp;version=1.0.0&amp;service=WFS&amp;request=GetFeature"</span>)
-<span class="co"># volcano &lt;- geojsonio::as.json(volcano)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">getContent &lt;-<span class="st"> </span><span class="cf">function</span>(url) {</a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(httr)</a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="kw">content</span>(<span class="kw">GET</span>(url))</a>
+<a class="sourceLine" id="cb6-4" title="4">}</a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6">world &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"</span>)</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co"># is text</span></a>
+<a class="sourceLine" id="cb6-8" title="8">world &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>(world, <span class="dt">simplifyVector =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co"># http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_corrientes_maritimas</span></a>
+<a class="sourceLine" id="cb6-11" title="11">marine &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&amp;typename=geonode%3Amundo_corrientes_maritimas&amp;outputFormat=json&amp;version=1.0.0&amp;service=WFS&amp;request=GetFeature"</span>)</a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co"># marine &lt;- geojsonio::as.json(marine)</span></a>
+<a class="sourceLine" id="cb6-13" title="13"></a>
+<a class="sourceLine" id="cb6-14" title="14"></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co"># http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_limites_placas</span></a>
+<a class="sourceLine" id="cb6-16" title="16">plates &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&amp;typename=geonode%3Amundo_limites_placas&amp;outputFormat=json&amp;version=1.0.0&amp;service=WFS&amp;request=GetFeature"</span>)</a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co"># plates &lt;- geojsonio::as.json(plates)</span></a>
+<a class="sourceLine" id="cb6-18" title="18"></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="co"># http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes</span></a>
+<a class="sourceLine" id="cb6-20" title="20">volcano &lt;-<span class="st"> </span><span class="kw">getContent</span>(<span class="st">"http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&amp;typename=geonode%3Amundo_volcanes&amp;outputFormat=json&amp;version=1.0.0&amp;service=WFS&amp;request=GetFeature"</span>)</a>
+<a class="sourceLine" id="cb6-21" title="21"><span class="co"># volcano &lt;- geojsonio::as.json(volcano)</span></a></code></pre></div>
 <p>The data is ready. Remember you can keep using the rest of the API to customize your map.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>(<span class="dt">type =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_chart.html">hc_chart</a></span>(<span class="dt">backgroundColor =</span> <span class="st">"#161C20"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">mapData =</span> world, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>, <span class="dt">nullColor =</span> <span class="st">"#424242"</span>,
-                <span class="dt">borderWidth =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> marine, <span class="dt">type =</span> <span class="st">"mapline"</span>, <span class="dt">geojson =</span> <span class="ot">TRUE</span>,
-                <span class="dt">color =</span> <span class="st">"#2980b9"</span>, <span class="dt">name =</span> <span class="st">"Marine currents"</span>,
-                <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.properties.NOMBRE}"</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> plates, <span class="dt">type =</span> <span class="st">"mapline"</span>, <span class="dt">lineWidth =</span> <span class="dv">2</span>, <span class="dt">zIndex =</span> <span class="op">-</span><span class="dv">1</span>,
-                <span class="dt">geojson =</span> <span class="ot">TRUE</span>,
-                <span class="dt">color =</span> <span class="st">"#d35400"</span>, <span class="dt">name =</span> <span class="st">"Plates"</span>,
-                <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.properties.TIPO}"</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> volcano, <span class="dt">type =</span> <span class="st">"mappoint"</span>,
-                <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"#f1c40f"</span>, <span class="fl">0.4</span>),
-                <span class="dt">geojson =</span> <span class="ot">TRUE</span>, <span class="dt">name =</span> <span class="st">"Volcanos"</span>,
-                <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.properties.NOMBRE}"</span>),
-                <span class="dt">marker =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">lineWidth =</span> <span class="dv">0</span>, <span class="dt">radius =</span> <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>(<span class="dt">type =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/hc_chart.html">hc_chart</a></span>(<span class="dt">backgroundColor =</span> <span class="st">"#161C20"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">mapData =</span> world, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>, <span class="dt">nullColor =</span> <span class="st">"#424242"</span>,</a>
+<a class="sourceLine" id="cb7-4" title="4">                <span class="dt">borderWidth =</span> <span class="dv">0</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> marine, <span class="dt">type =</span> <span class="st">"mapline"</span>, <span class="dt">geojson =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-6" title="6">                <span class="dt">color =</span> <span class="st">"#2980b9"</span>, <span class="dt">name =</span> <span class="st">"Marine currents"</span>,</a>
+<a class="sourceLine" id="cb7-7" title="7">                <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.properties.NOMBRE}"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> plates, <span class="dt">type =</span> <span class="st">"mapline"</span>, <span class="dt">lineWidth =</span> <span class="dv">2</span>, <span class="dt">zIndex =</span> <span class="dv">-1</span>,</a>
+<a class="sourceLine" id="cb7-9" title="9">                <span class="dt">geojson =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-10" title="10">                <span class="dt">color =</span> <span class="st">"#d35400"</span>, <span class="dt">name =</span> <span class="st">"Plates"</span>,</a>
+<a class="sourceLine" id="cb7-11" title="11">                <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.properties.TIPO}"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> volcano, <span class="dt">type =</span> <span class="st">"mappoint"</span>,</a>
+<a class="sourceLine" id="cb7-13" title="13">                <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"#f1c40f"</span>, <span class="fl">0.4</span>),</a>
+<a class="sourceLine" id="cb7-14" title="14">                <span class="dt">geojson =</span> <span class="ot">TRUE</span>, <span class="dt">name =</span> <span class="st">"Volcanos"</span>,</a>
+<a class="sourceLine" id="cb7-15" title="15">                <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.properties.NOMBRE}"</span>),</a>
+<a class="sourceLine" id="cb7-16" title="16">                <span class="dt">marker =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">lineWidth =</span> <span class="dv">0</span>, <span class="dt">radius =</span> <span class="dv">2</span>))</a></code></pre></div>
 </div>
 <div id="geojsonio-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#geojsonio-package" class="anchor"></a><code>geojsonio</code> Package</h2>
 <p>Highcharts support <code>geo_json</code> classes from the <code>geojsonio</code> package. So you can use <code>hc_add_series</code> as usual without use <code>geojson = TRUE</code> parameter/argument.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geojsonio)
-
-ausgeojson &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/httr/topics/GET">GET</a></span>(<span class="st">"https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json"</span>)
-ausgeojson &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/httr/topics/content">content</a></span>(ausgeojson)
-ausgeojson &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>(ausgeojson, <span class="dt">simplifyVector =</span> <span class="ot">FALSE</span>)
-ausgeojson &lt;-<span class="st"> </span>geojsonio<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/geojsonio/topics/as.json">as.json</a></span>(ausgeojson)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(ausgeojson)
-
-<span class="co"># http://openflights.org/data.html</span>
-airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv"</span>)
-airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(airports, country <span class="op">==</span><span class="st"> "Australia"</span>, name <span class="op">!=</span><span class="st"> "Roma Street Railway Station"</span>)
-
-airp_geojson &lt;-<span class="st"> </span><span class="kw">geojson_json</span>(airports, <span class="dt">lat =</span> <span class="st">"latitude"</span>, <span class="dt">lon =</span> <span class="st">"longitude"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(airp_geojson)
-
-<span class="kw"><a href="../reference/highchart.html">highchart</a></span>(<span class="dt">type =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">mapData =</span> ausgeojson, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> airp_geojson, <span class="dt">type =</span> <span class="st">"mappoint"</span>,
-                <span class="dt">dataLabels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>),
-                <span class="dt">name =</span> <span class="st">"Airports"</span>, <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.name}"</span>)) </code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geojsonio)</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">ausgeojson &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/httr/topics/GET">GET</a></span>(<span class="st">"https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json"</span>)</a>
+<a class="sourceLine" id="cb8-4" title="4">ausgeojson &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/httr/topics/content">content</a></span>(ausgeojson)</a>
+<a class="sourceLine" id="cb8-5" title="5">ausgeojson &lt;-<span class="st"> </span>jsonlite<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">fromJSON</a></span>(ausgeojson, <span class="dt">simplifyVector =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-6" title="6">ausgeojson &lt;-<span class="st"> </span>geojsonio<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/geojsonio/topics/as.json">as.json</a></span>(ausgeojson)</a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(ausgeojson)</a>
+<a class="sourceLine" id="cb8-8" title="8"></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co"># http://openflights.org/data.html</span></a>
+<a class="sourceLine" id="cb8-10" title="10">airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://commondatastorage.googleapis.com/ckannet-storage/2012-07-09T214020/global_airports.csv"</span>)</a>
+<a class="sourceLine" id="cb8-11" title="11">airports &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(airports, country <span class="op">==</span><span class="st"> "Australia"</span>, name <span class="op">!=</span><span class="st"> "Roma Street Railway Station"</span>)</a>
+<a class="sourceLine" id="cb8-12" title="12"></a>
+<a class="sourceLine" id="cb8-13" title="13">airp_geojson &lt;-<span class="st"> </span><span class="kw">geojson_json</span>(airports, <span class="dt">lat =</span> <span class="st">"latitude"</span>, <span class="dt">lon =</span> <span class="st">"longitude"</span>)</a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(airp_geojson)</a>
+<a class="sourceLine" id="cb8-15" title="15"></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>(<span class="dt">type =</span> <span class="st">"map"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">mapData =</span> ausgeojson, <span class="dt">showInLegend =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(<span class="dt">data =</span> airp_geojson, <span class="dt">type =</span> <span class="st">"mappoint"</span>,</a>
+<a class="sourceLine" id="cb8-19" title="19">                <span class="dt">dataLabels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb8-20" title="20">                <span class="dt">name =</span> <span class="st">"Airports"</span>, <span class="dt">tooltip =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">pointFormat =</span> <span class="st">"{point.name}"</span>)) </a></code></pre></div>
 </div>
   </div>
 
@@ -254,12 +269,26 @@ airp_geojson &lt;-<span class="st"> </span><span class="kw">geojson_json</span>(
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>
 
   
-
-  </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
+  docsearch({
+    
+    
+    apiKey: 'API_KEY',
+    indexName: 'INDEX_NAME',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+</body>
 </html>
