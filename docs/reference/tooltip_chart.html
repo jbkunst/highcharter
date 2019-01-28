@@ -94,16 +94,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/articles/charting-maps.html">&lt;i class="fa fa-map-o"&gt;&lt;/i&gt; Charting Maps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/showcase.html">&lt;i class="fa fa-newspaper-o"&gt;&lt;/i&gt; Showcase</a>
+    </li>
+    <li>
       <a href="../articles/charting-data-frames.html">Charting Data Frames</a>
     </li>
     <li>
-      <a href="../articles/charting-maps.html">Charting Maps</a>
-    </li>
-    <li>
       <a href="../articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
-    </li>
-    <li>
-      <a href="../articles/shiny-events-demo.html">Shiny events demo</a>
     </li>
   </ul>
 </li>
@@ -121,7 +121,7 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -194,9 +194,9 @@ inside of <code>hc_tooltip</code> function an <code>useHTML = TRUE</code> option
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span>(<span class='no'>country</span>, <span class='kw'>.keep_all</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>gp2</span> <span class='kw'>&lt;-</span> <span class='no'>gapminder</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/tidyr/topics/nest'>nest</a></span>(-<span class='no'>country</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/purrr/topics/map'>map</a></span>(<span class='no'>data</span>, <span class='no'>mutate_mapping</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>lifeExp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>gdpPercap</span>), <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-         <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/purrr/topics/map'>map</a></span>(<span class='no'>data</span>, <span class='no'>list_parse</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>(-<span class='no'>country</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, <span class='no'>mutate_mapping</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>lifeExp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>gdpPercap</span>), <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+         <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, <span class='no'>list_parse</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>ttdata</span> <span class='kw'>=</span> <span class='no'>data</span>)
 
 <span class='no'>gptot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>gp</span>, <span class='no'>gp2</span>)
@@ -271,7 +271,7 @@ inside of <code>hc_tooltip</code> function an <code>useHTML = TRUE</code> option
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

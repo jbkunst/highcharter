@@ -97,16 +97,16 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/articles/charting-maps.html">&lt;i class="fa fa-map-o"&gt;&lt;/i&gt; Charting Maps</a>
+    </li>
+    <li>
+      <a href="../articles/articles/showcase.html">&lt;i class="fa fa-newspaper-o"&gt;&lt;/i&gt; Showcase</a>
+    </li>
+    <li>
       <a href="../articles/charting-data-frames.html">Charting Data Frames</a>
     </li>
     <li>
-      <a href="../articles/charting-maps.html">Charting Maps</a>
-    </li>
-    <li>
       <a href="../articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
-    </li>
-    <li>
-      <a href="../articles/shiny-events-demo.html">Shiny events demo</a>
     </li>
   </ul>
 </li>
@@ -124,7 +124,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -171,20 +171,20 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>dta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
-<span class='fu'>get_data_from_map</span>(<span class='no'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 58 x 7</span><span>
+<span class='fu'>get_data_from_map</span>(<span class='no'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span><span>
 #&gt;    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
-#&gt; </span><span style='color: #555555;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
-#&gt; </span><span style='color: #555555;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
-#&gt; </span><span style='color: #555555;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
-#&gt; </span><span style='color: #555555;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
-#&gt; </span><span style='color: #555555;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
-#&gt; </span><span style='color: #555555;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
-#&gt; </span><span style='color: #555555;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
-#&gt; </span><span style='color: #555555;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
-#&gt; </span><span style='color: #555555;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
-#&gt; </span><span style='color: #555555;'># ... with 48 more rows</span><span></div></span></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
+#&gt; </span><span style='color: #949494;'># ... with 48 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -205,7 +205,7 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
