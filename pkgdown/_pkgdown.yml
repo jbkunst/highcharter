@@ -9,9 +9,19 @@ authors:
   Joshua Kunst:
     href: http://jkunst.com
 
-name: "my-website"
 navbar:
-  title: "My Website"
   right:
     - icon: fa-github-alt
       href: https://github.com/jbkunst/highcharter
+
+articles:
+- title: All vignettes
+  desc: ~
+  contents:
+  - '`highcharter`'
+  - '`articles/showcase`'
+  - '`articles/charting-maps`'
+  - '`articles/themes`'
+  - '`articles/replicating-highcharts-demos`'
+  - '`articles/shiny-events-demo`'
+  

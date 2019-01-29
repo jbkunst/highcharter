@@ -1,9 +1,14 @@
 ---
-title: <i class="fa fa-map-o"></i> Charting Maps
+title: Charting Maps
+author: Joshua Kunst
 output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+
+<script>
+$(document).ready(function(){ $(".page-header > h1").html("<span class=\"fa fa-map-o\"></span> Charting Maps") }) ;
+</script>
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)

@@ -1,10 +1,10 @@
 library(tidyverse)
 
-# clean articles folder
-fs::dir_delete("docs/articles")
-
-# rebuild articles
-pkgdown::build_articles()
+# # clean articles folder
+# fs::dir_delete("docs/articles")
+# 
+# # rebuild articles
+# pkgdown::build_articles()
 
 # files to fix
 files_to_fix <- dir(

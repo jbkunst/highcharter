@@ -1,4 +1,4 @@
-#' City temperatures from a year
+#' City temperatures from a year in wide format
 #'
 #' This data comes from the \url{http://www.highcharts.com/} examples.
 #'
@@ -19,6 +19,26 @@
 #' @usage citytemp
 #' @format A \code{data frame} with 12 observations and 5 variables.
 "citytemp"
+
+#' City temperatures from a year in long format
+#'
+#' This data comes from the \url{http://www.highcharts.com/} examples.
+#'
+#' @section Variables:
+#'
+#' \itemize{
+#'
+#'  \item \code{month}: The months.
+#'  \item \code{citiy}: City.
+#'  \item \code{temp}: Temperatures.
+#' }
+#'
+#' @docType data
+#' @name citytemp_long
+#' @usage citytemp_long
+#' @format A \code{data frame} with 36 observations and 3 variables.
+"citytemp_long"
+
 
 #' Marshall's Favorite Bars
 #'

@@ -1,13 +1,19 @@
 ---
-title: <i class="fa fa-newspaper-o"></i> Showcase
+title: Showcase
 output: html_document
 editor_options: 
   chunk_output_type: console
 ---
 
+<script>
+$(document).ready(function(){ $(".page-header > h1").html("<span class=\"fa fa-picture-o\"></span> Showcase") }) ;
+</script>
+
 ```{r, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
+
+Let's see some motivational (I hope so) examples!
 
 ## Stars Wars
 

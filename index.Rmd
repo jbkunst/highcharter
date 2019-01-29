@@ -43,7 +43,7 @@ hc_theme_index <-
 
 # example 1
 data(mpg, package = "ggplot2")
-
+mpg <- select(mpg, displ, hwy)
 p1 <- hchart(
   mpg,
   "scatter",
@@ -63,6 +63,7 @@ p2 <- hchart(
 
 # example 3
 data(GNI2014, package = "treemap")
+GNI2014 <- select(GNI2014, -population, -continent)
 p3 <- hcmap(
   "custom/world-robinson-lowres",
   data = GNI2014,
@@ -92,7 +93,7 @@ p4 <- hcboxplot(
 library(igraph)
 
 set.seed(12313)
-N <- 22
+N <- 24
 net <- sample_pa(N)
 wc <- cluster_walktrap(net)
 V(net)$label <- 1:N
@@ -120,7 +121,7 @@ p7 <- highchart() %>%
   hc_chart(type = "area") %>% 
   hc_add_series(density(rnorm(10000000)), name = "Normal Distribution") %>%
   hc_add_series(density(rgamma(10000000, 5, 0.8)), name = "Gamma(5. 0.8) Distribution") %>%
-  hc_add_series(density(rgamma(10000000, 3, 0.8)), name = "Gamma(3. 0.8) Distribution") %>%
+  # hc_add_series(density(rgamma(10000000, 3, 0.8)), name = "Gamma(3. 0.8) Distribution") %>%
   hc_plotOptions(series = list(fillOpacity = 0.5)) %>%
   hc_xAxis(min = -5, max = 12) %>% 
   hc_add_theme(hc_theme_index)

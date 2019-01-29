@@ -59,7 +59,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/articles/charting-maps.html">&lt;i class="fa fa-map-o"&gt;&lt;/i&gt; Charting Maps</a>
+      <a href="../articles/articles/charting-maps.html">Charting Maps</a>
     </li>
     <li>
       <a href="../articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
@@ -68,7 +68,10 @@
       <a href="../articles/articles/shiny-events-demo.html">Shiny events demo</a>
     </li>
     <li>
-      <a href="../articles/articles/showcase.html">&lt;i class="fa fa-newspaper-o"&gt;&lt;/i&gt; Showcase</a>
+      <a href="../articles/articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/articles/themes.html">Themes</a>
     </li>
   </ul>
 </li>
@@ -152,8 +155,8 @@
 ## 5 audi         a4      2.8  1999     6 auto(~ f        16    26 p     comp~
 ## 6 audi         a4      2.8  1999     6 manua~ f        18    26 p     comp~</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</code></pre></div>
-<div id="htmlwidget-8c3e2f3e60ebefb65224" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8c3e2f3e60ebefb65224">{
+<div id="htmlwidget-68484c5b01734c924e0f" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-68484c5b01734c924e0f">{
   "x": {
     "hc_opts": {
       "title": {
@@ -3824,8 +3827,8 @@
 }</script><p>The previous code is same as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</code></pre></div>
-<div id="htmlwidget-64eb491b98b4f81a27a0" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-64eb491b98b4f81a27a0">{
+<div id="htmlwidget-71c352530cf63686d002" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-71c352530cf63686d002">{
   "x": {
     "hc_opts": {
       "title": {
@@ -7497,8 +7500,8 @@ dfdiam &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><spa
 ## 5 Fair  VS1     2830.
 ## 6 Fair  VVS2    2484</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(dfdiam, <span class="st">"heatmap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> clarity, <span class="dt">value =</span> price)) </code></pre></div>
-<div id="htmlwidget-725be14caddf76e1d373" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-725be14caddf76e1d373">{
+<div id="htmlwidget-c83829b5d7e0d97d126e" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c83829b5d7e0d97d126e">{
   "x": {
     "hc_opts": {
       "title": {
@@ -8077,8 +8080,8 @@ economics_long2 &lt;-<span class="st"> </span><span class="kw"><a href="https://
 ## 5 1967-11-01 pop      199498 0.00643
 ## 6 1967-12-01 pop      199657 0.00773</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(economics_long2, <span class="st">"line"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value01, <span class="dt">group =</span> variable))</code></pre></div>
-<div id="htmlwidget-50facc13523ad2801d1e" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-50facc13523ad2801d1e">{
+<div id="htmlwidget-39399a8c07740b98b3db" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-39399a8c07740b98b3db">{
   "x": {
     "hc_opts": {
       "title": {
@@ -22044,8 +22047,8 @@ mpgman &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span cla
 ## 5 chevrolet       19      4
 ## 6 audi            18      3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman, <span class="st">"treemap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">value =</span> n, <span class="dt">color =</span> unique))</code></pre></div>
-<div id="htmlwidget-6599b1bf0aee31f2a093" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6599b1bf0aee31f2a093">{
+<div id="htmlwidget-ef5206b8fe26de2e74a2" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ef5206b8fe26de2e74a2">{
   "x": {
     "hc_opts": {
       "title": {
@@ -22347,8 +22350,8 @@ mpgman &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span cla
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman2, <span class="st">"bar"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">y =</span> n, <span class="dt">group =</span> year),
        <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#FCA50A"</span>, <span class="st">"#FCFFA4"</span>),
        <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span>))</code></pre></div>
-<div id="htmlwidget-a18334f653972fab6849" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a18334f653972fab6849">{
+<div id="htmlwidget-1ce450be64eff3b9b7b4" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1ce450be64eff3b9b7b4">{
   "x": {
     "hc_opts": {
       "title": {
@@ -22779,8 +22782,8 @@ fit &lt;-<span class="st"> </span><span class="kw">arrange</span>(<span class="k
     <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"gray"</span>, <span class="fl">0.2</span>),  <span class="co"># put a semi transparent color</span>
     <span class="dt">zIndex =</span> <span class="op">-</span><span class="dv">3</span> <span class="co"># this is for put the series in a back so the points are showed first</span>
     )</code></pre></div>
-<div id="htmlwidget-1802e52ea05be790d9d9" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1802e52ea05be790d9d9">{
+<div id="htmlwidget-db3fe5904b8023e9a381" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-db3fe5904b8023e9a381">{
   "x": {
     "hc_opts": {
       "title": {
