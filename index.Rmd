@@ -301,20 +301,15 @@ library(quantmod)
 x <- getSymbols("GOOG", auto.assign = FALSE)
 y <- getSymbols("AMZN", auto.assign = FALSE)
 
-hc <- hchart(x)
-hc
-```
-
-If you need to add new data you can use `hc_add_series` function.
-
-```{r}
-hc %>% 
-  hc_add_series(y, type = "ohlc")
+highchart(type = "stock") %>% 
+   hc_add_series(x) %>% 
+   hc_add_series(y, type = "ohlc")
 ```
 
 ## Highmaps
 
-You can chart maps and choropleth using the highmaps module.
+You can chart maps and choropleth using the highmaps module., build interactive 
+maps to display data linked to geographic objects. 
 
 ```{r}
 data(GNI2014, package = "treemap")
@@ -323,7 +318,7 @@ hcmap(
   "custom/world-robinson-lowres",data = GNI2014,
   name = "GNI",
   value = "GNI",
-  joinBy = c("iso-a3", "iso3"),
+  joinBy = c("iso-a3", "iso3")
   ) %>%
   hc_colorAxis(
     stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
