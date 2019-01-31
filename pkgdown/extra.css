@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Alegreya+Sans|Alegreya+Sans+SC");
+@import url("https://fonts.googleapis.com/css?family=Alegreya+Sans|Alegreya+Sans+SC:100,300,400");
 
 @font-face {
   font-family: 'Datalegreya-Gradient';
@@ -52,6 +52,7 @@ footer i {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Alegreya Sans SC', sans-serif;
+  font-weight: 300;
 }
 
 .highchart {
