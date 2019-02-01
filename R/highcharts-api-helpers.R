@@ -325,7 +325,9 @@ hc_elementId <- function(hc, id = NULL) {
 #'
 #' @examples
 #'
-#' hc_size(hcts(rnorm(100)), 400, 200)
+#' hc <- hchart(ts(rnorm(100)), showInLegend = FALSE)
+#'
+#' hc_size(hc, 200, 200)
 #'
 #' @export
 hc_size <- function(hc, width = NULL, height = NULL) {

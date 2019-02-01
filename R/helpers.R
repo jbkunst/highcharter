@@ -241,7 +241,7 @@ color_classes <- function(breaks = NULL,
 #'
 #' @examples
 #'
-#' get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
+#' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #'
 #' @importFrom tibble has_name
 get_hc_series_from_df <- function(data, type = NULL, ...) {
