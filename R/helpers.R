@@ -350,7 +350,13 @@ random_id <- function(n = 1, length = 10){
 
 #' Function to avoid the jsonlite::auto_unbox default
 #' @param x And element, numeric or character
-#' @export
+#' @examples 
+#' 
+#' hchart("A")
+#' 
+#' highchart() %>% 
+#'   hc_add_series(data = 1)
+#' 
 fix_1_length_data <- function(x) {
 
   if (getOption("highcharter.verbose"))
