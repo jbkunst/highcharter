@@ -44,7 +44,7 @@ funs <- dir("data/") %>%
 # theme
 ttle <- ""
 desc <- "Functions for create and add themes"
-funs <- 
+funs <- ""
   
 
 
