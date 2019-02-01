@@ -244,7 +244,6 @@ color_classes <- function(breaks = NULL,
 #' get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #'
 #' @importFrom tibble has_name
-#' @export
 get_hc_series_from_df <- function(data, type = NULL, ...) {
 
   assertthat::assert_that(is.data.frame(data))
