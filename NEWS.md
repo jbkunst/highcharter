@@ -2,6 +2,8 @@
 
 ## Changes
 
+* Adding `hc_theme_bloom` based on Bloomerg Graphics.
+* Removed shortcut functions: `hcts`, `hcbar`, `hcpie`, `hchist`, `hcdensity`.
 * Removing whisker package dependency (#415).
 * Bullet chart is supported. Added `bullet.js` module to `highchart.yalm` (#482).
 * Add parameter `quiet` to `download_map_data`. Thanks to @DavidBreuer (#450).
