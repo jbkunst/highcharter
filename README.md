@@ -66,7 +66,7 @@ Highcharts (http://highcharts.com) is a Highsoft product which is not free for c
 
 ## Discount for highcharter users
 
-Highsoft provide a discount to the highcharter users. It is a 50% discount on our Single Developer license. More details in http://announcements.highcharts.com/foss/.
+Highsoft provide a discount to the highcharter users. It is a 50% discount on our Single Developer license. More details in https://newsletter.highcharts.com/foss/.
 
 ## Code of Conduct
 
