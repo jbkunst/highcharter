@@ -359,7 +359,7 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   
   hc <- .hc_opt(hc, "motion", enabled = enabled, startIndex = startIndex, ...)
   
-  hc <- hc_add_dependency_fa(hc)
+  # hc <- hc_add_dependency_fa(hc)
   
   hc
   
