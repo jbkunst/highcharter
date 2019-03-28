@@ -443,6 +443,119 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
                  enabled = TRUE)
 }
 
+
+
+
+#' Shortcut to create sunburst chart.
+#' 
+#' This function helps create highcharts sunburst from data frames.
+#'
+#' @param data data frame containing variables to organize each level of the treemap on
+#' @param group_vars vector of strings containing column names of variables to generate treemap levels from. the first listed column will specify the top level of the sunburst chart. the unique values in each of these columns must have no intersection (including NAs).
+#' @param size_var string name of column containing numeric data to aggregate by
+#' @param ... additional shared arguments for the data series
+#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'
+#' @return highchart plot object
+#' @examples
+#' 
+#' \dontrun{
+#' 
+#' library(tidyverse)
+#' library(highcharter)
+#' library(RColorBrewer)
+#' 
+#' tibble(
+#'   index0 = "Letter",
+#'   index1 = sample(LETTERS[1:5], 500, replace = T),
+#'   index2 = sample(LETTERS[6:10], 500, replace = T),
+#'   index3 = sample(LETTERS[11:15], 500, replace = T),
+#'   value = rpois(500, 5)  
+#' ) %>%
+#'   hcsunburst(
+#'     group_vars = c("index0","index1", "index2", "index3"),
+#'     size_var = "value",
+#'     levels = list(
+#'       list(level = 1, color = 'transparent', dataLabels = list(enabled = TRUE)),
+#'       list(level = 2, colorByPoint = TRUE, dataLabels = list(enabled = TRUE)),
+#'       list(level = 3, colorVariation = list(key = 'brightness', to = 0.5),
+#'            dataLabels = list(enabled = TRUE)),
+#'       list(level = 4, colorVariation = list(key = 'brightness', to = -0.5),
+#'            dataLabels = list(enabled = FALSE))
+#'     )
+#'   ) %>% 
+#'   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+#'              Value: {point.value:,.0f}<br>")
+#' 
+#' @importFrom dplyr bind_rows filter group_by mutate_at pull select summarise
+#' @importFrom purrr map pmap_chr
+#' 
+#' @export 
+hcsunburst <- function(data, group_vars, size_var,...) {
+  
+  assertthat::assert_that(is.data.frame(data))
+  assertthat::assert_that(is.character(group_vars))
+  assertthat::assert_that(is.character(size_var))
+  
+  group_syms <- rlang::syms(group_vars)
+  size_sym <- rlang::sym(size_var)
+  
+  if (data %>%
+      select(!!!group_syms) %>%
+      map(unique) %>%
+      unlist() %>%
+      anyDuplicated()) stop("Sunburst data uses same label at multiple levels.")
+  
+  data <- data %>% mutate_at(group_vars, as.character)
+  
+  name_cell <- function(..., depth) paste0(list(...), 1:depth, collapse = "")
+  
+  data_at_depth <- function(depth) {
+    data %>%
+      group_by(!!!group_syms[1:depth]) %>%
+      summarise(
+        value = sum(!!size_sym)
+      ) %>%
+      ungroup() %>%
+      mutate(
+        name = !!group_syms[[depth]],
+        level = depth
+      ) %>% 
+      mutate_at(group_vars, as.character()) %>% 
+      {
+        if (depth == 1) mutate(., id = paste0(name, 1))
+        else {
+          mutate(
+            .,
+            parent = pmap_chr(
+              list(!!!group_syms[1:depth - 1]),
+              name_cell,
+              depth = depth - 1),
+            id = paste0(parent, name, depth)
+          )
+        }
+      }
+  }
+  
+  sunburst_df <- 1:length(group_vars) %>%
+    map(data_at_depth) %>%
+    bind_rows() %>% 
+    arrange(level)
+  
+  data_list <- sunburst_df %>%
+    highcharter::list_parse() %>%
+    purrr::map(~.[!is.na(.)])
+  
+  highchart() %>%
+    hc_add_series(data = data_list,
+                  type = "sunburst",
+                  allowDrillToNode = TRUE, ...)
+  
+}
+
+
+
+
 #' Shortcut for create parallel coordinates
 #' @param df A data frame object.
 #' @param ... Additional shared arguments for the data series
