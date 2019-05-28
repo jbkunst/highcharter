@@ -24,8 +24,8 @@ hc_add_dependency_fa <- function(hc) {
   dep <- htmlDependency(
     name = "font-awesome",
     version = "0.0.0",
-    src = c(file = system.file("www/shared/font-awesome", package = "shiny")),
-    stylesheet = "css/font-awesome.min.css"
+    src = c(file = system.file("htmlwidgets/lib/font-awesome-4.5.0", package = "highcharter")),
+    stylesheet = "font-awesome.min.css"
   )
   
   hc$dependencies <- c(hc$dependencies, list(dep))
