@@ -486,7 +486,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
 #'   ) %>% 
 #'   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
 #'              Value: {point.value:,.0f}<br>")
-#' 
+#' }
 #' @importFrom dplyr bind_rows filter group_by mutate_at pull select summarise
 #' @importFrom purrr map pmap_chr
 #' 
