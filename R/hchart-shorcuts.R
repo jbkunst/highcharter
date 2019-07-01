@@ -1,55 +1,3 @@
-#' Shortcut to make a bar chart
-#' @param x A character or factor vector.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
-#' @export
-hcbar <- function(x, ...) {
-  stopifnot(is.character(x) | is.factor(x))
-  hchart(x, ...)
-}
-
-#' Shortcut to make a pie chart
-#' @param x A character o factor vector.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
-#' @export
-hcpie <- function(x, ...) {
-  stopifnot(is.character(x) | is.factor(x))
-  hchart(x, type = "pie", ...)
-}
-
-#' Shortcut to make an histogram
-#' @param x A numeric vector.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
-#' @export
-hchist <- function(x, ...) {
-  stopifnot(is.numeric(x))
-  hchart(x, ...)
-}
-
-#' Shortcut to make time series or line charts
-#' @param x A numeric vector or a time series object.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
-#' @importFrom stats as.ts
-#' @export
-hcts <- function(x, ...) {
-  hchart(as.ts(x), ...)
-}
-
-#' Shortcut to make density charts
-#' @param x A numeric vector or a density object.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
-#' @importFrom stats density
-#' @export
-hcdensity <- function(x, ...) {
-  
-  stopifnot(inherits(x, "density") || inherits(x, "numeric"))
-  
-  if (class(x) == "numeric")
-    x <- density(x)
-  
-  hchart(x, ...)
-  
-}
-
 #' Shortcut to make spkarlines
 #' @param x A numeric vector.
 #' @param type Type sparkline: line, bar, etc.
@@ -84,8 +32,9 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @examples 
 #' hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
-#' @importFrom dplyr rename_ data_frame_
+#' @importFrom dplyr rename_
 #' @importFrom tidyr unnest
+#' @importFrom grDevices boxplot.stats
 #' @export
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   
@@ -96,7 +45,7 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   if (is.null(var2))
     var2 <- NA
   
-  df <- data_frame(x, g1 = var, g2 = var2)
+  df <- tibble(x, g1 = var, g2 = var2)
   
   get_box_values <- function(x){ 
     
@@ -229,16 +178,16 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
     
   }
   
-  ds <- data_frame(x = rep(1:w, h), y = rep(1:h, each = w)) %>% 
+  ds <- tibble(x = rep(1:w, h), y = rep(1:h, each = w)) %>% 
     head(sum(counts)) %>% 
     mutate_("y" = "-y") %>% 
     mutate(gr = rep(seq_along(labels), times = counts)) %>% 
-    left_join(data_frame(gr = seq_along(labels), name = as.character(labels)),
+    left_join(tibble(gr = seq_along(labels), name = as.character(labels)),
               by = "gr") %>% 
     group_by_("name") %>% 
-    do(data = list_parse2(data_frame(.$x, .$y))) %>% 
+    do(data = list_parse2(tibble(.$x, .$y))) %>% 
     ungroup() %>% 
-    left_join(data_frame(labels = as.character(labels), counts),
+    left_join(tibble(labels = as.character(labels), counts),
               by = c("name" = "labels")) %>% 
     arrange_("-counts") %>% 
     mutate_("percent" = "counts/sum(counts)*100")
@@ -394,7 +343,7 @@ hctreemap <- function(tm, ...) {
 #' library(highcharter)
 #' library(RColorBrewer)
 #' 
-#' data_frame(
+#' tibble(
 #'   index1 = sample(LETTERS[1:5], 500, replace = T),
 #'   index2 = sample(LETTERS[6:10], 500, replace = T),
 #'   index3 = sample(LETTERS[11:15], 500, replace = T),

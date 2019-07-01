@@ -1,3 +1,7 @@
+^pkgdown$
+^docs$
+^_pkgdown\.yml$
+^CRAN-RELEASE$
 # old versions
 # inst/htmlwidgets/lib/highcharts-4.2.4/*
 
@@ -15,3 +19,7 @@ fort.6
 ^data-raw$
 ^appveyor\.yml$
 ^revdep$
+index.Rmd
+.*debug.log
+
+

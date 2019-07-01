@@ -10,7 +10,7 @@ hc_theme_ggplot2(...)
 \item{...}{Named argument to modify the theme}
 }
 \description{
-Based on \url{http://ggplot2.org/}.
+Based on \url{https://ggplot2.tidyverse.org/}.
 }
 \examples{
 

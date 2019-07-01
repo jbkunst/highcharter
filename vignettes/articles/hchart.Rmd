@@ -1,0 +1,191 @@
+---
+title: "`hchart` function"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "magic-o"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
+
+```{r, include=FALSE}
+library(highcharter)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+options(highcharter.theme = hc_theme_smpl(tooltip = list(valueDecimals = 2)))
+options(download.file.method = "libcurl")
+```
+
+The `hchart` function is generic, this means you can chart various R objects 
+on the fly. The resulting chart is a highchart object
+so you can keep modifying with the implmented API.
+
+## Data Frames
+
+This function works like `qplot`: You pass the data, choose the type
+of chart and then define the aesthetics for each variable.
+
+```{r}
+library(highcharter)
+library(dplyr)
+
+data(diamonds, economics_long, mpg, package = "ggplot2")
+
+hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+
+mpgman2 <- mpg %>% 
+  count(class, year) %>% 
+  glimpse()
+
+hchart(mpgman2, "column", hcaes(x = class, y = n, group = year))
+```
+
+Check automatically if the x column is date class:
+
+```{r}
+economics_long2 <- economics_long %>% 
+  filter(variable %in% c("pop", "uempmed", "unemploy"))
+
+hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
+```
+
+## Numeric & Histograms
+
+```{r}
+x <- diamonds$price
+hchart(x) 
+```
+
+## Densities
+
+```{r}
+hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
+```
+
+## Character & Factor
+
+```{r}
+x <- diamonds$cut
+hchart(x, type = "column")
+```
+
+## Time Series
+
+```{r}
+hchart(LakeHuron)
+```
+
+## Seasonal Decomposition of Time Series by Loess
+
+```{r}
+x <- stl(log(AirPassengers), "per")
+hchart(x)
+```
+
+## Forecast package
+
+```{r}
+library(forecast)
+
+x <- forecast(ets(USAccDeaths), h = 48, level = 95)
+hchart(x)
+```
+
+## Igraph package
+
+```{r}
+library(igraph)
+N <- 40
+
+net <- sample_gnp(N, p = 2/N)
+wc <- cluster_walktrap(net)
+
+V(net)$label <- seq(N)
+V(net)$name <- paste("I'm #", seq(N))
+V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree
+V(net)$comm <- membership(wc)
+V(net)$color <- colorize(membership(wc))
+
+hchart(net, layout = layout_with_fr)
+```
+
+## Survival Package
+
+Survival models can be charted.
+
+```{r}
+library(survival)
+
+data(lung)
+lung <- mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+fit <- survfit(Surv(time, status) ~ sex, data = lung) 
+
+hchart(fit, ranges = TRUE)
+```
+
+## Quantmod package
+
+The highstock extension is used to chart `xts` and `xts ohlc` classes from the
+quantmod package. 
+
+```{r}
+library(quantmod)
+
+x <- getFX("USD/JPY", auto.assign = FALSE)
+hchart(x)
+
+y <- getSymbols("SPY", auto.assign = FALSE)
+hchart(y)
+```
+
+## Multivariate Time series
+
+```{r}
+x <- cbind(mdeaths, fdeaths)
+hchart(x)
+```
+
+## Autocovariance & Autocorrelation
+
+```{r}
+x <- acf(diff(AirPassengers), plot = FALSE)
+hchart(x)
+```
+
+
+## Principal Components
+
+```{r}
+hchart(princomp(USArrests, cor = TRUE))
+```
+
+## Matrix
+
+```{r}
+data(volcano)
+hchart(volcano) %>% # changing default color
+  hc_colorAxis(stops = color_stops(colors = viridis::inferno(10)))
+```
+
+## Distance matrix 
+
+```{r}
+mtcars2 <- mtcars[1:20, ]
+x <- dist(mtcars2)
+hchart(x)
+```
+
+## Correlation matrix
+
+```{r}
+hchart(cor(mtcars))
+```

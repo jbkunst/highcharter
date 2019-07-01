@@ -18,7 +18,7 @@ Design inspired by Edward Tufte style.
 \examples{
 
 n <- 15
-dta <- dplyr::data_frame(
+dta <- dplyr::tibble(
   x = rnorm(n),
   y = 1.5 * x + rnorm(n))
 highchart() \%>\%

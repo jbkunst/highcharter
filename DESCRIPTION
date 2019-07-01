@@ -1,6 +1,6 @@
 Package: highcharter
 Type: Package
-Version: 0.6.0
+Version: 0.7.0.9000
 Title: A Wrapper for the 'Highcharts' Library
 Description: A wrapper for the 'Highcharts' library including
     shortcut functions to plot R objects. 'Highcharts'
@@ -16,14 +16,15 @@ Authors@R: c(
   person("Adline", "Dsilva", role = c("ctb"), comment  = "First version Matrix heatmap"),
   person("Kamil", "Slowikowski", role = c("ctb"), comment = c(ORCID = "0000-0002-2843-6370")),
   person("Christian", "Minich", role = c("ctb"), comment  = "hcaes mutate_mapping improvement"),
-  person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix")
+  person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix"),
+  person("David", "Breuer", role = c("ctb"), comment = "download_map_data quiet parameter")
   )
 URL: http://jkunst.com/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
-Maintainer: Joshua Kunst <jbkunst@gmail.com>
 License: MIT + file LICENSE
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
 Depends:
     R (>= 2.10)
 Imports:
@@ -35,7 +36,7 @@ Imports:
     zoo,
     dplyr (>= 0.7.0),
     tibble (>= 1.1),
-    stringr,
+    stringr (>= 1.3.0),
     broom,
     xts,
     quantmod,
@@ -44,10 +45,8 @@ Imports:
     jsonlite,
     igraph,
     lubridate,
-    crosstalk,
     yaml,
-    rlang(>= 0.1.1),
-    whisker
+    rlang(>= 0.1.1)
 Suggests:
     knitr,
     rmarkdown,

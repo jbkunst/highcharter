@@ -61,7 +61,7 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...){
 }
 
 #' @export
-hchart.data_frame <- hchart.data.frame
+hchart.tibble <- hchart.data.frame
 
 #' @importFrom graphics hist
 #' @export
@@ -78,7 +78,7 @@ hchart.histogram <- function(object, ...) {
   
   d <- diff(object$breaks)[1]
   
-  df <- data_frame(
+  df <- tibble(
     x = object$mids,
     y = object$counts, 
     name = sprintf("(%s, %s]", object$mids - d / 2, object$mids + d / 2))
@@ -174,7 +174,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...){
     for (i in seq(ntss)) {
       nm <- nms[i]
       
-      dfbands <- data_frame(
+      dfbands <- tibble(
         t = tmf,
         u = as.vector(object$upper[[i]][, lvl]),
         l = as.vector(object$lower[[i]][, lvl])
@@ -219,7 +219,7 @@ hchart.acf <- function(object, ...){
   
   sv <- qnorm(1 - 0.05 / 2) / sqrt(object$n.used)
   
-  ds <- data_frame(
+  ds <- tibble(
     x = seq(object$lag[, , ]),
     y = object$acf[, , ]
     ) 
@@ -361,7 +361,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   
   ds <- as.data.frame(df) %>% 
     tbl_df() %>% 
-    bind_cols(data_frame(ynm), .)  %>% 
+    bind_cols(tibble(ynm), .)  %>% 
     gather("key", "value", -ynm) %>% 
     rename_("xnm" = "key") %>% 
     mutate_("xnm" = "as.character(xnm)",
@@ -370,8 +370,8 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   ds$xnm <- if (is.null(colnames(object))) str_replace(ds$xnm, "V", "") else ds$xnm
   
   ds <- ds %>% 
-    left_join(data_frame(xnm, xid), by = "xnm") %>%
-    left_join(data_frame(ynm, yid), by = "ynm") %>% 
+    left_join(tibble(xnm, xid), by = "xnm") %>%
+    left_join(tibble(ynm, yid), by = "ynm") %>% 
     mutate_("name" = "paste(xnm, ynm, sep = ' ~ ')") %>% 
     select_("x" = "xid", "y" = "yid", "value", "name")
   
@@ -727,7 +727,7 @@ hchart.density <- function(object, type = "area", ...) {
   hc_add_series(highchart(), data = object, type = type, ...)
 }
 
-#' @importFrom dplyr as_data_frame
+#' @importFrom dplyr as_tibble
 hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
                        choices = 1L:2L, scale = 1) {
   
@@ -757,7 +757,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
     as.data.frame() %>% 
     setNames(c("x", "y")) %>% 
     rownames_to_column("name") %>%  
-    as_data_frame() %>% 
+    as_tibble() %>% 
     group_by_("name") %>% 
     do(data = list(c(0, 0), c(.$x, .$y))) %>% 
     list_parse()
@@ -780,7 +780,7 @@ hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
              choices = choices, scale = scale, ...)
 }
 
-#' @importFrom dplyr as_data_frame
+#' @importFrom dplyr as_tibble
 #' @export
 hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
   hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation,

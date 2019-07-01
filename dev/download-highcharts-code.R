@@ -6,7 +6,7 @@ library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "6.0.3"
+version <- "7.0.1"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -16,12 +16,12 @@ version_old <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts
 path_old <- str_replace(path, version, version_old)
 
 # creating folder structure
-folders <- c("", "modules", "plugins", "css", "custom", "maps", "maps/modules", "stock")
+folders <- c("", "modules", "plugins", "css", "custom")
 try(map(file.path(path, folders), dir.create))
 
-
-# downloadzip -------------------------------------------------------------
+# main files --------------------------------------------------------------
 file_temp <- tempfile(fileext = ".zip")
+
 download.file(
   sprintf("https://code.highcharts.com/zips/Highcharts-%s.zip", version),
   file_temp
@@ -31,97 +31,97 @@ folder_temp <- tempdir()
 
 unzip(file_temp, exdir = folder_temp)
 
-files <- dir(folder_temp, recursive = TRUE, full.names = TRUE)
+files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
+  {.[!str_detect(., "src.js$")]} %>% 
+  {.[!str_detect(., "js.map$")]}
 
-main <- files %>% 
-  {.[str_detect(., "code/highcharts")]} %>% 
-  {.[!str_detect(., ".map|.src")]} 
-
-map2(
+main <- str_subset(files, "code/highcharts")
+  
+file.copy(
   main,
   file.path(path, basename(main)),
-  file.copy,
   overwrite = TRUE
 )
 
+modules <- str_subset(files, "code/modules")
 
-modules <- files %>% 
-  {.[str_detect(., "code/modules")]} %>% 
-  {.[!str_detect(., ".map|.src")]} 
-
-map2(
+file.copy(
   modules,
   file.path(path, "modules", basename(modules)),
-  file.copy,
   overwrite = TRUE
 )
 
-# main files --------------------------------------------------------------
-hchtml <- read_html(hccodeurl)
+file_temp <- tempfile(fileext = ".zip")
 
-hclnks <- hchtml %>%
-  html_node("ul") %>% # first list
-  html_nodes("li") %>%
-  html_text() %>%
-  .[!str_detect(., "src.js")] %>%
-  str_replace("^.*com\\/", "")
+download.file(
+  sprintf("https://code.highcharts.com/zips/Highmaps-%s.zip", version),
+  file_temp
+)
 
-hclnks <- hclnks %>% 
-{.[str_detect(., "map.js")]}
+folder_temp <- tempdir()
 
-hclnks <- c(hclnks, "stock/highstock.js")
+unzip(file_temp, exdir = folder_temp)
 
-# 
-# modules <- c(
-#   "sunburst.js",
-#   "wordcloud.js",
-#   "xrange.js",
-#   "windbarb.js",
-#   "vector.js",
-#   "variwide.js",
-#   "variable-pie.js",
-#   "sankey.js",
-#   "parallel-coordinates.js",
-#   "bullet.js",
-#   "histogram-bellcurve.js",
-#   "tilemap.js",
-#   "streamgraph.js"
-#   ) %>% 
-#   file.path("modules", .)
-# 
-# hclnks <- c(hclnks, modules)
-# 
-map2(
-  file.path(hccodeurl, hclnks),
-  file.path(path, hclnks),
+files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
+  {.[!str_detect(., "src.js$")]} %>% 
+  {.[!str_detect(., "js.map$")]}
+
+mapmodule <- files %>% 
+  str_subset("modules/map.js$")
+
+file.copy(
+  mapmodule,
+  file.path(path, "modules", basename(mapmodule)),
+  overwrite = TRUE
+)
+
+# check what modules are missing in yaml
+modules <- dir(file.path(path, "modules")) 
+modules
+
+modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") %>% 
+  str_subset("modules/") %>%
+  str_extract("modules/.*") %>% 
+  str_trim() %>% 
+  basename()
+
+setdiff(modules, modules_yalm) %>% 
+  str_c("#    - ", ., "\n") %>% 
+  cat()
+
+# sobran
+setdiff(modules_yalm, modules)
+
+# repetidos en yalm
+data_frame(m = modules_yalm) %>% 
+  count(m, sort = TRUE) %>% 
+  filter(n > 1)
+
+# plugins -----------------------------------------------------------------
+files <- c(
+  # "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
+  # "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
+  # "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
+  "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
+  "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
+  "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
+  "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
+  "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",
+  "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
+  "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
+  )
+
+aux <- map2(
+  files,
+  file.path(path, "plugins", basename(files)),
   download.file
 )
 
-# plugins -----------------------------------------------------------------
-# files <- c(
-#   "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
-#   "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
-#   "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
-#   "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
-#   "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
-#   "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
-#   "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
-#   "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",
-#   "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
-#   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
-#   )
-
-# map2(
-#   files,
+# file.copy(
+#   file.path(path_old, "plugins", basename(files)),
 #   file.path(path, "plugins", basename(files)),
-#   download.file
+#   overwrite = TRUE
 # )
-
-file.copy(
-  file.path(path_old, "plugins", basename(files)),
-  file.path(path, "plugins", basename(files)),
-  overwrite = TRUE
-)
 
 
 # for yaml ----------------------------------------------------------------

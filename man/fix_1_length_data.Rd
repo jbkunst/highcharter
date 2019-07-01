@@ -12,3 +12,11 @@ fix_1_length_data(x)
 \description{
 Function to avoid the jsonlite::auto_unbox default
 }
+\examples{
+
+hchart("A")
+
+highchart() \%>\% 
+  hc_add_series(data = 1)
+
+}

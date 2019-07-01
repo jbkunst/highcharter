@@ -26,3 +26,10 @@ fort.6
 
 # rev deps
 revdep/*
+
+# logs
+*debug.log
+
+# pkgdown libs
+ docs/articles/articles/*.js
+

@@ -1,0 +1,159 @@
+---
+title:  Themes
+author: Joshua Kunst
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "pencil"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+library(highcharter)
+library(tidyverse)
+library(htmltools)
+library(ggplot2)
+```
+
+Highcharts is super flexible to add and create themes.
+In Highcarter there are some predefined themes and some 
+functions to create or merge themes.
+
+Let's start with a simple bar chart and see the defaul theme:
+
+```{r}
+library(highcharter)
+library(tidyverse)
+data(diamonds, package = "ggplot2")
+
+data <- count(diamonds, cut, color)
+hc <- hchart(data, "column", hcaes(x = color, y = n, group = cut)) %>% 
+  hc_yAxis(title = list(text = "Cases")) %>% 
+  hc_title(text = "Diamonds Are Forever") %>%
+  hc_subtitle(text = "Source: Diamonds data set") %>% 
+  hc_credits(enabled = TRUE, text = "jkunst.com") %>% 
+  hc_tooltip(sort = TRUE, table = TRUE)
+hc
+```
+
+
+## Themes
+
+Here you'll find the themes to change the look of your charts.
+
+```{r, echo=FALSE}
+themes <- help.search("theme", package = "highcharter") %>%
+  .$matches %>%
+  tbl_df() %>%
+  janitor::clean_names() %>% 
+  select(name, title) %>% 
+  distinct() %>% 
+  filter(str_detect(name, "hc_theme_*")) %>% 
+  filter(!name %in% c("hc_theme_merge", "hc_theme")) %>% 
+  mutate(title = str_replace(title, " theme for highcharts", "")) %>% 
+  arrange(name)
+
+thms <- unique(c("hc_theme_smpl", "hc_theme_db", themes$name))
+# thms <- sample(thms, 5)
+
+# generate tabs
+thms %>% 
+  map(function(t){ # t <- sample(thms, 1)
+    
+    t %>% 
+      str_replace_all("hc_theme_", "") %>% 
+      tags$a(`data-target` = paste0("#", t), `data-toggle` = "tab") %>% 
+      tags$li(class = if(t == thms[1]) "active" else NULL)
+    
+  }) %>% 
+  tags$ul(class = "nav nav-pills", id = "myTab", .)
+
+
+tags$br()
+
+thms %>% 
+  map(function(t){ # t <- sample(thms, 1)
+    
+    thm <- get(t)()
+    
+    content <-  list(hc) %>%
+      map(hc_add_theme, thm)
+    
+    tags$div(content, id = t, class = "tab-pane", class = if(t == thms[1]) "active" else NULL)
+    
+  }) %>% 
+  tags$div(class = "tab-content")
+```
+
+
+## Creating themes
+
+You can create your own themes!
+
+```{r}
+my_own_theme <- hc_theme(
+  colors = c('red', 'green', 'blue'),
+  chart = list(
+    backgroundColor = NULL,
+    divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
+  ),
+  title = list(
+    style = list(
+      color = '#333333',
+      fontFamily = "Lato"
+    )
+  ),
+  subtitle = list(
+    style = list(
+      color = '#666666',
+      fontFamily = "Shadows Into Light"
+    )
+  ),
+  legend = list(
+    itemStyle = list(
+      fontFamily = 'Tangerine',
+      color = 'black'
+    ),
+    itemHoverStyle = list(
+      color = 'gray'
+    )   
+  )
+)
+
+hc %>% 
+  hc_add_theme(my_own_theme)
+```
+
+## Merge Themes
+
+You can merge themes too.
+
+```{r}
+thm <- hc_theme_merge(
+  hc_theme_darkunica(),
+  hc_theme(
+    chart = list(
+      backgroundColor = "transparent",
+      divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
+    ),
+    title = list(
+      style = list(
+        color = 'white',
+        fontFamily = "Open Sans"
+      )
+    )
+  )
+)
+
+hc %>%
+  hc_add_theme(thm)
+```

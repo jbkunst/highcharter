@@ -16,7 +16,7 @@ list_parse <- function(df) {
   assertthat::assert_that(is.data.frame(df))
 
   map_if(df, is.factor, as.character) %>%
-    as_data_frame() %>%
+    as_tibble() %>%
     list.parse() %>%
     setNames(NULL)
 
@@ -108,21 +108,6 @@ hex_to_rgba <- function(x, alpha = 1) {
     unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",") %>%
     .[[1]] %>%
     sprintf("rgba(%s,%s)", ., alpha)
-
-}
-
-#' Get dash styles
-#'
-#' Get dash style to use on highcharts objects.
-#'
-#'
-#' @export
-dash_styles <- function() {
-
-  .Deprecated()
-
-  c("Solid", "ShortDash", "ShortDot", "ShortDashDot", "ShortDashDotDot",
-    "Dot", "Dash", "LongDash", "DashDot", "LongDashDot", "LongDashDotDot")
 
 }
 
@@ -256,10 +241,9 @@ color_classes <- function(breaks = NULL,
 #'
 #' @examples
 #'
-#' get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
+#' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #'
 #' @importFrom tibble has_name
-#' @export
 get_hc_series_from_df <- function(data, type = NULL, ...) {
 
   assertthat::assert_that(is.data.frame(data))
@@ -365,7 +349,13 @@ random_id <- function(n = 1, length = 10){
 
 #' Function to avoid the jsonlite::auto_unbox default
 #' @param x And element, numeric or character
-#' @export
+#' @examples 
+#' 
+#' hchart("A")
+#' 
+#' highchart() %>% 
+#'   hc_add_series(data = 1)
+#' 
 fix_1_length_data <- function(x) {
 
   if (getOption("highcharter.verbose"))

@@ -1,0 +1,329 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/highcharter?color=brightgreen)](https://cran.r-project.org/package=highcharter)
+[![CRAN downloads](http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen)](http://www.r-pkg.org/pkg/highcharter)
+[![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&svg=true)](https://ci.appveyor.com/project/jbkunst/highcharter)
+[![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+[![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+[![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
+
+<h1><div id="brand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div></h1> 
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(highcharter)
+library(tidyverse)
+
+hc_theme_index <- 
+  hc_theme_smpl(
+    plotOptions = list(
+      series = list(showInLegend = FALSE),
+      line = list(lineWidth = 1.2)
+      ),
+    xAxis = list(
+      showLastLabel = FALSE,
+      showFirstLabel = FALSE,
+      endOnTick = FALSE,
+      startOnTick = FALSE
+      ),
+    yAxis = list(
+      showLastLabel = FALSE,
+      showFirstLabel = FALSE,
+      endOnTick = FALSE,
+      startOnTick = FALSE
+      ),
+    tooltip = list(valueDecimals = 2)
+  )
+
+
+# example 1
+data(mpg, package = "ggplot2")
+mpg <- select(mpg, displ, hwy)
+p1 <- hchart(
+  mpg,
+  "scatter",
+  hcaes(x = displ, y = hwy, color = hwy),
+  name = "Cars"
+  ) %>%
+  hc_add_theme(hc_theme_index)
+
+# example 2
+library(forecast)
+p2 <- hchart(
+  forecast(ets(AirPassengers), level = 90, h = 12 * 2),
+  fillOpacity = 0.7
+  ) %>%
+  hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
+  hc_add_theme(hc_theme_index)
+
+# example 3
+data(GNI2014, package = "treemap")
+GNI2014 <- select(GNI2014, -population, -continent)
+p3 <- hcmap(
+  "custom/world-robinson-lowres",
+  data = GNI2014,
+  name = "GNI",
+  value = "GNI",
+  joinBy = c("iso-a3", "iso3"),
+  nullColor = "#932667"
+  ) %>%
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
+    type = "logarithmic"
+    ) %>%
+  hc_legend(enabled = FALSE) %>%
+  hc_mapNavigation(enabled = FALSE) 
+
+# example 4
+p4 <- hcboxplot(
+  iris$Sepal.Length,
+  var = iris$Species,
+  name = "Sepal Length",
+  color = "red"
+  ) %>%
+  hc_xAxis(showLastLabel = TRUE, showFirstLabel = TRUE) %>% 
+  hc_add_theme(hc_theme_index)
+
+# example 5
+library(igraph)
+
+set.seed(12313)
+N <- 24
+net <- sample_pa(N)
+wc <- cluster_walktrap(net)
+V(net)$label <- 1:N
+V(net)$name <- 1:N
+V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree + 1
+V(net)$comm <- membership(wc)
+V(net)$color <- colorize(membership(wc), viridisLite::magma(length(wc)))
+p5 <- hchart(net, layout = layout_with_fr, maxSize = 13)
+  
+# example 6
+p6 <- hciconarray(
+  c("bicycle", "taxi", "subway"),
+  c(17, 12, 6),
+  rows = 4,
+  icons = c("bicycle", "taxi", "subway"),
+  showInLegend = TRUE
+  ) %>%
+  hc_colors(c("darkgreen", "#CCCC00", "#808183"))
+  
+# example 7
+p7 <- highchart() %>%
+  hc_chart(type = "area") %>% 
+  hc_add_series(density(rnorm(10000000)), name = "Normal Distribution") %>%
+  hc_add_series(density(rgamma(10000000, 5, 0.8)), name = "Gamma(5. 0.8) Distribution") %>%
+  # hc_add_series(density(rgamma(10000000, 3, 0.8)), name = "Gamma(3. 0.8) Distribution") %>%
+  hc_plotOptions(series = list(fillOpacity = 0.5)) %>%
+  hc_xAxis(min = -5, max = 12) %>% 
+  hc_add_theme(hc_theme_index)
+
+# example 8
+brks <- seq(-3, 3, length.out = 40)
+grid <- expand.grid(brks, brks)
+m <- as.data.frame(grid) %>%
+  mutate(
+    value =
+      mvtnorm::dmvnorm(grid, mean = c(1, 1), sigma = matrix(c(1, .2, .2, 1), nrow = 2)) +
+      mvtnorm::dmvnorm(grid, mean = c(-1,-1), sigma = matrix(c(1,-.8,-.8, 1), nrow = 2)) +
+      mvtnorm::dmvnorm(grid, mean = c(0, 0), sigma = matrix(c(1.5, 0, 0, 1.5), nrow = 2))
+    ) %>%
+  spread(Var2, value) %>%
+  select(-Var1) %>%
+  as.matrix()
+  
+colnames(m) <- rownames(m) <-  NULL
+ncols <- 10
+cols <- c(rep("white", 2), rev(viridisLite::inferno(ncols - 2, begin = 0)))
+cols <- hex_to_rgba(cols, alpha = 1:ncols / ncols)
+colssotps <- list_parse2(
+  data.frame(
+    q = seq(0, ncols - 1) / (ncols - 1),
+    c = cols
+    )
+  )
+  
+p8 <- hchart(m) %>%
+  hc_add_theme(hc_theme_null()) %>%
+  hc_legend(enabled = FALSE) %>%
+  hc_colorAxis(stops = colssotps)
+  
+
+# example 8
+library(rwars)
+swmovies <- get_all_films()
+  
+swdata <- map_df(swmovies$results, function(x) {
+  data_frame(
+  movie = x$title,
+  species = length(x$species),
+  planets = length(x$planets),
+  characters = length(x$characters),
+  vehicles = length(x$vehicles),
+  release = x$release_date
+  )
+  })
+  
+swdata <- gather(swdata, key, number,-movie,-release) %>% 
+  arrange(release)
+
+p9 <- hchart(
+  swdata,
+  "line",
+  hcaes(x = movie, y = number, group = key),
+  color = c("#e5b13a", "#4bd5ee", "#4AA942", "#FAFAFA")
+  ) %>%
+  hc_xAxis(visible = FALSE) %>%
+  hc_title(
+    text = "Diversity in <span style=\"color:#e5b13a\"> STAR WARS</span> movies",
+    style = list(fontSize = "13px"),
+    useHTML = TRUE
+    ) %>%
+  hc_tooltip(table = TRUE, sort = TRUE) %>%
+  hc_credits(
+    enabled = TRUE,
+    text = "Source: SWAPI via rwars package",
+    href = "https://swapi.co/"
+    ) %>%
+  hc_add_theme(
+    hc_theme_flatdark(
+      chart = list(
+        backgroundColor = "transparent",
+        divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
+        )
+      )
+    )
+
+# example 10
+p10 <- hchart(rgamma(10000, shape = 2, scale = 3)) %>% 
+  hc_add_theme(hc_theme_smpl()) %>% 
+  hc_add_theme(hc_theme_index)
+
+plots <- list(
+  p1, p2, 
+  p3, p9, 
+  p4, p7, 
+  p5, p10
+  #, p8, p6
+  )
+
+plots <- map(plots, hc_size, height = 300)
+
+divplots <- map(plots, tags$div, class = "col-sm-6")
+
+divplots <- htmltools::tagList(tags$div(class = "row", style = "padding-right: 10px", divplots))
+
+# htmltools::browsable(divplots)
+
+divplots
+  
+```
+
+
+Highcharter is a [R](https://cran.r-project.org/) wrapper for 
+**[Highcharts](https://www.highcharts.com/)**  javascript libray and its modules.
+Highcharts is very mature and flexible javascript charting library and 
+it has a great and powerful API^[See http://www.highcharts.com/demo].
+
+The main features of this package are:
+
+* Various chart type: scatters, bubble, line, 
+time series, heatmaps, treemap, bar charts, networks.
+* Chart various R object with one function. With hchart(x) you can 
+chart: data.frames, numeric, histogram, character, density, factors, ts,
+ mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist,
+  dendrogram, phylo, survfit classes.
+* Support Highstock charts. You can create a candlestick charts in 2 lines 
+of code. Support xts objects from the quantmod package.
+* Support Highmaps charts. It's easy to create choropleths or add 
+information in geojson format.
+* Themes: you configurate your chart in multiples ways. There are
+ implemented themes like economist, financial times, google, 538 among 
+ others.
+* A lot of Plugins: motion, drag points, fontawesome, url-pattern, annotations.
+
+
+## Highcharts: Hello World Example 
+
+This is a simple example using `hchart` function.
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+options(highcharter.theme = hc_theme_smpl())
+```
+
+```{r}
+library(highcharter)
+data(diamonds, mpg, package = "ggplot2")
+
+hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+```
+
+Among its features highcharter can chart various objects depending of
+its class with the generic^[I want to say *magic*]  `hchart` function.
+
+```{r}
+x <- c(rnorm(1000), rnorm(500, 5))
+
+hchart(x, name = "data") 
+```
+
+One of the nicest class which `hchart` can plot is the `forecast`
+class from the forecast package.
+
+```{r}
+library(forecast)
+
+airforecast <- forecast(auto.arima(AirPassengers), level = 95)
+
+hchart(airforecast)
+```
+
+## Highstock
+
+With highcharter you can use the highstock library which 
+include sophisticated navigation options like a small navigator 
+series, preset date ranges, date picker, scrolling and panning.
+With highcarter it's easy make candlesticks or ohlc charts using
+time series data. For example data from [quantmod](http://www.quantmod.com/)
+package.
+
+```{r}
+library(quantmod)
+
+x <- getSymbols("GOOG", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
+
+highchart(type = "stock") %>% 
+   hc_add_series(x) %>% 
+   hc_add_series(y, type = "ohlc")
+```
+
+## Highmaps
+
+You can chart maps and choropleth using the highmaps module., build interactive 
+maps to display data linked to geographic objects. 
+
+```{r}
+data(GNI2014, package = "treemap")
+
+hcmap(
+  "custom/world-robinson-lowres",data = GNI2014,
+  name = "GNI",
+  value = "GNI",
+  joinBy = c("iso-a3", "iso3")
+  ) %>%
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
+    type = "logarithmic"
+    ) 
+```
+
