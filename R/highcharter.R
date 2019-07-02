@@ -12,6 +12,10 @@
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
+#' @param google_fonts A boolean value. If TRUE (default), adds a reference to the
+#'   Google Fonts API to the HTML head, downloading CSS for the font families
+#'   defined in the Highcharts theme from https://fonts.googleapis.com. Set to
+#'   FALSE if you load your own fonts using CSS.
 #'      
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #'
@@ -21,7 +25,8 @@ highchart <- function(hc_opts = list(),
                       type = "chart",
                       width = NULL,
                       height = NULL,
-                      elementId = NULL) {
+                      elementId = NULL,
+                      google_fonts = TRUE) {
   
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
   
@@ -29,8 +34,10 @@ highchart <- function(hc_opts = list(),
 
   if (identical(hc_opts, list()))
     hc_opts <- opts$chart
-  
-  unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme))) 
+
+  unfonts <- NULL
+  if (google_fonts)
+    unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
   
   opts$chart <- NULL
   
@@ -116,6 +123,10 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param elementId	Use an explicit element ID for the widget.
 #' @param debug A boolean value if you want to print in the browser console the 
 #'    parameters given to `highchart`.
+#' @param google_fonts A boolean value. If TRUE (default), adds a reference to the
+#'   Google Fonts API to the HTML head, downloading CSS for the font families
+#'   defined in the Highcharts theme from https://fonts.googleapis.com. Set to
+#'   FALSE if you load your own fonts using CSS.
 #'
 #' @export
 highchart2 <- function(hc_opts = list(),
@@ -123,9 +134,12 @@ highchart2 <- function(hc_opts = list(),
                        width = NULL,
                        height = NULL,
                        elementId = NULL,
-                       debug = FALSE) {
+                       debug = FALSE,
+                       google_fonts = TRUE) {
   
-  unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme))) 
+  unfonts <- NULL
+  if (google_fonts)
+    unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
   
   # forward options using x
   x <- list(

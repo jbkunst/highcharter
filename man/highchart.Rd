@@ -5,7 +5,8 @@
 \title{Create a Highcharts chart widget}
 \usage{
 highchart(hc_opts = list(), theme = getOption("highcharter.theme"),
-  type = "chart", width = NULL, height = NULL, elementId = NULL)
+  type = "chart", width = NULL, height = NULL, elementId = NULL,
+  google_fonts = TRUE)
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as
@@ -21,6 +22,11 @@ Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 \item{height}{A numeric input in pixels.}
 
 \item{elementId}{Use an explicit element ID for the widget.}
+
+\item{google_fonts}{A boolean value. If TRUE (default), adds a reference to the
+Google Fonts API to the HTML head, downloading CSS for the font families
+defined in the Highcharts theme from https://fonts.googleapis.com. Set to
+FALSE if you load your own fonts using CSS.}
 }
 \description{
 This function creates a Highchart chart using \pkg{htmlwidgets}. The
