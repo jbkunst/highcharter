@@ -406,7 +406,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
         name = !!group_syms[[depth]],
         level = depth
       ) %>% 
-      mutate_at(group_vars, as.character()) %>% 
+      mutate_at(group_vars[1:depth], as.character) %>% 
       {
         if (depth == 1) mutate(., id = paste0(name, 1))
         else {
