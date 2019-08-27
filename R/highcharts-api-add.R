@@ -306,7 +306,7 @@ hc_add_series.loess <- hc_add_series.lm
 #'   \url{http://api.highcharts.com/highcharts#chart}. 
 #' @export
 hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
-                                     ...) {
+                                     ..., fast = FALSE) {
   
   if (getOption("highcharter.verbose"))
     message("hc_add_series.data.frame")
@@ -322,7 +322,7 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
   
   data <- mutate_mapping(data, mapping)
   
-  series <- data_to_series(data, mapping, type = type, ...)
+  series <- data_to_series(data, mapping, type = type, ..., fast = fast)
 
   hc_add_series_list(hc, series)
   
@@ -450,7 +450,7 @@ add_arg_to_df <- function(data, ...) {
 
 #' @importFrom dplyr mutate do arrange_
 #' @importFrom tibble tibble tibble_
-data_to_series <- function(data, mapping, type, ...) {
+data_to_series <- function(data, mapping, type, ..., fast = FALSE) {
   
   # check type and fix
   type <- ifelse(type == "point", "scatter", type)
@@ -505,10 +505,20 @@ data_to_series <- function(data, mapping, type, ...) {
   if (!has_name(mapping, "group"))
     data[["group"]] <- "group"
   
-  data <- data %>% 
-    group_by_("group") %>% 
-    do(data = list_parse(select_(., quote(-group)))) %>% 
-    ungroup()
+  if (isTRUE(fast)){ # pre-convert data to json
+    data <- data %>% 
+      group_by_("group") %>% 
+      do(data = jsonlite::toJSON( select_(., quote(-group))
+                                  , dataframe = "rows"
+                                  , verbatim=TRUE
+      )) %>% 
+      ungroup()
+  } else {
+    data <- data %>% 
+      group_by_("group") %>% 
+      do(data = list_parse(select_(., quote(-group)))) %>% 
+      ungroup()
+  }
 
   data$type <- type
   
@@ -519,9 +529,7 @@ data_to_series <- function(data, mapping, type, ...) {
     data <- rename_(data, "name" = "group")  
   
   series <- list_parse(data)
-  
   series
-  
 }
 
 data_to_options <- function(data, type) {
