@@ -1,12 +1,12 @@
 # packages ----------------------------------------------------------------
 library(purrr)
 library(rvest)
-library(stringr)
+library(dplyr)
 library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "7.0.1"
+version <- "7.2.0"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -93,7 +93,7 @@ setdiff(modules, modules_yalm) %>%
 setdiff(modules_yalm, modules)
 
 # repetidos en yalm
-data_frame(m = modules_yalm) %>% 
+tibble(m = modules_yalm) %>% 
   count(m, sort = TRUE) %>% 
   filter(n > 1)
 
