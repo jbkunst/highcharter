@@ -8,16 +8,18 @@ worldgeojson <- readLines(tmpfile)
 worldgeojson <- gsub(".* = ", "", worldgeojson)
 worldgeojson <- jsonlite::fromJSON(worldgeojson, simplifyVector = FALSE)
 
-worldgeojson$features <- map(worldgeojson$features, function(x){
+worldgeojson$features <- map(worldgeojson$features, function(x) {
   # x <- worldgeojson$features[[10]]
   x$properties <- x$properties[!grepl("hc", names(x$properties))]
   names(x$properties) <- gsub("-", "", names(x$properties))
   names(x$properties) <- gsub("isoa", "iso", names(x$properties))
-  x$properties <- map(x$properties, function(x){ ifelse(is.null(x), NA, iconv(x, to = "UTF-8")) })
+  x$properties <- map(x$properties, function(x) {
+    ifelse(is.null(x), NA, iconv(x, to = "UTF-8"))
+  })
   x
 })
 
-map_df(worldgeojson$features, function(x){
+map_df(worldgeojson$features, function(x) {
   as.data.frame(x$properties, stringsAsFactors = FALSE)
 })
 
@@ -33,9 +35,9 @@ usgeojson <- jsonlite::fromJSON(usgeojson, simplifyVector = FALSE)
 
 usgeojson$features[52] <- NULL
 
-usgeojson$features <- map(usgeojson$features, function(x){
+usgeojson$features <- map(usgeojson$features, function(x) {
   # x <- uscountygeojson$features[[10]]
-  x$properties$code <-  x$properties$`hc-key`
+  x$properties$code <- x$properties$`hc-key`
   x$properties <- x$properties[!grepl("hc", names(x$properties))]
   names(x$properties) <- gsub("-", "", names(x$properties))
   names(x$properties) <- gsub("isoa", "iso", names(x$properties))
@@ -43,7 +45,7 @@ usgeojson$features <- map(usgeojson$features, function(x){
   x
 })
 
-states <- map_df(usgeojson$features, function(x){
+states <- map_df(usgeojson$features, function(x) {
   as.data.frame(x$properties, stringsAsFactors = FALSE)
 })
 
@@ -59,9 +61,9 @@ uscountygeojson <- readLines(tmpfile)
 uscountygeojson <- gsub(".* = ", "", uscountygeojson)
 uscountygeojson <- jsonlite::fromJSON(uscountygeojson, simplifyVector = FALSE)
 
-uscountygeojson$features <- map(uscountygeojson$features, function(x){
+uscountygeojson$features <- map(uscountygeojson$features, function(x) {
   # x <- uscountygeojson$features[[10]]
-  x$properties$code <-  x$properties$`hc-key`
+  x$properties$code <- x$properties$`hc-key`
   x$properties <- x$properties[!grepl("hc", names(x$properties))]
   names(x$properties) <- gsub("-", "", names(x$properties))
   names(x$properties) <- gsub("isoa", "iso", names(x$properties))
@@ -69,11 +71,10 @@ uscountygeojson$features <- map(uscountygeojson$features, function(x){
   x
 })
 
-counties <- map_df(uscountygeojson$features, function(x){
+counties <- map_df(uscountygeojson$features, function(x) {
   as.data.frame(x$properties, stringsAsFactors = FALSE)
 })
 
 counties
 
 devtools::use_data(uscountygeojson, overwrite = TRUE)
-

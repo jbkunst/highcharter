@@ -5,33 +5,28 @@
 #' @param df A data frame to parse to list
 #' @examples
 #'
-#' x <- data.frame(a=1:3, type=c('A','C','B'), stringsAsFactors = FALSE)
+#' x <- data.frame(a = 1:3, type = c("A", "C", "B"), stringsAsFactors = FALSE)
 #' list_parse(x)
 #' list_parse2(x)
-#'
 #' @importFrom purrr transpose
 #' @export
 list_parse <- function(df) {
-
   assertthat::assert_that(is.data.frame(df))
 
   map_if(df, is.factor, as.character) %>%
     as_tibble() %>%
     list.parse() %>%
     setNames(NULL)
-
 }
 
 #' @importFrom rlist list.parse
 #' @rdname list_parse
 #' @export
 list_parse2 <- function(df) {
-
   assertthat::assert_that(is.data.frame(df))
 
   list_parse(df) %>%
     map(setNames, NULL)
-
 }
 
 #' String to 'id' format
@@ -43,10 +38,8 @@ list_parse2 <- function(df) {
 #' @examples
 #'
 #' str_to_id(" A string _ with sd / sdg    Underscores \   ")
-#'
 #' @export
 str_to_id <- function(x) {
-
   assertthat::assert_that(is.character(x) | is.factor(x))
 
   x %>%
@@ -58,7 +51,6 @@ str_to_id <- function(x) {
     str_replace_all("\\[|\\]", "_") %>%
     str_replace_all("_+", "_") %>%
     str_replace_all("_$|^_", "")
-
 }
 
 #' Date to timestamps
@@ -71,8 +63,9 @@ str_to_id <- function(x) {
 #'
 #' datetime_to_timestamp(
 #'   as.Date(c("2015-05-08", "2015-09-12"),
-#'   format = "%Y-%m-%d"))
-#'
+#'     format = "%Y-%m-%d"
+#'   )
+#' )
 #' @export
 datetime_to_timestamp <- function(dt) {
 
@@ -84,7 +77,6 @@ datetime_to_timestamp <- function(dt) {
   tmstmp <- 1000 * tmstmp
 
   tmstmp
-
 }
 
 #' Transform colors from hexadecimal format to rgba hc notation
@@ -95,12 +87,10 @@ datetime_to_timestamp <- function(dt) {
 #' @examples
 #'
 #' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725"))
-#'
 #' @importFrom grDevices col2rgb
 #' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
-
   x %>%
     col2rgb() %>%
     t() %>%
@@ -108,7 +98,6 @@ hex_to_rgba <- function(x, alpha = 1) {
     unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",") %>%
     .[[1]] %>%
     sprintf("rgba(%s,%s)", ., alpha)
-
 }
 
 #' Chart a demo for testing themes
@@ -118,24 +107,34 @@ hex_to_rgba <- function(x, alpha = 1) {
 #' @examples
 #'
 #' highcharts_demo()
-#'
 #' @export
 highcharts_demo <- function() {
-
   dtemp <- structure(
     list(
-      month = c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
-      tokyo = c(7, 6.9,  9.5, 14.5, 18.2, 21.5,
-                25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
-      new_york = c(-0.2,  0.8, 5.7, 11.3, 17, 22,
-                   24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
-      berlin = c(-0.9,  0.6, 3.5, 8.4, 13.5, 17,
-                 18.6, 17.9, 14.3, 9, 3.9, 1),
-      london = c(3.9,  4.2, 5.7, 8.5, 11.9, 15.2,
-                 17, 16.6, 14.2, 10.3, 6.6, 4.8)),
+      month = c(
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ),
+      tokyo = c(
+        7, 6.9, 9.5, 14.5, 18.2, 21.5,
+        25.2, 26.5, 23.3, 18.3, 13.9, 9.6
+      ),
+      new_york = c(
+        -0.2, 0.8, 5.7, 11.3, 17, 22,
+        24.8, 24.1, 20.1, 14.1, 8.6, 2.5
+      ),
+      berlin = c(
+        -0.9, 0.6, 3.5, 8.4, 13.5, 17,
+        18.6, 17.9, 14.3, 9, 3.9, 1
+      ),
+      london = c(
+        3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
+        17, 16.6, 14.2, 10.3, 6.6, 4.8
+      )
+    ),
     .Names = c("month", "tokyo", "new_york", "berlin", "london"),
-    row.names = c(NA, 12L ), class = c("tbl_df", "tbl", "data.frame"))
+    row.names = c(NA, 12L), class = c("tbl_df", "tbl", "data.frame")
+  )
 
   highchart() %>%
     hc_title(text = "Monthly Average Temperature") %>%
@@ -146,7 +145,6 @@ highcharts_demo <- function() {
     hc_add_series(name = "Tokyo", data = dtemp$tokyo) %>%
     hc_add_series(name = "London", data = dtemp$london) %>%
     hc_add_series(name = "Berlin", data = dtemp$berlin)
-
 }
 
 #' Create vector of color from vector
@@ -158,29 +156,22 @@ highcharts_demo <- function() {
 #' colorize(runif(10))
 #'
 #' colorize(LETTERS[rbinom(20, 5, 0.5)], c("#FF0000", "#00FFFF"))
-#'
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats ecdf
 #' @export
 colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
-
   nuniques <- length(unique(x))
   palcols <- grDevices::colorRampPalette(colors)(nuniques)
 
   if (!is.numeric(x) | nuniques < 10) {
-
     y <- as.numeric(as.factor(x))
     xcols <- palcols[y]
-
   } else {
-
     ecum <- ecdf(x)
     xcols <- palcols[ceiling(nuniques * ecum(x))]
-
   }
 
   xcols
-
 }
 
 #' Function to create \code{stops} argument in \code{hc_colorAxis}
@@ -191,18 +182,16 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 #' @examples
 #'
 #' color_stops(5)
-#'
 #' @export
 color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
-
   palcols <- grDevices::colorRampPalette(colors)(n)
 
   list_parse2(
     data.frame(
       q = seq(0, n - 1) / (n - 1),
       c = palcols
-      )
     )
+  )
 }
 
 #' Function to create \code{dataClasses} argument in \code{hc_colorAxis}
@@ -213,11 +202,9 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
 #' @examples
 #'
 #' color_classes(c(0, 10, 20, 50))
-#'
 #' @export
 color_classes <- function(breaks = NULL,
                           colors = c("#440154", "#21908C", "#FDE725")) {
-
   lbrks <- length(breaks)
 
   list_parse(
@@ -228,7 +215,6 @@ color_classes <- function(breaks = NULL,
       stringsAsFactors = FALSE
     )
   )
-
 }
 
 #' Auxiliar function to get series and options from tidy frame for hchart.data.frame
@@ -242,10 +228,8 @@ color_classes <- function(breaks = NULL,
 #' @examples
 #'
 #' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
-#'
 #' @importFrom tibble has_name
 get_hc_series_from_df <- function(data, type = NULL, ...) {
-
   assertthat::assert_that(is.data.frame(data))
   stopifnot(!is.null(type))
 
@@ -275,7 +259,6 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   if (has_name(parsc, "x")) {
     if (is.Date(data[["x"]])) {
       data[["x"]] <- datetime_to_timestamp(data[["x"]])
-
     } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
       data[["name"]] <- data[["x"]]
       data[["x"]] <- NULL
@@ -287,18 +270,22 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
     if (type == "treemap") {
       data <- rename_(data, "colorValue" = "color")
     } else {
-      data  <- mutate_(data, "colorv" = "color",
-                       "color" = "highcharter::colorize(color)")
+      data <- mutate_(data,
+        "colorv" = "color",
+        "color" = "highcharter::colorize(color)"
+      )
     }
   }
 
   # size
-  if (has_name(parsc, "size") & type %in% c("bubble", "scatter"))
+  if (has_name(parsc, "size") & type %in% c("bubble", "scatter")) {
     data <- mutate_(data, "z" = "size")
+  }
 
   # group
-  if (!has_name(parsc, "group"))
+  if (!has_name(parsc, "group")) {
     data[["group"]] <- "Series"
+  }
 
   data[["charttpye"]] <- type
 
@@ -308,13 +295,13 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
     ungroup() %>%
     rename_("name" = "group", "type" = "charttpye")
 
-  if (!has_name(parsc, "group"))
+  if (!has_name(parsc, "group")) {
     dfs[["name"]] <- NULL
+  }
 
   series <- list_parse(dfs)
 
   series
-
 }
 
 #' Check if a string vector is in hexadecimal color format
@@ -326,43 +313,37 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
 #' x <- c("#f0f0f0", "#FFf", "#99990000", "#00FFFFFF")
 #'
 #' is.hexcolor(x)
-#'
 #' @export
 is.hexcolor <- function(x) {
-
   pattern <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$"
 
   str_detect(x, pattern)
-
 }
 #' Function to generate iids
 #' @param n Number of ids
 #' @param length Length of ids
 #' @export
-random_id <- function(n = 1, length = 10){
-
+random_id <- function(n = 1, length = 10) {
   source <- c(seq(0, 9), letters)
 
   replicate(n, paste0(sample(x = source, size = length, replace = TRUE), collapse = ""))
-
 }
 
 #' Function to avoid the jsonlite::auto_unbox default
 #' @param x And element, numeric or character
-#' @examples 
-#' 
+#' @examples
+#'
 #' hchart("A")
-#' 
-#' highchart() %>% 
+#'
+#' highchart() %>%
 #'   hc_add_series(data = 1)
-#' 
 fix_1_length_data <- function(x) {
-
-  if (getOption("highcharter.verbose"))
+  if (getOption("highcharter.verbose")) {
     message("fix_1_length")
+  }
 
-  if (class(x) != "list" & length(x) == 1)
+  if (class(x) != "list" & length(x) == 1) {
     x <- list(x)
+  }
   x
 }
-

@@ -62,8 +62,8 @@ mapdata <- get_data_from_map(download_map_data("custom/usa-and-canada"))
 
 glimpse(mapdata)
 
-data_fake <- mapdata %>% 
-  select(code = `hc-a2`) %>% 
+data_fake <- mapdata %>%
+  select(code = `hc-a2`) %>%
   mutate(value = 1e5 * abs(rt(nrow(.), df = 10)))
 
 glimpse(data_fake)
@@ -87,7 +87,7 @@ hcmap(
     valuePrefix = "$",
     valueSuffix = "USD"
   )
-) 
+)
 ```
 
 ## Adding Points
@@ -105,7 +105,7 @@ cities <- data.frame(
 )
 
 hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
-  hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = '10%') %>%
+  hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = "10%") %>%
   hc_mapNavigation(enabled = TRUE)
 ```
 
@@ -118,17 +118,18 @@ library(tidyverse)
 airports <- read_csv("https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv")
 
 airports <- airports %>%
-  filter(country %in% c("Brazil", "Ecuador", "Venezuela", "Chile", "Argentina", "Peru", 
-"Uruguay", "Paraguay", "Bolivia", "Suriname", "Guyana", "Colombia"
-)) %>% 
-  rename(lat = latitude, lon = longitude) %>% 
+  filter(country %in% c(
+    "Brazil", "Ecuador", "Venezuela", "Chile", "Argentina", "Peru",
+    "Uruguay", "Paraguay", "Bolivia", "Suriname", "Guyana", "Colombia"
+  )) %>%
+  rename(lat = latitude, lon = longitude) %>%
   filter(lon < -30)
 
 hcmap(
   "custom/south-america",
   name = "South America",
   showInLegend = FALSE
-  ) %>%
+) %>%
   hc_add_series(
     data = airports,
     type = "mappoint",
@@ -138,7 +139,7 @@ hcmap(
     tooltip = list(
       pointFormat = "{point.name}: {point.altitude:,.0f} feets <br>
       ({point.lat:,.2f}, {point.lon:,.2f})"
-      )
+    )
   ) %>%
   hc_chart(zoomType = "xy")
 ```
@@ -155,9 +156,9 @@ library(httr)
 library(jsonlite)
 library(geojsonio)
 
-ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json") %>% 
-  content() %>% 
-  fromJSON(simplifyVector = FALSE) %>% 
+ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json") %>%
+  content() %>%
+  fromJSON(simplifyVector = FALSE) %>%
   as.json()
 
 ausmap <- highchart(type = "map") %>%
@@ -182,7 +183,7 @@ ausmap %>%
     dataLabels = list(enabled = FALSE),
     name = "Airports",
     tooltip = list(pointFormat = "{point.name}")
-  ) 
+  )
 ```
 
 ## An Advanced Example

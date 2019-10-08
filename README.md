@@ -9,6 +9,9 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
+<!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/pachamaltese/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/pachamaltese/highcharter?branch=master)
+<!-- badges: end -->
 
 ---
 

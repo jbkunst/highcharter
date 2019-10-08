@@ -127,7 +127,7 @@
 #'  \item \code{egg_group_2}:
 #'  \item \code{url_image}:
 #' }
-#' 
+#'
 #' @docType data
 #' @name pokemon
 #' @usage pokemon
@@ -158,8 +158,8 @@
 "stars"
 
 #' US Counties unemployment rate
-#' 
-#' This data comes from the 
+#'
+#' This data comes from the
 #' \url{https://www.highcharts.com/samples/data/jsonp.php?filename=us-counties-unemployment.json}
 #' and is used in highmaps examples.
 #'
@@ -181,7 +181,7 @@
 "unemployment"
 
 #' US Counties map in Geojson format (list)
-#' 
+#'
 #' This data comes from the \url{https://code.highcharts.com/mapdata/countries/us/us-all-all.js}
 #' and is used in highmaps examples.
 #'
@@ -192,7 +192,7 @@
 "uscountygeojson"
 
 #' US States map in Geojson format (list)
-#' 
+#'
 #' This data comes from the \url{https://code.highcharts.com/mapdata/countries/us/us-all.js}
 #' and is used in highmaps examples.
 #'
@@ -204,7 +204,7 @@
 
 #' Vaccines
 #'
-#' The number of infected people by Measles, measured over 70-some years and across 
+#' The number of infected people by Measles, measured over 70-some years and across
 #' all 50 states. From the WSJ analysis: \url{http://graphics.wsj.com/infectious-diseases-and-vaccines/}
 #'
 #' @section Variables:
@@ -244,7 +244,7 @@
 "weather"
 
 #' World map in Geojson format (list)
-#' 
+#'
 #' This data comes from the \url{https://code.highcharts.com/mapdata/custom/world.js}
 #' and is used in highmaps examples.#'
 #'
@@ -253,4 +253,3 @@
 #' @usage worldgeojson
 #' @format A `list` in geojson format.
 "worldgeojson"
-
