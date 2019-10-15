@@ -5,10 +5,10 @@ library("stringr")
 
 df <- read_csv("https://raw.githubusercontent.com/hrbrmstr/hadcrut/master/data/temps.csv")
 
-df <- select(df, -year, -decade, -month) %>% 
-  mutate(year_mon = as.Date(year_mon)) %>% 
+df <- select(df, -year, -decade, -month) %>%
+  mutate(year_mon = as.Date(year_mon)) %>%
   rename(date = year_mon)
-  
+
 globaltemp <- df
 devtools::use_data(globaltemp, overwrite = TRUE)
 
@@ -19,7 +19,7 @@ hchart(globaltemp, type = "spline", x = date, y = median)
 
 # setting theme
 thm <- hc_theme_darkunica(
-  chart  = list(
+  chart = list(
     style = list(fontFamily = "Roboto Condensed"),
     backgroundColor = "#323331"
   ),
@@ -35,12 +35,14 @@ y <- sprintf("{point.%s}", c("lower", "median", "upper"))
 tltip <- tooltip_table(x, y)
 
 
-hchart(globaltemp, type = "columnrange", x = date, low = lower, high = upper,
-       color = median) %>% 
-  hc_yAxis(tickPositions = c(-2, 0, 1.5, 2)) %>% 
+hchart(globaltemp,
+  type = "columnrange", x = date, low = lower, high = upper,
+  color = median
+) %>%
+  hc_yAxis(tickPositions = c(-2, 0, 1.5, 2)) %>%
   hc_tooltip(
     useHTML = TRUE,
     headerFormat = as.character(tags$small("{point.x: %Y %b}")),
     pointFormat = tltip
-  ) %>% 
+  ) %>%
   hc_add_theme(thm)

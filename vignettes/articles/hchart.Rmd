@@ -39,8 +39,8 @@ data(diamonds, economics_long, mpg, package = "ggplot2")
 
 hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
 
-mpgman2 <- mpg %>% 
-  count(class, year) %>% 
+mpgman2 <- mpg %>%
+  count(class, year) %>%
   glimpse()
 
 hchart(mpgman2, "column", hcaes(x = class, y = n, group = year))
@@ -49,7 +49,7 @@ hchart(mpgman2, "column", hcaes(x = class, y = n, group = year))
 Check automatically if the x column is date class:
 
 ```{r}
-economics_long2 <- economics_long %>% 
+economics_long2 <- economics_long %>%
   filter(variable %in% c("pop", "uempmed", "unemploy"))
 
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
@@ -59,7 +59,7 @@ hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 
 ```{r}
 x <- diamonds$price
-hchart(x) 
+hchart(x)
 ```
 
 ## Densities
@@ -103,7 +103,7 @@ hchart(x)
 library(igraph)
 N <- 40
 
-net <- sample_gnp(N, p = 2/N)
+net <- sample_gnp(N, p = 2 / N)
 wc <- cluster_walktrap(net)
 
 V(net)$label <- seq(N)
@@ -127,7 +127,7 @@ library(survival)
 
 data(lung)
 lung <- mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
-fit <- survfit(Surv(time, status) ~ sex, data = lung) 
+fit <- survfit(Surv(time, status) ~ sex, data = lung)
 
 hchart(fit, ranges = TRUE)
 ```

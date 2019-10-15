@@ -1,17 +1,15 @@
 #' Firefox theme for highcharts
-#' 
+#'
 #' Theme inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
-#' 
+#'
 #' @param ... Named argument to modify the theme
-#' 
-#' @examples 
-#' 
-#' highcharts_demo() %>% 
+#'
+#' @examples
+#'
+#' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_ffx())
-#' 
 #' @export
-hc_theme_ffx <- function(...){
-  
+hc_theme_ffx <- function(...) {
   theme <-
     hc_theme(
       colors = c("#00AACC", "#FF4E00", "#B90000", "#5F9B0A", "#CD6723"),
@@ -21,12 +19,12 @@ hc_theme_ffx <- function(...){
           stops = list(
             list(0, "#CAE1F4"),
             list(1, "#EEEEEE")
-            )
-          ),
-        style = list(
-          fontFamily = "Open Sans"
           )
         ),
+        style = list(
+          fontFamily = "Open Sans"
+        )
+      ),
       title = list(
         align = "left"
       ),
@@ -55,14 +53,13 @@ hc_theme_ffx <- function(...){
     )
 
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
-  } 
-  
+  }
+
   theme
-  
 }

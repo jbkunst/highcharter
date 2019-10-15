@@ -36,11 +36,11 @@ library(tidyverse)
 data(diamonds, package = "ggplot2")
 
 data <- count(diamonds, cut, color)
-hc <- hchart(data, "column", hcaes(x = color, y = n, group = cut)) %>% 
-  hc_yAxis(title = list(text = "Cases")) %>% 
+hc <- hchart(data, "column", hcaes(x = color, y = n, group = cut)) %>%
+  hc_yAxis(title = list(text = "Cases")) %>%
   hc_title(text = "Diamonds Are Forever") %>%
-  hc_subtitle(text = "Source: Diamonds data set") %>% 
-  hc_credits(enabled = TRUE, text = "jkunst.com") %>% 
+  hc_subtitle(text = "Source: Diamonds data set") %>%
+  hc_credits(enabled = TRUE, text = "jkunst.com") %>%
   hc_tooltip(sort = TRUE, table = TRUE)
 hc
 ```
@@ -54,43 +54,41 @@ Here you'll find the themes to change the look of your charts.
 themes <- help.search("theme", package = "highcharter") %>%
   .$matches %>%
   tbl_df() %>%
-  janitor::clean_names() %>% 
-  select(name, title) %>% 
-  distinct() %>% 
-  filter(str_detect(name, "hc_theme_*")) %>% 
-  filter(!name %in% c("hc_theme_merge", "hc_theme")) %>% 
-  mutate(title = str_replace(title, " theme for highcharts", "")) %>% 
+  janitor::clean_names() %>%
+  select(name, title) %>%
+  distinct() %>%
+  filter(str_detect(name, "hc_theme_*")) %>%
+  filter(!name %in% c("hc_theme_merge", "hc_theme")) %>%
+  mutate(title = str_replace(title, " theme for highcharts", "")) %>%
   arrange(name)
 
 thms <- unique(c("hc_theme_smpl", "hc_theme_db", themes$name))
 # thms <- sample(thms, 5)
 
 # generate tabs
-thms %>% 
-  map(function(t){ # t <- sample(thms, 1)
-    
-    t %>% 
-      str_replace_all("hc_theme_", "") %>% 
-      tags$a(`data-target` = paste0("#", t), `data-toggle` = "tab") %>% 
-      tags$li(class = if(t == thms[1]) "active" else NULL)
-    
-  }) %>% 
+thms %>%
+  map(function(t) { # t <- sample(thms, 1)
+
+    t %>%
+      str_replace_all("hc_theme_", "") %>%
+      tags$a(`data-target` = paste0("#", t), `data-toggle` = "tab") %>%
+      tags$li(class = if (t == thms[1]) "active" else NULL)
+  }) %>%
   tags$ul(class = "nav nav-pills", id = "myTab", .)
 
 
 tags$br()
 
-thms %>% 
-  map(function(t){ # t <- sample(thms, 1)
-    
+thms %>%
+  map(function(t) { # t <- sample(thms, 1)
+
     thm <- get(t)()
-    
-    content <-  list(hc) %>%
+
+    content <- list(hc) %>%
       map(hc_add_theme, thm)
-    
-    tags$div(content, id = t, class = "tab-pane", class = if(t == thms[1]) "active" else NULL)
-    
-  }) %>% 
+
+    tags$div(content, id = t, class = "tab-pane", class = if (t == thms[1]) "active" else NULL)
+  }) %>%
   tags$div(class = "tab-content")
 ```
 
@@ -101,35 +99,35 @@ You can create your own themes!
 
 ```{r}
 my_own_theme <- hc_theme(
-  colors = c('red', 'green', 'blue'),
+  colors = c("red", "green", "blue"),
   chart = list(
     backgroundColor = NULL,
     divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
   ),
   title = list(
     style = list(
-      color = '#333333',
+      color = "#333333",
       fontFamily = "Lato"
     )
   ),
   subtitle = list(
     style = list(
-      color = '#666666',
+      color = "#666666",
       fontFamily = "Shadows Into Light"
     )
   ),
   legend = list(
     itemStyle = list(
-      fontFamily = 'Tangerine',
-      color = 'black'
+      fontFamily = "Tangerine",
+      color = "black"
     ),
     itemHoverStyle = list(
-      color = 'gray'
-    )   
+      color = "gray"
+    )
   )
 )
 
-hc %>% 
+hc %>%
   hc_add_theme(my_own_theme)
 ```
 
@@ -147,7 +145,7 @@ thm <- hc_theme_merge(
     ),
     title = list(
       style = list(
-        color = 'white',
+        color = "white",
         fontFamily = "Open Sans"
       )
     )

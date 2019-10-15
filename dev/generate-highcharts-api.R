@@ -69,8 +69,6 @@ write_lines(txt, fout)
 dfopts %>% 
   pmap(function(option, url){
     
-    # url <- "https://api.highcharts.com/highcharts/time"
-    # option <- "colors"
     message(option, ": ", url)
     
     if(option == "colors") {

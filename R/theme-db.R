@@ -1,44 +1,42 @@
 #' Dotabuff theme for highcharts
-#' 
+#'
 #' @param ... Named argument to modify the theme
-#' 
-#' @examples 
-#' 
-#' highcharts_demo() %>% 
+#'
+#' @examples
+#'
+#' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_db())
-#' 
 #' @export
-hc_theme_db <- function(...){
-  
-  theme <- 
+hc_theme_db <- function(...) {
+  theme <-
     list(
       colors = c("#A9CF54", "#C23C2A", "#FFFFFF", "#979797", "#FBB829"),
-      chart = list(  
+      chart = list(
         backgroundColor = "#242F39",
         style = list(
           color = "white"
         )
-        ),
+      ),
       legend = list(
         enabled = TRUE,
         align = "right",
         verticalAlign = "bottom",
-        itemStyle = list(  
+        itemStyle = list(
           color = "#C0C0C0"
-          ),
-        itemHoverStyle = list(  
+        ),
+        itemHoverStyle = list(
           color = "#C0C0C0"
-          ),
+        ),
         itemHiddenStyle = list(
           color = "#444444"
-          )
-        ),
+        )
+      ),
       title = list(
         text = NULL,
         style = list(
           color = "#FFFFFF"
-          )
-        ),
+        )
+      ),
       tooltip = list(
         backgroundColor = "#1C242D",
         borderColor = "#1C242D",
@@ -46,58 +44,57 @@ hc_theme_db <- function(...){
         borderRadius = 0,
         style = list(
           color = "#FFFFFF"
-          )
-        ),
-      subtitle = list(  
-        style = list(  
+        )
+      ),
+      subtitle = list(
+        style = list(
           color = "#666666"
-          )
-        ),
-      xAxis = list(  
+        )
+      ),
+      xAxis = list(
         gridLineColor = "#2E3740",
         gridLineWidth = 1,
-        labels = list(  
-          style = list(  
+        labels = list(
+          style = list(
             color = "#525252"
-            )
-          ),
+          )
+        ),
         lineColor = "#2E3740",
         tickColor = "#2E3740",
         title = list(
           style = list(
             color = "#FFFFFF"
-            ),
+          ),
           text = NULL
-          )
-        ),
-      yAxis = list(  
+        )
+      ),
+      yAxis = list(
         gridLineColor = "#2E3740",
         gridLineWidth = 1,
-        labels = list(  
-          style = list(  
+        labels = list(
+          style = list(
             color = "#525252"
-            ),
+          ),
           lineColor = "#2E3740",
           tickColor = "#2E3740",
-          title = list(  
-            style = list(  
+          title = list(
+            style = list(
               color = "#FFFFFF"
-              ),
+            ),
             text = NULL
-            )
           )
         )
+      )
     )
-      
+
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
-  } 
-  
+  }
+
   theme
-  
 }

@@ -23,3 +23,5 @@ index.Rmd
 .*debug.log
 
 
+^codecov\.yml$
+^codemeta\.json$

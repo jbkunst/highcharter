@@ -1,19 +1,19 @@
 #' Alone theme for highcharts
-#' 
+#'
 #' @param ... Named argument to modify the theme
-#' 
-#' @examples 
-#' 
-#' highcharts_demo() %>% 
+#'
+#' @examples
+#'
+#' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_alone())
-#'   
 #' @export
-hc_theme_alone <- function(...){
-  
+hc_theme_alone <- function(...) {
   theme <-
     hc_theme(
-      colors = c("#d35400", "#2980b9", "#2ecc71",
-                 "#f1c40f", "#2c3e50", "#7f8c8d"),
+      colors = c(
+        "#d35400", "#2980b9", "#2ecc71",
+        "#f1c40f", "#2c3e50", "#7f8c8d"
+      ),
       chart = list(
         backgroundColor = "#161C20",
         style = list(
@@ -43,19 +43,19 @@ hc_theme_alone <- function(...){
       ),
       xAxis = list(
         gridLineColor = "#424242",
-        gridLineWidth =  1,
+        gridLineWidth = 1,
         minorGridLineColor = "#424242",
-        minoGridLineWidth =  0.5,
+        minoGridLineWidth = 0.5,
         tickColor = "#424242",
         minorTickColor = "#424242",
         lineColor = "#424242"
       ),
       yAxis = list(
-        gridLineColor = "#424242", 
-        ridLineWidth =  1,
-        minorGridLineColor = "#424242", 
-        inoGridLineWidth =  0.5,
-        tickColor = "#424242", 
+        gridLineColor = "#424242",
+        ridLineWidth = 1,
+        minorGridLineColor = "#424242",
+        inoGridLineWidth = 0.5,
+        tickColor = "#424242",
         minorTickColor = "#424242",
         lineColor = "#424242"
       ),
@@ -80,16 +80,15 @@ hc_theme_alone <- function(...){
         )
       )
     )
-  
+
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
-  } 
-  
+  }
+
   theme
-  
 }
