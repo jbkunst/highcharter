@@ -22,5 +22,5 @@ Similar in spirit to \code{ggplot2::aes_string}
 \examples{
 hchart(mtcars, "point", hcaes_string("hp", "mpg", group = "cyl"))
 
-hcaes_string(x = 'xval', color = 'colorvar', group = 'grvar')
+hcaes_string(x = "xval", color = "colorvar", group = "grvar")
 }

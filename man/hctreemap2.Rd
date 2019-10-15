@@ -50,9 +50,11 @@ tibble(
       list(level = 2, dataLabels = list(enabled = FALSE)),
       list(level = 3, dataLabels = list(enabled = FALSE))
     )
-  ) \%>\% 
-  hc_colorAxis(minColor = brewer.pal(7, "Greens")[1],
-               maxColor = brewer.pal(7, "Greens")[7]) \%>\% 
+  ) \%>\%
+  hc_colorAxis(
+    minColor = brewer.pal(7, "Greens")[1],
+    maxColor = brewer.pal(7, "Greens")[7]
+  ) \%>\%
   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
              Value: {point.value:,.0f}<br>
              Color Value: {point.colorValue:,.0f}")

@@ -18,5 +18,4 @@ Function to modify the \code{id} for the container.
 
 hchart(rnorm(10)) \%>\%
   hc_elementId("newid")
-
 }

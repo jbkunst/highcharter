@@ -19,5 +19,4 @@ Similar in spirit to \code{ggplot2::aes}
 \examples{
 
 hcaes(x = xval, color = colorvar, group = grvar)
-
 }

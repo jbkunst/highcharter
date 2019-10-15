@@ -22,7 +22,8 @@ The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 \dontrun{
 mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
 mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js",
-                            quiet = TRUE)
+  quiet = TRUE
+)
 str(mpdta, 1)
 }
 }

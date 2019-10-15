@@ -26,7 +26,7 @@ df <- data.frame(
 
 # Note the 3d requiere highchart2() due have the 3d module
 highchart2() \%>\%
-  hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) \%>\% 
+  hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) \%>\%
   hc_chart(
     type = "scatter3d",
     options3d = list(
@@ -42,7 +42,7 @@ highchart2() \%>\%
         )
       )
     )
-  ) \%>\% 
+  ) \%>\%
   hc_zAxis(
     title = list(text = "Z axis is here"),
     startOnTick = FALSE,
@@ -52,5 +52,4 @@ highchart2() \%>\%
     gridLineColor = "red",
     gridLineDashStyle = "dot"
   )
-
 }

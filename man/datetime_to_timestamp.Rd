@@ -16,6 +16,7 @@ Turn a date time vector to \code{timestamp} format
 
 datetime_to_timestamp(
   as.Date(c("2015-05-08", "2015-09-12"),
-  format = "\%Y-\%m-\%d"))
-
+    format = "\%Y-\%m-\%d"
+  )
+)
 }

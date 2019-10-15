@@ -14,7 +14,6 @@ Theme inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
 }
 \examples{
 
-highcharts_demo() \%>\% 
+highcharts_demo() \%>\%
   hc_add_theme(hc_theme_ffx())
-
 }
