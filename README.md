@@ -13,10 +13,8 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&svg=true)](https://ci.appveyor.com/project/jbkunst/highcharter)
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+[![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/jbkunst/highcharter?branch=master)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
-<!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/pachamaltese/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/pachamaltese/highcharter?branch=master)
-<!-- badges: end -->
 
 ---
 

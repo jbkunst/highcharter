@@ -26,7 +26,6 @@ inside of \code{hc_tooltip} function an \code{useHTML = TRUE} option.
 }
 \examples{
 
-
 \dontrun{
 require(dplyr)
 require(purrr)
@@ -40,23 +39,25 @@ gp <- gapminder \%>\%
 
 gp2 <- gapminder \%>\%
   nest(-country) \%>\%
-  mutate(data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
-         data = map(data, list_parse)) \%>\%
+  mutate(
+    data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
+    data = map(data, list_parse)
+  ) \%>\%
   rename(ttdata = data)
 
 gptot <- left_join(gp, gp2)
 
 hc <- hchart(
-        gptot,
-        "point",
-        hcaes(
-          lifeExp,
-          gdpPercap,
-          name = country,
-          size = pop,
-          group = continent
-          )
-       ) \%>\%
+  gptot,
+  "point",
+  hcaes(
+    lifeExp,
+    gdpPercap,
+    name = country,
+    size = pop,
+    group = continent
+  )
+) \%>\%
   hc_yAxis(type = "logarithmic")
 
 hc \%>\%
@@ -77,9 +78,10 @@ hc \%>\%
       hc_opts = list(
         title = list(text = "point.country"),
         xAxis = list(title = list(text = "lifeExp")),
-        yAxis = list(title = list(text = "gdpPercap")))
+        yAxis = list(title = list(text = "gdpPercap"))
       )
     )
+  )
 
 hc \%>\%
   hc_tooltip(
@@ -92,7 +94,6 @@ hc \%>\%
       )
     )
   )
-  
- }
+}
 
 }
