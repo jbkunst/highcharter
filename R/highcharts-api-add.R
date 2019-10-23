@@ -389,7 +389,7 @@ hcaes_ <- hcaes_string
 #' @param drop A logical argument to you drop variables or not. Default is
 #' \code{FALSE}
 #' @importFrom lubridate is.Date
-#' @importFrom rlang "!!!" "!!" ":=" parse_quosure syms
+#' @importFrom rlang "!!!" "!!" ":=" parse_quo syms
 #' @examples
 #'
 #' df <- head(mtcars)
@@ -404,7 +404,7 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
 
   tran <- as.character(mapping)
   newv <- names(mapping)
-  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quosure)
+  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quo)
 
   data <- dplyr::mutate(data, !!!list_names)
   # Reserverd  highcharts names (#241)
