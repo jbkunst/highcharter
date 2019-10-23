@@ -19,17 +19,18 @@ boxes where min and max dates can be manually input.
 }
 \examples{
 
-hc <- highchart(type = "stock") \%>\%
+hc <- highchart(type = "stock") \%>\% 
   hc_add_series(AirPassengers)
 
 hc
 
-hc \%>\%
+hc \%>\% 
   hc_rangeSelector(enabled = FALSE)
 
-hc \%>\%
+hc \%>\% 
   hc_rangeSelector(
     verticalAlign = "bottom",
     selected = 4
-  )
+    )
+
 }
