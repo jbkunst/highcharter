@@ -30,12 +30,13 @@ dependencies:
     - modules/heatmap.js
     - modules/treemap.js
     - modules/sankey.js
+    - modules/organization.js
     - modules/solid-gauge.js
     - modules/streamgraph.js
     - modules/sunburst.js
     - modules/vector.js
     - modules/wordcloud.js
-    - modules/xrange.js 
+    - modules/xrange.js
     - modules/tilemap.js
     - modules/venn.js
     - modules/gantt.js
@@ -46,7 +47,7 @@ dependencies:
 #    - modules/grid-axis.js
 #    - modules/broken-axis.js
 #    - modules/series-label.js
-#    - modules/pareto.js    
+#    - modules/pareto.js
 #    - modules/accessibility.js
 #    - modules/boost-canvas.js
 #    - modules/histogram-bellcurve.js
@@ -73,7 +74,7 @@ dependencies:
     - plugins/grouped-categories.js
     - plugins/motion.js
     - plugins/multicolor_series.js
-#    - plugins/highcharts-regression.js    
+#    - plugins/highcharts-regression.js
 #    - plugins/pattern-fill-v2.js
 #    - plugins/tooltip-delay.js
 #    - plugins/annotations.js
