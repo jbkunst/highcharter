@@ -321,22 +321,40 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
 #' @param x,y,... List of name value pairs giving aesthetics to map to
 #'   variables. The names for x and y aesthetics are typically omitted because
 #'   they are so common; all other aesthetics must be named.
-#' @importFrom rlang enexprs is_missing
+#' @importFrom rlang enquos is_quosure quo_is_symbolic quo_get_expr
 #' @examples
 #'
 #' hcaes(x = xval, color = colorvar, group = grvar)
 #' @export
-hcaes <- function(x, y, ...) {
+hcaes <- function(x, y, env = globalenv(), ...) {
   # taken from https://github.com/tidyverse/ggplot2/commit/d69762269787ed0799ab4fb1f35638cc46b5b7e6
-  exprs <- rlang::enexprs(x = x, y = y, ...)
+  exprs <- rlang::enquos(x = x, y = y, ..., .ignore_empty = "all")
+  aes <- new_aes(exprs, env = parent.frame())
+  class(aes) <- c("hcaes", class(aes))
+  aes
+}
 
-  is_missing <- vapply(exprs, rlang::is_missing, logical(1))
-
-  mapping <- structure(exprs[!is_missing], class = "uneval")
-
-  class(mapping) <- c("hcaes", class(mapping))
-
-  mapping
+# Wrap symbolic objects in quosures but pull out constants out of
+# quosures for backward-compatibility
+new_aesthetic <- function(x, env = globalenv()) {
+  if (rlang::is_quosure(x)) {
+    if (!rlang::quo_is_symbolic(x)) {
+      x <- rlang::quo_get_expr(x)
+    }
+    return(x)
+  }
+  
+  if (rlang::is_symbolic(x)) {
+    x <- rlang::new_quosure(x, env = env)
+    return(x)
+  }
+  
+  x
+}
+new_aes <- function(x, env = globalenv()) {
+  stopifnot(is.list(x))
+  x <- lapply(x, new_aesthetic, env = env)
+  structure(x, class = "uneval")
 }
 
 #' Define aesthetic mappings using strings.
