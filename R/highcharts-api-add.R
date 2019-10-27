@@ -321,40 +321,22 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
 #' @param x,y,... List of name value pairs giving aesthetics to map to
 #'   variables. The names for x and y aesthetics are typically omitted because
 #'   they are so common; all other aesthetics must be named.
-#' @importFrom rlang enquos is_quosure quo_is_symbolic quo_get_expr
+#' @importFrom rlang enexprs is_missing
 #' @examples
 #'
 #' hcaes(x = xval, color = colorvar, group = grvar)
 #' @export
-hcaes <- function(x, y, env = globalenv(), ...) {
+hcaes <- function(x, y, ...) {
   # taken from https://github.com/tidyverse/ggplot2/commit/d69762269787ed0799ab4fb1f35638cc46b5b7e6
-  exprs <- rlang::enquos(x = x, y = y, ..., .ignore_empty = "all")
-  aes <- new_aes(exprs, env = parent.frame())
-  class(aes) <- c("hcaes", class(aes))
-  aes
-}
-
-# Wrap symbolic objects in quosures but pull out constants out of
-# quosures for backward-compatibility
-new_aesthetic <- function(x, env = globalenv()) {
-  if (rlang::is_quosure(x)) {
-    if (!rlang::quo_is_symbolic(x)) {
-      x <- rlang::quo_get_expr(x)
-    }
-    return(x)
-  }
+  exprs <- rlang::enexprs(x = x, y = y, ...)
   
-  if (rlang::is_symbolic(x)) {
-    x <- rlang::new_quosure(x, env = env)
-    return(x)
-  }
+  is_missing <- vapply(exprs, rlang::is_missing, logical(1))
   
-  x
-}
-new_aes <- function(x, env = globalenv()) {
-  stopifnot(is.list(x))
-  x <- lapply(x, new_aesthetic, env = env)
-  structure(x, class = "uneval")
+  mapping <- structure(exprs[!is_missing], class = "uneval")
+  
+  class(mapping) <- c("hcaes", class(mapping))
+  
+  mapping
 }
 
 #' Define aesthetic mappings using strings.
@@ -422,7 +404,7 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
 
   tran <- as.character(mapping)
   newv <- names(mapping)
-  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quo)
+  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quo, env = globalenv())
 
   data <- dplyr::mutate(data, !!!list_names)
   # Reserverd  highcharts names (#241)
