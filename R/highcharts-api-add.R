@@ -329,13 +329,13 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
 hcaes <- function(x, y, ...) {
   # taken from https://github.com/tidyverse/ggplot2/commit/d69762269787ed0799ab4fb1f35638cc46b5b7e6
   exprs <- rlang::enexprs(x = x, y = y, ...)
-
+  
   is_missing <- vapply(exprs, rlang::is_missing, logical(1))
-
+  
   mapping <- structure(exprs[!is_missing], class = "uneval")
-
+  
   class(mapping) <- c("hcaes", class(mapping))
-
+  
   mapping
 }
 
@@ -404,7 +404,7 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
 
   tran <- as.character(mapping)
   newv <- names(mapping)
-  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quo)
+  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quo, env = globalenv())
 
   data <- dplyr::mutate(data, !!!list_names)
   # Reserverd  highcharts names (#241)
