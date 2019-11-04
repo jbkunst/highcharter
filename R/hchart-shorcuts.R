@@ -375,11 +375,11 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
 
   data <- data %>% mutate_at(group_vars, as.character)
 
-  name_cell <- function(..., depth) paste0(list(...), 1:depth, collapse = "")
+  name_cell <- function(..., depth) paste0(list(...), seq_len(depth), collapse = "")
 
   data_at_depth <- function(depth) {
     data %>%
-      group_by(!!!group_syms[1:depth]) %>%
+      group_by(!!!group_syms) %>%
       summarise(
         value = sum(!!size_sym),
         colorValue = sum(!!color_sym)
@@ -397,7 +397,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
           mutate(
             .,
             parent = pmap_chr(
-              list(!!!group_syms[1:depth - 1]),
+              list(!!!group_syms[seq_len(depth) - 1]),
               name_cell,
               depth = depth - 1
             ),
@@ -407,7 +407,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
       }
   }
 
-  treemap_df <- 1:length(group_vars) %>%
+  treemap_df <- seq_along(group_vars) %>%
     map(data_at_depth) %>%
     bind_rows()
 
