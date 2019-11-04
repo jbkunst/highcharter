@@ -23,12 +23,11 @@ map(chart_types_with_examples, function(x){
   })
 
 
-
 # charts with no examples
 chart_types_with_examples %>% 
   basename() %>% 
   str_remove(".R$") %>% 
   setdiff(chart_types, .) %>% 
   str_c("\t - ", ., "\n") %>% 
-  message("Chart with no examples:", "\n", .)
+  message("Chart with no examples (", length(.), "):\n", .)
 
