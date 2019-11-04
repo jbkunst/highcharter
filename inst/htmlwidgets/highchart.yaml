@@ -43,6 +43,12 @@ dependencies:
     - modules/timeline.js
     - modules/parallel-coordinates.js
     - modules/bullet.js
+#    - modules/coloraxis.js
+#    - modules/datagrouping.js
+#    - modules/dependency-wheel.js
+#    - modules/dotplot.js
+#    - modules/funnel3d.js
+#    - modules/pyramid3d.js    
 #    - modules/static-scale.js
 #    - modules/grid-axis.js
 #    - modules/broken-axis.js

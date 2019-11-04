@@ -70,7 +70,7 @@ files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>%
   str_subset("js.map$", negate = TRUE)
 
 mapmodule <- files %>% 
-  str_subset("modules/map.js$")
+  str_subset("code/modules/map.js$")
 
 file.copy(
   mapmodule,
@@ -88,7 +88,7 @@ modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") %>%
   str_trim() %>% 
   basename()
 
-# copy and paste y this is not empty
+# copy and paste if this is not empty
 setdiff(modules, modules_yalm) %>% 
   str_c("#    - modules/", ., "\n") %>% 
   message()

@@ -1,26 +1,30 @@
-# "['The Left', 69, '#BE3075', 'DIE LINKE'],
-# ['Social Democratic Party', 153, '#EB001F', 'SPD'],
-# ['Alliance 90/The Greens', 67, '#64A12D', 'GRÜNE'],
-# ['Free Democratic Party', 80, '#FFED00', 'FDP'],
-# ['Christian Democratic Union', 200, '#000000', 'CDU'],
-# ['Christian Social Union in Bavaria', 46, '#008AC5', 'CSU'],
-# ['Alternative for Germany', 94, '#009EE0', 'AfD']" %>% 
-#   str_split("\n") %>% 
-#   unlist() %>% 
-#   str_remove()
+df <- data.frame(
+  stringsAsFactors = FALSE,
+  name = c("The Left", "Social Democratic Party",
+           "Alliance 90/The Greens", "Free Democratic Party",
+           "Christian Democratic Union", "Christian Social Union in Bavaria",
+           "Alternative for Germany"),
+  count = c(69, 153, 67, 80, 200, 46, 94),
+  col = c("#BE3075", "#EB001F", "#64A12D", "#FFED00", "#000000",
+          "#008AC5", "#009EE0"),
+  abbrv = c("DIE LINKE", "SPD", "GRÜNE", "FDP", "CDU", "CSU", "AfD")
+  )
 
-# 
-#  %>% 
-#   hchart("item", hcaes(name = Species, y = n, label = Species)) %>% 
-#   hc_chart(type = "item")
-
-# library(tidyverse)
-# 
-# highchartzero() %>% 
-#   hc_add_dependency("modules/item-series.js") %>% 
-#   hc_add_series(count(iris, Species), "item",  hcaes(name = Species, y = n, label = Species))
-
-
-highchart() %>% 
-  # hc_add_dependency("modules/item-series.js") %>% 
-  hc_add_series(count(iris, Species), "item",  hcaes(name = Species, y = n, label = Species))
+hchart(df, "item", hcaes(name = name, y = count, label = abbrv, color = col), 
+       name = "Representatives") %>% 
+  hc_plotOptions(
+    series = list(
+      dataLabels = list(
+        enabled = TRUE,
+        format = "{point.label}"
+        ),
+      center = list('50%', '60%'),
+      size = '100%',
+      startAngle = -100,
+      endAngle = 100
+    )
+  ) %>% 
+  hc_legend(
+    enabled = TRUE,
+    labelFormat = "{name} <span style='opacity: 0.4'>{y}</span>"
+  )
