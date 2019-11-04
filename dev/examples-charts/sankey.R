@@ -13,7 +13,7 @@ energy <- paste0(
   jsonlite::fromJSON()
 
 dfnodes <- energy$nodes %>% 
-  map_df(as_data_frame) %>% 
+  map_df(as.data.frame) %>% 
   mutate(id = row_number() - 1)
 
 dflinks <- tbl_df(energy$links)
