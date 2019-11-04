@@ -2,7 +2,8 @@ library(lubridate)
 
 N <- 7
 set.seed(1234)
-df <- data_frame(
+df <- tibble(
+  stringsAsFactors = FALSE,
   start = Sys.Date() + months(sample(10:20, size = N)),
   end = start + months(sample(1:3, size = N, replace = TRUE)),
   cat = rep(1:5, length.out = N) - 1,
