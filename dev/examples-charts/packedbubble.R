@@ -1,5 +1,3 @@
-library(highcharter)
-
 data(gapminder, package = "gapminder")
 
 gapminder <- subset(gapminder, year == max(year))

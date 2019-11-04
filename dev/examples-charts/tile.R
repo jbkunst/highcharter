@@ -1,5 +1,3 @@
-library(highcharter)
-
 df <- data.frame(
   stringsAsFactors = FALSE,
   x = c(1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9),
@@ -15,36 +13,36 @@ df <- data.frame(
 df
 
 hc <- highchart() %>%
-  hc_add_series(data = df, name = '') %>%
-  hc_title(text = 'test') %>%
-  hc_chart(type = 'tilemap') %>%
+  hc_add_series(data = df, name = "") %>%
+  hc_title(text = "test") %>%
+  hc_chart(type = "tilemap") %>%
   hc_colorAxis(dataClasses = list(
     list(
       from = 0,
       to = 10,
-      color = '#ffff00',
-      name = '0°C - 10°C'
+      color = "#ffff00",
+      name = "0°C - 10°C"
     ),
     list(
       from = 10,
       to = 20,
-      color = '#FFA500',
-      name = '10°C - 20°C'
+      color = "#FFA500",
+      name = "10°C - 20°C"
     ),
     list(
       from = 20,
       to = 30,
-      color = '#e50000',
-      name = '20°C - 30°C'
+      color = "#e50000",
+      name = "20°C - 30°C"
     )
   )) %>%
-  hc_tooltip(headerFormat = '',
-             pointFormat = 'Average temperature: {point.value}') %>%
+  hc_tooltip(headerFormat = "",
+             pointFormat = "Average temperature: {point.value}") %>%
   hc_plotOptions(
     series = list(
       enabled = T,
-      format = '{point.value}',
-      color = '#000000',
+      format = "{point.value}",
+      color = "#000000",
       turboThreshold = 1000,
       style = list(textOutline = F)
     )
@@ -62,7 +60,7 @@ library(tidyverse)
 url <- "https://gist.githubusercontent.com/maartenzam/787498bbc07ae06b637447dbd430ea0a/raw/9a9dafafb44d8990f85243a9c7ca349acd3a0d07/worldtilegrid.csv"
 
 data <- read_csv(url)
-data <- rename_all(data, str_replace_al, "\\.", "_")
+data <- rename_all(data, str_replace_all, "\\.", "_")
 data
 
 hchart(data, "tilemap", hcaes(x = x, y = -y, name = name, group = region)) %>% 
