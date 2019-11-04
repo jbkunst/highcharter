@@ -1,11 +1,8 @@
-library(tidyverse)
-
-df <- tibble(
+df <- data.frame(
   y = sample(5:10),
-  target = sample(y),
+  target = sample(5:10),
   x = LETTERS[1:6]
   )
-
 
 hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
   hc_chart(inverted = TRUE) %>%
