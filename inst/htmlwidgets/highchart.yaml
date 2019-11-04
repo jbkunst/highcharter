@@ -84,4 +84,4 @@ dependencies:
     - custom/text-symbols.js
     stylesheet:
     - css/motion.css
-    - css/htmlwdgtgrid.css
+ #   - css/htmlwdgtgrid.css
