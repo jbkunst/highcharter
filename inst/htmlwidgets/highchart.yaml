@@ -80,8 +80,8 @@ dependencies:
 #    - plugins/annotations.js
 #    - plugins/draggable-legend.js
     - custom/reset.js
-    - custom/symbols-extra.js
-    - custom/text-symbols.js
+#    - custom/symbols-extra.js
+#    - custom/text-symbols.js
     stylesheet:
     - css/motion.css
  #   - css/htmlwdgtgrid.css
