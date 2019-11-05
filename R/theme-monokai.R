@@ -1,17 +1,15 @@
 #' Monokai theme for highcharts
-#' 
-#' A well know text editor theme 
-#' 
+#'
+#' A well know text editor theme
+#'
 #' @param ... Named argument to modify the theme
-#' 
-#' @examples 
-#' 
-#' highcharts_demo() %>% 
+#'
+#' @examples
+#'
+#' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_monokai())
-#' 
 #' @export
-hc_theme_monokai <- function(...){
-  
+hc_theme_monokai <- function(...) {
   theme <-
     hc_theme(
       colors = c("#F92672", "#66D9EF", "#A6E22E", "#A6E22E"),
@@ -20,8 +18,8 @@ hc_theme_monokai <- function(...){
         style = list(
           fontFamily = "Inconsolata",
           color = "#A2A39C"
-          )
-        ),
+        )
+      ),
       title = list(
         style = list(
           color = "#A2A39C"
@@ -62,14 +60,13 @@ hc_theme_monokai <- function(...){
     )
 
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
-  } 
-  
+  }
+
   theme
-  
 }

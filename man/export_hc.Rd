@@ -28,18 +28,17 @@ fn <- "function(){
   alert('Category: ' + this.category);
 }"
 
-hc <- highcharts_demo() \%>\% 
+hc <- highcharts_demo() \%>\%
   hc_plotOptions(
     series = list(
       cursor = "pointer",
-        point = list(
-          events = list(
-            click = JS(fn)
-         )
-       )
-   )
- )
-
+      point = list(
+        events = list(
+          click = JS(fn)
+        )
+      )
+    )
+  )
 \dontrun{
 export_hc(hc, filename = "~/hc_is.js", as = "is")
 export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "objectname")

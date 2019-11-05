@@ -25,9 +25,10 @@ parameter in \code{hc_tooltip}
 \examples{
 
 x <- c("Income:", "Genre", "Runtime")
-y <- c("$ {point.y}", "{point.series.options.extra.genre}",
-       "{point.series.options.extra.runtime}")
+y <- c(
+  "$ {point.y}", "{point.series.options.extra.genre}",
+  "{point.series.options.extra.runtime}"
+)
 
 tooltip_table(x, y)
-
 }

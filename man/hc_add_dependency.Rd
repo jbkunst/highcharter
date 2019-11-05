@@ -16,16 +16,16 @@ example: \code{"plugins/annotations.js"}}
 Add modules or plugin dependencies to highcharts objects
 }
 \examples{
- 
-data(mpg, package = "ggplot2")  
- 
-hchart(mpg, "point", hcaes(displ, hwy), regression = TRUE,
-       regressionSettings = list(type = "polynomial", order = 5, hideInLegend = TRUE)) \%>\%
-  hc_add_dependency("plugins/highcharts-regression.js")
-  
-hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) \%>\% 
-  hc_colors(c("#d35400", "#2980b9", "#2ecc71")) \%>\% 
-  hc_add_dependency("plugins/highcharts-regression.js")
-   
 
+data(mpg, package = "ggplot2")
+
+hchart(mpg, "point", hcaes(displ, hwy),
+  regression = TRUE,
+  regressionSettings = list(type = "polynomial", order = 5, hideInLegend = TRUE)
+) \%>\%
+  hc_add_dependency("plugins/highcharts-regression.js")
+
+hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) \%>\%
+  hc_colors(c("#d35400", "#2980b9", "#2ecc71")) \%>\%
+  hc_add_dependency("plugins/highcharts-regression.js")
 }

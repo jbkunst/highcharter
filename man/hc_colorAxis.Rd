@@ -12,7 +12,7 @@ hc_colorAxis(hc, ...)
 \item{...}{Arguments defined in https://api.highcharts.com/highcharts/colorAxis.}
 }
 \description{
-A color axis for choropleth maps and heat maps. Visually, the color
+A color axis for series. Visually, the color
 axis will appear as a gradient or as separate items inside the
 legend, depending on whether the axis is scalar or based on data
 classes.
@@ -32,6 +32,10 @@ subdivided into separate classes like categories based on their
 values. This can be used for ranges between two values, but also for
 a true category. However, when your data is categorized, it may be as
 convenient to add each category to a separate series.
+Color axis does not work with: sankey, sunburst, dependencywheel,
+networkgraph, wordcloud, venn, gauge and solidgauge series
+types.
+Since v7.2.0 colorAxis can also be an array of options objects.
 See the Axis object for
 programmatic access to the axis.
 }

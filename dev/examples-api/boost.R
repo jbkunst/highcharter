@@ -53,3 +53,47 @@ highchart() %>%
       pointFormat =  '[{point.x:.1f}, {point.y:.1f}]'
       )
     )
+
+# Ex3
+# N <- 1000000
+# n <- 5
+# s <- seq(n)
+# s <- s/(max(s) + min(s))
+# s <- round(s, 2)
+# 
+# series <- s %>% 
+#   map(~ arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 10) %>% 
+#   map(as.vector) %>% 
+#   map(round, 2) %>% 
+#   map(~ list(data = .x))
+# 
+# highchart() %>% 
+#   hc_add_series_list(series) %>% 
+#   hc_chart(zoomType = "x")
+# 
+# df <- map2_df(s, series, ~ data_frame(y = unlist(.y), x = seq(length(y)), group = .x))
+# 
+# hchart(df, "line", hcaes(x, y, group = group)) %>% 
+#   hc_chart(zoomType = "x")
+# 
+# 
+# set.seed(123)
+# N <- 1000000
+# df <- data_frame(
+#   x = rnorm(N),
+#   y = x + rnorm(N, sd = 0.5)
+# ) %>% 
+#   mutate_all(round, 4)
+# 
+# df %>% 
+#   mutate_all(abs) %>% 
+#   summarise_all(max)
+# 
+# highchart() %>% 
+#   hc_add_series(
+#     data = list_parse2(df), type = "scatter", marker = list(radius = 0.2),
+#     tooltip = list(followPointer = FALSE) 
+#   ) %>% 
+#   hc_chart(zoomType = "yx") %>% 
+#   hc_xAxis(min = -5, max = 5) %>% 
+#   hc_yAxis(min = -5, max = 5)

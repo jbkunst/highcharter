@@ -1,12 +1,12 @@
 # packages ----------------------------------------------------------------
 library(purrr)
 library(rvest)
-library(stringr)
+library(dplyr)
 library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "7.0.1"
+version <- "7.2.1"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -32,10 +32,11 @@ folder_temp <- tempdir()
 unzip(file_temp, exdir = folder_temp)
 
 files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
-  {.[!str_detect(., "src.js$")]} %>% 
-  {.[!str_detect(., "js.map$")]}
+  str_subset("src.js$", negate = TRUE) %>% 
+  str_subset("js.map$", negate = TRUE)
 
 main <- str_subset(files, "code/highcharts")
+main
   
 file.copy(
   main,
@@ -44,6 +45,7 @@ file.copy(
 )
 
 modules <- str_subset(files, "code/modules")
+modules
 
 file.copy(
   modules,
@@ -51,6 +53,7 @@ file.copy(
   overwrite = TRUE
 )
 
+# map
 file_temp <- tempfile(fileext = ".zip")
 
 download.file(
@@ -63,11 +66,11 @@ folder_temp <- tempdir()
 unzip(file_temp, exdir = folder_temp)
 
 files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
-  {.[!str_detect(., "src.js$")]} %>% 
-  {.[!str_detect(., "js.map$")]}
+  str_subset("src.js$", negate = TRUE) %>% 
+  str_subset("js.map$", negate = TRUE)
 
 mapmodule <- files %>% 
-  str_subset("modules/map.js$")
+  str_subset("code/modules/map.js$")
 
 file.copy(
   mapmodule,
@@ -85,15 +88,16 @@ modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") %>%
   str_trim() %>% 
   basename()
 
+# copy and paste if this is not empty
 setdiff(modules, modules_yalm) %>% 
-  str_c("#    - ", ., "\n") %>% 
-  cat()
+  str_c("#    - modules/", ., "\n") %>% 
+  message()
 
 # sobran
 setdiff(modules_yalm, modules)
 
 # repetidos en yalm
-data_frame(m = modules_yalm) %>% 
+tibble(m = modules_yalm) %>% 
   count(m, sort = TRUE) %>% 
   filter(n > 1)
 
@@ -122,7 +126,6 @@ aux <- map2(
 #   file.path(path, "plugins", basename(files)),
 #   overwrite = TRUE
 # )
-
 
 # for yaml ----------------------------------------------------------------
 # path %>%

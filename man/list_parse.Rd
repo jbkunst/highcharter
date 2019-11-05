@@ -18,8 +18,7 @@ names.
 }
 \examples{
 
-x <- data.frame(a=1:3, type=c('A','C','B'), stringsAsFactors = FALSE)
+x <- data.frame(a = 1:3, type = c("A", "C", "B"), stringsAsFactors = FALSE)
 list_parse(x)
 list_parse2(x)
-
 }

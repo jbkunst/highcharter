@@ -23,11 +23,10 @@ thm <- hc_theme_merge(
     ),
     title = list(
       style = list(
-        color = 'white',
+        color = "white",
         fontFamily = "Erica One"
       )
     )
   )
 )
-
 }

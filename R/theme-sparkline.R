@@ -1,17 +1,15 @@
 #' Sparkline theme for highcharts
-#' 
+#'
 #' Based on \url{http://www.highcharts.com/demo/sparkline}.
-#' 
+#'
 #' @param ... Named argument to modify the theme
-#' 
+#'
 #' @examples
-#' 
-#' highcharts_demo() %>% 
+#'
+#' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_sparkline())
-#'   
 #' @export
 hc_theme_sparkline <- function(...) {
-  
   theme <- list(
     chart = list(
       backgroundColor = NULL,
@@ -54,8 +52,9 @@ hc_theme_sparkline <- function(...) {
             x: point.plotX - w / 2,
             y: point.plotY - h
           };
-        }")
-      ),
+        }"
+      )
+    ),
     plotOptions = list(
       series = list(
         animation = FALSE,
@@ -78,16 +77,15 @@ hc_theme_sparkline <- function(...) {
       )
     )
   )
-  
+
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
-  } 
-  
+  }
+
   theme
-  
-} 
+}

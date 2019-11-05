@@ -21,9 +21,8 @@ Shortcut to make spkarlines
 set.seed(123)
 x <- cumsum(rnorm(10))
 
-hcspark(x) 
+hcspark(x)
 hcspark(x, "columnn")
 hcspark(c(1, 4, 5), "pie")
 hcspark(x, type = "area")
-   
 }
