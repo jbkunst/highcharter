@@ -15,7 +15,6 @@ and color by \url{https://www.materialui.co/flatuicolors}
 }
 \examples{
 
-highcharts_demo() \%>\% 
+highcharts_demo() \%>\%
   hc_add_theme(hc_theme_smpl())
-
 }

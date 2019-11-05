@@ -13,3 +13,10 @@ sudo: required
 notifications:
  email:
   on_failure: change
+
+r_packages:
+  - covr
+  - devtools
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'

@@ -8,7 +8,7 @@ pcks <- c("highcharter", "rbokeh", "dygraphs", "plotly", "ggvis", "billboarder",
           "metricsgraphics", "rAmCharts", "echarts4r") 
 
 data <- pcks %>% 
-  cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
+  adjustedcranlogs::adj_cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
   tbl_df() %>% 
   mutate(date = floor_date(date, unit = "week")) %>% 
   group_by(date, package) %>% 
@@ -23,7 +23,6 @@ data <- pcks %>%
 hchart(data, type = "line", hcaes(x = date, y = count, group = package)) %>% 
   hc_chart(zoomType = "x") %>% 
   hc_tooltip(sort = TRUE, table = TRUE) %>%
-  hc_tooltip(split = TRUE) %>%
   hc_add_theme(hc_theme_smpl()) %>% 
   hc_navigator(enabled = TRUE) %>% 
   hc_yAxis(endOnTick = FALSE)

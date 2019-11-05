@@ -21,5 +21,4 @@ Changing the size of a \code{highchart} object
 hc <- hchart(ts(rnorm(100)), showInLegend = FALSE)
 
 hc_size(hc, 200, 200)
-
 }

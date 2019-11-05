@@ -20,9 +20,9 @@ hc_annotations(hc, ...)
 \item{x}{A \code{list} or a \code{data.frame} of annotations.}
 }
 \description{
-Options for configuring annotations, for example labels, arrows or
-shapes. Annotations can be tied to points, axis coordinates or chart
-pixel coordinates.
+A basic type of an annotation. It allows to add custom labels
+or shapes. The items  can be tied to points, axis coordinates
+or chart pixel coordinates.
 }
 \details{
 The \code{x} elements must have \code{xValue} and \code{yValue}

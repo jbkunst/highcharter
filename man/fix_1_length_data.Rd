@@ -16,7 +16,6 @@ Function to avoid the jsonlite::auto_unbox default
 
 hchart("A")
 
-highchart() \%>\% 
+highchart() \%>\%
   hc_add_series(data = 1)
-
 }

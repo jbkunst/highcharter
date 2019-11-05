@@ -15,7 +15,6 @@ Base16 inspired theme \url{https://github.com/chriskempson/base16} and
 }
 \examples{
 
-highcharts_demo() \%>\% 
+highcharts_demo() \%>\%
   hc_add_theme(hc_theme_flatdark())
-
 }

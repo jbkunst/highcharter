@@ -8,8 +8,8 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 7.0.1
-    src: "htmlwidgets/lib/highcharts-7.0.1"
+    version: 7.2.1
+    src: "htmlwidgets/lib/highcharts-7.2.1"
     script:
     - highcharts.js
     - highcharts-3d.js
@@ -30,23 +30,30 @@ dependencies:
     - modules/heatmap.js
     - modules/treemap.js
     - modules/sankey.js
+    - modules/organization.js
     - modules/solid-gauge.js
     - modules/streamgraph.js
     - modules/sunburst.js
     - modules/vector.js
     - modules/wordcloud.js
-    - modules/xrange.js 
+    - modules/xrange.js
     - modules/tilemap.js
     - modules/venn.js
     - modules/gantt.js
     - modules/timeline.js
     - modules/parallel-coordinates.js
     - modules/bullet.js
+#    - modules/coloraxis.js
+#    - modules/datagrouping.js
+#    - modules/dependency-wheel.js
+#    - modules/dotplot.js
+#    - modules/funnel3d.js
+#    - modules/pyramid3d.js    
 #    - modules/static-scale.js
 #    - modules/grid-axis.js
 #    - modules/broken-axis.js
 #    - modules/series-label.js
-#    - modules/pareto.js    
+#    - modules/pareto.js
 #    - modules/accessibility.js
 #    - modules/boost-canvas.js
 #    - modules/histogram-bellcurve.js
@@ -73,14 +80,14 @@ dependencies:
     - plugins/grouped-categories.js
     - plugins/motion.js
     - plugins/multicolor_series.js
-#    - plugins/highcharts-regression.js    
+#    - plugins/highcharts-regression.js
 #    - plugins/pattern-fill-v2.js
 #    - plugins/tooltip-delay.js
 #    - plugins/annotations.js
 #    - plugins/draggable-legend.js
     - custom/reset.js
-    - custom/symbols-extra.js
-    - custom/text-symbols.js
+#    - custom/symbols-extra.js
+#    - custom/text-symbols.js
     stylesheet:
     - css/motion.css
-    - css/htmlwdgtgrid.css
+ #   - css/htmlwdgtgrid.css

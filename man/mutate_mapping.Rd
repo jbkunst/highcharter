@@ -22,5 +22,4 @@ Modify data frame according to mapping
 df <- head(mtcars)
 mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
 mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt), drop = TRUE)
-
 }

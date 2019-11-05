@@ -14,7 +14,6 @@ Based on \url{https://ggplot2.tidyverse.org/}.
 }
 \examples{
 
-highcharts_demo() \%>\% 
+highcharts_demo() \%>\%
   hc_add_theme(hc_theme_ggplot2())
-  
 }

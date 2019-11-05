@@ -1,17 +1,15 @@
 #' ggplot2 theme for highcharts
-#' 
+#'
 #' Based on \url{https://ggplot2.tidyverse.org/}.
-#' 
+#'
 #' @param ... Named argument to modify the theme
-#' 
+#'
 #' @examples
-#' 
-#' highcharts_demo() %>% 
+#'
+#' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_ggplot2())
-#'   
 #' @export
 hc_theme_ggplot2 <- function(...) {
-  
   theme <- hc_theme(
     chart = list(
       plotBackgroundColor = "#EBEBEB",
@@ -56,14 +54,13 @@ hc_theme_ggplot2 <- function(...) {
     contrastTextColor = "#F0F0F3",
     maskColor = "rgba(255,255,255,0.3)"
   )
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
-  } 
-  
+  }
+
   theme
-  
 }
