@@ -94,6 +94,7 @@
   options(
     highcharter.theme = hc_theme(chart = list(backgroundColor = "transparent")),
     highcharter.verbose = FALSE,
+    highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,
     highcharter.download_map_data = TRUE,
     highcharter.color_palette = c(

@@ -15,7 +15,8 @@
 #' @param google_fonts A boolean value. If TRUE (default), adds a reference to the
 #'   Google Fonts API to the HTML head, downloading CSS for the font families
 #'   defined in the Highcharts theme from https://fonts.googleapis.com. Set to
-#'   FALSE if you load your own fonts using CSS.
+#'   FALSE if you load your own fonts using CSS. This option as default is 
+#'   controled by \code{"highcharter.google_fonts"} option
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #' @export
 highchart <- function(hc_opts = list(),
@@ -24,12 +25,14 @@ highchart <- function(hc_opts = list(),
                       width = NULL,
                       height = NULL,
                       elementId = NULL,
-                      google_fonts = TRUE) {
+                      google_fonts = getOption("highcharter.google_fonts")
+                      ) {
+  
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
 
   opts <- .join_hc_opts()
 
-  if (identical(hc_opts, list())) {
+  if (identical(hc_opts, list()))
     hc_opts <- opts$chart
   
   unfonts <- NULL
@@ -133,7 +136,7 @@ highchart2 <- function(hc_opts = list(),
                        height = NULL,
                        elementId = NULL,
                        debug = FALSE,
-                       google_fonts = TRUE) {
+                       google_fonts = getOption("highcharter.google_fonts")) {
   
   unfonts <- NULL
   if (google_fonts)

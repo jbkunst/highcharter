@@ -7,7 +7,7 @@
 \usage{
 highchart2(hc_opts = list(), theme = NULL, width = NULL,
   height = NULL, elementId = NULL, debug = FALSE,
-  google_fonts = TRUE)
+  google_fonts = getOption("highcharter.google_fonts"))
 
 highchartzero(hc_opts = list(), theme = NULL, width = NULL,
   height = NULL, elementId = NULL)
