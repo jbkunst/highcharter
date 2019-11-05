@@ -5,7 +5,7 @@
 \title{hc_add_series for data frames objects}
 \usage{
 \method{hc_add_series}{data.frame}(hc, data, type = NULL,
-  mapping = hcaes(), ...)
+  mapping = hcaes(), fast = FALSE, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
@@ -15,6 +15,8 @@
 \item{type}{The type of the series: line, bar, etc.}
 
 \item{mapping}{The mapping, same idea as \code{ggplot2}.}
+
+\item{fast}{convert to json during the composition of a highchart object}
 
 \item{...}{Arguments defined in
 \url{http://api.highcharts.com/highcharts#chart}.}

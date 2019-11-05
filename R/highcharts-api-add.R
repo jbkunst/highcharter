@@ -292,6 +292,7 @@ hc_add_series.loess <- hc_add_series.lm
 #' @param data A `data.frame` object.
 #' @param type The type of the series: line, bar, etc.
 #' @param mapping The mapping, same idea as \code{ggplot2}.
+#' @param fast convert to json during the composition of a highchart object
 #' @param ... Arguments defined in
 #'   \url{http://api.highcharts.com/highcharts#chart}.
 #' @export
@@ -431,7 +432,7 @@ add_arg_to_df <- function(data, ...) {
 
 #' @importFrom dplyr mutate do arrange_
 #' @importFrom tibble tibble tibble_
-data_to_series <- function(data, mapping, type, ...) {
+data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
   
   # check type and fix
   type <- ifelse(type == "point", "scatter", type)
