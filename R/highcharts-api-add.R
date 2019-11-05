@@ -295,8 +295,8 @@ hc_add_series.loess <- hc_add_series.lm
 #' @param ... Arguments defined in
 #'   \url{http://api.highcharts.com/highcharts#chart}.
 #' @export
-hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
-                                     ...) {
+hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), fast = FALSE, ...) {
+  
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.data.frame")
   }
@@ -311,7 +311,7 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(),
 
   data <- mutate_mapping(data, mapping)
 
-  series <- data_to_series(data, mapping, type = type, ...)
+  series <- data_to_series(data, mapping, type = type, fast = fast, ...)
 
   hc_add_series_list(hc, series)
 }
@@ -432,8 +432,8 @@ add_arg_to_df <- function(data, ...) {
 
 #' @importFrom dplyr mutate do arrange_
 #' @importFrom tibble tibble tibble_
-data_to_series <- function(data, mapping, type, ...) {
-
+data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
+  
   # check type and fix
   type <- ifelse(type == "point", "scatter", type)
   type <- ifelse((has_name(mapping, "size") | has_name(mapping, "z")) & type == "scatter",
@@ -483,12 +483,22 @@ data_to_series <- function(data, mapping, type, ...) {
   # group
   if (!has_name(mapping, "group")) {
     data[["group"]] <- "group"
+  
+  if (isTRUE(fast)) {
+    # pre-convert data to json
+    data <- data %>% 
+      group_by_("group") %>% 
+      do(data = jsonlite::toJSON( select_(., quote(-group))
+                                  , dataframe = "rows"
+                                  , verbatim=TRUE
+      )) %>% 
+      ungroup()
+  } else {
+    data <- data %>% 
+      group_by_("group") %>% 
+      do(data = list_parse(select_(., quote(-group)))) %>% 
+      ungroup()
   }
-
-  data <- data %>%
-    group_by_("group") %>%
-    do(data = list_parse(select_(., quote(-group)))) %>%
-    ungroup()
 
   data$type <- type
 
@@ -502,7 +512,7 @@ data_to_series <- function(data, mapping, type, ...) {
 
   series <- list_parse(data)
 
-  series
+  return(series)
 }
 
 data_to_options <- function(data, type) {
