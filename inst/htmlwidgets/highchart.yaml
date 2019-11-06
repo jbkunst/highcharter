@@ -43,7 +43,7 @@ dependencies:
     - modules/timeline.js
     - modules/parallel-coordinates.js
     - modules/bullet.js
-#    - modules/coloraxis.js
+    - modules/coloraxis.js
 #    - modules/datagrouping.js
 #    - modules/dependency-wheel.js
 #    - modules/dotplot.js
@@ -79,7 +79,7 @@ dependencies:
 #    - modules/treegrid.js
     - plugins/grouped-categories.js
     - plugins/motion.js
-    - plugins/multicolor_series.js
+#    - plugins/multicolor_series.js
 #    - plugins/highcharts-regression.js
 #    - plugins/pattern-fill-v2.js
 #    - plugins/tooltip-delay.js

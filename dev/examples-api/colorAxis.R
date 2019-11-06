@@ -1,22 +1,24 @@
-hc <- hchart(volcano)
-
-hc
-
-hc %>% 
+hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width)) %>% 
   hc_colorAxis(
-    minColor = "#FFFFFF",
-    maxColor = "#434348"
-    )
+    minColor = "gray",
+    maxColor = "yellow"
+  )
 
-hc %>% 
+
+hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width, group = Species)) %>% 
   hc_colorAxis(
-    minColor = "#FFFFFF",
-    maxColor = "#434348",
-    type = "logarithmic"
-    )
+    minColor = "gray",
+    maxColor = "yellow"
+  )
+
+
 
 
 require("viridisLite")
+
+hc <- hchart(volcano)
+hc
+
 
 n <- 5
 
