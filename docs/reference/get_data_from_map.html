@@ -9,21 +9,25 @@
 <title>Helper function to get the data inside the map data
 The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>. — get_data_from_map • highcharter</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,12 +43,13 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Helper function to get the data inside the map data
 The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>. — get_data_from_map" />
-
 <meta property="og:description" content="Helper function to get the data inside the map data
 The urls are listed in https://code.highcharts.com/mapdata/." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -56,6 +61,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -82,7 +88,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -103,7 +109,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       <a href="../articles/articles/charting-maps.html">Charting Maps</a>
     </li>
     <li>
-      <a href="../articles/articles/hchart.html">`hchart` function</a>
+      <a href="../articles/articles/hchart.html">Hchart Function</a>
     </li>
     <li>
       <a href="../articles/articles/highcharts-api.html">Highcharts API</a>
@@ -112,7 +118,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       <a href="../articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
     </li>
     <li>
-      <a href="../articles/articles/shiny-events-demo.html">Shiny events demo</a>
+      <a href="../articles/articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
     <li>
       <a href="../articles/articles/showcase.html">Showcase</a>
@@ -126,7 +132,6 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
@@ -147,6 +152,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -159,14 +165,12 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
     </div>
 
     <div class="ref-description">
-    
     <p>Helper function to get the data inside the map data
 The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>get_data_from_map</span>(<span class='no'>mapdata</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -175,41 +179,39 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
       <td><p>A list obtained from <code><a href='download_map_data.html'>download_map_data</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='download_map_data.html'>download_map_data</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>dta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
-<span class='fu'>get_data_from_map</span>(<span class='no'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span><span>
+<span class='fu'>get_data_from_map</span>(<span class='no'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 58 x 7</span><span>
 #&gt;    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
-#&gt; </span><span style='color: #949494;'># ... with 48 more rows</span><span></div></span></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #555555;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
+#&gt; </span><span style='color: #555555;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
+#&gt; </span><span style='color: #555555;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
+#&gt; </span><span style='color: #555555;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
+#&gt; </span><span style='color: #555555;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
+#&gt; </span><span style='color: #555555;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
+#&gt; </span><span style='color: #555555;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
+#&gt; </span><span style='color: #555555;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
+#&gt; </span><span style='color: #555555;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
+#&gt; </span><span style='color: #555555;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
+#&gt; </span><span style='color: #555555;'># ... with 48 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -217,8 +219,9 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
@@ -241,6 +244,8 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 </script>
 
 
+
   </body>
 </html>
+
 

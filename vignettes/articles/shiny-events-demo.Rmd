@@ -1,5 +1,5 @@
 ---
-title: "Shiny events demo"
+title: "Shiny Events Demo"
 author: "Martin John Hadley, @martinjhnhadley"
 ---
 
