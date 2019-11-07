@@ -25,7 +25,7 @@ Let's see some motivational (I hope so) examples!
 
 A starting example:
 
-```{r}
+```{r, eval=FALSE}
 library(highcharter)
 library(tidyverse)
 library(rwars)
@@ -88,7 +88,7 @@ colors <- c(
   "#F3F5E7", "#C7E4EA", "#ABD6E6", "#9AD2E1"
 )
 
-stars$color <- colorize(log(stars$temp), colors)
+stars$color <- highcharter::colorize(log(stars$temp), colors)
 
 x <- c("Luminosity", "Temperature", "Distance")
 y <- sprintf("{point.%s:.2f}", c("lum", "temp", "distance"))

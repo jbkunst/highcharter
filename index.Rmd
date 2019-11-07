@@ -1,9 +1,6 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
+# <div id="brand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div> <img src="man/figures/logo.png" align="right" />
 
+<!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/highcharter?color=brightgreen)](https://cran.r-project.org/package=highcharter)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen)](http://www.r-pkg.org/pkg/highcharter)
 [![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
@@ -11,8 +8,18 @@ editor_options:
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
+<!-- badges: end -->
 
-<h1><div id="brand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div></h1> 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(dplyr)
+library(htmltools)
+```
+
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}

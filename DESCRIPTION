@@ -19,7 +19,7 @@ Authors@R: c(
   person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix"),
   person("David", "Breuer", role = c("ctb"), comment = "download_map_data quiet parameter")
   )
-URL: http://jkunst.com/highcharter
+URL: http://jkunst.com/highcharter, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 License: MIT + file LICENSE
 RoxygenNote: 6.1.1
