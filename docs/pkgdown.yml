@@ -1,13 +1,11 @@
-pandoc: 2.7.3
-pkgdown: 1.4.1
-pkgdown_sha: ~
+pandoc: '2.6'
+pkgdown: 1.4.1.9000
+pkgdown_sha: dfae44ecfcc5b0ac51f9489993ddd79ad6c707c3
 articles:
   charting-maps: articles/charting-maps.html
   hchart: articles/hchart.html
-  highcharts-api: articles/highcharts-api.html
   replicating-highcharts-demos: articles/replicating-highcharts-demos.html
   shiny-events-demo: articles/shiny-events-demo.html
   showcase: articles/showcase.html
   themes: articles/themes.html
-  highcharter: highcharter.html
 

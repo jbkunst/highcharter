@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -62,6 +62,16 @@ through the Chart.update or Chart.caption.update methods." />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-000000-01"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-000000-01');
+</script>
+
 
   </head>
 
@@ -92,9 +102,6 @@ through the Chart.update or Chart.caption.update methods." />
   </a>
 </li>
 <li>
-  <a href="../articles/highcharter.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -109,9 +116,6 @@ through the Chart.update or Chart.caption.update methods." />
     </li>
     <li>
       <a href="../articles/articles/hchart.html">Hchart Function</a>
-    </li>
-    <li>
-      <a href="../articles/articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
       <a href="../articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
@@ -158,7 +162,7 @@ through the Chart.update or Chart.caption.update methods." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>caption options for highcharter objects</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/jbkunst/highcharter/blob/master/R/highcharts-api.R'><code>R/highcharts-api.R</code></a></small>
     <div class="hidden name"><code>hc_caption.Rd</code></div>
     </div>
 
@@ -187,8 +191,8 @@ through the Chart.update or Chart.caption.update methods.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_title.html'>hc_title</a></span>(<span class='kw'>text</span><span class='kw'>=</span> <span class='st'>"Chart with a caption"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_subtitle.html'>hc_subtitle</a></span>(<span class='kw'>text</span><span class='kw'>=</span> <span class='st'>"This is the subtitle"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='hc_title.html'>hc_title</a></span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"Chart with a caption"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='hc_subtitle.html'>hc_subtitle</a></span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"This is the subtitle"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span>(<span class='kw'>categories</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Apples"</span>, <span class='st'>"Pears"</span>, <span class='st'>"Banana"</span>, <span class='st'>"Orange"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span>),
@@ -199,9 +203,9 @@ through the Chart.update or Chart.caption.update methods.</p>
     <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"&lt;b&gt;The caption renders in the bottom, and is part of the exported
     chart.&lt;/b&gt;&lt;br&gt;&lt;em&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit,
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
     laborum.&lt;/em&gt;'"</span>
   )</div></pre>
@@ -223,7 +227,7 @@ through the Chart.update or Chart.caption.update methods.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

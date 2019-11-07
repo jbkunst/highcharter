@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -58,6 +58,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-000000-01"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-000000-01');
+</script>
+
 
   </head>
 
@@ -88,9 +98,6 @@
   </a>
 </li>
 <li>
-  <a href="articles/highcharter.html">Get started</a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -105,9 +112,6 @@
     </li>
     <li>
       <a href="articles/articles/hchart.html">Hchart Function</a>
-    </li>
-    <li>
-      <a href="articles/articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
       <a href="articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
@@ -160,13 +164,13 @@
 <p>The github issues feature is reserved for bug reports and feature requests only. You can search in stackoverflow or post your question. I usually look the <code>r</code> and <code>highcharts</code> tags.</p>
 <p>For bug reports, please provide a minimal reproducible example. By “minimal”, I mean you should reduce your example as much as possible right before the problem you want to report disappears. By doing this, you may be able to figure out what the problem really is before reporting to me. Please do not make me read your hundreds of lines of code (most of which are perhaps irrelevant to the bug), or understand dozens of variables in your particular dataset (use a simple built-in dataset in R instead, such as <code>iris</code> or <code>mtcars</code>, or simulated data). Make your example self-contained in one single document, i.e. avoid reading external files if possible, which you may forget to attach to your bug report.</p>
 <p>To include a verbatim chunk of arbitrary text, indent it by four spaces (this can be done in RStudio by selecting the text and pressing the <code>Tab</code> key once or twice, depending on your settings), especially when it contains backticks, e.g.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>    A sample document.</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="st">```</span><span class="dt">{r}</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="dt">    1 + 1  # a line of code</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="dt">    </span><span class="st">```</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a>    Another paragraph.</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">    A sample document.</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="st">```</span><span class="dt">{r}</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="dt">    1 + 1  # a line of code</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="dt">    </span><span class="st">```</span></a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">    Another paragraph.</a></code></pre></div>
 
 
   </div>
@@ -181,7 +185,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
