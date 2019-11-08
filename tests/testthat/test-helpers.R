@@ -10,6 +10,5 @@ test_that("list.parse", {
     list(9, 10)
   )
 
-
   expect_equal(list_parse2(head(cars)), result)
 })
