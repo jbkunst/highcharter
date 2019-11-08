@@ -1,52 +1,70 @@
-# reference:
-#   - title: "Connecting to Spark"
-#    desc: >
-#       Functions for installing Spark components and managing
-#       connections to Spark
-#     contents: 
-#       - spark_config
-#       - spark_connect
-#       - spark_disconnect
-#       - spark_install
-#       - spark_log
-#   - title: "Reading and Writing Data"
-#     desc: "Functions for reading and writing Spark DataFrames."
-#     contents:
-#       - starts_with("spark_read")
-#       - starts_with("spark_write")
-#       - matches("saveload")
-
+# packages ----------------------------------------------------------------
+library(yaml)
 library(tidyverse)
 
-pkgdown::template_reference()
+# data --------------------------------------------------------------------
+yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
-make_reference_section <- function(ttle, desc, funs) {
+dfun <- help.search("*", package = "highcharter") %>%
+  .$matches %>% tbl_df() %>%
+  janitor::clean_names() %>% 
+  select(name, title) %>% 
+  distinct()
+
+
+
+# funs --------------------------------------------------------------------
+fun_hc_api <- read_lines("R/highcharts-api.R") %>% 
+  str_subset(" <- function") %>% 
+  str_remove(" <-.*")
+
+fun_hc_thm <- dfun %>% 
+  filter(str_detect(name, "theme")) %>% 
+  distinct() %>% 
+  pull(name)
+
+fun_hc_add <- dfun %>% 
+  filter(str_detect(name, "add_series")) %>% 
+  distinct() %>% 
+  pull(name)
+
+datas <- read_lines("R/data.R") %>% 
+  str_subset("\".*\"") %>% 
+  str_trim() %>% 
+  str_remove_all("\"")
   
-  yml <- c(
-    paste0("  - title: \"", ttle, "\""),
-    paste0("    desc: \"", desc, "\""),
-    "    contents:",
-    str_c("      - '`", funs, "`'")
+
+# gen reference -----------------------------------------------------------
+yml[["reference"]] <- list(
+  list(
+    title = "Highcharts API",
+    desc = "Functions to access the highcharts API and modify charts",
+    contents = fun_hc_api
+  ),
+  list(
+    title = "Add data",
+    desc = "Functions to add data from R objects to a highcharts charts",
+    contents = fun_hc_add
+  ),
+  list(
+    title = "Themes",
+    desc = "Functions to customize the look of your chart",
+    contents = fun_hc_thm
+  ),
+  list(
+    title = "Data",
+    desc = "Data for examples",
+    contents = datas
   )
-  
-  cat(paste(yml, collapse = "\n"))
-  
-   yml
-  
-}
+)
 
-# data
-ttle <- "Data for examples"
-desc <- "Various data frames to play and have fun with highcharter."
-funs <- dir("data/") %>% 
-  str_remove_all(".rda")
 
-# theme
-ttle <- ""
-desc <- "Functions for create and add themes"
-funs <- ""
-  
+# write reference ---------------------------------------------------------
+write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
+
+# build reference ---------------------------------------------------------
+pkgdown::build_reference_index()
 
 
 

@@ -5,17 +5,102 @@ template:
     docsearch:
       api_key: API_KEY
       index_name: INDEX_NAME
-
 authors:
   Joshua Kunst:
     href: http://jkunst.com
-
 navbar:
   right:
-    - icon: fa-github-alt
-      href: https://github.com/jbkunst/highcharter
-
+  - icon: fa-github-alt
+    href: https://github.com/jbkunst/highcharter
 articles:
 - title: All vignettes
   desc: ~
-  
+reference:
+- title: Highcharts API
+  desc: Functions to access the highcharts API and modify charts
+  contents:
+  - hc_annotations
+  - hc_boost
+  - hc_caption
+  - hc_chart
+  - hc_colorAxis
+  - hc_colors
+  - hc_credits
+  - hc_drilldown
+  - hc_exporting
+  - hc_labels
+  - hc_legend
+  - hc_pane
+  - hc_plotOptions
+  - hc_responsive
+  - hc_series
+  - hc_subtitle
+  - hc_title
+  - hc_tooltip
+  - hc_xAxis
+  - hc_yAxis
+  - hc_zAxis
+  - hc_navigator
+  - hc_rangeSelector
+  - hc_scrollbar
+  - hc_mapNavigation
+- title: Add data
+  desc: Functions to add data from R objects to a highcharts charts
+  contents:
+  - hc_add_series
+  - hc_add_series.character
+  - hc_add_series.data.frame
+  - hc_add_series.density
+  - hc_add_series.forecast
+  - hc_add_series.geo_json
+  - hc_add_series.lm
+  - hc_add_series.numeric
+  - hc_add_series.ts
+  - hc_add_series.xts
+  - hc_add_series_list
+  - hc_add_series_map
+- title: Themes
+  desc: Functions to customize the look of your chart
+  contents:
+  - hc_add_theme
+  - hc_theme
+  - hc_theme_538
+  - hc_theme_alone
+  - hc_theme_bloom
+  - hc_theme_chalk
+  - hc_theme_darkunica
+  - hc_theme_db
+  - hc_theme_economist
+  - hc_theme_elementary
+  - hc_theme_ffx
+  - hc_theme_flat
+  - hc_theme_flatdark
+  - hc_theme_ft
+  - hc_theme_ggplot2
+  - hc_theme_google
+  - hc_theme_gridlight
+  - hc_theme_handdrawn
+  - hc_theme_merge
+  - hc_theme_monokai
+  - hc_theme_null
+  - hc_theme_sandsignika
+  - hc_theme_smpl
+  - hc_theme_sparkline
+  - hc_theme_superheroes
+  - hc_theme_tufte
+- title: Data
+  desc: Data for examples
+  contents:
+  - citytemp
+  - citytemp_long
+  - favorite_bars
+  - favorite_pies
+  - globaltemp
+  - pokemon
+  - stars
+  - unemployment
+  - uscountygeojson
+  - usgeojson
+  - vaccines
+  - weather
+  - worldgeojson

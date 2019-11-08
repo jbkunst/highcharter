@@ -8,6 +8,13 @@
 
 <title>Function reference • highcharter</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -169,267 +176,11 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-highcharts-api" class="hasAnchor"><a href="#section-highcharts-api" class="anchor"></a>Highcharts API</h2>
+          <p class="section-desc"><p>Functions to access the highcharts API and modify charts</p></p>
         </th>
       </tr>
       <tr>
-        
-        <td>
-          <p><code><a href="citytemp.html">citytemp</a></code> </p>
-        </td>
-        <td><p>City temperatures from a year in wide format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="citytemp_long.html">citytemp_long</a></code> </p>
-        </td>
-        <td><p>City temperatures from a year in long format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="colorize.html">colorize()</a></code> </p>
-        </td>
-        <td><p>Create vector of color from vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="color_classes.html">color_classes()</a></code> </p>
-        </td>
-        <td><p>Function to create <code>dataClasses</code> argument in <code>hc_colorAxis</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="color_stops.html">color_stops()</a></code> </p>
-        </td>
-        <td><p>Function to create <code>stops</code> argument in <code>hc_colorAxis</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="create_yaxis.html">create_yaxis()</a></code> </p>
-        </td>
-        <td><p>Creating multiples yAxis t use with highcharts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="datetime_to_timestamp.html">datetime_to_timestamp()</a></code> </p>
-        </td>
-        <td><p>Date to timestamps</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="download_map_data.html">download_map_data()</a></code> </p>
-        </td>
-        <td><p>Helper function to download the map data form a url</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="export_hc.html">export_hc()</a></code> </p>
-        </td>
-        <td><p>Function to export js file the configuration options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="favorite_bars.html">favorite_bars</a></code> </p>
-        </td>
-        <td><p>Marshall's Favorite Bars</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="favorite_pies.html">favorite_pies</a></code> </p>
-        </td>
-        <td><p>Marshall's Favorite Pies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fix_1_length_data.html">fix_1_length_data()</a></code> </p>
-        </td>
-        <td><p>Function to avoid the jsonlite::auto_unbox default</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_data_from_map.html">get_data_from_map()</a></code> </p>
-        </td>
-        <td><p>Helper function to get the data inside the map data
-The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_hc_series_from_df.html">get_hc_series_from_df()</a></code> </p>
-        </td>
-        <td><p>Auxiliar function to get series and options from tidy frame for hchart.data.frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="globaltemp.html">globaltemp</a></code> </p>
-        </td>
-        <td><p>globaltemp</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hcaes.html">hcaes()</a></code> </p>
-        </td>
-        <td><p>Define aesthetic mappings.
-Similar in spirit to <code>ggplot2::aes</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hcaes_string.html">hcaes_string()</a></code> <code><a href="hcaes_string.html">hcaes_()</a></code> </p>
-        </td>
-        <td><p>Define aesthetic mappings using strings.
-Similar in spirit to <code>ggplot2::aes_string</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hcboxplot.html">hcboxplot()</a></code> </p>
-        </td>
-        <td><p>Shortcut to make a boxplot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hchart.html">hchart()</a></code> </p>
-        </td>
-        <td><p>Create a highchart object from a particular data type</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hchart.survfit.html">hchart(<i>&lt;survfit&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot survival curves using Highcharts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hciconarray.html">hciconarray()</a></code> </p>
-        </td>
-        <td><p>Shortcut to make icon arrays charts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hcmap.html">hcmap()</a></code> </p>
-        </td>
-        <td><p>Shortcut for create map from <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>
-collection.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hcparcords.html">hcparcords()</a></code> </p>
-        </td>
-        <td><p>Shortcut for create parallel coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hcspark.html">hcspark()</a></code> </p>
-        </td>
-        <td><p>Shortcut to make spkarlines</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hctreemap.html">hctreemap()</a></code> </p>
-        </td>
-        <td><p>Shortcut for create treemaps</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hctreemap2.html">hctreemap2()</a></code> </p>
-        </td>
-        <td><p>Shortcut to create treemaps.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_dependency.html">hc_add_dependency()</a></code> </p>
-        </td>
-        <td><p>Add modules or plugin dependencies to highcharts objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_dependency_fa.html">hc_add_dependency_fa()</a></code> <code><a href="hc_add_dependency_fa.html">fa_icon()</a></code> <code><a href="hc_add_dependency_fa.html">fa_icon_mark()</a></code> </p>
-        </td>
-        <td><p>Helpers functions to get FontAwesome icons code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_event_point.html">hc_add_event_point()</a></code> <code><a href="hc_add_event_point.html">hc_add_event_series()</a></code> </p>
-        </td>
-        <td><p>Helpers to use highcharter as input in shiny apps</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.character.html">hc_add_series(<i>&lt;character&gt;</i>)</a></code> <code><a href="hc_add_series.character.html">hc_add_series(<i>&lt;factor&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for character and factor objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.data.frame.html">hc_add_series(<i>&lt;data.frame&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for data frames objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.density.html">hc_add_series(<i>&lt;density&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for density objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.forecast.html">hc_add_series(<i>&lt;forecast&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for forecast objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.geo_json.html">hc_add_series(<i>&lt;geo_json&gt;</i>)</a></code> <code><a href="hc_add_series.geo_json.html">hc_add_series(<i>&lt;geo_list&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for geo_json &amp; geo_list objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.lm.html">hc_add_series(<i>&lt;lm&gt;</i>)</a></code> <code><a href="hc_add_series.lm.html">hc_add_series(<i>&lt;loess&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for lm and loess objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.numeric.html">hc_add_series(<i>&lt;numeric&gt;</i>)</a></code> </p>
-        </td>
-        <td><p><code>hc_add_series</code> for numeric objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.html">hc_add_series()</a></code> </p>
-        </td>
-        <td><p>Adding and removing series from highchart objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.ts.html">hc_add_series(<i>&lt;ts&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for time series objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series.xts.html">hc_add_series(<i>&lt;xts&gt;</i>)</a></code> <code><a href="hc_add_series.xts.html">hc_add_series(<i>&lt;ohlc&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>hc_add_series for xts objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series_list.html">hc_add_series_list()</a></code> </p>
-        </td>
-        <td><p>Shortcut for data series from a list of data series</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_series_map.html">hc_add_series_map()</a></code> </p>
-        </td>
-        <td><p>Add a map series</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_add_theme.html">hc_add_theme()</a></code> </p>
-        </td>
-        <td><p>Add themes to a highchart object</p></td>
-      </tr><tr>
         
         <td>
           <p><code><a href="hc_annotations.html">hc_add_annotation()</a></code> <code><a href="hc_annotations.html">hc_add_annotations()</a></code> <code><a href="hc_annotations.html">hc_annotations()</a></code> </p>
@@ -480,12 +231,6 @@ collection.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_elementId.html">hc_elementId()</a></code> </p>
-        </td>
-        <td><p>Setting <code>elementId</code></p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="hc_exporting.html">hc_exporting()</a></code> </p>
         </td>
         <td><p>exporting options for highcharter objects</p></td>
@@ -504,24 +249,6 @@ collection.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_mapNavigation.html">hc_mapNavigation()</a></code> </p>
-        </td>
-        <td><p>mapNavigation options for highcharter objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_motion.html">hc_motion()</a></code> </p>
-        </td>
-        <td><p>Setting Motion options to highcharts objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_navigator.html">hc_navigator()</a></code> </p>
-        </td>
-        <td><p>navigator options for highcharter objects</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="hc_pane.html">hc_pane()</a></code> </p>
         </td>
         <td><p>pane options for highcharter objects</p></td>
@@ -534,27 +261,9 @@ collection.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_rangeSelector.html">hc_rangeSelector()</a></code> </p>
-        </td>
-        <td><p>rangeSelector options for highcharter objects</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="hc_responsive.html">hc_responsive()</a></code> </p>
         </td>
         <td><p>responsive options for highcharter objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_rm_series.html">hc_rm_series()</a></code> </p>
-        </td>
-        <td><p>Removing series to highchart objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_scrollbar.html">hc_scrollbar()</a></code> </p>
-        </td>
-        <td><p>scrollbar options for highcharter objects</p></td>
       </tr><tr>
         
         <td>
@@ -564,15 +273,157 @@ collection.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_size.html">hc_size()</a></code> </p>
-        </td>
-        <td><p>Changing the size of a <code>highchart</code> object</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="hc_subtitle.html">hc_subtitle()</a></code> </p>
         </td>
         <td><p>subtitle options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_title.html">hc_title()</a></code> </p>
+        </td>
+        <td><p>title options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_tooltip.html">hc_tooltip()</a></code> </p>
+        </td>
+        <td><p>tooltip options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_xAxis.html">hc_yAxis_multiples()</a></code> <code><a href="hc_xAxis.html">hc_xAxis()</a></code> </p>
+        </td>
+        <td><p>xAxis options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_yAxis.html">hc_yAxis()</a></code> </p>
+        </td>
+        <td><p>yAxis options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_zAxis.html">hc_zAxis()</a></code> </p>
+        </td>
+        <td><p>zAxis options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_navigator.html">hc_navigator()</a></code> </p>
+        </td>
+        <td><p>navigator options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_rangeSelector.html">hc_rangeSelector()</a></code> </p>
+        </td>
+        <td><p>rangeSelector options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_scrollbar.html">hc_scrollbar()</a></code> </p>
+        </td>
+        <td><p>scrollbar options for highcharter objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_mapNavigation.html">hc_mapNavigation()</a></code> </p>
+        </td>
+        <td><p>mapNavigation options for highcharter objects</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-add-data" class="hasAnchor"><a href="#section-add-data" class="anchor"></a>Add data</h2>
+          <p class="section-desc"><p>Functions to add data from R objects to a highcharts charts</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.html">hc_add_series()</a></code> </p>
+        </td>
+        <td><p>Adding and removing series from highchart objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.character.html">hc_add_series(<i>&lt;character&gt;</i>)</a></code> <code><a href="hc_add_series.character.html">hc_add_series(<i>&lt;factor&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for character and factor objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.data.frame.html">hc_add_series(<i>&lt;data.frame&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for data frames objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.density.html">hc_add_series(<i>&lt;density&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for density objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.forecast.html">hc_add_series(<i>&lt;forecast&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for forecast objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.geo_json.html">hc_add_series(<i>&lt;geo_json&gt;</i>)</a></code> <code><a href="hc_add_series.geo_json.html">hc_add_series(<i>&lt;geo_list&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for geo_json &amp; geo_list objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.lm.html">hc_add_series(<i>&lt;lm&gt;</i>)</a></code> <code><a href="hc_add_series.lm.html">hc_add_series(<i>&lt;loess&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for lm and loess objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.numeric.html">hc_add_series(<i>&lt;numeric&gt;</i>)</a></code> </p>
+        </td>
+        <td><p><code>hc_add_series</code> for numeric objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.ts.html">hc_add_series(<i>&lt;ts&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for time series objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series.xts.html">hc_add_series(<i>&lt;xts&gt;</i>)</a></code> <code><a href="hc_add_series.xts.html">hc_add_series(<i>&lt;ohlc&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>hc_add_series for xts objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series_list.html">hc_add_series_list()</a></code> </p>
+        </td>
+        <td><p>Shortcut for data series from a list of data series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hc_add_series_map.html">hc_add_series_map()</a></code> </p>
+        </td>
+        <td><p>Add a map series</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-themes" class="hasAnchor"><a href="#section-themes" class="anchor"></a>Themes</h2>
+          <p class="section-desc"><p>Functions to customize the look of your chart</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="hc_add_theme.html">hc_add_theme()</a></code> </p>
+        </td>
+        <td><p>Add themes to a highchart object</p></td>
       </tr><tr>
         
         <td>
@@ -723,110 +574,44 @@ collection.</p></td>
           <p><code><a href="hc_theme_tufte.html">hc_theme_tufte()</a></code> <code><a href="hc_theme_tufte.html">hc_theme_tufte2()</a></code> </p>
         </td>
         <td><p>Tufte theme for highcharts</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
+          <p class="section-desc"><p>Data for examples</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="citytemp.html">citytemp</a></code> </p>
+        </td>
+        <td><p>City temperatures from a year in wide format</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_title.html">hc_title()</a></code> </p>
+          <p><code><a href="citytemp_long.html">citytemp_long</a></code> </p>
         </td>
-        <td><p>title options for highcharter objects</p></td>
+        <td><p>City temperatures from a year in long format</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_tooltip.html">hc_tooltip()</a></code> </p>
+          <p><code><a href="favorite_bars.html">favorite_bars</a></code> </p>
         </td>
-        <td><p>tooltip options for highcharter objects</p></td>
+        <td><p>Marshall's Favorite Bars</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_xAxis.html">hc_yAxis_multiples()</a></code> <code><a href="hc_xAxis.html">hc_xAxis()</a></code> </p>
+          <p><code><a href="favorite_pies.html">favorite_pies</a></code> </p>
         </td>
-        <td><p>xAxis options for highcharter objects</p></td>
+        <td><p>Marshall's Favorite Pies</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="hc_yAxis.html">hc_yAxis()</a></code> </p>
+          <p><code><a href="globaltemp.html">globaltemp</a></code> </p>
         </td>
-        <td><p>yAxis options for highcharter objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hc_zAxis.html">hc_zAxis()</a></code> </p>
-        </td>
-        <td><p>zAxis options for highcharter objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hex_to_rgba.html">hex_to_rgba()</a></code> </p>
-        </td>
-        <td><p>Transform colors from hexadecimal format to rgba hc notation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highchart.html">highchart()</a></code> </p>
-        </td>
-        <td><p>Create a Highcharts chart widget</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highchart2.html">highchart2()</a></code> <code><a href="highchart2.html">highchartzero()</a></code> </p>
-        </td>
-        <td><p>Create a Highcharts chart widget</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highcharter-exports.html">highcharter-exports</a></code> </p>
-        </td>
-        <td><p>highcharter exported operators and S3 methods</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highcharter.html">highcharter</a></code> </p>
-        </td>
-        <td><p>An <code>htmlwidget</code> interface to the
-Highcharts javascript chart library</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highchartOutput.html">highchartOutput()</a></code> <code><a href="highchartOutput.html">highchartOutput2()</a></code> </p>
-        </td>
-        <td><p>Widget output function for use in Shiny</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="highcharts_demo.html">highcharts_demo()</a></code> </p>
-        </td>
-        <td><p>Chart a demo for testing themes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hw_grid.html">hw_grid()</a></code> </p>
-        </td>
-        <td><p>Lays out highchart widgets into a "grid", similar to
-<code>grid.arrange</code> from <code>gridExtra</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is.hexcolor.html">is.hexcolor()</a></code> </p>
-        </td>
-        <td><p>Check if a string vector is in hexadecimal color format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is.highchart.html">is.highchart()</a></code> </p>
-        </td>
-        <td><p>Reports whether x is a highchart object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="list_parse.html">list_parse()</a></code> <code><a href="list_parse.html">list_parse2()</a></code> </p>
-        </td>
-        <td><p>Convert an object to list with identical structure</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mutate_mapping.html">mutate_mapping()</a></code> </p>
-        </td>
-        <td><p>Modify data frame according to mapping</p></td>
+        <td><p>globaltemp</p></td>
       </tr><tr>
         
         <td>
@@ -836,39 +621,9 @@ Highcharts javascript chart library</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="random_id.html">random_id()</a></code> </p>
-        </td>
-        <td><p>Function to generate iids</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="renderHighchart.html">renderHighchart()</a></code> <code><a href="renderHighchart.html">renderHighchart2()</a></code> </p>
-        </td>
-        <td><p>Widget render function for use in Shiny</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="stars.html">stars</a></code> </p>
         </td>
         <td><p>stars</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="str_to_id.html">str_to_id()</a></code> </p>
-        </td>
-        <td><p>String to 'id' format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tooltip_chart.html">tooltip_chart()</a></code> </p>
-        </td>
-        <td><p>Helper to create charts in tooltips.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tooltip_table.html">tooltip_table()</a></code> </p>
-        </td>
-        <td><p>Helper for make table in tooltips</p></td>
       </tr><tr>
         
         <td>
@@ -913,7 +668,10 @@ Highcharts javascript chart library</p></td>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-highcharts-api">Highcharts API</a></li>
+      <li><a href="#section-add-data">Add data</a></li>
+      <li><a href="#section-themes">Themes</a></li>
+      <li><a href="#section-data">Data</a></li>
     </ul>
   </div>
 </div>
