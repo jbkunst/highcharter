@@ -12,21 +12,19 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -49,6 +47,7 @@ resolution data through clicking on chart items like columns or pie slices.
 The drilldown feature requires the drilldown.js file to be loaded,
 found in the modules directory of the download package, or online at
 code.highcharts.com/modules/drilldown.js." />
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -74,7 +73,6 @@ code.highcharts.com/modules/drilldown.js." />
   gtag('config', 'UA-000000-01');
 </script>
 
-
   </head>
 
   <body>
@@ -99,7 +97,7 @@ code.highcharts.com/modules/drilldown.js." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -146,7 +144,7 @@ code.highcharts.com/modules/drilldown.js." />
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -157,7 +155,6 @@ code.highcharts.com/modules/drilldown.js." />
 </div><!--/.navbar -->
 
       
-
       </header>
 
 <div class="row">
@@ -194,14 +191,16 @@ code.highcharts.com/modules/drilldown.js.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>highcharter</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>purrr</span>)
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>highcharter</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>purrr</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'purrr' was built under R version 3.5.3</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'purrr'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:testthat':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    is_null</span></div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Animals"</span>, <span class='st'>"Fruits"</span>),
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>2</span>),
-  <span class='kw'>drilldown</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>name</span>)
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Animals"</span>, <span class='st'>"Fruits"</span>),
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>2</span>),
+  <span class='kw'>drilldown</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/chartr'>tolower</a></span>(<span class='no'>name</span>)
 )
 
 <span class='no'>df</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
@@ -214,9 +213,9 @@ code.highcharts.com/modules/drilldown.js.</p>
   <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"category"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_legend.html'>hc_legend</a></span>(<span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_plotOptions.html'>hc_plotOptions</a></span>(
-    <span class='kw'>series</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+    <span class='kw'>series</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
       <span class='kw'>boderWidth</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-      <span class='kw'>dataLabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+      <span class='kw'>dataLabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
     )
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(
@@ -227,14 +226,14 @@ code.highcharts.com/modules/drilldown.js.</p>
     <span class='kw'>colorByPoint</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
   )
 
-<span class='no'>dfan</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Cats"</span>, <span class='st'>"Dogs"</span>, <span class='st'>"Cows"</span>, <span class='st'>"Sheep"</span>, <span class='st'>"Pigs"</span>),
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>)
+<span class='no'>dfan</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Cats"</span>, <span class='st'>"Dogs"</span>, <span class='st'>"Cows"</span>, <span class='st'>"Sheep"</span>, <span class='st'>"Pigs"</span>),
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>)
 )
 
-<span class='no'>dffru</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Apple"</span>, <span class='st'>"Organes"</span>),
-  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>2</span>)
+<span class='no'>dffru</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Apple"</span>, <span class='st'>"Organes"</span>),
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>2</span>)
 )
 
 
@@ -245,12 +244,12 @@ code.highcharts.com/modules/drilldown.js.</p>
 <span class='no'>hc</span> <span class='kw'>&lt;-</span> <span class='no'>hc</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>hc_drilldown</span>(
     <span class='kw'>allowPointDrilldown</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>series</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+    <span class='kw'>series</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
         <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"animals"</span>,
         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dsan</span>
       ),
-      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
         <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"fruits"</span>,
         <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>dsfru</span>
       )
@@ -269,16 +268,14 @@ code.highcharts.com/modules/drilldown.js.</p>
   </div>
 </div>
 
-
       <footer>
       <div class="copyright">
   <p>Developed by <a href='http://jkunst.com'>Joshua Kunst</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
    </div>
 
@@ -301,8 +298,6 @@ code.highcharts.com/modules/drilldown.js.</p>
 </script>
 
 
-
   </body>
 </html>
-
 

@@ -23,32 +23,61 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* navbar and container things */
-.main-container, .container-fluid {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* footer icons */
-footer i {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-/* content things */
-#content {
-  padding-top: 80px;
-}
-
 #brand {
   font-family: 'Datalegreya-Gradient', sans-serif;
-  font-size: 3em;
+  font-size: 6em;
   text-align:center;
   vertical-align:middle;
   display: table;
   width: 100%;
 }
+
+.navbar-default {
+  background-color: #47475C;
+  border-color: #8087E8;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.nav li>a:focus, .nav li>a:hover {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.nav-pills>li.active>a, 
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover, 
+.dropdown-menu>.active>a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #A3EDBA;
+}
+
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Alegreya Sans SC', sans-serif;

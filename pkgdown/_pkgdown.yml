@@ -1,6 +1,6 @@
 template:
   params:
-    bootswatch: lumen
+    bootswatch: cosmo
     ganalytics: UA-000000-01
     docsearch:
       api_key: API_KEY
