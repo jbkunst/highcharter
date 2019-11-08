@@ -33,7 +33,7 @@ library(rwars)
 swmovies <- get_all_films()
 
 swdata <- map_df(swmovies$results, function(x) {
-  data_frame(
+  tibble(
     movie = x$title,
     species = length(x$species),
     planets = length(x$planets),
