@@ -126,7 +126,7 @@ Survival models can be charted.
 library(survival)
 
 data(lung)
-lung <- mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+lung <- dplyr::mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
 fit <- survfit(Surv(time, status) ~ sex, data = lung)
 
 hchart(fit, ranges = TRUE)

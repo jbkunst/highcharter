@@ -63,6 +63,78 @@ test_that("hchart returns a valid time series forecast plot after valid data inp
   expect_true(all(class(h) %in% c("highchart","htmlwidget")))
 })
 
+test_that("hchart returns a valid graph after valid data input", {
+  require(igraph)
+  N <- 40
+  
+  net <- sample_gnp(N, p = 2 / N)
+  wc <- cluster_walktrap(net)
+  
+  V(net)$label <- seq(N)
+  V(net)$name <- paste("I'm #", seq(N))
+  V(net)$page_rank <- round(page.rank(net)$vector, 2)
+  V(net)$betweenness <- round(betweenness(net), 2)
+  V(net)$degree <- degree(net)
+  V(net)$size <- V(net)$degree
+  V(net)$comm <- membership(wc)
+  V(net)$color <- colorize(membership(wc))
+  
+  h <- hchart(net, layout = layout_with_fr)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid model plot after valid data input", {
+  library(survival)
+  
+  data(lung)
+  lung <- dplyr::mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+  fit <- survfit(Surv(time, status) ~ sex, data = lung)
+  
+  h <- hchart(fit, ranges = TRUE)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid stocks plot after valid data input", {
+  x <- quantmod::getFX("USD/JPY", auto.assign = FALSE)
+  h <- hchart(x)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid multivariate time series plot after valid data input", {
+  x <- cbind(mdeaths, fdeaths)
+  h <- hchart(x)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid autocovariance plot after valid data input", {
+  x <- acf(diff(AirPassengers), plot = FALSE)
+  h <- hchart(x)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid pca plot after valid data input", {
+  h <- hchart(princomp(USArrests, cor = TRUE))
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid matrix plot after valid data input", {
+  data(volcano)
+  h <- hchart(volcano)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid distance matrix plot after valid data input", {
+  mtcars2 <- mtcars[1:20, ]
+  x <- dist(mtcars2)
+  h <- hchart(x)
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
+test_that("hchart returns a valid correlation matrix plot after valid data input", {
+  h <- hchart(cor(mtcars))
+  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
+})
+
 test_that("hchart fails after non-existing data", {
   # mgp = mpg mispelled
   expect_error(hchart(mgp, "scatter", hcaes(x = displ, y = hwy, group = class)))
