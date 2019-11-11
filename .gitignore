@@ -33,3 +33,5 @@ revdep/*
 # pkgdown libs
  docs/articles/articles/*.js
 
+doc
+Meta

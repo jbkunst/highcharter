@@ -25,3 +25,5 @@ index.Rmd
 
 ^codecov\.yml$
 ^codemeta\.json$
+^doc$
+^Meta$
