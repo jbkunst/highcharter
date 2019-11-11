@@ -119,7 +119,7 @@ From [WSJ graphic: Battling Infectious Diseases in the 20th Century](http://grap
 
 ```{r}
 data(vaccines)
-library(viridis)
+library(viridisLite)
 
 fntltp <- JS("function(){
   return this.point.x + ' ' +  this.series.yAxis.categories[this.point.y] + ':<br>' +

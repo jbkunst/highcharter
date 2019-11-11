@@ -27,3 +27,5 @@ index.Rmd
 ^codemeta\.json$
 ^doc$
 ^Meta$
+
+^.github$

@@ -46,7 +46,7 @@ Imports:
     igraph,
     lubridate,
     yaml,
-    rlang(>= 0.1.1)
+    rlang (>= 0.1.1)
 Suggests:
     knitr,
     rmarkdown,
@@ -57,6 +57,8 @@ Suggests:
     shiny,
     MASS,
     gapminder,
-    covr
+    covr,
+    forecast,
+    geojsonio
 VignetteBuilder: knitr
 LazyData: true
