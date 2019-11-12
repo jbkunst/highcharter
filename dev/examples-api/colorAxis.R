@@ -13,18 +13,13 @@ hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width, group = Species)) %>%
 
 
 
-
-require("viridisLite")
-
 hc <- hchart(volcano)
-hc
-
 
 n <- 5
 
 stops <- data.frame(
   q = 0:n/n,
-  c = substring(viridis(n + 1), 0, 7),
+  c = c("#440154", "#414487", "#2A788E", "#22A884", "#7AD151", "#FDE725"),
   stringsAsFactors = FALSE
   )
 
