@@ -119,7 +119,6 @@ From [WSJ graphic: Battling Infectious Diseases in the 20th Century](http://grap
 
 ```{r}
 data(vaccines)
-library(viridisLite)
 
 fntltp <- JS("function(){
   return this.point.x + ' ' +  this.series.yAxis.categories[this.point.y] + ':<br>' +
@@ -137,7 +136,8 @@ plotline <- list(
 
 hchart(vaccines, "heatmap", hcaes(x = year, y = state, value = count)) %>%
   hc_colorAxis(
-    stops = color_stops(10, rev(inferno(10))),
+    stops = color_stops(10, c("#FCFFA4FF", "#F7D03CFF", "#FB9A06FF", "#ED6925FF", "#CF4446FF", 
+"#A52C60FF", "#781C6DFF", "#4B0C6BFF", "#1B0C42FF", "#000004FF")),
     type = "logarithmic"
   ) %>%
   hc_yAxis(
