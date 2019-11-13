@@ -1,10 +1,10 @@
 library(tidyverse)
 
 # clean articles folder
-try(fs::dir_delete("docs/articles"))
+# try(fs::dir_delete("docs/articles"))
 
 # rebuild articles
-pkgdown::build_articles(preview = FALSE)
+pkgdown::build_articles(preview = FALSE, lazy = TRUE)
 
 # files to fix
 files_to_fix <- dir(
@@ -12,7 +12,7 @@ files_to_fix <- dir(
   full.names = TRUE,
   pattern = "html$",
   recursive = TRUE
-  ) +
+  ) 
 
 files_to_fix <- setdiff(files_to_fix, "docs/articles/index.html")
 

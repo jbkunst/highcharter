@@ -21,7 +21,7 @@ $(document).ready(function(){
 ```{r, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(highcharter)
-library(tidyverse)
+library(dplyr)
 library(htmltools)
 library(ggplot2)
 ```
@@ -34,7 +34,7 @@ Let's start with a simple bar chart and see the defaul theme:
 
 ```{r}
 library(highcharter)
-library(tidyverse)
+library(dplyr)
 data(diamonds, package = "ggplot2")
 
 data <- count(diamonds, cut, color)
@@ -53,6 +53,7 @@ hc
 Here you'll find the themes to change the look of your charts.
 
 ```{r, echo=FALSE}
+library(tidyverse)
 themes <- help.search("theme", package = "highcharter") %>%
   .$matches %>%
   tbl_df() %>%

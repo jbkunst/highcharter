@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Charting Maps}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 <script>
@@ -116,9 +118,12 @@ Another example:
 
 
 ```{r}
-library(tidyverse)
+library(dplyr)
 
-airports <- read_csv("https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv")
+airports <- read.csv(
+  "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
+  stringsAsFactors = FALSE
+  )
 
 airports <- airports %>%
   filter(country %in% c(

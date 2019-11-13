@@ -175,8 +175,11 @@ hchart(princomp(USArrests, cor = TRUE))
 
 ```{r}
 data(volcano)
+
 hchart(volcano) %>% # changing default color
-  hc_colorAxis(stops = color_stops(colors = viridis::inferno(10)))
+  hc_colorAxis(
+    stops = color_stops(colors = c("#000004FF", "#56106EFF", "#BB3754FF", "#F98C0AFF", "#FCFFA4FF"))
+    )
 ```
 
 ## Distance matrix 
