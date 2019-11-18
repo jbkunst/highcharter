@@ -1,13 +1,16 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "highcharter",
   "description": "A wrapper for the 'Highcharts' library including\n    shortcut functions to plot R objects. 'Highcharts'\n    <http://www.highcharts.com/> is a charting library offering\n    numerous chart types with a simple configuration syntax.",
   "name": "highcharter: A Wrapper for the 'Highcharts' Library",
-  "codeRepository": "http://jkunst.com/highcharter",
+  "codeRepository": "https://github.com/jbkunst/highcharter",
   "issueTracker": "https://github.com/jbkunst/highcharter/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.7.0.9000",
+  "version": "0.7.0.9001",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -212,6 +215,30 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "forecast",
+      "name": "forecast",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=forecast"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "geojsonio",
+      "name": "geojsonio",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=geojsonio"
     }
   ],
   "softwareRequirements": [
@@ -454,9 +481,15 @@
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     }
   ],
-  "releaseNotes": "https://github.com/pachamaltese/highcharter/blob/master/NEWS.md",
-  "readme": "https://github.com/pachamaltese/highcharter/blob/master/README.md",
-  "fileSize": "2126.798KB",
-  "contIntegration": ["https://travis-ci.org/jbkunst/highcharter", "https://ci.appveyor.com/project/jbkunst/highcharter", "https://codecov.io/gh/pachamaltese/highcharter?branch=master"],
-  "relatedLink": "https://CRAN.R-project.org/package=highcharter"
+  "releaseNotes": "https://github.com/jbkunst/highcharter/blob/master/NEWS.md",
+  "readme": "https://github.com/jbkunst/highcharter/blob/master/README.md",
+  "fileSize": "1540.786KB",
+  "contIntegration": [
+    "https://travis-ci.org/jbkunst/highcharter",
+    "https://ci.appveyor.com/project/jbkunst/highcharter",
+    "https://codecov.io/gh/pachamaltese/highcharter?branch=master"
+  ],
+  "relatedLink": ["https://CRAN.R-project.org/package=highcharter", "http://jkunst.com/highcharter"],
+  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
+  "keywords": ["r", "highcharts", "visualization", "cran", "htmlwidgets", "wrapper", "rstats", "shiny", "shiny-r"]
 }
