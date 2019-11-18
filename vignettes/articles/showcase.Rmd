@@ -1,11 +1,6 @@
 ---
 title: "Showcase"
 author: "Joshua Kunst"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Showcase}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 <script>
