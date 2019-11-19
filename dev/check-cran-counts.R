@@ -5,7 +5,7 @@ library(highcharter)
 library(forcats)
 
 pcks <- c("highcharter", "rbokeh", "dygraphs", "plotly", "ggvis", "billboarder",
-          "metricsgraphics", "rAmCharts", "echarts4r") 
+          "metricsgraphics", "rAmCharts", "echarts4r", "rchess") 
 
 data <- pcks %>% 
   # adjustedcranlogs::adj_cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 

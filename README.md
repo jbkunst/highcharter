@@ -1,4 +1,4 @@
-[![](https://raw.githubusercontent.com/jbkunst/highcharter/master/highcharter-logo.png)](http://jkunst.com/highcharter/)
+# HIGHCHARTER
 
 ---
 
@@ -48,8 +48,7 @@ fontawesome, url-pattern, annotations.
 - CRAN site https://cran.r-project.org/web/packages/highcharter/.
 - Some Shiny demos [here](http://104.140.247.162:3838/shiny-apps-highcharter/) and code [there](https://github.com/jbkunst/shiny-apps-highcharter).
 
-## Installation:
-
+## Installation
 
 CRAN version:
 ```r
