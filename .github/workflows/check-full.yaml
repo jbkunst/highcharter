@@ -36,9 +36,8 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y libglpk-dev
-          sudo apt-get install -y libjq-dev
-        
+          sudo apt-get install -y libglpk-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler
+          
       - name: Cache R packages
         uses: actions/cache@v1
         with:
@@ -70,7 +69,5 @@ jobs:
       - name: Test coverage
         if: matrix.config.os == 'ubuntu-18.04' && matrix.config.r == '3.6'
         run: |
-          Rscript -e 'install.packages("testthat")'
-          Rscript -e 'install.packages("covr")'
           Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
           

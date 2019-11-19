@@ -206,18 +206,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "covr",
-      "name": "covr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=covr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "forecast",
       "name": "forecast",
       "provider": {
@@ -239,6 +227,30 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=geojsonio"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
     }
   ],
   "softwareRequirements": [
@@ -483,13 +495,29 @@
   ],
   "releaseNotes": "https://github.com/jbkunst/highcharter/blob/master/NEWS.md",
   "readme": "https://github.com/jbkunst/highcharter/blob/master/README.md",
-  "fileSize": "1540.786KB",
+  "fileSize": "2322.485KB",
   "contIntegration": [
     "https://travis-ci.org/jbkunst/highcharter",
     "https://ci.appveyor.com/project/jbkunst/highcharter",
     "https://codecov.io/gh/pachamaltese/highcharter?branch=master"
   ],
-  "relatedLink": ["https://CRAN.R-project.org/package=highcharter", "http://jkunst.com/highcharter"],
-  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
-  "keywords": ["r", "highcharts", "visualization", "cran", "htmlwidgets", "wrapper", "rstats", "shiny", "shiny-r"]
+  "relatedLink": [
+    "https://CRAN.R-project.org/package=highcharter",
+    "http://jkunst.com/highcharter"
+  ],
+  "developmentStatus": [
+    "https://www.repostatus.org/#active",
+    "https://www.tidyverse.org/lifecycle/#stable"
+  ],
+  "keywords": [
+    "r",
+    "highcharts",
+    "visualization",
+    "cran",
+    "htmlwidgets",
+    "wrapper",
+    "rstats",
+    "shiny",
+    "shiny-r"
+  ]
 }

@@ -57,8 +57,9 @@ Suggests:
     shiny,
     MASS,
     gapminder,
-    covr,
     forecast,
-    geojsonio
+    geojsonio,
+    testthat,
+    covr
 VignetteBuilder: knitr
 LazyData: true
