@@ -1,6 +1,3 @@
-codecov:
-  token: e09b36f5-c951-4f86-abbb-d36a1a9ceace
-  
 comment: false
 
 coverage:
@@ -13,3 +10,8 @@ coverage:
       default:
         target: auto
         threshold: 1%
+
+
+coverage:
+  ignore: 
+    - "R/zzz.R"
