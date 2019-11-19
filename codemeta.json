@@ -495,7 +495,7 @@
   ],
   "releaseNotes": "https://github.com/jbkunst/highcharter/blob/master/NEWS.md",
   "readme": "https://github.com/jbkunst/highcharter/blob/master/README.md",
-  "fileSize": "2322.485KB",
+  "fileSize": "1541.543KB",
   "contIntegration": [
     "https://travis-ci.org/jbkunst/highcharter",
     "https://ci.appveyor.com/project/jbkunst/highcharter",
