@@ -24,10 +24,12 @@ axis ticks, labels, annotations. We'll review all the functions to control the c
 
 *Premise*: There's not default arguments. All arguments need to be named.
 
+
+# Title, subtitle, caption and credits
+
 Fist of all, let's create a simple chart:
 
-
-```{r }
+```{r}
 data(mpg, package = "ggplot2")
 library(dplyr)
 library(highcharter)
@@ -39,9 +41,8 @@ hc <- hchart(mpgc, "column", hcaes(class, n, group = year))
 hc
 ```
 
-# Title, subtitle, caption and credits
-
-asd
+A good chart always have at least title, right? Then you can do it better adding relevant information
+using a subtitle or caption, even link to the source of data:
 
 ```{r}
 hc %>% 
@@ -50,5 +51,61 @@ hc %>%
   hc_caption(text = "This is a long text to give some 
 subtle details of the data which can be relevant to the reader. This is usually a long text
 that's why I'm trying to put a <i>loooooong</i> text.", useHTML = TRUE) %>% 
-  hc_credits(text = "by Joshua Kunst", href = "http://jkunst.com", enabled = TRUE)
+  hc_credits(text = "Chart created using R and highcharter", href = "http://jkunst.com/highcharter", enabled = TRUE)
 ```
+
+# Axis
+
+Usually is deseable get control and modiy the axis:
+
+```{r}
+data("citytemp_long")
+
+hc2 <- hchart(citytemp_long, "line", hcaes(month, temp, group = city))
+hc2
+```
+
+```{r}
+hc2 %>% 
+  hc_xAxis(
+    title = list(text = "Month in x Axis"),
+    opposite = TRUE
+    ) %>% 
+  hc_yAxis(
+    title = list(text = "Temperature <b>in y Axis</b>", useHTML = TRUE),
+    opposite = TRUE,
+    minorTickInterval = "auto",
+    minorGridLineDashStyle = "LongDashDotDot",
+    showFirstLabel = FALSE,
+    showLastLabel = FALSE
+  )
+```
+
+A good feature is `plotLines` and `plotBand` which you can use in both axis. For example:
+
+```{r}
+hc2 %>% 
+  hc_xAxis(
+    plotLines = list(
+      list(
+        label = list(text = "This is a plotLine"),
+        color = "#FF0000",
+        width = 2,
+        value = 5.5)
+      )
+    ) %>% 
+  hc_yAxis(
+    plotBands = list(
+      list(
+        from = 20,
+        to = 50,
+        color = "rgba(100, 0, 0, 0.1)",
+        label = list(text = "This is a plotBand")
+        )
+      )
+    ) 
+```
+
+       
+
+
