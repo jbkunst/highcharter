@@ -20,7 +20,7 @@ options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 
 We chart data. Data can come in different ways: numeric or character vectors,
 as time series objects, etc. but the most common object with data is a data 
-frame. So, why can chart this type of object in __highcharter__?
+frame. So, we'll show how  chart this type of object in __highcharter__.
 
 Highcharter have two main functions to create a chart from data and another
 to add data to an existing `highchart` object.
@@ -116,6 +116,9 @@ hchart(mpgman2, "bar", hcaes(x = manufacturer, y = n, group = year),
        name = c("Year 1999", "Year 2008"))
 ```
 
+Highcharts has a _veeeeery_ complete API with a lot of options. You can 
+see every option in action in https://api.highcharts.com/highcharts/plotOptions.series.
+
 ## A more advanced examples
 
 Using the `broom` package is really nice due the you 
@@ -124,8 +127,8 @@ can work with tidy data:
 ```{r, message=FALSE}
 library(dplyr)
 library(broom)
-
 ```
+
 ```{r}
 modlss <- loess(hwy ~ cty, data = mpg)
 fit <- arrange(augment(modlss), cty)
@@ -154,6 +157,7 @@ highchart() %>%
   hc_add_series(
     fit,
     type = "arearange",
+    name = "SE",
     hcaes(x = cty, low = .fitted - 3*.se.fit, high = .fitted + 3*.se.fit),
     linkedTo = "fit", # here we link the legends in one.
     color = hex_to_rgba("gray", 0.2),  # put a semi transparent color

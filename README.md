@@ -2,51 +2,36 @@
 
 ---
 
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/highcharter?color=brightgreen)](https://cran.r-project.org/package=highcharter)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen)](http://www.r-pkg.org/pkg/highcharter)
-[![R build status](https://github.com/jbkunst/highcharter/workflows/R-CMD-check/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=R-CMD-check)
+[![Project Status: Active – The project has reached a stable, usablestate and is being activelydeveloped.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/jbkunst/highcharter?branch=master)
+[![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/jbkunst/highcharter?branch=master)
+[![R build status](https://github.com/jbkunst/highcharter/workflows/R-CMD-check/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=R-CMD-check)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
 
----
+Highcharter is a [R](https://cran.r-project.org/) wrapper for 
+**[Highcharts](https://www.highcharts.com/)**  javascript libray and its modules.
+Highcharts is very mature and flexible javascript charting library and 
+it has a great and powerful API^[See http://www.highcharts.com/demo].
 
-R wrapper for highcharts. `highcharter` bring all the highcharts capabilites
-so it is recommended know how highcharts API works to take a major advantage of 
-this package. You can look  some [demos](http://www.highcharts.com/demo) charts
-and explore chart types, syntax and all what highcharts can do.
+The main features of this package are:
 
-## Highlights
-
-- [Various](http://jkunst.com/highcharter/) chart type with the same style: 
-scatters, bubble, line, time series, heatmaps, treemap, bar charts, networks.
-- Chart various R object with [one function](http://jkunst.com/highcharter/hchart.html). 
-With `hchart(x)` you can chart: data.frames, numeric, histogram, character, 
-density, factors, ts, mts, xts, stl, ohlc, acf, forecast, mforecast, ets, 
-igraph, dist, dendrogram, phylo, survfit classes.
-- Support [Highstock charts](http://jkunst.com/highcharter/highstock.html). You can create a candlestick charts in 2 lines of code. Support `xts` objects from the quantmod package.
-- Support [Highmaps charts](http://jkunst.com/highcharter/highmaps.html). It's easy to create choropleths or add information in geojson format.
-- [Themes](http://jkunst.com/highcharter/themes.html): you configurate your 
-chart in multiples ways. There are implemented themes like economist, financial 
-times, google, 538 among others.
-- [Plugins](http://jkunst.com/highcharter/plugins.html): motion, drag points, 
-fontawesome, url-pattern, annotations.
-- <3 and respect to Highcharts team.
-
-## Resources
-
-- Official package website: http://jkunst.com/highcharter/.
-- [Highcharts API and highcharter](https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html) by
-@dantonnoriega. 
-- Replicating Highcharts Demos: https://cran.rstudio.com/web/packages/highcharter/vignettes/replicating-highcharts-demos.html
-- CRAN site https://cran.r-project.org/web/packages/highcharter/.
-- Some Shiny demos [here](http://104.140.247.162:3838/shiny-apps-highcharter/) and code [there](https://github.com/jbkunst/shiny-apps-highcharter).
+* Chart various R objects with one function. With hchart(x) you can 
+chart: data.frames, numeric, histogram, character, density, factors, ts,
+ mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist,
+  dendrogram, survfit classes.
+* Support Highstock charts. You can create a candlestick charts in 2 lines 
+of code. Support xts objects from the quantmod package.
+* Support Highmaps charts. It's easy to create choropleths or add 
+information in geojson format.
+* Themes: you configurate your chart in multiples ways. There are
+ implemented themes like economist, financial times, google, 538 among 
+ others.
+* A lot of features and plugins: motion, draggable points, fonta-wesome, tooltips, annotations.
 
 ## Installation
 
@@ -58,7 +43,7 @@ install.packages("highcharter")
 Development version:
 ```r
 devtools::install_github("jbkunst/highcharter")
-
+remotes::install_github("jbkunst/highcharter")
 source("https://install-github.me/jbkunst/highcharter")
 ```
 

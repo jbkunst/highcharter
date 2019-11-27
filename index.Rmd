@@ -6,12 +6,13 @@ editor_options:
 <!-- badges: start -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/highcharter?color=brightgreen)](https://cran.r-project.org/package=highcharter)
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen)](http://www.r-pkg.org/pkg/highcharter)
-[![travis-status](https://api.travis-ci.org/jbkunst/highcharter.svg)](https://travis-ci.org/jbkunst/highcharter)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jbkunst/highcharter?branch=master&svg=true)](https://ci.appveyor.com/project/jbkunst/highcharter)
+[![Project Status: Active – The project has reached a stable, usablestate and is being activelydeveloped.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/jbkunst/highcharter?branch=master)
+[![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![R build status](https://github.com/jbkunst/highcharter/workflows/R-CMD-check/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=R-CMD-check)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
 <!-- badges: end -->
 
@@ -43,10 +44,11 @@ library(viridisLite)
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
 
-hc_theme_index <- 
+hc_theme_highcharts <- 
   hc_theme_smpl(
     chart = list(backgroundColor = "transparent"),
-    colors = c("#47475C", "#A3EDBA", "#8087E8"),
+    colors = c("#47475C", "#A3EDBA", "#8087E8",
+               "#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"),
     plotOptions = list(
       series = list(showInLegend = FALSE),
       line = list(lineWidth = 1.2)
@@ -66,7 +68,7 @@ hc_theme_index <-
     tooltip = list(valueDecimals = 2)
   )
 
-options(highcharter.theme = hc_theme_index)
+options(highcharter.theme = hc_theme_highcharts)
 
 # example 1
 data(mpg, package = "ggplot2")
@@ -82,7 +84,7 @@ p2 <- hchart(
   name = "Air Passengers data"
   ) %>%
   hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
-  hc_add_theme(hc_theme_index)
+  hc_add_theme(hc_theme_highcharts)
 
 # example 3
 data(GNI2014, package = "treemap")
@@ -107,7 +109,7 @@ p4 <- hcboxplot(
   color = "red"
   ) %>%
   hc_xAxis(showLastLabel = TRUE, showFirstLabel = TRUE) %>% 
-  hc_add_theme(hc_theme_index)
+  hc_add_theme(hc_theme_highcharts)
 
 # example 5
 library(igraph)
@@ -134,7 +136,7 @@ p6 <- highchart() %>%
   # hc_add_series(density(rgamma(10000000, 3, 0.8)), name = "Gamma(3. 0.8) Distribution") %>%
   hc_plotOptions(series = list(fillOpacity = 0.5)) %>%
   hc_xAxis(min = -5, max = 12) %>% 
-  hc_add_theme(hc_theme_index)
+  hc_add_theme(hc_theme_highcharts)
 
 # example 7
 brks <- seq(-3, 3, length.out = 40)
@@ -160,7 +162,7 @@ p7 <- hchart(m) %>%
 # example 8
 p8 <- hchart(rgamma(10000, shape = 2, scale = 3)) %>% 
   hc_add_theme(hc_theme_smpl()) %>% 
-  hc_add_theme(hc_theme_index)
+  hc_add_theme(hc_theme_highcharts)
 
 plots <- list(
   p1, p2, 
@@ -277,7 +279,7 @@ hcmap(
 ```
 
 
-## Installation:
+## Installation
 
 CRAN version:
 
@@ -288,6 +290,7 @@ install.packages("highcharter")
 Development version:
 ```r
 devtools::install_github("jbkunst/highcharter")
+remotes::install_github("jbkunst/highcharter")
 source("https://install-github.me/jbkunst/highcharter")
 ```
 

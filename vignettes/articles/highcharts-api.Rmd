@@ -56,7 +56,7 @@ that's why I'm trying to put a <i>loooooong</i> text.", useHTML = TRUE) %>%
 
 # Axis
 
-Usually is deseable get control and modiy the axis:
+Usually is deseable get control or modify the behaviour of the axis:
 
 ```{r}
 data("citytemp_long")

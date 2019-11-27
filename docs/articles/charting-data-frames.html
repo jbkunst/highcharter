@@ -138,7 +138,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>We chart data. Data can come in different ways: numeric or character vectors, as time series objects, etc. but the most common object with data is a data frame. So, why can chart this type of object in <strong>highcharter</strong>?</p>
+<p>We chart data. Data can come in different ways: numeric or character vectors, as time series objects, etc. but the most common object with data is a data frame. So, we’ll show how chart this type of object in <strong>highcharter</strong>.</p>
 <p>Highcharter have two main functions to create a chart from data and another to add data to an existing <code>highchart</code> object.</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -173,8 +173,8 @@
 ## 5 audi         a4      2.8  1999     6 auto(~ f        16    26 p     comp~
 ## 6 audi         a4      2.8  1999     6 manua~ f        18    26 p     comp~</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</a></code></pre></div>
-<div id="htmlwidget-bb463ac4defd7d0994d0" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bb463ac4defd7d0994d0">{
+<div id="htmlwidget-29f0367a9fbe5081feee" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-29f0367a9fbe5081feee">{
   "x": {
     "hc_opts": {
       "title": {
@@ -3845,8 +3845,8 @@
 }</script><p>The previous code is same as:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</a></code></pre></div>
-<div id="htmlwidget-44aa88da1baf914930bb" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-44aa88da1baf914930bb">{
+<div id="htmlwidget-a685291bf927f7a2618c" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a685291bf927f7a2618c">{
   "x": {
     "hc_opts": {
       "title": {
@@ -7518,8 +7518,8 @@
 ## 5 Fair  VS1     2830.
 ## 6 Fair  VVS2    2484</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(dfdiam, <span class="st">"heatmap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> clarity, <span class="dt">value =</span> price)) </a></code></pre></div>
-<div id="htmlwidget-f1bf359e87dc08e86edd" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f1bf359e87dc08e86edd">{
+<div id="htmlwidget-e69ebcb38098c661411b" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e69ebcb38098c661411b">{
   "x": {
     "hc_opts": {
       "title": {
@@ -8097,8 +8097,8 @@
 ## 5 1967-11-01 pop      199498 0.00646
 ## 6 1967-12-01 pop      199657 0.00777</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(economics_long2, <span class="st">"line"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value01, <span class="dt">group =</span> variable))</a></code></pre></div>
-<div id="htmlwidget-6211776b6d1d9b538ab1" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6211776b6d1d9b538ab1">{
+<div id="htmlwidget-ad8cda58171c08a37e7f" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ad8cda58171c08a37e7f">{
   "x": {
     "hc_opts": {
       "title": {
@@ -22064,8 +22064,8 @@
 ## 5 chevrolet       19      4
 ## 6 audi            18      3</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman, <span class="st">"treemap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">value =</span> n, <span class="dt">color =</span> unique))</a></code></pre></div>
-<div id="htmlwidget-a091428ea156e2274e7f" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a091428ea156e2274e7f">{
+<div id="htmlwidget-9de0eea13f71ab58a8ff" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9de0eea13f71ab58a8ff">{
   "x": {
     "hc_opts": {
       "title": {
@@ -22367,8 +22367,8 @@
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman2, <span class="st">"bar"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">y =</span> n, <span class="dt">group =</span> year),</a>
 <a class="sourceLine" id="cb16-2" title="2">       <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#FCA50A"</span>, <span class="st">"#FCFFA4"</span>),</a>
 <a class="sourceLine" id="cb16-3" title="3">       <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span>))</a></code></pre></div>
-<div id="htmlwidget-9f8277b15159cef3521c" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9f8277b15159cef3521c">{
+<div id="htmlwidget-83ef634aed94bad9b4b7" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-83ef634aed94bad9b4b7">{
   "x": {
     "hc_opts": {
       "title": {
@@ -22786,13 +22786,14 @@
 <a class="sourceLine" id="cb20-16" title="16"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</a>
 <a class="sourceLine" id="cb20-17" title="17">    fit,</a>
 <a class="sourceLine" id="cb20-18" title="18">    <span class="dt">type =</span> <span class="st">"arearange"</span>,</a>
-<a class="sourceLine" id="cb20-19" title="19">    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">low =</span> .fitted <span class="op">-</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit, <span class="dt">high =</span> .fitted <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit),</a>
-<a class="sourceLine" id="cb20-20" title="20">    <span class="dt">linkedTo =</span> <span class="st">"fit"</span>, <span class="co"># here we link the legends in one.</span></a>
-<a class="sourceLine" id="cb20-21" title="21">    <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"gray"</span>, <span class="fl">0.2</span>),  <span class="co"># put a semi transparent color</span></a>
-<a class="sourceLine" id="cb20-22" title="22">    <span class="dt">zIndex =</span> <span class="dv">-3</span> <span class="co"># this is for put the series in a back so the points are showed first</span></a>
-<a class="sourceLine" id="cb20-23" title="23">    )</a></code></pre></div>
-<div id="htmlwidget-e8ffa3ee16cb1d560f1c" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e8ffa3ee16cb1d560f1c">{
+<a class="sourceLine" id="cb20-19" title="19">    <span class="dt">name =</span> <span class="st">"SE"</span>,</a>
+<a class="sourceLine" id="cb20-20" title="20">    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">low =</span> .fitted <span class="op">-</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit, <span class="dt">high =</span> .fitted <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit),</a>
+<a class="sourceLine" id="cb20-21" title="21">    <span class="dt">linkedTo =</span> <span class="st">"fit"</span>, <span class="co"># here we link the legends in one.</span></a>
+<a class="sourceLine" id="cb20-22" title="22">    <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"gray"</span>, <span class="fl">0.2</span>),  <span class="co"># put a semi transparent color</span></a>
+<a class="sourceLine" id="cb20-23" title="23">    <span class="dt">zIndex =</span> <span class="dv">-3</span> <span class="co"># this is for put the series in a back so the points are showed first</span></a>
+<a class="sourceLine" id="cb20-24" title="24">    )</a></code></pre></div>
+<div id="htmlwidget-89c65f3b9835b8371127" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-89c65f3b9835b8371127">{
   "x": {
     "hc_opts": {
       "title": {
@@ -31308,6 +31309,7 @@
             }
           ],
           "type": "arearange",
+          "name": "SE",
           "linkedTo": "fit",
           "color": "rgba(190,190,190,0.2)",
           "zIndex": -3
