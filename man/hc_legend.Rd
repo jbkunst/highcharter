@@ -9,7 +9,7 @@ hc_legend(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/legend.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/legend}.}
 }
 \description{
 The legend is a box containing a symbol and name for each series
@@ -25,9 +25,9 @@ Either as a gradient, or as multiple legend items for dataClasses.
 }
 \examples{
 
-highchart() \%>\%
-  hc_xAxis(categories = month.abb) \%>\%
-  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\%
+highchart() \%>\% 
+  hc_xAxis(categories = month.abb) \%>\% 
+  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\% 
   hc_add_series(name = "London", data = sample(1:12) + 10) \%>\%
   hc_add_series(name = "Other City", data = sample(1:12) + 20) \%>\%
   hc_legend(
@@ -36,5 +36,6 @@ highchart() \%>\%
     layout = "vertical",
     x = 0,
     y = 100
-  )
+    ) 
+
 }

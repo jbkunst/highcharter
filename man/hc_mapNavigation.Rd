@@ -9,17 +9,18 @@ hc_mapNavigation(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highmaps/mapNavigation.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highmaps/mapNavigation}.}
 }
 \description{
 mapNavigation options for highcharter objects
 }
 \examples{
 
-hcmap(download_map_data = FALSE) \%>\%
+hcmap(download_map_data = FALSE) \%>\% 
   hc_mapNavigation(
     enabled = TRUE,
     enableMouseWheelZoom = TRUE,
     enableDoubleClickZoom = TRUE
   )
+
 }

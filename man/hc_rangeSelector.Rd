@@ -9,7 +9,7 @@ hc_rangeSelector(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highstock/rangeSelector.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highstock/rangeSelector}.}
 }
 \description{
 The range selector is a tool for selecting ranges to display within
@@ -19,17 +19,18 @@ boxes where min and max dates can be manually input.
 }
 \examples{
 
-hc <- highchart(type = "stock") \%>\%
+hc <- highchart(type = "stock") \%>\% 
   hc_add_series(AirPassengers)
 
 hc
 
-hc \%>\%
+hc \%>\% 
   hc_rangeSelector(enabled = FALSE)
 
-hc \%>\%
+hc \%>\% 
   hc_rangeSelector(
     verticalAlign = "bottom",
     selected = 4
-  )
+    )
+
 }

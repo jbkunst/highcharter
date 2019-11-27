@@ -9,7 +9,7 @@ hc_boost(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/boost.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/boost}.}
 }
 \description{
 boost options for highcharter objects
@@ -19,7 +19,7 @@ boost options for highcharter objects
 #  Ex 1
 n <- 50000
 
-x <- sin(4 * 2 * pi * seq(n) / n) + rnorm(n) / 10
+x <- sin(4*2*pi*seq(n)/n) + rnorm(n)/10
 
 x <- round(x, 3)
 
@@ -27,16 +27,16 @@ plot(x)
 
 highchart() \%>\%
   hc_chart(zoomType = "x") \%>\%
-  hc_add_series(data = x) \%>\%
-  hc_title(text = "No boost") \%>\%
+  hc_add_series(data = x) \%>\% 
+  hc_title(text = "No boost") \%>\% 
   hc_boost(
     enabled = FALSE # Not recommended
   )
 
 highchart() \%>\%
   hc_chart(zoomType = "x") \%>\%
-  hc_add_series(data = x) \%>\%
-  hc_title(text = "With boost") \%>\%
+  hc_add_series(data = x) \%>\% 
+  hc_title(text = "With boost") \%>\% 
   hc_boost(
     enabled = TRUE # Default :D
   )
@@ -46,29 +46,74 @@ library(MASS)
 
 n <- 100000
 
-sigma <- matrix(c(10, 3, 3, 2), 2, 2)
+sigma <- matrix(c(10,3,3,2),2,2)
 sigma
 
 mvr <- round(mvrnorm(n, rep(c(0, 0)), sigma), 6)
 
-vx <- ceiling(1 + abs(max(mvr[, 1])))
-vy <- ceiling(1 + abs(max(mvr[, 2])))
+vx <- ceiling(1+abs(max(mvr[, 1])))
+vy <- ceiling(1+abs(max(mvr[, 2])))
 
 ds <- list_parse2(as.data.frame(mvr))
 
 highchart() \%>\%
   hc_chart(zoomType = "xy") \%>\%
-  hc_xAxis(min = -vx, max = vx) \%>\%
-  hc_yAxis(min = -vy, max = vy) \%>\%
+  hc_xAxis(min = -vx, max = vx) \%>\% 
+  hc_yAxis(min = -vy, max = vy) \%>\% 
   hc_add_series(
     data = ds,
     type = "scatter",
     name = "A lot of points!",
-    color = "rgba(0,0,0,0.01)",
+    color = 'rgba(0,0,0,0.01)',
     marker = list(radius = 2),
     tooltip = list(
       followPointer = FALSE,
-      pointFormat = "[{point.x:.1f}, {point.y:.1f}]"
+      pointFormat =  '[{point.x:.1f}, {point.y:.1f}]'
+      )
     )
-  )
+
+# Ex3
+# N <- 1000000
+# n <- 5
+# s <- seq(n)
+# s <- s/(max(s) + min(s))
+# s <- round(s, 2)
+# 
+# series <- s \%>\% 
+#   map(~ arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 10) \%>\% 
+#   map(as.vector) \%>\% 
+#   map(round, 2) \%>\% 
+#   map(~ list(data = .x))
+# 
+# highchart() \%>\% 
+#   hc_add_series_list(series) \%>\% 
+#   hc_chart(zoomType = "x")
+# 
+# df <- map2_df(s, series, ~ data_frame(y = unlist(.y), x = seq(length(y)), group = .x))
+# 
+# hchart(df, "line", hcaes(x, y, group = group)) \%>\% 
+#   hc_chart(zoomType = "x")
+# 
+# 
+# set.seed(123)
+# N <- 1000000
+# df <- data_frame(
+#   x = rnorm(N),
+#   y = x + rnorm(N, sd = 0.5)
+# ) \%>\% 
+#   mutate_all(round, 4)
+# 
+# df \%>\% 
+#   mutate_all(abs) \%>\% 
+#   summarise_all(max)
+# 
+# highchart() \%>\% 
+#   hc_add_series(
+#     data = list_parse2(df), type = "scatter", marker = list(radius = 0.2),
+#     tooltip = list(followPointer = FALSE) 
+#   ) \%>\% 
+#   hc_chart(zoomType = "yx") \%>\% 
+#   hc_xAxis(min = -5, max = 5) \%>\% 
+#   hc_yAxis(min = -5, max = 5)
+
 }

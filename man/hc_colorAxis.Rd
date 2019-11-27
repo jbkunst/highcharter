@@ -9,7 +9,7 @@ hc_colorAxis(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/colorAxis.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/colorAxis}.}
 }
 \description{
 A color axis for series. Visually, the color
@@ -41,36 +41,34 @@ programmatic access to the axis.
 }
 \examples{
 
+hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width)) \%>\% 
+  hc_colorAxis(
+    minColor = "gray",
+    maxColor = "yellow"
+  )
+
+
+hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width, group = Species)) \%>\% 
+  hc_colorAxis(
+    minColor = "gray",
+    maxColor = "yellow"
+  )
+
+
+
 hc <- hchart(volcano)
-
-hc
-
-hc \%>\%
-  hc_colorAxis(
-    minColor = "#FFFFFF",
-    maxColor = "#434348"
-  )
-
-hc \%>\%
-  hc_colorAxis(
-    minColor = "#FFFFFF",
-    maxColor = "#434348",
-    type = "logarithmic"
-  )
-
-
-require("viridisLite")
 
 n <- 5
 
 stops <- data.frame(
-  q = 0:n / n,
-  c = substring(viridis(n + 1), 0, 7),
+  q = 0:n/n,
+  c = c("#440154", "#414487", "#2A788E", "#22A884", "#7AD151", "#FDE725"),
   stringsAsFactors = FALSE
-)
+  )
 
 stops <- list_parse2(stops)
 
-hc \%>\%
+hc \%>\% 
   hc_colorAxis(stops = stops, max = 200)
+
 }

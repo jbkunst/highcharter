@@ -9,7 +9,7 @@ hc_scrollbar(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highstock/scrollbar.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highstock/scrollbar}.}
 }
 \description{
 The scrollbar is a means of panning over the X axis of a stock chart.
@@ -23,9 +23,9 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
 }
 \examples{
 
-highchart(type = "stock") \%>\%
-  hc_add_series(AirPassengers) \%>\%
-  hc_rangeSelector(selected = 4) \%>\%
+highchart(type = "stock") \%>\% 
+  hc_add_series(AirPassengers) \%>\% 
+  hc_rangeSelector(selected = 4) \%>\% 
   hc_scrollbar(
     barBackgroundColor = "gray",
     barBorderRadius = 7,
@@ -40,4 +40,5 @@ highchart(type = "stock") \%>\%
     trackBorderColor = "silver",
     trackBorderRadius = 7
   )
+
 }

@@ -12,7 +12,7 @@ hc_xAxis(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/xAxis.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/xAxis}.}
 }
 \description{
 The X axis or category axis. Normally this is the horizontal axis,
@@ -32,7 +32,7 @@ highchart() \%>\%
   hc_add_series(
     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
     type = "spline"
-  ) \%>\%
+    ) \%>\% 
   hc_xAxis(
     title = list(text = "x Axis at top"),
     alternateGridColor = "#FDFFD5",
@@ -43,7 +43,8 @@ highchart() \%>\%
         color = "#FF0000",
         width = 2,
         value = 5.5
+        )
       )
     )
-  )
+
 }

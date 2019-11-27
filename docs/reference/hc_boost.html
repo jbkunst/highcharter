@@ -8,6 +8,13 @@
 
 <title>boost options for highcharter objects — hc_boost • highcharter</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -85,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
       </span>
     </div>
 
@@ -111,19 +118,25 @@
       <a href="../articles/articles/charting-maps.html">Charting Maps</a>
     </li>
     <li>
-      <a href="../articles/articles/hchart.html">Hchart Function</a>
+      <a href="../articles/articles/hchart.html">`hchart` Function</a>
     </li>
     <li>
-      <a href="../articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
-    </li>
-    <li>
-      <a href="../articles/articles/shiny-events-demo.html">Shiny Events Demo</a>
+      <a href="../articles/articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
       <a href="../articles/articles/showcase.html">Showcase</a>
     </li>
     <li>
       <a href="../articles/articles/themes.html">Themes</a>
+    </li>
+    <li>
+      <a href="../articles/charting-data-frames.html">Charting Data Frames</a>
+    </li>
+    <li>
+      <a href="../articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
+    </li>
+    <li>
+      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
   </ul>
 </li>
@@ -176,7 +189,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments defined in https://api.highcharts.com/highcharts/boost.</p></td>
+      <td><p>Arguments defined in <a href='https://api.highcharts.com/highcharts/boost'>https://api.highcharts.com/highcharts/boost</a>.</p></td>
     </tr>
     </table>
 
@@ -186,7 +199,7 @@
 <span class='co'>#  Ex 1</span>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>50000</span>
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Trig'>sin</a></span>(<span class='fl'>4</span> * <span class='fl'>2</span> * <span class='no'>pi</span> * <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='no'>n</span>) / <span class='no'>n</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>) / <span class='fl'>10</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Trig'>sin</a></span>(<span class='fl'>4</span>*<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='no'>n</span>)/<span class='no'>n</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>)/<span class='fl'>10</span>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>x</span>, <span class='fl'>3</span>)
 
@@ -208,20 +221,18 @@
   )
 
 <span class='co'># Ex 2</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MASS</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'MASS' was built under R version 3.5.3</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'MASS'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:dplyr':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    select</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MASS</span>)
+
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>100000</span>
 
-<span class='no'>sigma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>2</span>), <span class='fl'>2</span>, <span class='fl'>2</span>)
+<span class='no'>sigma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>2</span>),<span class='fl'>2</span>,<span class='fl'>2</span>)
 <span class='no'>sigma</span></div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]   10    3
 #&gt; [2,]    3    2</div><div class='input'>
 <span class='no'>mvr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>mvrnorm</a></span>(<span class='no'>n</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>)), <span class='no'>sigma</span>), <span class='fl'>6</span>)
 
-<span class='no'>vx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>1</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mvr</span>[, <span class='fl'>1</span>])))
-<span class='no'>vy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>1</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mvr</span>[, <span class='fl'>2</span>])))
+<span class='no'>vx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mvr</span>[, <span class='fl'>1</span>])))
+<span class='no'>vy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mvr</span>[, <span class='fl'>2</span>])))
 
 <span class='no'>ds</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_parse.html'>list_parse2</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>mvr</span>))
 
@@ -233,13 +244,57 @@
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ds</span>,
     <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"scatter"</span>,
     <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"A lot of points!"</span>,
-    <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"rgba(0,0,0,0.01)"</span>,
+    <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>'rgba(0,0,0,0.01)'</span>,
     <span class='kw'>marker</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>2</span>),
     <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
       <span class='kw'>followPointer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-      <span class='kw'>pointFormat</span> <span class='kw'>=</span> <span class='st'>"[{point.x:.1f}, {point.y:.1f}]"</span>
+      <span class='kw'>pointFormat</span> <span class='kw'>=</span>  <span class='st'>'[{point.x:.1f}, {point.y:.1f}]'</span>
+      )
     )
-  )</div></pre>
+
+<span class='co'># Ex3</span>
+<span class='co'># N &lt;- 1000000</span>
+<span class='co'># n &lt;- 5</span>
+<span class='co'># s &lt;- seq(n)</span>
+<span class='co'># s &lt;- s/(max(s) + min(s))</span>
+<span class='co'># s &lt;- round(s, 2)</span>
+<span class='co'># </span>
+<span class='co'># series &lt;- s %&gt;% </span>
+<span class='co'>#   map(~ arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 10) %&gt;% </span>
+<span class='co'>#   map(as.vector) %&gt;% </span>
+<span class='co'>#   map(round, 2) %&gt;% </span>
+<span class='co'>#   map(~ list(data = .x))</span>
+<span class='co'># </span>
+<span class='co'># highchart() %&gt;% </span>
+<span class='co'>#   hc_add_series_list(series) %&gt;% </span>
+<span class='co'>#   hc_chart(zoomType = "x")</span>
+<span class='co'># </span>
+<span class='co'># df &lt;- map2_df(s, series, ~ data_frame(y = unlist(.y), x = seq(length(y)), group = .x))</span>
+<span class='co'># </span>
+<span class='co'># hchart(df, "line", hcaes(x, y, group = group)) %&gt;% </span>
+<span class='co'>#   hc_chart(zoomType = "x")</span>
+<span class='co'># </span>
+<span class='co'># </span>
+<span class='co'># set.seed(123)</span>
+<span class='co'># N &lt;- 1000000</span>
+<span class='co'># df &lt;- data_frame(</span>
+<span class='co'>#   x = rnorm(N),</span>
+<span class='co'>#   y = x + rnorm(N, sd = 0.5)</span>
+<span class='co'># ) %&gt;% </span>
+<span class='co'>#   mutate_all(round, 4)</span>
+<span class='co'># </span>
+<span class='co'># df %&gt;% </span>
+<span class='co'>#   mutate_all(abs) %&gt;% </span>
+<span class='co'>#   summarise_all(max)</span>
+<span class='co'># </span>
+<span class='co'># highchart() %&gt;% </span>
+<span class='co'>#   hc_add_series(</span>
+<span class='co'>#     data = list_parse2(df), type = "scatter", marker = list(radius = 0.2),</span>
+<span class='co'>#     tooltip = list(followPointer = FALSE) </span>
+<span class='co'>#   ) %&gt;% </span>
+<span class='co'>#   hc_chart(zoomType = "yx") %&gt;% </span>
+<span class='co'>#   hc_xAxis(min = -5, max = 5) %&gt;% </span>
+<span class='co'>#   hc_yAxis(min = -5, max = 5)</span></div><div class='img'><img src='hc_boost-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -8,6 +8,13 @@
 
 <title>annotations options for highcharter objects — hc_add_annotation • highcharter</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -87,7 +94,7 @@ or chart pixel coordinates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
       </span>
     </div>
 
@@ -113,19 +120,25 @@ or chart pixel coordinates." />
       <a href="../articles/articles/charting-maps.html">Charting Maps</a>
     </li>
     <li>
-      <a href="../articles/articles/hchart.html">Hchart Function</a>
+      <a href="../articles/articles/hchart.html">`hchart` Function</a>
     </li>
     <li>
-      <a href="../articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
-    </li>
-    <li>
-      <a href="../articles/articles/shiny-events-demo.html">Shiny Events Demo</a>
+      <a href="../articles/articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
       <a href="../articles/articles/showcase.html">Showcase</a>
     </li>
     <li>
       <a href="../articles/articles/themes.html">Themes</a>
+    </li>
+    <li>
+      <a href="../articles/charting-data-frames.html">Charting Data Frames</a>
+    </li>
+    <li>
+      <a href="../articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
+    </li>
+    <li>
+      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
   </ul>
 </li>
@@ -184,7 +197,7 @@ or chart pixel coordinates.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments defined in https://api.highcharts.com/highcharts/annotations.</p></td>
+      <td><p>Arguments defined in <a href='https://api.highcharts.com/highcharts/annotations'>https://api.highcharts.com/highcharts/annotations</a>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -215,22 +228,22 @@ elements</p>
           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
             <span class='kw'>point</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>129.2</span>, <span class='kw'>xAxis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>yAxis</span> <span class='kw'>=</span> <span class='fl'>0</span>),
             <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
-          ),
+            ),
           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
             <span class='kw'>point</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>194.1</span>, <span class='kw'>xAxis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>yAxis</span> <span class='kw'>=</span> <span class='fl'>0</span>),
             <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
-          ),
+            ),
           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
             <span class='kw'>point</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>xAxis</span> <span class='kw'>=</span> <span class='fl'>0</span>),
             <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {point.plotY} px"</span>
-          ),
+            ),
           <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
             <span class='kw'>point</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>),
             <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"x: {point.plotX} px&lt;br/&gt;y: {point.plotY} px"</span>
+            )
           )
-        )
+      )
     )
-  )
 
 <span class='co'># Ex 2</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(

@@ -9,7 +9,7 @@ hc_credits(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/credits.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/credits}.}
 }
 \description{
 Highchart by default puts a credits label in the lower right corner
@@ -17,12 +17,13 @@ of the chart. This can be changed using these options.
 }
 \examples{
 
-highchart() \%>\%
-  hc_xAxis(categories = citytemp$month) \%>\%
-  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\%
+highchart() \%>\% 
+  hc_xAxis(categories = citytemp$month) \%>\% 
+  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\% 
   hc_credits(
     enabled = TRUE,
     text = "htmlwidgets.org",
     href = "http://www.htmlwidgets.org/"
-  )
+    )
+
 }

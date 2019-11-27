@@ -8,6 +8,13 @@
 
 <title>caption options for highcharter objects — hc_caption • highcharter</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -87,7 +94,7 @@ through the Chart.update or Chart.caption.update methods." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
       </span>
     </div>
 
@@ -113,19 +120,25 @@ through the Chart.update or Chart.caption.update methods." />
       <a href="../articles/articles/charting-maps.html">Charting Maps</a>
     </li>
     <li>
-      <a href="../articles/articles/hchart.html">Hchart Function</a>
+      <a href="../articles/articles/hchart.html">`hchart` Function</a>
     </li>
     <li>
-      <a href="../articles/articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
-    </li>
-    <li>
-      <a href="../articles/articles/shiny-events-demo.html">Shiny Events Demo</a>
+      <a href="../articles/articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
       <a href="../articles/articles/showcase.html">Showcase</a>
     </li>
     <li>
       <a href="../articles/articles/themes.html">Themes</a>
+    </li>
+    <li>
+      <a href="../articles/charting-data-frames.html">Charting Data Frames</a>
+    </li>
+    <li>
+      <a href="../articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
+    </li>
+    <li>
+      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
   </ul>
 </li>
@@ -180,7 +193,7 @@ through the Chart.update or Chart.caption.update methods.</p>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments defined in https://api.highcharts.com/highcharts/caption.</p></td>
+      <td><p>Arguments defined in <a href='https://api.highcharts.com/highcharts/caption'>https://api.highcharts.com/highcharts/caption</a>.</p></td>
     </tr>
     </table>
 
@@ -188,8 +201,8 @@ through the Chart.update or Chart.caption.update methods.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_title.html'>hc_title</a></span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"Chart with a caption"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_subtitle.html'>hc_subtitle</a></span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"This is the subtitle"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='hc_title.html'>hc_title</a></span>(<span class='kw'>text</span><span class='kw'>=</span> <span class='st'>"Chart with a caption"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='hc_subtitle.html'>hc_subtitle</a></span>(<span class='kw'>text</span><span class='kw'>=</span> <span class='st'>"This is the subtitle"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span>(<span class='kw'>categories</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Apples"</span>, <span class='st'>"Pears"</span>, <span class='st'>"Banana"</span>, <span class='st'>"Orange"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span>),
@@ -200,9 +213,9 @@ through the Chart.update or Chart.caption.update methods.</p>
     <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"&lt;b&gt;The caption renders in the bottom, and is part of the exported
     chart.&lt;/b&gt;&lt;br&gt;&lt;em&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit,
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
     laborum.&lt;/em&gt;'"</span>
   )</div></pre>

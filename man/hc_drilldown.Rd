@@ -9,7 +9,7 @@ hc_drilldown(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/drilldown.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/drilldown}.}
 }
 \description{
 Options for drill down, the concept of inspecting increasingly high
@@ -81,4 +81,7 @@ hc <- hc \%>\%
   )
 
 hc
+
+
+
 }

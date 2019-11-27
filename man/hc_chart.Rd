@@ -9,28 +9,28 @@ hc_chart(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/chart.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 General options for the chart.
 }
 \examples{
 
-hc <- highchart() \%>\%
-  hc_xAxis(categories = month.abb) \%>\%
-  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\%
+hc <- highchart() \%>\% 
+  hc_xAxis(categories = month.abb) \%>\% 
+  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\% 
   hc_add_series(name = "London", data = sample(1:12) + 10)
 
 hc
 
-hc \%>\%
+hc \%>\% 
   hc_chart(
     type = "column",
     options3d = list(enabled = TRUE, beta = 15, alpha = 15)
-  )
+    )
 
 
-hc \%>\%
+hc \%>\% 
   hc_chart(
     borderColor = "#EBBA95",
     borderRadius = 10,
@@ -38,9 +38,11 @@ hc \%>\%
     backgroundColor = list(
       linearGradient = c(0, 0, 500, 500),
       stops = list(
-        list(0, "rgb(255, 255, 255)"),
-        list(1, "rgb(200, 200, 255)")
+        list(0, 'rgb(255, 255, 255)'),
+        list(1, 'rgb(200, 200, 255)')
+             )
       )
     )
-  )
+
+
 }

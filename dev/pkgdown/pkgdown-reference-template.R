@@ -11,8 +11,6 @@ dfun <- help.search("*", package = "highcharter") %>%
   select(name, title) %>% 
   distinct()
 
-
-
 # funs --------------------------------------------------------------------
 fun_hc_api <- read_lines("R/highcharts-api.R") %>% 
   str_subset(" <- function") %>% 
@@ -65,6 +63,7 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 # build reference ---------------------------------------------------------
 pkgdown::build_reference_index()
+# pkgdown::build_reference()
 
 
 

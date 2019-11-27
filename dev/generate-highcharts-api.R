@@ -69,6 +69,9 @@ write_lines(txt, fout)
 dfopts %>% 
   pmap(function(option, url){
     
+    # option <- "tooltip"
+    # url <- "https://api.highcharts.com/highcharts/annotations"
+    
     message(option, ": ", url)
     
     if(option == "colors") {
@@ -104,11 +107,11 @@ dfopts %>%
       
       roxy2 <- str_glue(
         "#' @param hc A `highchart` `htmlwidget` object. 
-#' @param ... Arguments defined in { url }. 
+#' @param ... Arguments defined in \\url{{{url}}}. 
 #' @param sort Logical value to implement sort according `this.point`
-#'   http://stackoverflow.com/a/16954666/829971.
+#'   \\url{{http://stackoverflow.com/a/16954666/829971}}.
 #' @param table Logical value to implement table in tooltip: 
-#'   http://stackoverflow.com/a/22327749/829971.
+#'   \\url{{http://stackoverflow.com/a/22327749/829971}}.
 #' 
 #' @examples
 #' ",
@@ -129,7 +132,7 @@ dfopts %>%
       
       roxy2 <- str_glue(
         "#' @param hc A `highchart` `htmlwidget` object. 
-#' @param ... Arguments defined in { url }. 
+#' @param ... Arguments defined in \\url{{{url}}}. 
 #' 
 #' @examples
 #' ",
@@ -217,11 +220,14 @@ hc_{ opt } <- function(hc, ...) {{
   })
 
 
+message("Copying to R folder")
 file.copy(
   fout, 
   file.path("R", basename(fout)),
   overwrite = TRUE
 )
 
-# devtools::build()
-# devtools::document()
+message("devtools::document() & devtools::build()")
+devtools::document()
+devtools::build()
+

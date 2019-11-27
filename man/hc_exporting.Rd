@@ -9,7 +9,7 @@ hc_exporting(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in https://api.highcharts.com/highcharts/exporting.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/exporting}.}
 }
 \description{
 Options for the exporting module. For an overview on the matter, see
@@ -17,11 +17,12 @@ the docs.
 }
 \examples{
 
-highchart() \%>\%
-  hc_xAxis(categories = month.abb) \%>\%
-  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\%
+highchart() \%>\% 
+  hc_xAxis(categories = month.abb) \%>\% 
+  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\% 
   hc_exporting(
     enabled = TRUE, # always enabled
     filename = "custom-file-name"
-  )
+    )
+
 }
