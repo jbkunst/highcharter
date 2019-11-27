@@ -86,6 +86,7 @@ dependencies:
 #    - plugins/annotations.js
 #    - plugins/draggable-legend.js
     - custom/reset.js
+#    - custom/appear.js    
 #    - custom/symbols-extra.js
 #    - custom/text-symbols.js
     stylesheet:
