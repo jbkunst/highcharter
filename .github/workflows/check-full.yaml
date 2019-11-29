@@ -37,6 +37,11 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y libglpk-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libudunits2-dev libgdal-dev
+      
+      - name: Install system dependencies
+        if: runner.os == 'macOS'
+        run: |
+          tlmgr install pdftexcmds
           
       - name: Cache R packages
         uses: actions/cache@v1
