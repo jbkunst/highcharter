@@ -5,13 +5,14 @@ library(highcharter)
 library(forcats)
 
 pcks <- c("highcharter", "rbokeh", "dygraphs", "plotly", "ggvis", "billboarder",
-          "metricsgraphics", "rAmCharts", "echarts4r", "rchess") 
+          "metricsgraphics", "rAmCharts", "echarts4r", "rchess", "apexcharter") 
 
 data <- pcks %>% 
   # adjustedcranlogs::adj_cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
   cranlogs::cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
   tbl_df() %>% 
-  mutate(date = floor_date(date, unit = "week")) %>% 
+  # mutate(date = floor_date(date, unit = "week")) %>% 
+  mutate(date = floor_date(date, unit = "month")) %>% 
   group_by(date, package) %>% 
   summarize(count = sum(count)) %>% 
   ungroup() %>% 

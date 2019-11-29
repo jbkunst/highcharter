@@ -13,11 +13,14 @@ navbar:
   - icon: fa-github-alt
     href: https://github.com/jbkunst/highcharter
 articles:
-- title: All vignettes
-  desc: ~
+- title: Starting
+  content:
+  - charting-data-frames
+  - hchart
+  - highcharts-api
 reference:
 - title: Highcharts API
-  desc: Functions to access the highcharts API and modify charts
+  desc: Functions to access the highcharts API and modify charts.
   contents:
   - hc_annotations
   - hc_boost
@@ -45,7 +48,7 @@ reference:
   - hc_scrollbar
   - hc_mapNavigation
 - title: Add data
-  desc: Functions to add data from R objects to a highcharts charts
+  desc: Functions to add data from R objects to a highcharts charts.
   contents:
   - hc_add_series
   - hc_add_series.character
@@ -59,8 +62,20 @@ reference:
   - hc_add_series.xts
   - hc_add_series_list
   - hc_add_series_map
+- title: Helpers to add
+  desc: Function to add other plugins as dependencies, events or annotations.
+  contents:
+  - hc_add_dependency
+  - hc_add_dependency_fa
+  - hc_add_event_point
+  - hc_add_annotation
+- title: Helpers to customize tooltips
+  desc: Function to help get table or charts in tooltips.
+  contents:
+  - tooltip_chart
+  - tooltip_table
 - title: Themes
-  desc: Functions to customize the look of your chart
+  desc: Functions to customize the look of your chart.
   contents:
   - hc_add_theme
   - hc_theme

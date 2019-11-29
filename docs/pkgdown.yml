@@ -4,8 +4,10 @@ pkgdown_sha: 42971af1df065ab4e804ce3ee741192468c8bbd4
 articles:
   charting-maps: articles/charting-maps.html
   hchart: articles/hchart.html
-  replicating-highcharts-demos: articles/replicating-highcharts-demos.html
-  shiny-events-demo: articles/shiny-events-demo.html
+  highcharts-api: articles/highcharts-api.html
   showcase: articles/showcase.html
   themes: articles/themes.html
+  charting-data-frames: charting-data-frames.html
+  replicating-highcharts-demos: replicating-highcharts-demos.html
+  shiny-events-demo: shiny-events-demo.html
 

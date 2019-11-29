@@ -21,32 +21,56 @@ fun_hc_thm <- dfun %>%
   distinct() %>% 
   pull(name)
 
-fun_hc_add <- dfun %>% 
-  filter(str_detect(name, "add_series")) %>% 
+fun_hc_add_series <- dfun %>% 
+  filter(str_detect(name, "hc_add_series")) %>% 
   distinct() %>% 
   pull(name)
 
+fun_hc_add <- dfun %>% 
+  filter(str_detect(name, "add")) %>% 
+  distinct() %>% 
+  pull(name) %>% 
+  setdiff(fun_hc_add_series) %>% 
+  setdiff(fun_hc_thm) 
+
+fun_hc_ttip <- dfun %>% 
+  filter(str_detect(name, "tooltip")) %>% 
+  distinct() %>% 
+  pull(name) %>% 
+  setdiff(fun_hc_api) 
+  
 datas <- read_lines("R/data.R") %>% 
   str_subset("\".*\"") %>% 
   str_trim() %>% 
   str_remove_all("\"")
   
 
+
 # gen reference -----------------------------------------------------------
 yml[["reference"]] <- list(
   list(
     title = "Highcharts API",
-    desc = "Functions to access the highcharts API and modify charts",
+    desc = "Functions to access the highcharts API and modify charts.",
     contents = fun_hc_api
   ),
   list(
     title = "Add data",
-    desc = "Functions to add data from R objects to a highcharts charts",
+    desc = "Functions to add data from R objects to a highcharts charts.",
+    contents = fun_hc_add_series
+  ),
+  list(
+    title = "Helpers to add",
+    desc = "Function to add other plugins as dependencies, events or annotations.",
     contents = fun_hc_add
   ),
   list(
+    title = "Helpers to customize tooltips",
+    desc = "Function to help get table or charts in tooltips.",
+    contents = fun_hc_ttip
+  ),  
+  list(
     title = "Themes",
-    desc = "Functions to customize the look of your chart",
+    desc = "Functions to customize the look of your chart.",
     contents = fun_hc_thm
   ),
   list(

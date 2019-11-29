@@ -1,4 +1,4 @@
-#' Adding and removing series from highchart objects
+#' Adding data to highchart objects
 #'
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data An R object like numeric, list, ts, xts, etc.
@@ -692,7 +692,11 @@ hc_add_event_series <- function(hc, series = "series", event = "click") {
   hc
 }
 
-#' @rdname hc_annotations
+#' Helper to add annotations from data frame or list
+#' 
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}. 
+#' 
 #' @export
 hc_add_annotation <- function(hc, ...) {
   assertthat::assert_that(is.highchart(hc))
@@ -705,7 +709,7 @@ hc_add_annotation <- function(hc, ...) {
   hc
 }
 
-#' @rdname hc_annotations
+#' @rdname hc_add_annotation
 #' @param x A \code{list} or a \code{data.frame} of annotations.
 #' @details The \code{x} elements must have \code{xValue} and \code{yValue}
 #'   elements

@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api-add.R
 \name{hc_add_series}
 \alias{hc_add_series}
-\title{Adding and removing series from highchart objects}
+\title{Adding data to highchart objects}
 \usage{
 hc_add_series(hc, data = NULL, ...)
 }
@@ -14,7 +14,7 @@ hc_add_series(hc, data = NULL, ...)
 \item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.}
 }
 \description{
-Adding and removing series from highchart objects
+Adding data to highchart objects
 }
 \examples{
 

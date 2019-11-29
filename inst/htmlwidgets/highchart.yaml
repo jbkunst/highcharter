@@ -77,7 +77,7 @@ dependencies:
 #    - modules/sonification.js
 #    - modules/stock-tools.js
 #    - modules/treegrid.js
-    - plugins/grouped-categories.js
+#    - plugins/grouped-categories.js
     - plugins/motion.js
 #    - plugins/multicolor_series.js
 #    - plugins/highcharts-regression.js
