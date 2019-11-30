@@ -60,7 +60,10 @@ jobs:
         
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
-
+      
+      - name: Install dependencies 2
+        run: Rscript -e "install.packages('igraph')"
+        
       - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '${{ matrix.config.args }}', error_on = 'warning', check_dir = 'check')"
 
