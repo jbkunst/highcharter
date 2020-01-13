@@ -8,8 +8,8 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 7.2.1
-    src: "htmlwidgets/lib/highcharts-7.2.1"
+    version: 8.0.0
+    src: "htmlwidgets/lib/highcharts-8.0.0"
     script:
     - highcharts.js
     - highcharts-3d.js
@@ -44,6 +44,9 @@ dependencies:
     - modules/parallel-coordinates.js
     - modules/bullet.js
     - modules/coloraxis.js
+    - modules/dumbbell.js
+#    - modules/lollipop.js
+#    - modules/marker-clusters.js
 #    - modules/datagrouping.js
 #    - modules/dependency-wheel.js
 #    - modules/dotplot.js
