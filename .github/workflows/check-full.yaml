@@ -12,9 +12,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: '3.6', args: "--no-manual"}
-        - { os: macOS-latest, r: '3.6'}
-        - { os: ubuntu-16.04, r: '3.6', cran: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+        - { os: windows-latest, r: '3.6' }
+        - { os: macOS-latest, r: '3.6' }
+        - { os: ubuntu-18.04, r: '3.6', cran: "https://demo.rstudiopm.com/all/__linux__/bionic/latest" }
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -35,7 +35,7 @@ jobs:
       - name: Install system dependencies
         if: runner.os == 'Linux'
         run: |
-          sudo add-apt-repository -y ppa:opencpu/jq
+          sudo add-apt-repository -y ppa:openjdk-r/ppa
           sudo apt-get update -y
           sudo apt-get install -y libglpk-dev libjq-dev libv8-dev libprotobuf-dev protobuf-compiler libudunits2-dev libgdal-dev
       
@@ -76,7 +76,7 @@ jobs:
           path: check
 
       - name: Test coverage
-        if: matrix.config.os == 'ubuntu-16.04' && matrix.config.r == '3.6'
+        if: matrix.config.os == 'ubuntu-18.04' && matrix.config.r == '3.6'
         run: |
           Rscript -e 'remotes::install_github("r-lib/covr@gh-actions")'
           Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
