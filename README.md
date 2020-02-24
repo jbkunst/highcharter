@@ -10,26 +10,28 @@
 [![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![R build status](https://github.com/jbkunst/highcharter/workflows/R-CMD-check/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=R-CMD-check)
+[![check-windows](https://github.com/jbkunst/highcharter/workflows/check-windows/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-windows)
+[![check-mac](https://github.com/jbkunst/highcharter/workflows/check-mac/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-mac)
+[![check-linux](https://github.com/jbkunst/highcharter/workflows/check-linux/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-linux)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
 
-Highcharter is a [R](https://cran.r-project.org/) wrapper for 
+Highcharter is a [R](https://cran.r-project.org/) wrapper for
 **[Highcharts](https://www.highcharts.com/)**  javascript libray and its modules.
-Highcharts is very mature and flexible javascript charting library and 
+Highcharts is very mature and flexible javascript charting library and
 it has a great and powerful API^[See http://www.highcharts.com/demo].
 
 The main features of this package are:
 
-* Chart various R objects with one function. With hchart(x) you can 
+* Chart various R objects with one function. With hchart(x) you can
 chart: data.frames, numeric, histogram, character, density, factors, ts,
  mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist,
   dendrogram, survfit classes.
-* Support Highstock charts. You can create a candlestick charts in 2 lines 
+* Support Highstock charts. You can create a candlestick charts in 2 lines
 of code. Support xts objects from the quantmod package.
-* Support Highmaps charts. It's easy to create choropleths or add 
+* Support Highmaps charts. It's easy to create choropleths or add
 information in geojson format.
 * Themes: you configurate your chart in multiples ways. There are
- implemented themes like economist, financial times, google, 538 among 
+ implemented themes like economist, financial times, google, 538 among
  others.
 * A lot of features and plugins: motion, draggable points, fonta-wesome, tooltips, annotations.
 
@@ -47,7 +49,7 @@ remotes::install_github("jbkunst/highcharter")
 source("https://install-github.me/jbkunst/highcharter")
 ```
 
-## Licence 
+## Licence
 
 Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.
 
@@ -60,4 +62,3 @@ Highsoft provide a discount to the highcharter users. It is a 50% discount on ou
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
-
