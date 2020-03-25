@@ -4,7 +4,8 @@
 \alias{hctreemap2}
 \title{Shortcut to create treemaps.}
 \usage{
-hctreemap2(data, group_vars, size_var, color_var = NULL, ...)
+hctreemap2(data, group_vars, size_var, color_var = NULL,
+  allowDrillToNode = TRUE, ...)
 }
 \arguments{
 \item{data}{data frame containing variables to organize each level of the treemap on}
@@ -14,6 +15,8 @@ hctreemap2(data, group_vars, size_var, color_var = NULL, ...)
 \item{size_var}{string name of column containing numeric data to aggregate by}
 
 \item{color_var}{string name of column containing numeric data to color by. defaults to same column as \code{size_var}}
+
+\item{allowDrillToNode}{logical use the allowDrillToNode option in Highcharts}
 
 \item{...}{additional shared arguments for the data series
 (\url{http://api.highcharts.com/highcharts#series}).}

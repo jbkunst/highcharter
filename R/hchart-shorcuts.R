@@ -311,6 +311,7 @@ hctreemap <- function(tm, ...) {
 #' @param group_vars vector of strings containing column names of variables to generate treemap levels from. the first listed column will specify the top level of the treemap. the unique values in each of these columns must have no intersection (including NAs).
 #' @param size_var string name of column containing numeric data to aggregate by
 #' @param color_var string name of column containing numeric data to color by. defaults to same column as \code{size_var}
+#' @param allowDrillToNode logical use the allowDrillToNode option in Highcharts
 #' @param ... additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'
@@ -355,7 +356,7 @@ hctreemap <- function(tm, ...) {
 #' @importFrom purrr map pmap_chr
 #'
 #' @export
-hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
+hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, allowDrillToNode = TRUE, ...) {
   assertthat::assert_that(is.data.frame(data))
   assertthat::assert_that(is.character(group_vars))
   assertthat::assert_that(is.character(size_var))
@@ -423,7 +424,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
     hc_add_series(
       data = data_list,
       type = "treemap",
-      allowDrillToNode = TRUE, ...
+      allowDrillToNode = allowDrillToNode, ...
     ) %>%
     hc_colorAxis(
       min = min(colorVals),
