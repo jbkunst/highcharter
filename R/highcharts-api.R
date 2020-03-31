@@ -971,6 +971,50 @@ hc_yAxis <- function(hc, ...) {
   
 }
 
+#' yAxis add highcharter objects
+#'
+#' @export
+hc_add_yAxis <- function(hc, ...) {
+  assertthat::assert_that(is.highchart(hc))
+  
+  # Check for single yAxis, by title attribute.
+  if (assertthat::has_name(hc$x$hc_opts$yAxis, "title")) {
+    # When yAxis only has empty title we can overwrite,
+    # otherwise we move yAxis to become first in the list.
+    if ((length(hc$x$hc_opts$yAxis) == 1) &&
+        is.null(hc$x$hc_opts$yAxis$title$text)) {
+      hc <- .hc_opt(hc, "yAxis", ...)
+      return(hc)
+    } else { # move the existing yAxis
+      hc$x$hc_opts$yAxis <- list(hc$x$hc_opts$yAxis)
+    }
+  }
+  
+  # Add new yAxis to the list.
+  validate_args("yAxis", eval(substitute(alist(...))))
+  hc$x$hc_opts$yAxis <- append(hc$x$hc_opts$yAxis, list(list(...)))
+
+  # Optional layout with relative heights.
+  relative <- list(...)["relative"]
+  if (!is.null(relative)) {
+    # Calculate the total relative(s) and initiate offset.
+    layout <- Reduce("+", lapply(hc$x$hc_opts$yAxis, function(y) { y$relative }))
+    tops <- 0
+    for (i in 1:length(hc$x$hc_opts$yAxis)) {
+      part <- as.numeric(hc$x$hc_opts$yAxis[[i]]["relative"]) 
+      height <- round((part * 100)/layout, 3)
+      hc$x$hc_opts$yAxis[[i]]["top"] <- paste0(tops, "%")
+      hc$x$hc_opts$yAxis[[i]]["height"] <- paste0(height, "%")
+      hc$x$hc_opts$yAxis[[i]]["offset"] <- 0
+      tops <- tops + height
+    }
+  }
+  return(hc)
+}
+
+
+
+
 #' zAxis options for highcharter objects
 #' 
 #' The Z axis or depth axis for 3D plots.
