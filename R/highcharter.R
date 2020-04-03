@@ -52,9 +52,9 @@ highchart <- function(hc_opts = list(),
   )
 
   attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
-
+  
   # create widget
-  htmlwidgets::createWidget(
+  hc <- htmlwidgets::createWidget(
     name = "highchart",
     x,
     width = width,
@@ -68,6 +68,9 @@ highchart <- function(hc_opts = list(),
       padding = 0
     )
   )
+
+  # set sizing for `shinyRenderer`
+  hc_size(hc, width = width, height = height)
 }
 
 #' Reports whether x is a highchart object
