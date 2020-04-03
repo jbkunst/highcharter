@@ -313,11 +313,17 @@ hc_size <- function(hc, width = NULL, height = NULL) {
   assertthat::assert_that(is.highchart(hc))
 
   if (!is.null(width)) {
+    # Set for both static renderer and `shinyRenderer`,
+    # where width is handled by Highcharts in the htmlwidget.
     hc$width <- width
+    hc <- .hc_opt(hc, "chart", width = width)
   }
 
   if (!is.null(height)) {
+    # Set for both static renderer and `shinyRenderer`,
+    # where height is handled by Highcharts in the htmlwidget.
     hc$height <- height
+    hc <- .hc_opt(hc, "chart", height = height)
   }
 
   hc
