@@ -972,7 +972,33 @@ hc_yAxis <- function(hc, ...) {
 }
 
 #' yAxis add highcharter objects
+#' 
+#' The Y axis or value axis. Normally this is the vertical axis,
+#' though if the chart is inverted this is the horizontal axis.
+#' Add yAxis allows to add multiple axis with a relative height between Y axis.
+#' Based upon the `relative` parameter the height of each Y axis is recalculated.
+#' Otherwise the parameters are as supported by Y axis.
+#' 
+#' @param hc A `highchart` `htmlwidget` object. 
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/yAxis}. 
 #'
+#' @examples
+#' 
+#' # Retrieve stock data to plot.
+#' aapl <- quantmod::getSymbols("AAPL", 
+#'   src = "yahoo",
+#'   from = "2020-01-01",
+#'   auto.assign = FALSE
+#' )
+#' 
+#' # Plot prices and volume with relative height.
+#' hc <- highcharter::highchart(type = "stock") %>%
+#'   highcharter::hc_title(text = "AAPLE") %>%
+#'   highcharter::hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) %>%
+#'   highcharter::hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) %>%
+#'   highcharter::hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) %>%
+#'   highcharter::hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
+#'   
 #' @export
 hc_add_yAxis <- function(hc, ...) {
   assertthat::assert_that(is.highchart(hc))
