@@ -51,7 +51,11 @@ highchart <- function(hc_opts = list(),
     debug = getOption("highcharter.debug")
   )
 
-  attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
+  if (getOption("highcharter.debug")) {
+    attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
+  } else if (getOption("highcharter.rjson")) {
+    attr(x, 'TOJSON_FUNC') = rjson::toJSON
+  }
 
   # create widget
   htmlwidgets::createWidget(

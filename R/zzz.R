@@ -96,6 +96,7 @@
     highcharter.verbose = FALSE,
     highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,
+    highcharter.rjson = FALSE,
     highcharter.download_map_data = TRUE,
     highcharter.color_palette = c(
       "#420A68", "#66166E", "#8B226A", "#AE305C", "#CF4446",
