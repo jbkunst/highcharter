@@ -88,6 +88,7 @@ hc_add_series.xts <- function(hc, data, ...) {
     return(hc_add_series.ohlc(hc, data, ...))
   }
   
+  data <- zoo::na.fill(data, NULL)
   timestamps <- datetime_to_timestamp(time(data))
   
   series <- list_parse2(data.frame(timestamps, as.vector(data)))
@@ -104,6 +105,7 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...) {
     message("hc_add_series.xts.ohlc")
   }
   
+  data <- zoo::na.fill(data, NULL)
   time <- datetime_to_timestamp(time(data))
   xdf <- cbind(time, as.data.frame(data))
   xds <- list_parse2(xdf)

@@ -2,6 +2,7 @@ library(microbenchmark)
 library(quantmod)
 library(magrittr)
 
+options(highcharter.verbose = TRUE)
 options(highcharter.debug = FALSE)
 options(highcharter.rjson = TRUE)
 
@@ -11,15 +12,19 @@ aapl <- quantmod::getSymbols("AAPL",
   auto.assign = FALSE
 )
 
+# Add some NA with SMA.
+aapl$SMA <- runMean(aapl$AAPL.Close, 20)
+
 to_benchmark <- function() {
   hc <- highcharter::highchart(type = "stock", height = 500) %>%
     highcharter::hc_title(text = "RJSON test") %>%
-    highcharter::hc_add_series(aapl, yAxis = 0, showInLegend = FALSE)
+    highcharter::hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) %>%
+    highcharter::hc_add_series(aapl$SMA, yAxis = 0, showInLegend = TRUE)
   return(hc)
 }
 
 hc <- to_benchmark()
-
+ 
 res <- microbenchmark(
   rjson::toJSON(hc),
   shiny:::toJSON(hc),
