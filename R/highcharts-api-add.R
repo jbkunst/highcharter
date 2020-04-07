@@ -88,7 +88,6 @@ hc_add_series.xts <- function(hc, data, ...) {
     return(hc_add_series.ohlc(hc, data, ...))
   }
   
-  data <- zoo::na.fill(data, NULL)
   timestamps <- datetime_to_timestamp(time(data))
   
   series <- list_parse2(data.frame(timestamps, as.vector(data)))
@@ -105,9 +104,10 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...) {
     message("hc_add_series.xts.ohlc")
   }
   
-  data <- zoo::na.fill(data, NULL)
   time <- datetime_to_timestamp(time(data))
-  xdf <- cbind(time, as.data.frame(data))
+  xdf <- cbind(time, as.data.frame(
+    quantmod::OHLC(data)
+  ))
   xds <- list_parse2(xdf)
   
   nm <- ifelse(!is.null(list(...)[["name"]]),
@@ -302,7 +302,7 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), f
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.data.frame")
   }
-  
+
   if (length(mapping) == 0) {
     if (has_name(data, "series")) {
       data <- rename_(data, "seriess" = "series")

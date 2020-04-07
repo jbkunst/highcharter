@@ -1,7 +1,8 @@
 #' Convert an object to list with identical structure
 #'
 #' This functions are similar to \code{rlist::list.parse} but this removes
-#' names.
+#' names. NA's are removed for compatibility with rjson::toJSON.
+#' 
 #' @param df A data frame to parse to list
 #' @examples
 #'
@@ -13,6 +14,14 @@
 list_parse <- function(df) {
   assertthat::assert_that(is.data.frame(df))
 
+  if (getOption("highcharter.rjson")) {
+    rows <- nrow(df)
+    df <- tidyr::drop_na(df)
+    if (getOption("highcharter.verbose") && (rows > nrow(df))) {
+      warning("Removed ", (rows - nrow(df)), " rows with NA's.")
+    }
+  }
+  
   map_if(df, is.factor, as.character) %>%
     as_tibble() %>%
     list.parse() %>%

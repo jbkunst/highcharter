@@ -23,6 +23,15 @@ to_benchmark <- function() {
   return(hc)
 }
 
+# Chart with a data.frame
+df <- data.frame(zoo::index(aapl), coredata(aapl))
+hc_df <- function() {
+  hc <- highcharter::highchart() %>%
+    highcharter::hc_title(text = "RJSON test") %>%
+    highcharter::hc_add_series(df$SMA, yAxis = 0, showInLegend = TRUE)
+  return(hc)
+}
+
 hc <- to_benchmark()
  
 res <- microbenchmark(
