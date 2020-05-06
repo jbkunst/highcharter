@@ -9,8 +9,8 @@ highcharter-logo.png
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^cran-comments\.md$
-tests/
-dev/
+^tests$
+^dev$
 ^\.travis\.yml$
 .lintr
 fort.6
@@ -21,7 +21,6 @@ fort.6
 ^revdep$
 index.Rmd
 .*debug.log
-
 
 ^codecov\.yml$
 ^codemeta\.json$

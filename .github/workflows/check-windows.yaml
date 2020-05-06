@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: '3.6', args: "--no-manual"}
+        - { os: windows-latest, r: '4.0', args: "--no-manual"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
