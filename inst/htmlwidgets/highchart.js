@@ -123,6 +123,8 @@ HTMLWidgets.widget({
     
   },
 
+  
+  # fix bug here
   resize: function(el, width, height, instance) {
     
     /* http://stackoverflow.com/questions/18445784/ */
