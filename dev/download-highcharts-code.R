@@ -6,7 +6,7 @@ library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "8.0.0"
+version <- "8.1.1"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -53,11 +53,11 @@ file.copy(
   overwrite = TRUE
 )
 
-# map
+# maps -----------------------------------------------------------------------
 file_temp <- tempfile(fileext = ".zip")
 
 download.file(
-  sprintf("https://code.highcharts.com/zips/Highmaps-%s.zip", version),
+  sprintf("https://code.highcharts.com/zips/Highcharts-Maps-%s.zip", version),
   file_temp
 )
 

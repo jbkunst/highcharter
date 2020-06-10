@@ -4,8 +4,8 @@ dependencies:
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
   - name: highcharts
-    version: 8.0.0
-    src: "htmlwidgets/lib/highcharts-8.0.0"
+    version: 8.1.1
+    src: "htmlwidgets/lib/highcharts-8.1.1"
     script:
     - highcharts.js
     - highcharts-3d.js
