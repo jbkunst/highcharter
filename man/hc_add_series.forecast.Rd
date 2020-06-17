@@ -4,8 +4,15 @@
 \alias{hc_add_series.forecast}
 \title{hc_add_series for forecast objects}
 \usage{
-\method{hc_add_series}{forecast}(hc, data, addOriginal = FALSE,
-  addLevels = TRUE, fillOpacity = 0.1, name = NULL, ...)
+\method{hc_add_series}{forecast}(
+  hc,
+  data,
+  addOriginal = FALSE,
+  addLevels = TRUE,
+  fillOpacity = 0.1,
+  name = NULL,
+  ...
+)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

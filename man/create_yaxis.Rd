@@ -4,8 +4,14 @@
 \alias{create_yaxis}
 \title{Creating multiples yAxis t use with highcharts}
 \usage{
-create_yaxis(naxis = 2, heights = 1, sep = 0.01, offset = 0,
-  turnopposite = TRUE, ...)
+create_yaxis(
+  naxis = 2,
+  heights = 1,
+  sep = 0.01,
+  offset = 0,
+  turnopposite = TRUE,
+  ...
+)
 }
 \arguments{
 \item{naxis}{Number of axis an integer.}

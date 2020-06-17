@@ -4,7 +4,9 @@
 \name{pokemon}
 \alias{pokemon}
 \title{pokemon}
-\format{A \code{data frame} with 718 observations and 20 variables.}
+\format{
+A \code{data frame} with 718 observations and 20 variables.
+}
 \source{
 \url{jkunst.com/r/pokemon-visualize-em-all/}
 }

@@ -8,12 +8,13 @@
 
 .onAttach <- function(libname = find.package("highcharter"),
                       pkgname = "highcharter") {
-  packageStartupMessage(
-    "Highcharts (www.highcharts.com) is a Highsoft software product which is"
-  )
-  packageStartupMessage(
-    "not free for commercial and Governmental use"
-  )
+  
+  if(runif(1) <= 1/3) {
+    packageStartupMessage("Highcharts (www.highcharts.com) is a Highsoft software product which is")
+    
+    packageStartupMessage("not free for commercial and Governmental use")  
+  }
+  
 }
 
 .onLoad <- function(libname = find.package("highcharter"),

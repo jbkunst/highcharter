@@ -4,7 +4,9 @@
 \name{usgeojson}
 \alias{usgeojson}
 \title{US States map in Geojson format (list)}
-\format{A \code{list} in geojson format.}
+\format{
+A \code{list} in geojson format.
+}
 \usage{
 usgeojson
 }

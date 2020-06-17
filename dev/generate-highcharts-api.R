@@ -58,7 +58,8 @@ txt <- c(
   ""
 )
 
-# run examples to check at least don't have errores
+# run examples to check at least don't have errors
+# dont assing if you want to see the outputs
 out <- dfopts %>%
   pull(option) %>%
   str_c("dev/examples-api/", ., ".R") %>%

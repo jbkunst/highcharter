@@ -4,8 +4,7 @@
 \alias{tooltip_chart}
 \title{Helper to create charts in tooltips.}
 \usage{
-tooltip_chart(accesor = NULL, hc_opts = NULL, width = 250,
-  height = 150)
+tooltip_chart(accesor = NULL, hc_opts = NULL, width = 250, height = 150)
 }
 \arguments{
 \item{accesor}{A string indicating the name of the column where the data is.}

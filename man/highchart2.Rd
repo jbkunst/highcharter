@@ -5,12 +5,23 @@
 \alias{highchartzero}
 \title{Create a Highcharts chart widget}
 \usage{
-highchart2(hc_opts = list(), theme = NULL, width = NULL,
-  height = NULL, elementId = NULL, debug = FALSE,
-  google_fonts = getOption("highcharter.google_fonts"))
+highchart2(
+  hc_opts = list(),
+  theme = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  debug = FALSE,
+  google_fonts = getOption("highcharter.google_fonts")
+)
 
-highchartzero(hc_opts = list(), theme = NULL, width = NULL,
-  height = NULL, elementId = NULL)
+highchartzero(
+  hc_opts = list(),
+  theme = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as

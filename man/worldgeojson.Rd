@@ -4,7 +4,9 @@
 \name{worldgeojson}
 \alias{worldgeojson}
 \title{World map in Geojson format (list)}
-\format{A \code{list} in geojson format.}
+\format{
+A \code{list} in geojson format.
+}
 \usage{
 worldgeojson
 }

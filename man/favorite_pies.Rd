@@ -4,7 +4,9 @@
 \name{favorite_pies}
 \alias{favorite_pies}
 \title{Marshall's Favorite Pies}
-\format{A \code{data frame} with 5 observations and 2 variables.}
+\format{
+A \code{data frame} with 5 observations and 2 variables.
+}
 \usage{
 favorite_pies
 }

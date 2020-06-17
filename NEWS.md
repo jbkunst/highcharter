@@ -1,3 +1,11 @@
+# highcharter 0.8.1
+
+## Changes
+
+* Highcharter now uses HighchartsJS 8 (8.1.0).
+* Highcharter now uses jquery v3.5.0; previously used is v1.11.1
+
+
 # highcharter 0.7.2
 
 ## Changes

@@ -1,6 +1,6 @@
 dependencies:
   - name: jquery
-    version: 1.11.1
+    version: 3.5.0
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
   - name: proj4js
@@ -8,8 +8,8 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 8.0.0
-    src: "htmlwidgets/lib/highcharts-8.0.0"
+    version: 8.1.0
+    src: "htmlwidgets/lib/highcharts-8.1.0"
     script:
     - highcharts.js
     - highcharts-3d.js
@@ -45,7 +45,7 @@ dependencies:
     - modules/bullet.js
     - modules/coloraxis.js
     - modules/dumbbell.js
-#    - modules/lollipop.js
+    - modules/lollipop.js
 #    - modules/marker-clusters.js
 #    - modules/datagrouping.js
 #    - modules/dependency-wheel.js

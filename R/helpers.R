@@ -11,9 +11,10 @@
 #' @importFrom purrr transpose
 #' @export
 list_parse <- function(df) {
+  
   assertthat::assert_that(is.data.frame(df))
 
-  map_if(df, is.factor, as.character) %>%
+  purrr::map_if(df, is.factor, as.character) %>%
     as_tibble() %>%
     list.parse() %>%
     setNames(NULL)
@@ -23,6 +24,7 @@ list_parse <- function(df) {
 #' @rdname list_parse
 #' @export
 list_parse2 <- function(df) {
+  
   assertthat::assert_that(is.data.frame(df))
 
   list_parse(df) %>%
@@ -40,17 +42,19 @@ list_parse2 <- function(df) {
 #' str_to_id(" A string _ with sd / sdg    Underscores \   ")
 #' @export
 str_to_id <- function(x) {
+  
   assertthat::assert_that(is.character(x) | is.factor(x))
 
   x %>%
     as.character() %>%
-    str_trim() %>%
-    str_to_lower() %>%
-    str_replace_all("\\s+", "_") %>%
-    str_replace_all("\\\\|/", "_") %>%
-    str_replace_all("\\[|\\]", "_") %>%
-    str_replace_all("_+", "_") %>%
-    str_replace_all("_$|^_", "")
+    stringr::str_trim() %>%
+    stringr::str_to_lower() %>%
+    stringr::str_replace_all("\\s+", "_") %>%
+    stringr::str_replace_all("\\\\|/", "_") %>%
+    stringr::str_replace_all("\\[|\\]", "_") %>%
+    stringr::str_replace_all("_+", "_") %>%
+    stringr::str_replace_all("_$|^_", "")
+  
 }
 
 #' Date to timestamps
@@ -91,6 +95,7 @@ datetime_to_timestamp <- function(dt) {
 #' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
+  
   x %>%
     col2rgb() %>%
     t() %>%
@@ -98,6 +103,7 @@ hex_to_rgba <- function(x, alpha = 1) {
     unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",") %>%
     .[[1]] %>%
     sprintf("rgba(%s,%s)", ., alpha)
+  
 }
 
 #' Chart a demo for testing themes
@@ -109,6 +115,7 @@ hex_to_rgba <- function(x, alpha = 1) {
 #' highcharts_demo()
 #' @export
 highcharts_demo <- function() {
+  
   dtemp <- structure(
     list(
       month = c(
@@ -145,6 +152,7 @@ highcharts_demo <- function() {
     hc_add_series(name = "Tokyo", data = dtemp$tokyo) %>%
     hc_add_series(name = "London", data = dtemp$london) %>%
     hc_add_series(name = "Berlin", data = dtemp$berlin)
+  
 }
 
 #' Create vector of color from vector
@@ -160,7 +168,9 @@ highcharts_demo <- function() {
 #' @importFrom stats ecdf
 #' @export
 colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
+ 
   nuniques <- length(unique(x))
+  
   palcols <- grDevices::colorRampPalette(colors)(nuniques)
 
   if (!is.numeric(x) | nuniques < 10) {
@@ -172,6 +182,7 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   }
 
   xcols
+  
 }
 
 #' Function to create \code{stops} argument in \code{hc_colorAxis}

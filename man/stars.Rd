@@ -4,7 +4,9 @@
 \name{stars}
 \alias{stars}
 \title{stars}
-\format{A \code{data frame} with 404 observations and 6 variables.}
+\format{
+A \code{data frame} with 404 observations and 6 variables.
+}
 \usage{
 stars
 }

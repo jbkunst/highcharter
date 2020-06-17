@@ -4,7 +4,9 @@
 \name{uscountygeojson}
 \alias{uscountygeojson}
 \title{US Counties map in Geojson format (list)}
-\format{A \code{list} in geojson format.}
+\format{
+A \code{list} in geojson format.
+}
 \usage{
 uscountygeojson
 }

@@ -4,7 +4,9 @@
 \name{vaccines}
 \alias{vaccines}
 \title{Vaccines}
-\format{A \code{data frame} with 3,876 observations and 3 variables.}
+\format{
+A \code{data frame} with 3,876 observations and 3 variables.
+}
 \usage{
 vaccines
 }

@@ -4,9 +4,15 @@
 \alias{highchart}
 \title{Create a Highcharts chart widget}
 \usage{
-highchart(hc_opts = list(), theme = getOption("highcharter.theme"),
-  type = "chart", width = NULL, height = NULL, elementId = NULL,
-  google_fonts = getOption("highcharter.google_fonts"))
+highchart(
+  hc_opts = list(),
+  theme = getOption("highcharter.theme"),
+  type = "chart",
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  google_fonts = getOption("highcharter.google_fonts")
+)
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as

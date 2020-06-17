@@ -6,7 +6,7 @@ library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "8.0.0"
+version <- "8.1.0"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
@@ -53,32 +53,41 @@ file.copy(
   overwrite = TRUE
 )
 
-# map
-file_temp <- tempfile(fileext = ".zip")
+
+# map ---------------------------------------------------------------------
+# file_temp <- tempfile(fileext = ".zip")
+# 
+# download.file(
+#   sprintf("https://code.highcharts.com/zips/Highmaps-%s.zip", version),
+#   file_temp
+# )
+# 
+# folder_temp <- tempdir()
+# 
+# unzip(file_temp, exdir = folder_temp)
+# 
+# files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
+#   str_subset("src.js$", negate = TRUE) %>% 
+#   str_subset("js.map$", negate = TRUE)
+# 
+# mapmodule <- files %>% 
+#   str_subset("code/modules/map.js$")
+# 
+# file.copy(
+#   mapmodule,
+#   file.path(path, "modules", basename(mapmodule)),
+#   overwrite = TRUE
+# )
+
+urlmapmodule <- sprintf("https://code.highcharts.com/maps/%s/modules/map.js", version)
 
 download.file(
-  sprintf("https://code.highcharts.com/zips/Highmaps-%s.zip", version),
-  file_temp
+  urlmapmodule,
+  file.path(path, "modules", basename(urlmapmodule))
 )
 
-folder_temp <- tempdir()
 
-unzip(file_temp, exdir = folder_temp)
-
-files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
-  str_subset("src.js$", negate = TRUE) %>% 
-  str_subset("js.map$", negate = TRUE)
-
-mapmodule <- files %>% 
-  str_subset("code/modules/map.js$")
-
-file.copy(
-  mapmodule,
-  file.path(path, "modules", basename(mapmodule)),
-  overwrite = TRUE
-)
-
-# check what modules are missing in yaml
+# check what modules are missing in yaml ----------------------------------
 modules <- dir(file.path(path, "modules")) 
 modules
 
@@ -115,7 +124,7 @@ files <- c(
   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
   )
 
-aux <- map2(
+aux <- walk2(
   files,
   file.path(path, "plugins", basename(files)),
   download.file

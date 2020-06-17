@@ -4,8 +4,7 @@
 \alias{download_map_data}
 \title{Helper function to download the map data form a url}
 \usage{
-download_map_data(url = "custom/world.js", showinfo = FALSE,
-  quiet = FALSE)
+download_map_data(url = "custom/world.js", showinfo = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{url}{The map's url.}

@@ -30,7 +30,7 @@ highchart() \%>\%
   hc_tooltip(
     useHTML = TRUE,
     pointFormat = paste0(
-      "<span style=\\"color:{series.color};\\">{series.options.icon}</span>",
+      "<span style=\"color:{series.color};\">{series.options.icon}</span>",
       "{series.name}: <b>[{point.x}, {point.y}]</b><br/>"
     )
   ) \%>\%

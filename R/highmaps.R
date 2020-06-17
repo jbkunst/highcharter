@@ -206,15 +206,15 @@ download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
 #' @export
 get_data_from_map <- function(mapdata) {
   mapdata$features %>%
-    map("properties") %>%
-    map_df(function(x) {
-      x[!map_lgl(x, is.null)]
+    purrr::map("properties") %>%
+    purrr::map_df(function(x) {
+      x[!purrr::map_lgl(x, is.null)]
     })
 }
 
 fix_map_name <- function(x = "custom/world") {
-  x <- str_replace(x, "\\.js$", "")
-  x <- str_replace(x, "https://code\\.highcharts\\.com/mapdata/", "")
+  x <- stringr::str_replace(x, "\\.js$", "")
+  x <- stringr::str_replace(x, "https://code\\.highcharts\\.com/mapdata/", "")
   x <- sprintf("%s.js", x)
   x
 }

@@ -4,7 +4,9 @@
 \name{weather}
 \alias{weather}
 \title{Weather}
-\format{A \code{data frame} with 365 observations and 4 variables.}
+\format{
+A \code{data frame} with 365 observations and 4 variables.
+}
 \usage{
 weather
 }

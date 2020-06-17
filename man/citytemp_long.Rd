@@ -4,7 +4,9 @@
 \name{citytemp_long}
 \alias{citytemp_long}
 \title{City temperatures from a year in long format}
-\format{A \code{data frame} with 36 observations and 3 variables.}
+\format{
+A \code{data frame} with 36 observations and 3 variables.
+}
 \usage{
 citytemp_long
 }

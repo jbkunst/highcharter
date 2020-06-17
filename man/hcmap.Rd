@@ -5,9 +5,14 @@
 \title{Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
 collection.}
 \usage{
-hcmap(map = "custom/world",
+hcmap(
+  map = "custom/world",
   download_map_data = getOption("highcharter.download_map_data"),
-  data = NULL, value = NULL, joinBy = NULL, ...)
+  data = NULL,
+  value = NULL,
+  joinBy = NULL,
+  ...
+)
 }
 \arguments{
 \item{map}{String indicating what map to chart, a list from

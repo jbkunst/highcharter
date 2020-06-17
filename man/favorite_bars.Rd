@@ -4,7 +4,9 @@
 \name{favorite_bars}
 \alias{favorite_bars}
 \title{Marshall's Favorite Bars}
-\format{A \code{data frame} with 5 observations and 2 variables.}
+\format{
+A \code{data frame} with 5 observations and 2 variables.
+}
 \usage{
 favorite_bars
 }

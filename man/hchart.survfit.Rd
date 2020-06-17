@@ -4,9 +4,16 @@
 \alias{hchart.survfit}
 \title{Plot survival curves using Highcharts}
 \usage{
-\method{hchart}{survfit}(object, ..., fun = NULL, markTimes = TRUE,
-  symbol = "plus", markerColor = "black", ranges = FALSE,
-  rangesOpacity = 0.3)
+\method{hchart}{survfit}(
+  object,
+  ...,
+  fun = NULL,
+  markTimes = TRUE,
+  symbol = "plus",
+  markerColor = "black",
+  ranges = FALSE,
+  rangesOpacity = 0.3
+)
 }
 \arguments{
 \item{object}{A survfit object as returned from the \code{survfit} function}

@@ -4,8 +4,7 @@
 \alias{color_classes}
 \title{Function to create \code{dataClasses} argument in \code{hc_colorAxis}}
 \usage{
-color_classes(breaks = NULL, colors = c("#440154", "#21908C",
-  "#FDE725"))
+color_classes(breaks = NULL, colors = c("#440154", "#21908C", "#FDE725"))
 }
 \arguments{
 \item{breaks}{A numeric vector}

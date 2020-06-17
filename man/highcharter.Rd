@@ -3,7 +3,6 @@
 \docType{package}
 \name{highcharter}
 \alias{highcharter}
-\alias{highcharter-package}
 \title{An \code{htmlwidget} interface to the
 Highcharts javascript chart library}
 \description{
