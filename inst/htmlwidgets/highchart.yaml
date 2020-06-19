@@ -19,7 +19,6 @@ dependencies:
     - modules/annotations.js
     - modules/boost.js
     - modules/data.js
-    - modules/drag-panes.js
     - modules/drilldown.js
     - modules/item-series.js
     - modules/offline-exporting.js
@@ -46,6 +45,8 @@ dependencies:
     - modules/coloraxis.js
     - modules/dumbbell.js
     - modules/lollipop.js
+    - modules/series-label.js
+#    - modules/drag-panes.js
 #    - modules/marker-clusters.js
 #    - modules/datagrouping.js
 #    - modules/dependency-wheel.js
@@ -55,7 +56,6 @@ dependencies:
 #    - modules/static-scale.js
 #    - modules/grid-axis.js
 #    - modules/broken-axis.js
-#    - modules/series-label.js
 #    - modules/pareto.js
 #    - modules/accessibility.js
 #    - modules/boost-canvas.js
