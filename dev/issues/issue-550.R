@@ -2,7 +2,7 @@ set.seed(2019)
 d <- data.frame(
   month = rep(1:120, 50),
   sim = rep(1:50, each = 120),
-  n = runif(120 * 50)
+  n = stats::runif(120 * 50)
 )
 
 library(highcharter)

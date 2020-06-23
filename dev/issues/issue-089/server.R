@@ -2,7 +2,7 @@ server = function(input, output, session) {
   
   values <- reactiveValues()
   values$Validate=0
-  onclick("demobtn",values$Validate <- runif(1, 1, 10000))
+  onclick("demobtn",values$Validate <- stats::runif(1, 1, 10000))
   
   # Load the Data
   SPY <- getSymbols("SPY", from="2006-01-01", auto.assign=FALSE)
@@ -36,7 +36,7 @@ server = function(input, output, session) {
       SPY.RSI.BuyLevel <- xts(rep(30, NROW(SPY)), index(SPY))
       # shinyjs::html(id="DataPull", "-")
     } 
-    values$Validate <- runif(1, 1, 10000)
+    values$Validate <- stats::runif(1, 1, 10000)
   })
   
   

@@ -1,6 +1,6 @@
 library(scales)
 
-x <- sort(runif(10, 1, 10))
+x <- sort(stats::runif(10, 1, 10))
 
 pal <- col_bin(c("red", "blue"), 1:10)
 
@@ -12,7 +12,7 @@ show_col(colorize(x))
 show_col(hc_theme_smpl()$colors)
 
 pal <- col_bin("Greens", domain = 0:100)
-show_col(pal(sort(runif(10, 60, 100))))
+show_col(pal(sort(stats::runif(10, 60, 100))))
 
 # Exponential distribution, mapped continuously
 show_col(col_numeric("Blues", domain = NULL)(sort(rexp(16))))

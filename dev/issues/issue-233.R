@@ -7,9 +7,9 @@ set.seed(123)
 n <- 10
  
 df <- data_frame(
-  lat = runif(n, -180, 180),
-  lon = runif(n, -180, 180),
-  z =  round(runif(n)*10) + 1,
+  lat = stats::runif(n, -180, 180),
+  lon = stats::runif(n, -180, 180),
+  z =  round(stats::runif(n)*10) + 1,
   color = colorize(lat)
   )
 
