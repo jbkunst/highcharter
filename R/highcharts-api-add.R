@@ -250,6 +250,7 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
 #' @param ... Arguments defined in
 #'   \url{http://api.highcharts.com/highcharts#chart}.
 #' @importFrom broom augment
+#' @importFrom rlang .data
 #' @export
 hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpacity = 0.1, ...) {
   if (getOption("highcharter.verbose")) {
@@ -260,10 +261,10 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
     augment() %>%
     as.matrix.data.frame() %>%
     as.data.frame() %>%
-    tbl_df()
+    tibble::as_tibble()
   data2 <- arrange_(data2, .dots = names(data2)[2])
-  data2 <- mutate_(data2, .dots = c("x" = names(data2)[2]))
-  data2 <- select_(data2, .dots = c(names(data2)[1]), "x", ".fitted", ".se.fit")
+  data2 <- mutate(data2, x = names(data2)[2])
+  data2 <- select(data2, !!!c(names(data2)[1]), .data$x, .data$.fitted, .data$.se.fit)
   
   rid <- random_id()
   
@@ -295,6 +296,7 @@ hc_add_series.loess <- hc_add_series.lm
 #' @param fast convert to json during the composition of a highchart object
 #' @param ... Arguments defined in
 #'   \url{http://api.highcharts.com/highcharts#chart}.
+#' @importFrom rlang .data
 #' @export
 hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), fast = FALSE, ...) {
   if (getOption("highcharter.verbose")) {
@@ -303,7 +305,7 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), f
   
   if (length(mapping) == 0) {
     if (has_name(data, "series")) {
-      data <- rename_(data, "seriess" = "series")
+      data <- rename(data, seriess = .data$series)
     }
     
     return(hc_add_series(hc, data = list_parse(data), type = type, ...))
@@ -389,7 +391,7 @@ hcaes_ <- hcaes_string
 #' @param drop A logical argument to you drop variables or not. Default is
 #' \code{FALSE}
 #' @importFrom lubridate is.Date
-#' @importFrom rlang "!!!" "!!" ":=" parse_quo syms
+#' @importFrom rlang "!!!" "!!" ":=" parse_quo syms .data
 #' @examples
 #'
 #' df <- head(mtcars)
@@ -409,7 +411,7 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
   data <- dplyr::mutate(data, !!!list_names)
   # Reserverd  highcharts names (#241)
   if (has_name(data, "series")) {
-    data <- dplyr::rename(data, "seriess" = "series")
+    data <- dplyr::rename(data, seriess = .data$series)
   }
   
   if (drop) {
@@ -465,18 +467,18 @@ data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
   # color
   if (has_name(mapping, "color")) {
     if (type == "treemap") {
-      data <- rename_(data, "colorValue" = "color")
+      data <- rename(data, colorValue = .data$color)
     } else if (!all(is.hexcolor(data[["color"]]))) {
-      data <- mutate_(data, "colorv" = "color", "color" = "highcharter::colorize(color)")
+      data <- mutate(data, colorv = .data$color, color = highcharter::colorize(.data$color))
     }
   } else if (has_name(data, "color")) {
-    data <- rename_(data, "colorv" = "color")
+    data <- rename(data, colorv = .data$color)
   }
   
   # size
   if (type %in% c("bubble", "scatter")) {
     if (has_name(mapping, "size")) {
-      data <- mutate_(data, "z" = "size")
+      data <- mutate(data, z = .data$size)
     }
   }
   
@@ -488,16 +490,15 @@ data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
   if (isTRUE(fast)) {
     # pre-convert data to json
     data <- data %>% 
-      group_by_("group") %>% 
-      do(data = jsonlite::toJSON( select_(., quote(-group))
-                                  , dataframe = "rows"
-                                  , verbatim=TRUE
-      )) %>% 
+      group_by(.data$group) %>% 
+      do(data = jsonlite::toJSON(select(., -.data$group), 
+                                 dataframe = "rows", 
+                                 verbatim = TRUE)) %>% 
       ungroup()
   } else {
     data <- data %>%
-      group_by_("group") %>%
-      do(data = list_parse(select_(., quote(-group)))) %>%
+      group_by(.data$group) %>%
+      do(data = list_parse(select(., -.data$group))) %>%
       ungroup()
   }
   
@@ -508,7 +509,7 @@ data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
   }
   
   if (has_name(mapping, "group") & !has_name(list(...), "name")) {
-    data <- rename_(data, "name" = "group")
+    data <- rename(data, name = .data$group)
   }
   
   series <- list_parse(data)

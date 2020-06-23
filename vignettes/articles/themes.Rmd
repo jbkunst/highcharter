@@ -56,7 +56,7 @@ Here you'll find the themes to change the look of your charts.
 library(tidyverse)
 themes <- help.search("theme", package = "highcharter") %>%
   .$matches %>%
-  tbl_df() %>%
+  tibble::as_tibble() %>%
   janitor::clean_names() %>%
   select(name, title) %>%
   distinct() %>%

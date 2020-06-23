@@ -32,9 +32,10 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @examples
 #' hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
-#' @importFrom dplyr rename_
+#' @importFrom dplyr rename
 #' @importFrom tidyr unnest
 #' @importFrom grDevices boxplot.stats
+#' @importFrom rlang .data
 #' @export
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   stopifnot(is.numeric(x))
@@ -60,28 +61,28 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   }
 
   series_box <- df %>%
-    group_by_("g1", "g2") %>%
+    group_by(.data$g1, .data$g2) %>%
     do(data = get_box_values(.$x)) %>%
     ungroup() %>%
     unnest() %>%
-    group_by_("g2") %>%
-    do(data = list_parse(rename_(select_(., "-g2"), "name" = "g1"))) %>%
+    group_by(.data$g2) %>%
+    do(data = list_parse(rename(select(., -.data$g2), name = .data$g1))) %>%
     mutate(type = "boxplot") %>%
-    mutate_("id" = "as.character(g2)")
+    mutate(id = as.character(.data$g2))
 
   if (length(list(...)) > 0) {
     series_box <- add_arg_to_df(series_box, ...)
   }
 
   series_out <- df %>%
-    group_by_("g1", "g2") %>%
+    group_by(.data$g1, .data$g2) %>%
     do(data = get_outliers_values(.$x)) %>%
     ungroup() %>%
     filter(map_lgl(data, ~ length(.x) != 0)) %>%
-    group_by_("g2") %>%
-    do(data = list_parse(select_(., "name" = "g1", "y" = "data"))) %>%
+    group_by(.data$g2) %>%
+    do(data = list_parse(select(., name = .data$g1, y = .data$data))) %>%
     mutate(type = "scatter") %>%
-    mutate_("linkedTo" = "as.character(g2)")
+    mutate(linkedTo = as.character(.data$g2))
 
   if (length(list(...)) > 0) {
     series_out <- add_arg_to_df(series_out, ...)
@@ -93,8 +94,8 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   }
 
   if (!has_name(list(...), "name")) {
-    series_box <- rename_(series_box, "name" = "g2")
-    series_out <- rename_(series_out, "name" = "g2")
+    series_box <- rename(series_box, name = .data$g2)
+    series_out <- rename(series_out, name = .data$g2)
   }
 
 
@@ -144,7 +145,8 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 #'       hc_theme_null(chart = list(backgroundColor = "#34495e"))
 #'     )
 #'   )
-#' @importFrom dplyr ungroup group_by_
+#' @importFrom dplyr ungroup group_by
+#' @importFrom rlang .data
 #' @export
 hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
                         ...) {
@@ -161,26 +163,26 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
 
   ds <- tibble(x = rep(1:w, h), y = rep(1:h, each = w)) %>%
     head(sum(counts)) %>%
-    mutate_("y" = "-y") %>%
+    mutate(y = -.data$y) %>%
     mutate(gr = rep(seq_along(labels), times = counts)) %>%
     left_join(tibble(gr = seq_along(labels), name = as.character(labels)),
       by = "gr"
     ) %>%
-    group_by_("name") %>%
+    group_by(.data$name) %>%
     do(data = list_parse2(tibble(.$x, .$y))) %>%
     ungroup() %>%
     left_join(tibble(labels = as.character(labels), counts),
       by = c("name" = "labels")
     ) %>%
     arrange_("-counts") %>%
-    mutate_("percent" = "counts/sum(counts)*100")
+    mutate(percent = .data$counts / sum(.data$counts) * 100)
 
   if (!is.null(icons)) {
     assertthat::assert_that(length(icons) %in% c(1, length(labels)))
 
     dsmrk <- ds %>%
       mutate(iconm = icons) %>%
-      group_by_("name") %>%
+      group_by(.data$name) %>%
       do(marker = list(symbol = fa_icon_mark(.$iconm)))
 
     ds <- ds %>%
@@ -252,9 +254,9 @@ hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
 #'                              GNI: {point.valuecolor:,.0f}")
 #' }
 #'
-#' @importFrom dplyr filter_ mutate_ rename_ select_ tbl_df
+#' @importFrom dplyr filter_ mutate_ rename select_ tbl_df
 #' @importFrom purrr map map_df map_if
-#'
+#' @importFrom rlang .data
 #' @export
 hctreemap <- function(tm, ...) {
   .Deprecated("hctreemap2")
@@ -262,30 +264,28 @@ hctreemap <- function(tm, ...) {
   assertthat::assert_that(is.list(tm))
 
   df <- tm$tm %>%
-    tbl_df() %>%
-    select_("-x0", "-y0", "-w", "-h", "-stdErr", "-vColorValue") %>%
-    rename_("value" = "vSize", "valuecolor" = "vColor") %>%
+    tibble::as_tibble() %>%
+    select(-.data$x0, -.data$y0, -.data$w, -.data$h, -.data$stdErr, -.data$vColorValue) %>%
+    rename(value = .data$vSize, valuecolor = .data$vColor) %>%
     purrr::map_if(is.factor, as.character) %>%
     data.frame(stringsAsFactors = FALSE) %>%
-    tbl_df()
+    tibble::as_tibble()
 
   ndepth <- which(names(df) == "value") - 1
 
   ds <- map_df(seq(ndepth), function(lvl) {
     df2 <- df %>%
       filter_(sprintf("level == %s", lvl)) %>%
-      rename_("name" = names(df)[lvl]) %>%
-      mutate_("id" = "highcharter::str_to_id(name)")
+      rename(name = names(df)[lvl]) %>%
+      mutate(id = highcharter::str_to_id(.data$name))
 
     if (lvl > 1) {
       df2 <- df2 %>%
-        mutate_(
-          "parent" = names(df)[lvl - 1],
-          "parent" = "highcharter::str_to_id(parent)"
-        )
+        mutate(parent = names(df)[lvl - 1],
+               parent = highcharter::str_to_id(.data$parent))
     } else {
       df2 <- df2 %>%
-        mutate_("parent" = NA)
+        mutate(parent = NA)
     }
 
     df2

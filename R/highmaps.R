@@ -60,7 +60,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 
   joindf <- tail(joinBy, 1)
 
-  ddta <- mutate_(df, "value" = value, "code" = joindf)
+  ddta <- mutate(df, value = value, code = joindf)
   ddta <- list_parse(ddta)
 
   hc$x$type <- "map"
@@ -112,6 +112,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' )
 #' }
 #' @importFrom htmltools htmlDependency
+#' @importFrom rlang .data
 #' @export
 hcmap <- function(map = "custom/world",
                   download_map_data = getOption("highcharter.download_map_data"),
@@ -141,7 +142,7 @@ hcmap <- function(map = "custom/world",
         mapData = mapdata, ...
       )
   } else {
-    data <- mutate_(data, "value" = value)
+    data <- mutate(data, value = .data$value)
 
     hc <- hc %>%
       hc_add_series.default(
