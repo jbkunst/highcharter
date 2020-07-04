@@ -50,10 +50,15 @@ hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width)) \%>\%
 
 hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width, group = Species)) \%>\% 
   hc_colorAxis(
-    minColor = "gray",
-    maxColor = "yellow"
+    minColor = "red",
+    maxColor = "black"
   )
 
+hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width, colorValue = Sepal.Width*Sepal.Width)) \%>\% 
+  hc_colorAxis(
+    minColor = "red",
+    maxColor = "black"
+  )
 
 
 hc <- hchart(volcano)

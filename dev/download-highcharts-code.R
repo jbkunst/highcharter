@@ -6,7 +6,7 @@ library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
-version <- "8.1.0"
+version <- "8.1.2"
 hccodeurl <- "http://code.highcharts.com"
 path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 

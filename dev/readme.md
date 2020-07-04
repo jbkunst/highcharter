@@ -5,7 +5,7 @@
 To download/update highcharts libraries `dev/download-highcharts-code.R` then modify 
 `inst/htmlwidgets/highchart.yalm`
 
-## Autogenrate `highchars-api.R`
+## Autogenerate `highchars-api.R`
 
-Run `dev/generate-highcharts-api`. Make sure you have an example in
-the `dev/examples-api/` folder.
+Run `dev/generate-highcharts-api.R`. Make sure you have an example in
+the `dev/examples-api/` folder for each function.

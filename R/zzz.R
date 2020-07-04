@@ -1,3 +1,4 @@
+#' @importFrom stats runif
 .join_hc_opts <- function() {
   list(
     global = getOption("highcharter.global"),
