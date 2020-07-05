@@ -41,12 +41,6 @@ test_that("hchart returns a valid time series decomposition plot after valid dat
   expect_true(all(class(h) %in% c("highchart","htmlwidget")))
 })
 
-test_that("hchart returns a valid time series forecast plot after valid data input", {
-  x <- forecast::forecast(forecast::ets(USAccDeaths), h = 48, level = 95)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart","htmlwidget")))
-})
-
 test_that("hchart returns a valid graph after valid data input", {
   require(igraph)
   N <- 40

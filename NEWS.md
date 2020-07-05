@@ -4,7 +4,8 @@
 
 * Highcharter now uses HighchartsJS 8 (8.1.0).
 * Highcharter now uses jquery v3.5.0; previously used is v1.11.1
-
+* Updates deprecated dplyr functions (@hdrab127, #637)
+* Fix warnings for numeric vectors with multiple classes (@nuno-agostinho, #635)
 
 # highcharter 0.7.2
 
