@@ -33,7 +33,7 @@ information in geojson format.
 * Themes: you configurate your chart in multiples ways. There are
  implemented themes like economist, financial times, google, 538 among
  others.
-* A lot of features and plugins: motion, draggable points, fonta-wesome, tooltips, annotations.
+* A lot of features and plugins: motion, draggable points, font-awesome, tooltips, annotations.
 
 ## Installation
 
@@ -48,6 +48,12 @@ devtools::install_github("jbkunst/highcharter")
 remotes::install_github("jbkunst/highcharter")
 source("https://install-github.me/jbkunst/highcharter")
 ```
+
+## Tutorials and examples
+
+- [Highcharter cookbook](https://www.tmbish.me/lab/highcharter-cookbook/) by [Tom Bishop](https://twitter.com/bigbishdog)
+- [Thinking in `highcharter`](https://dantonnoriega.github.io/ultinomics.org/posts/2017-04-05-highcharter-explainer.html) by [Danton Noriega](https://twitter.com/dantonnoriega)
+- Examples in [Highcharter in Data, Code and Visualization](http://jkunst.com/blog/#highcharts)
 
 ## Licence
 

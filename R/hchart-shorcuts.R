@@ -14,7 +14,12 @@
 #' hcspark(x, type = "area")
 #' @export
 hcspark <- function(x = NULL, type = NULL, ...) {
+  
+  .Deprecated(
+    msg = "Use type 'hc_theme_sparkline' or hc_theme_sparkline_bv theme instead.")
+  
   stopifnot(is.numeric(x))
+  
   highchart() %>%
     hc_plotOptions(
       series = list(showInLegend = FALSE, dataLabels = list(enabled = FALSE)),
@@ -474,9 +479,9 @@ hcparcords <- function(df, ...) {
 
   df <- mutate_if(df, is.numeric, rescale01)
 
-  df <- tidyr::gather_(df, "var", "val", setdiff(names(df), ".row"))
+  df <- tidyr::gather(df, .data$var, .data$val, setdiff(names(df), ".row"))
 
-  hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row"), ...) %>%
+  hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row")) %>%
     hc_plotOptions(series = list(showInLegend = FALSE)) %>%
     hc_yAxis(min = 0, max = 1) %>%
     hc_tooltip(sort = TRUE, table = TRUE, valueDecimals = 2)

@@ -2,15 +2,21 @@
 % Please edit documentation in R/theme-sparkline.R
 \name{hc_theme_sparkline}
 \alias{hc_theme_sparkline}
+\alias{hc_theme_sparkline_vb}
 \title{Sparkline theme for highcharts}
 \usage{
 hc_theme_sparkline(...)
+
+hc_theme_sparkline_vb(...)
 }
 \arguments{
 \item{...}{Named argument to modify the theme}
 }
 \description{
 Based on \url{http://www.highcharts.com/demo/sparkline}.
+}
+\details{
+http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/
 }
 \examples{
 
