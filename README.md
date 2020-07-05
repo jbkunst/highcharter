@@ -16,7 +16,7 @@
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
 
 Highcharter is a [R](https://cran.r-project.org/) wrapper for
-**[Highcharts](https://www.highcharts.com/)**  javascript libray and its modules.
+**[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.
 Highcharts is very mature and flexible javascript charting library and
 it has a great and powerful API^[See http://www.highcharts.com/demo].
 
