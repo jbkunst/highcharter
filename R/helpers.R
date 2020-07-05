@@ -353,7 +353,7 @@ fix_1_length_data <- function(x) {
     message("fix_1_length")
   }
 
-  if (class(x) != "list" & length(x) == 1) {
+  if (!is.list(x) && length(x) == 1) {
     x <- list(x)
   }
   x
