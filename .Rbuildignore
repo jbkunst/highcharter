@@ -28,3 +28,4 @@ index.Rmd
 ^Meta$
 
 ^.github$
+^\.github$
