@@ -322,7 +322,8 @@ hchart.ets <- function(object, ...) {
 }
 
 #' @importFrom tidyr gather
-#' @importFrom dplyr count_ left_join select_
+#' @importFrom dplyr count_ left_join select
+#' @importFrom rlang .data
 #' @export
 hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   if (getOption("highcharter.verbose")) {
@@ -345,22 +346,20 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   yid <- seq(length(ynm)) - pos
 
   ds <- as.data.frame(df) %>%
-    tbl_df() %>%
+    tibble::as_tibble() %>%
     bind_cols(tibble(ynm), .) %>%
     gather("key", "value", -ynm) %>%
-    rename_("xnm" = "key") %>%
-    mutate_(
-      "xnm" = "as.character(xnm)",
-      "ynm" = "as.character(ynm)"
-    )
+    rename(xnm = .data$key) %>%
+    mutate(xnm = as.character(.data$xnm),
+           ynm = as.character(.data$ynm))
 
   ds$xnm <- if (is.null(colnames(object))) str_replace(ds$xnm, "V", "") else ds$xnm
 
   ds <- ds %>%
     left_join(tibble(xnm, xid), by = "xnm") %>%
     left_join(tibble(ynm, yid), by = "ynm") %>%
-    mutate_("name" = "paste(xnm, ynm, sep = ' ~ ')") %>%
-    select_("x" = "xid", "y" = "yid", "value", "name")
+    mutate(name = paste(.data$xnm, .data$ynm, sep = ' ~ ')) %>%
+    select(x = .data$xid, y = .data$yid, .data$value, .data$name)
 
   fntltp <- JS("function(){
                  return this.point.name + ': ' +
@@ -412,6 +411,7 @@ hchart.dist <- function(object, ...) {
 
 #' @importFrom igraph vertex_attr edge_attr get.edgelist layout_nicely
 #' @importFrom stats setNames
+#' @importFrom rlang .data
 #' @export
 hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
 
@@ -419,16 +419,16 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   dfv <- layout(object) %>%
     round(digits) %>%
     data.frame() %>%
-    tbl_df() %>%
+    tibble::as_tibble() %>%
     setNames(c("x", "y"))
 
   dfvex <- object %>%
     vertex_attr() %>%
     data.frame(stringsAsFactors = FALSE) %>%
-    tbl_df()
+    tibble::as_tibble()
 
   if (nrow(dfvex) > 0) {
-    dfv <- tbl_df(cbind(dfv, dfvex))
+    dfv <- tibble::as_tibble(cbind(dfv, dfvex))
   }
 
   if (is.null(dfv[["name"]])) {
@@ -440,39 +440,39 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   dfe <- object %>%
     get.edgelist() %>%
     data.frame(stringsAsFactors = FALSE) %>%
-    tbl_df() %>%
+    tibble::as_tibble() %>%
     setNames(c("from", "to")) %>%
     left_join(dfv %>%
-      select_(.dots = c("name", "x", "y")) %>%
+      select(.data$name, .data$x, .data$y) %>%
       setNames(c("from", "xf", "yf")), by = "from") %>%
     left_join(dfv %>%
-      select_(.dots = c("name", "x", "y")) %>%
+      select(.data$name, .data$x, .data$y) %>%
       setNames(c("to", "xt", "yt")), by = "to") %>%
     mutate(linkedTo = "e")
 
   dfex <- object %>%
     edge_attr() %>%
     data.frame(stringsAsFactors = FALSE) %>%
-    tbl_df()
+    tibble::as_tibble()
 
   if (nrow(dfex) > 0) {
-    dfe <- tbl_df(cbind(dfe, dfex))
+    dfe <- tibble::as_tibble(cbind(dfe, dfex))
   }
 
   # Checking opts
   type <- "scatter"
 
   if ("size" %in% names(dfv)) {
-    dfv <- dfv %>% rename_("z" = "size")
+    dfv <- dfv %>% rename(z = .data$size)
     type <- "bubble"
   }
 
   if ("group" %in% names(dfv)) {
-    dfv <- dfv %>% rename_("groupvar" = "group")
+    dfv <- dfv %>% rename(groupvar = .data$group)
   }
 
   if ("width" %in% names(dfe)) {
-    dfe <- dfe %>% rename_("lineWidth" = "width")
+    dfe <- dfe %>% rename(lineWidth = .data$width)
   }
 
   if (!"color" %in% names(dfe)) {
@@ -525,7 +525,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   if ("label" %in% names(dfv)) {
     hc <- hc %>%
       hc_add_series(
-        data = list_parse(dfv %>% select_(.dots = c("x", "y", "label"))),
+        data = list_parse(dfv %>% select(.data$x, .data$y, .data$label)),
         type = "scatter", name = "labels", zIndex = 4,
         marker = list(radius = 0), enableMouseTracking = FALSE,
         dataLabels = list(enabled = TRUE, format = "{point.label}")
@@ -707,8 +707,8 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 }
 
 #' @importFrom tibble rownames_to_column
+#' @importFrom rlang .data
 #' @export
-
 hchart.density <- function(object, type = "area", ...) {
   hc_add_series(highchart(), data = object, type = type, ...)
 }
@@ -746,7 +746,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
     setNames(c("x", "y")) %>%
     rownames_to_column("name") %>%
     as_tibble() %>%
-    group_by_("name") %>%
+    group_by(.data$name) %>%
     do(data = list(c(0, 0), c(.$x, .$y))) %>%
     list_parse()
 

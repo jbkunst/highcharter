@@ -10,18 +10,18 @@ n <- 50
 s <- 20
 
 sequences <- map(1:n, function(i){
-  map(1:s, function(x) list(lat = runif(1)*10, lon = runif(1)*100, z = runif(1)))
+  map(1:s, function(x) list(lat = stats::runif(1)*10, lon = stats::runif(1)*100, z = stats::runif(1)))
 })
 
 sequences <- map(1:n, function(i){
-  map(1:s, function(x) list(z = runif(1)))
+  map(1:s, function(x) list(z = stats::runif(1)))
 })
 
 
 df <- data_frame(
-  lat = runif(n)*180*2 - 180,
-  lon = runif(n)*180*2 - 180,
-  z = runif(n),
+  lat = stats::runif(n)*180*2 - 180,
+  lon = stats::runif(n)*180*2 - 180,
+  z = stats::runif(n),
   color = colorize(z),
   sequence = sequences
 )
@@ -36,15 +36,15 @@ hcmap() %>%
 
 
 sequences <- map(1:n, function(i){
-  map(1:s, function(x) list(runif(1)*10, runif(1)*100, runif(1)))
-  # runif(s)
+  map(1:s, function(x) list(stats::runif(1)*10, stats::runif(1)*100, stats::runif(1)))
+  # stats::runif(s)
 })
 
 df <- data_frame(
-  x = runif(n),
-  y = runif(n),
-  z = runif(n),
-  color = colorize(runif(n)),
+  x = stats::runif(n),
+  y = stats::runif(n),
+  z = stats::runif(n),
+  color = colorize(stats::runif(n)),
   sequence = sequences
 )
 

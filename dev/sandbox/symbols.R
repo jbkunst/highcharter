@@ -8,8 +8,8 @@ options(highcharter.theme = hc_theme_smpl())
 
 dss <- map(c("cross", "plus"), function(s){
   
-  x <- rnorm(20, runif(1)*2)
-  y <- (rnorm(1) + 1)*x + runif(20)
+  x <- rnorm(20, stats::runif(1)*2)
+  y <- (rnorm(1) + 1)*x + stats::runif(20)
   
   list(name = s,
        type = "scatter",

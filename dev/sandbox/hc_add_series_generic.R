@@ -91,7 +91,7 @@ hcdensity(rexp(500, 1))
 
 # character ---------------------------------------------------------------
 library(dplyr)
-data <- sample(LETTERS[1:6], 50, prob = runif(6), replace = TRUE)
+data <- sample(LETTERS[1:6], 50, prob = stats::runif(6), replace = TRUE)
 data2 <- sample(LETTERS[4:10], 50, replace = TRUE)
 data3 <- sample(LETTERS[3:7], 50, replace = TRUE)
 

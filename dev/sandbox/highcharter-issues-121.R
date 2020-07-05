@@ -13,7 +13,7 @@ hc
 
 series <- data_frame(
   name = paste0("series", seq(1:n)),
-  linkedTo = ifelse(runif(n) < 0.5, "g1", "g2"),
+  linkedTo = ifelse(stats::runif(n) < 0.5, "g1", "g2"),
   data = map(1:10, rnorm, n = 10)) %>%
   list_parse()
   

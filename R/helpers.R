@@ -240,6 +240,7 @@ color_classes <- function(breaks = NULL,
 #'
 #' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #' @importFrom tibble has_name
+#' @importFrom rlang .data
 get_hc_series_from_df <- function(data, type = NULL, ...) {
   assertthat::assert_that(is.data.frame(data))
   stopifnot(!is.null(type))
@@ -279,18 +280,17 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   # color
   if (has_name(parsc, "color")) {
     if (type == "treemap") {
-      data <- rename_(data, "colorValue" = "color")
+      data <- rename(data, colorValue = .data$color)
     } else {
-      data <- mutate_(data,
-        "colorv" = "color",
-        "color" = "highcharter::colorize(color)"
-      )
+      data <- mutate(data,
+                     colorv = .data$color,
+                     color = highcharter::colorize(.data$color))
     }
   }
 
   # size
   if (has_name(parsc, "size") & type %in% c("bubble", "scatter")) {
-    data <- mutate_(data, "z" = "size")
+    data <- mutate(data, z = .data$size)
   }
 
   # group
@@ -301,10 +301,10 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
   data[["charttpye"]] <- type
 
   dfs <- data %>%
-    group_by_("group", "charttpye") %>%
-    do(data = list_parse(select_(., quote(-group), quote(-charttpye)))) %>%
+    group_by(.data$group, .data$charttpye) %>%
+    do(data = list_parse(select(., -.data$group, -.data$charttpye))) %>%
     ungroup() %>%
-    rename_("name" = "group", "type" = "charttpye")
+    rename(name = .data$group, type = .data$charttpye)
 
   if (!has_name(parsc, "group")) {
     dfs[["name"]] <- NULL

@@ -7,7 +7,7 @@ df <- tibble(
   start = Sys.Date() + months(sample(10:20, size = N)),
   end = start + months(sample(1:3, size = N, replace = TRUE)),
   cat = rep(1:5, length.out = N) - 1,
-  progress = round(runif(N), 1)
+  progress = round(stats::runif(N), 1)
 )
 
 df <- mutate_if(df, is.Date, datetime_to_timestamp)
