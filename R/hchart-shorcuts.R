@@ -443,7 +443,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
     )
 }
 
-#' Shortcut for create parallel coordinates
+#' Shortcut to create parallel coordinates
 #' @param df A data frame object.
 #' @param ... Additional shared arguments for the data series
 #'   (\url{http://api.highcharts.com/highcharts#series}) for the
@@ -477,9 +477,9 @@ hcparcords <- function(df, ...) {
   # Add row identifier
   df <- rownames_to_column(df, ".row")
 
-  df <- mutate_if(df, is.numeric, rescale01)
+  df <- dplyr::mutate_if(df, is.numeric, rescale01)
 
-  df <- tidyr::gather(df, .data$var, .data$val, setdiff(names(df), ".row"))
+  df <- tidyr::gather(df, "var", "val", setdiff(names(df), ".row"))
 
   hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row")) %>%
     hc_plotOptions(series = list(showInLegend = FALSE)) %>%

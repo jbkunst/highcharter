@@ -2,7 +2,7 @@
 % Please edit documentation in R/hchart-shorcuts.R
 \name{hcparcords}
 \alias{hcparcords}
-\title{Shortcut for create parallel coordinates}
+\title{Shortcut to create parallel coordinates}
 \usage{
 hcparcords(df, ...)
 }
@@ -14,7 +14,7 @@ hcparcords(df, ...)
 \code{hchar.data.frame} function.}
 }
 \description{
-Shortcut for create parallel coordinates
+Shortcut to create parallel coordinates
 }
 \examples{
 require(viridisLite)
