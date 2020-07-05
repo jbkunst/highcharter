@@ -38,6 +38,7 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @importFrom rlang .data
 #' @export
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
+  
   stopifnot(is.numeric(x))
 
   if (is.null(var)) {
@@ -64,7 +65,7 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
     group_by(.data$g1, .data$g2) %>%
     do(data = get_box_values(.$x)) %>%
     ungroup() %>%
-    unnest() %>%
+    unnest(cols = c(data)) %>%
     group_by(.data$g2) %>%
     do(data = list_parse(rename(select(., -.data$g2), name = .data$g1))) %>%
     mutate(type = "boxplot") %>%
@@ -150,6 +151,11 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 #' @export
 hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
                         ...) {
+  
+  .Deprecated(
+    msg = "Use type 'item' instead (`hchart(df, \"item\", hcaes(name = labels, y = counts))`).
+Item chart provides better behaviour beside is a specific type of chart of HighchartsJS.")
+  
   assertthat::assert_that(length(counts) == length(labels))
 
   if (is.null(rows)) {
