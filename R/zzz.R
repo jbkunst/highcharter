@@ -68,6 +68,9 @@
 
   options(
     highcharter.chart = list(
+      chart = list(
+        reflow = TRUE
+      ),
       title = list(
         text = NULL
       ),
