@@ -28,11 +28,11 @@ aapl <- quantmod::getSymbols("AAPL",
 )
 
 # Plot prices and volume with relative height.
-hc <- highcharter::highchart(type = "stock") \%>\%
-  highcharter::hc_title(text = "AAPLE") \%>\%
-  highcharter::hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) \%>\%
-  highcharter::hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) \%>\%
-  highcharter::hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) \%>\%
-  highcharter::hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
+highchart(type = "stock") \%>\%
+  hc_title(text = "AAPLE") \%>\%
+  hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) \%>\%
+  hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) \%>\%
+  hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) \%>\%
+  hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
   
 }
