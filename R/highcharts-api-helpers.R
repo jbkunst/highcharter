@@ -374,6 +374,7 @@ hc_yAxis_multiples <- function(hc, ...) {
 #'   hc_add_series(data = c(20, 40, 10), yAxis = 1) %>%
 #'   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) %>%
 #'   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)
+#'   
 #' @importFrom dplyr bind_cols
 #' @export
 create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
@@ -436,14 +437,12 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
 #' )
 #' 
 #' # Plot prices and volume with relative height.
-#' hc <- highchart(type = "stock") %>%
+#' highchart(type = "stock") %>%
 #'   hc_title(text = "AAPLE") %>%
 #'   hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) %>%
 #'   hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) %>%
 #'   hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) %>%
 #'   hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
-#'   
-#' hc
 #'   
 #' @export
 hc_add_yAxis <- function(hc, ...) {

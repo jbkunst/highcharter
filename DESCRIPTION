@@ -47,7 +47,8 @@ Imports:
     igraph,
     lubridate,
     yaml,
-    rlang (>= 0.1.1)
+    rlang (>= 0.1.1),
+    rjson
 Suggests:
     knitr,
     rmarkdown,

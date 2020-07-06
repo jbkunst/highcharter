@@ -105,7 +105,9 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...) {
   }
   
   time <- datetime_to_timestamp(time(data))
-  xdf <- cbind(time, as.data.frame(data))
+  xdf <- cbind(time, as.data.frame(
+    quantmod::OHLC(data)
+  ))
   xds <- list_parse2(xdf)
   
   nm <- ifelse(!is.null(list(...)[["name"]]),
@@ -302,7 +304,7 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), f
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.data.frame")
   }
-  
+
   if (length(mapping) == 0) {
     if (has_name(data, "series")) {
       data <- rename(data, seriess = .data$series)

@@ -42,4 +42,5 @@ highchart() \%>\%
   hc_add_series(data = c(20, 40, 10), yAxis = 1) \%>\%
   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) \%>\%
   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)
+  
 }
