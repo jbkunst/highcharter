@@ -1,4 +1,5 @@
 # yAxis test-case
+library(highcharter)
 library(quantmod)
 library(magrittr)
 
