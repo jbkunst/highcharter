@@ -25,7 +25,7 @@ df <- data.frame(
 )
 
 # Note the 3d requiere highchart2() due have the 3d module
-highchart() \%>\%
+highchart2() \%>\%
   hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) \%>\% 
   hc_chart(
     type = "scatter3d",

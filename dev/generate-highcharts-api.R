@@ -63,7 +63,12 @@ txt <- c(
 out <- dfopts %>%
   pull(option) %>%
   str_c("dev/examples-api/", ., ".R") %>%
-  map(source, echo = FALSE)
+  map(function(script){
+    
+    message("Running ", script)
+    source(script, echo = FALSE)
+    
+  })
 
 write_lines(txt, fout)
 

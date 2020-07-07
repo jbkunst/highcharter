@@ -92,7 +92,9 @@
         series = list(
           # start disabled series-label.js module https://api.highcharts.com/highcharts/plotOptions.series.label
           label = list(enabled = FALSE),
-          turboThreshold = 1000
+          # this is DUE inteally all data is given as named arrays
+          # https://www.highcharts.com/errors/12/
+          turboThreshold = 0
         ),
         treemap = list(layoutAlgorithm = "squarified")
       )
