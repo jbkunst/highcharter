@@ -3,12 +3,12 @@ rm(list = ls())
 
 #### EX 0  ####
 data(worldgeojson)
-data(GNI2010, package = "treemap")
+data(GNI2014, package = "treemap")
 
-head(GNI2010)
+head(GNI2014)
 
 highchart() %>% 
-  hc_add_series_map(worldgeojson, GNI2010,
+  hc_add_series_map(worldgeojson, GNI2014,
                     value = "GNI", joinBy = "iso3")
 
 #### EX 0 ####
@@ -34,9 +34,9 @@ highchart() %>%
 library("purrr")
 library("dplyr")
 
-data(GNI2010, package = "treemap")
+data(GNI2014, package = "treemap")
 
-head(GNI2010)
+head(GNI2014)
 
 url <- "https://code.highcharts.com/mapdata/custom/world.js"
 tmpfile <- tempfile(fileext = ".json")

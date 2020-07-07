@@ -30,3 +30,4 @@ hcmap("custom/asia", data = fakedata, value = "fakevalue", joinBy = "hc-a2") %>%
   hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
   hc_mapNavigation(enabled = TRUE) %>% 
   hc_add_theme(hc_theme_db())
+

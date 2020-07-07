@@ -17,7 +17,6 @@ dependencies:
     - modules/stock.js
     - modules/map.js
     - modules/annotations.js
-    - modules/boost.js
     - modules/data.js
     - modules/drilldown.js
     - modules/item-series.js
@@ -92,6 +91,7 @@ dependencies:
 #    - custom/appear.js    
 #    - custom/symbols-extra.js
 #    - custom/text-symbols.js
+    - modules/boost.js
     stylesheet:
     - css/motion.css
  #   - css/htmlwdgtgrid.css

@@ -26,6 +26,7 @@ highchart <- function(hc_opts = list(),
                       height = NULL,
                       elementId = NULL,
                       google_fonts = getOption("highcharter.google_fonts")) {
+  
   assertthat::assert_that(type %in% c("chart", "stock", "map"))
 
   opts <- .join_hc_opts()
