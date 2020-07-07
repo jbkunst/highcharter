@@ -60,7 +60,7 @@ highchart <- function(hc_opts = list(),
   }
 
   # create widget
-  htmlwidgets::createWidget(
+  hc <- htmlwidgets::createWidget(
     name = "highchart",
     x,
     width = width,
@@ -74,6 +74,12 @@ highchart <- function(hc_opts = list(),
       padding = 0
     )
   )
+
+  # set sizing for `shinyRenderer`
+  hc <- hc_size(hc, width = width, height = height)
+  
+  hc
+  
 }
 
 #' Reports whether x is a highchart object
