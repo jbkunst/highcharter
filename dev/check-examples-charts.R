@@ -15,7 +15,11 @@ chart_types <- read_html("https://api.highcharts.com/highcharts/plotOptions") %>
 # check examples ----------------------------------------------------------
 chart_types_with_examples <- dir("dev/examples-charts/", full.names = TRUE)
 
-chart_types_with_examples
+chart_types_with_examples %>% 
+  basename() %>% 
+  str_remove(".R$") %>% 
+  str_c("\t - ", ., "\n") %>% 
+  message("Chart with examples (", length(.), "):\n", .)
 
 map(chart_types_with_examples, function(x){
   message(x)

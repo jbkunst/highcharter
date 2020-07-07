@@ -10,7 +10,7 @@ pcks <- c("highcharter", "rbokeh", "dygraphs", "plotly", "ggvis", "billboarder",
 data <- pcks %>% 
   # adjustedcranlogs::adj_cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
   cranlogs::cran_downloads(from = "2015-06-01", to = Sys.Date()) %>% 
-  tbl_df() %>% 
+  tibble::as_tibble() %>% 
   # mutate(date = floor_date(date, unit = "week")) %>% 
   mutate(date = floor_date(date, unit = "month")) %>% 
   group_by(date, package) %>% 

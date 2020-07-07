@@ -17,14 +17,13 @@ hchart(
   showInLegend = TRUE
 )
 
-hchart(
-  df, "item", hcaes(name = name, y = count, label = abbrv),
-  marker = list(symbol = "square"),
-  rows = 5,
-  name = "Representatives",
-  showInLegend = TRUE
-)
-
+# hchart(
+#   df, "item", hcaes(name = name, y = count, label = abbrv),
+#   marker = list(symbol = "square"),
+#   rows = 5,
+#   name = "Representatives",
+#   showInLegend = TRUE
+# )
 
 hchart(
   df,
@@ -37,21 +36,5 @@ hchart(
   startAngle = -100,
   endAngle  = 100
   ) %>% 
-  hc_title(text = "Item chart with different layout") %>% 
-  hc_legend(labelFormat = '{name} <span style="opacity: 0.4">{y}</span>')
-
-
-hchart(
-  df,
-  "item", 
-  hcaes(name = name, y = count, label = abbrv, color = col),
-  name = "Representatives",
-  rows = 10,
-  showInLegend = TRUE,
-  size = "100%",
-  center = list("50%", "75%"),
-  startAngle = -100,
-  endAngle  = 100
-) %>% 
   hc_title(text = "Item chart with different layout") %>% 
   hc_legend(labelFormat = '{name} <span style="opacity: 0.4">{y}</span>')
