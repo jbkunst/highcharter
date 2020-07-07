@@ -6,16 +6,15 @@ options(highcharter.download_map_data = TRUE)
 
 hcmap("custom/asia")
 
-
 mapdata <- get_data_from_map(download_map_data("custom/asia"))
+
 glimpse(mapdata)
 
 fakedata <- mapdata %>% 
   select(`hc-a2`) %>% 
   mutate(fakevalue = rexp(nrow(.)) + 1)
+
 glimpse(fakedata)
-
-
 
 hcmap("custom/asia", data = fakedata, value = "fakevalue", joinBy = "hc-a2") %>% 
   hc_plotOptions(

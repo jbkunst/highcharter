@@ -38,8 +38,6 @@ collection.
 }
 \examples{
 
-\dontrun{
-
 hcmap(nullColor = "#DADADA")
 hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 
@@ -58,5 +56,5 @@ hcmap(
   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
   download_map_data = FALSE
 )
-}
+
 }

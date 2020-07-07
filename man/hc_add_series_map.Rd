@@ -50,6 +50,7 @@ highchart() \%>\%
   hc_colorAxis(stops = color_stops()) \%>\%
   hc_legend(valueDecimals = 0, valueSuffix = "\%") \%>\%
   hc_mapNavigation(enabled = TRUE)
+  
 \dontrun{
 
 data(worldgeojson, package = "highcharter")

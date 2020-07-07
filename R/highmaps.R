@@ -32,6 +32,7 @@
 #'   hc_colorAxis(stops = color_stops()) %>%
 #'   hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
 #'   hc_mapNavigation(enabled = TRUE)
+#'   
 #' \dontrun{
 #'
 #' data(worldgeojson, package = "highcharter")
@@ -50,6 +51,7 @@
 #' @importFrom utils tail
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
+  
   assertthat::assert_that(
     is.highchart(hc),
     is.list(map),
@@ -60,7 +62,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 
   joindf <- tail(joinBy, 1)
 
-  ddta <- mutate(df, value = value, code = joindf)
+  ddta <- rename(df, value := value)
   ddta <- list_parse(ddta)
 
   hc$x$type <- "map"
@@ -68,7 +70,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   hc %>%
     hc_add_series(
       mapData = map, data = ddta,
-      joinBy = c(joinBy[1], "code"),
+      joinBy = joinBy,
       ...
     ) %>%
     hc_colorAxis(min = 0)
@@ -90,8 +92,6 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
 #' hcmap(nullColor = "#DADADA")
 #' hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 #'
@@ -110,7 +110,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
 #'   download_map_data = FALSE
 #' )
-#' }
+#' 
 #' @importFrom htmltools htmlDependency
 #' @importFrom rlang .data
 #' @export
@@ -142,7 +142,7 @@ hcmap <- function(map = "custom/world",
         mapData = mapdata, ...
       )
   } else {
-    data <- mutate(data, value = .data$value)
+    data <- rename(data, value := value)
 
     hc <- hc %>%
       hc_add_series.default(
