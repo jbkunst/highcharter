@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shortcut for create parallel coordinates — hcparcords • highcharter</title>
+<title>Shortcut to create parallel coordinates — hcparcords • highcharter</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Shortcut for create parallel coordinates — hcparcords" />
-<meta property="og:description" content="Shortcut for create parallel coordinates" />
+<meta property="og:title" content="Shortcut to create parallel coordinates — hcparcords" />
+<meta property="og:description" content="Shortcut to create parallel coordinates" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -169,13 +169,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Shortcut for create parallel coordinates</h1>
+    <h1>Shortcut to create parallel coordinates</h1>
     <small class="dont-index">Source: <a href='https://github.com/jbkunst/highcharter/blob/master/R/hchart-shorcuts.R'><code>R/hchart-shorcuts.R</code></a></small>
     <div class="hidden name"><code>hcparcords.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Shortcut for create parallel coordinates</p>
+    <p>Shortcut to create parallel coordinates</p>
     </div>
 
     <pre class="usage"><span class='fu'>hcparcords</span>(<span class='no'>df</span>, <span class='no'>...</span>)</pre>
@@ -200,21 +200,18 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>viridisLite</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: viridisLite</span></div><div class='input'>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>15</span>
 
-<span class='fu'>hcparcords</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>mtcars</span>, <span class='no'>n</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='hex_to_rgba.html'>hex_to_rgba</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/viridisLite/topics/viridis'>magma</a></span>(<span class='no'>n</span>), <span class='fl'>0.5</span>))
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'dplyr' was built under R version 3.6.1</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'dplyr'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:testthat':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    matches</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:stats':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
+<span class='fu'>hcparcords</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>mtcars</span>, <span class='no'>n</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='hex_to_rgba.html'>hex_to_rgba</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/viridisLite/topics/viridis'>magma</a></span>(<span class='no'>n</span>), <span class='fl'>0.5</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Problem with `mutate()` input `group`.</span>
+#&gt; <span class='error'><span style='color: #BB0000;'>x</span><span> Input `group` must be a vector, not a `formula` object.</span>
+#&gt; <span class='error'></span><span style='color: #0000BB;'>i</span><span> Input `group` is `~.row`.</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>123</span>)
 
-<span class='no'>iris</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample.html'>sample_n</a></span>(<span class='no'>iris</span>, <span class='fl'>60</span>)
+<span class='no'>iris</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span>(<span class='no'>iris</span>, <span class='fl'>60</span>)
 
-<span class='fu'>hcparcords</span>(<span class='no'>iris</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='colorize.html'>colorize</a></span>(<span class='no'>iris</span>$<span class='no'>Species</span>))</div></pre>
+<span class='fu'>hcparcords</span>(<span class='no'>iris</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='colorize.html'>colorize</a></span>(<span class='no'>iris</span>$<span class='no'>Species</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Problem with `mutate()` input `group`.</span>
+#&gt; <span class='error'></span><span style='color: #BB0000;'>x</span><span> Input `group` must be a vector, not a `formula` object.</span>
+#&gt; <span class='error'></span><span style='color: #0000BB;'>i</span><span> Input `group` is `~.row`.</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -1,6 +1,6 @@
 #' Dotabuff theme for highcharts
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'

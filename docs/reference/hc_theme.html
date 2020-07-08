@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Highchart theme constructor — hc_theme • highcharter</title>
+<title>Creating highcharter themes — hc_theme • highcharter</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Highchart theme constructor — hc_theme" />
-<meta property="og:description" content="Function to create highcharts themes." />
+<meta property="og:title" content="Creating highcharter themes — hc_theme" />
+<meta property="og:description" content="Highcharts is very flexible so you can modify every element of the chart.
+There are some exiting themes so you can apply style to charts with few
+lines of code." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -92,7 +94,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -169,13 +171,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Highchart theme constructor</h1>
+    <h1>Creating highcharter themes</h1>
     <small class="dont-index">Source: <a href='https://github.com/jbkunst/highcharter/blob/master/R/theme.R'><code>R/theme.R</code></a></small>
     <div class="hidden name"><code>hc_theme.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function to create highcharts themes.</p>
+    <p>Highcharts is very flexible so you can modify every element of the chart.
+There are some exiting themes so you can apply style to charts with few
+lines of code.</p>
     </div>
 
     <pre class="usage"><span class='fu'>hc_theme</span>(<span class='no'>...</span>)</pre>
@@ -185,13 +189,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>A named parameters.</p></td>
+      <td><p>A list of named parameters.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>More examples are in <a href='http://www.highcharts.com/docs/chart-design-and-style/themes'>http://www.highcharts.com/docs/chart-design-and-style/themes</a>.</p>
+    <p>More examples and details in <a href='http://www.highcharts.com/docs/chart-design-and-style/themes'>http://www.highcharts.com/docs/chart-design-and-style/themes</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -227,7 +231,7 @@
   )
 )
 
-<span class='no'>hc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='hc_add_theme.html'>hc_add_theme</a></span>(<span class='no'>thm</span>)</div></pre>
+<span class='fu'><a href='hc_add_theme.html'>hc_add_theme</a></span>(<span class='no'>hc</span>, <span class='no'>thm</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

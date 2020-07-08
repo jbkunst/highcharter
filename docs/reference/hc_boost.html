@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -197,6 +197,8 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>#  Ex 1</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='kw'>highcharter.rjson</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>50000</span>
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Trig'>sin</a></span>(<span class='fl'>4</span>*<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='no'>n</span>)/<span class='no'>n</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='no'>n</span>)/<span class='fl'>10</span>
@@ -204,99 +206,94 @@
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='no'>x</span>, <span class='fl'>3</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>)</div><div class='img'><img src='hc_boost-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
+<span class='no'>hc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_chart.html'>hc_chart</a></span>(<span class='kw'>zoomType</span> <span class='kw'>=</span> <span class='st'>"x"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>x</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_title.html'>hc_title</a></span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"No boost"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>hc_boost</span>(
-    <span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span> <span class='co'># Not recommended</span>
+    <span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span> <span class='co'># Default</span>
   )
 
-<span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
+<span class='no'>hc1</span>
+
+<span class='co'># Boost is a stripped-down renderer-in-a-module for Highcharts. It bypasses</span>
+<span class='co'># some of the standard Highcharts features (such as animation), and focuses</span>
+<span class='co'># on pushing as many points as possible as quickly as possible.</span>
+
+<span class='no'>hc2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_chart.html'>hc_chart</a></span>(<span class='kw'>zoomType</span> <span class='kw'>=</span> <span class='st'>"x"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>x</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_title.html'>hc_title</a></span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"With boost"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>hc_boost</span>(
-    <span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> <span class='co'># Default :D</span>
-  )
+  <span class='fu'>hc_boost</span>(<span class='kw'>enabled</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='co'># Ex 2</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MASS</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'MASS'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:dplyr':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    select</span></div><div class='input'>
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>100000</span>
+<span class='no'>hc2</span>
 
-<span class='no'>sigma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>2</span>),<span class='fl'>2</span>,<span class='fl'>2</span>)
-<span class='no'>sigma</span></div><div class='output co'>#&gt;      [,1] [,2]
-#&gt; [1,]   10    3
-#&gt; [2,]    3    2</div><div class='input'>
-<span class='no'>mvr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>mvrnorm</a></span>(<span class='no'>n</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>)), <span class='no'>sigma</span>), <span class='fl'>6</span>)
 
-<span class='no'>vx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mvr</span>[, <span class='fl'>1</span>])))
-<span class='no'>vy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>ceiling</a></span>(<span class='fl'>1</span>+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mvr</span>[, <span class='fl'>2</span>])))
-
-<span class='no'>ds</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_parse.html'>list_parse2</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>mvr</span>))
-
-<span class='fu'><a href='highchart.html'>highchart</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_chart.html'>hc_chart</a></span>(<span class='kw'>zoomType</span> <span class='kw'>=</span> <span class='st'>"xy"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span>(<span class='kw'>min</span> <span class='kw'>=</span> -<span class='no'>vx</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='no'>vx</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_yAxis.html'>hc_yAxis</a></span>(<span class='kw'>min</span> <span class='kw'>=</span> -<span class='no'>vy</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='no'>vy</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span>(
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ds</span>,
-    <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"scatter"</span>,
-    <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"A lot of points!"</span>,
-    <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>'rgba(0,0,0,0.01)'</span>,
-    <span class='kw'>marker</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>radius</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-    <span class='kw'>tooltip</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-      <span class='kw'>followPointer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-      <span class='kw'>pointFormat</span> <span class='kw'>=</span>  <span class='st'>'[{point.x:.1f}, {point.y:.1f}]'</span>
-      )
-    )
-
-<span class='co'># Ex3</span>
+<span class='co'># # Ex 2</span>
+<span class='co'># library(MASS)</span>
+<span class='co'># </span>
+<span class='co'># n &lt;- 20000</span>
+<span class='co'># </span>
+<span class='co'># sigma &lt;- matrix(c(10,3,3,2),2,2)</span>
+<span class='co'># sigma</span>
+<span class='co'># </span>
+<span class='co'># mvr &lt;- round(mvrnorm(n, rep(c(0, 0)), sigma), 2)</span>
+<span class='co'># </span>
+<span class='co'># vx &lt;- ceiling(1+abs(max(mvr[, 1])))</span>
+<span class='co'># vy &lt;- ceiling(1+abs(max(mvr[, 2])))</span>
+<span class='co'># </span>
+<span class='co'># # unnamed list</span>
+<span class='co'># ds &lt;- list_parse2(as.data.frame(mvr))</span>
+<span class='co'># </span>
+<span class='co'># highchart() %&gt;%</span>
+<span class='co'>#   hc_chart(zoomType = "xy") %&gt;%</span>
+<span class='co'>#   hc_xAxis(min = -vx, max = vx) %&gt;% </span>
+<span class='co'>#   hc_yAxis(min = -vy, max = vy) %&gt;% </span>
+<span class='co'>#   hc_add_series(</span>
+<span class='co'>#     data = ds, #list</span>
+<span class='co'>#     type = "scatter",</span>
+<span class='co'>#     name = "A lot of points!",</span>
+<span class='co'>#     color = 'rgba(0,0,0,0.1)',</span>
+<span class='co'>#     marker = list(radius = 2)</span>
+<span class='co'>#     ) %&gt;% </span>
+<span class='co'>#   hc_boost(</span>
+<span class='co'>#     enabled = TRUE </span>
+<span class='co'>#   )</span>
+<span class='co'># </span>
+<span class='co'># dat &lt;- as.data.frame(mvr)</span>
+<span class='co'># names(dat) &lt;- c("x", "y")</span>
+<span class='co'># </span>
+<span class='co'># highchart() %&gt;%</span>
+<span class='co'>#   hc_chart(zoomType = "xy") %&gt;%</span>
+<span class='co'>#   hc_xAxis(min = -vx, max = vx) %&gt;% </span>
+<span class='co'>#   hc_yAxis(min = -vy, max = vy) %&gt;% </span>
+<span class='co'>#   hc_add_series(</span>
+<span class='co'>#     data = dat,</span>
+<span class='co'>#     type = "scatter",</span>
+<span class='co'>#     hcaes(x, y),</span>
+<span class='co'>#     name = "A lot of points!",</span>
+<span class='co'>#     color = 'rgba(0,0,0,0.1)',</span>
+<span class='co'>#     marker = list(radius = 2)</span>
+<span class='co'>#   ) %&gt;% </span>
+<span class='co'>#   hc_boost(enabled = TRUE)</span>
+<span class='co'># </span>
+<span class='co'># # Ex3</span>
 <span class='co'># N &lt;- 1000000</span>
 <span class='co'># n &lt;- 5</span>
 <span class='co'># s &lt;- seq(n)</span>
 <span class='co'># s &lt;- s/(max(s) + min(s))</span>
 <span class='co'># s &lt;- round(s, 2)</span>
 <span class='co'># </span>
-<span class='co'># series &lt;- s %&gt;% </span>
-<span class='co'>#   map(~ arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 10) %&gt;% </span>
-<span class='co'>#   map(as.vector) %&gt;% </span>
-<span class='co'>#   map(round, 2) %&gt;% </span>
-<span class='co'>#   map(~ list(data = .x))</span>
+<span class='co'># series &lt;- s %&gt;%</span>
+<span class='co'>#   purrr::map(~ stats::arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 20) %&gt;%</span>
+<span class='co'>#   purrr::map(as.vector) %&gt;%</span>
+<span class='co'>#   purrr::map(round, 2) %&gt;%</span>
+<span class='co'>#   purrr::map(~ list(data = .x))</span>
 <span class='co'># </span>
-<span class='co'># highchart() %&gt;% </span>
-<span class='co'>#   hc_add_series_list(series) %&gt;% </span>
-<span class='co'>#   hc_chart(zoomType = "x")</span>
-<span class='co'># </span>
-<span class='co'># df &lt;- map2_df(s, series, ~ data_frame(y = unlist(.y), x = seq(length(y)), group = .x))</span>
-<span class='co'># </span>
-<span class='co'># hchart(df, "line", hcaes(x, y, group = group)) %&gt;% </span>
-<span class='co'>#   hc_chart(zoomType = "x")</span>
-<span class='co'># </span>
-<span class='co'># </span>
-<span class='co'># set.seed(123)</span>
-<span class='co'># N &lt;- 1000000</span>
-<span class='co'># df &lt;- data_frame(</span>
-<span class='co'>#   x = rnorm(N),</span>
-<span class='co'>#   y = x + rnorm(N, sd = 0.5)</span>
-<span class='co'># ) %&gt;% </span>
-<span class='co'>#   mutate_all(round, 4)</span>
-<span class='co'># </span>
-<span class='co'># df %&gt;% </span>
-<span class='co'>#   mutate_all(abs) %&gt;% </span>
-<span class='co'>#   summarise_all(max)</span>
-<span class='co'># </span>
-<span class='co'># highchart() %&gt;% </span>
-<span class='co'>#   hc_add_series(</span>
-<span class='co'>#     data = list_parse2(df), type = "scatter", marker = list(radius = 0.2),</span>
-<span class='co'>#     tooltip = list(followPointer = FALSE) </span>
-<span class='co'>#   ) %&gt;% </span>
-<span class='co'>#   hc_chart(zoomType = "yx") %&gt;% </span>
-<span class='co'>#   hc_xAxis(min = -5, max = 5) %&gt;% </span>
-<span class='co'>#   hc_yAxis(min = -5, max = 5)</span></div></pre>
+<span class='co'># highchart() %&gt;%</span>
+<span class='co'>#   hc_add_series_list(series) %&gt;%</span>
+<span class='co'>#   hc_chart(zoomType = "x") %&gt;% </span>
+<span class='co'>#   hc_boost(enabled = TRUE)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

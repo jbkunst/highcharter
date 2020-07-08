@@ -3,7 +3,7 @@
 #' Hand Drawn theme for highcharts. Inspired by
 #' \url{https://www.amcharts.com/inspiration/hand-drawn/}.
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'

@@ -1,13 +1,16 @@
 #' Sparkline theme for highcharts
 #'
-#' Based on \url{http://www.highcharts.com/demo/sparkline}.
+#' Sparkline theme is based on \url{http://www.highcharts.com/demo/sparkline}
+#' and this post  \url{http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/}.
 #'
-#' @param ... Named argument to modify the theme
-#' @details http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/
+#' @rdname hc_theme_538
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_sparkline())
+#'   
+#'   
 #' @export
 hc_theme_sparkline <- function(...) {
   theme <- list(
@@ -91,8 +94,14 @@ hc_theme_sparkline <- function(...) {
 }
 
 
+#' @rdname hc_theme_538
+#' 
+#' @examples
+#'
+#' highcharts_demo() %>%
+#'   hc_add_theme(hc_theme_sparkline_vb())
+#' 
 #' @export
-#' @rdname hc_theme_sparkline
 hc_theme_sparkline_vb <- function(...) {
   
   theme <- list(

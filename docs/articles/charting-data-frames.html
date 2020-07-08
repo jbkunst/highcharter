@@ -12,12 +12,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Charting Data Frames">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
@@ -25,13 +23,7 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-000000-01"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-000000-01');
-</script>
+<![endif]-->
 </head>
 <body>
     <div class="container template-article">
@@ -46,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -101,18 +93,12 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
-      </form>
-      
-    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -120,8 +106,8 @@
 <!--/.navbar -->
 
       
-      </header><script src="../index_files/htmlwidgets-1.5.1.9000/htmlwidgets.js"></script><script src="../index_files/jquery-1.11.1/jquery.min.js"></script><script src="../index_files/proj4js-2.3.15/proj4.js"></script><link href="../index_files/highcharts-7.2.1/css/motion.css" rel="stylesheet">
-<script src="../index_files/highcharts-7.2.1/highcharts.js"></script><script src="../index_files/highcharts-7.2.1/highcharts-3d.js"></script><script src="../index_files/highcharts-7.2.1/highcharts-more.js"></script><script src="../index_files/highcharts-7.2.1/modules/stock.js"></script><script src="../index_files/highcharts-7.2.1/modules/map.js"></script><script src="../index_files/highcharts-7.2.1/modules/annotations.js"></script><script src="../index_files/highcharts-7.2.1/modules/boost.js"></script><script src="../index_files/highcharts-7.2.1/modules/data.js"></script><script src="../index_files/highcharts-7.2.1/modules/drag-panes.js"></script><script src="../index_files/highcharts-7.2.1/modules/drilldown.js"></script><script src="../index_files/highcharts-7.2.1/modules/item-series.js"></script><script src="../index_files/highcharts-7.2.1/modules/offline-exporting.js"></script><script src="../index_files/highcharts-7.2.1/modules/overlapping-datalabels.js"></script><script src="../index_files/highcharts-7.2.1/modules/exporting.js"></script><script src="../index_files/highcharts-7.2.1/modules/export-data.js"></script><script src="../index_files/highcharts-7.2.1/modules/funnel.js"></script><script src="../index_files/highcharts-7.2.1/modules/heatmap.js"></script><script src="../index_files/highcharts-7.2.1/modules/treemap.js"></script><script src="../index_files/highcharts-7.2.1/modules/sankey.js"></script><script src="../index_files/highcharts-7.2.1/modules/organization.js"></script><script src="../index_files/highcharts-7.2.1/modules/solid-gauge.js"></script><script src="../index_files/highcharts-7.2.1/modules/streamgraph.js"></script><script src="../index_files/highcharts-7.2.1/modules/sunburst.js"></script><script src="../index_files/highcharts-7.2.1/modules/vector.js"></script><script src="../index_files/highcharts-7.2.1/modules/wordcloud.js"></script><script src="../index_files/highcharts-7.2.1/modules/xrange.js"></script><script src="../index_files/highcharts-7.2.1/modules/tilemap.js"></script><script src="../index_files/highcharts-7.2.1/modules/venn.js"></script><script src="../index_files/highcharts-7.2.1/modules/gantt.js"></script><script src="../index_files/highcharts-7.2.1/modules/timeline.js"></script><script src="../index_files/highcharts-7.2.1/modules/parallel-coordinates.js"></script><script src="../index_files/highcharts-7.2.1/modules/bullet.js"></script><script src="../index_files/highcharts-7.2.1/modules/coloraxis.js"></script><script src="../index_files/highcharts-7.2.1/plugins/grouped-categories.js"></script><script src="../index_files/highcharts-7.2.1/plugins/motion.js"></script><script src="../index_files/highcharts-7.2.1/custom/reset.js"></script><script src="../index_files/highcharts-7.2.1/custom/appear.js"></script><script src="../index_files/highchart-binding-0.7.0.9001/highchart.js"></script><div class="row">
+      </header><script src="charting-data-frames_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="charting-data-frames_files/htmlwidgets-1.5.1/htmlwidgets.js"></script><script src="charting-data-frames_files/jquery-3.5.0/jquery.min.js"></script><script src="charting-data-frames_files/proj4js-2.3.15/proj4.js"></script><link href="charting-data-frames_files/highcharts-8.1.2/css/motion.css" rel="stylesheet">
+<script src="charting-data-frames_files/highcharts-8.1.2/highcharts.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/highcharts-3d.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/highcharts-more.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/stock.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/map.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/annotations.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/data.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/drilldown.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/item-series.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/offline-exporting.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/overlapping-datalabels.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/exporting.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/export-data.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/funnel.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/heatmap.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/treemap.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/sankey.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/organization.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/solid-gauge.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/streamgraph.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/sunburst.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/vector.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/wordcloud.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/xrange.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/tilemap.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/venn.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/gantt.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/timeline.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/parallel-coordinates.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/bullet.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/coloraxis.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/dumbbell.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/lollipop.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/series-label.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/plugins/motion.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/custom/reset.js"></script><script src="charting-data-frames_files/highcharts-8.1.2/modules/boost.js"></script><script src="charting-data-frames_files/highchart-binding-0.8.1.9001/highchart.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Charting Data Frames</h1>
@@ -161,22 +147,25 @@
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>Lets see examples to be more clear.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"mpg"</span>, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mpg)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"mpg"</span>, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mpg)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
-##   manufacturer model displ  year   cyl trans  drv     cty   hwy fl    class
-##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 audi         a4      1.8  1999     4 auto(~ f        18    29 p     comp~
-## 2 audi         a4      1.8  1999     4 manua~ f        21    29 p     comp~
-## 3 audi         a4      2    2008     4 manua~ f        20    31 p     comp~
-## 4 audi         a4      2    2008     4 auto(~ f        21    30 p     comp~
-## 5 audi         a4      2.8  1999     6 auto(~ f        16    26 p     comp~
-## 6 audi         a4      2.8  1999     6 manua~ f        18    26 p     comp~</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</a></code></pre></div>
-<div id="htmlwidget-f336779c052186be4409" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f336779c052186be4409">{
+##   manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class 
+##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; 
+## 1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa~
+## 2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa~
+## 3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa~
+## 4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa~
+## 5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa~
+## 6 audi         a4      2.8  1999     6 manual(m5) f        18    26 p     compa~</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</span></code></pre></div>
+<div id="htmlwidget-1dbdca7142349e0dda4c" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1dbdca7142349e0dda4c">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -190,6 +179,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -3843,12 +3835,15 @@
   "evals": [],
   "jsHooks": []
 }</script><p>The previous code is same as:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</a></code></pre></div>
-<div id="htmlwidget-b42c0ef8b4de81ff37ed" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b42c0ef8b4de81ff37ed">{
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../reference/highchart.html">highchart</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(mpg, <span class="st">"point"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> displ, <span class="dt">y =</span> cty))</span></code></pre></div>
+<div id="htmlwidget-4a4ac78e01d318f3c6b6" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4a4ac78e01d318f3c6b6">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -3861,6 +3856,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -7501,12 +7499,12 @@
   "evals": [],
   "jsHooks": []
 }</script><p>With highcharter you can have other type of charts.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"diamonds"</span>, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2">dfdiam &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(cut, clarity) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">price =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(price))</a>
-<a class="sourceLine" id="cb5-5" title="5"></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(dfdiam)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"diamonds"</span>, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>dfdiam &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw">group_by</span>(cut, clarity) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">price =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(price))</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by 'cut' (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(dfdiam)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ## # Groups:   cut [1]
 ##   cut   clarity price
@@ -7517,11 +7515,14 @@
 ## 4 Fair  VS2     3190 
 ## 5 Fair  VS1     2830.
 ## 6 Fair  VVS2    2484</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(dfdiam, <span class="st">"heatmap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> clarity, <span class="dt">value =</span> price)) </a></code></pre></div>
-<div id="htmlwidget-84f11e0a2c2883662aa2" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-84f11e0a2c2883662aa2">{
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(dfdiam, <span class="st">"heatmap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> clarity, <span class="dt">value =</span> price)) </span></code></pre></div>
+<div id="htmlwidget-7f116bffd3025f0d28df" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7f116bffd3025f0d28df">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -7536,6 +7537,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -8081,12 +8085,12 @@
   },
   "evals": [],
   "jsHooks": []
-}</script><div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(economics_long, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3">economics_long2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(economics_long,</a>
-<a class="sourceLine" id="cb8-4" title="4">                          variable <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"pop"</span>, <span class="st">"uempmed"</span>, <span class="st">"unemploy"</span>))</a>
-<a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(economics_long2)</a></code></pre></div>
+}</script><div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(economics_long, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>economics_long2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(economics_long,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>                          variable <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"pop"</span>, <span class="st">"uempmed"</span>, <span class="st">"unemploy"</span>))</span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(economics_long2)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   date       variable  value value01
 ##   &lt;date&gt;     &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
@@ -8096,11 +8100,14 @@
 ## 4 1967-10-01 pop      199311 0.00492
 ## 5 1967-11-01 pop      199498 0.00646
 ## 6 1967-12-01 pop      199657 0.00777</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(economics_long2, <span class="st">"line"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value01, <span class="dt">group =</span> variable))</a></code></pre></div>
-<div id="htmlwidget-4a4f5a847e1023b447ca" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4a4f5a847e1023b447ca">{
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(economics_long2, <span class="st">"line"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value01, <span class="dt">group =</span> variable))</span></code></pre></div>
+<div id="htmlwidget-dfda95a2a18bf926e9d1" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dfda95a2a18bf926e9d1">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -8114,6 +8121,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -22045,15 +22055,15 @@
   "evals": [],
   "jsHooks": []
 }</script><p>You can even chart a treemaps:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(mpg, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2"></a>
-<a class="sourceLine" id="cb11-3" title="3">mpgman &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(manufacturer) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),</a>
-<a class="sourceLine" id="cb11-6" title="6">            <span class="dt">unique =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(model))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>n, <span class="op">-</span>unique)</a>
-<a class="sourceLine" id="cb11-8" title="8"></a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mpgman)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(mpg, <span class="dt">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>mpgman &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">group_by</span>(manufacturer) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),</span>
+<span id="cb13-6"><a href="#cb13-6"></a>            <span class="dt">unique =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(model))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>n, <span class="op">-</span>unique)</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mpgman)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   manufacturer     n unique
 ##   &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
@@ -22063,11 +22073,14 @@
 ## 4 ford            25      4
 ## 5 chevrolet       19      4
 ## 6 audi            18      3</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman, <span class="st">"treemap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">value =</span> n, <span class="dt">color =</span> unique))</a></code></pre></div>
-<div id="htmlwidget-8abe5a7c3bb9ddb81330" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8abe5a7c3bb9ddb81330">{
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman, <span class="st">"treemap"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">value =</span> n, <span class="dt">color =</span> unique))</span></code></pre></div>
+<div id="htmlwidget-fbdc41d7efba27ca0b13" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fbdc41d7efba27ca0b13">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -22081,6 +22094,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -22352,9 +22368,9 @@
 <h2 class="hasAnchor">
 <a href="#extra-parameters" class="anchor"></a>Extra parameters</h2>
 <p>You can add other parameters to add options to the data series:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mpgman2 &lt;-<span class="st"> </span><span class="kw">count</span>(mpg, manufacturer, year)</a>
-<a class="sourceLine" id="cb14-2" title="2"></a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mpgman2)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>mpgman2 &lt;-<span class="st"> </span><span class="kw">count</span>(mpg, manufacturer, year)</span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mpgman2)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   manufacturer  year     n
 ##   &lt;chr&gt;        &lt;int&gt; &lt;int&gt;
@@ -22364,13 +22380,16 @@
 ## 4 chevrolet     2008    12
 ## 5 dodge         1999    16
 ## 6 dodge         2008    21</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman2, <span class="st">"bar"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">y =</span> n, <span class="dt">group =</span> year),</a>
-<a class="sourceLine" id="cb16-2" title="2">       <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#FCA50A"</span>, <span class="st">"#FCFFA4"</span>),</a>
-<a class="sourceLine" id="cb16-3" title="3">       <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span>))</a></code></pre></div>
-<div id="htmlwidget-f4c35ca401e746b3ae90" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f4c35ca401e746b3ae90">{
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="../reference/hchart.html">hchart</a></span>(mpgman2, <span class="st">"bar"</span>, <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> manufacturer, <span class="dt">y =</span> n, <span class="dt">group =</span> year),</span>
+<span id="cb20-2"><a href="#cb20-2"></a>       <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#FCA50A"</span>, <span class="st">"#FCFFA4"</span>),</span>
+<span id="cb20-3"><a href="#cb20-3"></a>       <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span>))</span></code></pre></div>
+<div id="htmlwidget-e2bb03b6767a2eba20f9" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e2bb03b6767a2eba20f9">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -22384,6 +22403,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -22752,12 +22774,12 @@
 <h2 class="hasAnchor">
 <a href="#a-more-advanced-examples" class="anchor"></a>A more advanced examples</h2>
 <p>Using the <code>broom</code> package is really nice due the you can work with tidy data:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom)</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">modlss &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/loess">loess</a></span>(hwy <span class="op">~</span><span class="st"> </span>cty, <span class="dt">data =</span> mpg)</a>
-<a class="sourceLine" id="cb18-2" title="2">fit &lt;-<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">augment</span>(modlss), cty)</a>
-<a class="sourceLine" id="cb18-3" title="3"></a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(fit)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>modlss &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/loess">loess</a></span>(hwy <span class="op">~</span><span class="st"> </span>cty, <span class="dt">data =</span> mpg)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>fit &lt;-<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">augment</span>(modlss), cty)</span>
+<span id="cb22-3"><a href="#cb22-3"></a></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(fit)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##     hwy   cty .fitted .se.fit  .resid
 ##   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -22768,34 +22790,37 @@
 ## 5    12     9    13.0   0.578 -1.01  
 ## 6    15    11    15.1   0.243 -0.0894</code></pre>
 <p>Now we try to be specific in what parameter we use.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/highchart.html">highchart</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</a>
-<a class="sourceLine" id="cb20-3" title="3">    mpg,</a>
-<a class="sourceLine" id="cb20-4" title="4">    <span class="dt">type =</span> <span class="st">"scatter"</span>,</a>
-<a class="sourceLine" id="cb20-5" title="5">    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy, <span class="dt">size =</span> cyl, <span class="dt">group =</span> class),</a>
-<a class="sourceLine" id="cb20-6" title="6">    <span class="dt">maxSize =</span> <span class="dv">5</span> <span class="co"># max size for bubbles</span></a>
-<a class="sourceLine" id="cb20-7" title="7">    ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</a>
-<a class="sourceLine" id="cb20-9" title="9">    fit,</a>
-<a class="sourceLine" id="cb20-10" title="10">    <span class="dt">type =</span> <span class="st">"spline"</span>,</a>
-<a class="sourceLine" id="cb20-11" title="11">    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> .fitted),</a>
-<a class="sourceLine" id="cb20-12" title="12">    <span class="dt">name =</span> <span class="st">"Fit"</span>,</a>
-<a class="sourceLine" id="cb20-13" title="13">    <span class="dt">id =</span> <span class="st">"fit"</span>, <span class="co"># this is for link the arearange series to this one and have one legend</span></a>
-<a class="sourceLine" id="cb20-14" title="14">    <span class="dt">lineWidth =</span> <span class="dv">1</span> </a>
-<a class="sourceLine" id="cb20-15" title="15">    ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-16" title="16"><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</a>
-<a class="sourceLine" id="cb20-17" title="17">    fit,</a>
-<a class="sourceLine" id="cb20-18" title="18">    <span class="dt">type =</span> <span class="st">"arearange"</span>,</a>
-<a class="sourceLine" id="cb20-19" title="19">    <span class="dt">name =</span> <span class="st">"SE"</span>,</a>
-<a class="sourceLine" id="cb20-20" title="20">    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">low =</span> .fitted <span class="op">-</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit, <span class="dt">high =</span> .fitted <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit),</a>
-<a class="sourceLine" id="cb20-21" title="21">    <span class="dt">linkedTo =</span> <span class="st">"fit"</span>, <span class="co"># here we link the legends in one.</span></a>
-<a class="sourceLine" id="cb20-22" title="22">    <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"gray"</span>, <span class="fl">0.2</span>),  <span class="co"># put a semi transparent color</span></a>
-<a class="sourceLine" id="cb20-23" title="23">    <span class="dt">zIndex =</span> <span class="dv">-3</span> <span class="co"># this is for put the series in a back so the points are showed first</span></a>
-<a class="sourceLine" id="cb20-24" title="24">    )</a></code></pre></div>
-<div id="htmlwidget-73c9d3aa766cc2316e93" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-73c9d3aa766cc2316e93">{
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw"><a href="../reference/highchart.html">highchart</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>    mpg,</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="dt">type =</span> <span class="st">"scatter"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy, <span class="dt">size =</span> cyl, <span class="dt">group =</span> class),</span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="dt">maxSize =</span> <span class="dv">5</span> <span class="co"># max size for bubbles</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</span>
+<span id="cb24-9"><a href="#cb24-9"></a>    fit,</span>
+<span id="cb24-10"><a href="#cb24-10"></a>    <span class="dt">type =</span> <span class="st">"spline"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11"></a>    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> .fitted),</span>
+<span id="cb24-12"><a href="#cb24-12"></a>    <span class="dt">name =</span> <span class="st">"Fit"</span>,</span>
+<span id="cb24-13"><a href="#cb24-13"></a>    <span class="dt">id =</span> <span class="st">"fit"</span>, <span class="co"># this is for link the arearange series to this one and have one legend</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a>    <span class="dt">lineWidth =</span> <span class="dv">1</span> </span>
+<span id="cb24-15"><a href="#cb24-15"></a>    ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb24-16"><a href="#cb24-16"></a><span class="st">  </span><span class="kw"><a href="../reference/hc_add_series.html">hc_add_series</a></span>(</span>
+<span id="cb24-17"><a href="#cb24-17"></a>    fit,</span>
+<span id="cb24-18"><a href="#cb24-18"></a>    <span class="dt">type =</span> <span class="st">"arearange"</span>,</span>
+<span id="cb24-19"><a href="#cb24-19"></a>    <span class="dt">name =</span> <span class="st">"SE"</span>,</span>
+<span id="cb24-20"><a href="#cb24-20"></a>    <span class="kw"><a href="../reference/hcaes.html">hcaes</a></span>(<span class="dt">x =</span> cty, <span class="dt">low =</span> .fitted <span class="op">-</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit, <span class="dt">high =</span> .fitted <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>.se.fit),</span>
+<span id="cb24-21"><a href="#cb24-21"></a>    <span class="dt">linkedTo =</span> <span class="st">"fit"</span>, <span class="co"># here we link the legends in one.</span></span>
+<span id="cb24-22"><a href="#cb24-22"></a>    <span class="dt">color =</span> <span class="kw"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span>(<span class="st">"gray"</span>, <span class="fl">0.2</span>),  <span class="co"># put a semi transparent color</span></span>
+<span id="cb24-23"><a href="#cb24-23"></a>    <span class="dt">zIndex =</span> <span class="dv">-3</span> <span class="co"># this is for put the series in a back so the points are showed first</span></span>
+<span id="cb24-24"><a href="#cb24-24"></a>    )</span></code></pre></div>
+<div id="htmlwidget-43b864438f36857a0582" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-43b864438f36857a0582">{
   "x": {
     "hc_opts": {
+      "chart": {
+        "reflow": true
+      },
       "title": {
         "text": null
       },
@@ -22808,6 +22833,9 @@
         "enabled": false
       },
       "exporting": {
+        "enabled": false
+      },
+      "boost": {
         "enabled": false
       },
       "plotOptions": {
@@ -31445,7 +31473,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://jkunst.com">Joshua Kunst</a>.</p>
+  <p>Developed by Joshua Kunst.</p>
 </div>
 
 <div class="pkgdown">
@@ -31455,20 +31483,6 @@
 </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
-  docsearch({
-    
-    
-    apiKey: 'API_KEY',
-    indexName: 'INDEX_NAME',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+  </body>
 </html>

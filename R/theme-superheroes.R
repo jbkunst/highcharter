@@ -1,13 +1,14 @@
 #' Superheroes theme for highcharts
 #'
-#' Inspired by \url{https://public.tableau.com/profile/ryansmith#!/vizhome/HeroesofNewYork/SuperheroesinNewYork}
+#' The superheroes theme is inspired by \url{https://public.tableau.com/profile/ryansmith#!/vizhome/HeroesofNewYork/SuperheroesinNewYork}
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_superheroes())
+#'   
 #' @export
 hc_theme_superheroes <- function(...) {
   theme <- hc_theme_flat(

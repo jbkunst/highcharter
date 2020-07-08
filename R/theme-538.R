@@ -1,19 +1,16 @@
-#' Fivethirtyeight theme for highcharts
+#' Theme collection for highcharts
 #'
-#' @param ... Named argument to modify the theme
+#' Highcharts is very flexible so you can modify every element of the chart.
+#' There are some exiting themes so you can apply style to charts with few
+#' lines of code.
+#'
+#' @param ... A named parameters to modify the theme.
 #'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_538())
 #'
-#' highcharts_demo() %>%
-#'   hc_add_theme(
-#'     hc_theme_538(
-#'       colors = c("red", "blue", "green"),
-#'       chart = list(backgroundColor = "white")
-#'     )
-#'   )
 #' @export
 hc_theme_538 <- function(...) {
   theme <-

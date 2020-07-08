@@ -1,8 +1,8 @@
 #' Monokai theme for highcharts
 #'
-#' A well know text editor theme
+#' Monokai is a well know text editor theme.
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'

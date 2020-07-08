@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Convert an object to list with identical structure — list_parse" />
 <meta property="og:description" content="This functions are similar to rlist::list.parse but this removes
-names." />
+names. NA's are removed for compatibility with rjson::toJSON." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -93,7 +93,7 @@ names." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -177,7 +177,7 @@ names." />
 
     <div class="ref-description">
     <p>This functions are similar to <code><a href='https://www.rdocumentation.org/packages/rlist/topics/list.parse'>rlist::list.parse</a></code> but this removes
-names.</p>
+names. NA's are removed for compatibility with rjson::toJSON.</p>
     </div>
 
     <pre class="usage"><span class='fu'>list_parse</span>(<span class='no'>df</span>)

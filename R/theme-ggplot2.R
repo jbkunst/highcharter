@@ -1,8 +1,8 @@
 #' ggplot2 theme for highcharts
 #'
-#' Based on \url{https://ggplot2.tidyverse.org/}.
+#' ggplot2 theme is based on \url{https://ggplot2.tidyverse.org/}.
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'

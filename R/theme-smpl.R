@@ -1,14 +1,15 @@
 #' Simple theme for highcharts
 #'
-#' Design inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r}
-#' and color by \url{https://www.materialui.co/flatuicolors}
+#' Theme smpl design is inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r}
+#' and color by \url{https://www.materialui.co/flatuicolors}.
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_smpl())
+#'   
 #' @export
 hc_theme_smpl <- function(...) {
   theme <-

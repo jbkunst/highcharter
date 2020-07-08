@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -212,19 +212,24 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"nice"</span>, <span class='st'>"good"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))
-
-<span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"nice"</span>, <span class='st'>"good"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-
-<span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"nice"</span>, <span class='st'>"good"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>), <span class='kw'>icons</span> <span class='kw'>=</span> <span class='st'>"child"</span>)
-
+<span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"nice"</span>, <span class='st'>"good"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Use type 'item' instead (`hchart(df, "item", hcaes(name = labels, y = counts))`).</span>
+#&gt; <span class='warning'>Item chart provides better behaviour beside is a specific type of chart of HighchartsJS.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `arrange_()` is deprecated as of dplyr 0.7.0.</span>
+#&gt; <span class='warning'>Please use `arrange()` instead.</span>
+#&gt; <span class='warning'>See vignette('programming') for more help</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
+<span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"nice"</span>, <span class='st'>"good"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Use type 'item' instead (`hchart(df, "item", hcaes(name = labels, y = counts))`).</span>
+#&gt; <span class='warning'>Item chart provides better behaviour beside is a specific type of chart of HighchartsJS.</span></div><div class='input'>
+<span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"nice"</span>, <span class='st'>"good"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>), <span class='kw'>icons</span> <span class='kw'>=</span> <span class='st'>"child"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Use type 'item' instead (`hchart(df, "item", hcaes(name = labels, y = counts))`).</span>
+#&gt; <span class='warning'>Item chart provides better behaviour beside is a specific type of chart of HighchartsJS.</span></div><div class='input'>
 <span class='fu'>hciconarray</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"car"</span>, <span class='st'>"truck"</span>, <span class='st'>"plane"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>75</span>, <span class='fl'>30</span>, <span class='fl'>20</span>), <span class='kw'>icons</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"car"</span>, <span class='st'>"truck"</span>, <span class='st'>"plane"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='hc_add_theme.html'>hc_add_theme</a></span>(
     <span class='fu'><a href='hc_theme_merge.html'>hc_theme_merge</a></span>(
-      <span class='fu'><a href='hc_theme_flatdark.html'>hc_theme_flatdark</a></span>(),
-      <span class='fu'><a href='hc_theme_null.html'>hc_theme_null</a></span>(<span class='kw'>chart</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>backgroundColor</span> <span class='kw'>=</span> <span class='st'>"#34495e"</span>))
+      <span class='fu'><a href='hc_theme_smpl.html'>hc_theme_flatdark</a></span>(),
+      <span class='fu'><a href='hc_theme_smpl.html'>hc_theme_null</a></span>(<span class='kw'>chart</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>backgroundColor</span> <span class='kw'>=</span> <span class='st'>"#34495e"</span>))
     )
-  )</div></pre>
+  )</div><div class='output co'>#&gt; <span class='warning'>Warning: Use type 'item' instead (`hchart(df, "item", hcaes(name = labels, y = counts))`).</span>
+#&gt; <span class='warning'>Item chart provides better behaviour beside is a specific type of chart of HighchartsJS.</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

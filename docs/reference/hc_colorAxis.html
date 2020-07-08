@@ -117,7 +117,7 @@ programmatic access to the axis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -246,23 +246,50 @@ programmatic access to the axis.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>mpg</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ggplot2"</span>)
+
+<span class='no'>mpgman2</span> <span class='kw'>&lt;-</span> <span class='no'>mpg</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>manufacturer</span>, <span class='no'>year</span>) <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(
+    <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>(),
+    <span class='kw'>displ</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>displ</span>)
+    )</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'manufacturer' (override with `.groups` argument)</span></div><div class='input'>
+<span class='no'>mpgman2</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 30 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   manufacturer [15]</span><span>
+#&gt;    manufacturer  year     n displ
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> audi          </span><span style='text-decoration: underline;'>1</span><span>999     9  2.36
+#&gt; </span><span style='color: #555555;'> 2</span><span> audi          </span><span style='text-decoration: underline;'>2</span><span>008     9  2.73
+#&gt; </span><span style='color: #555555;'> 3</span><span> chevrolet     </span><span style='text-decoration: underline;'>1</span><span>999     7  4.97
+#&gt; </span><span style='color: #555555;'> 4</span><span> chevrolet     </span><span style='text-decoration: underline;'>2</span><span>008    12  5.12
+#&gt; </span><span style='color: #555555;'> 5</span><span> dodge         </span><span style='text-decoration: underline;'>1</span><span>999    16  4.32
+#&gt; </span><span style='color: #555555;'> 6</span><span> dodge         </span><span style='text-decoration: underline;'>2</span><span>008    21  4.42
+#&gt; </span><span style='color: #555555;'> 7</span><span> ford          </span><span style='text-decoration: underline;'>1</span><span>999    15  4.45
+#&gt; </span><span style='color: #555555;'> 8</span><span> ford          </span><span style='text-decoration: underline;'>2</span><span>008    10  4.66
+#&gt; </span><span style='color: #555555;'> 9</span><span> honda         </span><span style='text-decoration: underline;'>1</span><span>999     5  1.6 
+#&gt; </span><span style='color: #555555;'>10</span><span> honda         </span><span style='text-decoration: underline;'>2</span><span>008     4  1.85
+#&gt; </span><span style='color: #555555;'># ... with 20 more rows</span><span></div><div class='input'>
+<span class='fu'><a href='hchart.html'>hchart</a></span>(
+  <span class='no'>mpgman2</span>, <span class='st'>"column"</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>manufacturer</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>year</span>),
+  <span class='kw'>colorKey</span> <span class='kw'>=</span> <span class='st'>"displ"</span>,
+  <span class='co'># color = c("#FCA50A", "#FCFFA4"),</span>
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Year 1999"</span>, <span class='st'>"Year 2008"</span>)
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>hc_colorAxis</span>(<span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+
+<span class='co'># defaults to yAxis</span>
 <span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>iris</span>, <span class='st'>"point"</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='no'>Sepal.Length</span>, <span class='no'>Sepal.Width</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'>hc_colorAxis</span>(
-    <span class='kw'>minColor</span> <span class='kw'>=</span> <span class='st'>"gray"</span>,
-    <span class='kw'>maxColor</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>
-  )
-
-
-<span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>iris</span>, <span class='st'>"point"</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='no'>Sepal.Length</span>, <span class='no'>Sepal.Width</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>Species</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>hc_colorAxis</span>(
-    <span class='kw'>minColor</span> <span class='kw'>=</span> <span class='st'>"gray"</span>,
-    <span class='kw'>maxColor</span> <span class='kw'>=</span> <span class='st'>"yellow"</span>
+    <span class='kw'>minColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+    <span class='kw'>maxColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>
   )
 
 
 
-<span class='no'>hc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>volcano</span>)
-
+<span class='co'># Ex2</span>
 <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>5</span>
 
 <span class='no'>stops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
@@ -273,8 +300,14 @@ programmatic access to the axis.</p>
 
 <span class='no'>stops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_parse.html'>list_parse2</a></span>(<span class='no'>stops</span>)
 
-<span class='no'>hc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>hc_colorAxis</span>(<span class='kw'>stops</span> <span class='kw'>=</span> <span class='no'>stops</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div></pre>
+<span class='no'>M</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>50</span>*<span class='fl'>50</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>50</span>), <span class='fl'>2</span>)
+
+<span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>M</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>hc_colorAxis</span>(<span class='kw'>stops</span> <span class='kw'>=</span> <span class='no'>stops</span>)
+
+<span class='co'># Ex3</span>
+<span class='co'># hchart(volcano) %&gt;% </span>
+<span class='co'>#   hc_colorAxis(stops = stops, max = 200)</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

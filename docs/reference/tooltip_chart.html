@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -178,8 +178,7 @@
     <p>Helper to create charts in tooltips.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tooltip_chart</span>(<span class='kw'>accesor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hc_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>250</span>,
-  <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>150</span>)</pre>
+    <pre class="usage"><span class='fu'>tooltip_chart</span>(<span class='kw'>accesor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hc_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>150</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,9 +226,9 @@ inside of <code>hc_tooltip</code> function an <code>useHTML = TRUE</code> option
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, <span class='no'>mutate_mapping</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>lifeExp</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>gdpPercap</span>), <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, <span class='no'>list_parse</span>)
   ) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>ttdata</span> <span class='kw'>=</span> <span class='no'>data</span>)
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span>(<span class='kw'>ttdata</span> <span class='kw'>=</span> <span class='no'>data</span>)
 
-<span class='no'>gptot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>gp</span>, <span class='no'>gp2</span>)
+<span class='no'>gptot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='no'>gp</span>, <span class='no'>gp2</span>)
 
 <span class='no'>hc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hchart.html'>hchart</a></span>(
   <span class='no'>gptot</span>,

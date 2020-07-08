@@ -95,7 +95,7 @@ Similar in spirit to ggplot2::aes_string" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">highcharter</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1.9001</span>
       </span>
     </div>
 
@@ -200,19 +200,13 @@ they are so common; all other aesthetics must be named.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>mtcars</span>, <span class='st'>"point"</span>, <span class='fu'>hcaes_string</span>(<span class='st'>"hp"</span>, <span class='st'>"mpg"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"cyl"</span>))
-
-<span class='fu'>hcaes_string</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"xval"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"colorvar"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"grvar"</span>)</div><div class='output co'>#&gt; $color
-#&gt; colorvar
-#&gt; 
-#&gt; $group
-#&gt; grvar
-#&gt; 
-#&gt; $x
-#&gt; xval
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "hcaes" "list" </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>mtcars</span>, <span class='st'>"point"</span>, <span class='fu'>hcaes_string</span>(<span class='st'>"hp"</span>, <span class='st'>"mpg"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"cyl"</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Problem with `mutate()` input `group`.</span>
+#&gt; <span class='error'><span style='color: #BB0000;'>x</span><span> Input `group` must be a vector, not a `formula` object.</span>
+#&gt; <span class='error'></span><span style='color: #0000BB;'>i</span><span> Input `group` is `~cyl`.</span></div><div class='input'>
+<span class='fu'>hcaes_string</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"xval"</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"colorvar"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"grvar"</span>)</div><div class='output co'>#&gt; Aesthetic mapping: 
+#&gt; * `color` -&gt; `colorvar`
+#&gt; * `group` -&gt; `grvar`
+#&gt; * `x`     -&gt; `xval`</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

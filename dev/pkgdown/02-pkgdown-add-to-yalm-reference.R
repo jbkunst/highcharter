@@ -2,11 +2,17 @@
 library(yaml)
 library(tidyverse)
 
+
+# buildocs ----------------------------------------------------------------
+devtools::document()
+
 # data --------------------------------------------------------------------
 yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
+# the package need to be build
 dfun <- help.search("*", package = "highcharter") %>%
-  .$matches %>% tbl_df() %>%
+  .$matches %>% 
+  tibble::as_tibble() %>%
   janitor::clean_names() %>% 
   select(name, title) %>% 
   distinct()
@@ -19,7 +25,9 @@ fun_hc_api <- read_lines("R/highcharts-api.R") %>%
 fun_hc_thm <- dfun %>% 
   filter(str_detect(name, "theme")) %>% 
   distinct() %>% 
-  pull(name)
+  pull(name) %>% 
+  c("hc_theme", "hc_add_theme", "hc_theme_merge", .) %>% 
+  unique()
 
 fun_hc_add_series <- dfun %>% 
   filter(str_detect(name, "hc_add_series")) %>% 
@@ -44,8 +52,6 @@ datas <- read_lines("R/data.R") %>%
   str_trim() %>% 
   str_remove_all("\"")
   
-
-
 # gen reference -----------------------------------------------------------
 yml[["reference"]] <- list(
   list(
@@ -84,10 +90,9 @@ yml[["reference"]] <- list(
 # write reference ---------------------------------------------------------
 write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
-
 # build reference ---------------------------------------------------------
 pkgdown::build_reference_index()
-# pkgdown::build_reference()
+pkgdown::build_reference()
 
 
 

@@ -1,11 +1,12 @@
 #' Alone theme for highcharts
 #'
-#' @param ... Named argument to modify the theme
-#'
+#' @rdname hc_theme_538
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_alone())
+#'   
 #' @export
 hc_theme_alone <- function(...) {
   theme <-

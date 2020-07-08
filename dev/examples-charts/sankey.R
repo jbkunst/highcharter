@@ -1,22 +1,3 @@
-# energy <- paste0(
-#   "https://cdn.rawgit.com/christophergandrud/networkD3/",
-#   "master/JSONdata/energy.json"
-# ) %>% 
-#   jsonlite::fromJSON()
-# 
-# dfnodes <- energy$nodes %>% 
-#   map_df(as.data.frame) %>% 
-#   mutate(id = row_number() - 1)
-# 
-# dflinks <- tbl_df(energy$links)
-# 
-# dflinks <- dflinks %>% 
-#   left_join(dfnodes %>% rename(from = value), by = c("source" = "id")) %>% 
-#   left_join(dfnodes %>% rename(to = value), by = c("target" = "id")) 
-# 
-# hchart(dflinks, "sankey", hcaes(from = from, to = to, weight = value))
-
-
 UKvisits <- data.frame(
   origin = c("France", "Germany", "USA", "Irish Republic", "Netherlands", "Spain", "Italy",
            "Poland", "Belgium", "Australia",  "Other countries", rep("UK", 5)),

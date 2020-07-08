@@ -2,18 +2,20 @@
 % Please edit documentation in R/theme.R
 \name{hc_theme}
 \alias{hc_theme}
-\title{Highchart theme constructor}
+\title{Creating highcharter themes}
 \usage{
 hc_theme(...)
 }
 \arguments{
-\item{...}{A named parameters.}
+\item{...}{A list of named parameters.}
 }
 \description{
-Function to create highcharts themes.
+Highcharts is very flexible so you can modify every element of the chart.
+There are some exiting themes so you can apply style to charts with few
+lines of code.
 }
 \details{
-More examples are in \url{http://www.highcharts.com/docs/chart-design-and-style/themes}.
+More examples and details in \url{http://www.highcharts.com/docs/chart-design-and-style/themes}.
 }
 \examples{
 
@@ -49,5 +51,6 @@ thm <- hc_theme(
   )
 )
 
-hc \%>\% hc_add_theme(thm)
+hc_add_theme(hc, thm)
+
 }

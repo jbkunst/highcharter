@@ -1,7 +1,7 @@
-#' Boolmberg Graphics theme for highcharts
+#' Bloomberg Graphics theme for highcharts
 #'
-#' @param ... Named argument to modify the theme
-#'
+#' @rdname hc_theme_538
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%

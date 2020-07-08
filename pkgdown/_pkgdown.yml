@@ -1,3 +1,5 @@
+home:
+  path: pkgdown/index.Rmd
 template:
   params:
     bootswatch: cosmo
@@ -65,10 +67,11 @@ reference:
 - title: Helpers to add
   desc: Function to add other plugins as dependencies, events or annotations.
   contents:
+  - hc_add_annotation
   - hc_add_dependency
   - hc_add_dependency_fa
   - hc_add_event_point
-  - hc_add_annotation
+  - hc_add_yAxis
 - title: Helpers to customize tooltips
   desc: Function to help get table or charts in tooltips.
   contents:
@@ -77,32 +80,10 @@ reference:
 - title: Themes
   desc: Functions to customize the look of your chart.
   contents:
-  - hc_add_theme
   - hc_theme
-  - hc_theme_538
-  - hc_theme_alone
-  - hc_theme_bloom
-  - hc_theme_chalk
-  - hc_theme_darkunica
-  - hc_theme_db
-  - hc_theme_economist
-  - hc_theme_elementary
-  - hc_theme_ffx
-  - hc_theme_flat
-  - hc_theme_flatdark
-  - hc_theme_ft
-  - hc_theme_ggplot2
-  - hc_theme_google
-  - hc_theme_gridlight
-  - hc_theme_handdrawn
+  - hc_add_theme
   - hc_theme_merge
-  - hc_theme_monokai
-  - hc_theme_null
-  - hc_theme_sandsignika
-  - hc_theme_smpl
-  - hc_theme_sparkline
-  - hc_theme_superheroes
-  - hc_theme_tufte
+  - hc_theme_538
 - title: Data
   desc: Data for examples
   contents:

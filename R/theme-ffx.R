@@ -1,8 +1,8 @@
 #' Firefox theme for highcharts
 #'
-#' Theme inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
+#' Firefox theme was inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'

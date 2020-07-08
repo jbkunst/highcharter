@@ -1,8 +1,8 @@
 #' Null theme for highcharts
 #'
-#' Null theme for highcharts. Axis are removed (\code{visible = FALSE}).
+#' For Null theme the axis are removed (\code{visible = FALSE}).
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'

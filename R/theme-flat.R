@@ -1,9 +1,10 @@
 #' Flat theme for highcharts
 #'
-#' Base16 inspired theme \url{https://github.com/chriskempson/base16} and
+#' Flat and flatdark theme is inspired by 
+#' \url{https://github.com/chriskempson/base16} and
 #' \url{https://github.com/cttobin/ggthemr#flat}
 #'
-#' @param ... Named argument to modify the theme
+#' @rdname hc_theme_538
 #'
 #' @examples
 #'
