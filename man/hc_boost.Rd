@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_boost}
 \alias{hc_boost}
-\title{boost options for highcharter objects}
+\title{Boost options for highcharter objects}
 \usage{
 hc_boost(hc, ...)
 }
@@ -12,7 +12,7 @@ hc_boost(hc, ...)
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/boost}.}
 }
 \description{
-boost options for highcharter objects
+Boost options for highcharter objects
 }
 \examples{
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_zAxis}
 \alias{hc_zAxis}
-\title{zAxis options for highcharter objects}
+\title{Zaxis options for highcharter objects}
 \usage{
 hc_zAxis(hc, ...)
 }

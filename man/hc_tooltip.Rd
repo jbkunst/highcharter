@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_tooltip}
 \alias{hc_tooltip}
-\title{tooltip options for highcharter objects}
+\title{Tooltip options for highcharter objects}
 \usage{
 hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_drilldown}
 \alias{hc_drilldown}
-\title{drilldown options for highcharter objects}
+\title{Drilldown options for highcharter objects}
 \usage{
 hc_drilldown(hc, ...)
 }

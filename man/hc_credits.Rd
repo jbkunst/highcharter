@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_credits}
 \alias{hc_credits}
-\title{credits options for highcharter objects}
+\title{Credits options for highcharter objects}
 \usage{
 hc_credits(hc, ...)
 }

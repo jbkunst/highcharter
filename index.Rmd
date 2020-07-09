@@ -17,9 +17,10 @@
 
 <div id="brand"><img src="man/figures/logo.png"width ="15%"/> h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div> 
 
-<br/>
-<hr/>
-<br/>
+Highcharter is a [R](https://cran.r-project.org/) wrapper for 
+**[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.
+Highcharts is very mature and flexible javascript charting library and 
+it has a great and powerful API^[See http://www.highcharts.com/demo].
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -31,8 +32,6 @@ library(dplyr)
 library(htmltools)
 ```
 
-
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(highcharter)
 library(tidyverse)
@@ -43,11 +42,14 @@ library(viridisLite)
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
 
+cols <-  c("#47475C", "#d35400",  "#8087E8", "#A3EDBA", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d")
+
+# scales::show_col(cols)
+
 hc_theme_highcharts <- 
   hc_theme_smpl(
     chart = list(backgroundColor = "transparent"),
-    colors = c("#47475C", "#A3EDBA", "#8087E8",
-               "#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"),
+    colors = cols,
     plotOptions = list(
       series = list(showInLegend = FALSE),
       line = list(lineWidth = 1.2)
@@ -83,7 +85,8 @@ p2 <- hchart(
   name = "Air Passengers data"
   ) %>%
   hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
-  hc_add_theme(hc_theme_highcharts)
+  hc_add_theme(hc_theme_highcharts) %>% 
+  hc_tooltip(shared = TRUE)
 
 # example 3
 data(GNI2014, package = "treemap")
@@ -93,6 +96,7 @@ p3 <- hcmap(
   data = GNI2014,
   name = "GNI",
   value = "GNI",
+  borderWidth = 0,
   joinBy = c("iso-a3", "iso3"),
   nullColor = "#932667"
   ) %>%
@@ -181,55 +185,45 @@ divplots <- htmltools::tagList(tags$div(class = "row", style = "padding-right: 1
 divplots
 ```
 
+The main features of highcharter are:
 
-Highcharter is a [R](https://cran.r-project.org/) wrapper for 
-**[Highcharts](https://www.highcharts.com/)**  javascript libray and its modules.
-Highcharts is very mature and flexible javascript charting library and 
-it has a great and powerful API^[See http://www.highcharts.com/demo].
-
-The main features of this package are:
-
-* Chart various R objects with one function. With hchart(x) you can 
-chart: data.frames, numeric, histogram, character, density, factors, ts,
- mts, xts, stl, ohlc, acf, forecast, mforecast, ets, igraph, dist,
-  dendrogram, survfit classes.
+* Chart various R objects with one function: with `hchart(x)` you can 
+chart `data.frames`, `numeric` or `character` vectors, `ts`,
+ `xts`, `forecast`, `survfit`  objects.
 * Support Highstock charts. You can create a candlestick charts in 2 lines 
-of code. Support xts objects from the quantmod package.
-* Support Highmaps charts. It's easy to create choropleths or add 
-information in geojson format.
-* Themes: you configurate your chart in multiples ways. There are
+of code. Support `xts` class from the {quantmod} package.
+* Support Highmaps charts. It's easy to create choropleth or add 
+information in `geojson` format.
+* Themes: you configure your chart in multiples ways. There are
  implemented themes like economist, financial times, google, 538 among 
  others.
-* A lot of features and plugins: motion, draggable points, fonta-wesome, tooltips, annotations.
+* A lot of features and plugins: motion, draggable points, fonta-wesome,
+tooltips, annotations.
 
 
 ## <span class="fa fa-bar-chart"></span> Highcharts
 
-This is a simple example using `hchart` function.
-
-```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-# options(highcharter.theme = hc_theme_smpl())
-```
+Let's start with a simple example using `hchart` function.
 
 ```{r}
 library(highcharter)
-data(diamonds, mpg, package = "ggplot2")
+# remotes::install_github("allisonhorst/palmerpenguins")
+data(penguins, package = "palmerpenguins")
 
-hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
+hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group = species))
 ```
 
 Among its features highcharter can chart various objects depending of
-its class with the generic^[I want to say *magic*]  `hchart` function.
+its class with the generic^[I wanted to say *magic*]  `hchart` function.
 
 ```{r}
-x <- c(rnorm(10000), rnorm(5000, 5))
+x <- c(rnorm(10000), rnorm(1000, 5))
 
 hchart(x, name = "data") 
 ```
 
 One of the nicest class which `hchart` can plot is the `forecast`
-class from the forecast package.
+class from the {forecast} package.
 
 ```{r}
 library(forecast)
@@ -242,13 +236,18 @@ hchart(airforecast)
 ## <span class="fa fa-line-chart"></span> Highstock
 
 With highcharter you can use the highstock library which 
-include sophisticated navigation options like a small navigator 
-series, preset date ranges, date picker, scrolling and panning.
-With highcarter it's easy make candlesticks or ohlc charts using
-time series data. Integration with data from [quantmod](http://www.quantmod.com/)
-package.
+include sophisticated navigation options like_
 
-```{r}
+- Small navigator series
+- Preset date ranges
+- Date picker
+- Scrolling and panning.
+
+With highcarter it's easy make candlesticks or ohlc charts using
+time series data. For example, using data from 
+[quantmod](http://www.quantmod.com/) package.
+
+```{r, message=FALSE, warning=FALSE}
 library(quantmod)
 
 x <- getSymbols("GOOG", auto.assign = FALSE)
@@ -261,16 +260,21 @@ highchart(type = "stock") %>%
 
 ## <span class="fa fa-map-o"></span> Highmaps
 
-You can chart maps and choropleth using the highmaps module., build interactive 
-maps to display data linked to geographic objects. 
+We can chart maps elements and choropleth using the highmaps and 
+build interactive maps to display data linked to geographic objects. 
 
 ```{r}
 data(GNI2014, package = "treemap")
 
 hcmap(
-  "custom/world-robinson-lowres", data = GNI2014,
-  name = "GNI", value = "GNI", joinBy = c("iso-a3", "iso3")
-) %>%
+  "custom/world-robinson-lowres", 
+  data = GNI2014,
+  name = "Gross national income per capita", 
+  value = "GNI",
+  borderWidth = 0,
+  nullColor = "#d3d3d3",
+  joinBy = c("iso-a3", "iso3")
+  ) %>%
   hc_colorAxis(
     stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
     type = "logarithmic"
@@ -287,10 +291,9 @@ install.packages("highcharter")
 ```
 
 Development version:
+
 ```r
-devtools::install_github("jbkunst/highcharter")
 remotes::install_github("jbkunst/highcharter")
-source("https://install-github.me/jbkunst/highcharter")
 ```
 
 ## Licence 

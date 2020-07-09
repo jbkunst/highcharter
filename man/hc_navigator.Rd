@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_navigator}
 \alias{hc_navigator}
-\title{navigator options for highcharter objects}
+\title{Navigator options for highcharter objects}
 \usage{
 hc_navigator(hc, ...)
 }

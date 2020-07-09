@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_annotations}
 \alias{hc_annotations}
-\title{annotations options for highcharter objects}
+\title{Annotations options for highcharter objects}
 \usage{
 hc_annotations(hc, ...)
 }

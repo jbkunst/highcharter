@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_pane}
 \alias{hc_pane}
-\title{pane options for highcharter objects}
+\title{Pane options for highcharter objects}
 \usage{
 hc_pane(hc, ...)
 }

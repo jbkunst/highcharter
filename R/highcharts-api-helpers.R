@@ -346,9 +346,7 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   hc
 }
 
-
-
-#' @rdname hc_xAxis
+#' @rdname hc_add_yAxis
 #' @export
 hc_yAxis_multiples <- function(hc, ...) {
   if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_yaxis_list") {
@@ -361,12 +359,14 @@ hc_yAxis_multiples <- function(hc, ...) {
 }
 
 #' Creating multiples yAxis t use with highcharts
+#' 
 #' @param naxis Number of axis an integer.
 #' @param heights A numeric vector. This values will be normalized.
 #' @param sep A numeric value for the separation (in percentage) for the panes.
 #' @param offset A numeric value (in percentage).
 #' @param turnopposite A logical value to turn the side of each axis or not.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}.
+#' 
 #' @examples
 #'
 #' highchart() %>%
@@ -382,6 +382,7 @@ hc_yAxis_multiples <- function(hc, ...) {
 #'   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)
 #'   
 #' @importFrom dplyr bind_cols
+#' @rdname hc_add_yAxis
 #' @export
 create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
                          offset = 0, turnopposite = TRUE, ...) {

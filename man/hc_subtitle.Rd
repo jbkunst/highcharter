@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_subtitle}
 \alias{hc_subtitle}
-\title{subtitle options for highcharter objects}
+\title{Subtitle options for highcharter objects}
 \usage{
 hc_subtitle(hc, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_caption}
 \alias{hc_caption}
-\title{caption options for highcharter objects}
+\title{Caption options for highcharter objects}
 \usage{
 hc_caption(hc, ...)
 }

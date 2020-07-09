@@ -22,8 +22,10 @@ articles:
   - highcharts-api
 reference:
 - title: Highcharts API
-  desc: Functions to access the highcharts API and modify charts.
+  desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).
   contents:
+  - highchart
+  - hchart
   - hc_annotations
   - hc_boost
   - hc_caption
@@ -49,6 +51,29 @@ reference:
   - hc_rangeSelector
   - hc_scrollbar
   - hc_mapNavigation
+  - highchart2
+  - highchartzero
+- title: Additional function to use Highcharts API
+  desc: |-
+    Helpers function to add or modify elements, like plugins (as {htmltools} dependencies), events or annotations and
+        functions to create valid arguments in `dataClasses`, `stops` or `pointFormatter` parameters.
+  contents:
+  - color_classes
+  - color_stops
+  - colorize
+  - hc_add_annotation
+  - hc_add_dependency
+  - hc_add_dependency_fa
+  - hc_add_event_point
+  - hc_add_yAxis
+  - hc_elementId
+  - hc_motion
+  - hc_rm_series
+  - hc_size
+  - hc_yAxis_multiples
+  - tooltip_chart
+  - tooltip_table
+  - hex_to_rgba
 - title: Add data
   desc: Functions to add data from R objects to a highcharts charts.
   contents:
@@ -64,19 +89,6 @@ reference:
   - hc_add_series.xts
   - hc_add_series_list
   - hc_add_series_map
-- title: Helpers to add
-  desc: Function to add other plugins as dependencies, events or annotations.
-  contents:
-  - hc_add_annotation
-  - hc_add_dependency
-  - hc_add_dependency_fa
-  - hc_add_event_point
-  - hc_add_yAxis
-- title: Helpers to customize tooltips
-  desc: Function to help get table or charts in tooltips.
-  contents:
-  - tooltip_chart
-  - tooltip_table
 - title: Themes
   desc: Functions to customize the look of your chart.
   contents:
@@ -100,3 +112,31 @@ reference:
   - vaccines
   - weather
   - worldgeojson
+- title: Extra functions
+  contents:
+  - create_yaxis
+  - datetime_to_timestamp
+  - download_map_data
+  - export_hc
+  - get_data_from_map
+  - get_hc_series_from_df
+  - hcaes
+  - hcaes_string
+  - hcboxplot
+  - hchart.survfit
+  - hciconarray
+  - hcmap
+  - hcparcords
+  - hcspark
+  - hctreemap
+  - hctreemap2
+  - highchartOutput
+  - highcharts_demo
+  - hw_grid
+  - is.hexcolor
+  - is.highchart
+  - list_parse
+  - mutate_mapping
+  - random_id
+  - renderHighchart
+  - str_to_id

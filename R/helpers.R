@@ -340,10 +340,10 @@ is.hexcolor <- function(x) {
 
   str_detect(x, pattern)
 }
+
 #' Function to generate iids
 #' @param n Number of ids
 #' @param length Length of ids
-#' @export
 random_id <- function(n = 1, length = 10) {
   source <- c(seq(0, 9), letters)
 
@@ -358,6 +358,8 @@ random_id <- function(n = 1, length = 10) {
 #'
 #' highchart() %>%
 #'   hc_add_series(data = 1)
+#'   
+#' @noRd   
 fix_1_length_data <- function(x) {
   if (getOption("highcharter.verbose")) {
     message("fix_1_length")

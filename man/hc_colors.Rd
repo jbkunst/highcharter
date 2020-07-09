@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_colors}
 \alias{hc_colors}
-\title{colors options for highcharter objects}
+\title{Colors options for highcharter objects}
 \usage{
 hc_colors(hc, colors)
 }

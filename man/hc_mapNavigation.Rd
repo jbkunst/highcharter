@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_mapNavigation}
 \alias{hc_mapNavigation}
-\title{mapNavigation options for highcharter objects}
+\title{Mapnavigation options for highcharter objects}
 \usage{
 hc_mapNavigation(hc, ...)
 }
@@ -12,7 +12,7 @@ hc_mapNavigation(hc, ...)
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highmaps/mapNavigation}.}
 }
 \description{
-mapNavigation options for highcharter objects
+Mapnavigation options for highcharter objects
 }
 \examples{
 

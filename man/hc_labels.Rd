@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_labels}
 \alias{hc_labels}
-\title{labels options for highcharter objects}
+\title{Labels options for highcharter objects}
 \usage{
 hc_labels(hc, ...)
 }

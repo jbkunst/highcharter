@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_colorAxis}
 \alias{hc_colorAxis}
-\title{colorAxis options for highcharter objects}
+\title{Coloraxis options for highcharter objects}
 \usage{
 hc_colorAxis(hc, ...)
 }

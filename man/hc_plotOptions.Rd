@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_plotOptions}
 \alias{hc_plotOptions}
-\title{plotOptions options for highcharter objects}
+\title{Plotoptions options for highcharter objects}
 \usage{
 hc_plotOptions(hc, ...)
 }

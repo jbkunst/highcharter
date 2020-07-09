@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_scrollbar}
 \alias{hc_scrollbar}
-\title{scrollbar options for highcharter objects}
+\title{Scrollbar options for highcharter objects}
 \usage{
 hc_scrollbar(hc, ...)
 }

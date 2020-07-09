@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_legend}
 \alias{hc_legend}
-\title{legend options for highcharter objects}
+\title{Legend options for highcharter objects}
 \usage{
 hc_legend(hc, ...)
 }

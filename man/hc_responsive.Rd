@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_responsive}
 \alias{hc_responsive}
-\title{responsive options for highcharter objects}
+\title{Responsive options for highcharter objects}
 \usage{
 hc_responsive(hc, ...)
 }

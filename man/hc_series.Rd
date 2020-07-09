@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_series}
 \alias{hc_series}
-\title{series options for highcharter objects}
+\title{Series options for highcharter objects}
 \usage{
 hc_series(hc, ...)
 }

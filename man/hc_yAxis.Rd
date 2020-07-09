@@ -2,7 +2,7 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_yAxis}
 \alias{hc_yAxis}
-\title{yAxis options for highcharter objects}
+\title{Yaxis options for highcharter objects}
 \usage{
 hc_yAxis(hc, ...)
 }
