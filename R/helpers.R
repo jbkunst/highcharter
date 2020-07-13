@@ -123,6 +123,7 @@ hex_to_rgba <- function(x, alpha = 1) {
 #' @examples
 #'
 #' highcharts_demo()
+#' 
 #' @export
 highcharts_demo <- function() {
   
@@ -156,6 +157,8 @@ highcharts_demo <- function() {
   highchart() %>%
     hc_title(text = "Monthly Average Temperature") %>%
     hc_subtitle(text = "Source: WorldClimate.com") %>%
+    hc_caption(text = "This is a caption text to show the style of this type of text") %>% 
+    hc_credits(text = "Made with highcharter", href = "http://jkunst.com/highcharter/", enabled = TRUE) %>% 
     hc_yAxis(title = list(text = "Temperature")) %>%
     hc_xAxis(title = list(text = "Months")) %>%
     hc_xAxis(categories = dtemp$month) %>%

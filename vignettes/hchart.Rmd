@@ -1,11 +1,18 @@
 ---
-title: "`hchart` Function"
+title: "hchart Function"
 author: Joshua Kunst
 output: rmarkdown::html_vignette
+description: >
+  This a generic function, this means you can chart various R like numeric, 
+  histograms, character, factor, ts on the fly.
+  The resulting chart is a highchart object so you can keep 
+  modifying with the implemented API.
 vignette: >
-  %\VignetteIndexEntry{`hchart` Function}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{hchart Function}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 <script>
@@ -21,13 +28,14 @@ $(document).ready(function(){
 ```{r, include=FALSE}
 library(highcharter)
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-options(highcharter.theme = hc_theme_smpl(tooltip = list(valueDecimals = 2)))
+options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 options(download.file.method = "libcurl")
 ```
 
-The `hchart` function is generic, this means you can chart various R objects 
-on the fly. The resulting chart is a highchart object
-so you can keep modifying with the implmented API.
+This a generic function, this means you can chart various R like numeric, 
+histograms, character, factor, ts on the fly.
+The resulting chart is a highchart object so you can keep 
+modifying with the implemented API.
 
 ## Data Frames
 
@@ -37,16 +45,17 @@ of chart and then define the aesthetics for each variable.
 ```{r}
 library(highcharter)
 library(dplyr)
+# remotes::install_github("allisonhorst/palmerpenguins")
+data(penguins, package = "palmerpenguins")
+data(diamonds, economics_long, package = "ggplot2")
 
-data(diamonds, economics_long, mpg, package = "ggplot2")
+hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group = species))
 
-hchart(mpg, "scatter", hcaes(x = displ, y = hwy, group = class))
-
-mpgman2 <- mpg %>%
-  count(class, year) %>%
+penguins2 <- penguins %>%
+  count(species, island) %>%
   glimpse()
 
-hchart(mpgman2, "column", hcaes(x = class, y = n, group = year))
+hchart(penguins2, "column", hcaes(x = island, y = n, group = species))
 ```
 
 Check automatically if the x column is date class:
@@ -81,7 +90,8 @@ hchart(x, type = "column")
 ## Time Series
 
 ```{r}
-hchart(LakeHuron)
+hchart(LakeHuron, name = "Level") %>% 
+  hc_title(text = "Level of Lake Huron 1875–1972")
 ```
 
 ## Seasonal Decomposition of Time Series by Loess
@@ -163,7 +173,6 @@ hchart(x)
 x <- acf(diff(AirPassengers), plot = FALSE)
 hchart(x)
 ```
-
 
 ## Principal Components
 

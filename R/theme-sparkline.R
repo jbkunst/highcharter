@@ -10,7 +10,6 @@
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_sparkline())
 #'   
-#'   
 #' @export
 hc_theme_sparkline <- function(...) {
   theme <- list(

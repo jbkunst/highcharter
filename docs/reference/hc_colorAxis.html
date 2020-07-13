@@ -17,32 +17,32 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 
-
-<!-- docsearch -->
-<script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
   <link href="../extra.css" rel="stylesheet">
@@ -76,7 +76,6 @@ Since v7.2.0 colorAxis can also be an array of options objects.
 See the Axis object for
 programmatic access to the axis." />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -92,18 +91,19 @@ programmatic access to the axis." />
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-000000-01"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-17670833-9"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-000000-01');
+  gtag('config', 'UA-17670833-9');
 </script>
+
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -125,7 +125,7 @@ programmatic access to the axis." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -139,23 +139,29 @@ programmatic access to the axis." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Get Started</li>
     <li>
-      <a href="../articles/articles/charting-maps.html">Charting Maps</a>
+      <a href="../articles/hchart.html">chart Function</a>
     </li>
     <li>
-      <a href="../articles/articles/hchart.html">`hchart` Function</a>
+      <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/articles/highcharts-api.html">Highcharts API</a>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Extensions</li>
+    <li>
+      <a href="../articles/charting-maps.html">Charting Maps</a>
     </li>
     <li>
-      <a href="../articles/articles/showcase.html">Showcase</a>
+      <a href="../articles/themes.html">Themes</a>
     </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Miscellaneous</li>
     <li>
-      <a href="../articles/articles/themes.html">Themes</a>
-    </li>
-    <li>
-      <a href="../articles/charting-data-frames.html">Charting Data Frames</a>
+      <a href="../articles/highcharts.html">Charting Data Frames</a>
     </li>
     <li>
       <a href="../articles/replicating-highcharts-demos.html">Replicating Highcharts Demos</a>
@@ -178,17 +184,12 @@ programmatic access to the axis." />
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
-        </div>
-      </form>
-      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -228,7 +229,7 @@ See the Axis object for
 programmatic access to the axis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hc_colorAxis</span>(<span class='no'>hc</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_colorAxis.html'>hc_colorAxis</a></span>(<span class='kw'>hc</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -246,78 +247,77 @@ programmatic access to the axis.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>mpg</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ggplot2"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>mpg</span>, package = <span class='st'>"ggplot2"</span>)
 
-<span class='no'>mpgman2</span> <span class='kw'>&lt;-</span> <span class='no'>mpg</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>manufacturer</span>, <span class='no'>year</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(
-    <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>(),
-    <span class='kw'>displ</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>displ</span>)
+<span class='kw'>mpgman2</span> <span class='op'>&lt;-</span> <span class='kw'>mpg</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>manufacturer</span>, <span class='kw'>year</span>) <span class='op'>%&gt;%</span> 
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(
+    n = <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>(),
+    displ = <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='kw'>displ</span>)
     )</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'manufacturer' (override with `.groups` argument)</span></div><div class='input'>
-<span class='no'>mpgman2</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 30 x 4</span><span>
-#&gt; </span><span style='color: #949494;'># Groups:   manufacturer [15]</span><span>
+<span class='kw'>mpgman2</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 30 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   manufacturer [15]</span><span>
 #&gt;    manufacturer  year     n displ
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> audi          </span><span style='text-decoration: underline;'>1</span><span>999     9  2.36
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> audi          </span><span style='text-decoration: underline;'>2</span><span>008     9  2.73
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> chevrolet     </span><span style='text-decoration: underline;'>1</span><span>999     7  4.97
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> chevrolet     </span><span style='text-decoration: underline;'>2</span><span>008    12  5.12
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> dodge         </span><span style='text-decoration: underline;'>1</span><span>999    16  4.32
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> dodge         </span><span style='text-decoration: underline;'>2</span><span>008    21  4.42
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> ford          </span><span style='text-decoration: underline;'>1</span><span>999    15  4.45
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> ford          </span><span style='text-decoration: underline;'>2</span><span>008    10  4.66
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> honda         </span><span style='text-decoration: underline;'>1</span><span>999     5  1.6 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> honda         </span><span style='text-decoration: underline;'>2</span><span>008     4  1.85
-#&gt; </span><span style='color: #949494;'># ... with 20 more rows</span><span></div><div class='input'>
-<span class='fu'><a href='hchart.html'>hchart</a></span>(
-  <span class='no'>mpgman2</span>, <span class='st'>"column"</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>manufacturer</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>n</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>year</span>),
-  <span class='kw'>colorKey</span> <span class='kw'>=</span> <span class='st'>"displ"</span>,
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> audi          </span><span style='text-decoration: underline;'>1</span><span>999     9  2.36
+#&gt; </span><span style='color: #555555;'> 2</span><span> audi          </span><span style='text-decoration: underline;'>2</span><span>008     9  2.73
+#&gt; </span><span style='color: #555555;'> 3</span><span> chevrolet     </span><span style='text-decoration: underline;'>1</span><span>999     7  4.97
+#&gt; </span><span style='color: #555555;'> 4</span><span> chevrolet     </span><span style='text-decoration: underline;'>2</span><span>008    12  5.12
+#&gt; </span><span style='color: #555555;'> 5</span><span> dodge         </span><span style='text-decoration: underline;'>1</span><span>999    16  4.32
+#&gt; </span><span style='color: #555555;'> 6</span><span> dodge         </span><span style='text-decoration: underline;'>2</span><span>008    21  4.42
+#&gt; </span><span style='color: #555555;'> 7</span><span> ford          </span><span style='text-decoration: underline;'>1</span><span>999    15  4.45
+#&gt; </span><span style='color: #555555;'> 8</span><span> ford          </span><span style='text-decoration: underline;'>2</span><span>008    10  4.66
+#&gt; </span><span style='color: #555555;'> 9</span><span> honda         </span><span style='text-decoration: underline;'>1</span><span>999     5  1.6 
+#&gt; </span><span style='color: #555555;'>10</span><span> honda         </span><span style='text-decoration: underline;'>2</span><span>008     4  1.85
+#&gt; </span><span style='color: #555555;'># ... with 20 more rows</span><span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(
+  <span class='kw'>mpgman2</span>, <span class='st'>"column"</span>, <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcaes.html'>hcaes</a></span>(x = <span class='kw'>manufacturer</span>, y = <span class='kw'>n</span>, group = <span class='kw'>year</span>),
+  colorKey = <span class='st'>"displ"</span>,
   <span class='co'># color = c("#FCA50A", "#FCFFA4"),</span>
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Year 1999"</span>, <span class='st'>"Year 2008"</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>hc_colorAxis</span>(<span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+  name = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Year 1999"</span>, <span class='st'>"Year 2008"</span>)
+  ) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_colorAxis.html'>hc_colorAxis</a></span>(min = <span class='fl'>0</span>, max = <span class='fl'>5</span>)
 
 
 <span class='co'># defaults to yAxis</span>
-<span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>iris</span>, <span class='st'>"point"</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span>(<span class='no'>Sepal.Length</span>, <span class='no'>Sepal.Width</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>hc_colorAxis</span>(
-    <span class='kw'>minColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-    <span class='kw'>maxColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(<span class='kw'>iris</span>, <span class='st'>"point"</span>, <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcaes.html'>hcaes</a></span>(<span class='kw'>Sepal.Length</span>, <span class='kw'>Sepal.Width</span>)) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_colorAxis.html'>hc_colorAxis</a></span>(
+    minColor = <span class='st'>"red"</span>,
+    maxColor = <span class='st'>"blue"</span>
   )
 
 
 
 <span class='co'># Ex2</span>
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>5</span>
+<span class='kw'>n</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>
 
-<span class='no'>stops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
-  <span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>0</span>:<span class='no'>n</span>/<span class='no'>n</span>,
-  <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"#440154"</span>, <span class='st'>"#414487"</span>, <span class='st'>"#2A788E"</span>, <span class='st'>"#22A884"</span>, <span class='st'>"#7AD151"</span>, <span class='st'>"#FDE725"</span>),
-  <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+<span class='kw'>stops</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+  q = <span class='fl'>0</span><span class='op'>:</span><span class='kw'>n</span><span class='op'>/</span><span class='kw'>n</span>,
+  c = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#440154"</span>, <span class='st'>"#414487"</span>, <span class='st'>"#2A788E"</span>, <span class='st'>"#22A884"</span>, <span class='st'>"#7AD151"</span>, <span class='st'>"#FDE725"</span>),
+  stringsAsFactors = <span class='fl'>FALSE</span>
   )
 
-<span class='no'>stops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_parse.html'>list_parse2</a></span>(<span class='no'>stops</span>)
+<span class='kw'>stops</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/list_parse.html'>list_parse2</a></span>(<span class='kw'>stops</span>)
 
-<span class='no'>M</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>50</span>*<span class='fl'>50</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>50</span>), <span class='fl'>2</span>)
+<span class='kw'>M</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>50</span><span class='op'>*</span><span class='fl'>50</span>), ncol = <span class='fl'>50</span>), <span class='fl'>2</span>)
 
-<span class='fu'><a href='hchart.html'>hchart</a></span>(<span class='no'>M</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>hc_colorAxis</span>(<span class='kw'>stops</span> <span class='kw'>=</span> <span class='no'>stops</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(<span class='kw'>M</span>) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_colorAxis.html'>hc_colorAxis</a></span>(stops = <span class='kw'>stops</span>)
 
 <span class='co'># Ex3</span>
 <span class='co'># hchart(volcano) %&gt;% </span>
-<span class='co'>#   hc_colorAxis(stops = stops, max = 200)</span></div></span></pre>
+<span class='co'>#   hc_colorAxis(stops = stops, max = 200)</span>
+</div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -325,30 +325,16 @@ programmatic access to the axis.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
+
       </footer>
    </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
-<script>
-  docsearch({
-    
-    
-    apiKey: 'API_KEY',
-    indexName: 'INDEX_NAME',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
 
 
   </body>
 </html>
+
 

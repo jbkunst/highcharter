@@ -1,10 +1,13 @@
 ---
-title: "Charting Maps"
+title: "Maps"
 author: "Joshua Kunst"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+description:
+  The highcharter package include [highmaps](https://www.highcharts.com/demo/maps) 
+  libraries from highcharts to chart maps, choroplets and geojson.
 vignette: >
-  %\VignetteIndexEntry{Charting Maps}
+  %\VignetteIndexEntry{Maps}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -24,24 +27,33 @@ $(document).ready(function(){
 ```{r, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(highcharter)
-options(highcharter.download_map_data = TRUE)
+options(highcharter.theme = hc_theme_hcrt(), highcharter.download_map_data = TRUE)
 ```
+
+The highcharter package include [highmaps](https://www.highcharts.com/demo/maps) 
+libraries from highcharts to chart maps, choroplets and geojson.
 
 ## Basics
 
-The easiest way to chart a map with highcharter is using `hcmap` function.
+The easiest way to chart a map with highcharter is using `hcmap()` function.
 Select a map (a url) from the highmaps collection 
 https://code.highcharts.com/mapdata/.
-and use the url as a map in `hcmap` function. This will download the map
-and create a \code{highchart} object using the info as a `mapData` argument.
+and use the url as a map in `hcmap()` function. This will download the map
+and create a `highchart` object using the info as a `mapData` argument.
+
+Let's try some maps:
 
 
 ```{r, warning=FALSE, message=FALSE}
 library(highcharter)
 hcmap("countries/nz/nz-all")
+
+
 hcmap("custom/usa-and-canada", showInLegend = FALSE)
+
 hcmap("countries/us/us-ca-all") %>%
-  hc_title(text = "California")
+  hc_title(text = "California") %>% 
+  hc_subtitle(text = "You can use the same functions to modify your map!")
 ```
 
 __Note__: _The copyright information is added to the chart credits by default, 
@@ -56,8 +68,8 @@ highcharts maps collection have keys to join data. There are 2 functions
 to help to know what are the regions coded to know how to join the map
 and data:
 
-- `download_map_data`: Download the geojson data from the highcharts collection.
-- `get_data_from_map`: Get the properties  for each region in the map, as 
+- `download_map_data()`: Download the geojson data from the highcharts collection.
+- `get_data_from_map()`: Get the properties  for each region in the map, as 
 the keys from the map data.
 
 ```{r}
@@ -125,11 +137,15 @@ airports <- read.csv(
   stringsAsFactors = FALSE
   )
 
+south_america_countries <- c(
+    "Brazil", "Ecuador", "Venezuela",
+    "Chile", "Argentina", "Peru",
+    "Uruguay", "Paraguay", "Bolivia", 
+    "Suriname", "Guyana", "Colombia"
+  ) 
+
 airports <- airports %>%
-  filter(country %in% c(
-    "Brazil", "Ecuador", "Venezuela", "Chile", "Argentina", "Peru",
-    "Uruguay", "Paraguay", "Bolivia", "Suriname", "Guyana", "Colombia"
-  )) %>%
+  filter(country %in% south_america_countries) %>%
   rename(lat = latitude, lon = longitude) %>%
   filter(lon < -30)
 
@@ -194,11 +210,11 @@ ausmap %>%
   )
 ```
 
-## An Advanced Example
+## Advanced Example
 
 Let's download some geojson files and make a map.
 
-```{r}
+```{r, eval=TRUE}
 getContent <- function(url) {
   library(httr)
   content(GET(url))
@@ -225,7 +241,7 @@ volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=E
 The data is ready. Remember you can keep using the rest of the API to 
 customize your map.
 
-```{r}
+```{r, eval=TRUE}
 highchart(type = "map") %>%
   hc_chart(backgroundColor = "#161C20") %>%
   hc_add_series(

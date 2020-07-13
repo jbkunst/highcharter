@@ -2,10 +2,16 @@
 title: "Themes"
 author: "Joshua Kunst"
 output: rmarkdown::html_vignette
+description: >
+  Highcharts is very flexible for create or themes.
+  In Highcarter there are some predefined themes and some 
+  functions to create your own or merge themes.
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Themes}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 <script>
@@ -26,24 +32,28 @@ library(htmltools)
 library(ggplot2)
 ```
 
-Highcharts is super flexible to add and create themes.
+Highcharts is very flexible for create or themes.
 In Highcarter there are some predefined themes and some 
-functions to create or merge themes.
+functions to create your own or merge themes.
 
-Let's start with a simple bar chart and see the defaul theme:
+Let's start with a simple bar chart and see the default theme:
 
 ```{r}
 library(highcharter)
 library(dplyr)
+
 data(diamonds, package = "ggplot2")
 
 data <- count(diamonds, cut, color)
+
 hc <- hchart(data, "column", hcaes(x = color, y = n, group = cut)) %>%
   hc_yAxis(title = list(text = "Cases")) %>%
   hc_title(text = "Diamonds Are Forever") %>%
   hc_subtitle(text = "Source: Diamonds data set") %>%
-  hc_credits(enabled = TRUE, text = "jkunst.com") %>%
-  hc_tooltip(sort = TRUE, table = TRUE)
+  hc_credits(enabled = TRUE, text = "http://jkunst.com/highcharter/") %>%
+  hc_tooltip(sort = TRUE, table = TRUE) %>% 
+  hc_caption(text = "This is a caption text to show the style of this type of text")
+
 hc
 ```
 
@@ -54,18 +64,40 @@ Here you'll find the themes to change the look of your charts.
 
 ```{r, echo=FALSE}
 library(tidyverse)
-themes <- help.search("theme", package = "highcharter") %>%
-  .$matches %>%
-  tibble::as_tibble() %>%
-  janitor::clean_names() %>%
-  select(name, title) %>%
-  distinct() %>%
-  filter(str_detect(name, "hc_theme_*")) %>%
-  filter(!name %in% c("hc_theme_merge", "hc_theme")) %>%
-  mutate(title = str_replace(title, " theme for highcharts", "")) %>%
-  arrange(name)
 
-thms <- unique(c("hc_theme_smpl", "hc_theme_db", themes$name))
+# themes <- help.search("theme", package = "highcharter") %>%
+#   .$matches %>%
+#   tibble::as_tibble() %>%
+#   janitor::clean_names() %>%
+#   select(name, title) %>%
+#   distinct() %>%
+#   filter(str_detect(name, "hc_theme_*")) %>%
+#   filter(!name %in% c("hc_theme_merge", "hc_theme")) %>%
+#   mutate(title = str_replace(title, " theme for highcharts", "")) %>%
+#   arrange(name)
+
+# themes <- dir("R", full.names = TRUE) %>%
+#   str_subset("theme") %>%
+#   setdiff("R/theme.R") %>%
+#   map(readLines) %>%
+#   reduce(c) %>%
+#   str_subset(" <- function") %>%
+#   str_remove(" <-.*")
+# 
+# dput(themes)
+
+themes <- c("hc_theme_538", "hc_theme_alone", "hc_theme_bloom", "hc_theme_chalk", 
+"hc_theme_darkunica", "hc_theme_db", "hc_theme_economist", "hc_theme_elementary", 
+"hc_theme_ffx", "hc_theme_flat", "hc_theme_flatdark", "hc_theme_ft", 
+"hc_theme_ggplot2", "hc_theme_google", "hc_theme_gridlight", 
+"hc_theme_handdrawn", "hc_theme_hcrt", "hc_theme_monokai", "hc_theme_null", 
+"hc_theme_sandsignika", "hc_theme_smpl", "hc_theme_sparkline", 
+"hc_theme_sparkline_vb", "hc_theme_superheroes", "hc_theme_tufte", 
+"hc_theme_tufte2")
+
+themes <- str_subset(themes, "spark", negate = TRUE)
+
+thms <- unique(c("hc_theme_smpl", "hc_theme_db", themes))
 # thms <- sample(thms, 5)
 
 # generate tabs
@@ -144,12 +176,13 @@ thm <- hc_theme_merge(
   hc_theme(
     chart = list(
       backgroundColor = "transparent",
-      divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
+      divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
     ),
     title = list(
       style = list(
         color = "white",
-        fontFamily = "Open Sans"
+        fontFamily = "Griffy",
+        fontSize = "25px"
       )
     )
   )

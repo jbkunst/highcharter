@@ -1,25 +1,12 @@
-
-<!-- badges: start -->
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/highcharter?color=brightgreen)](https://cran.r-project.org/package=highcharter)
-[![CRAN downloads](http://cranlogs.r-pkg.org/badges/highcharter?color=brightgreen)](http://www.r-pkg.org/pkg/highcharter)
-[![Project Status: Active – The project has reached a stable, usablestate and is being activelydeveloped.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://codecov.io/gh/jbkunst/highcharter?branch=master)
-[![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![check-windows](https://github.com/jbkunst/highcharter/workflows/check-windows/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-windows)
-[![check-mac](https://github.com/jbkunst/highcharter/workflows/check-mac/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-mac)
-[![check-linux](https://github.com/jbkunst/highcharter/workflows/check-linux/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-linux)
-[![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
-<!-- badges: end -->
-
+---
+output: html_document
+---
 
 <div id="brand"><img src="man/figures/logo.png"width ="15%"/> h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div> 
 
 Highcharter is a [R](https://cran.r-project.org/) wrapper for 
 **[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.
-Highcharts is very mature and flexible javascript charting library and 
+Highcharts is very flexible and customizable javascript charting library and 
 it has a great and powerful API^[See http://www.highcharts.com/demo].
 
 ```{r setup, include = FALSE}
@@ -42,12 +29,8 @@ library(viridisLite)
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
 
-cols <-  c("#47475C", "#d35400",  "#8087E8", "#A3EDBA", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d")
-
-# scales::show_col(cols)
-
 hc_theme_highcharts <- 
-  hc_theme_smpl(
+  hc_theme_hcrt(
     chart = list(backgroundColor = "transparent"),
     colors = cols,
     plotOptions = list(
@@ -86,7 +69,7 @@ p2 <- hchart(
   ) %>%
   hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
   hc_add_theme(hc_theme_highcharts) %>% 
-  hc_tooltip(shared = TRUE)
+  hc_tooltip(shared = TRUE, valueDecimals = 0)
 
 # example 3
 data(GNI2014, package = "treemap")
@@ -94,7 +77,7 @@ GNI2014 <- select(GNI2014, -population, -continent)
 p3 <- hcmap(
   "custom/world-robinson-lowres",
   data = GNI2014,
-  name = "GNI",
+  name = "Gross national income per capita",
   value = "GNI",
   borderWidth = 0,
   joinBy = c("iso-a3", "iso3"),
@@ -217,7 +200,7 @@ Among its features highcharter can chart various objects depending of
 its class with the generic^[I wanted to say *magic*]  `hchart` function.
 
 ```{r}
-x <- c(rnorm(10000), rnorm(1000, 5))
+x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 
 hchart(x, name = "data") 
 ```

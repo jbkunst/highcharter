@@ -12,4 +12,5 @@ Chart a demo for testing themes
 \examples{
 
 highcharts_demo()
+
 }

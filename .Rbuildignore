@@ -1,5 +1,6 @@
 ^pkgdown$
 ^docs$
+^vignettes/.*$
 ^_pkgdown\.yml$
 ^CRAN-RELEASE$
 # old versions

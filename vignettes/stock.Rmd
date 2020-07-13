@@ -1,0 +1,151 @@
+---
+title: "Stocks"
+author: "Joshua Kunst"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+description: >
+  The highcharter package include [highstocks](https://www.highcharts.com/demo/stock)
+  libraries from highcharts to create stock or general timeline charts.
+  Features sophisticated navigation for high-volume data, user annotations and
+  range selectors.
+vignette: >
+  %\VignetteIndexEntry{Stocks}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "line-chart"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+library(highcharter)
+options(highcharter.theme = hc_theme_hcrt())
+```
+
+The highcharter package include [highstocks](https://www.highcharts.com/demo/stock) 
+libraries from highcharts to create stock or general timeline charts.
+Features sophisticated navigation for high-volume data, user annotations and
+range selectors.
+
+## Basics
+
+Highstock work well with the quantmod package. It's  easy chart symbols using
+`hchart()`. Then you can add more series using `hc_add_series()`.
+
+```{r}
+library(quantmod)
+
+x <- getSymbols("GOOG", auto.assign = FALSE)
+
+hchart(x)
+```
+
+Obviously you can use the implemented API functions to edit the chart:
+
+```{r}
+y <- getSymbols("AMZN", auto.assign = FALSE)
+
+hchart(y, type = "ohlc") %>% 
+  hc_title(text = "This is a Open-high-low-close chart with a custom theme") %>% 
+  hc_add_theme(hc_theme_db())
+```
+
+## Candlestick and OHLC charts
+
+If you want to chart more symbols in you can
+use the `hc_add_series()` function. Dont' forget to specify `type = "stock"` to
+activate the navigator, range selector and other features of highstock.   
+
+```{r}
+highchart(type = "stock") %>% 
+  hc_add_series(x) %>% 
+  hc_add_series(y, type = "ohlc")
+```
+
+In the next example well chart `xts` class data: 
+
+```{r}
+usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
+eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
+
+class(eurkpw)
+
+hc <- highchart(type = "stock") %>% 
+  hc_title(text = "Charting some Symbols") %>% 
+  hc_subtitle(text = "Data extracted using quantmod package") %>% 
+  hc_add_series(usdjpy, id = "usdjpy", name = "USD/JPY") %>% 
+  hc_add_series(eurkpw, id = "eurkpw", name = "EUR/KPW")
+
+hc
+```
+
+## Flags
+
+Previously we used the `id` parameter. This is necessary 
+to add flags to relate series and flags:
+
+```{r}
+library(dplyr)
+
+set.seed(123)
+
+data_flags <- data_frame(
+  date = sample(time(usdjpy), size = 5),
+  title = sprintf("E #%s", seq_along(date)),
+  text = sprintf("An interesting event #%s in %s", seq_along(date), date)
+)
+
+glimpse(data_flags)
+
+hc %>% 
+  hc_add_series(
+    data_flags, 
+    hcaes(x = date),
+    type = "flags", 
+    onSeries = "usdjpy"
+    )
+
+
+```
+
+## Advanced Example
+
+You can do what you want. Use all the highchartsJS API to add axis, series, 
+bands, etc.
+
+```{r}
+SPY <- getSymbols("SPY", from = Sys.Date() - lubridate::years(1), auto.assign = FALSE)
+SPY <- adjustOHLC(SPY)
+
+SPY.SMA.10 <- SMA(Cl(SPY), n = 5)
+SPY.SMA.200 <- SMA(Cl(SPY), n = 100)
+SPY.RSI.14 <- RSI(Cl(SPY))
+SPY.RSI.SellLevel <- xts(rep(70, NROW(SPY)), index(SPY))
+SPY.RSI.BuyLevel <- xts(rep(30, NROW(SPY)), index(SPY))
+
+
+highchart(type = "stock") %>% 
+  # create axis :)
+  hc_yAxis_multiples(create_yaxis(3, height = c(2, 1, 1), turnopposite = TRUE)) %>% 
+  # series :D
+  hc_add_series(SPY, yAxis = 0, name = "SPY") %>% 
+  hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") %>% 
+  hc_add_series(SPY.SMA.200, yAxis = 0, name = "Slow MA") %>% 
+  hc_add_series(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") %>% 
+  hc_add_series(SPY.RSI.14, yAxis = 2, name = "Osciallator", color = hex_to_rgba("green", 0.7)) %>%
+  hc_add_series(SPY.RSI.SellLevel, color = hex_to_rgba("red", 0.7), yAxis = 2, name = "Sell level") %>% 
+  hc_add_series(SPY.RSI.BuyLevel, color = hex_to_rgba("blue", 0.7), yAxis = 2, name = "Buy level") %>% 
+  hc_tooltip(valueDecimals = 2) %>% 
+  hc_size(height = 800)
+```
+

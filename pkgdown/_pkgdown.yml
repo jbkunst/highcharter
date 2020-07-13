@@ -3,10 +3,7 @@ home:
 template:
   params:
     bootswatch: cosmo
-    ganalytics: UA-000000-01
-    docsearch:
-      api_key: API_KEY
-      index_name: INDEX_NAME
+    ganalytics: UA-17670833-9
 authors:
   Joshua Kunst:
     href: http://jkunst.com
@@ -15,11 +12,23 @@ navbar:
   - icon: fa-github-alt
     href: https://github.com/jbkunst/highcharter
 articles:
-- title: Starting
-  content:
-  - charting-data-frames
+- title: Get Started
+  navbar: Get Started
+  contents:
+  - highcharter
   - hchart
   - highcharts-api
+  - showcase
+- title: Extensions
+  navbar: Extensions
+  contents:
+  - maps
+  - stock
+  - themes
+- title: Other
+  contents:
+  - motion
+  - shiny-events-demo
 reference:
 - title: Highcharts API
   desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).

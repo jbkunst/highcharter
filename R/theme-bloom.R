@@ -6,6 +6,7 @@
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_bloom())
+#'   
 #' @export
 hc_theme_bloom <- function(...) {
   theme <-

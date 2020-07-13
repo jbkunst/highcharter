@@ -5,18 +5,40 @@ library(tidyverse)
 # data --------------------------------------------------------------------
 yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
+artcls <- dir("vignettes") %>% 
+  basename() %>% 
+  str_remove(".Rmd")
+
+get_started <- c("highcharter", "hchart", "highcharts-api", "showcase")
+
+artcls <- setdiff(artcls, get_started)
+
+extensions <- c("maps", "stock", "themes")
+
+artcls <- setdiff(artcls, extensions)
+
 
 yml[["articles"]] <- list(
   list(
-    title = "Starting",
-    content = c("charting-data-frames", "hchart", "highcharts-api")
+    title = "Get Started",
+    navbar = "Get Started",
+    contents = get_started 
+  ),
+  list(
+    title = "Extensions",
+    navbar = "Extensions",
+    contents = extensions
+  ),
+  list(
+    title = "Other",
+    contents = artcls
   )
 )
 
-
-# write reference ---------------------------------------------------------
+# write articles ----------------------------------------------------------
 write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 
-# build reference ---------------------------------------------------------
+# build articles ----------------------------------------------------------
 pkgdown::build_articles()
+# pkgdown::build_article("maps")
