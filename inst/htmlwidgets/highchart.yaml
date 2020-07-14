@@ -9,10 +9,10 @@ dependencies:
     script: proj4.js
   - name: highcharts
     version: 8.1.2
-    src: "htmlwidgets/lib/highcharts-8.1.2"
+    src: "htmlwidgets/lib/highcharts"
     script:
     - highcharts.js
-    # - highcharts-3d.js
+    - highcharts-3d.js
     - highcharts-more.js
     - modules/stock.js
     - modules/map.js

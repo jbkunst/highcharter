@@ -6,18 +6,16 @@ library(yaml)
 library(stringr)
 
 # settings ----------------------------------------------------------------
+# version to download
 version <- "8.1.2"
 hccodeurl <- "http://code.highcharts.com"
-path <- sprintf("inst/htmlwidgets/lib/highcharts-%s", version)
 
-yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
-yml <- yaml.load_file(yml)[[1]]
-version_old <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts"]
-path_old <- str_replace(path, version, version_old)
+path      <- sprintf("inst/htmlwidgets/lib/highcharts")
+path_temp  <- sprintf("inst/htmlwidgets/lib/highcharts-temp")
 
 # creating folder structure
 folders <- c("", "modules", "plugins", "css", "custom")
-try(map(file.path(path, folders), dir.create))
+try(map(file.path(path_temp, folders), dir.create))
 
 # main files --------------------------------------------------------------
 file_temp <- tempfile(fileext = ".zip")
@@ -40,7 +38,7 @@ main
   
 file.copy(
   main,
-  file.path(path, basename(main)),
+  file.path(path_temp, basename(main)),
   overwrite = TRUE
 )
 
@@ -49,43 +47,18 @@ modules
 
 file.copy(
   modules,
-  file.path(path, "modules", basename(modules)),
+  file.path(path_temp, "modules", basename(modules)),
   overwrite = TRUE
 )
 
 
 # map ---------------------------------------------------------------------
-# file_temp <- tempfile(fileext = ".zip")
-# 
-# download.file(
-#   sprintf("https://code.highcharts.com/zips/Highmaps-%s.zip", version),
-#   file_temp
-# )
-# 
-# folder_temp <- tempdir()
-# 
-# unzip(file_temp, exdir = folder_temp)
-# 
-# files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
-#   str_subset("src.js$", negate = TRUE) %>% 
-#   str_subset("js.map$", negate = TRUE)
-# 
-# mapmodule <- files %>% 
-#   str_subset("code/modules/map.js$")
-# 
-# file.copy(
-#   mapmodule,
-#   file.path(path, "modules", basename(mapmodule)),
-#   overwrite = TRUE
-# )
-
 urlmapmodule <- sprintf("https://code.highcharts.com/maps/%s/modules/map.js", version)
 
 download.file(
   urlmapmodule,
-  file.path(path, "modules", basename(urlmapmodule))
+  file.path(path_temp, "modules", basename(urlmapmodule))
 )
-
 
 # check what modules are missing in yaml ----------------------------------
 modules <- dir(file.path(path, "modules")) 
@@ -124,38 +97,44 @@ files <- c(
   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
   )
 
-aux <- walk2(
+walk2(
   files,
-  file.path(path, "plugins", basename(files)),
+  file.path(path_temp, "plugins", basename(files)),
   download.file
 )
 
-# file.copy(
-#   file.path(path_old, "plugins", basename(files)),
-#   file.path(path, "plugins", basename(files)),
-#   overwrite = TRUE
-# )
-
-# for yaml ----------------------------------------------------------------
-# path %>%
-#   dir(recursive = TRUE, full.names = TRUE, pattern = ".js$") %>%
-#   str_replace(path, "    - ") %>%
-#   str_replace("/", "") %>%
-#   paste0(collapse = "\n") %>%
-#   cat()
-  
-# my customs --------------------------------------------------------------
+# customs -----------------------------------------------------------------
 file.copy(
-  dir(file.path(path_old, "custom"), full.names = TRUE),
-  str_replace(dir(file.path(path_old, "custom"), full.names = TRUE), version_old, version),
+  dir(file.path(path, "custom"), full.names = TRUE),
+  str_replace(dir(file.path(path, "custom"), full.names = TRUE), path, path_temp),
   overwrite = TRUE
 )
 
 file.copy(
-  dir(file.path(path_old, "css"), full.names = TRUE),
-  str_replace(dir(file.path(path_old, "css"), full.names = TRUE), version_old, version),
+  dir(file.path(path, "css"), full.names = TRUE),
+  str_replace(dir(file.path(path, "css"), full.names = TRUE), path, path_temp),
   overwrite = TRUE
 )
+
+# moving ------------------------------------------------------------------
+try(fs::dir_delete(path))
+
+try(fs::dir_create(path))
+
+try(map(file.path(path, folders), fs::dir_create))
+
+file.copy(
+  dir(file.path(path_temp), full.names = TRUE, recursive = TRUE),
+  str_replace(dir(file.path(path_temp), full.names = TRUE, recursive = TRUE), path_temp, path),
+  overwrite = TRUE
+)
+
+try(fs::dir_delete(path_temp))
+
+# change the version on yaml ----------------------------------------------
+walk(1:10, ~ message("change version on inst/htmlwidgets/highchart.yaml"))
+
+
 
 
 

@@ -94,17 +94,29 @@
             regression.rSquared = _round(regression.rSquared, s.regressionSettings.decimalPlaces);
             regression.standardError = _round(standardError(mergedData, regression.points), s.regressionSettings.decimalPlaces);
             extraSerie.data = regression.points;
-            extraSerie.name = extraSerie.name.replace("%r2", regression.rSquared);
-            extraSerie.name = extraSerie.name.replace("%r", regression.rValue);
-            extraSerie.name = extraSerie.name.replace("%eq", regression.string);
-            extraSerie.name = extraSerie.name.replace("%se", regression.standardError);
+            extraSerie.name = replaceRegressionPlaceholders(extraSerie.name, regression);
 
-            if (extraSerie.visible === false) {
-                extraSerie.visible = false;
+            if (s.regressionSettings.dataLabels !== undefined) {
+                for (let i = 0; i < s.regressionSettings.dataLabels.length; i++) {
+                    var dataLabel = s.regressionSettings.dataLabels[i]
+                    var dataLabelPoint = extraSerie.data[dataLabel.pointIndex];
+                    var dataLabelFormat = replaceRegressionPlaceholders(dataLabel.format, regression);
+
+                    if (dataLabelPoint !== undefined) {
+                        extraSerie.data[dataLabel.pointIndex] = {
+                            x: dataLabelPoint[0],
+                            y: dataLabelPoint[1],
+                            dataLabels: {
+                                enabled: true,
+                                format: dataLabelFormat
+                            }
+                        };
+                    }
+                }
             }
+
             extraSerie.regressionOutputs = regression;
             return extraSerie;
-
         }
     }
 
@@ -640,5 +652,12 @@
     function _round(number, decimalPlaces) {
         var decimalFactor = Math.pow(10, decimalPlaces);
         return Math.round(number * decimalFactor) / decimalFactor;
+    }
+    function replaceRegressionPlaceholders(text, regression) {
+        return text
+            .replace("%r2", regression.rSquared)
+            .replace("%r", regression.rValue)
+            .replace("%eq", regression.string)
+            .replace("%se", regression.standardError);
     }
 }));
