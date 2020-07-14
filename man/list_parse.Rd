@@ -14,7 +14,7 @@ list_parse2(df)
 }
 \description{
 This functions are similar to \code{rlist::list.parse} but this removes
-names. NA's are removed for compatibility with rjson::toJSON.
+names. \code{NA}s are removed for compatibility with rjson::toJSON.
 }
 \examples{
 

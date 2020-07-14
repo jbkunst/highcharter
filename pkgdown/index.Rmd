@@ -27,7 +27,7 @@ hc_theme_highcharts <-
   hc_theme_hcrt(
     chart = list(backgroundColor = "transparent"),
     plotOptions = list(
-      series = list(showInLegend = FALSE),
+      series = list(showInLegend = FALSE, marker = list(radius = 2)),
       line = list(lineWidth = 1.2)
       ),
     xAxis = list(
@@ -80,7 +80,8 @@ p3 <- hcmap(
   ) %>%
   hc_colorAxis(stops = color_stops_index, type = "logarithmic") %>%
   hc_legend(enabled = FALSE) %>%
-  hc_mapNavigation(enabled = FALSE) 
+  hc_mapNavigation(enabled = FALSE) %>% 
+  hc_credits(enabled = FALSE)
 
 # example 4
 p4 <- hcboxplot(
@@ -176,9 +177,9 @@ The main features of highcharter are:
 * Chart various R objects with one function: with `hchart(x)` you can 
 chart `data.frames`, `numeric` or `character` vectors, `ts`,
  `xts`, `forecast`, `survfit`  objects.
-* Support Highstock charts. You can create a candlestick charts in 2 lines 
+* Support Highstock You can create a candlestick charts in 2 lines 
 of code. Support `xts` class from the {quantmod} package.
-* Support Highmaps charts. It's easy to create choropleth or add 
+* Support Highmaps Create choropleth charts or add 
 information in `geojson` format.
 * Themes: you configure your chart in multiples ways. There are
  implemented themes like economist, financial times, google, 538 among 
@@ -189,7 +190,22 @@ tooltips, annotations.
 
 ## <span class="fa fa-bar-chart"></span> Highcharts
 
-Let's start with a simple example using `hchart` function.
+let us start start with a simple example using `hchart` function.
+
+```{r, echo=FALSE}
+hc_theme_highcharts <- 
+  hc_theme_hcrt(
+    chart = list(backgroundColor = "transparent"),
+    plotOptions = list(
+      series = list(showInLegend = FALSE),
+      line = list(lineWidth = 1.2)
+      ),
+    tooltip = list(valueDecimals = 2)
+  )
+
+options(highcharter.theme = hc_theme_highcharts)
+```
+
 
 ```{r}
 library(highcharter)
@@ -229,7 +245,7 @@ include sophisticated navigation options like_
 - Date picker
 - Scrolling and panning.
 
-With highcarter it's easy make candlesticks or ohlc charts using
+With highcarter it is easy make candlesticks or ohlc charts using
 time series data. For example, using data from 
 [quantmod](http://www.quantmod.com/) package.
 

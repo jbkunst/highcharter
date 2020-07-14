@@ -1,6 +1,6 @@
 #' Highcharter theme for highcharts
 #'
-#' Theme use for the documentatios webiste.
+#' hcrt theme is used for the documentation website.
 #'
 #' @rdname hc_theme_538
 #'

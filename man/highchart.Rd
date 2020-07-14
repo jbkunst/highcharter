@@ -33,7 +33,7 @@ Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 Google Fonts API to the HTML head, downloading CSS for the font families
 defined in the Highcharts theme from https://fonts.googleapis.com. Set to
 FALSE if you load your own fonts using CSS. This option as default is
-controled by \code{"highcharter.google_fonts"} option}
+controlled by \code{"highcharter.google_fonts"} option.}
 }
 \description{
 This function creates a Highchart chart using \pkg{htmlwidgets}. The

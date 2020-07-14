@@ -25,7 +25,7 @@ hcmap(
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
 
-\item{value}{A string value with the name of the columnn to chart.}
+\item{value}{A string value with the name of the variable to chart.}
 
 \item{joinBy}{What property to join the \code{map} and \code{df}.}
 

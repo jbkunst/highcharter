@@ -1,5 +1,5 @@
 ---
-title: First steps on highchater package
+title: First steps on highcharter package
 author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -129,7 +129,7 @@ hchart(
   )
 ```
 
-Highcharts has a _veeeeery_ complete API with a lot of options. You can 
+Highcharts has a very complete API with a lot of options. You can 
 see every option in action in https://api.highcharts.com/highcharts/plotOptions.series.
 
 ## A more advanced example

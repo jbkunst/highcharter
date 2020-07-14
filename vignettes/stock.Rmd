@@ -59,7 +59,7 @@ hchart(y, type = "ohlc") %>%
 ## Candlestick and OHLC charts
 
 If you want to chart more symbols in you can
-use the `hc_add_series()` function. Dont' forget to specify `type = "stock"` to
+use the `hc_add_series()` function. Don't forget to specify `type = "stock"` to
 activate the navigator, range selector and other features of highstock.   
 
 ```{r}

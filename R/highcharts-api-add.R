@@ -754,6 +754,7 @@ hc_add_annotations <- function(hc, x) {
 #' @importFrom yaml yaml.load_file
 #' @export
 hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
+  
   stopifnot(!is.null(name))
   
   yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
@@ -765,7 +766,7 @@ hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
     name = basename(name),
     version = hc_ver,
     src = c(file = system.file(
-      sprintf("htmlwidgets/lib/highcharts-%s/%s", hc_ver, dirname(name)),
+      sprintf("htmlwidgets/lib/highcharts/%s", dirname(name)),
       package = "highcharter"
     )),
     script = basename(name)

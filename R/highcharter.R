@@ -16,7 +16,7 @@
 #'   Google Fonts API to the HTML head, downloading CSS for the font families
 #'   defined in the Highcharts theme from https://fonts.googleapis.com. Set to
 #'   FALSE if you load your own fonts using CSS. This option as default is
-#'   controled by \code{"highcharter.google_fonts"} option
+#'   controlled by \code{"highcharter.google_fonts"} option.
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #' @export
 highchart <- function(hc_opts = list(),
@@ -108,7 +108,7 @@ highchartOutput <- function(outputId, width = "100%", height = "400px") {
 #' Widget render function for use in Shiny
 #'
 #' @param expr A highchart expression.
-#' @param env A enviorment.
+#' @param env A environment.
 #' @param quoted  A boolean value.
 #'
 #' @importFrom htmlwidgets shinyRenderWidget

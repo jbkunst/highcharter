@@ -12,7 +12,7 @@ renderHighchart2(expr, env = parent.frame(), quoted = FALSE)
 \arguments{
 \item{expr}{A highchart expression.}
 
-\item{env}{A enviorment.}
+\item{env}{A environment.}
 
 \item{quoted}{A boolean value.}
 }

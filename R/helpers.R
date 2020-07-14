@@ -1,7 +1,7 @@
 #' Convert an object to list with identical structure
 #'
 #' This functions are similar to \code{rlist::list.parse} but this removes
-#' names. NA's are removed for compatibility with rjson::toJSON.
+#' names. \code{NA}s are removed for compatibility with rjson::toJSON.
 #' 
 #' @param df A data frame to parse to list
 #' @examples
@@ -246,7 +246,7 @@ color_classes <- function(breaks = NULL,
 #' This function is used in hchart.data.frame and hc_add_series_df
 #'
 #' @param data A `data.frame` object.
-#' @param type The type of chart. Possible values are line, scatter, point, columnn.
+#' @param type The type of chart. Possible values are line, scatter, point, column.
 #' @param ... Aesthetic mappings as \code{x y group color low high}.
 #'
 #' @examples

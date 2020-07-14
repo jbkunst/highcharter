@@ -9,7 +9,7 @@ get_hc_series_from_df(data, type = NULL, ...)
 \arguments{
 \item{data}{A \code{data.frame} object.}
 
-\item{type}{The type of chart. Possible values are line, scatter, point, columnn.}
+\item{type}{The type of chart. Possible values are line, scatter, point, column.}
 
 \item{...}{Aesthetic mappings as \code{x y group color low high}.}
 }

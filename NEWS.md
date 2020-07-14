@@ -17,7 +17,7 @@
 
 ## Changes
 
-* Adding `hc_theme_bloom` based on Bloomerg Graphics.
+* Adding `hc_theme_bloom` based on Bloomberg Graphics.
 * Removed shortcut functions: `hcts`, `hcbar`, `hcpie`, `hchist`, `hcdensity`.
 * Removing whisker package dependency (#415).
 * Bullet chart is supported. Added `bullet.js` module to `highchart.yalm` (#482).
@@ -27,7 +27,7 @@
 
 ## Changes
 
-* `highchart` function don't load plugins as default. Now there is `hc_add_plugin` to load as requiered (#258). 
+* `highchart` function don't load plugins as default. Now there is `hc_add_plugin` to load as required (#258). 
 * Fontawesome is not loaded as default. Now there is a `hc_add_depency_fa` function helper to load as required (#257). 
 
 ## New Features
@@ -44,8 +44,8 @@
 * New functions  `hc_add_series.lm` and `hc_add_series.loess` (#271). 
 * New function/theme Super Heroes (#286).
 * New function/theme `hc_theme_ggplot2` to honoring one of the best packages (#260). 
-* Added multicolor pluging (#251). 
-* Added regression pluging (#262). 
+* Added multicolor plugin (#251). 
+* Added regression plugin (#262). 
 
 ## Bug Fixes
 
@@ -54,7 +54,7 @@
 * Fixed `export_hc(..., as = "is")` does not format javascript correctly (#398). 
 * Added the MIME type to show fonts correctly (#308). 
 * Fixed vignettes titles #244).
-* Fixed bug due conflict etween highcharts v5 and dragabble-points pluging (#273). 
+* Fixed bug due conflict between highcharts v5 and draggable-points plugin (#273). 
 * `maxSize` uses the default highchartsJS value (#272). 
 * `hchart.data.frame` and `hc_add_series.data.frame` forces to be data frame to avoid problems
 with the data.table class (#263). 
@@ -84,13 +84,13 @@ with the data.table class (#263).
  * New _charting maps_ vignette (http://jkunst.com/highcharter/highmaps.html) (#218). 
  * `debug` as an option instead of argument. Example `options(highcharter.debug = TRUE)` (#216).
  * Upgrade to highcharts V5 (#154) (#208). 
- * Added helpers & shorcuts for tooltip: sort and table (#206).
+ * Added helpers & shortcuts for tooltip: sort and table (#206).
  * Added export-csv plugin to export chart data to CSV, XLS, HTML or JS array (#178). 
- * Added Grouped Categories pluging (#172) (#193). 
- * Added Tooltip delay pluging  (#181). 
+ * Added Grouped Categories plugin (#172) (#193). 
+ * Added Tooltip delay plugin  (#181). 
  * Added `is.highchart` according with _Best practices_ in http://adv-r.had.co.nz/S3.html (#179). 
  * New themes:  `theme_firefox` (#191), `theme_tufte` (#190). `hc_theme_elementary` (#184). 
- * `hchart.data.frame` doesn't override the color if the colum var have a hexadecimal color
+ * `hchart.data.frame` doesn't override the color if the column var have a hexadecimal color
    format (#148).
  * Added `hc_size` function to change width and height (#146). 
  * Add more data for nice examples: vaccines, weather radials, pkmn (#145). 
@@ -98,7 +98,7 @@ with the data.table class (#263).
 ## Changes
 
  * renaming `hcwaffle` to hciconarray. The `hcwaffle` do not make a waffle!  (#242). 
- * removing colize_vector function (#237). 
+ * removing colorize_vector function (#237). 
  * `viridisLite` moved from imports to suggests (#236). 
 
 ## Bug fixes
@@ -126,7 +126,7 @@ with the data.table class (#263).
  * `hchart`support matrix objects charting a heatmap (`hchart.matrix`) (#86).
  * `hchart` support phylo objects (#64).
  * New `hcboxplot`, `hcwaffle`, `hcbar`, `hcpie`, `hchist`, `hcdensity`, 
- `hcts` function to get quick some style of charts. Thanks @nuo-agostinho fo
+ `hcts` function to get quick some style of charts. Thanks to @nuo-agostinho.
  `hc_add_series_density` implementation  (#99 #70).
  * New `hc_add_series_bwp` to chart box and whisker plots (#81).
  * New  `hc_add_series_list` to add list of series (#68).
@@ -166,7 +166,7 @@ with the data.table class (#263).
  
 ## Others
 
- * At startup a message disply mentioning that highchart, highstock and
+ * At startup a message display mentioning that highchart, highstock and
  highmaps are not free for commercial and Governmental use.
  
 
@@ -183,12 +183,12 @@ write a js file with the options (#60).
 in `tags` from `htmltools`package #59).
 * New function `hc_colors`. Function for the `colors` option in 
 highcharts api (#57).
-* Adding funnel.js and gauge-solid.js to depedenci for create
+* Adding funnel.js and gauge-solid.js to dependency for create
 funnel charts and charts like apple watch (#56).
 * The `hc_themes_...` functions gains a `...` parameter to
 add styles to the current invoked theme (#53).
 * More themes: flat, flatdark, smpl, ft (financial times) (#49).
-* Dont run error (`\dontrun{}`) to avoid `quantmod` package example
+* Don't run error (`\dontrun{}`) to avoid `quantmod` package example
 in flags function
 
 # highcharter 0.2.0
@@ -197,13 +197,13 @@ in flags function
 This include highcharts.js, exporting.js and boost-module.js.
 * Highstock implementation/support (#10)
 * Highmaps implementation/support (#25)
-* Adding themes (#35): 538, economis, dotabuff, google, theme null (#19)
+* Adding themes (#35): 538, economist, dotabuff, google, theme null (#19)
 * Plugins: Add font awesome integration (#45), fill-pattern (#31),
 draggable-points (#28)
 * New `hchart` function. Generic function to chart acf, forecast,
-ts, stl, xts, ohcl objects (#2) (#27)
+ts, stl, xts, ohlc objects (#2) (#27)
 * In highmaps prevent scrolling when cursor is over the map (#38)
-* Import rex-export %>% (#15) 
+* Import %>% (#15) 
 * Heigth scale in the container in rstudio IDE (#14)
 * Avoid duplicate css calls (#6)
 * Add uscountygeojson, usgeojson, worldgeojson, unemployment data
@@ -212,5 +212,5 @@ ts, stl, xts, ohcl objects (#2) (#27)
 
 * Data: city temp. favorite bars, favorite pies.
 * Shortcuts to plot scatters, bar, pies, treemaps and time series
-* Addging theme and options HC funcionalities
+* Adding theme and options HC funcionalities
 

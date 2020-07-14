@@ -34,7 +34,7 @@ main functions with simple examples.
 ## Before to start
 
 - There's not default arguments. All arguments need to be named.
-- You can see mor examples of _every_ arguments in https://api.highcharts.com/highcharts/
+- You can see more examples for arguments in https://api.highcharts.com/highcharts/.
 
 If this is clear, we can continue.
 

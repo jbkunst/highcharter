@@ -27,7 +27,7 @@ options(highcharter.theme = hc_theme_hcrt(), highcharter.download_map_data = TRU
 ```
 
 The highcharter package include [highmaps](https://www.highcharts.com/demo/maps) 
-libraries from highcharts to chart maps, choroplets and geojson.
+libraries from highcharts to chart maps, choropleths and geojson.
 
 ## Basics
 

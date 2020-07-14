@@ -113,7 +113,7 @@ Google theme for highcharts is based on \url{https://books.google.com/ngrams/}.
 Hand Drawn theme for highcharts. Inspired by
 \url{https://www.amcharts.com/inspiration/hand-drawn/}.
 
-Theme use for the documentatios webiste.
+hcrt theme is used for the documentation website.
 
 Monokai is a well know text editor theme.
 
