@@ -1,6 +1,6 @@
 ---
-title: "Stocks"
-author: "Joshua Kunst"
+title: Stocks with highstock
+author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
@@ -8,10 +8,6 @@ description: >
   libraries from highcharts to create stock or general timeline charts.
   Features sophisticated navigation for high-volume data, user annotations and
   range selectors.
-vignette: >
-  %\VignetteIndexEntry{Stocks}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---

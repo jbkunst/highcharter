@@ -747,6 +747,8 @@ hc_add_annotations <- function(hc, x) {
 #' hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) %>%
 #'   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>%
 #'   hc_add_dependency("plugins/highcharts-regression.js")
+#'   
+#' @details See `vignette("modules")`   
 #' @importFrom purrr map_chr
 #' @importFrom htmltools htmlDependency
 #' @importFrom yaml yaml.load_file

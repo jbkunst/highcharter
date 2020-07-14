@@ -15,6 +15,9 @@ example: \code{"plugins/annotations.js"}}
 \description{
 Add modules or plugin dependencies to highcharts objects
 }
+\details{
+See \code{vignette("modules")}
+}
 \examples{
 
 data(mpg, package = "ggplot2")
@@ -28,4 +31,5 @@ hchart(mpg, "point", hcaes(displ, hwy),
 hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) \%>\%
   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) \%>\%
   hc_add_dependency("plugins/highcharts-regression.js")
+  
 }

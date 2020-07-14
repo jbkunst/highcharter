@@ -1,15 +1,11 @@
 ---
-title: "Maps"
-author: "Joshua Kunst"
+title: Maps with highmaps
+author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description:
   The highcharter package include [highmaps](https://www.highcharts.com/demo/maps) 
   libraries from highcharts to chart maps, choroplets and geojson.
-vignette: >
-  %\VignetteIndexEntry{Maps}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
@@ -214,7 +210,7 @@ ausmap %>%
 
 Let's download some geojson files and make a map.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 getContent <- function(url) {
   library(httr)
   content(GET(url))
@@ -241,7 +237,7 @@ volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=E
 The data is ready. Remember you can keep using the rest of the API to 
 customize your map.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 highchart(type = "map") %>%
   hc_chart(backgroundColor = "#161C20") %>%
   hc_add_series(

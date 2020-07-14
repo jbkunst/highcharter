@@ -2,6 +2,8 @@
 library(yaml)
 library(tidyverse)
 
+options(rmarkdown.html_vignette.check_title = FALSE)
+
 # data --------------------------------------------------------------------
 yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
@@ -30,7 +32,7 @@ yml[["articles"]] <- list(
     contents = extensions
   ),
   list(
-    title = "Other",
+    title = "Extras",
     contents = artcls
   )
 )

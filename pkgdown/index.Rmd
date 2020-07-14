@@ -1,38 +1,31 @@
 ---
-output: html_document
+title: 
+output:
+  html_document:
+    self_contained: false
 ---
 
-<div id="brand"><img src="man/figures/logo.png"width ="15%"/> h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div> 
-
-Highcharter is a [R](https://cran.r-project.org/) wrapper for 
+Highcharter is a **[R](https://cran.r-project.org/)** wrapper for 
 **[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.
 Highcharts is very flexible and customizable javascript charting library and 
-it has a great and powerful API^[See http://www.highcharts.com/demo].
+it has a great and powerful API.
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  warning = FALSE,
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r setup, include = FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, collapse = TRUE, comment = "#>")
 library(dplyr)
 library(htmltools)
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(highcharter)
 library(tidyverse)
 library(viridisLite)
 ```
 
 
-```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, eval=TRUE, echo=FALSE}
 color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
 
 hc_theme_highcharts <- 
   hc_theme_hcrt(
     chart = list(backgroundColor = "transparent"),
-    colors = cols,
     plotOptions = list(
       series = list(showInLegend = FALSE),
       line = list(lineWidth = 1.2)
@@ -56,15 +49,17 @@ options(highcharter.theme = hc_theme_highcharts)
 
 # example 1
 data(mpg, package = "ggplot2")
-mpg <- select(mpg, displ, hwy)
-p1 <- hchart(mpg, "point", hcaes(x = displ, y = hwy), name = "Cars") %>% 
+mpg <- mpg %>%
+  mutate(name = str_c(manufacturer, " ", model)) %>% 
+  select(name, displ, hwy)
+p1 <- hchart(mpg, "point", hcaes(x = displ, y = hwy, name = name), name = "Cars") %>% 
   hc_colorAxis(stops = color_stops_index, legend = FALSE, visible = FALSE)
 
 # example 2
 library(forecast)
 p2 <- hchart(
   forecast(ets(AirPassengers), level = 90, h = 12 * 2),
-  fillOpacity = 0.7,
+  fillOpacity = 0.1,
   name = "Air Passengers data"
   ) %>%
   hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
@@ -125,30 +120,38 @@ p6 <- highchart() %>%
   hc_add_theme(hc_theme_highcharts)
 
 # example 7
-brks <- seq(-3, 3, length.out = 40)
+brks <- seq(-2.5, 2.5, length.out = 30)
 grid <- expand.grid(brks, brks)
-m <- as.data.frame(grid) %>%
+m <- as.data.frame(grid) %>% 
   mutate(
     value =
       mvtnorm::dmvnorm(grid, mean = c(1, 1), sigma = matrix(c(1, .2, .2, 1), nrow = 2)) +
-      mvtnorm::dmvnorm(grid, mean = c(-1,-1), sigma = matrix(c(1,-.8,-.8, 1), nrow = 2)) +
-      mvtnorm::dmvnorm(grid, mean = c(0, 0), sigma = matrix(c(1.5, 0, 0, 1.5), nrow = 2))
-    ) %>%
-  spread(Var2, value) %>%
-  select(-Var1) %>%
-  as.matrix()
-  
+      mvtnorm::dmvnorm(grid, mean = c(-1, -1), sigma = matrix(c(1, -.8, -.8, 1), nrow = 2)) +
+      mvtnorm::dmvnorm(grid, mean = c(0, 0), sigma = matrix(c(1.5, 0, 0, 1.5), nrow = 2))) %>% 
+  spread(Var2, value) %>% 
+  select(-Var1) %>% 
+  as.matrix() 
+
 colnames(m) <- rownames(m) <-  NULL
 
-p7 <- hchart(m) %>%
-  hc_add_theme(hc_theme_null()) %>%
-  hc_legend(enabled = FALSE) %>%
-  hc_colorAxis(stops = color_stops_index)
-  
+ncols <- 10
+cols <- c(rep("white", 2), rev(inferno(ncols - 2, begin = 0)))
+cols <- hex_to_rgba(cols, alpha = 1:ncols/ncols)
+colssotps <- list_parse2(
+  data.frame(
+    q = seq(0, ncols - 1) / (ncols - 1),
+    c = cols
+  )
+)
+
+p7 <- hchart(m) %>% 
+  hc_add_theme(hc_theme_null()) %>% 
+  hc_legend(enabled = FALSE) %>% 
+  hc_colorAxis(stops = colssotps)
+
 # example 8
-p8 <- hchart(rgamma(10000, shape = 2, scale = 3)) %>% 
-  hc_add_theme(hc_theme_smpl()) %>% 
-  hc_add_theme(hc_theme_highcharts)
+p8 <- hchart(rgamma(5000, shape = 3, scale = 0.8)) %>% 
+  hc_xAxis(max = 8)
 
 plots <- list(
   p1, p2, 
@@ -157,7 +160,7 @@ plots <- list(
   p7, p8
   )
 
-plots <- map(plots, hc_size, height = 300)
+plots <- map(plots, hc_size, height = 250)
 
 divplots <- map(plots, tags$div, class = "col-sm-6")
 
@@ -180,7 +183,7 @@ information in `geojson` format.
 * Themes: you configure your chart in multiples ways. There are
  implemented themes like economist, financial times, google, 538 among 
  others.
-* A lot of features and plugins: motion, draggable points, fonta-wesome,
+* A lot of features and plugins: motion, draggable points, font-awesome,
 tooltips, annotations.
 
 
@@ -197,7 +200,7 @@ hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group
 ```
 
 Among its features highcharter can chart various objects depending of
-its class with the generic^[I wanted to say *magic*]  `hchart` function.
+its class with the generic (*magic*) `hchart` function.
 
 ```{r}
 x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
@@ -205,7 +208,7 @@ x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 hchart(x, name = "data") 
 ```
 
-One of the nicest class which `hchart` can plot is the `forecast`
+One of the nicest class which `hchart can plot is the `forecast`
 class from the {forecast} package.
 
 ```{r}
@@ -264,28 +267,4 @@ hcmap(
     ) 
 ```
 
-
-## Installation
-
-CRAN version:
-
-```r
-install.packages("highcharter")
-```
-
-Development version:
-
-```r
-remotes::install_github("jbkunst/highcharter")
-```
-
-## Licence 
-
-Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.
-
-Highcharts (http://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.
-
-## Discount for highcharter users
-
-Highsoft provide a discount to the highcharter users. It is a 50% discount on our Single Developer license. More details in https://newsletter.highcharts.com/foss/.
-
+<span></span>

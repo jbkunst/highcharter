@@ -12,7 +12,7 @@ dependencies:
     src: "htmlwidgets/lib/highcharts-8.1.2"
     script:
     - highcharts.js
-    - highcharts-3d.js
+    # - highcharts-3d.js
     - highcharts-more.js
     - modules/stock.js
     - modules/map.js

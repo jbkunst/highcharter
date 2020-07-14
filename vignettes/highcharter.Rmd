@@ -1,17 +1,24 @@
 ---
-title: "First steps on highchater package"
-author: "Joshua Kunst"
+title: First steps on highchater package
+author: Joshua Kunst
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   Start here if this is your first time with highcharter. You'll learn the main   
   functions to get a chart from a data frame and some basic examples.
-vignette: >
-  %\VignetteIndexEntry{First steps on highchater package}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
+
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "rocket"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
 
 ```{r, warning = FALSE, message = FALSE, echo = FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)

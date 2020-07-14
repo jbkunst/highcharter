@@ -1,15 +1,12 @@
 ---
-title: "Themes"
-author: "Joshua Kunst"
+title: Themes
+author: Joshua Kunst
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   Highcharts is very flexible for create or themes.
   In Highcarter there are some predefined themes and some 
   functions to create your own or merge themes.
-vignette: >
-  %\VignetteIndexEntry{Themes}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
@@ -17,7 +14,7 @@ editor_options:
 <script>
 $(document).ready(function(){ 
   el = $(".page-header > h1")
-  icon = "pencil"
+  icon = "paint-brush"
   text = el.text()
   text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
   el.html(text_new) 

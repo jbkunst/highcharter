@@ -1,14 +1,11 @@
 ---
-title: "Showcase"
-author: "Joshua Kunst"
+title: Showcase
+author: Joshua Kunst
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   In this vignette we'll review some examples to show what highcharts and
   highcharter can do in terms of customization and design.
-vignette: >
-  %\VignetteIndexEntry{Showcase}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---

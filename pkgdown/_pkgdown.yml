@@ -1,6 +1,5 @@
-home:
-  path: pkgdown/index.Rmd
 template:
+  path: pkgdown/templates
   params:
     bootswatch: cosmo
     ganalytics: UA-17670833-9
@@ -25,8 +24,9 @@ articles:
   - maps
   - stock
   - themes
-- title: Other
+- title: Extras
   contents:
+  - modules
   - motion
   - shiny-events-demo
 reference:
@@ -74,12 +74,11 @@ reference:
   - hc_add_dependency
   - hc_add_dependency_fa
   - hc_add_event_point
-  - hc_add_yAxis
+  - hc_yAxis_multiples
   - hc_elementId
   - hc_motion
   - hc_rm_series
   - hc_size
-  - hc_yAxis_multiples
   - tooltip_chart
   - tooltip_table
   - hex_to_rgba
@@ -123,7 +122,6 @@ reference:
   - worldgeojson
 - title: Extra functions
   contents:
-  - create_yaxis
   - datetime_to_timestamp
   - download_map_data
   - export_hc

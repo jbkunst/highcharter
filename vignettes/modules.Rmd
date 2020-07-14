@@ -1,0 +1,71 @@
+---
+title: Modules & plugins
+author: Joshua Kunst
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+editor_options: 
+  chunk_output_type: console
+---
+
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "puzzle-piece"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
+
+```{r, include=FALSE}
+library(highcharter)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+options(download.file.method = "libcurl")
+```
+
+```{r}
+dir(system.file("htmlwidgets/lib", package = "highcharter"))
+
+yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
+yml <- yaml::yaml.load_file(yml)[[1]]
+
+```
+
+
+Before check the example. Let's present the data we'll work.
+
+```{r}
+data(penguins, package = "palmerpenguins")
+
+penguins <- penguins[complete.cases(penguins),]
+
+str(penguins)
+```
+
+
+
+## Regression Plugins
+
+```{r}
+library(highcharter)
+
+hchart(
+  penguins,
+  "scatter",
+  hcaes(x = body_mass_g, y = flipper_length_mm),
+  regression = TRUE,
+  regressionSettings = list(type = "polynomial", order = 3, hideInLegend = FALSE)
+  ) %>%
+  hc_add_dependency("plugins/highcharts-regression.js")
+
+hchart(
+  penguins, 
+  "scatter",
+  hcaes(x = body_mass_g, y = flipper_length_mm , group = species),
+  regression = TRUE
+  ) %>%
+  hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>%
+  hc_add_dependency("plugins/highcharts-regression.js")
+```
+

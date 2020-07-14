@@ -1,15 +1,12 @@
 ---
-title: "Highcharts API"
-author: "Joshua Kunst"
+title: Highcharts API
+author: Joshua Kunst
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   Highcharts have a rich API which allows you to have control of the entire chart, 
   from title, subtitle to axis ticks, labels, annotations. We'll review the
   main functions with simple examples.
-vignette: >
-  %\VignetteIndexEntry{Highcharts API}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---

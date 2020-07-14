@@ -1,16 +1,13 @@
 ---
-title: "hchart Function"
+title: hchart Function
 author: Joshua Kunst
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   This a generic function, this means you can chart various R like numeric, 
   histograms, character, factor, ts on the fly.
   The resulting chart is a highchart object so you can keep 
   modifying with the implemented API.
-vignette: >
-  %\VignetteIndexEntry{hchart Function}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
@@ -18,7 +15,7 @@ editor_options:
 <script>
 $(document).ready(function(){ 
   el = $(".page-header > h1")
-  icon = "magic-o"
+  icon = "magic"
   text = el.text()
   text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
   el.html(text_new) 

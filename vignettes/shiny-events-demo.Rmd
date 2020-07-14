@@ -1,11 +1,8 @@
 ---
-title: "Shiny Events Demo"
-author: "Martin John Hadley, @martinjhnhadley"
+title: Shiny Events Demo
+author: Martin John Hadley, @martinjhnhadley
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Shiny Events Demo}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 Using `hc_add_event_point` and `hc_add_event_series` it is possible extract click and mouse over events from a Highchart within a Shiny app. To extract this information from the chart, `input$` variables are created as follows:

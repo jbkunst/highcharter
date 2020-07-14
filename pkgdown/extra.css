@@ -7,6 +7,14 @@
   font-style: normal;
 }
 
+@font-face {
+	font-family: 'Datalegreya-Thin';
+	src: url('http://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Thin.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
 body {
   font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
@@ -31,6 +39,11 @@ body {
   display: table;
   width: 100%;
   margin-top: 30px; /* same as #sidebar */
+}
+
+#navbarbrand {
+  font-size: 1.75em;
+  font-family: 'Datalegreya-Thin', sans-serif;
 }
 
 .navbar-default {
