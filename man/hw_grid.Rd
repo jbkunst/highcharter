@@ -3,20 +3,31 @@
 \name{hw_grid}
 \alias{hw_grid}
 \title{Lays out highchart widgets into a "grid", similar to
-\code{grid.arrange} from \code{gridExtra}}
+\code{grid.arrange} from \code{gridExtra}.}
 \usage{
-hw_grid(..., ncol = NULL, rowheight = NULL)
+hw_grid(..., ncol = NULL, rowheight = NULL, browsable = TRUE)
 }
 \arguments{
 \item{...}{either individual \code{highchart} objects or a mixture of
-individual \code{highchart} objects
-and \code{list}s of \code{highchart} objects.}
+individual \code{highchart} objects and \code{list}s of \code{highchart} objects.}
 
 \item{ncol}{how many columns in the grid}
 
 \item{rowheight}{Height in px.}
+
+\item{browsable}{Logical value indicating if the returned object is converted
+to an HTML object browsable using \code{htmltools::browsable}.}
 }
 \description{
 Lays out highchart widgets into a "grid", similar to
-\code{grid.arrange} from \code{gridExtra}
+\code{grid.arrange} from \code{gridExtra}.
+}
+\examples{
+
+charts <- lapply(1:9, function(x) {
+  hchart(ts(cumsum(rnorm(100))))
+})
+
+hw_grid(charts, rowheight = 300)
+
 }

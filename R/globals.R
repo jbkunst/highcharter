@@ -1,0 +1,8 @@
+utils::globalVariables(
+  c("var1",
+    "var2",
+    "from",
+    "to",
+    "id"
+    )
+  )

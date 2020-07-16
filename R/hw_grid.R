@@ -10,11 +10,11 @@
 #' 
 #' @examples 
 #' 
-#' charts <- lapply(1:4, function(x) {
-#'   hchart(ts(cumsum(rbeta(1000, x, x))))
+#' charts <- lapply(1:9, function(x) {
+#'   hchart(ts(cumsum(rnorm(100))))
 #' })
 #' 
-#' hw_grid(charts)
+#' hw_grid(charts, rowheight = 300)
 #'
 #' @importFrom grDevices n2mfrow
 #' @export

@@ -4,14 +4,17 @@
 #'
 #' @examples 
 #' 
+#' \dontrun{
 #' library(dplyr) 
-#' data(diamonds)
+#' data(diamonds, package = "ggplot2")
 #' 
 #' diamonds2 <- select(diamonds, cut, color, clarity)
 #' 
 #' hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
+#' }
 #' 
-#'
+#' @importFrom dplyr all_of count group_by_all vars
+#' @importFrom stats complete.cases
 #' @export
 data_to_sankey <- function(data = NULL) {
   
