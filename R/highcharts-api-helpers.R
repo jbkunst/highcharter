@@ -341,6 +341,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #'
 #' @export
 hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
+  
   hc <- .hc_opt(hc, "motion", enabled = enabled, startIndex = startIndex, ...)
 
   hc
