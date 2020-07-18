@@ -18,7 +18,8 @@ Authors@R: c(
   person("Christian", "Minich", role = c("ctb"), comment  = "hcaes mutate_mapping improvement"),
   person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix"),
   person("David", "Breuer", role = c("ctb"), comment = "download_map_data quiet parameter"),
-  person("Mauricio", "Vargas", role = c("ctb"), comment = "tests and gh-actions")
+  person("Mauricio", "Vargas", role = c("ctb"), comment = "tests and gh-actions"),
+  person("Michael", "Yan", role = c("ctb"), comment = "Motivational example for treemap/sunburst data helper")
   )
 URL: http://jkunst.com/highcharter, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues

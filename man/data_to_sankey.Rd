@@ -2,7 +2,7 @@
 % Please edit documentation in R/data-helpers.R
 \name{data_to_sankey}
 \alias{data_to_sankey}
-\title{Helper to transform data frame in sankey highcharts format}
+\title{Helper to transform data frame for sankey highcharts format}
 \usage{
 data_to_sankey(data = NULL)
 }
@@ -10,7 +10,7 @@ data_to_sankey(data = NULL)
 \item{data}{A data frame}
 }
 \description{
-Helper to transform data frame in sankey highcharts format
+Helper to transform data frame for sankey highcharts format
 }
 \examples{
 
@@ -19,6 +19,8 @@ library(dplyr)
 data(diamonds, package = "ggplot2")
 
 diamonds2 <- select(diamonds, cut, color, clarity)
+
+data_to_sankey(diamonds2)
 
 hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
 }

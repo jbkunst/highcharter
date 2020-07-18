@@ -3,6 +3,8 @@ utils::globalVariables(
     "var2",
     "from",
     "to",
-    "id"
+    "id",
+    "value",
+    "un"
     )
   )

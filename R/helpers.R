@@ -67,6 +67,25 @@ str_to_id <- function(x) {
   
 }
 
+#' @rdname str_to_id
+str_to_id_vec <- function(x){
+  
+  # x <- c("A_ aa", "A_  Aa", "a_   aa"
+  
+  tibble(
+    var = x,
+    id = str_to_id(x),
+    un = cumsum(duplicated(id))
+  ) %>%
+    mutate(
+      un = ifelse(un == 0, "", str_c("_", un)),
+      id2 = str_c(id, un)
+    ) %>% 
+    pull("id2")
+  
+}
+
+
 #' Date to timestamps
 #'
 #' Turn a date time vector to \code{timestamp} format

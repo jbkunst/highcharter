@@ -24,6 +24,17 @@ hchart.default <- function(object, ...) {
 }
 
 #' @export
+hchart.list <- function(object, ...) {
+  if (getOption("highcharter.verbose")) {
+    message("hchart.list")
+  }
+  
+  highchart() %>% 
+    hc_add_series(data = object, ...)
+  
+}
+
+#' @export
 hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
   if (getOption("highcharter.verbose")) {
     message("hchart.data.frame")

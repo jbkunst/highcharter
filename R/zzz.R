@@ -102,15 +102,19 @@
   )
 
   options(
-    highcharter.theme = hc_theme(chart = list(backgroundColor = "transparent")),
+    highcharter.theme = hc_theme(
+      chart = list(backgroundColor = "transparent"),
+      colors = c("#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
+                 "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1")
+      ),
     highcharter.verbose = FALSE,
     highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,
     highcharter.rjson = FALSE,
     highcharter.download_map_data = TRUE,
     highcharter.color_palette = c(
-      "#420A68", "#66166E", "#8B226A", "#AE305C", "#CF4446",
-      "#E8602C", "#F8850F", "#FCAF13", "#F5DC4D", "#FCFFA4"
-    )
+      "#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
+      "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"
+      )
   )
 }

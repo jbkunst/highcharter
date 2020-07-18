@@ -278,9 +278,7 @@ hctreemap <- function(tm, ...) {
     tibble::as_tibble() %>%
     select(-.data$x0, -.data$y0, -.data$w, -.data$h, -.data$stdErr, -.data$vColorValue) %>%
     rename(value = .data$vSize, valuecolor = .data$vColor) %>%
-    purrr::map_if(is.factor, as.character) %>%
-    data.frame(stringsAsFactors = FALSE) %>%
-    tibble::as_tibble()
+    mutate_if(is.factor, as.character) 
 
   ndepth <- which(names(df) == "value") - 1
 

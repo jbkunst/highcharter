@@ -27,58 +27,7 @@ options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
 
 In this vignette we'll review some examples to show what highcharts and
-highcharter can do in terms of customization and design
-
-## Weathers Radials
-
-Example inspired by http://weather-radials.com/.
-
-```{r}
-library(highcharter)
-data(weather)
-
-x <- c("Min", "Mean", "Max")
-y <- sprintf("{point.%s}°", c("min_temperaturec", "mean_temperaturec", "max_temperaturec"))
-
-tltip <- tooltip_table(x, y)
-
-hchart(
-  weather,
-  type = "columnrange",
-  hcaes(
-    x = date, 
-    low = min_temperaturec, 
-    high = max_temperaturec,
-    color = mean_temperaturec
-    )
-  ) %>%
-  hc_chart(
-    polar = TRUE
-    ) %>%
-  hc_yAxis(
-    max = 30,
-    min = -10,
-    labels = list(format = "{value} C"),
-    showFirstLabel = FALSE
-  ) %>%
-  hc_xAxis(
-    title = list(text = ""), 
-    gridLineWidth = 0.5,
-    labels = list(format = "{value: %b}")
-  ) %>%
-  hc_tooltip(
-    useHTML = TRUE,
-    pointFormat = tltip,
-    headerFormat = as.character(tags$small("{point.x:%d %B, %Y}"))
-  ) %>% 
-  hc_title(
-    text = "Climatical characteristics of San Francisco"
-  ) %>% 
-  hc_size(
-    height = 600
-  )
-```
-
+highcharter can do in terms of customization and design.
 
 ## HIMYM example
 
@@ -152,6 +101,108 @@ highchart() %>%
     )
 ```
 
+
+## Pokemon
+
+```{r}
+library(dplyr)
+data(pokemon)
+
+lvl_opts <-  list(
+  list(
+    level = 1,
+    borderWidth = 0,
+    borderColor = "transparent",
+    dataLabels = list(
+      enabled = TRUE,
+      align = "left",
+      verticalAlign = "top",
+      style = list(fontSize = "12px", textOutline = FALSE, color = "white")
+      )
+  ),
+  list(
+    level = 2,
+    borderWidth = 0,
+    borderColor = "transparent",
+    colorVariation = list(key = "brightness", to = 0.250),
+    dataLabels = list(enabled = FALSE),
+    style = list(fontSize = "8px", textOutline = FALSE, color = "white")
+  )
+)
+
+pkmn_min <- pokemon %>% 
+  select(type_1, type_2, color_1) %>%
+  mutate(type_1 = stringr::str_to_title(type_1)) %>% 
+  mutate(type_2 = ifelse(is.na(type_2), paste("only", type_1), type_2)) %>%
+  mutate(val = 1)
+
+cols <- pkmn_min %>% 
+  count(type_1, type_2, color_1, sort = TRUE) %>% 
+  pull(color_1) %>% 
+  unique()
+
+hchart(
+  data_to_hierarchical(pkmn_min, c(type_1, type_2), val, colors = cols),
+  type = "treemap",
+  # levelIsConstant = FALSE,
+  # allowDrillToNode = TRUE,
+  levels = lvl_opts,
+  tooltip = list(valueDecimals = FALSE) 
+) %>% 
+  hc_size(height = 700)
+```
+
+
+## Weathers Radials
+
+Example inspired by http://weather-radials.com/.
+
+```{r}
+library(highcharter)
+data(weather)
+
+x <- c("Min", "Mean", "Max")
+y <- sprintf("{point.%s}°", c("min_temperaturec", "mean_temperaturec", "max_temperaturec"))
+
+tltip <- tooltip_table(x, y)
+
+hchart(
+  weather,
+  type = "columnrange",
+  hcaes(
+    x = date, 
+    low = min_temperaturec, 
+    high = max_temperaturec,
+    color = mean_temperaturec
+    )
+  ) %>%
+  hc_chart(
+    polar = TRUE
+    ) %>%
+  hc_yAxis(
+    max = 30,
+    min = -10,
+    labels = list(format = "{value} C"),
+    showFirstLabel = FALSE
+  ) %>%
+  hc_xAxis(
+    title = list(text = ""), 
+    gridLineWidth = 0.5,
+    labels = list(format = "{value: %b}")
+  ) %>%
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = tltip,
+    headerFormat = as.character(tags$small("{point.x:%d %B, %Y}"))
+  ) %>% 
+  hc_title(
+    text = "Climatical characteristics of San Francisco"
+  ) %>% 
+  hc_size(
+    height = 600
+  )
+```
+
 ## Stars
 
 Inspired by Nadieh Bremer's [block](http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47).
@@ -184,7 +235,9 @@ hchart(
   maxSize = 20
   ) %>%
   hc_chart(
-    backgroundColor = "black"
+    # backgroundColor = "black"
+    backgroundColor = hex_to_rgba("black", 0.5),
+    divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
     ) %>%
   hc_xAxis(
     title = list(text = "Temperature"),
@@ -198,9 +251,11 @@ hchart(
     gridLineWidth = 0
     ) %>%
   hc_title(
+    style = list(color = hex_to_rgba("white", 0.5)),
     text = "Our nearest Stars"
     ) %>%
   hc_subtitle(
+    style = list(color = hex_to_rgba("white", 0.5)),
     text = "In a Hertzsprung-Russell diagram"
     ) %>%
   hc_tooltip(
