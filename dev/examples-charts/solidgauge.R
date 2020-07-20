@@ -6,7 +6,6 @@ col_stops <- data.frame(
 
 highchart() %>%
   hc_chart(type = "solidgauge") %>%
-  hc_title(text = "solidgauge") %>%
   hc_pane(
     startAngle = -90,
     endAngle = 90,
@@ -16,6 +15,7 @@ highchart() %>%
       shape = "arc"
     )
   ) %>%
+  hc_tooltip(enabled = FALSE) %>% 
   hc_yAxis(
     stops = list_parse2(col_stops),
     lineWidth = 0,
@@ -33,4 +33,5 @@ highchart() %>%
       useHTML = TRUE,
       style = list(fontSize = "40px")
     )
-  )
+  ) %>% 
+  hc_size(height = 300)

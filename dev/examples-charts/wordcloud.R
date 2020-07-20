@@ -10,7 +10,7 @@ data <- texts %>%
   unlist() %>% 
   data_frame(word = .) %>% 
   count(word, sort = TRUE) %>% 
-  anti_join(tidytext::stop_words) %>% 
+  anti_join(tidytext::stop_words, by = "word") %>% 
   head(50)
 
 data

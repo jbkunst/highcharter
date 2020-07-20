@@ -4,6 +4,8 @@ df <- data.frame(
   x = LETTERS[1:6]
   )
 
+glimpse(df)
+
 hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
   hc_chart(inverted = TRUE) %>%
   hc_yAxis(
@@ -27,4 +29,5 @@ hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
       borderWidth = 0,
       targetOptions = list(width = '200%')
       )
-    )
+    ) %>% 
+  hc_size(height = 300)
