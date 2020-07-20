@@ -2,9 +2,12 @@
 % Please edit documentation in R/helpers.R
 \name{datetime_to_timestamp}
 \alias{datetime_to_timestamp}
+\alias{dt_tstp}
 \title{Date to timestamps}
 \usage{
 datetime_to_timestamp(dt)
+
+dt_tstp(dt)
 }
 \arguments{
 \item{dt}{Date or datetime vector}

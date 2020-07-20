@@ -21,7 +21,7 @@ chart_types_with_examples %>%
   str_c("\t - ", ., "\n") %>% 
   message("Chart with examples (", length(.), "):\n", .)
 
-map(chart_types_with_examples, function(x){
+walk(chart_types_with_examples, function(x){
   message(x)
   source(x, echo = FALSE, encoding = "utf-8")
   })

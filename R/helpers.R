@@ -112,6 +112,10 @@ datetime_to_timestamp <- function(dt) {
   tmstmp
 }
 
+#' @rdname datetime_to_timestamp
+#' @export
+dt_tstp <- datetime_to_timestamp
+
 #' Transform colors from hexadecimal format to rgba hc notation
 #'
 #' @param x colors in hexadecimal format

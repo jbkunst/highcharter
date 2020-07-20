@@ -27,6 +27,6 @@ index.Rmd
 ^codemeta\.json$
 ^doc$
 ^Meta$
-
+^.here
 ^.github$
 ^\.github$
