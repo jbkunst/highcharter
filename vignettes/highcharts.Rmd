@@ -1,0 +1,179 @@
+---
+title: Charts with highcharts
+author: Joshua Kunst
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+description: >
+  Highcharts is a SVG-based, multi-platform charting library. The highcharter 
+  package bring all highchartsJS capabilities to your R console. So you can
+  chart from simple charts like column, scatter to more complex charts like
+  streamgraph, packedbubble, vector field among others.
+editor_options: 
+  chunk_output_type: console
+---
+
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "area-chart"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(highcharter)
+options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+```
+
+Highcharts is a SVG-based, multi-platform charting library. The highcharter 
+package bring all highchartsJS capabilities to your R console. So you can
+chart from simple charts like column, scatter to more complex charts like
+streamgraph, packed bubble, vector field among others.
+
+## Basics charts
+
+Let's see a preview of what highchartsJS (so highcharter) can chart. First of
+all a simple data set:
+
+```{r echo=FALSE}
+library(dplyr)
+library(stringr)
+library(purrr)
+
+n <- 6
+
+set.seed(12345)
+
+colors <- c("#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d")
+colors2 <- c("#000004", "#3B0F70", "#8C2981", "#DE4968", "#FE9F6D", "#FCFDBF")
+
+df <- data.frame(x = seq_len(n) - 1) %>% 
+  mutate(
+    y = 10 + x + 10 * sin(x),
+    z = 5 + (x*y) - median(x*y),
+    e = 10 * abs(rnorm(length(x))) + 2,
+    e = round(e, 1),
+    low = y - e,
+    high = y + e,
+    value = round(y + 1),
+    name = sample(fruit[str_length(fruit) <= 5], size = n),
+    color = rep(colors, length.out = n)
+  ) %>% 
+  mutate_if(is.numeric, round, 1) %>% 
+  select(-e)
+
+knitr::kable(df)
+```
+
+
+```{r, echo=FALSE}
+create_hc <- function(t = "dumbbell") {
+  
+  dont_rm_high_and_low <- c(
+    "arearange",
+    "areasplinerange",
+    "columnrange",
+    "errorbar",
+    "dumbbell"
+    )
+  
+  is_polar <- str_detect(t, "polar")
+  t        <- str_replace(t, "polar", "")
+  invt     <- ifelse(t %in% c("dumbbell"), TRUE, FALSE)  
+  yvisible <- ifelse(t %in% c("streamgraph", "timeline"), FALSE, TRUE)
+  xvisible <- ifelse(t %in% c(""), FALSE, TRUE)
+  
+  if(!t %in% dont_rm_high_and_low) df <- df %>% select(-low, -high)
+  
+  hcout <-  highchart() %>%
+    hc_title(
+      text = paste(ifelse(is_polar, "polar ", ""), t),
+      style = list(fontSize = "15px")
+      ) %>% 
+    hc_chart(
+      type = t,
+      polar = is_polar,
+      inverted = invt
+    ) %>% 
+    hc_xAxis(
+      categories = df$name
+      ) %>% 
+    hc_yAxis(
+      visible = yvisible
+    ) %>% 
+    hc_tooltip(
+      outside = TRUE
+    ) %>% 
+    hc_add_series(
+      df,
+      name = "Fruit Consumption",
+      showInLegend = FALSE
+      )
+  
+  hcout
+  
+}
+
+hcs <- c(
+  "line", "spline",  "area", "areaspline",
+  "column", "columnpyramid", "bar", 
+  "lollipop", "dumbbell",
+  "waterfall" , "funnel", "pyramid",
+  "pie" , "treemap", "packedbubble",
+  # "sunburst",
+  "scatter", "bubble",
+  "arearange", "areasplinerange", "columnrange", "errorbar",
+  "polygon", "polarline", "polarcolumn", "polarcolumnrange",
+  "streamgraph", "item", "wordcloud", "timeline"
+  # "coloredarea", "coloredline"
+  )  %>% 
+  map(create_hc) 
+
+hcs %>% 
+  {print(hw_grid(.)); .} %>% 
+  map(hc_size, height = 300) %>% 
+  map(tags$div, class = "col-sm-4") %>% 
+  tags$div(class = "row")
+```
+
+
+## xrange 
+
+```{r code = readLines(here::here("dev/examples-charts/xrange.R"))}
+```
+
+## vector 
+
+```{r code = readLines(here::here("dev/examples-charts/vector.R"))}
+```
+
+## tilemap 
+
+```{r code = readLines(here::here("dev/examples-charts/tilemap.R"))}
+```
+
+## solidgauge
+
+```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))}
+```
+
+## bullet
+
+```{r code = readLines(here::here("dev/examples-charts/bullet.R"))}
+```
+
+## packedbubble
+
+```{r code = readLines(here::here("dev/examples-charts/packedbubble.R"))}
+```
+
+## venn & euler
+
+```{r code = readLines(here::here("dev/examples-charts/venn.R"))}
+```
+
+
+

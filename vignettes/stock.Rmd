@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   The highcharter package include [highstocks](https://www.highcharts.com/demo/stock)
-  libraries from highcharts to create stock or general timeline charts.
+  libraries from highchartsJS to create stock or general timeline charts.
   Features sophisticated navigation for high-volume data, user annotations and
   range selectors.
 editor_options: 
@@ -29,7 +29,7 @@ options(highcharter.theme = hc_theme_hcrt())
 ```
 
 The highcharter package include [highstocks](https://www.highcharts.com/demo/stock) 
-libraries from highcharts to create stock or general timeline charts.
+libraries from highchartsJS to create stock or general timeline charts.
 Features sophisticated navigation for high-volume data, user annotations and
 range selectors.
 

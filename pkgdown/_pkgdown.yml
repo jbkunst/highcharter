@@ -18,14 +18,16 @@ articles:
   - hchart
   - highcharts-api
   - showcase
-- title: Extensions
-  navbar: Extensions
+- title: The highchartsJS bundle
+  navbar: The highchartsJS bundle
   contents:
+  - highcharts
   - maps
   - stock
-  - themes
-- title: Extras
+- title: More of highcharter
+  navbar: More of highcharter
   contents:
+  - themes
   - modules
   - motion
   - shiny-events-demo
@@ -122,6 +124,8 @@ reference:
   - worldgeojson
 - title: Extra functions
   contents:
+  - data_to_hierarchical
+  - data_to_sankey
   - datetime_to_timestamp
   - download_map_data
   - export_hc

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Lays out highchart widgets into a "grid", similar to
-<code>grid.arrange</code> from <code>gridExtra</code> — hw_grid • highcharter</title>
+<code>grid.arrange</code> from <code>gridExtra</code>. — hw_grid • highcharter</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,9 +50,9 @@
   
 
 <meta property="og:title" content="Lays out highchart widgets into a "grid", similar to
-<code>grid.arrange</code> from <code>gridExtra</code> — hw_grid" />
+<code>grid.arrange</code> from <code>gridExtra</code>. — hw_grid" />
 <meta property="og:description" content="Lays out highchart widgets into a &quot;grid&quot;, similar to
-grid.arrange from gridExtra" />
+grid.arrange from gridExtra." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -132,19 +132,29 @@ grid.arrange from gridExtra" />
       <a href="../articles/showcase.html">Showcase</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Extensions</li>
+    <li class="dropdown-header">The highchartsJS bundle</li>
+    <li>
+      <a href="../articles/highcharts.html">Charts with highcharts</a>
+    </li>
     <li>
       <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
     </li>
-    <li class="divider"></li>
     <li>
-      <a href="../articles/index.html">More...</a>
+      <a href="../articles/modules.html">Modules &amp; plugins</a>
+    </li>
+    <li>
+      <a href="../articles/motion.html">Motion plugin</a>
+    </li>
+    <li>
+      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
   </ul>
 </li>
@@ -173,17 +183,17 @@ grid.arrange from gridExtra" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lays out highchart widgets into a "grid", similar to
-<code>grid.arrange</code> from <code>gridExtra</code></h1>
+<code>grid.arrange</code> from <code>gridExtra</code>.</h1>
     <small class="dont-index">Source: <a href='https://github.com/jbkunst/highcharter/blob/master/R/hw_grid.R'><code>R/hw_grid.R</code></a></small>
     <div class="hidden name"><code>hw_grid.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Lays out highchart widgets into a "grid", similar to
-<code>grid.arrange</code> from <code>gridExtra</code></p>
+<code>grid.arrange</code> from <code>gridExtra</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hw_grid.html'>hw_grid</a></span>(<span class='kw'>...</span>, ncol = <span class='kw'>NULL</span>, rowheight = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hw_grid.html'>hw_grid</a></span>(<span class='kw'>...</span>, ncol = <span class='kw'>NULL</span>, rowheight = <span class='kw'>NULL</span>, browsable = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,8 +201,7 @@ grid.arrange from gridExtra" />
     <tr>
       <th>...</th>
       <td><p>either individual <code>highchart</code> objects or a mixture of
-individual <code>highchart</code> objects
-and <code>list</code>s of <code>highchart</code> objects.</p></td>
+individual <code>highchart</code> objects and <code>list</code>s of <code>highchart</code> objects.</p></td>
     </tr>
     <tr>
       <th>ncol</th>
@@ -202,9 +211,22 @@ and <code>list</code>s of <code>highchart</code> objects.</p></td>
       <th>rowheight</th>
       <td><p>Height in px.</p></td>
     </tr>
+    <tr>
+      <th>browsable</th>
+      <td><p>Logical value indicating if the returned object is converted
+to an HTML object browsable using <code><a href='https://rdrr.io/pkg/htmltools/man/browsable.html'>htmltools::browsable</a></code>.</p></td>
+    </tr>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>charts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) {
+  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>))))
+})
+
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hw_grid.html'>hw_grid</a></span>(<span class='kw'>charts</span>, rowheight = <span class='fl'>300</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -216,18 +238,17 @@ and <code>list</code>s of <code>highchart</code> objects.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://jkunst.com'>Joshua Kunst</a>.</p>
+  <p>Developed by <a href='http://jkunst.com'>Joshua Kunst</a></p>
 </div>
 
 <p style="text-align: center;">
-	<span class="fa fa-pencil"></span> 
-	with <span class="red pulse fa fa-heart"></span>,
-	Open Source &amp; <span class="fa fa-coffee"></span>.
-	<span class="fa fa-code"></span> in <span class="fa fa-github-alt"></span>.
+	<span class="fa fa-code"></span> 
+	with <span class="red pulse fa fa-heart" style="color:red"></span>,
+	Open Source &amp; <span class="fa fa-coffee" style="color:#6f4e37"></span>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
 </div>
 
       </footer>

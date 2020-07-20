@@ -11,14 +11,18 @@ artcls <- dir("vignettes") %>%
   basename() %>% 
   str_remove(".Rmd")
 
+# get_started
 get_started <- c("highcharter", "hchart", "highcharts-api", "showcase")
 
 artcls <- setdiff(artcls, get_started)
 
-extensions <- c("maps", "stock", "themes")
+# highcharts
+highcharts <- c("highcharts", "maps", "stock")
 
-artcls <- setdiff(artcls, extensions)
+artcls <- setdiff(artcls, highcharts)
 
+# extras
+artcls <- unique(c("themes", artcls))
 
 yml[["articles"]] <- list(
   list(
@@ -27,12 +31,13 @@ yml[["articles"]] <- list(
     contents = get_started 
   ),
   list(
-    title = "Extensions",
-    navbar = "Extensions",
-    contents = extensions
+    title = "The highchartsJS bundle",
+    navbar = "The highchartsJS bundle",
+    contents = highcharts
   ),
   list(
-    title = "Extras",
+    title = "More of highcharter",
+    navbar = "More of highcharter", 
     contents = artcls
   )
 )
@@ -43,4 +48,4 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 # build articles ----------------------------------------------------------
 pkgdown::build_articles()
-# pkgdown::build_article("maps")
+# pkgdown::build_article("highcharts")

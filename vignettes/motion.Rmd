@@ -91,3 +91,83 @@ highchart() %>%
   )
 ```
 
+```{r}
+# highchart() %>% 
+#   hc_xAxis(min = 0, max = 10) %>% 
+#   hc_yAxis(min = 0, max = 10) %>% 
+#   hc_motion(enabled = TRUE) %>% 
+#   hc_add_series(
+#     type = "bubble",
+#     data = list(
+#       list(
+#         sequence = list(
+#           list(x = 1, y = 1, z = 10),
+#           list(x = 2, y = 3, z = 5),
+#           list(x = 3, y = 5, z = 8)
+#           )
+#         )
+#       )
+#     )
+# 
+# 
+# highchart() %>% 
+#   hc_xAxis(min = 0, max = 10) %>% 
+#   hc_yAxis(min = 0, max = 10) %>% 
+#   hc_add_series(
+#     type = "bubble",
+#     data = list(
+#       list(x = 1, y = 1, z = 10)
+#     )
+#   )
+# 
+# 
+# library(highcharter)
+# 
+# highchart() %>% 
+#   hc_chart(type = "scatter") %>% 
+#   hc_yAxis(max = 6, min = 0) %>% 
+#   hc_xAxis(max = 6, min = 0) %>%
+#   hc_add_series(name = "Australia",
+#                 data = list(
+#                   list(sequence = list(c(1,1),c(2,2),c(3,3),c(4,4)))
+#                 )) %>%
+#   hc_add_series(name = "United States",
+#                 data = list(
+#                   list(sequence = list(c(0,0),c(3,2),c(4,3),c(4,1)))
+#                 )) %>%
+#   hc_add_series(name = "China",
+#                 data = list(
+#                   list(sequence = list(c(3,2),c(2,2),c(1,1),c(2,5)))
+#                 )) %>% 
+#   hc_motion(enabled = TRUE,
+#             labels = 2000:2003,
+#             series = c(0,1,2))
+# 
+# 
+# list(x = )
+# 
+#     
+# 
+# highchart() %>% 
+#   hc_chart(type = "column") %>% 
+#   hc_yAxis(max = 6, min = 0) %>% 
+#   hc_add_series(name = "A", data = c(2,3,4), zIndex = -10) %>% 
+#   hc_add_series(name = "B",
+#                 data = list(
+#                   list(sequence = c(1,2,3,4)),
+#                   list(sequence = c(3,2,1,3)),
+#                   list(sequence = c(2,5,4,3))
+#                 )) %>% 
+#   hc_add_series(name = "C",
+#                 data = list(
+#                   list(sequence = c(3,2,1,3)),
+#                   list(sequence = c(2,5,4,3)),
+#                   list(sequence = c(1,2,3,4))
+#                 )) %>% 
+#   hc_motion(enabled = TRUE,
+#             labels = 2000:2003,
+#             series = c(1,2))
+
+```
+
+

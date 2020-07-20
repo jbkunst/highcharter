@@ -3,6 +3,10 @@ title: Modules & plugins
 author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+description: >
+  There are many plugins for highcharts created by both the Highsoft team and the
+  community. The plugins can from adding features to series or legends, as well
+  as in data export formats or adjusting regressions or smoothing.
 editor_options: 
   chunk_output_type: console
 ---
@@ -24,41 +28,54 @@ options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 options(download.file.method = "libcurl")
 ```
 
-```{r}
-dir(system.file("htmlwidgets/lib", package = "highcharter"))
+There are many plugins for highcharts created by both the Highsoft team and the
+community. The plugins can from adding features to series or legends, as well
+as in data export formats or adjusting regressions or smoothing.
 
-yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
-yml <- yaml::yaml.load_file(yml)[[1]]
+Since there are many and some of them are for a particular or unusual use, 
+they are not included in `highchart`. This is why these can be incorporated
+into the `htmlwidget` using the` hc_add_dependency` function.
 
-```
-
-
-Before check the example. Let's present the data we'll work.
-
-```{r}
-data(penguins, package = "palmerpenguins")
-
-penguins <- penguins[complete.cases(penguins),]
-
-str(penguins)
-```
+It should be noted that from time to time the plugins interfere with each
+other so you must be careful in using them.
 
 
+## Regression
 
-## Regression Plugins
+This plugin was created by Ignacio Vazquez (https://github.com/phpepe) and
+let you add a regression series to any existing series on your chart. Calculates
+the r-squared value (coefficient of determination) and optionally prints it on 
+the legend. If Linear or Polynomial regression is selected, you can print 
+the equation on the legend.
 
 ```{r}
 library(highcharter)
 
+data(penguins, package = "palmerpenguins")
+penguins <- penguins[complete.cases(penguins),]
+
 hchart(
   penguins,
   "scatter",
+  name = "Penguins",
+  opacity = 0.35,
   hcaes(x = body_mass_g, y = flipper_length_mm),
   regression = TRUE,
-  regressionSettings = list(type = "polynomial", order = 3, hideInLegend = FALSE)
+  regressionSettings = list(
+    type = "polynomial",
+    dashStyle = "dash",
+    color = "brown",
+    order = 3,
+    lineWidth = 5,
+    name = "%eq | r2: %r",
+    hideInLegend = FALSE)
   ) %>%
   hc_add_dependency("plugins/highcharts-regression.js")
+```
 
+Even you can get a regression for each series/group.
+
+```{r}
 hchart(
   penguins, 
   "scatter",
@@ -67,5 +84,56 @@ hchart(
   ) %>%
   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>%
   hc_add_dependency("plugins/highcharts-regression.js")
+```
+
+A detail of the each parameter can be found in the github page of this plugin:
+https://github.com/streamlinesocial/highcharts-regression#regression-settings.
+
+## Grouped Categories
+
+Home page: http://blacklabel.github.io/grouped_categories/
+
+Let's try an example:
+
+```{r}
+library(purrr) # map function to make grouped categories argument
+library(dplyr) # for select function 
+
+data(mpg, package = "ggplot2")
+
+mpgg <- mpg %>% 
+  filter(!manufacturer %in% c("volkswagen", "chevrolet")) %>% 
+  filter(class %in% c("compact", "midsize", "subcompact")) %>% 
+  group_by(class, manufacturer) %>% 
+  summarize(count = n()) %>% 
+  ungroup()
+
+categories_grouped <- mpgg %>%
+  select(class, manufacturer) %>%
+  group_by(name = class) %>% 
+  summarise(categories = list(manufacturer)) %>% 
+  list_parse()
+
+hchart(
+  mpgg,
+  "column", 
+  name = "Cars",
+  hcaes(y = count)
+  ) %>% 
+  hc_xAxis(
+    # specify the grouped categories
+    categories = categories_grouped, 
+    # styling a little bit
+    labels = list(style = list(fontSize = "10px"))
+    ) %>%
+  hc_add_dependency("plugins/grouped-categories.js")
+```
+
+## List of Plugins in highcharter
+
+You can use the next plugins:
+
+```{r, include=TRUE}
+dir(system.file("htmlwidgets/lib/highcharts/plugins", package = "highcharter"))
 ```
 

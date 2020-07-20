@@ -46,10 +46,16 @@ body {
   font-family: 'Datalegreya-Thin', sans-serif;
 }
 
+.row {
+  margin-top: 30px;
+}
+
 .navbar-default {
   background-color: #47475C;
   border-color: #A3EDBA;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  border-bottom-width: 1px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.22);
+  
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -92,7 +98,6 @@ body {
     outline: 0;
     background-color: #A3EDBA;
 }
-
 
 h1, h2, h3, h4, h5, h6, .navbar-brand {
   font-family: 'Alegreya Sans SC', sans-serif;

@@ -34,7 +34,7 @@ highcharter can do in terms of customization and design.
 > This is a bar graph describing my favorite pies including a pie chart describing my favorite bars.
 > - _Marshall Eriksen_
 
-```{r}
+```{r bar}
 data(favorite_bars)
 data(favorite_pies)
 
@@ -104,7 +104,7 @@ highchart() %>%
 
 ## Pokemon
 
-```{r}
+```{r pokemon}
 library(dplyr)
 data(pokemon)
 
@@ -133,7 +133,7 @@ lvl_opts <-  list(
 pkmn_min <- pokemon %>% 
   select(type_1, type_2, color_1) %>%
   mutate(type_1 = stringr::str_to_title(type_1)) %>% 
-  mutate(type_2 = ifelse(is.na(type_2), paste("only", type_1), type_2)) %>%
+  mutate(type_2 = ifelse(is.na(type_2), type_1, paste(type_1, "-", type_2))) %>%
   mutate(val = 1)
 
 cols <- pkmn_min %>% 
@@ -147,8 +147,15 @@ hchart(
   # levelIsConstant = FALSE,
   # allowDrillToNode = TRUE,
   levels = lvl_opts,
-  tooltip = list(valueDecimals = FALSE) 
-) %>% 
+  tooltip = list(valueDecimals = FALSE)
+  ) %>% 
+  hc_chart(
+    style = list(fontFamily = "Gloria Hallelujah")
+  ) %>% 
+  hc_title(
+    text = "Gotta Catch 'Em All!",
+    style = list(fontFamily = "Gloria Hallelujah")
+    ) %>% 
   hc_size(height = 700)
 ```
 
@@ -157,7 +164,7 @@ hchart(
 
 Example inspired by http://weather-radials.com/.
 
-```{r}
+```{r weather}
 library(highcharter)
 data(weather)
 
@@ -207,7 +214,7 @@ hchart(
 
 Inspired by Nadieh Bremer's [block](http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47).
 
-```{r}
+```{r stars}
 data(stars)
 
 colors <- c(
@@ -268,44 +275,11 @@ hchart(
     )
 ```
 
-## Global temperatures
-
-```{r}
-data(globaltemp)
-
-x <- c("Min", "Median", "Max")
-y <- sprintf("{point.%s}", c("lower", "median", "upper"))
-
-tltip <- tooltip_table(x, y)
-
-hchart(
-  globaltemp,
-  type = "columnrange",
-  hcaes(
-    x = date,
-    low = lower,
-    high = upper, 
-    color = median
-    )
-  ) %>%
-  hc_yAxis(
-    tickPositions = c(-2, 0, 1.5, 2),
-    gridLineColor = "#B71C1C",
-    labels = list(format = "{value} C", useHTML = TRUE)
-  ) %>%
-  hc_tooltip(
-    useHTML = TRUE,
-    headerFormat = as.character(tags$small("{point.x: %Y %b}")),
-    pointFormat = tltip
-  ) %>%
-  hc_add_theme(hc_theme_flatdark())
-```
-
 ## The Impact of Vaccines
 
 From [WSJ graphic: Battling Infectious Diseases in the 20th Century](http://graphics.wsj.com/infectious-diseases-and-vaccines/): 
 
-```{r}
+```{r vaccines}
 data(vaccines)
 
 fntltp <- JS("function(){
