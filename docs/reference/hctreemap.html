@@ -190,7 +190,7 @@ from the package treemap. NOTE: This function is deprecated. Please use hctreema
 from the package <code>treemap</code>. NOTE: This function is deprecated. Please use <code>hctreemap2</code> instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hctreemap.html'>hctreemap</a></span>(<span class='kw'>tm</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>hctreemap</span>(<span class='kw'>tm</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,9 +224,9 @@ from the package <code>treemap</code>. NOTE: This function is deprecated. Please
   draw = <span class='fl'>FALSE</span>
 )
 
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hctreemap.html'>hctreemap</a></span>(<span class='kw'>tm</span>, allowDrillToNode = <span class='fl'>TRUE</span>, layoutAlgorithm = <span class='st'>"squarified"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_title.html'>hc_title</a></span>(text = <span class='st'>"Gross National Income World Data"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_tooltip.html'>hc_tooltip</a></span>(pointFormat = <span class='st'>"&lt;b&gt;{point.name}&lt;/b&gt;:&lt;br&gt;
+<span class='fu'>hctreemap</span>(<span class='kw'>tm</span>, allowDrillToNode = <span class='fl'>TRUE</span>, layoutAlgorithm = <span class='st'>"squarified"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>hc_title</span>(text = <span class='st'>"Gross National Income World Data"</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'>hc_tooltip</span>(pointFormat = <span class='st'>"&lt;b&gt;{point.name}&lt;/b&gt;:&lt;br&gt;
                              Pop: {point.value:,.0f}&lt;br&gt;
                              GNI: {point.valuecolor:,.0f}"</span>
                              Pop: {point.value:,.0f}<br>

@@ -4,10 +4,10 @@
 # The actual dev version of pkgdown don't detect index.Rmd as a homepage
 # 
 # pkgdown:::build_home_index
-pkgdown::build_home()
-
 try(fs::file_delete("docs/extra.css"))
 fs::file_copy("pkgdown/extra.css", new_path = "docs/extra.css")
+
+pkgdown::build_home()
 
 try(fs::file_delete("pkgdown/index.html"))
 

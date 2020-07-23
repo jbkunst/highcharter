@@ -2,7 +2,7 @@
 #'
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data An R object like numeric, list, ts, xts, etc.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @examples
 #'
 #' highchart() %>%
@@ -35,7 +35,7 @@ hc_add_series.default <- function(hc, ...) {
 #' `hc_add_series` for numeric objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A numeric object
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.numeric <- function(hc, data, ...) {
   if (getOption("highcharter.verbose")) {
@@ -51,7 +51,7 @@ hc_add_series.numeric <- function(hc, data, ...) {
 #' hc_add_series for time series objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A time series `ts` object.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @importFrom zoo as.Date
 #' @importFrom stats time
 #' @export
@@ -75,7 +75,7 @@ hc_add_series.ts <- function(hc, data, ...) {
 #' hc_add_series for xts objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A `xts` object.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @importFrom xts is.xts
 #' @importFrom quantmod is.OHLC
 #' @export
@@ -178,7 +178,7 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
 #' hc_add_series for density objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A `density` object.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.density <- function(hc, data, ...) {
   if (getOption("highcharter.verbose")) {
@@ -194,7 +194,7 @@ hc_add_series.density <- function(hc, data, ...) {
 #' hc_add_series for character and factor objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A \code{character} or \code{factor} object.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.character <- function(hc, data, ...) {
   if (getOption("highcharter.verbose")) {
@@ -219,7 +219,7 @@ hc_add_series.factor <- hc_add_series.character
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A \code{geo_json} or \code{geo_list} object.
 #' @param type Type of series. Can be 'mapline', 'mapoint'.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
   if (getOption("highcharter.verbose")) {

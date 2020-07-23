@@ -11,7 +11,7 @@
 
 \item{data}{A time series \code{ts} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}
 }
 \description{
 hc_add_series for time series objects

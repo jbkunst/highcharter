@@ -1,3 +1,153 @@
+get_box_values <- function(x) {
+  boxplot.stats(x)$stats %>%
+    t() %>%
+    as.data.frame() %>%
+    setNames(c("low", "q1", "median", "q3", "high"))
+}
+
+get_outliers_values <- function(x) {
+  boxplot.stats(x)$out
+}
+
+#' Helper to transform data frame for boxplot highcharts format
+#'
+#' @param data The data frame containing variables.
+#' @param variable The variable to calculate the box plot data.
+#' @param group_var A variable to split calculation
+#' @param group_var2 A second variable to create separate series.
+#' @param add_outliers A logical value indicating if outlies series should
+#'   be calculated. Default to \code{FALSE}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
+#'
+#' @examples 
+#' 
+#' data(pokemon) 
+#' 
+#' dat <- data_to_boxplot(pokemon, height)
+#' 
+#' highchart() %>%
+#'   hc_xAxis(type = "category") %>%
+#'   hc_add_series_list(dat)
+#'   
+#' dat <- data_to_boxplot(pokemon, height, type_1, name = "height in meters")
+#' 
+#' highchart() %>%
+#' hc_xAxis(type = "category") %>%
+#' hc_add_series_list(dat)
+#' 
+#' 
+#' \dontrun{
+#' 
+#' 
+#' 
+# data <- diamonds
+# 
+# dat <- data_to_boxplot(data, x)
+# dat
+# highchart() %>% hc_xAxis(type = "category") %>% hc_add_series_list(dat)
+# ggplot(diamonds) + geom_boxplot(aes(y = x))
+# 
+# dat <- data_to_boxplot(data, x, color)
+# dat
+# highchart() %>% hc_xAxis(type = "category") %>% hc_add_series_list(dat)
+# ggplot(diamonds) + geom_boxplot(aes(y = x, x = color))
+# 
+# dat <- data_to_boxplot(data, x, color, cut)
+# dat
+# highchart() %>% hc_xAxis(type = "category") %>% hc_add_series_list(dat)
+# ggplot(diamonds) + geom_boxplot(aes(y = x, x = color, fill = cut))
+# 
+# dat <- data_to_boxplot(data, x, group_var2 = cut)
+# dat
+# highchart() %>% hc_xAxis(type = "category") %>% hc_add_series_list(dat)
+# ggplot(diamonds) + geom_boxplot(aes(y = x, fill = cut))
+# 
+# data_to_boxplot(data)
+# data_to_boxplot(data, x + x)
+# data_to_boxplot(data, x, c(color, cut))
+# data_to_boxplot(data, x, c(color, cut), c(color, cut))
+# 
+# 
+# highchart() %>% 
+#   hc_xAxis(type = "category") %>%
+#   hc_add_series_list(
+#     data_to_boxplot(data, x, color = "red", lineWidth = 100)
+#   )
+# 
+# highchart() %>% 
+#   hc_xAxis(type = "category") %>%
+#   hc_add_series_list(
+#     data_to_boxplot(data, x, color, color = "black", add_outliers = TRUE)
+#   )
+#' 
+#' }
+#'
+#' @importFrom dplyr transmute group_nest
+#' @export
+data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL, add_outliers = FALSE, ...){
+  
+  stopifnot(
+    is.data.frame(data),
+    !missing(variable)
+    )
+  
+  dx <- data %>%
+    transmute(x := {{variable}}) 
+  
+  if(!missing(group_var)) {
+    dg <- data %>% 
+      select({{group_var}})
+  } else {
+    dg <- data.frame(rep(0, nrow(dx)))
+  }
+  
+  if(!missing(group_var2)) {
+    dg2 <- data %>% 
+      select({{group_var2}})
+  } else {
+    dg2 <- data.frame(rep(NA, nrow(dx)))
+  }  
+  
+  dg  <- dg  %>% setNames("name")
+  dg2 <- dg2 %>% setNames("series")
+  
+  dat <- bind_cols(dx, dg, dg2)
+   
+  dat1 <- dat %>%
+    group_by(series, name) %>%
+    summarise(data = list(get_box_values(x)), .groups = "drop") %>%
+    unnest(cols = data) %>%
+    group_nest(series) %>%
+    mutate(data = map(data, list_parse)) %>%
+    rename(name = series) %>%
+    mutate(id = name) %>%
+    mutate(type = "boxplot", ...) 
+    # list_parse()
+  
+  if(add_outliers) {
+    
+    dat2 <- dat %>%
+      mutate(name = as.numeric(factor(name)) - 1) %>% 
+      group_by(series, name) %>%
+      summarise(y = list(get_outliers_values(x)), .groups = "drop") %>%
+      unnest(cols = y) %>%
+      rename(x = name) %>%
+      group_nest(series) %>%
+      mutate(data = map(data, list_parse)) %>% 
+      rename(linkedTo = series) %>%
+      mutate(type = "scatter", showInLegend = FALSE, ...)
+    
+    dout <- bind_rows(dat1, dat2)
+    
+  } else {
+    dout <- dat1
+  }
+  
+  dout
+}
+
+
+
 #' Helper to transform data frame for treemap/sunburst highcharts format
 #'
 #' @param data data frame containing variables to organize each level of 

@@ -188,7 +188,7 @@
     <p>The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(url = <span class='st'>"custom/world.js"</span>, showinfo = <span class='fl'>FALSE</span>, quiet = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>download_map_data</span>(url = <span class='st'>"custom/world.js"</span>, showinfo = <span class='fl'>FALSE</span>, quiet = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,12 +210,12 @@ are the keys to add data in <code>hcmap</code>.</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></code></p></div>
+    <div class='dont-index'><p><code>hcmap</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
-<span class='kw'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>,
+<span class='kw'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'>download_map_data</span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
+<span class='kw'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'>download_map_data</span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>,
   quiet = <span class='fl'>TRUE</span>
 )
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>mpdta</span>, <span class='fl'>1</span>)

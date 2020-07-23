@@ -14,7 +14,7 @@
 
 \item{data}{A \code{xts} object.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}
 
 \item{type}{The way to show the \code{xts} object. Can be 'candlestick' or 'ohlc'.}
 }

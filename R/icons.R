@@ -25,6 +25,7 @@
 #'   hc_add_dependency_fa()
 #' @export
 hc_add_dependency_fa <- function(hc) {
+  .Deprecated(msg = "Deprecated function. Use the fontawesome package. Example in the docs website.")
   dep <- htmlDependency(
     name = "font-awesome",
     version = "0.0.0",
@@ -43,6 +44,7 @@ hc_add_dependency_fa <- function(hc) {
 #' fa_icon("car")
 #' @export
 fa_icon <- function(iconname = "circle") {
+  .Deprecated(msg = "Deprecated function. Use the fontawesome package. Example in the docs website.")
   sprintf("<i class=\"fa fa-%s\"></i>", iconname)
 }
 
@@ -52,6 +54,9 @@ fa_icon <- function(iconname = "circle") {
 #' fa_icon_mark(iconname = c("car", "plane", "car"))
 #' @export
 fa_icon_mark <- function(iconname = "circle") {
+  
+  .Deprecated(msg = "Deprecated function. Use the fontawesome package. Example in the docs website.")
+  
   faicos <- readRDS(system.file("extdata/faicos.rds", package = "highcharter"))
 
   idx <- purrr::map_int(iconname, function(icn) which(faicos$name %in% icn))

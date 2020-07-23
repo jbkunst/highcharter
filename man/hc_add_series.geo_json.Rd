@@ -16,7 +16,7 @@
 
 \item{type}{Type of series. Can be 'mapline', 'mapoint'.}
 
-\item{...}{Arguments defined in \url{http://api.highcharts.com/highcharts/chart}.}
+\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}
 }
 \description{
 hc_add_series for geo_json & geo_list objects

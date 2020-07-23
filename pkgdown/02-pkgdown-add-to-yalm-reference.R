@@ -4,11 +4,13 @@ library(tidyverse)
 
 # buildocs ----------------------------------------------------------------
 devtools::document()
+devtools::build()
 
 # data --------------------------------------------------------------------
 yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
-# the package need to be build
+# the package needs to be build
+message(rep("the package needs to be build\n", 50))
 dfun <- help.search("*", package = "highcharter") %>%
   .$matches %>% 
   tibble::as_tibble() %>%
@@ -60,11 +62,12 @@ fun_hc_add <- dfun %>%
 dfun <- dfun %>%
   filter(!name %in% fun_hc_add)
 
-  
+
 datas <- read_lines("R/data.R") %>% 
   str_subset("\".*\"") %>% 
   str_trim() %>% 
   str_remove_all("\"")
+
 
 dfun <- dfun %>%
   filter(!name %in% datas)
@@ -114,7 +117,7 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 # build reference ---------------------------------------------------------
 pkgdown::build_reference_index()
-pkgdown::build_reference()
+# pkgdown::build_reference()
 
 
 

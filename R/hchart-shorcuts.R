@@ -36,13 +36,18 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @param outliers A boolean value to show or not the outliers.
 #' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @examples
-#' hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
+#' 
+#' \dontrun{
+#'   hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
+#'  } 
 #' @importFrom dplyr rename
 #' @importFrom tidyr unnest
 #' @importFrom grDevices boxplot.stats
 #' @importFrom rlang .data
 #' @export
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
+  
+  .Deprecated("data_to_boxplot")
   
   stopifnot(is.numeric(x))
 
@@ -270,7 +275,8 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
 #' @importFrom rlang .data
 #' @export
 hctreemap <- function(tm, ...) {
-  .Deprecated("hctreemap2")
+  
+  .Deprecated("data_to_hierarchical")
 
   assertthat::assert_that(is.list(tm))
 
@@ -365,6 +371,9 @@ hctreemap <- function(tm, ...) {
 #'
 #' @export
 hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
+  
+  .Deprecated("data_to_hierarchical")
+  
   assertthat::assert_that(is.data.frame(data))
   assertthat::assert_that(is.character(group_vars))
   assertthat::assert_that(is.character(size_var))

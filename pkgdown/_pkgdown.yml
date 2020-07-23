@@ -24,6 +24,11 @@ articles:
   - highcharts
   - maps
   - stock
+- title: Experiments & Examples
+  navbar: Experiments & Examples
+  contents:
+  - fontawesome
+  - drilldown
 - title: More of highcharter
   navbar: More of highcharter
   contents:
@@ -124,6 +129,7 @@ reference:
   - worldgeojson
 - title: Extra functions
   contents:
+  - data_to_boxplot
   - data_to_hierarchical
   - data_to_sankey
   - datetime_to_timestamp

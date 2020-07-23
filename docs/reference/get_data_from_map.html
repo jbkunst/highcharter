@@ -193,37 +193,37 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/get_data_from_map.html'>get_data_from_map</a></span>(<span class='kw'>mapdata</span>)</pre>
+    <pre class="usage"><span class='fu'>get_data_from_map</span>(<span class='kw'>mapdata</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mapdata</th>
-      <td><p>A list obtained from <code><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></code>.</p></td>
+      <td><p>A list obtained from <code>download_map_data</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></code></p></div>
+    <div class='dont-index'><p><code>download_map_data</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>dta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/get_data_from_map.html'>get_data_from_map</a></span>(<span class='kw'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 58 x 7</span><span>
+    <pre class="examples"><div class='input'><span class='kw'>dta</span> <span class='op'>&lt;-</span> <span class='fu'>download_map_data</span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
+<span class='fu'>get_data_from_map</span>(<span class='kw'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span><span>
 #&gt;    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
-#&gt; </span><span style='color: #555555;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
-#&gt; </span><span style='color: #555555;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
-#&gt; </span><span style='color: #555555;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
-#&gt; </span><span style='color: #555555;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
-#&gt; </span><span style='color: #555555;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
-#&gt; </span><span style='color: #555555;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
-#&gt; </span><span style='color: #555555;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
-#&gt; </span><span style='color: #555555;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
-#&gt; </span><span style='color: #555555;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
-#&gt; </span><span style='color: #555555;'># ... with 48 more rows</span><span></div></span></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
+#&gt; </span><span style='color: #949494;'># ... with 48 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

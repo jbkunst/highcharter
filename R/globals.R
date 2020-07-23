@@ -5,6 +5,8 @@ utils::globalVariables(
     "to",
     "id",
     "value",
-    "un"
+    "un",
+    "x","y",
+    "series"
     )
   )

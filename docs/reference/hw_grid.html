@@ -143,6 +143,11 @@ grid.arrange from gridExtra." />
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Experiments &amp; Examples</li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
@@ -193,7 +198,13 @@ grid.arrange from gridExtra." />
 <code>grid.arrange</code> from <code>gridExtra</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hw_grid.html'>hw_grid</a></span>(<span class='kw'>...</span>, ncol = <span class='kw'>NULL</span>, rowheight = <span class='kw'>NULL</span>, browsable = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hw_grid.html'>hw_grid</a></span>(
+  <span class='kw'>...</span>,
+  ncol = <span class='kw'>NULL</span>,
+  rowheight = <span class='kw'>NULL</span>,
+  add_htmlgrid_css = <span class='fl'>TRUE</span>,
+  browsable = <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,6 +221,11 @@ individual <code>highchart</code> objects and <code>list</code>s of <code>highch
     <tr>
       <th>rowheight</th>
       <td><p>Height in px.</p></td>
+    </tr>
+    <tr>
+      <th>add_htmlgrid_css</th>
+      <td><p>A logical value to add or not <code>htmlgrid.css</code> as
+dependency.</p></td>
     </tr>
     <tr>
       <th>browsable</th>

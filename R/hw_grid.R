@@ -5,6 +5,8 @@
 #'   individual `highchart` objects and `list`s of `highchart` objects.
 #' @param ncol how many columns in the grid
 #' @param rowheight Height in px.
+#' @param add_htmlgrid_css A logical value to add or not `htmlgrid.css` as
+#'   dependency.
 #' @param browsable Logical value indicating if the returned object is converted
 #'   to an HTML object browsable using \code{htmltools::browsable}.
 #' 
@@ -18,7 +20,7 @@
 #'
 #' @importFrom grDevices n2mfrow
 #' @export
-hw_grid <- function(..., ncol = NULL, rowheight = NULL, browsable = TRUE) {
+hw_grid <- function(..., ncol = NULL, rowheight = NULL, add_htmlgrid_css = TRUE, browsable = TRUE) {
   
   input_list <- as.list(substitute(list(...)))[-1L]
  
@@ -61,7 +63,9 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL, browsable = TRUE) {
 
   divs <- map(params, function(x) {
     
-    x$dependencies <- c(x$dependencies, list(dep))
+    if(add_htmlgrid_css) {
+      x$dependencies <- c(x$dependencies, list(dep))
+    }
     
     x$width <- "100%"
 

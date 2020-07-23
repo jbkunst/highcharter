@@ -190,8 +190,9 @@ hc %>%
     fit,
     type = "arearange",
     name = "SE",
-    hcaes(x = cty, low = .fitted - 5*.se.fit, high = .fitted + 5*.se.fit),
+    hcaes(x = cty, low = .fitted - 10*.se.fit, high = .fitted + 10*.se.fit),
     linkedTo = "fit", # here we link the legends in one.
+    showInLegend = FALSE,
     color = hex_to_rgba("gray", 0.2),  # put a semi transparent color
     zIndex = -3 # this is for put the series in a back so the points are showed first
     )

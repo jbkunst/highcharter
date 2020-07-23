@@ -21,6 +21,11 @@ highcharts <- c("highcharts", "maps", "stock")
 
 artcls <- setdiff(artcls, highcharts)
 
+# Xperiments n Xamples
+xx <- c("fontawesome", "drilldown")
+
+artcls <- setdiff(artcls, xx)
+
 # extras
 artcls <- unique(c("themes", artcls))
 
@@ -36,11 +41,18 @@ yml[["articles"]] <- list(
     contents = highcharts
   ),
   list(
+    title = "Experiments & Examples",
+    navbar = "Experiments & Examples",
+    contents = xx
+  ),
+  list(
     title = "More of highcharter",
     navbar = "More of highcharter", 
     contents = artcls
   )
 )
+
+yml
 
 # write articles ----------------------------------------------------------
 write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
