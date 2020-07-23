@@ -140,6 +140,14 @@
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Experiments &amp; Examples</li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
@@ -188,7 +196,7 @@
     <p>Shortcut to create parallel coordinates</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hcparcords</span>(<span class='kw'>df</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcparcords.html'>hcparcords</a></span>(<span class='kw'>df</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,18 +218,15 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://github.com/sjmgarnier/viridisLite'>viridisLite</a></span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: viridisLite</span></div><div class='input'>
 <span class='kw'>n</span> <span class='op'>&lt;-</span> <span class='fl'>15</span>
 
-<span class='fu'>hcparcords</span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>mtcars</span>, <span class='kw'>n</span>), color = <span class='fu'>hex_to_rgba</span>(<span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>magma</a></span>(<span class='kw'>n</span>), <span class='fl'>0.5</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Problem with `mutate()` input `group`.</span>
-#&gt; <span class='error'><span style='color: #BB0000;'>x</span><span> Input `group` must be a vector, not a `formula` object.</span>
-#&gt; <span class='error'></span><span style='color: #0000BB;'>i</span><span> Input `group` is `~.row`.</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcparcords.html'>hcparcords</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>mtcars</span>, <span class='kw'>n</span>), color = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hex_to_rgba.html'>hex_to_rgba</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>magma</a></span>(<span class='kw'>n</span>), <span class='fl'>0.5</span>))
+
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>iris</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
 
 <span class='kw'>iris</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span>(<span class='kw'>iris</span>, <span class='fl'>60</span>)
 
-<span class='fu'>hcparcords</span>(<span class='kw'>iris</span>, color = <span class='fu'>colorize</span>(<span class='kw'>iris</span><span class='op'>$</span><span class='kw'>Species</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Problem with `mutate()` input `group`.</span>
-#&gt; <span class='error'></span><span style='color: #BB0000;'>x</span><span> Input `group` must be a vector, not a `formula` object.</span>
-#&gt; <span class='error'></span><span style='color: #0000BB;'>i</span><span> Input `group` is `~.row`.</span></div></span></pre>
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcparcords.html'>hcparcords</a></span>(<span class='kw'>iris</span>, color = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/colorize.html'>colorize</a></span>(<span class='kw'>iris</span><span class='op'>$</span><span class='kw'>Species</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

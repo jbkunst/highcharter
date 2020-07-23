@@ -140,6 +140,14 @@
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Experiments &amp; Examples</li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
@@ -189,7 +197,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for survfit</span>
-<span class='fu'>hchart</span>(
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(
   <span class='kw'>object</span>,
   <span class='kw'>...</span>,
   fun = <span class='kw'>NULL</span>,
@@ -250,16 +258,16 @@ the respective color of each series</p></td>
     <pre class="examples"><div class='input'>
 <span class='co'># Plot Kaplan-Meier curves</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/therneau/survival'>"survival"</a></span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: survival</span></div><div class='input'><span class='kw'>leukemia.surv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span>(<span class='kw'>time</span>, <span class='kw'>status</span>) <span class='op'>~</span> <span class='kw'>x</span>, data = <span class='kw'>aml</span>)
-<span class='fu'>hchart</span>(<span class='kw'>leukemia.surv</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(<span class='kw'>leukemia.surv</span>)
 
 <span class='co'># Plot the cumulative hazard function</span>
 <span class='kw'>lsurv2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span>(<span class='kw'>time</span>, <span class='kw'>status</span>) <span class='op'>~</span> <span class='kw'>x</span>, <span class='kw'>aml</span>, type = <span class='st'>"fleming"</span>)
-<span class='fu'>hchart</span>(<span class='kw'>lsurv2</span>, fun = <span class='st'>"cumhaz"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(<span class='kw'>lsurv2</span>, fun = <span class='st'>"cumhaz"</span>)
 
 <span class='co'># Plot the fit of a Cox proportional hazards regression model</span>
 <span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/coxph.html'>coxph</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span>(<span class='kw'>futime</span>, <span class='kw'>fustat</span>) <span class='op'>~</span> <span class='kw'>age</span>, data = <span class='kw'>ovarian</span>)
 <span class='kw'>ovarian.surv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/survival/man/survfit.html'>survfit</a></span>(<span class='kw'>fit</span>, newdata = <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(age = <span class='fl'>60</span>))
-<span class='fu'>hchart</span>(<span class='kw'>ovarian.surv</span>, ranges = <span class='fl'>TRUE</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(<span class='kw'>ovarian.surv</span>, ranges = <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,3 +1,39 @@
+# highcharter 0.8.1.2
+
+## Changes
+
+* Highcharter now uses HighchartsJS 8.1.2
+* Adding data helpers to make easy certain type of charts: `data_to_boxplot`,
+`data_to_hierarchical` and `data_to_sankey`. Thanks to @wwwjk366.
+* Adding `list` to `hchart` supported classes to work wiht the new data helpers.
+* Adding `hc_theme_sparkline_vb`, `hc_theme_hcrt` themes.
+* boost module is FALSE by default.
+* Modifying `highcharts_demo()`, adding caption and credit texts.
+* All vignettes were moved from the package to favor to avoid CRAN check NOTE
+and warning. The content was moved to  the new website of the package.
+* htmlwdwtgrid.css were removed from the yalm of `highcart` `hchart` widgets
+to avoid problems with others css frameworks when highcarter is used with shiny.
+Now `hw_grid` add `htmlwdwtgrid.css` automatically. 
+Additionally `hw_grid` gain new parameters:  1) `add_htmlgrid_css` To add or 
+not `htmlgrid.css` and 2) `browsable` -set as TRUE the default value- so now
+there is no need to use htmltools::browsable #622 
+* Adding new `hc_add_yAxis`. Thanks to @nordicgit70.
+* Added option to switch to `rjson::toJSON` for better plotting performance.
+To use exectue `options(highcharter.rjon =TRUE)`. See #613.  Thanks to @nordicgit70.
+
+## Bugs
+
+* Removing deprecated messages by dplyr #633 #637 thanks to @hdrab127.
+
+## Deprecated
+
+* `hc_add_dependency_fa`, `fa_icon`, `fa_icon_mark`, please use fontawesome 
+package https://github.com/rstudio/fontawesome. See examples in the new
+website.
+* `hciconarray`, please use now `type = "item"`
+* `hcspark`, please use `hc_theme_sparkline`
+* `hctreeemaps`, `hctreeemaps2`, please use `data_to_hierarchical`.
+
 # highcharter 0.8.1
 
 ## Changes

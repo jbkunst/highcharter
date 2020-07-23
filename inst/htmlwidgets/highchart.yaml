@@ -28,6 +28,7 @@ dependencies:
     - modules/heatmap.js
     - modules/treemap.js
     - modules/sankey.js
+    - modules/dependency-wheel.js
     - modules/organization.js
     - modules/solid-gauge.js
     - modules/streamgraph.js
@@ -48,7 +49,6 @@ dependencies:
 #    - modules/drag-panes.js
 #    - modules/marker-clusters.js
 #    - modules/datagrouping.js
-#    - modules/dependency-wheel.js
 #    - modules/dotplot.js
 #    - modules/funnel3d.js
 #    - modules/pyramid3d.js    

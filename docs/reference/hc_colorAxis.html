@@ -165,6 +165,14 @@ programmatic access to the axis." />
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Experiments &amp; Examples</li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
@@ -266,21 +274,21 @@ programmatic access to the axis.</p>
     n = <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span>(),
     displ = <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='kw'>displ</span>)
     )</div><div class='output co'>#&gt; <span class='message'>`summarise()` regrouping output by 'manufacturer' (override with `.groups` argument)</span></div><div class='input'>
-<span class='kw'>mpgman2</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 30 x 4</span><span>
-#&gt; </span><span style='color: #949494;'># Groups:   manufacturer [15]</span><span>
+<span class='kw'>mpgman2</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 30 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   manufacturer [15]</span><span>
 #&gt;    manufacturer  year     n displ
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> audi          </span><span style='text-decoration: underline;'>1</span><span>999     9  2.36
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> audi          </span><span style='text-decoration: underline;'>2</span><span>008     9  2.73
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> chevrolet     </span><span style='text-decoration: underline;'>1</span><span>999     7  4.97
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> chevrolet     </span><span style='text-decoration: underline;'>2</span><span>008    12  5.12
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> dodge         </span><span style='text-decoration: underline;'>1</span><span>999    16  4.32
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> dodge         </span><span style='text-decoration: underline;'>2</span><span>008    21  4.42
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> ford          </span><span style='text-decoration: underline;'>1</span><span>999    15  4.45
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> ford          </span><span style='text-decoration: underline;'>2</span><span>008    10  4.66
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> honda         </span><span style='text-decoration: underline;'>1</span><span>999     5  1.6 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> honda         </span><span style='text-decoration: underline;'>2</span><span>008     4  1.85
-#&gt; </span><span style='color: #949494;'># ... with 20 more rows</span><span></div><div class='input'>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> audi          </span><span style='text-decoration: underline;'>1</span><span>999     9  2.36
+#&gt; </span><span style='color: #555555;'> 2</span><span> audi          </span><span style='text-decoration: underline;'>2</span><span>008     9  2.73
+#&gt; </span><span style='color: #555555;'> 3</span><span> chevrolet     </span><span style='text-decoration: underline;'>1</span><span>999     7  4.97
+#&gt; </span><span style='color: #555555;'> 4</span><span> chevrolet     </span><span style='text-decoration: underline;'>2</span><span>008    12  5.12
+#&gt; </span><span style='color: #555555;'> 5</span><span> dodge         </span><span style='text-decoration: underline;'>1</span><span>999    16  4.32
+#&gt; </span><span style='color: #555555;'> 6</span><span> dodge         </span><span style='text-decoration: underline;'>2</span><span>008    21  4.42
+#&gt; </span><span style='color: #555555;'> 7</span><span> ford          </span><span style='text-decoration: underline;'>1</span><span>999    15  4.45
+#&gt; </span><span style='color: #555555;'> 8</span><span> ford          </span><span style='text-decoration: underline;'>2</span><span>008    10  4.66
+#&gt; </span><span style='color: #555555;'> 9</span><span> honda         </span><span style='text-decoration: underline;'>1</span><span>999     5  1.6 
+#&gt; </span><span style='color: #555555;'>10</span><span> honda         </span><span style='text-decoration: underline;'>2</span><span>008     4  1.85
+#&gt; </span><span style='color: #555555;'># ... with 20 more rows</span><span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(
   <span class='kw'>mpgman2</span>, <span class='st'>"column"</span>, <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcaes.html'>hcaes</a></span>(x = <span class='kw'>manufacturer</span>, y = <span class='kw'>n</span>, group = <span class='kw'>year</span>),
   colorKey = <span class='st'>"displ"</span>,

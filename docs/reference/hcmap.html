@@ -143,6 +143,14 @@ collection." />
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Experiments &amp; Examples</li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
@@ -193,7 +201,7 @@ collection.</h1>
 collection.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hcmap</span>(
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(
   map = <span class='st'>"custom/world"</span>,
   download_map_data = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"highcharter.download_map_data"</span>),
   data = <span class='kw'>NULL</span>,
@@ -239,20 +247,24 @@ the joinBy and value are needed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>hcmap</span>(nullColor = <span class='st'>"#DADADA"</span>)
-<span class='fu'>hcmap</span>(nullColor = <span class='st'>"#DADADA"</span>, download_map_data = <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(nullColor = <span class='st'>"#DADADA"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(nullColor = <span class='st'>"#DADADA"</span>, download_map_data = <span class='fl'>FALSE</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"USArrests"</span>, package = <span class='st'>"datasets"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'dplyr'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:stats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"USArrests"</span>, package = <span class='st'>"datasets"</span>)
 <span class='kw'>USArrests</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>USArrests</span>, <span class='st'>"woe-name"</span> = <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='kw'>USArrests</span>))
 
-<span class='fu'>hcmap</span>(
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(
   map = <span class='st'>"countries/us/us-all"</span>, data = <span class='kw'>USArrests</span>,
   joinBy = <span class='st'>"woe-name"</span>, value = <span class='st'>"UrbanPop"</span>, name = <span class='st'>"Urban Population"</span>
 )
 
 <span class='co'># download_map_data = FALSE</span>
-<span class='fu'>hcmap</span>(
+<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(
   map = <span class='st'>"countries/us/us-all"</span>, data = <span class='kw'>USArrests</span>,
   joinBy = <span class='st'>"woe-name"</span>, value = <span class='st'>"UrbanPop"</span>, name = <span class='st'>"Urban Population"</span>,
   download_map_data = <span class='fl'>FALSE</span>

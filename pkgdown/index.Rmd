@@ -23,7 +23,7 @@ library(viridisLite)
 ```{r, eval=TRUE, echo=FALSE}
 color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
 
-hc_theme_highcharts <- 
+hc_theme_highcharts_small <- 
   hc_theme_hcrt(
     chart = list(backgroundColor = "transparent"),
     plotOptions = list(
@@ -45,7 +45,7 @@ hc_theme_highcharts <-
     tooltip = list(valueDecimals = 2)
   )
 
-options(highcharter.theme = hc_theme_highcharts)
+options(highcharter.theme = hc_theme_highcharts_small)
 
 # example 1
 data(mpg, package = "ggplot2")
@@ -63,7 +63,6 @@ p2 <- hchart(
   name = "Air Passengers data"
   ) %>%
   hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
-  hc_add_theme(hc_theme_highcharts) %>% 
   hc_tooltip(shared = TRUE, valueDecimals = 0)
 
 # example 3
@@ -84,14 +83,11 @@ p3 <- hcmap(
   hc_credits(enabled = FALSE)
 
 # example 4
-p4 <- hcboxplot(
-  iris$Sepal.Length,
-  var = iris$Species,
-  name = "Sepal Length",
-  color = "red"
-  ) %>%
+p4 <- highchart() %>%
+  hc_chart(type = "bar") %>% 
+  hc_xAxis(type = "category") %>%
   hc_xAxis(showLastLabel = TRUE, showFirstLabel = TRUE) %>% 
-  hc_add_theme(hc_theme_highcharts)
+  hc_add_series_list(data_to_boxplot(iris, Sepal.Length, Species, add_outliers = TRUE, color = "red"))
 
 # example 5
 library(igraph)
@@ -113,12 +109,10 @@ p5 <- hchart(net, layout = layout_with_fr, maxSize = 13)
 # example 6
 p6 <- highchart() %>%
   hc_chart(type = "area") %>% 
-  hc_add_series(density(rnorm(10000000)), name = "Normal Distribution") %>%
-  hc_add_series(density(rgamma(10000000, 5, 0.8)), name = "Gamma(5. 0.8) Distribution") %>%
-  # hc_add_series(density(rgamma(10000000, 3, 0.8)), name = "Gamma(3. 0.8) Distribution") %>%
+  hc_add_series(density(rnorm(10000000)), name = "Normal(0, 1) Distribution") %>%
+  hc_add_series(density(rgamma(100000000, 5, 0.8)), name = "Gamma(5. 0.8) Distribution") %>%
   hc_plotOptions(series = list(fillOpacity = 0.5)) %>%
-  hc_xAxis(min = -5, max = 12) %>% 
-  hc_add_theme(hc_theme_highcharts)
+  hc_xAxis(min = -5, max = 12)
 
 # example 7
 brks <- seq(-2.5, 2.5, length.out = 30)
