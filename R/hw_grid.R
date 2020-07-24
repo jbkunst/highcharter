@@ -16,6 +16,10 @@
 #'   hchart(ts(cumsum(rnorm(100))))
 #' })
 #' 
+#' if(interactive()){
+#'   hw_grid(charts, rowheight = 300)
+#' }
+#' 
 #' hw_grid(charts, rowheight = 300)
 #'
 #' @importFrom grDevices n2mfrow

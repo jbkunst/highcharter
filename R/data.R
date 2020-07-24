@@ -131,7 +131,6 @@
 #' @docType data
 #' @name pokemon
 #' @usage pokemon
-#' @source \url{jkunst.com/r/pokemon-visualize-em-all/}
 #' @format A \code{data frame} with 718 observations and 20 variables.
 "pokemon"
 
@@ -159,9 +158,7 @@
 
 #' US Counties unemployment rate
 #'
-#' This data comes from the
-#' \url{https://www.highcharts.com/samples/data/jsonp.php?filename=us-counties-unemployment.json}
-#' and is used in highmaps examples.
+#' This data comes from the higcharts and is used in highmaps examples.
 #'
 #' @section Variables:
 #'
