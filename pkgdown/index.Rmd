@@ -87,7 +87,12 @@ p4 <- highchart() %>%
   hc_chart(type = "bar") %>% 
   hc_xAxis(type = "category") %>%
   hc_xAxis(showLastLabel = TRUE, showFirstLabel = TRUE) %>% 
-  hc_add_series_list(data_to_boxplot(iris, Sepal.Length, Species, add_outliers = TRUE, color = "red"))
+  hc_add_series_list(
+    data_to_boxplot(
+      iris, Sepal.Length, Species, add_outliers = TRUE,
+      color = "red", showInLegend = FALSE
+      )
+    )
 
 # example 5
 library(igraph)
@@ -157,11 +162,17 @@ plots <- list(
 
 plots <- map(plots, hc_size, height = 250)
 
+# hw_grid(plots)
+
 divplots <- map(plots, tags$div, class = "col-sm-6")
 
-divplots <- htmltools::tagList(tags$div(class = "row", style = "padding-right: 10px", divplots))
-
-# htmltools::browsable(divplots)
+divplots <- htmltools::tagList(
+  tags$div(
+    class = "row", 
+    # style = "padding-right: 10px",
+    divplots
+    )
+  )
 
 divplots
 ```
