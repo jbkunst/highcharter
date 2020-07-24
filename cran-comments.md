@@ -1,6 +1,6 @@
 ## Resubmission 
 
-- Fix 2 404 urls.
-- Fixing duplicated name in vignettes.
+- Fix CRAN checks https://cran.r-project.org/web/checks/check_results_highcharter.html
+- Updating highchartsJS libraries an adding new functionalities.
 
-Thanks again!
+Thanks 
