@@ -33,7 +33,7 @@ package bring all highchartsJS capabilities to your R console. So you can
 chart from simple charts like column, scatter to more complex charts like
 streamgraph, packed bubble, vector field among others.
 
-## Basics charts
+## Basic charts
 
 Let's see a preview of what highchartsJS (so highcharter) can chart. First of
 all a simple data set:
@@ -45,14 +45,14 @@ library(purrr)
 
 n <- 6
 
-set.seed(12345)
+set.seed(123)
 
 colors <- c("#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d")
 colors2 <- c("#000004", "#3B0F70", "#8C2981", "#DE4968", "#FE9F6D", "#FCFDBF")
 
 df <- data.frame(x = seq_len(n) - 1) %>% 
   mutate(
-    y = 10 + x + 10 * sin(x),
+    y = 10 + x + 10 * sin(x - 1),
     z = 5 + (x*y) - median(x*y),
     e = 10 * abs(rnorm(length(x))) + 2,
     e = round(e, 1),
@@ -65,6 +65,15 @@ df <- data.frame(x = seq_len(n) - 1) %>%
   mutate_if(is.numeric, round, 1) %>% 
   select(-e)
 
+df <- df %>% 
+  mutate(
+    from = name[c(1, 1, 1, 2, 3, 4)],
+    to   = name[c(3, 4, 5, 3, 6, 6)],
+     weight = c(1, 1, 1, 1, 1, 2)
+  )
+```
+
+```{r}
 knitr::kable(df)
 ```
 
@@ -82,7 +91,7 @@ create_hc <- function(t = "dumbbell") {
   
   is_polar <- str_detect(t, "polar")
   t        <- str_replace(t, "polar", "")
-  invt     <- ifelse(t %in% c("dumbbell"), TRUE, FALSE)  
+  invt     <- ifelse(t %in% c("dumbbell", "organization"), TRUE, FALSE)  
   yvisible <- ifelse(t %in% c("streamgraph", "timeline"), FALSE, TRUE)
   xvisible <- ifelse(t %in% c(""), FALSE, TRUE)
   
@@ -98,6 +107,11 @@ create_hc <- function(t = "dumbbell") {
       polar = is_polar,
       inverted = invt
     ) %>% 
+    # hc_plotOptions(
+    #   series = list(
+    #      dataLabels = list(style = list(fontSize = "13px"))
+    #   )
+    # ) %>% 
     hc_xAxis(
       categories = df$name
       ) %>% 
@@ -123,12 +137,11 @@ hcs <- c(
   "lollipop", "dumbbell",
   "waterfall" , "funnel", "pyramid",
   "pie" , "treemap", "packedbubble",
-  # "sunburst",
   "scatter", "bubble",
   "arearange", "areasplinerange", "columnrange", "errorbar",
   "polygon", "polarline", "polarcolumn", "polarcolumnrange",
-  "streamgraph", "item", "wordcloud", "timeline"
-  # "coloredarea", "coloredline"
+  "streamgraph", "item", "wordcloud", "timeline",
+  "sankey", "dependencywheel", "organization"
   )  %>% 
   map(create_hc) 
 
@@ -155,16 +168,6 @@ hcs %>%
 ```{r code = readLines(here::here("dev/examples-charts/tilemap.R"))}
 ```
 
-## solidgauge
-
-```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))}
-```
-
-## bullet
-
-```{r code = readLines(here::here("dev/examples-charts/bullet.R"))}
-```
-
 ## packedbubble
 
 ```{r code = readLines(here::here("dev/examples-charts/packedbubble.R")), eval=FALSE}
@@ -175,5 +178,15 @@ hcs %>%
 ```{r code = readLines(here::here("dev/examples-charts/venn.R"))}
 ```
 
+## solidgauge
+
+```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))}
+```
+
+
+## bullet
+
+```{r code = readLines(here::here("dev/examples-charts/bullet.R"))}
+```
 
 

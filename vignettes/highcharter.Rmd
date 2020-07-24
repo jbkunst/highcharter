@@ -205,4 +205,4 @@ Since you know the basics now it could be interesting:
 - Go motivate yourself with the `vignette("showcase")` and observe everything that can be 
 done with the highcharter package.
 - Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
-
+- See all chart you can make in `vignette("highcharts")`.

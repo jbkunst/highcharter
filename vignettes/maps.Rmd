@@ -210,7 +210,7 @@ ausmap %>%
 
 Let's download some geojson files and make a map.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 getContent <- function(url) {
   library(httr)
   content(GET(url))
@@ -237,7 +237,7 @@ volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=E
 The data is ready. Remember you can keep using the rest of the API to 
 customize your map.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 highchart(type = "map") %>%
   hc_chart(backgroundColor = "#161C20") %>%
   hc_add_series(

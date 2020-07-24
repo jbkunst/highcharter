@@ -68,7 +68,7 @@ gapminder_drilldown <- gapminder2007 %>%
 gapminder_drilldown
 ```
 
-The data is ready. Now, in this example due the contients and countries have
+The data is ready. Now, in this example due the continents and countries have
 the sames values (pop, lifeExp, ...) we can use the same `pointFormat` for 
 the tooltips:
 

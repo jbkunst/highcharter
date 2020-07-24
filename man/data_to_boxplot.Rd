@@ -22,7 +22,7 @@ data_to_boxplot(
 
 \item{group_var2}{A second variable to create separate series.}
 
-\item{add_outliers}{A logical value indicating if outlies series should
+\item{add_outliers}{A logical value indicating if outliers series should
 be calculated. Default to \code{FALSE}.}
 
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}

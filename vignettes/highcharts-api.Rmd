@@ -38,21 +38,68 @@ main functions with simple examples.
 
 If this is clear, we can continue.
 
-## Title, subtitle, caption and credits
-
-Fist of all, let's create a simple chart:
+Now, let's create a simple chart:
 
 ```{r}
-data(mpg, package = "ggplot2")
-library(dplyr)
 library(highcharter)
 
-mpgc <- mpg %>% 
-  count(year, class)
+data("citytemp")
 
-hc <- hchart(mpgc, "column", hcaes(class, n, group = year))
+hc <- highchart() %>% 
+  hc_xAxis(categories = citytemp$month) %>% 
+  hc_add_series(
+    name = "Tokyo", data = citytemp$tokyo
+    ) %>% 
+  hc_add_series(
+    name = "London", data = citytemp$london
+    ) %>% 
+  hc_add_series(
+    name = "Other city",
+    data = (citytemp$tokyo + citytemp$london)/2
+    )
+
 hc
 ```
+
+## Chart
+
+With `hc_chart` you can define general chart options.
+
+```{r}
+hc %>% 
+  hc_chart(
+    borderColor = '#EBBA95',
+    borderRadius = 10,
+    borderWidth = 2,
+    backgroundColor = list(
+      linearGradient = c(0, 0, 500, 500),
+      stops = list(
+        list(0, 'rgb(255, 255, 255)'),
+        list(1, 'rgb(200, 200, 255)')
+        )
+      )
+    )
+```
+
+Now change type to column and add 3d effect.
+
+```{r}
+hc <- hc %>% 
+  hc_chart(
+    type = "column",
+    options3d = list(
+      enabled = TRUE, 
+      beta = 15,
+      alpha = 15
+      )
+    )
+hc
+
+# back to the line!
+hc <- hc_chart(hc, type = "line", options3d = list(enabled = FALSE))
+```
+
+## Title, subtitle, caption and credits
 
 A good chart always have at least title, right? Then you can do it better adding relevant information
 using a subtitle or caption, even link to the source of data:
@@ -85,14 +132,7 @@ hc %>%
 Usually is desirable get control or modify the behavior of the axis:
 
 ```{r}
-data("citytemp_long")
-
-hc2 <- hchart(citytemp_long, "line", hcaes(month, temp, group = city))
-hc2
-```
-
-```{r}
-hc2 %>% 
+hc %>% 
   hc_xAxis(
     title = list(text = "Month in x Axis"),
     opposite = TRUE
@@ -110,7 +150,7 @@ hc2 %>%
 A good feature is `plotLines` and `plotBand` which you can use in both axis. For example:
 
 ```{r}
-hc2 %>% 
+hc %>% 
   hc_xAxis(
     plotLines = list(
       list(
@@ -136,6 +176,25 @@ hc2 %>%
       )
     ) 
 ```
+
+## Legend & tooltip
+
+```{r}
+hc %>%
+  hc_legend(
+    align = "left",
+    verticalAlign = "top",
+    layout = "vertical",
+    x = 0, y = 100
+    ) %>%
+  hc_tooltip(
+    crosshairs = TRUE,
+    backgroundColor = "#F0F0F0",
+    shared = TRUE, 
+    borderWidth = 5
+    )
+```
+
 
        
 

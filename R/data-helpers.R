@@ -15,7 +15,7 @@ get_outliers_values <- function(x) {
 #' @param variable The variable to calculate the box plot data.
 #' @param group_var A variable to split calculation
 #' @param group_var2 A second variable to create separate series.
-#' @param add_outliers A logical value indicating if outlies series should
+#' @param add_outliers A logical value indicating if outliers series should
 #'   be calculated. Default to \code{FALSE}.
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #'

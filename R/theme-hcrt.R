@@ -34,20 +34,26 @@ hc_theme_hcrt <- function(...) {
         align = "left",
         style = list(
           fontFamily = "Alegreya Sans SC",
-          fontSize = "2em"
+          fontSize = "24px"
         )
       ),
       subtitle = list(
         align = "left",
         style = list(
           fontFamily = "Alegreya Sans",
-          fontSize = "1.3em"
+          fontSize = "16px"
         )
       ),
       caption = list(
         style = list(
           fontFamily = "Alegreya Sans",
-          fontSize = "1.25em"
+          fontSize = "14px"
+        )
+      ),
+      credits = list(
+        style = list(
+          fontFamily = "Roboto",
+          fontSize = "10px"
         )
       ),
       legend = list(

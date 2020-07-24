@@ -1,25 +1,25 @@
-# highcharter 0.8.1.2
+# highcharter 0.8.2
 
 ## Changes
 
 * Highcharter now uses HighchartsJS 8.1.2
 * Adding data helpers to make easy certain type of charts: `data_to_boxplot`,
 `data_to_hierarchical` and `data_to_sankey`. Thanks to @wwwjk366.
-* Adding `list` to `hchart` supported classes to work wiht the new data helpers.
+* Adding `list` to `hchart` supported classes to work with the new data helpers.
 * Adding `hc_theme_sparkline_vb`, `hc_theme_hcrt` themes.
 * boost module is FALSE by default.
 * Modifying `highcharts_demo()`, adding caption and credit texts.
 * All vignettes were moved from the package to favor to avoid CRAN check NOTE
 and warning. The content was moved to  the new website of the package.
-* htmlwdwtgrid.css were removed from the yalm of `highcart` `hchart` widgets
+* `htmlwdgtgrid.css` were removed from the yaml of `highcart` `hchart` widgets
 to avoid problems with others css frameworks when highcarter is used with shiny.
-Now `hw_grid` add `htmlwdwtgrid.css` automatically. 
+Now `hw_grid` add `htmlwdgtgrid.css` automatically. 
 Additionally `hw_grid` gain new parameters:  1) `add_htmlgrid_css` To add or 
 not `htmlgrid.css` and 2) `browsable` -set as TRUE the default value- so now
 there is no need to use htmltools::browsable #622 
 * Adding new `hc_add_yAxis`. Thanks to @nordicgit70.
 * Added option to switch to `rjson::toJSON` for better plotting performance.
-To use exectue `options(highcharter.rjon =TRUE)`. See #613.  Thanks to @nordicgit70.
+To use execute `options(highcharter.rjon =TRUE)`. See #613.  Thanks to @nordicgit70.
 
 ## Bugs
 
