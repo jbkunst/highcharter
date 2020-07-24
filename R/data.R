@@ -174,7 +174,6 @@
 #' @name unemployment
 #' @usage unemployment
 #' @format A `data.frame` with 3 variables and 3.216 observations.
-#' @source \url{https://www.highcharts.com/samples/data/jsonp.php?filename=us-counties-unemployment.json}
 "unemployment"
 
 #' US Counties map in Geojson format (list)

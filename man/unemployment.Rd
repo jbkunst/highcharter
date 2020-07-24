@@ -7,9 +7,6 @@
 \format{
 A \code{data.frame} with 3 variables and 3.216 observations.
 }
-\source{
-\url{https://www.highcharts.com/samples/data/jsonp.php?filename=us-counties-unemployment.json}
-}
 \usage{
 unemployment
 }
