@@ -6,6 +6,9 @@
 \usage{
 hc_theme_elementary(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Elementary (OS) theme for highcharts was based on \url{https://elementary.io}
 }

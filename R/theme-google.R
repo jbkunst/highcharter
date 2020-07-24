@@ -1,7 +1,9 @@
 #' Google theme for highcharts
 #'
 #' Google theme for highcharts is based on \url{https://books.google.com/ngrams/}.
-#'
+#' 
+#' @param ... A named parameters to modify the theme.
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%

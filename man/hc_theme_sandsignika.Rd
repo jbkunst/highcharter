@@ -6,6 +6,9 @@
 \usage{
 hc_theme_sandsignika(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Sand Signika theme for highcharts
 }

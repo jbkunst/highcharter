@@ -6,6 +6,9 @@
 \usage{
 hc_theme_alone(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Alone theme for highcharts
 }

@@ -1,5 +1,7 @@
 #' Tufte theme for highcharts
 #' 
+#' @param ... A named parameters to modify the theme.
+#' 
 #' @examples
 #'
 #' n <- 15

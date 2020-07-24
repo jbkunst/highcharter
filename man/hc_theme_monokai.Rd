@@ -6,6 +6,9 @@
 \usage{
 hc_theme_monokai(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Monokai is a well know text editor theme.
 }

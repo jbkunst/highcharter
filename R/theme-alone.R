@@ -1,5 +1,7 @@
 #' Alone theme for highcharts
 #'
+#' @param ... A named parameters to modify the theme.
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%

@@ -6,6 +6,9 @@
 \usage{
 hc_theme_bloom(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Bloomberg Graphics theme for highcharts
 }

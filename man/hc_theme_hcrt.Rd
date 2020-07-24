@@ -6,6 +6,9 @@
 \usage{
 hc_theme_hcrt(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 hcrt theme is used for the documentation website.
 }

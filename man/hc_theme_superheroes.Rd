@@ -6,6 +6,9 @@
 \usage{
 hc_theme_superheroes(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 The superheroes theme is inspired by \url{https://public.tableau.com/profile/ryansmith#!/vizhome/HeroesofNewYork/SuperheroesinNewYork}
 }

@@ -6,6 +6,9 @@
 \usage{
 hc_theme_google(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Google theme for highcharts is based on \url{https://books.google.com/ngrams/}.
 }

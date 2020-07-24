@@ -6,6 +6,9 @@
 \usage{
 hc_theme_flatdark(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Flatdark theme for highcharts
 }

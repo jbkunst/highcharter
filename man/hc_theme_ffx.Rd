@@ -6,6 +6,9 @@
 \usage{
 hc_theme_ffx(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Firefox theme was inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
 }

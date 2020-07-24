@@ -6,6 +6,9 @@
 \usage{
 hc_theme_darkunica(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Dark Unica theme for highcharts
 }

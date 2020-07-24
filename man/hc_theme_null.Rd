@@ -6,6 +6,9 @@
 \usage{
 hc_theme_null(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 For Null theme the axis are removed (\code{visible = FALSE}).
 }

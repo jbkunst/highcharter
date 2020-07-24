@@ -6,6 +6,9 @@
 \usage{
 hc_theme_sparkline(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Sparkline theme is based on \url{http://www.highcharts.com/demo/sparkline}
 and this post  \url{http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/}.

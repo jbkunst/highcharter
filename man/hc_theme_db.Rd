@@ -6,6 +6,9 @@
 \usage{
 hc_theme_db(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Dotabuff theme for highcharts
 }

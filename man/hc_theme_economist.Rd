@@ -6,6 +6,9 @@
 \usage{
 hc_theme_economist(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Economist theme for highcharts
 }

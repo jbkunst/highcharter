@@ -6,6 +6,9 @@
 \usage{
 hc_theme_ggplot2(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 ggplot2 theme is based on \url{https://ggplot2.tidyverse.org/}.
 }

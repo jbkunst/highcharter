@@ -1,7 +1,9 @@
 #' Highcharter theme for highcharts
 #'
 #' hcrt theme is used for the documentation website.
-#'
+#' 
+#' @param ... A named parameters to modify the theme.
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%

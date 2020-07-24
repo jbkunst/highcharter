@@ -6,6 +6,9 @@
 \usage{
 hc_theme_gridlight(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Grid Light theme for highcharts
 }

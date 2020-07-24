@@ -6,6 +6,9 @@
 \usage{
 hc_theme_tufte(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Tufte theme for highcharts
 }

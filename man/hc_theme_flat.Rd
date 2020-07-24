@@ -6,6 +6,9 @@
 \usage{
 hc_theme_flat(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Flat and flatdark theme is inspired by
 \url{https://github.com/chriskempson/base16} and
