@@ -6,6 +6,9 @@
 \usage{
 hc_theme_handdrawn(...)
 }
+\arguments{
+\item{...}{A named parameters to modify the theme.}
+}
 \description{
 Hand Drawn theme for highcharts. Inspired by
 \url{https://www.amcharts.com/inspiration/hand-drawn/}.
