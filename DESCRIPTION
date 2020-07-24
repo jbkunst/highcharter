@@ -65,6 +65,5 @@ Suggests:
     testthat,
     covr,
     spelling
-VignetteBuilder: knitr
 LazyData: true
 Language: en-US
