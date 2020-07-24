@@ -29,10 +29,3 @@ revdep/*
 
 # logs
 *debug.log
-
-# pkgdown libs
- docs/articles/articles/*.js
-
-doc
-Meta
-docs
