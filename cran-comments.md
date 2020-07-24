@@ -1,10 +1,10 @@
 ## Resubmission 
 
-- Removing invalid URLs from the documentacion.
-- The example of `hc_theme_538` function takes more than 10s because various
-related function are using the same man file. 
+- Removing invalid URLs from the documentation.
+- Fix the examples with more than 10s elapsed times.
 - Adding `if(interactive())` to example for the `checking for detritus in the temp directory`
-based on https://stackoverflow.com/questions/62456137/r-cran-check-detritus-in-temp-directory.
+NOTE based on https://stackoverflow.com/questions/62456137/r-cran-check-detritus-in-temp-directory.
+- Remove the VignetteBuilder field in DESCRIPTION file. 
 
 ## Previous resubmission 
 

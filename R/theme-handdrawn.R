@@ -3,8 +3,6 @@
 #' Hand Drawn theme for highcharts. Inspired by
 #' \url{https://www.amcharts.com/inspiration/hand-drawn/}.
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

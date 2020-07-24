@@ -3,8 +3,6 @@
 #' Sparkline theme is based on \url{http://www.highcharts.com/demo/sparkline}
 #' and this post  \url{http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/}.
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

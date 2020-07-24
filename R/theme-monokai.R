@@ -2,8 +2,6 @@
 #'
 #' Monokai is a well know text editor theme.
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

@@ -1,9 +1,7 @@
 #' Null theme for highcharts
 #'
 #' For Null theme the axis are removed (\code{visible = FALSE}).
-#'
-#' @rdname hc_theme_538
-#'
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%

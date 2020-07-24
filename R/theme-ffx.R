@@ -2,8 +2,6 @@
 #'
 #' Firefox theme was inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

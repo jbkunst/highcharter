@@ -4,8 +4,6 @@
 #' \url{https://github.com/chriskempson/base16} and
 #' \url{https://github.com/cttobin/ggthemr#flat}
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

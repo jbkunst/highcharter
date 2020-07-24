@@ -1,7 +1,5 @@
 #' Tufte theme for highcharts
-#'
-#' @rdname hc_theme_538
-#'
+#' 
 #' @examples
 #'
 #' n <- 15

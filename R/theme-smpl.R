@@ -2,9 +2,7 @@
 #'
 #' Theme smpl design is inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r}
 #' and color by \url{https://www.materialui.co/flatuicolors}.
-#'
-#' @rdname hc_theme_538
-#'
+#' 
 #' @examples
 #'
 #' highcharts_demo() %>%

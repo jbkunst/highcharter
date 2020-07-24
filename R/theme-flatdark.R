@@ -1,7 +1,5 @@
 #' Flatdark theme for highcharts
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

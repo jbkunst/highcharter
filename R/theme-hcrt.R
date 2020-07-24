@@ -2,8 +2,6 @@
 #'
 #' hcrt theme is used for the documentation website.
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

@@ -2,8 +2,6 @@
 #'
 #' ggplot2 theme is based on \url{https://ggplot2.tidyverse.org/}.
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%

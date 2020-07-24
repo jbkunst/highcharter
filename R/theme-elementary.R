@@ -2,8 +2,6 @@
 #'
 #' Elementary (OS) theme for highcharts was based on \url{https://elementary.io}
 #'
-#' @rdname hc_theme_538
-#'
 #' @examples
 #'
 #' highcharts_demo() %>%
