@@ -192,7 +192,7 @@
 
     <div id="highcharter-082" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.2">
-<a href="#highcharter-082" class="anchor"></a>highcharter 0.8.2<small> Unreleased </small>
+<a href="#highcharter-082" class="anchor"></a>highcharter 0.8.2<small> 2020-07-26 </small>
 </h1>
 <div id="changes" class="section level2">
 <h2 class="hasAnchor">
@@ -200,12 +200,13 @@
 <ul>
 <li>Highcharter now uses HighchartsJS 8.1.2</li>
 <li>Adding data helpers to make easy certain type of charts: <code>data_to_boxplot</code>, <code>data_to_hierarchical</code> and <code>data_to_sankey</code>. Thanks to <a href='https://github.com/wwwjk366'>@wwwjk366</a>.</li>
-<li>Adding <code>list</code> to <code>hchart</code> supported classes to work wiht the new data helpers.</li>
+<li>Adding <code>list</code> to <code>hchart</code> supported classes to work with the new data helpers.</li>
 <li>Adding <code>hc_theme_sparkline_vb</code>, <code>hc_theme_hcrt</code> themes.</li>
 <li>boost module is FALSE by default.</li>
 <li>Modifying <code><a href="https://rdrr.io/pkg/highcharter/man/highcharts_demo.html">highcharts_demo()</a></code>, adding caption and credit texts.</li>
 <li>All vignettes were moved from the package to favor to avoid CRAN check NOTE and warning. The content was moved to the new website of the package.</li>
-<li>htmlwdwtgrid.css were removed from the yalm of <code>highcart</code> <code>hchart</code> widgets to avoid problems with others css frameworks when highcarter is used with shiny. Now <code>hw_grid</code> add <code>htmlwdwtgrid.css</code> automatically. Additionally <code>hw_grid</code> gain new parameters: 1) <code>add_htmlgrid_css</code> To add or not <code>htmlgrid.css</code> and 2) <code>browsable</code> -set as TRUE the default value- so now there is no need to use htmltools::browsable <a href='https://github.com/jbkunst/highcharter/issues/622'>#622</a></li>
+<li>
+<code>htmlwdgtgrid.css</code> were removed from the yaml of <code>highcart</code> <code>hchart</code> widgets to avoid problems with others css frameworks when highcarter is used with shiny. Now <code>hw_grid</code> add <code>htmlwdgtgrid.css</code> automatically. Additionally <code>hw_grid</code> gain new parameters: 1) <code>add_htmlgrid_css</code> To add or not <code>htmlgrid.css</code> and 2) <code>browsable</code> -set as TRUE the default value- so now there is no need to use htmltools::browsable <a href='https://github.com/jbkunst/highcharter/issues/622'>#622</a></li>
 <li>Adding new <code>hc_add_yAxis</code>. Thanks to <a href='https://github.com/nordicgit70'>@nordicgit70</a>.</li>
 <li>Added option to switch to <code><a href="https://rdrr.io/pkg/rjson/man/toJSON.html">rjson::toJSON</a></code> for better plotting performance. To use execute <code><a href="https://rdrr.io/r/base/options.html">options(highcharter.rjon =TRUE)</a></code>. See <a href='https://github.com/jbkunst/highcharter/issues/613'>#613</a>. Thanks to <a href='https://github.com/nordicgit70'>@nordicgit70</a>.</li>
 </ul>

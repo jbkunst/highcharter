@@ -103,6 +103,55 @@ hcmap(
 )
 ```
 
+## Categorized areas
+
+```{r}
+data <- tibble(
+  country = 
+    c("PT", "IE", "GB", "IS",
+      
+      "NO", "SE", "DK", "DE", "NL", "BE", "LU", "ES", "FR", "PL", "CZ", "AT",
+      "CH", "LI", "SK", "HU", "SI", "IT", "SM", "HR", "BA", "YF", "ME", "AL", "MK",
+      
+      "FI", "EE", "LV", "LT", "BY", "UA", "MD", "RO", "BG", "GR", "TR", "CY",
+      
+      "RU"),  
+  tz = c(rep("UTC", 4), rep("UTC + 1",25), rep("UCT + 2",12), "UTC + 3")
+  )
+
+# auxiliar variable
+data <- data %>% 
+  mutate(value = cumsum(!duplicated(tz)))
+
+
+# now we'll create the dataClasses
+dta_clss <- data %>% 
+  mutate(value = cumsum(!duplicated(tz))) %>% 
+  group_by(tz) %>% 
+  summarise(value = unique(value)) %>% 
+  arrange(value) %>% 
+  rename(name = tz, from = value) %>% 
+  mutate(to = from + 1) %>% 
+  list_parse()
+
+hcmap(
+  map = "custom/europe",
+  data = data, 
+  joinBy = c("iso-a2","country"),
+  name = "Time zone",
+  value = "value",
+  tooltip = list(pointFormat = "{point.name} {point.tz}"),
+  dataLabels = list(enabled = TRUE, format = "{point.country}")
+  ) %>%
+  hc_colorAxis(
+    dataClassColor = "category",
+    dataClasses = dta_clss
+    ) %>% 
+  hc_title(text = "Europe Time Zones")
+```
+
+Example from https://www.highcharts.com/demo/maps/category-map.
+
 ## Adding Points
 
 With highcharter is possible add data as points or bubbles. For this it is 
@@ -118,7 +167,23 @@ cities <- data.frame(
 )
 
 hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
-  hc_add_series(data = cities, type = "mapbubble", name = "Cities", maxSize = "10%") %>%
+  hc_add_series(
+    data = cities, 
+    type = "mappoint",
+    name = "Cities", 
+    minSize = "1%",
+    maxSize = "5%"
+    ) %>%
+  hc_mapNavigation(enabled = TRUE)
+
+hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
+  hc_add_series(
+    data = cities, 
+    type = "mapbubble",
+    name = "Cities", 
+    minSize = "1%",
+    maxSize = "5%"
+    ) %>%
   hc_mapNavigation(enabled = TRUE)
 ```
 

@@ -2,14 +2,14 @@
 
 @font-face {
   font-family: 'Datalegreya-Gradient';
-  src: url('http://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Gradient.otf');
+  src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Gradient.otf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
 	font-family: 'Datalegreya-Thin';
-	src: url('http://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Thin.otf');
+	src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Thin.otf');
 	font-weight: normal;
 	font-style: normal;
 }
