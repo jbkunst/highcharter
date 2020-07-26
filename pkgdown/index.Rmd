@@ -90,7 +90,7 @@ p4 <- highchart() %>%
   hc_add_series_list(
     data_to_boxplot(
       iris, Sepal.Length, Species, add_outliers = TRUE,
-      color = "red", showInLegend = FALSE
+      color = "red", showInLegend = FALSE, name = "Sepal length"
       )
     )
 

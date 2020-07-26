@@ -220,6 +220,46 @@ hchart(df, "coloredarea", hcaes(x, y, segmentColor = col)) %>%
    hc_add_dependency("plugins/multicolor_series.js")
 ```
 
+## Draggable-points  
+
+More details in https://api.highcharts.com/highcharts/plotOptions.series.dragDrop.
+
+```{r}
+set.seed(123)
+
+df <- tibble(id = 1:10, x = rnorm(10), y = rnorm(10))
+
+hchart(
+  df,
+  "scatter",
+  hcaes(x = x, y = y),
+  showInLegend = TRUE,
+  name = "You can move the points",
+  cursor = "move",
+  dragDrop = list(
+    draggableX = TRUE,
+    draggableY = TRUE
+    )
+  ) %>% 
+  hc_add_dependency("modules/draggable-points.js")
+
+highchart() %>% 
+  hc_add_series(
+  df,
+  "line",
+  hcaes(x = id, y = y),
+  "scatter",
+  showInLegend = TRUE,
+  name = "You can move the points only Yaxis direction",
+  cursor = "ns-resize",
+  dragDrop = list(
+    draggableY = TRUE
+    )
+  ) %>% 
+  hc_add_dependency("modules/draggable-points.js")
+ ```
+
+
 ## List of modules and plugins in highcharter
 
 You can use the next plugins:

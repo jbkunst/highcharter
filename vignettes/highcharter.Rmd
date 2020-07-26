@@ -140,8 +140,10 @@ models to tidy data:
 ```{r, message=FALSE}
 library(broom)
 
-modlss <- loess(hwy ~ cty, data = mpg)
-fit <- arrange(augment(modlss), cty)
+modlss <- loess(dist ~ speed, data = cars)
+
+fit <- arrange(augment(modlss), speed) %>% 
+  mutate(.se = predict(modlss, se = TRUE)$se.fit)
 
 head(fit)
 ```
@@ -151,9 +153,11 @@ In this case we'll chart the original data first and store in a variable called
 
 ```{r}
 hc <- hchart(
-  mpg,
+  cars,
   type = "scatter",
-  hcaes(x = cty, y = hwy, group = year)
+  hcaes(x = speed, y = dist),
+  name = "Speed and Stopping Distances of Cars",
+  showInLegend = TRUE
   )
 
 hc
@@ -177,26 +181,31 @@ In this case we will add 2 groups of series. The 1st to add will be the
 spline then the arearange. So we'll use `hc_add_series` 2 times.
 
 ```{r}
+qtint <- qt(0.975, predict(modlss, se = TRUE)$df)
+
 hc %>%
   hc_add_series(
     fit,
     type = "spline",
-    hcaes(x = cty, y = .fitted),
+    hcaes(x = speed, y = .fitted),
     name = "Fit",
     id = "fit", # this is for link the arearange series to this one and have one legend
-    lineWidth = 1 
+    lineWidth = 1,
+    showInLegend = TRUE
     ) %>% 
   hc_add_series(
     fit,
     type = "arearange",
     name = "SE",
-    hcaes(x = cty, low = .fitted - 10*.se.fit, high = .fitted + 10*.se.fit),
+    hcaes(x = speed, low = .fitted - qtint*.se, high = .fitted + qtint*.se),
     linkedTo = "fit", # here we link the legends in one.
     showInLegend = FALSE,
     color = hex_to_rgba("gray", 0.2),  # put a semi transparent color
     zIndex = -3 # this is for put the series in a back so the points are showed first
     )
 ```
+
+Example of data from https://stackoverflow.com/questions/22717930/how-to-get-the-confidence-intervals-for-lowess-fit-using-r.
 
 ## What now?
 
