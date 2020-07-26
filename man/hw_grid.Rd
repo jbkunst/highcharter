@@ -41,6 +41,4 @@ if(interactive()){
   hw_grid(charts, rowheight = 300)
 }
 
-hw_grid(charts, rowheight = 300)
-
 }

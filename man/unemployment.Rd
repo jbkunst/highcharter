@@ -11,7 +11,7 @@ A \code{data.frame} with 3 variables and 3.216 observations.
 unemployment
 }
 \description{
-This data comes from the higcharts and is used in highmaps examples.
+This data comes from the highcharts and is used in highmaps examples.
 }
 \section{Variables}{
 

@@ -158,7 +158,7 @@
 
 #' US Counties unemployment rate
 #'
-#' This data comes from the higcharts and is used in highmaps examples.
+#' This data comes from the highcharts and is used in highmaps examples.
 #'
 #' @section Variables:
 #'

@@ -19,7 +19,8 @@ Authors@R: c(
   person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix"),
   person("David", "Breuer", role = c("ctb"), comment = "download_map_data quiet parameter"),
   person("Mauricio", "Vargas", role = c("ctb"), comment = "tests and gh-actions"),
-  person("Michael", "Yan", role = c("ctb"), comment = "Motivational example for treemap/sunburst data helper")
+  person("Michael", "Yan", role = c("ctb"), comment = "Motivational example for treemap/sunburst data helper"),
+  person("Bart", "Oortwijn", role = c("ctb"), comment = "rjson option, hc_add_yAxis, and GH issues collaborator")
   )
 URL: http://jkunst.com/highcharter, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
