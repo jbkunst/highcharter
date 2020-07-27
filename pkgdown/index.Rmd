@@ -217,7 +217,7 @@ library(highcharter)
 # remotes::install_github("allisonhorst/palmerpenguins")
 data(penguins, package = "palmerpenguins")
 
-hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group = species))
+hchart(penguins, "scatter", hcaes(x = flipper_length_mm, y = bill_length_mm, group = species))
 ```
 
 Among its features highcharter can chart various objects depending of

@@ -58,13 +58,13 @@ hchart(
   penguins,
   "scatter",
   name = "Penguins",
-  opacity = 0.35,
-  hcaes(x = body_mass_g, y = flipper_length_mm),
+  # opacity = 0.35,
+  hcaes(x = flipper_length_mm, y = bill_length_mm),
   regression = TRUE,
   regressionSettings = list(
     type = "polynomial",
-    dashStyle = "dash",
-    color = "brown",
+    dashStyle = "ShortDash",
+    color = "skyblue",
     order = 3,
     lineWidth = 5,
     name = "%eq | r2: %r",
@@ -79,7 +79,7 @@ Even you can get a regression for each series/group.
 hchart(
   penguins, 
   "scatter",
-  hcaes(x = body_mass_g, y = flipper_length_mm , group = species),
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
   regression = TRUE
   ) %>%
   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>%
@@ -231,7 +231,7 @@ df <- tibble(id = 1:10, x = rnorm(10), y = rnorm(10))
 
 hchart(
   df,
-  "scatter",
+  "bubble",
   hcaes(x = x, y = y),
   showInLegend = TRUE,
   name = "You can move the points",
