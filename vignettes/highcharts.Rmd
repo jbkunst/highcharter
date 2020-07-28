@@ -73,7 +73,7 @@ df <- df %>%
   )
 ```
 
-```{r}
+```{r echo=FALSE}
 knitr::kable(df)
 ```
 

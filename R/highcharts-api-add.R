@@ -6,11 +6,13 @@
 #' @examples
 #'
 #' highchart() %>%
-#'   hc_add_series(data = abs(rnorm(5)), type = "columnn") %>%
-#'   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "blue")
+#'   hc_add_series(data = abs(rnorm(5)), type = "column") %>%
+#'   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "orange")
+#'   
 #' @export
 hc_add_series <- function(hc, data = NULL, ...) {
-  assertthat::assert_that(is.highchart(hc))
+  
+  # assertthat::assert_that(is.highchart(hc))
   
   UseMethod("hc_add_series", data)
 }
@@ -18,7 +20,8 @@ hc_add_series <- function(hc, data = NULL, ...) {
 
 #' @export
 hc_add_series.default <- function(hc, ...) {
-  assertthat::assert_that(is.highchart(hc))
+  
+  # assertthat::assert_that(is.highchart(hc))
   
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.default")
