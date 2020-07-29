@@ -58,7 +58,7 @@ df <- data.frame(x = seq_len(n) - 1) %>%
     e = round(e, 1),
     low = y - e,
     high = y + e,
-    value = round(y + 1),
+    value = round(y - 1),
     name = sample(fruit[str_length(fruit) <= 5], size = n),
     color = rep(colors, length.out = n)
   ) %>% 
@@ -69,7 +69,7 @@ df <- df %>%
   mutate(
     from = name[c(1, 1, 1, 2, 3, 4)],
     to   = name[c(3, 4, 5, 3, 6, 6)],
-     weight = c(1, 1, 1, 1, 1, 2)
+     weight = c(1, 1, 1, 1, 2, 2)
   )
 ```
 
@@ -84,34 +84,31 @@ create_hc <- function(t = "dumbbell") {
   dont_rm_high_and_low <- c(
     "arearange",
     "areasplinerange",
+    "polarcolumnrange",
     "columnrange",
     "errorbar",
     "dumbbell"
     )
   
+  if(!t %in% dont_rm_high_and_low) df <- df %>% select(-low, -high)
+  
   is_polar <- str_detect(t, "polar")
-  t        <- str_replace(t, "polar", "")
+  type     <- str_remove(t, "polar")
+  title    <- str_c(ifelse(is_polar, "polar ", ""), type)
   invt     <- ifelse(t %in% c("dumbbell", "organization"), TRUE, FALSE)  
   yvisible <- ifelse(t %in% c("streamgraph", "timeline"), FALSE, TRUE)
   xvisible <- ifelse(t %in% c(""), FALSE, TRUE)
   
-  if(!t %in% dont_rm_high_and_low) df <- df %>% select(-low, -high)
-  
   hcout <-  highchart() %>%
     hc_title(
-      text = paste(ifelse(is_polar, "polar ", ""), t),
+      text = title,
       style = list(fontSize = "15px")
       ) %>% 
     hc_chart(
-      type = t,
+      type = type,
       polar = is_polar,
       inverted = invt
     ) %>% 
-    # hc_plotOptions(
-    #   series = list(
-    #      dataLabels = list(style = list(fontSize = "13px"))
-    #   )
-    # ) %>% 
     hc_xAxis(
       categories = df$name
       ) %>% 
@@ -134,20 +131,26 @@ create_hc <- function(t = "dumbbell") {
 hcs <- c(
   "line", "spline",  "area", "areaspline",
   "column", "columnpyramid", "bar", 
-  "lollipop", "dumbbell",
-  "waterfall" , "funnel", "pyramid",
-  "pie" , "treemap", "packedbubble",
   "scatter", "bubble",
-  "arearange", "areasplinerange", "columnrange", "errorbar",
-  "polygon", "polarline", "polarcolumn", "polarcolumnrange",
+  "lollipop", 
+  
+  "waterfall" , "funnel", "pyramid",
+  
+  "pie" , "treemap", "packedbubble",
+
+  "arearange", "areasplinerange", "columnrange", "errorbar", "dumbbell",
+  "polygon", 
+  
+  "polarline", "polarcolumn", "polarcolumnrange",
   "streamgraph", "item", "wordcloud", "timeline",
+  
   "sankey", "dependencywheel", "organization"
   )  %>% 
   map(create_hc) 
 
 hcs %>% 
-  {print(hw_grid(.)); .} %>% 
   map(hc_size, height = 300) %>% 
+  {print(hw_grid(.)); .} %>% 
   map(tags$div, class = "col-sm-4") %>% 
   tags$div(class = "row")
 ```

@@ -33,6 +33,7 @@ articles:
   navbar: More of highcharter
   contents:
   - themes
+  - howtos
   - modules
   - motion
   - shiny-events-demo
