@@ -131,12 +131,6 @@ HTMLWidgets.widget({
           return chart;
           
         },
-        
-        getChart: function(){
-          
-          return chart;
-          
-        },
       
         resize: function(el, width, height, instance) {
           
@@ -154,23 +148,6 @@ HTMLWidgets.widget({
     };
   }
 });
-
-
-// source: https://shiny.rstudio.com/articles/js-send-message.html
-function getHighchart(id){
-  
-  // Get the HTMLWidgets object
-  var htmlWidgetsObj = HTMLWidgets.find("#" + id);
-  
-  // Use the getChart method we created to get the underlying highchart chart
-  var hcObj ;
-  
-  if (typeof htmlWidgetsObj != 'undefined') {
-    hcObj = htmlWidgetsObj.getChart();
-  }
-
-  return(hcObj);
-}
 
 if (HTMLWidgets.shinyMode) {
   
@@ -218,8 +195,6 @@ if (HTMLWidgets.shinyMode) {
   
   Shiny.addCustomMessageHandler('showLoading', function(msg) {
     
-    console.log(msg);
-    
     var chart = $("#" + msg.id).highcharts();
     
     if (msg.showLoading) {
@@ -232,6 +207,22 @@ if (HTMLWidgets.shinyMode) {
       
     }
       
+  });
+  
+  Shiny.addCustomMessageHandler('addPoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).addPoint(msg.point, msg.redraw, msg.shift);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('removePoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).removePoint(msg.i, msg.redraw);
+    
   });
   
 }

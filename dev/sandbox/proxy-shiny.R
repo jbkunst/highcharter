@@ -2,7 +2,7 @@ library(tidyverse)
 library(highcharter)
 library(shiny)
 
-column <- partial(shiny::column, width = 6)
+column <- purrr::partial(shiny::column, width = 6)
 
 ui <- fluidPage(
   tags$hr(),
@@ -38,6 +38,12 @@ ui <- fluidPage(
       actionButton("update3", "Update series data"), 
       actionButton("update4", "Update series options"),
       highchartOutput("hc_opts2")
+    ),
+    column(
+      actionButton("addpoint", "Add point"),
+      actionButton("addpoint_w_shift", "Add point with shift"),
+      actionButton("rmpoint", "Remove point"),
+      highchartOutput("hc_addpoint")
     )
   )
 )
@@ -171,12 +177,60 @@ server <- function(input, output, session){
     highchartProxy("hc_opts2") %>%
       hcpxy_update_series(
         id = "london",
-        type = sample(c('line', 'column', 'spline', 'area', 'areaspline', 'scatter', 'pie'), 1),
+        type = sample(c('line', 'column', 'spline', 'area', 'areaspline', 'scatter', 'lollipop', 'bubble'), 1),
         name = str_c("London ", sample(1:10, 1)),
         dataLabels = list(enabled = sample(c(TRUE, FALSE), 1))
       )
     
   })
+  
+  output$hc_addpoint <- renderHighchart({
+    input$reset
+    
+    df <- tibble::tibble(
+      x = datetime_to_timestamp(Sys.time() - lubridate::seconds(10:1)),
+      y = rnorm(length(x))
+    )
+    
+    highchart() %>% 
+      hc_xAxis(type = "datetime") %>% 
+      hc_add_series(df, "line", hcaes(x, y), id = "ts", name = "A real time value") %>% 
+      hc_navigator(enabled = TRUE)
+    
+  })
+  
+  observeEvent(input$addpoint, { 
+    
+    highchartProxy("hc_addpoint") %>%
+      hcpxy_add_point(
+        id = "ts",
+        point = list(x = datetime_to_timestamp(Sys.time()), y = rnorm(1))
+      )
+    
+  })
+  
+  observeEvent(input$addpoint_w_shift, { 
+    
+    highchartProxy("hc_addpoint") %>%
+      hcpxy_add_point(
+        id = "ts",
+        point = list(x = datetime_to_timestamp(Sys.time()), y = rnorm(1)),
+        shift = TRUE
+        )
+    
+  })
+  
+  observeEvent(input$rmpoint, { 
+    
+    highchartProxy("hc_addpoint") %>%
+      hcpxy_remove_point(
+        id = "ts",
+        i = 0
+        )
+    
+  })
+  
+  
   
 }
 

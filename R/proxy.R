@@ -192,4 +192,68 @@ hcpxy_update_series <- function(proxy, id = NULL, ...){
 }
 
 
+#' Add point to a series of a higchartProxy object
+#' 
+#' @param proxy A `higchartProxy` object.
+#' @param id A character vector indicating the `id` of the series to update.
+#' @param point The point options. If options is a single number, a point with 
+#'   that y value is appended to the series. If it is an list, it will be 
+#'   interpreted as x and y values respectively. If it is an object, 
+#'   advanced options as outlined under series.data are applied
+#' @param redraw Whether to redraw the chart after the point is added. When 
+#'   adding more than one point, it is highly recommended that the redraw option
+#'   be set to false, and instead Highcharts.Chart#redraw is explicitly called 
+#'   after the adding of points is finished. Otherwise, the chart will redraw 
+#'   after adding each point.
+#' @param shift If `TRUE`, a point is shifted off the start of the series as 
+#'   one is appended to the end.
+#' @export
+hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALSE){
+  
+  checkProxy(proxy)
+  
+  proxy$session$sendCustomMessage(
+    type = "addPoint",
+    message = list(
+      id = proxy$id,
+      idSeries = id,
+      point = point,
+      redraw = redraw,
+      shift = shift
+      )
+    )
+    
+  proxy
+  
+}
+
+#' Remove point to a series of a higchartProxy object
+#' 
+#' @param proxy A `higchartProxy` object.
+#' @param id A character vector indicating the `id` of the series to update.
+#' @param i The index of the point in the data array. Remember js is 0 based index.
+#' @param redraw Whether to redraw the chart after the point is added. When 
+#'   adding more than one point, it is highly recommended that the redraw option
+#'   be set to false, and instead Highcharts.Chart#redraw is explicitly called 
+#'   after the adding of points is finished. Otherwise, the chart will redraw 
+#'   after adding each point.
+#' @export
+hcpxy_remove_point <- function(proxy, id = NULL, i = NULL, redraw = TRUE){
+  
+  checkProxy(proxy)
+  
+  proxy$session$sendCustomMessage(
+    type = "removePoint",
+    message = list(
+      id = proxy$id,
+      idSeries = id,
+      i = i,
+      redraw = redraw
+    )
+  )
+  
+  proxy
+  
+}
+
 
