@@ -236,3 +236,5 @@ server <- function(input, output, session){
 
 if(interactive()) shiny::shinyApp(ui, server, options = list(launch.browser = .rs.invokeShinyPaneViewer))
 
+
+shiny::shinyApp(ui, server)

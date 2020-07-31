@@ -40,7 +40,7 @@ dfopts <- distinct(dfopts, option, .keep_all = TRUE)
 
 opts_to_remove <- c(
   "global", "lang", "noData",
-  "defs", "data", "loading", "accessibility",
+  "defs", "data", "accessibility",
   "stockTools", "navigation", "time"
   )
 
@@ -57,8 +57,10 @@ dfopts %>%
   walk(function(script){
     
     message("Running ", script)
-    source(script, echo = FALSE)
-    
+    try({
+      source(script, echo = FALSE)
+    })
+        
   })
 
 
