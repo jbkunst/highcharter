@@ -48,6 +48,20 @@ hc <- hchart(penguins, "scatter", hcaes(x = flipper_length_mm, y = bill_length_m
 hc
 ```
 
+And:
+
+```{r}
+preguins_grouped <- penguins %>% 
+  group_by(species) %>% 
+  summarise(flipper_length_mm_mean = mean(flipper_length_mm))
+
+glimpse(preguins_grouped)
+
+hc2 <- hchart(preguins_grouped, "column", hcaes(x = species, y = flipper_length_mm_mean))
+hc2
+```
+
+
 
 ## Disabled inactive state 
 
@@ -63,4 +77,23 @@ hc %>%
 
 More info: https://api.highcharts.com/highcharts/plotOptions.series.states.inactive.
 
-Example: https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-states-inactive-disabled.
+Example: https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-states-inactive-
+
+## Axis Label Custom Order
+
+Remember `hc2`. If we want a new order we can give the explicit order
+using `hc_xAxis`: 
+
+```{r}
+lvls <- preguins_grouped %>% 
+  mutate(
+    species = forcats::fct_relevel(species, "Gentoo", after  = 0)
+  ) %>% 
+  pull(species) %>% 
+  levels()
+
+hchart(preguins_grouped, "column", hcaes(x = species, y = flipper_length_mm_mean)) %>% 
+  hc_xAxis(categories = lvls)
+```
+
+

@@ -157,7 +157,7 @@ hcpxy_update <- function(proxy, ...) {
   
 }
 
-#' Show or hide loading text for a higchartProxy object
+#' Update options series in a higchartProxy object
 #' 
 #' @param proxy A `higchartProxy` object.
 #' @param id A character vector indicating the `id` (or `id`s) of the series to update.
@@ -255,5 +255,3 @@ hcpxy_remove_point <- function(proxy, id = NULL, i = NULL, redraw = TRUE){
   proxy
   
 }
-
-

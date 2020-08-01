@@ -67,9 +67,10 @@ df <- data.frame(x = seq_len(n) - 1) %>%
 
 df <- df %>% 
   mutate(
+    # label = name,
     from = name[c(1, 1, 1, 2, 3, 4)],
     to   = name[c(3, 4, 5, 3, 6, 6)],
-     weight = c(1, 1, 1, 1, 2, 2)
+    weight = c(1, 1, 1, 1, 2, 2)
   )
 ```
 

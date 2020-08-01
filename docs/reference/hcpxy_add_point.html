@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Adding data to highchart objects — hc_add_series • highcharter</title>
+<title>Add point to a series of a higchartProxy object — hcpxy_add_point • highcharter</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Adding data to highchart objects — hc_add_series" />
-<meta property="og:description" content="Adding data to highchart objects" />
+<meta property="og:title" content="Add point to a series of a higchartProxy object — hcpxy_add_point" />
+<meta property="og:description" content="Add point to a series of a higchartProxy object" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -190,41 +190,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Adding data to highchart objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jbkunst/highcharter/blob/master/R/highcharts-api-add.R'><code>R/highcharts-api-add.R</code></a></small>
-    <div class="hidden name"><code>hc_add_series.Rd</code></div>
+    <h1>Add point to a series of a higchartProxy object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jbkunst/highcharter/blob/master/R/proxy.R'><code>R/proxy.R</code></a></small>
+    <div class="hidden name"><code>hcpxy_add_point.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Adding data to highchart objects</p>
+    <p>Add point to a series of a higchartProxy object</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>hc</span>, data = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcpxy_add_point.html'>hcpxy_add_point</a></span>(<span class='kw'>proxy</span>, id = <span class='kw'>NULL</span>, <span class='kw'>point</span>, redraw = <span class='fl'>TRUE</span>, shift = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>hc</th>
-      <td><p>A <code>highchart</code> <code>htmlwidget</code> object.</p></td>
+      <th>proxy</th>
+      <td><p>A <code>higchartProxy</code> object.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>An R object like numeric, list, ts, xts, etc.</p></td>
+      <th>id</th>
+      <td><p>A character vector indicating the <code>id</code> of the series to update.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Arguments defined in <a href='https://api.highcharts.com/highcharts/plotOptions.series'>https://api.highcharts.com/highcharts/plotOptions.series</a>.</p></td>
+      <th>point</th>
+      <td><p>The point options. If options is a single number, a point with
+that y value is appended to the series. If it is an list, it will be
+interpreted as x and y values respectively. If it is an object,
+advanced options as outlined under series.data are applied</p></td>
+    </tr>
+    <tr>
+      <th>redraw</th>
+      <td><p>Whether to redraw the chart after the point is added. When
+adding more than one point, it is highly recommended that the redraw option
+be set to false, and instead Highcharts.Chart#redraw is explicitly called
+after the adding of points is finished. Otherwise, the chart will redraw
+after adding each point.</p></td>
+    </tr>
+    <tr>
+      <th>shift</th>
+      <td><p>If <code>TRUE</code>, a point is shifted off the start of the series as
+one is appended to the end.</p></td>
     </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(data = <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>)), type = <span class='st'>"column"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(data = <span class='kw'>purrr</span>::<span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='fl'>0</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span>, <span class='kw'>x</span>)), type = <span class='st'>"scatter"</span>, color = <span class='st'>"orange"</span>)
-  </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

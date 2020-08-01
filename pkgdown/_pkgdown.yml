@@ -54,6 +54,7 @@ reference:
   - hc_exporting
   - hc_labels
   - hc_legend
+  - hc_loading
   - hc_pane
   - hc_plotOptions
   - hc_responsive
@@ -71,25 +72,17 @@ reference:
   - highchart2
   - highchartzero
 - title: Additional function to use Highcharts API
-  desc: |-
-    Helpers function to add or modify elements, like plugins (as {htmltools} dependencies), events or annotations and
-        functions to create valid arguments in `dataClasses`, `stops` or `pointFormatter` parameters.
+  desc: Helpers function to add or modify elements, like plugins (as {htmltools} dependencies),
+    events or annotations.
   contents:
-  - color_classes
-  - color_stops
-  - colorize
   - hc_add_annotation
   - hc_add_dependency
-  - hc_add_dependency_fa
   - hc_add_event_point
   - hc_yAxis_multiples
   - hc_elementId
   - hc_motion
   - hc_rm_series
   - hc_size
-  - tooltip_chart
-  - tooltip_table
-  - hex_to_rgba
 - title: Add data
   desc: Functions to add data from R objects to a highcharts charts.
   contents:
@@ -105,6 +98,40 @@ reference:
   - hc_add_series.xts
   - hc_add_series_list
   - hc_add_series_map
+- title: Data helpers
+  desc: |-
+    Function to help manipulate data to use in specific arguments or
+        some types of series. For example create valid arguments in `dataClasses`,
+        `stops` or `pointFormatter` parameters and create the rigth type of format
+        to create treemaps, sunburst or sankey charts.
+  contents:
+  - color_classes
+  - color_stops
+  - colorize
+  - data_to_boxplot
+  - data_to_hierarchical
+  - data_to_sankey
+  - tooltip_chart
+  - tooltip_table
+  - hex_to_rgba
+  - datetime_to_timestamp
+  - dt_tstp
+- title: Shiny and proxy functions
+  desc: |-
+    Functions to create highcharts in shinyapps or rmarkdown documents.
+        Proxy functions allow you maniupulate a highchart widget from server side in a
+        shiny app.
+  contents:
+  - highchartProxy
+  - hcpxy_add_point
+  - hcpxy_add_series
+  - hcpxy_loading
+  - hcpxy_remove_point
+  - hcpxy_remove_series
+  - hcpxy_update
+  - hcpxy_update_series
+  - highchartOutput
+  - renderHighchart
 - title: Themes
   desc: Functions to customize the look of your chart.
   contents:
@@ -153,25 +180,16 @@ reference:
   - worldgeojson
 - title: Extra functions
   contents:
-  - data_to_boxplot
-  - data_to_hierarchical
-  - data_to_sankey
-  - datetime_to_timestamp
   - download_map_data
   - export_hc
   - get_data_from_map
   - get_hc_series_from_df
   - hcaes
   - hcaes_string
-  - hcboxplot
   - hchart.survfit
-  - hciconarray
   - hcmap
-  - hcparcords
-  - hcspark
-  - hctreemap
-  - hctreemap2
-  - highchartOutput
+  - highcharter-exports
+  - highcharter
   - highcharts_demo
   - hw_grid
   - is.hexcolor
@@ -179,5 +197,16 @@ reference:
   - list_parse
   - mutate_mapping
   - random_id
-  - renderHighchart
   - str_to_id
+- title: Deprecated functions
+  desc: Functions that will be removed in the next version of the package.
+  contents:
+  - hcparcords
+  - hcspark
+  - hctreemap
+  - hctreemap2
+  - hciconarray
+  - hcboxplot
+  - hc_add_dependency_fa
+  - fa_icon
+  - fa_icon_mark

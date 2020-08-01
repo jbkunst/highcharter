@@ -131,12 +131,6 @@ HTMLWidgets.widget({
           return chart;
           
         },
-        
-        getChart: function(){
-          
-          return chart;
-          
-        },
       
         resize: function(el, width, height, instance) {
           
@@ -155,45 +149,80 @@ HTMLWidgets.widget({
   }
 });
 
-
-// source: https://shiny.rstudio.com/articles/js-send-message.html
-function getHighchart(id){
-  
-  // Get the HTMLWidgets object
-  var htmlWidgetsObj = HTMLWidgets.find("#" + id);
-  
-  // Use the getChart method we created to get the underlying highchart chart
-  var hcObj ;
-  
-  if (typeof htmlWidgetsObj != 'undefined') {
-    hcObj = htmlWidgetsObj.getChart();
-  }
-
-  return(hcObj);
-}
-
 if (HTMLWidgets.shinyMode) {
   
   Shiny.addCustomMessageHandler('addSeries', function(msg) {
     
-    console.log(msg);
+    var chart = $("#" + msg.id).highcharts();
     
-    /*
-    var chart = getHighchart(msg.id);
-    */
+    chart.addSeries(msg.series);
+      
+  });
+  
+  Shiny.addCustomMessageHandler('removeSeries', function(msg) {
     
     var chart = $("#" + msg.id).highcharts();
     
-    window.xchart = chart;
+    chart.get(msg.idSeries).remove();
     
-    console.log(chart);
+  });
+  
+  Shiny.addCustomMessageHandler('removeAllSeries', function(msg) {
     
-    if (typeof chart != 'undefined') {
+    var chart = $("#" + msg.id).highcharts();
+    
+    while (chart.series.length) {
+      chart.series[0].remove();
+      }
+    
+  });
+  
+  Shiny.addCustomMessageHandler('updateChart', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.update(msg.options);
+   
+  });
+  
+  Shiny.addCustomMessageHandler('updateSeries', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).update(msg.options);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('showLoading', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    if (msg.showLoading) {
       
-      chart.addSeries(msg.series);
+      chart.showLoading();
+      
+    } else {
+      
+      chart.hideLoading();
       
     }
       
+  });
+  
+  Shiny.addCustomMessageHandler('addPoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).addPoint(msg.point, msg.redraw, msg.shift);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('removePoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).removePoint(msg.i, msg.redraw);
+    
   });
   
 }

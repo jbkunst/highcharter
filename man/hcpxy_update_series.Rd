@@ -2,7 +2,7 @@
 % Please edit documentation in R/proxy.R
 \name{hcpxy_update_series}
 \alias{hcpxy_update_series}
-\title{Show or hide loading text for a higchartProxy object}
+\title{Update options series in a higchartProxy object}
 \usage{
 hcpxy_update_series(proxy, id = NULL, ...)
 }
@@ -16,5 +16,5 @@ The argumnes will be the same for each series. So if you want update data it
 is used this function sequentially for each series.}
 }
 \description{
-Show or hide loading text for a higchartProxy object
+Update options series in a higchartProxy object
 }
