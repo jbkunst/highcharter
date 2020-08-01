@@ -197,7 +197,7 @@ highchart() %>%
 
 ## Colored area and colored line
 
-More information in https://github.com/blacklabel/multicolor_series
+More information in https://github.com/blacklabel/multicolor_series.
 
 ```{r}
 library(dplyr)
@@ -257,7 +257,98 @@ highchart() %>%
     )
   ) %>% 
   hc_add_dependency("modules/draggable-points.js")
- ```
+```
+
+## Pattern fills
+
+More information in https://www.highcharts.com/blog/tutorials/pattern-fills/.
+
+Example taken from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/pattern-fill-area.
+
+```{r}
+# base chart without series
+hc_fill <- highchart() %>% 
+  # add dependency
+  hc_add_dependency("modules/pattern-fill.js") %>% 
+  hc_chart(type = 'area') %>% 
+  hc_title(text = 'Pattern fill plugin demo') %>% 
+  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) %>% 
+  hc_plotOptions(
+    area = list(
+      fillColor = list(
+        pattern = list(
+          path = list(
+            d = 'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
+            strokeWidth = 3
+            ),
+          width = 10,
+          height = 10,
+          opacity = 0.4
+          )
+        )
+      )
+    )
+
+# test with 2 series
+hc_fill %>% 
+  hc_add_series(
+    data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6),
+    color= '#88e',
+    fillColor = list(
+      pattern = list(
+        color = '#11d'
+      )
+    )
+    ) %>% 
+  hc_add_series(
+    data = c(NA, NA, NA, NA, NA, 43.1, 95.6, 148.5, 216.4, 194.1, 95.6, 54.4),
+    color = '#e88',
+    fillColor = list(
+      pattern = list(
+        color= '#d11'
+      )
+    )
+  )
+```
+
+More examples for fun.
+
+```{r}
+# test with 1 series and a theme
+hc_fill %>% 
+  hc_add_series(
+    data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
+    color= '#000',
+    fillColor = list(
+      pattern = list(
+        color = '#000'
+      )
+    )
+    ) %>% 
+  hc_add_theme(hc_theme_handdrawn())
+```
+
+
+```{r}
+dim(volcano)
+
+highchart() %>% 
+  hc_add_dependency("modules/pattern-fill.js") %>% 
+  hc_add_theme(hc_theme_null()) %>% 
+  hc_add_series(
+    type = "area", # area needs fill color
+    name = "Maunga Whau Volcano",
+    color = "transparent",
+    data = as.numeric(volcano[40, ]) - min(volcano[40, ]) + 1,
+    fillColor = list(
+      pattern = list(
+        image = 'https://cdn.pixabay.com/photo/2014/12/04/02/02/wall-556100_960_720.jpg'
+        )
+      )
+    )
+```
+
+
 
 
 ## List of modules and plugins in highcharter
