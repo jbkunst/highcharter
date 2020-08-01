@@ -141,21 +141,6 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 #' @param icons A character vector same length (o length 1) as labels
 #' @param size Font size
 #' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
-#' @examples
-#'
-#' hciconarray(c("nice", "good"), c(10, 20))
-#'
-#' hciconarray(c("nice", "good"), c(10, 20), size = 10)
-#'
-#' hciconarray(c("nice", "good"), c(100, 200), icons = "child")
-#'
-#' hciconarray(c("car", "truck", "plane"), c(75, 30, 20), icons = c("car", "truck", "plane")) %>%
-#'   hc_add_theme(
-#'     hc_theme_merge(
-#'       hc_theme_flatdark(),
-#'       hc_theme_null(chart = list(backgroundColor = "#34495e"))
-#'     )
-#'   )
 #' @importFrom dplyr ungroup group_by
 #' @importFrom rlang .data
 #' @export
