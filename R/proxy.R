@@ -207,8 +207,9 @@ hcpxy_update_series <- function(proxy, id = NULL, ...){
 #'   after adding each point.
 #' @param shift If `TRUE`, a point is shifted off the start of the series as 
 #'   one is appended to the end.
+#' @param animation Whether to apply animation, and optionally animation configuration.
 #' @export
-hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALSE){
+hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALSE, animation = TRUE){
   
   checkProxy(proxy)
   
@@ -219,7 +220,8 @@ hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALS
       idSeries = id,
       point = point,
       redraw = redraw,
-      shift = shift
+      shift = shift,
+      animation = animation
       )
     )
     

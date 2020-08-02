@@ -4,7 +4,14 @@
 \alias{hcpxy_add_point}
 \title{Add point to a series of a higchartProxy object}
 \usage{
-hcpxy_add_point(proxy, id = NULL, point, redraw = TRUE, shift = FALSE)
+hcpxy_add_point(
+  proxy,
+  id = NULL,
+  point,
+  redraw = TRUE,
+  shift = FALSE,
+  animation = TRUE
+)
 }
 \arguments{
 \item{proxy}{A \code{higchartProxy} object.}
@@ -24,6 +31,8 @@ after adding each point.}
 
 \item{shift}{If \code{TRUE}, a point is shifted off the start of the series as
 one is appended to the end.}
+
+\item{animation}{Whether to apply animation, and optionally animation configuration.}
 }
 \description{
 Add point to a series of a higchartProxy object

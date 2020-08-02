@@ -213,7 +213,7 @@ if (HTMLWidgets.shinyMode) {
     
     var chart = $("#" + msg.id).highcharts();
     
-    chart.get(msg.idSeries).addPoint(msg.point, msg.redraw, msg.shift);
+    chart.get(msg.idSeries).addPoint(msg.point, msg.redraw, msg.shift, msg.animation);
     
   });
   
