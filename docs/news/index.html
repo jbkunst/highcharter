@@ -125,6 +125,9 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
+    </li>
+    <li>
       <a href="../articles/showcase.html">Showcase</a>
     </li>
     <li class="divider"></li>
@@ -150,6 +153,9 @@
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
+    </li>
+    <li>
+      <a href="../articles/howtos.html">Commons HOW TOs</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -194,14 +200,24 @@
 <h1 class="page-header" data-toc-text="0.8.3">
 <a href="#highcharter-083" class="anchor"></a>highcharter 0.8.3<small> Unreleased </small>
 </h1>
+<div id="changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes" class="anchor"></a>Changes</h2>
+<ul>
+<li>Adding <code>hcpxy_add_series</code>, <code>hcpxy_remove_series</code>, <code>hcpxy_update</code>, <code>hcpxy_update_series</code>, <code>hcpxy_add_point</code>, <code>hcpxy_remove_point</code> and <code>hcpxy_loading</code>
+</li>
+<li>Adding <code>hc_loading</code> for use with <code>hcpxy_loading</code>
+</li>
+</ul>
+</div>
 </div>
     <div id="highcharter-082" class="section level1">
 <h1 class="page-header" data-toc-text="0.8.2">
 <a href="#highcharter-082" class="anchor"></a>highcharter 0.8.2<small> 2020-07-26 </small>
 </h1>
-<div id="changes" class="section level2">
+<div id="changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes" class="anchor"></a>Changes</h2>
+<a href="#changes-1" class="anchor"></a>Changes</h2>
 <ul>
 <li>Highcharter now uses HighchartsJS 8.1.2</li>
 <li>Adding data helpers to make easy certain type of charts: <code>data_to_boxplot</code>, <code>data_to_hierarchical</code> and <code>data_to_sankey</code>. Thanks to <a href='https://github.com/wwwjk366'>@wwwjk366</a>.</li>
@@ -244,9 +260,9 @@
 <h1 class="page-header" data-toc-text="0.8.1">
 <a href="#highcharter-081" class="anchor"></a>highcharter 0.8.1<small> Unreleased </small>
 </h1>
-<div id="changes-1" class="section level2">
+<div id="changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-1" class="anchor"></a>Changes</h2>
+<a href="#changes-2" class="anchor"></a>Changes</h2>
 <ul>
 <li>Highcharter now uses HighchartsJS 8 (8.1.0).</li>
 <li>Highcharter now uses jquery v3.5.0; previously used is v1.11.1</li>
@@ -259,9 +275,9 @@
 <h1 class="page-header" data-toc-text="0.7.2">
 <a href="#highcharter-072" class="anchor"></a>highcharter 0.7.2<small> Unreleased </small>
 </h1>
-<div id="changes-2" class="section level2">
+<div id="changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-2" class="anchor"></a>Changes</h2>
+<a href="#changes-3" class="anchor"></a>Changes</h2>
 <ul>
 <li>Highcharter now uses HighchartsJS 7 (7.2.0) thanks to Daniel Possenriede (<a href='https://github.com/jbkunst/highcharter/issues/552'>#552</a>).</li>
 </ul>
@@ -271,9 +287,9 @@
 <h1 class="page-header" data-toc-text="0.7.1">
 <a href="#highcharter-071" class="anchor"></a>highcharter 0.7.1<small> Unreleased </small>
 </h1>
-<div id="changes-3" class="section level2">
+<div id="changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-3" class="anchor"></a>Changes</h2>
+<a href="#changes-4" class="anchor"></a>Changes</h2>
 <ul>
 <li>Adding <code>hc_theme_bloom</code> based on Bloomberg Graphics.</li>
 <li>Removed shortcut functions: <code>hcts</code>, <code>hcbar</code>, <code>hcpie</code>, <code>hchist</code>, <code>hcdensity</code>.</li>
@@ -287,9 +303,9 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#highcharter-070" class="anchor"></a>highcharter 0.7.0<small> 2019-01-15 </small>
 </h1>
-<div id="changes-4" class="section level2">
+<div id="changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-4" class="anchor"></a>Changes</h2>
+<a href="#changes-5" class="anchor"></a>Changes</h2>
 <ul>
 <li>
 <code>highchart</code> function don’t load plugins as default. Now there is <code>hc_add_plugin</code> to load as required (<a href='https://github.com/jbkunst/highcharter/issues/258'>#258</a>).</li>
@@ -382,9 +398,9 @@
 <li>Add more data for nice examples: vaccines, weather radials, pkmn (<a href='https://github.com/jbkunst/highcharter/issues/145'>#145</a>).</li>
 </ul>
 </div>
-<div id="changes-5" class="section level2">
+<div id="changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-5" class="anchor"></a>Changes</h2>
+<a href="#changes-6" class="anchor"></a>Changes</h2>
 <ul>
 <li>renaming <code>hcwaffle</code> to hciconarray. The <code>hcwaffle</code> do not make a waffle! (<a href='https://github.com/jbkunst/highcharter/issues/242'>#242</a>).</li>
 <li>removing colorize_vector function (<a href='https://github.com/jbkunst/highcharter/issues/237'>#237</a>).</li>
@@ -447,9 +463,9 @@
 <li>Add motion plugin <a href="http://www.highcharts.com/plugin-registry/single/40/Motion" class="uri">http://www.highcharts.com/plugin-registry/single/40/Motion</a> (<a href='https://github.com/jbkunst/highcharter/issues/62'>#62</a>).</li>
 </ul>
 </div>
-<div id="changes-6" class="section level2">
+<div id="changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-6" class="anchor"></a>Changes</h2>
+<a href="#changes-7" class="anchor"></a>Changes</h2>
 <ul>
 <li>Upgrading to highcharts 4.2.4 (<a href='https://github.com/jbkunst/highcharter/issues/72'>#72</a>).</li>
 <li>Options were separated into <code>highcharter.global</code>, <code>highcharter.lang</code> and <code>highcharter.chart</code> instead of having all in one big list (<a href='https://github.com/jbkunst/highcharter/issues/77'>#77</a> <a href='https://github.com/jbkunst/highcharter/issues/52'>#52</a>).</li>

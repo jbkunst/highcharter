@@ -126,6 +126,9 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
+    </li>
+    <li>
       <a href="../articles/showcase.html">Showcase</a>
     </li>
     <li class="divider"></li>
@@ -151,6 +154,9 @@
     <li class="dropdown-header">More of highcharter</li>
     <li>
       <a href="../articles/themes.html">Themes</a>
+    </li>
+    <li>
+      <a href="../articles/howtos.html">Commons HOW TOs</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -216,29 +222,6 @@
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>dcars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>10</span>), y = <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>10</span>))
-<span class='kw'>dtrck</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>10</span>), y = <span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>10</span>))
-
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_chart.html'>hc_chart</a></span>(zoomType = <span class='st'>"xy"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_tooltip.html'>hc_tooltip</a></span>(
-    useHTML = <span class='fl'>TRUE</span>,
-    pointFormat = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(
-      <span class='st'>"&lt;span style=\"color:{series.color};\"&gt;{series.options.icon}&lt;/span&gt;"</span>,
-      <span class='st'>"{series.name}: &lt;b&gt;[{point.x}, {point.y}]&lt;/b&gt;&lt;br/&gt;"</span>
-    )
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>dcars</span>, <span class='st'>"scatter"</span>,
-    marker = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(symbol = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon_mark</a></span>(<span class='st'>"car"</span>)),
-    icon = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon</a></span>(<span class='st'>"car"</span>), name = <span class='st'>"car"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>dtrck</span>, <span class='st'>"scatter"</span>,
-    marker = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(symbol = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon_mark</a></span>(<span class='st'>"plane"</span>)),
-    icon = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon</a></span>(<span class='st'>"plane"</span>), name = <span class='st'>"plane"</span>
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>hc_add_dependency_fa</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon</a></span>(<span class='st'>"car"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; [1] "&lt;i class=\"fa fa-car\"&gt;&lt;/i&gt;"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon_mark</a></span>(<span class='st'>"car"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; [1] "text:f1b9"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_dependency_fa.html'>fa_icon_mark</a></span>(iconname = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"car"</span>, <span class='st'>"plane"</span>, <span class='st'>"car"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Deprecated function. Use the fontawesome package. Example in the docs website.</span></div><div class='output co'>#&gt; [1] "text:f1b9" "text:f072" "text:f1b9"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

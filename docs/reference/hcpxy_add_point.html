@@ -126,6 +126,9 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
+    </li>
+    <li>
       <a href="../articles/showcase.html">Showcase</a>
     </li>
     <li class="divider"></li>
@@ -199,7 +202,14 @@
     <p>Add point to a series of a higchartProxy object</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcpxy_add_point.html'>hcpxy_add_point</a></span>(<span class='kw'>proxy</span>, id = <span class='kw'>NULL</span>, <span class='kw'>point</span>, redraw = <span class='fl'>TRUE</span>, shift = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcpxy_add_point.html'>hcpxy_add_point</a></span>(
+  <span class='kw'>proxy</span>,
+  id = <span class='kw'>NULL</span>,
+  <span class='kw'>point</span>,
+  redraw = <span class='fl'>TRUE</span>,
+  shift = <span class='fl'>FALSE</span>,
+  animation = <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -231,6 +241,10 @@ after adding each point.</p></td>
       <th>shift</th>
       <td><p>If <code>TRUE</code>, a point is shifted off the start of the series as
 one is appended to the end.</p></td>
+    </tr>
+    <tr>
+      <th>animation</th>
+      <td><p>Whether to apply animation, and optionally animation configuration.</p></td>
     </tr>
     </table>
 

@@ -80,6 +80,9 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
+    </li>
+    <li>
       <a href="../articles/showcase.html">Showcase</a>
     </li>
     <li class="divider">
@@ -148,7 +151,7 @@
       <h1 data-toc-skip>Charts with highcharts</h1>
                         <h4 class="author">Joshua Kunst</h4>
             
-            <h4 class="date">2020-08-01</h4>
+            <h4 class="date">2020-08-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/master/vignettes/highcharts.Rmd"><code>vignettes/highcharts.Rmd</code></a></small>
       <div class="hidden name"><code>highcharts.Rmd</code></div>
@@ -405,14 +408,14 @@ $(document).ready(function(){
 <span class="kw">N</span> <span class="op">&lt;-</span> <span class="fl">7</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
 
-<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span>(
+<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
   start = <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span>() <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html">months</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">10</span><span class="op">:</span><span class="fl">20</span>, size = <span class="kw">N</span>)),
   end = <span class="kw">start</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html">months</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, size = <span class="kw">N</span>, replace = <span class="fl">TRUE</span>)),
   cat = <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, length.out = <span class="kw">N</span>) <span class="op">-</span> <span class="fl">1</span>,
   progress = <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw">stats</span>::<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="kw">N</span>), <span class="fl">1</span>)
 )
 
-<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu">mutate_if</span>(<span class="kw">df</span>, <span class="kw">is.Date</span>, <span class="kw">datetime_to_timestamp</span>)
+<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span>(<span class="kw">df</span>, <span class="kw">is.Date</span>, <span class="kw">datetime_to_timestamp</span>)
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span>(
   <span class="kw">df</span>,
@@ -430,7 +433,7 @@ $(document).ready(function(){
     )
 </pre></div>
 <div id="htmlwidget-767209723a30863ca56b" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-767209723a30863ca56b">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":false,"type":"linear","categories":["Prototyping","Development","Testing","Validation","Modelling"]},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"start":1646092800000,"end":1651363200000,"cat":0,"progress":0.2,"x":1646092800000,"y":0,"x2":1651363200000,"partialFill":0.2},{"start":1635724800000,"end":1640995200000,"cat":1,"progress":0.2,"x":1635724800000,"y":1,"x2":1640995200000,"partialFill":0.2},{"start":1633046400000,"end":1640995200000,"cat":2,"progress":0.3,"x":1633046400000,"y":2,"x2":1640995200000,"partialFill":0.3},{"start":1630454400000,"end":1635724800000,"cat":3,"progress":0.3,"x":1630454400000,"y":3,"x2":1635724800000,"partialFill":0.3},{"start":1638316800000,"end":1643673600000,"cat":4,"progress":0.2,"x":1638316800000,"y":4,"x2":1643673600000,"partialFill":0.2},{"start":1622505600000,"end":1627776000000,"cat":0,"progress":0,"x":1622505600000,"y":0,"x2":1627776000000,"partialFill":0},{"start":1643673600000,"end":1651363200000,"cat":1,"progress":0.2,"x":1643673600000,"y":1,"x2":1651363200000,"partialFill":0.2}],"type":"xrange","dataLabels":{"enabled":true}}],"xAxis":{"type":"datetime","title":false}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"Roboto","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom"},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["Roboto","Alegreya+Sans+SC","Alegreya+Sans"],"debug":false},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-767209723a30863ca56b">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":false,"type":"linear","categories":["Prototyping","Development","Testing","Validation","Modelling"]},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"start":1646352000000,"end":1651622400000,"cat":0,"progress":0.2,"x":1646352000000,"y":0,"x2":1651622400000,"partialFill":0.2},{"start":1635984000000,"end":1641254400000,"cat":1,"progress":0.2,"x":1635984000000,"y":1,"x2":1641254400000,"partialFill":0.2},{"start":1633305600000,"end":1641254400000,"cat":2,"progress":0.3,"x":1633305600000,"y":2,"x2":1641254400000,"partialFill":0.3},{"start":1630713600000,"end":1635984000000,"cat":3,"progress":0.3,"x":1630713600000,"y":3,"x2":1635984000000,"partialFill":0.3},{"start":1638576000000,"end":1643932800000,"cat":4,"progress":0.2,"x":1638576000000,"y":4,"x2":1643932800000,"partialFill":0.2},{"start":1622764800000,"end":1628035200000,"cat":0,"progress":0,"x":1622764800000,"y":0,"x2":1628035200000,"partialFill":0},{"start":1643932800000,"end":1651622400000,"cat":1,"progress":0.2,"x":1643932800000,"y":1,"x2":1651622400000,"partialFill":0.2}],"type":"xrange","dataLabels":{"enabled":true}}],"xAxis":{"type":"datetime","title":false}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"Roboto","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom"},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["Roboto","Alegreya+Sans+SC","Alegreya+Sans"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="vector" class="section level2">
 <h2 class="hasAnchor">
@@ -439,12 +442,12 @@ $(document).ready(function(){
 <span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">5</span>, <span class="fl">95</span>, by = <span class="fl">5</span>)
 
 <span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(x = <span class="kw">x</span>, y = <span class="kw">x</span>) <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span>(
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(
     length = <span class="fl">200</span> <span class="op">-</span> (<span class="kw">x</span> <span class="op">+</span> <span class="kw">y</span>),
     direction = (<span class="kw">x</span> <span class="op">+</span> <span class="kw">y</span>)<span class="op">/</span><span class="fl">200</span> <span class="op">*</span> <span class="fl">360</span>
   )
 
-<span class="fu">glimpse</span>(<span class="kw">df</span>)
+<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span>(<span class="kw">df</span>)
 </pre></div>
 <pre><code>## Rows: 361
 ## Columns: 4
@@ -478,10 +481,10 @@ $(document).ready(function(){
 <span class="kw">data</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span>(<span class="kw">url</span>)
 
 <span class="kw">data</span> <span class="op">&lt;-</span> <span class="kw">data</span> <span class="op">%&gt;%</span> 
-  <span class="fu">rename_all</span>(<span class="kw">str_replace_all</span>, <span class="st">"\\."</span>, <span class="st">"_"</span>) <span class="op">%&gt;%</span> 
-  <span class="fu">select</span>(<span class="kw">x</span>, <span class="kw">y</span>, <span class="kw">name</span>, <span class="kw">region</span>, <span class="kw">alpha_2</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span>(<span class="kw">str_replace_all</span>, <span class="st">"\\."</span>, <span class="st">"_"</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">x</span>, <span class="kw">y</span>, <span class="kw">name</span>, <span class="kw">region</span>, <span class="kw">alpha_2</span>)
 
-<span class="fu">glimpse</span>(<span class="kw">data</span>)
+<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span>(<span class="kw">data</span>)
 </pre></div>
 <pre><code>## Rows: 192
 ## Columns: 5
@@ -523,8 +526,8 @@ $(document).ready(function(){
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">gapminder</span>, package = <span class="st">"gapminder"</span>)
 
 <span class="kw">gapminder</span> <span class="op">&lt;-</span> <span class="kw">gapminder</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">year</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">year</span>)) <span class="op">%&gt;%</span> 
-  <span class="fu">select</span>(<span class="kw">country</span>, <span class="kw">pop</span>, <span class="kw">continent</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">year</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">year</span>)) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">country</span>, <span class="kw">pop</span>, <span class="kw">continent</span>)
 
 <span class="kw">hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hchart.html">hchart</a></span>(<span class="kw">gapminder</span>, <span class="st">"packedbubble"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span>(name = <span class="kw">country</span>, value = <span class="kw">pop</span>, group = <span class="kw">continent</span>))
 
@@ -660,7 +663,7 @@ $(document).ready(function(){
   x = <span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">6</span>]
   )
 
-<span class="fu">glimpse</span>(<span class="kw">df</span>)
+<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span>(<span class="kw">df</span>)
 </pre></div>
 <pre><code>## Rows: 6
 ## Columns: 3
