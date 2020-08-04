@@ -129,72 +129,6 @@ hchart(
   hc_add_dependency("plugins/grouped-categories.js")
 ```
 
-## Pattern fill
-
-Example from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/.
-
-```{r}
-highchart() %>% 
-  # add the module
-  hc_add_dependency("modules/pattern-fill.js") %>% 
-  hc_size(heigh = 350) %>% 
-  hc_xAxis(type = 'category') %>% 
-  hc_tooltip(
-    borderColor = "#CACACA",
-    pointFormat = 'The height for <b>{point.name}</b> is <b>{point.y}</b>'
-    ) %>% 
-  hc_add_series(
-    type = "column",
-    showInLegend = FALSE,
-    pointWidth = 110,
-    pointPadding = 0.25,
-    borderColor = "transparent",
-    borderWidth = 0,
-    data = list(
-      list(
-        name = "Petronas",
-        y = 100,
-        color = list(
-          pattern = list(
-             image = 'https://www.svgrepo.com/show/27082/petronas-towers.svg',
-             aspectRatio = 1.3
-          )
-        )
-      ),
-      list(
-        name = 'Pisa',
-        y = 150,
-        color = list(
-          pattern = list(
-            image = 'https://www.svgrepo.com/show/1171/tower-of-pisa.svg',
-            aspectRatio = 1
-          )
-        )
-      ),
-      list(
-        name = 'Eiffel tower',
-        y = 200,
-        color = list(
-          pattern = list(
-            image = 'https://www.svgrepo.com/show/19456/tokyo-tower.svg',
-            aspectRatio = 0.8
-            )
-          )
-      ),
-      list(
-        name = 'Ahu-tongariki',
-        y = 250,
-        color = list(
-          pattern = list(
-            image = 'https://www.svgrepo.com/show/27081/ahu-tongariki.svg',
-            aspectRatio = 0.75
-          )
-        )
-      )
-    )
-  )
-```
-
 ## Colored area and colored line
 
 More information in https://github.com/blacklabel/multicolor_series.
@@ -328,6 +262,71 @@ hc_fill %>%
   hc_add_theme(hc_theme_handdrawn())
 ```
 
+Example from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/.
+
+```{r}
+highchart() %>% 
+  # add the module
+  hc_add_dependency("modules/pattern-fill.js") %>% 
+  hc_size(heigh = 350) %>% 
+  hc_xAxis(type = 'category') %>% 
+  hc_tooltip(
+    borderColor = "#CACACA",
+    pointFormat = 'The height for <b>{point.name}</b> is <b>{point.y}</b>'
+    ) %>% 
+  hc_add_series(
+    type = "column",
+    showInLegend = FALSE,
+    pointWidth = 110,
+    pointPadding = 0.25,
+    borderColor = "transparent",
+    borderWidth = 0,
+    data = list(
+      list(
+        name = "Petronas",
+        y = 100,
+        color = list(
+          pattern = list(
+             image = 'https://www.svgrepo.com/show/27082/petronas-towers.svg',
+             aspectRatio = 1.3
+          )
+        )
+      ),
+      list(
+        name = 'Pisa',
+        y = 150,
+        color = list(
+          pattern = list(
+            image = 'https://www.svgrepo.com/show/1171/tower-of-pisa.svg',
+            aspectRatio = 1
+          )
+        )
+      ),
+      list(
+        name = 'Eiffel tower',
+        y = 200,
+        color = list(
+          pattern = list(
+            image = 'https://www.svgrepo.com/show/19456/tokyo-tower.svg',
+            aspectRatio = 0.8
+            )
+          )
+      ),
+      list(
+        name = 'Ahu-tongariki',
+        y = 250,
+        color = list(
+          pattern = list(
+            image = 'https://www.svgrepo.com/show/27081/ahu-tongariki.svg',
+            aspectRatio = 0.75
+          )
+        )
+      )
+    )
+  )
+```
+
+And the last one.
 
 ```{r}
 dim(volcano)

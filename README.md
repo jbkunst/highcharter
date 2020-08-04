@@ -29,13 +29,17 @@ remotes::install_github("jbkunst/highcharter")
 
 ## How to start
 
-There are a lot of vignettes to show how highcharter works. You can check:
+There are a lot of vignettes to show how highcharter works and what you 
+can do:
 
 - `vignette("highcharter")` explore the basics of the package. 
 - `vignette("showcase")` to see how much highcharts is flexible in terms of 
 customization and design.
 - `vignette("highcharts-api")` show the main functions to configure charts with
 the implemented Highcharts API.
+- `vignette("highchartsjs-api-basics")` explain the relationship between the
+highchartsJS API and highcharter.
+
 
 ## Licence 
 

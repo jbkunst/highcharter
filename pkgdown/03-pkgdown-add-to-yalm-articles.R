@@ -12,7 +12,13 @@ artcls <- dir("vignettes") %>%
   str_remove(".Rmd")
 
 # get_started
-get_started <- c("highcharter", "hchart", "highcharts-api", "showcase")
+get_started <- c(
+  "highcharter",
+  "hchart",
+  "highcharts-api",
+  "highchartsjs-api-basics",
+  "showcase"
+  )
 
 artcls <- setdiff(artcls, get_started)
 

@@ -17,6 +17,7 @@ articles:
   - highcharter
   - hchart
   - highcharts-api
+  - highchartsjs-api-basics
   - showcase
 - title: The highchartsJS bundle
   navbar: The highchartsJS bundle
@@ -33,6 +34,11 @@ articles:
   navbar: More of highcharter
   contents:
   - themes
+  - debug.log
+  - hc-api-legend-jsfiddle.png
+  - hc-api-legend-title.png
+  - hc-api-legend.png
+  - help-hc-legend.png
   - howtos
   - modules
   - motion

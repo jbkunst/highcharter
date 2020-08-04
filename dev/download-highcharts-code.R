@@ -85,16 +85,16 @@ tibble(m = modules_yalm) %>%
 
 # plugins -----------------------------------------------------------------
 files <- c(
-  # "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
-  # "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
-  # "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
   "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
   "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
-  "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
   "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
   "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",
   "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
   "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
+  # "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
+  # "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
+  # "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
+  # "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
   )
 
 walk2(
