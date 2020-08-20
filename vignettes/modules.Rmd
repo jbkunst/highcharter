@@ -348,11 +348,9 @@ highchart() %>%
 ```
 
 
-
-
 ## List of modules and plugins in highcharter
 
-You can use the next plugins:
+You can use the next modules, plugins and and custom scripts:
 
 ```{r, include=TRUE}
 dir(system.file("htmlwidgets/lib/highcharts/modules", package = "highcharter"))
@@ -360,5 +358,9 @@ dir(system.file("htmlwidgets/lib/highcharts/modules", package = "highcharter"))
 
 ```{r, include=TRUE}
 dir(system.file("htmlwidgets/lib/highcharts/plugins", package = "highcharter"))
+```
+
+```{r, include=TRUE}
+dir(system.file("htmlwidgets/lib/highcharts/custom", package = "highcharter"))
 ```
 
