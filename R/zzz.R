@@ -37,11 +37,20 @@
     highcharter.lang = list(
       contextButtonTitle = "Chart context menu",
       decimalPoint = ".",
+      downloadCSV = "Download CSV",
       downloadJPEG = "Download JPEG image",
       downloadPDF = "Download PDF document",
       downloadPNG = "Download PNG image",
       downloadSVG = "Download SVG vector image",
-      drillUpText = "Back to {series.name}",
+      downloadXLS = "Download XLS",
+      drillUpText = "◁ Back to {series.name}",
+      exitFullscreen = "Exit from full screen",
+      exportData = list(
+        annotationHeader = "Annotations",
+        categoryDatetimeHeader = "DateTime",
+        categoryHeader = "Category"
+      ),
+      hideData = "Hide data table",
       invalidDate = NULL,
       loading = "Loading...",
       months = c(
@@ -49,7 +58,9 @@
         "May", "June", "July", "August",
         "September", "October", "November", "December"
       ),
+      # navigation 
       noData = "No data to display",
+      numericSymbolMagnitude = 1000,
       numericSymbols = c("k", "M", "G", "T", "P", "E"),
       printChart = "Print chart",
       resetZoom = "Reset zoom",
@@ -58,7 +69,10 @@
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
       ),
+      shortWeekdays = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"),
       thousandsSep = " ",
+      viewData = "View data table",
+      viewFullscreen = "View in full screen",
       weekdays = c(
         "Sunday", "Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday"
