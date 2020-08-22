@@ -43,7 +43,7 @@
       downloadPNG = "Download PNG image",
       downloadSVG = "Download SVG vector image",
       downloadXLS = "Download XLS",
-      drillUpText = "◁ Back to {series.name}",
+      drillUpText = "\u25C1 Back to {series.name}",
       exitFullscreen = "Exit from full screen",
       exportData = list(
         annotationHeader = "Annotations",
