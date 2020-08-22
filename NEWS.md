@@ -2,6 +2,8 @@
 
 ## Changes
 
+* Support highcharts gantt extension (#287) 
+* Adding missed language options in `getOption("highcharter.lang")`.
 * Adding `hcpxy_add_series`, `hcpxy_remove_series`, `hcpxy_update`, `hcpxy_update_series`,
 `hcpxy_add_point`, `hcpxy_remove_point` and `hcpxy_loading`
 * Adding `hc_loading` for use with `hcpxy_loading`

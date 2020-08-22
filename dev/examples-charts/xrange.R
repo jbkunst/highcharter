@@ -12,6 +12,8 @@ df <- tibble(
 
 df <- mutate_if(df, is.Date, datetime_to_timestamp)
 
+highchart(type = "gantt")
+
 hchart(
   df,
   "xrange",
