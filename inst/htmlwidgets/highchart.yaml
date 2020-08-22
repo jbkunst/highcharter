@@ -84,10 +84,10 @@ dependencies:
 #    - plugins/multicolor_series.js
 #    - plugins/highcharts-regression.js
 #    - plugins/pattern-fill-v2.js
-#    - plugins/tooltip-delay.js
 #    - plugins/annotations.js
 #    - plugins/draggable-legend.js
     - custom/reset.js
+#    - custom/tooltip-delay.js
 #    - custom/appear.js    
 #    - custom/symbols-extra.js
 #    - custom/text-symbols.js
