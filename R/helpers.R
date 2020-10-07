@@ -22,12 +22,42 @@ list_parse <- function(df) {
       warning("Removed ", (rows - nrow(df)), " rows with NA's.")
     }
   }
-  
-  purrr::map_if(df, is.factor, as.character) %>%
-    as_tibble() %>%
-    list.parse() %>%
-    setNames(NULL)
-  
+
+  # Check for boost mode setting.  
+  if (getOption("highcharter.boost")) {
+    if (getOption("highcharter.verbose")) {
+      message("Data frame parsing in boost mode.")
+    }
+    
+    # Transform factors into characters.
+    if (hasName(df, "name")) {
+      # Use case for grouped data frame(s).
+      df[["name"]] <- as.character(df$name)
+
+    } else if (any(sapply(df, is.factor))) {
+      # Reconstruct the data.frame without factors.
+      df <- lapply(df, function(x) {
+        if (is.factor(x)) { 
+          return(as.character(x))
+        } else { return(x) }
+      }) %>% cbind.data.frame(stringsAsFactors  = FALSE)
+    }
+
+    # Parse the data frame to list.    
+    rlist::list.parse(df) %>% setNames(NULL)
+    
+  } else {
+    if (getOption("highcharter.verbose")) {
+      message("Original data frame parsing (boost-mode offers better performance).")
+    }
+    
+    # Original replace any factors in the dataframe,
+    # and construct a (grouped) list with the data items.
+    purrr::map_if(df, is.factor, as.character) %>%
+      tibble::as_tibble() %>%
+      rlist::list.parse() %>%
+      setNames(NULL)
+  }
 }
 
 #' @importFrom rlist list.parse

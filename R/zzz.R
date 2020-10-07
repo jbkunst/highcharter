@@ -125,6 +125,7 @@
     highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,
     highcharter.rjson = FALSE,
+    highcharter.boost = FALSE,
     highcharter.download_map_data = TRUE,
     highcharter.color_palette = c(
       "#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
