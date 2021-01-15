@@ -8,7 +8,7 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 8.1.2
+    version: 8.2.2
     src: "htmlwidgets/lib/highcharts"
     script:
     - highcharts.js

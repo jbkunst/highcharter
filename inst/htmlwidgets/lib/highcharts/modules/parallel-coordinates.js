@@ -1,5 +1,5 @@
 /*
- Highcharts JS v8.1.2 (2020-06-16)
+ Highcharts JS v8.2.2 (2020-10-22)
 
  Support for parallel coordinates in Highcharts
 
@@ -7,7 +7,7 @@
 
  License: www.highcharts.com/license
 */
-(function(b){"object"===typeof module&&module.exports?(b["default"]=b,module.exports=b):"function"===typeof define&&define.amd?define("highcharts/modules/parallel-coordinates",["highcharts"],function(g){b(g);b.Highcharts=g;return b}):b("undefined"!==typeof Highcharts?Highcharts:void 0)})(function(b){function g(b,k,l,d){b.hasOwnProperty(k)||(b[k]=d.apply(null,l))}b=b?b._modules:{};g(b,"modules/parallel-coordinates.src.js",[b["parts/Axis.js"],b["parts/Chart.js"],b["parts/Globals.js"],b["parts/Utilities.js"]],
+(function(b){"object"===typeof module&&module.exports?(b["default"]=b,module.exports=b):"function"===typeof define&&define.amd?define("highcharts/modules/parallel-coordinates",["highcharts"],function(g){b(g);b.Highcharts=g;return b}):b("undefined"!==typeof Highcharts?Highcharts:void 0)})(function(b){function g(b,k,l,d){b.hasOwnProperty(k)||(b[k]=d.apply(null,l))}b=b?b._modules:{};g(b,"Extensions/ParallelCoordinates.js",[b["Core/Axis/Axis.js"],b["Core/Chart/Chart.js"],b["Core/Globals.js"],b["Core/Utilities.js"]],
 function(b,k,l,d){function g(a){var c=this.series&&this.series.chart,n=a.apply(this,Array.prototype.slice.call(arguments,1)),b;if(c&&c.hasParallelCoordinates&&!p(n.formattedValue)){var e=c.yAxis[this.x];var f=e.options;c=(b=r(f.tooltipValueFormat,f.labels.format))?x(b,t(this,{value:this.y}),c):e.dateTime?c.time.dateFormat(c.time.resolveDTLFormat(f.dateTimeLabelFormats[e.tickPositions.info.unitName]).main,this.y):f.categories?f.categories[this.y]:this.y;n.formattedValue=n.point.formattedValue=c}return n}
 var h=d.addEvent,y=d.arrayMax,z=d.arrayMin,p=d.defined,A=d.erase,t=d.extend,x=d.format,m=d.merge,r=d.pick,B=d.setOptions,u=d.splat,C=d.wrap;d=k.prototype;var v={lineWidth:0,tickLength:0,opposite:!0,type:"category"};B({chart:{parallelCoordinates:!1,parallelAxes:{lineWidth:1,title:{text:"",reserveSpace:!1},labels:{x:0,y:4,align:"center",reserveSpace:!1},offset:0}}});h(k,"init",function(a){a=a.args[0];var c=u(a.yAxis||{}),b=[],d=c.length;if(this.hasParallelCoordinates=a.chart&&a.chart.parallelCoordinates){for(this.setParallelInfo(a);d<=
 this.parallelInfo.counter;d++)b.push({});a.legend||(a.legend={});"undefined"===typeof a.legend.enabled&&(a.legend.enabled=!1);m(!0,a,{boost:{seriesThreshold:Number.MAX_VALUE},plotOptions:{series:{boostThreshold:Number.MAX_VALUE}}});a.yAxis=c.concat(b);a.xAxis=m(v,u(a.xAxis||{})[0])}});h(k,"update",function(a){a=a.options;a.chart&&(p(a.chart.parallelCoordinates)&&(this.hasParallelCoordinates=a.chart.parallelCoordinates),this.options.chart.parallelAxes=m(this.options.chart.parallelAxes,a.chart.parallelAxes));

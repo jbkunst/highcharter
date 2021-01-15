@@ -2,6 +2,7 @@
 
 ## Changes
 
+* Highcharter now uses HighchartsJS 8.2.2
 * Support highcharts gantt extension (#287) 
 * Adding missed language options in `getOption("highcharter.lang")`.
 * Adding `hcpxy_add_series`, `hcpxy_remove_series`, `hcpxy_update`, `hcpxy_update_series`,

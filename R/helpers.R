@@ -396,3 +396,30 @@ fix_1_length_data <- function(x) {
   }
   x
 }
+
+#' Function to create annotations arguments from a data frame
+#' @param df A data frame with `x`, `y` and `text` columns names.
+#' @param xAxis Index (js 0-based) of the x axis to put the annotations.
+#' @param yAxis Index (js 0-based) of the y axis to put the annotations.
+#' @examples
+#' 
+#' df <- data.frame(text = c("hi", "bye"), x = c(0, 1), y = c(1, 0))
+#' 
+#' df_to_annotations_labels(df)
+#' 
+#' @importFrom utils hasName
+#' @importFrom dplyr rowwise
+#' @export
+df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
+  
+  stopifnot(hasName(df, "x"))
+  stopifnot(hasName(df, "y"))
+  stopifnot(hasName(df, "text"))
+  
+  df %>% 
+    rowwise() %>% 
+    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) %>% 
+    select(-x, -y) %>% 
+    list_parse()
+  
+}

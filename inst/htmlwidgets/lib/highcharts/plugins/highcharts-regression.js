@@ -26,26 +26,30 @@
             s.regressionSettings.dashStyle = s.regressionSettings.dashStyle || 'solid';
             s.regressionSettings.decimalPlaces = s.regressionSettings.decimalPlaces || 2;
             s.regressionSettings.useAllSeries = s.regressionSettings.useAllSeries || false;
+            s.regressionSettings.regressionSeriesOptions = s.regressionSettings.regressionSeriesOptions || {};
 
             var regressionType = s.regressionSettings.type || "linear";
             var regression;
-            var extraSerie = {
-                data: [],
-                color: s.regressionSettings.color || '',
-                yAxis: s.yAxis,
-                lineWidth: s.regressionSettings.lineWidth || 2,
-                marker: {enabled: false},
-                isRegressionLine: true,
-                visible: s.regressionSettings.visible,
-                type: s.regressionSettings.linetype || 'spline',
-                name: s.regressionSettings.name || "Equation: %eq",
-                id: s.regressionSettings.id,
-                dashStyle: s.regressionSettings.dashStyle || 'solid',
-                showInLegend: !s.regressionSettings.hideInLegend,
-                tooltip: {
-                    valueSuffix: s.regressionSettings.tooltip.valueSuffix || ' '
-                }
-            };
+            var extraSerie = s.regressionSettings.regressionSeriesOptions;
+            
+            // Set default values
+            extraSerie.data = [];
+            extraSerie.isRegressionLine = true;
+            if (extraSerie.color === undefined)         extraSerie.color = s.regressionSettings.color || '';
+            if (extraSerie.yAxis === undefined)         extraSerie.yAxis = s.yAxis;
+            if (extraSerie.lineWidth === undefined)     extraSerie.lineWidth = s.regressionSettings.lineWidth || 2;
+            if (extraSerie.marker === undefined)        extraSerie.marker = { enabled: false };
+            if (extraSerie.visible === undefined)       extraSerie.visible = s.regressionSettings.visible;
+            if (extraSerie.type === undefined)          extraSerie.type = s.regressionSettings.linetype || 'spline';
+            if (extraSerie.name === undefined)          extraSerie.name = s.regressionSettings.name || "Equation = %eq";
+            if (extraSerie.id === undefined)            extraSerie.id = s.regressionSettings.id;
+            if (extraSerie.dashStyle === undefined)     extraSerie.dashStyle = s.regressionSettings.dashStyle || 'solid';
+            if (extraSerie.showInLegend === undefined)  extraSerie.showInLegend = !s.regressionSettings.hideInLegend;
+            if (extraSerie.tooltip === undefined)       extraSerie.tooltip = s.regressionSettings.tooltip;
+
+            if (s.regressionSettings.tooltip.valueSuffix === undefined) {
+                extraSerie.tooltip.valueSuffix = ' ';
+            }
 
             if (typeof s.regressionSettings.index !== 'undefined') {
                 extraSerie.index = s.regressionSettings.index;
