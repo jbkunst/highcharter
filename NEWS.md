@@ -1,4 +1,4 @@
-# highcharter 0.8.3
+# highcharter 0.8.2.9000
 
 ## Changes
 
