@@ -157,6 +157,60 @@ hcpxy_update <- function(proxy, ...) {
   
 }
 
+#' Update data for a higchartProxy object
+#' 
+#' @param proxy A `higchartProxy` object.
+#' @param type series type (column, bar, line, etc)
+#' @param data dataframe of new data to send to chart
+#' @param mapping how data should be mapped using `hcaes()`
+#' @param redraw boolean Whether to redraw the chart after the series is altered. 
+#'   If doing more operations on the chart, it is a good idea to set redraw to false and call hcpxy_redraw after.
+#' @param animation boolean When the updated data is the same length as the existing data, points will be updated by default, 
+#'   and animation visualizes how the points are changed. Set false to disable animation, or a configuration object to set duration or easing.
+#' @param updatePoints boolean When this is TRUE, points will be updated instead of replaced whenever possible. 
+#'   This occurs a) when the updated data is the same length as the existing data, b) when points are matched by their id's, or c) when points can be matched by X values. 
+#'   This allows updating with animation and performs better. In this case, the original array is not passed by reference. Set FALSE to prevent.
+#' 
+#' @export
+hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE, animation = NULL, updatePoints = TRUE) {
+  checkProxy(proxy)
+  
+  data <- mutate_mapping(data, mapping)
+  
+  series <- data_to_series(data, mapping, type = type)
+  
+  for(i in 1:length(series))
+    proxy$session$sendCustomMessage(
+      type = 'setData',
+      message = list(
+        id = proxy$id,
+        serie = i-1,
+        data = series[[i]]$data,
+        redraw = redraw,
+        animation = animation,
+        updatePoints = updatePoints
+      )
+    )
+  
+  return(proxy)
+}
+
+#' Redraw a higchartProxy object
+#' 
+#' @param proxy A `higchartProxy` object.
+#' 
+#' @export
+hcpxy_redraw <- function(proxy) {
+  checkProxy(proxy)
+  
+  proxy$session$sendCustomMessage(
+    type = 'redraw',
+    message = list(id = proxy$id)
+  )
+  
+  return(proxy)
+}
+
 #' Update options series in a higchartProxy object
 #' 
 #' @param proxy A `higchartProxy` object.
