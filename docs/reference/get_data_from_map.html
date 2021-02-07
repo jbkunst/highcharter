@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Helper function to get the data inside the map data
-The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>. — get_data_from_map • highcharter</title>
+The urls are listed in https://code.highcharts.com/mapdata/. — get_data_from_map • highcharter</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -50,10 +50,12 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
   
 
 <meta property="og:title" content="Helper function to get the data inside the map data
-The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>. — get_data_from_map" />
+The urls are listed in https://code.highcharts.com/mapdata/. — get_data_from_map" />
 <meta property="og:description" content="Helper function to get the data inside the map data
 The urls are listed in https://code.highcharts.com/mapdata/." />
 <meta property="og:image" content="/logo.png" />
+
+
 
 
 
@@ -102,12 +104,6 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -120,8 +116,12 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -129,37 +129,16 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -170,6 +149,15 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -179,7 +167,7 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -207,24 +195,25 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/get_data_from_map.html'>get_data_from_map</a></span>(<span class='kw'>mapdata</span>)</pre>
+    <pre class="usage"><span class='fu'>get_data_from_map</span><span class='op'>(</span><span class='va'>mapdata</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mapdata</th>
-      <td><p>A list obtained from <code><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></code>.</p></td>
+      <td><p>A list obtained from <code><a href='download_map_data.html'>download_map_data</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></code></p></div>
+    <div class='dont-index'><p><code><a href='download_map_data.html'>download_map_data</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>dta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/get_data_from_map.html'>get_data_from_map</a></span>(<span class='kw'>dta</span>)</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span><span>
+    <pre class="examples"><div class='input'><span class='va'>dta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='download_map_data.html'>download_map_data</a></span><span class='op'>(</span><span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span><span class='op'>)</span>
+<span class='fu'>get_data_from_map</span><span class='op'>(</span><span class='va'>dta</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span><span>
 #&gt;    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          
 #&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
@@ -259,7 +248,7 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

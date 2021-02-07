@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -99,12 +101,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -117,8 +113,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -126,37 +126,16 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -167,6 +146,15 @@
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -176,7 +164,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -202,7 +190,7 @@
     <p>The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(url = <span class='st'>"custom/world.js"</span>, showinfo = <span class='fl'>FALSE</span>, quiet = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>download_map_data</span><span class='op'>(</span>url <span class='op'>=</span> <span class='st'>"custom/world.js"</span>, showinfo <span class='op'>=</span> <span class='cn'>FALSE</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,16 +212,17 @@ are the keys to add data in <code>hcmap</code>.</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></code></p></div>
+    <div class='dont-index'><p><code><a href='hcmap.html'>hcmap</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>)
-<span class='kw'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/download_map_data.html'>download_map_data</a></span>(<span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>,
-  quiet = <span class='fl'>TRUE</span>
-)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>mpdta</span>, <span class='fl'>1</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'>download_map_data</span><span class='op'>(</span><span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span><span class='op'>)</span>
+<span class='va'>mpdta</span> <span class='op'>&lt;-</span> <span class='fu'>download_map_data</span><span class='op'>(</span><span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span>,
+  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>mpdta</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -255,7 +244,7 @@ are the keys to add data in <code>hcmap</code>.</p></td>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

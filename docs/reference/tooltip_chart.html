@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -99,12 +101,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -117,8 +113,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -126,37 +126,16 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -167,6 +146,15 @@
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -176,7 +164,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -202,7 +190,7 @@
     <p>Helper to create charts in tooltips.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/tooltip_chart.html'>tooltip_chart</a></span>(accesor = <span class='kw'>NULL</span>, hc_opts = <span class='kw'>NULL</span>, width = <span class='fl'>250</span>, height = <span class='fl'>150</span>)</pre>
+    <pre class="usage"><span class='fu'>tooltip_chart</span><span class='op'>(</span>accesor <span class='op'>=</span> <span class='cn'>NULL</span>, hc_opts <span class='op'>=</span> <span class='cn'>NULL</span>, width <span class='op'>=</span> <span class='fl'>250</span>, height <span class='op'>=</span> <span class='fl'>150</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,75 +221,76 @@ inside of <code>hc_tooltip</code> function an <code>useHTML = TRUE</code> option
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='http://purrr.tidyverse.org'>purrr</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://tidyr.tidyverse.org'>tidyr</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://github.com/jennybc/gapminder'>gapminder</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>gapminder</span>, package = <span class='st'>"gapminder"</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://purrr.tidyverse.org'>purrr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jennybc/gapminder'>gapminder</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>gapminder</span>, package <span class='op'>=</span> <span class='st'>"gapminder"</span><span class='op'>)</span>
 
-<span class='kw'>gp</span> <span class='op'>&lt;-</span> <span class='kw'>gapminder</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span>(<span class='kw'>year</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span>(<span class='kw'>country</span>, .keep_all = <span class='fl'>TRUE</span>)
+<span class='va'>gp</span> <span class='op'>&lt;-</span> <span class='va'>gapminder</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>country</span>, .keep_all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='kw'>gp2</span> <span class='op'>&lt;-</span> <span class='kw'>gapminder</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>(<span class='op'>-</span><span class='kw'>country</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    data = <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='kw'>data</span>, <span class='kw'>mutate_mapping</span>, <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcaes.html'>hcaes</a></span>(x = <span class='kw'>lifeExp</span>, y = <span class='kw'>gdpPercap</span>), drop = <span class='fl'>TRUE</span>),
-    data = <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='kw'>data</span>, <span class='kw'>list_parse</span>)
-  ) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span>(ttdata = <span class='kw'>data</span>)
+<span class='va'>gp2</span> <span class='op'>&lt;-</span> <span class='va'>gapminder</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>country</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
+    data <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>mutate_mapping</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>lifeExp</span>, y <span class='op'>=</span> <span class='va'>gdpPercap</span><span class='op'>)</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+    data <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>list_parse</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>ttdata <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
 
-<span class='kw'>gptot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='kw'>gp</span>, <span class='kw'>gp2</span>)
+<span class='va'>gptot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>gp</span>, <span class='va'>gp2</span><span class='op'>)</span>
 
-<span class='kw'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hchart.html'>hchart</a></span>(
-  <span class='kw'>gptot</span>,
+<span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='hchart.html'>hchart</a></span><span class='op'>(</span>
+  <span class='va'>gptot</span>,
   <span class='st'>"point"</span>,
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcaes.html'>hcaes</a></span>(
-    <span class='kw'>lifeExp</span>,
-    <span class='kw'>gdpPercap</span>,
-    name = <span class='kw'>country</span>,
-    size = <span class='kw'>pop</span>,
-    group = <span class='kw'>continent</span>
-  )
-) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_yAxis.html'>hc_yAxis</a></span>(type = <span class='st'>"logarithmic"</span>)
+  <span class='fu'><a href='hcaes.html'>hcaes</a></span><span class='op'>(</span>
+    <span class='va'>lifeExp</span>,
+    <span class='va'>gdpPercap</span>,
+    name <span class='op'>=</span> <span class='va'>country</span>,
+    size <span class='op'>=</span> <span class='va'>pop</span>,
+    group <span class='op'>=</span> <span class='va'>continent</span>
+  <span class='op'>)</span>
+<span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_yAxis.html'>hc_yAxis</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"logarithmic"</span><span class='op'>)</span>
 
-<span class='kw'>hc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_tooltip.html'>hc_tooltip</a></span>(useHTML = <span class='fl'>TRUE</span>, pointFormatter = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/tooltip_chart.html'>tooltip_chart</a></span>(accesor = <span class='st'>"ttdata"</span>))
+<span class='va'>hc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_tooltip.html'>hc_tooltip</a></span><span class='op'>(</span>useHTML <span class='op'>=</span> <span class='cn'>TRUE</span>, pointFormatter <span class='op'>=</span> <span class='fu'>tooltip_chart</span><span class='op'>(</span>accesor <span class='op'>=</span> <span class='st'>"ttdata"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>hc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_tooltip.html'>hc_tooltip</a></span>(useHTML = <span class='fl'>TRUE</span>, pointFormatter = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/tooltip_chart.html'>tooltip_chart</a></span>(
-    accesor = <span class='st'>"ttdata"</span>,
-    hc_opts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(chart = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(type = <span class='st'>"column"</span>))
-  ))
+<span class='va'>hc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_tooltip.html'>hc_tooltip</a></span><span class='op'>(</span>useHTML <span class='op'>=</span> <span class='cn'>TRUE</span>, pointFormatter <span class='op'>=</span> <span class='fu'>tooltip_chart</span><span class='op'>(</span>
+    accesor <span class='op'>=</span> <span class='st'>"ttdata"</span>,
+    hc_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>chart <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"column"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span><span class='op'>)</span>
 
-<span class='kw'>hc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_tooltip.html'>hc_tooltip</a></span>(
-    useHTML = <span class='fl'>TRUE</span>,
-    positioner = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highcharter-exports.html'>JS</a></span>(<span class='st'>"function () { return { x: this.chart.plotLeft + 10, y: 10}; }"</span>),
-    pointFormatter = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/tooltip_chart.html'>tooltip_chart</a></span>(
-      accesor = <span class='st'>"ttdata"</span>,
-      hc_opts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        title = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(text = <span class='st'>"point.country"</span>),
-        xAxis = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(title = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(text = <span class='st'>"lifeExp"</span>)),
-        yAxis = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(title = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(text = <span class='st'>"gdpPercap"</span>))
-      )
-    )
-  )
+<span class='va'>hc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_tooltip.html'>hc_tooltip</a></span><span class='op'>(</span>
+    useHTML <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    positioner <span class='op'>=</span> <span class='fu'><a href='highcharter-exports.html'>JS</a></span><span class='op'>(</span><span class='st'>"function () { return { x: this.chart.plotLeft + 10, y: 10}; }"</span><span class='op'>)</span>,
+    pointFormatter <span class='op'>=</span> <span class='fu'>tooltip_chart</span><span class='op'>(</span>
+      accesor <span class='op'>=</span> <span class='st'>"ttdata"</span>,
+      hc_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"point.country"</span><span class='op'>)</span>,
+        xAxis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"lifeExp"</span><span class='op'>)</span><span class='op'>)</span>,
+        yAxis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"gdpPercap"</span><span class='op'>)</span><span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
 
-<span class='kw'>hc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_tooltip.html'>hc_tooltip</a></span>(
-    useHTML = <span class='fl'>TRUE</span>,
-    pointFormatter = <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/tooltip_chart.html'>tooltip_chart</a></span>(
-      accesor = <span class='st'>"ttdata"</span>,
-      hc_opts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        legend = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(enabled = <span class='fl'>TRUE</span>),
-        series = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(color = <span class='st'>"gray"</span>, name = <span class='st'>"point.name"</span>))
-      )
-    )
-  )
-}
+<span class='va'>hc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_tooltip.html'>hc_tooltip</a></span><span class='op'>(</span>
+    useHTML <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    pointFormatter <span class='op'>=</span> <span class='fu'>tooltip_chart</span><span class='op'>(</span>
+      accesor <span class='op'>=</span> <span class='st'>"ttdata"</span>,
+      hc_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>enabled <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+        series <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"gray"</span>, name <span class='op'>=</span> <span class='st'>"point.name"</span><span class='op'>)</span><span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -324,7 +313,7 @@ inside of <code>hc_tooltip</code> function an <code>useHTML = TRUE</code> option
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

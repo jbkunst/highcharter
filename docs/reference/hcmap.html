@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shortcut for create map from <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>
+<title>Shortcut for create map from https://code.highcharts.com/mapdata/
 collection. — hcmap • highcharter</title>
 
 <!-- favicons -->
@@ -49,11 +49,13 @@ collection. — hcmap • highcharter</title>
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Shortcut for create map from <a href='https://code.highcharts.com/mapdata/'>https://code.highcharts.com/mapdata/</a>
+<meta property="og:title" content="Shortcut for create map from https://code.highcharts.com/mapdata/
 collection. — hcmap" />
 <meta property="og:description" content="Shortcut for create map from https://code.highcharts.com/mapdata/
 collection." />
 <meta property="og:image" content="/logo.png" />
+
+
 
 
 
@@ -102,12 +104,6 @@ collection." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -120,8 +116,12 @@ collection." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -129,37 +129,16 @@ collection." />
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -170,6 +149,15 @@ collection." />
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -179,7 +167,7 @@ collection." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -207,14 +195,14 @@ collection.</h1>
 collection.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(
-  map = <span class='st'>"custom/world"</span>,
-  download_map_data = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"highcharter.download_map_data"</span>),
-  data = <span class='kw'>NULL</span>,
-  value = <span class='kw'>NULL</span>,
-  joinBy = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>hcmap</span><span class='op'>(</span>
+  map <span class='op'>=</span> <span class='st'>"custom/world"</span>,
+  download_map_data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"highcharter.download_map_data"</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  value <span class='op'>=</span> <span class='cn'>NULL</span>,
+  joinBy <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,28 +241,30 @@ the joinBy and value are needed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(nullColor = <span class='st'>"#DADADA"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(nullColor = <span class='st'>"#DADADA"</span>, download_map_data = <span class='fl'>FALSE</span>)
+<span class='fu'>hcmap</span><span class='op'>(</span>nullColor <span class='op'>=</span> <span class='st'>"#DADADA"</span><span class='op'>)</span>
+<span class='fu'>hcmap</span><span class='op'>(</span>nullColor <span class='op'>=</span> <span class='st'>"#DADADA"</span>, download_map_data <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'dplyr'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:stats':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"USArrests"</span>, package = <span class='st'>"datasets"</span>)
-<span class='kw'>USArrests</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>USArrests</span>, <span class='st'>"woe-name"</span> = <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='kw'>USArrests</span>))
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"USArrests"</span>, package <span class='op'>=</span> <span class='st'>"datasets"</span><span class='op'>)</span>
+<span class='va'>USArrests</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>USArrests</span>, <span class='st'>"woe-name"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>USArrests</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(
-  map = <span class='st'>"countries/us/us-all"</span>, data = <span class='kw'>USArrests</span>,
-  joinBy = <span class='st'>"woe-name"</span>, value = <span class='st'>"UrbanPop"</span>, name = <span class='st'>"Urban Population"</span>
-)
+<span class='fu'>hcmap</span><span class='op'>(</span>
+  map <span class='op'>=</span> <span class='st'>"countries/us/us-all"</span>, data <span class='op'>=</span> <span class='va'>USArrests</span>,
+  joinBy <span class='op'>=</span> <span class='st'>"woe-name"</span>, value <span class='op'>=</span> <span class='st'>"UrbanPop"</span>, name <span class='op'>=</span> <span class='st'>"Urban Population"</span>
+<span class='op'>)</span>
 
 <span class='co'># download_map_data = FALSE</span>
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcmap.html'>hcmap</a></span>(
-  map = <span class='st'>"countries/us/us-all"</span>, data = <span class='kw'>USArrests</span>,
-  joinBy = <span class='st'>"woe-name"</span>, value = <span class='st'>"UrbanPop"</span>, name = <span class='st'>"Urban Population"</span>,
-  download_map_data = <span class='fl'>FALSE</span>
-)
+<span class='fu'>hcmap</span><span class='op'>(</span>
+  map <span class='op'>=</span> <span class='st'>"countries/us/us-all"</span>, data <span class='op'>=</span> <span class='va'>USArrests</span>,
+  joinBy <span class='op'>=</span> <span class='st'>"woe-name"</span>, value <span class='op'>=</span> <span class='st'>"UrbanPop"</span>, name <span class='op'>=</span> <span class='st'>"Urban Population"</span>,
+  download_map_data <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -297,7 +287,7 @@ the joinBy and value are needed.</p></td>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

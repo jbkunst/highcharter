@@ -56,6 +56,8 @@ gauges and polar charts." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -100,12 +102,6 @@ gauges and polar charts." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -118,8 +114,12 @@ gauges and polar charts." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -127,37 +127,16 @@ gauges and polar charts." />
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -168,6 +147,15 @@ gauges and polar charts." />
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -177,7 +165,7 @@ gauges and polar charts." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -204,7 +192,7 @@ gauges and polar charts." />
 gauges and polar charts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_pane.html'>hc_pane</a></span>(<span class='kw'>hc</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>hc_pane</span><span class='op'>(</span><span class='va'>hc</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,85 +210,86 @@ gauges and polar charts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_chart.html'>hc_chart</a></span>(
-  type = <span class='st'>"gauge"</span>,
-  plotBackgroundColor = <span class='kw'>NULL</span>,
-  plotBackgroundImage = <span class='kw'>NULL</span>,
-  plotBorderWidth = <span class='fl'>0</span>,
-  plotShadow = <span class='fl'>FALSE</span>
-  ) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_title.html'>hc_title</a></span>(
-    text = <span class='st'>"Speedometer"</span>
-  ) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_pane.html'>hc_pane</a></span>(
-    startAngle = <span class='op'>-</span><span class='fl'>150</span>,
-    endAngle = <span class='fl'>150</span>,
-    background = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      backgroundColor = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        linearGradient = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>( x1 = <span class='fl'>0</span>, y1 = <span class='fl'>0</span>, x2 = <span class='fl'>0</span>, y2 = <span class='fl'>1</span>),
-        stops = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>0</span>, <span class='st'>"#FFF"</span>),
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"#333"</span>)
-        )
-      ),
-      borderWidth = <span class='fl'>0</span>,
-      outerRadius = <span class='st'>"109%"</span>
-    ), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      backgroundColor = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        linearGradient = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>( x1 = <span class='fl'>0</span>, y1 = <span class='fl'>0</span>, x2 = <span class='fl'>0</span>, y2 = <span class='fl'>1</span>),
-        stops = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>0</span>, <span class='st'>"#333"</span>),
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"#FFF"</span>)
-        )
-      ),
-      borderWidth = <span class='fl'>1</span>,
-      outerRadius = <span class='st'>"107%"</span>
-    ), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_chart.html'>hc_chart</a></span><span class='op'>(</span>
+  type <span class='op'>=</span> <span class='st'>"gauge"</span>,
+  plotBackgroundColor <span class='op'>=</span> <span class='cn'>NULL</span>,
+  plotBackgroundImage <span class='op'>=</span> <span class='cn'>NULL</span>,
+  plotBorderWidth <span class='op'>=</span> <span class='fl'>0</span>,
+  plotShadow <span class='op'>=</span> <span class='cn'>FALSE</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_title.html'>hc_title</a></span><span class='op'>(</span>
+    text <span class='op'>=</span> <span class='st'>"Speedometer"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>hc_pane</span><span class='op'>(</span>
+    startAngle <span class='op'>=</span> <span class='op'>-</span><span class='fl'>150</span>,
+    endAngle <span class='op'>=</span> <span class='fl'>150</span>,
+    background <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      backgroundColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        linearGradient <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span> x1 <span class='op'>=</span> <span class='fl'>0</span>, y1 <span class='op'>=</span> <span class='fl'>0</span>, x2 <span class='op'>=</span> <span class='fl'>0</span>, y2 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
+        stops <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='st'>"#FFF"</span><span class='op'>)</span>,
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"#333"</span><span class='op'>)</span>
+        <span class='op'>)</span>
+      <span class='op'>)</span>,
+      borderWidth <span class='op'>=</span> <span class='fl'>0</span>,
+      outerRadius <span class='op'>=</span> <span class='st'>"109%"</span>
+    <span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      backgroundColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        linearGradient <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span> x1 <span class='op'>=</span> <span class='fl'>0</span>, y1 <span class='op'>=</span> <span class='fl'>0</span>, x2 <span class='op'>=</span> <span class='fl'>0</span>, y2 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
+        stops <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='st'>"#333"</span><span class='op'>)</span>,
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"#FFF"</span><span class='op'>)</span>
+        <span class='op'>)</span>
+      <span class='op'>)</span>,
+      borderWidth <span class='op'>=</span> <span class='fl'>1</span>,
+      outerRadius <span class='op'>=</span> <span class='st'>"107%"</span>
+    <span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
       <span class='co'># default background</span>
-    ), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      backgroundColor = <span class='st'>"#DDD"</span>,
-      borderWidth = <span class='fl'>0</span>,
-      outerRadius = <span class='st'>"105%"</span>,
-      innerRadius = <span class='st'>"103%"</span>
-    ))
-  ) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(
-    data = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>80</span>), name = <span class='st'>"speed"</span>, tooltip = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(valueSuffix = <span class='st'>" km/h"</span>)
-  ) <span class='op'>%&gt;%</span> 
+    <span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      backgroundColor <span class='op'>=</span> <span class='st'>"#DDD"</span>,
+      borderWidth <span class='op'>=</span> <span class='fl'>0</span>,
+      outerRadius <span class='op'>=</span> <span class='st'>"105%"</span>,
+      innerRadius <span class='op'>=</span> <span class='st'>"103%"</span>
+    <span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>
+    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>80</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"speed"</span>, tooltip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>valueSuffix <span class='op'>=</span> <span class='st'>" km/h"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
   
   
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_yAxis.html'>hc_yAxis</a></span>(
-    min = <span class='fl'>0</span>,
-    max = <span class='fl'>200</span>,
+  <span class='fu'><a href='hc_yAxis.html'>hc_yAxis</a></span><span class='op'>(</span>
+    min <span class='op'>=</span> <span class='fl'>0</span>,
+    max <span class='op'>=</span> <span class='fl'>200</span>,
     
-    minorTickInterval = <span class='st'>"auto"</span>,
-    minorTickWidth = <span class='fl'>1</span>,
-    minorTickLength = <span class='fl'>10</span>,
-    minorTickPosition = <span class='st'>"inside"</span>,
-    minorTickColor = <span class='st'>"#666"</span>,
+    minorTickInterval <span class='op'>=</span> <span class='st'>"auto"</span>,
+    minorTickWidth <span class='op'>=</span> <span class='fl'>1</span>,
+    minorTickLength <span class='op'>=</span> <span class='fl'>10</span>,
+    minorTickPosition <span class='op'>=</span> <span class='st'>"inside"</span>,
+    minorTickColor <span class='op'>=</span> <span class='st'>"#666"</span>,
     
-    tickPixelInterval = <span class='fl'>30</span>,
-    tickWidth = <span class='fl'>2</span>,
-    tickPosition = <span class='st'>"inside"</span>,
-    tickLength = <span class='fl'>10</span>,
-    tickColor = <span class='st'>"#666"</span>,
+    tickPixelInterval <span class='op'>=</span> <span class='fl'>30</span>,
+    tickWidth <span class='op'>=</span> <span class='fl'>2</span>,
+    tickPosition <span class='op'>=</span> <span class='st'>"inside"</span>,
+    tickLength <span class='op'>=</span> <span class='fl'>10</span>,
+    tickColor <span class='op'>=</span> <span class='st'>"#666"</span>,
     
-    labels = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      step = <span class='fl'>2</span>,
-      rotation = <span class='st'>"auto"</span>
-    ),
-    title = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      text = <span class='st'>"km/h"</span>
-    ),
+    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      step <span class='op'>=</span> <span class='fl'>2</span>,
+      rotation <span class='op'>=</span> <span class='st'>"auto"</span>
+    <span class='op'>)</span>,
+    title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      text <span class='op'>=</span> <span class='st'>"km/h"</span>
+    <span class='op'>)</span>,
     
-    plotBands = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(from =   <span class='fl'>0</span>, to = <span class='fl'>120</span>, color = <span class='st'>"#55BF3B"</span>),
-      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(from = <span class='fl'>120</span>, to = <span class='fl'>160</span>, color = <span class='st'>"#DDDF0D"</span>),
-      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(from = <span class='fl'>160</span>, to = <span class='fl'>200</span>, color = <span class='st'>"#DF5353"</span>)
-    )
+    plotBands <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>from <span class='op'>=</span>   <span class='fl'>0</span>, to <span class='op'>=</span> <span class='fl'>120</span>, color <span class='op'>=</span> <span class='st'>"#55BF3B"</span><span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>120</span>, to <span class='op'>=</span> <span class='fl'>160</span>, color <span class='op'>=</span> <span class='st'>"#DDDF0D"</span><span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>160</span>, to <span class='op'>=</span> <span class='fl'>200</span>, color <span class='op'>=</span> <span class='st'>"#DF5353"</span><span class='op'>)</span>
+    <span class='op'>)</span>
     
-  )
+  <span class='op'>)</span>
+
 
 </div></pre>
   </div>
@@ -324,7 +313,7 @@ gauges and polar charts.</p>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

@@ -106,7 +106,7 @@ fun_hc_hpr <- dfun %>%
   filter(str_detect(name, "data_to|^color|^tooltip_")) %>% 
   distinct() %>% 
   pull(name) %>% 
-  c(., "hex_to_rgba", "datetime_to_timestamp", "dt_tstp")
+  c(., "hex_to_rgba", "datetime_to_timestamp", "dt_tstp", "df_to_annotations_labels")
 
 fun_hc_hpr
 
@@ -178,8 +178,9 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 # build reference ---------------------------------------------------------
 pkgdown::build_reference_index()
+pkgdown::build_reference()
 pkgdown::preview_site(path = "/reference")
-# pkgdown::build_reference()
+
 
 
 

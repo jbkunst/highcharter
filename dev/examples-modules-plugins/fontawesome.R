@@ -1,51 +1,61 @@
-library(tidyverse)
+# from vignettes/fontawesome.Rmd
+# install.packages("rsvg")
+require(rsvg) # for fontawesome::fa_png
+library(fontawesome)
 library(highcharter)
-library(MASS)
+library(stringr)
 
-ds1 <- as_tibble(round(mvrnorm(n = 20, mu = c(1, 1), Sigma = matrix(c(1,0,0,1),2)), 2))
-ds2 <- as_tibble(round(mvrnorm(n = 10, mu = c(3, 4), Sigma = matrix(c(2,.5,2,2),2)), 2))
-
-highchart() %>%
-  hc_chart(zoomType = "xy") %>%
-  hc_tooltip(
-    useHTML = TRUE,
-    pointFormat = paste0(
-      "<span style=\"color:{series.color};\">{series.options.icon}</span>",
-      "{series.name}: <b>[{point.x}, {point.y}]</b><br/>"
-    )
-  ) %>%
-  hc_add_series(
-    data = ds1,
-    type = "point",
-    hcaes(V1, V2), 
-    marker = list(symbol = fa_icon_mark("bath")),
-    icon = fa_icon("bath"),
-    name = "bath"
-  ) %>%
-  hc_add_series(
-    data = ds2,
-    type = "point",
-    hcaes(V1, V2), 
-    marker = list(symbol = fa_icon_mark("shower")),
-    icon = fa_icon("shower"),
-    name = "shower"
-  ) %>%
-  hc_add_dependency_fa()
-
-
-data <- bind_rows(
-  ds1 %>% mutate(ico = "bath"),
-  ds2 %>% mutate(ico = "shower")
+df <- data.frame(
+  a = round(rnorm(10), 2),
+  b = round(rnorm(10), 2)
 )
 
-hchart(data, "point", hcaes(V1, V2, group = ico))
+fa_to_png_to_datauri <- function(name, ...) {
+  
+  tmpfl <- tempfile(fileext = ".png")
+  
+  fontawesome::fa_png(name, file = tmpfl, ...)
+  
+  knitr::image_uri(tmpfl)
+  
+}
 
-data <- data %>% 
-  mutate(
-    icon = fa_icon(ico),
-    marker =  map(ico, ~ list(symbol = fa_icon_mark(.x)))
+# specify colors tu resue in the series/tooltips
+rcol <- "#4C83B6"
+pcol <- "#3CAB48"
+
+rproj <- fa_to_png_to_datauri(name = "r-project", width = 22, fill = rcol)
+pthon <- fa_to_png_to_datauri(name = "python",    width = 22, fill = pcol)
+
+highchart() %>% 
+  hc_title(
+    text = str_c("This is a svg ", fa("rocket", fill = "#CACACA"), " icon"),
+    useHTML = TRUE
+  ) %>% 
+  hc_add_series(
+    df,
+    "scatter",
+    hcaes(a, b),
+    name = "R icons",
+    color = rcol,
+    marker = list(symbol = str_glue("url({data_uri})", data_uri = rproj)),
+    icon = rproj
+  ) %>% 
+  hc_add_series(
+    df,
+    "scatter",
+    hcaes(b, a),
+    name = "Python icons",
+    color = pcol,
+    marker = list(symbol = str_glue("url({data_uri})", data_uri = pthon)),
+    icon = pthon
+  ) %>% 
+  hc_tooltip(
+    pointFormat = str_c(
+      "<b>",
+      "<img style='vertical-align:middle' height='15' src='{series.options.icon}'/> ",
+      "[{point.x}, {point.y}]",
+      "</b>"
+    ),
+    useHTML = TRUE
   )
-
-
-hchart(data, "point", hcaes(V1, V2, group = ico)) %>% 
-  hc_add_dependency_fa() 

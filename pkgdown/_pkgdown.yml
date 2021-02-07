@@ -10,39 +10,6 @@ navbar:
   right:
   - icon: fa-github-alt
     href: https://github.com/jbkunst/highcharter
-articles:
-- title: Get Started
-  navbar: Get Started
-  contents:
-  - highcharter
-  - hchart
-  - highcharts-api
-  - highchartsjs-api-basics
-  - showcase
-- title: The highchartsJS bundle
-  navbar: The highchartsJS bundle
-  contents:
-  - highcharts
-  - maps
-  - stock
-- title: Experiments & Examples
-  navbar: Experiments & Examples
-  contents:
-  - fontawesome
-  - drilldown
-- title: More of highcharter
-  navbar: More of highcharter
-  contents:
-  - themes
-  - debug.log
-  - hc-api-legend-jsfiddle.png
-  - hc-api-legend-title.png
-  - hc-api-legend.png
-  - help-hc-legend.png
-  - howtos
-  - modules
-  - motion
-  - shiny-events-demo
 reference:
 - title: Highcharts API
   desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).
@@ -122,6 +89,7 @@ reference:
   - hex_to_rgba
   - datetime_to_timestamp
   - dt_tstp
+  - df_to_annotations_labels
 - title: Shiny and proxy functions
   desc: |-
     Functions to create highcharts in shinyapps or rmarkdown documents.
@@ -216,3 +184,36 @@ reference:
   - hc_add_dependency_fa
   - fa_icon
   - fa_icon_mark
+articles:
+- title: Get Started
+  navbar: Get Started
+  contents:
+  - highcharter
+  - hchart
+  - highcharts-api
+  - highchartsjs-api-basics
+  - showcase
+- title: The highchartsJS bundle
+  navbar: The highchartsJS bundle
+  contents:
+  - highcharts
+  - maps
+  - stock
+- title: Experiments & Examples
+  navbar: Experiments & Examples
+  contents:
+  - fontawesome
+  - drilldown
+- title: More of highcharter
+  navbar: More of highcharter
+  contents:
+  - themes
+  - debug.log
+  - hc-api-legend-jsfiddle.png
+  - hc-api-legend-title.png
+  - hc-api-legend.png
+  - help-hc-legend.png
+  - howtos
+  - modules
+  - motion
+  - shiny-events-demo

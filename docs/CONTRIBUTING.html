@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -99,7 +101,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -116,8 +118,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="articles/hchart.html">hchart Function</a>
     </li>
@@ -125,37 +131,16 @@
       <a href="articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="articles/themes.html">Themes</a>
+      <a href="articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="articles/modules.html">Modules &amp; plugins</a>
@@ -166,6 +151,15 @@
     <li>
       <a href="articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -175,7 +169,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -213,8 +207,8 @@
 <ul>
 <li><p>Fork the package and clone onto your computer. If you haven’t done this before, we recommend using <code><a href="https://usethis.r-lib.org/reference/create_from_github.html">usethis::create_from_github("jbkunst/highcharter", fork = TRUE)</a></code>.</p></li>
 <li><p>Install all development dependences with <code><a href="https://devtools.r-lib.org//reference/install_deps.html">devtools::install_dev_deps()</a></code>, and then make sure the package passes R CMD check by running <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check()</a></code>. If R CMD check doesn’t pass cleanly, it’s a good idea to ask for help before continuing.</p></li>
-<li><p>Create a Git branch for your pull request (PR). We recommend using <code><a href="https://usethis.r-lib.org/reference/pr_init.html">usethis::pr_init("brief-description-of-change")</a></code>.</p></li>
-<li><p>Make your changes, commit to git, and then create a PR by running <code><a href="https://usethis.r-lib.org/reference/pr_init.html">usethis::pr_push()</a></code>, and following the prompts in your browser. The title of your PR should briefly describe the change. The body of your PR should contain <code>Fixes #issue-number</code>.</p></li>
+<li><p>Create a Git branch for your pull request (PR). We recommend using <code><a href="https://usethis.r-lib.org/reference/pull-requests.html">usethis::pr_init("brief-description-of-change")</a></code>.</p></li>
+<li><p>Make your changes, commit to git, and then create a PR by running <code><a href="https://usethis.r-lib.org/reference/pull-requests.html">usethis::pr_push()</a></code>, and following the prompts in your browser. The title of your PR should briefly describe the change. The body of your PR should contain <code>Fixes #issue-number</code>.</p></li>
 <li><p>For user-facing changes, add a bullet to the top of <code>NEWS.md</code> (i.e. just below the first header). Follow the style described in <a href="https://style.tidyverse.org/news.html" class="uri">https://style.tidyverse.org/news.html</a>.</p></li>
 </ul>
 </div>
@@ -259,7 +253,7 @@
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

@@ -62,6 +62,8 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -106,12 +108,6 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -124,8 +120,12 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -133,37 +133,16 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -174,6 +153,15 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -183,7 +171,7 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -216,7 +204,7 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
 .highcharts-scrollbar-rifles and .highcharts-scrollbar-track.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_scrollbar.html'>hc_scrollbar</a></span>(<span class='kw'>hc</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>hc_scrollbar</span><span class='op'>(</span><span class='va'>hc</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -234,23 +222,24 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>(type = <span class='st'>"stock"</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(<span class='kw'>AirPassengers</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_rangeSelector.html'>hc_rangeSelector</a></span>(selected = <span class='fl'>4</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_scrollbar.html'>hc_scrollbar</a></span>(
-    barBackgroundColor = <span class='st'>"gray"</span>,
-    barBorderRadius = <span class='fl'>7</span>,
-    barBorderWidth = <span class='fl'>0</span>,
-    buttonBackgroundColor = <span class='st'>"gray"</span>,
-    buttonBorderWidth = <span class='fl'>0</span>,
-    buttonArrowColor = <span class='st'>"yellow"</span>,
-    buttonBorderRadius = <span class='fl'>7</span>,
-    rifleColor = <span class='st'>"yellow"</span>,
-    trackBackgroundColor = <span class='st'>"white"</span>,
-    trackBorderWidth = <span class='fl'>1</span>,
-    trackBorderColor = <span class='st'>"silver"</span>,
-    trackBorderRadius = <span class='fl'>7</span>
-  )
+<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"stock"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span><span class='va'>AirPassengers</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_rangeSelector.html'>hc_rangeSelector</a></span><span class='op'>(</span>selected <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>hc_scrollbar</span><span class='op'>(</span>
+    barBackgroundColor <span class='op'>=</span> <span class='st'>"gray"</span>,
+    barBorderRadius <span class='op'>=</span> <span class='fl'>7</span>,
+    barBorderWidth <span class='op'>=</span> <span class='fl'>0</span>,
+    buttonBackgroundColor <span class='op'>=</span> <span class='st'>"gray"</span>,
+    buttonBorderWidth <span class='op'>=</span> <span class='fl'>0</span>,
+    buttonArrowColor <span class='op'>=</span> <span class='st'>"yellow"</span>,
+    buttonBorderRadius <span class='op'>=</span> <span class='fl'>7</span>,
+    rifleColor <span class='op'>=</span> <span class='st'>"yellow"</span>,
+    trackBackgroundColor <span class='op'>=</span> <span class='st'>"white"</span>,
+    trackBorderWidth <span class='op'>=</span> <span class='fl'>1</span>,
+    trackBorderColor <span class='op'>=</span> <span class='st'>"silver"</span>,
+    trackBorderRadius <span class='op'>=</span> <span class='fl'>7</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -273,7 +262,7 @@ scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

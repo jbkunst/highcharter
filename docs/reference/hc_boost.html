@@ -49,8 +49,20 @@
   
 
 <meta property="og:title" content="Boost options for highcharter objects — hc_boost" />
-<meta property="og:description" content="Boost options for highcharter objects" />
+<meta property="og:description" content="Options for the Boost module. The Boost module allows certain series types
+to be rendered by WebGL instead of the default SVG. This allows hundreds of
+thousands of data points to be rendered in milliseconds. In addition to the
+WebGL rendering it saves time by skipping processing and inspection of the
+data wherever possible. This introduces some limitations to what features are
+available in boost mode. See the docs for
+details.
+In addition to the global boost option, each series has a
+boostThreshold that defines when the
+boost should kick in.
+Requires the modules/boost.js module." />
 <meta property="og:image" content="/logo.png" />
+
+
 
 
 
@@ -99,12 +111,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -117,8 +123,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -126,37 +136,16 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -167,6 +156,15 @@
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -176,7 +174,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -199,10 +197,20 @@
     </div>
 
     <div class="ref-description">
-    <p>Boost options for highcharter objects</p>
+    <p>Options for the Boost module. The Boost module allows certain series types
+to be rendered by WebGL instead of the default SVG. This allows hundreds of
+thousands of data points to be rendered in milliseconds. In addition to the
+WebGL rendering it saves time by skipping processing and inspection of the
+data wherever possible. This introduces some limitations to what features are
+available in boost mode. See the docs for
+details.
+In addition to the global boost option, each series has a
+boostThreshold that defines when the
+boost should kick in.
+Requires the modules/boost.js module.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_boost.html'>hc_boost</a></span>(<span class='kw'>hc</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>hc_boost</span><span class='op'>(</span><span class='va'>hc</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,36 +229,37 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>#  Ex 1</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(highcharter.rjson = <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>highcharter.rjson <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='kw'>n</span> <span class='op'>&lt;-</span> <span class='fl'>50000</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>50000</span>
 
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>4</span><span class='op'>*</span><span class='fl'>2</span><span class='op'>*</span><span class='kw'>pi</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='kw'>n</span>)<span class='op'>/</span><span class='kw'>n</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span>)<span class='op'>/</span><span class='fl'>10</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>*</span><span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>/</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>10</span>
 
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='kw'>x</span>, <span class='fl'>3</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>3</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='kw'>x</span>)</div><div class='img'><img src='hc_boost-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>hc1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_chart.html'>hc_chart</a></span>(zoomType = <span class='st'>"x"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(data = <span class='kw'>x</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_title.html'>hc_title</a></span>(text = <span class='st'>"No boost"</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_boost.html'>hc_boost</a></span>(
-    enabled = <span class='fl'>FALSE</span> <span class='co'># Default</span>
-  )
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='img'><img src='hc_boost-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>hc1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_chart.html'>hc_chart</a></span><span class='op'>(</span>zoomType <span class='op'>=</span> <span class='st'>"x"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_title.html'>hc_title</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"No boost"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>hc_boost</span><span class='op'>(</span>
+    enabled <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='co'># Default</span>
+  <span class='op'>)</span>
 
-<span class='kw'>hc1</span>
+<span class='va'>hc1</span>
 
 <span class='co'># Boost is a stripped-down renderer-in-a-module for Highcharts. It bypasses</span>
 <span class='co'># some of the standard Highcharts features (such as animation), and focuses</span>
 <span class='co'># on pushing as many points as possible as quickly as possible.</span>
 
-<span class='kw'>hc2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_chart.html'>hc_chart</a></span>(zoomType = <span class='st'>"x"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(data = <span class='kw'>x</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_title.html'>hc_title</a></span>(text = <span class='st'>"With boost"</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_boost.html'>hc_boost</a></span>(enabled = <span class='fl'>TRUE</span>)
+<span class='va'>hc2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_chart.html'>hc_chart</a></span><span class='op'>(</span>zoomType <span class='op'>=</span> <span class='st'>"x"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_title.html'>hc_title</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"With boost"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>hc_boost</span><span class='op'>(</span>enabled <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='kw'>hc2</span>
+<span class='va'>hc2</span>
 
 
 <span class='co'># # Ex 2</span>
@@ -318,6 +327,7 @@
 <span class='co'>#   hc_add_series_list(series) %&gt;%</span>
 <span class='co'>#   hc_chart(zoomType = "x") %&gt;% </span>
 <span class='co'>#   hc_boost(enabled = TRUE)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -340,7 +350,7 @@
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

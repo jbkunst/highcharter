@@ -57,6 +57,8 @@ or chart pixel coordinates." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -101,12 +103,6 @@ or chart pixel coordinates." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -119,8 +115,12 @@ or chart pixel coordinates." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -128,37 +128,16 @@ or chart pixel coordinates." />
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -169,6 +148,15 @@ or chart pixel coordinates." />
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -178,7 +166,7 @@ or chart pixel coordinates." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -206,7 +194,7 @@ or shapes. The items  can be tied to points, axis coordinates
 or chart pixel coordinates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_annotations.html'>hc_annotations</a></span>(<span class='kw'>hc</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>hc_annotations</span><span class='op'>(</span><span class='va'>hc</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,54 +213,55 @@ or chart pixel coordinates.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Ex 1</span>
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(
-    data = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>29.9</span>, <span class='fl'>71.5</span>, <span class='fl'>106.4</span>, <span class='fl'>129.2</span>, <span class='fl'>144.0</span>, <span class='fl'>176.0</span>, <span class='fl'>135.6</span>, <span class='fl'>148.5</span>, <span class='fl'>216.4</span>, <span class='fl'>194.1</span>, <span class='fl'>95.6</span>, <span class='fl'>54.4</span>)
-  ) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_xAxis.html'>hc_xAxis</a></span>(
-    tickInterval = <span class='fl'>0.5</span>,
-    gridLineWidth = <span class='fl'>1</span>  
-  ) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_annotations.html'>hc_annotations</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      labels = 
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-            point = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>3</span>, y = <span class='fl'>129.2</span>, xAxis = <span class='fl'>0</span>, yAxis = <span class='fl'>0</span>),
-            text = <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
-            ),
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-            point = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>9</span>, y = <span class='fl'>194.1</span>, xAxis = <span class='fl'>0</span>, yAxis = <span class='fl'>0</span>),
-            text = <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
-            ),
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-            point = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>5</span>, y = <span class='fl'>100</span>, xAxis = <span class='fl'>0</span>),
-            text = <span class='st'>"x: {x}&lt;br/&gt;y: {point.plotY} px"</span>
-            ),
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-            point = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>0</span>, y = <span class='fl'>0</span>),
-            text = <span class='st'>"x: {point.plotX} px&lt;br/&gt;y: {point.plotY} px"</span>
-            )
-          )
-      )
-    )
+<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>
+    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>29.9</span>, <span class='fl'>71.5</span>, <span class='fl'>106.4</span>, <span class='fl'>129.2</span>, <span class='fl'>144.0</span>, <span class='fl'>176.0</span>, <span class='fl'>135.6</span>, <span class='fl'>148.5</span>, <span class='fl'>216.4</span>, <span class='fl'>194.1</span>, <span class='fl'>95.6</span>, <span class='fl'>54.4</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span>
+    tickInterval <span class='op'>=</span> <span class='fl'>0.5</span>,
+    gridLineWidth <span class='op'>=</span> <span class='fl'>1</span>  
+  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>hc_annotations</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      labels <span class='op'>=</span> 
+        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3</span>, y <span class='op'>=</span> <span class='fl'>129.2</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
+            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
+            <span class='op'>)</span>,
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>9</span>, y <span class='op'>=</span> <span class='fl'>194.1</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
+            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
+            <span class='op'>)</span>,
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>100</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
+            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {point.plotY} px"</span>
+            <span class='op'>)</span>,
+          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
+            text <span class='op'>=</span> <span class='st'>"x: {point.plotX} px&lt;br/&gt;y: {point.plotY} px"</span>
+            <span class='op'>)</span>
+          <span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>
   
 <span class='co'># Ex 2</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  x = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,
-  y = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
-)
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,
+  y <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
+<span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/highchart.html'>highchart</a></span>() <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_add_series.html'>hc_add_series</a></span>(data = <span class='kw'>df</span>, <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hcaes.html'>hcaes</a></span>(x = <span class='kw'>x</span>, y = <span class='kw'>y</span>), type = <span class='st'>"area"</span>) <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/highcharter/man/hc_annotations.html'>hc_annotations</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      labels = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(point = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>5</span>, y = <span class='fl'>5</span>, xAxis = <span class='fl'>0</span>, yAxis = <span class='fl'>0</span>), text = <span class='st'>"Middle"</span>),
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(point = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>1</span>, y = <span class='fl'>1</span>, xAxis = <span class='fl'>0</span>, yAxis = <span class='fl'>0</span>), text = <span class='st'>"Start"</span>)
-      )
-    )
-  )
+<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"area"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>hc_annotations</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>5</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, text <span class='op'>=</span> <span class='st'>"Middle"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>1</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, text <span class='op'>=</span> <span class='st'>"Start"</span><span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -295,7 +284,7 @@ or chart pixel coordinates.</p>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

@@ -109,6 +109,12 @@ HTMLWidgets.widget({
               
             }
             
+          } else if (x.type == "gantt") {
+            
+            if(x.debug) console.log("charting GANTT");
+            
+            chart = Highcharts.ganttChart(el.id, x.hc_opts);
+            
           }
           
           if(x.hc_opts.motion !== undefined) {

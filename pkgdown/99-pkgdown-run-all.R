@@ -1,3 +1,4 @@
+# delete docs/
 # pkgdown::build_site()
 source("pkgdown/01-pkgdown-buid-home.R")
 source("pkgdown/02-pkgdown-add-to-yalm-reference.R")

@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -98,12 +100,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -116,8 +112,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="divider"></li>
-    <li class="dropdown-header">Get Started</li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -125,37 +125,16 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
       <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
+      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
       <a href="../articles/howtos.html">Commons HOW TOs</a>
+    </li>
+    <li>
+      <a href="../articles/maps.html">Maps with highmaps</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -166,6 +145,15 @@
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
+    <li>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -175,7 +163,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
+    <span class="fas fa-github-alt"></span>
      
   </a>
 </li>
@@ -196,14 +184,17 @@
       <small>Source: <a href='https://github.com/jbkunst/highcharter/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="highcharter-083" class="section level1">
-<h1 class="page-header" data-toc-text="0.8.3">
-<a href="#highcharter-083" class="anchor"></a>highcharter 0.8.3<small> Unreleased </small>
+    <div id="highcharter-0829000-pre-0900" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.2.9000">
+<a href="#highcharter-0829000-pre-0900" class="anchor"></a>highcharter 0.8.2.9000 (pre 0.9.0.0)<small> Unreleased </small>
 </h1>
 <div id="changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h2>
 <ul>
+<li>Highcharter now uses HighchartsJS 9.0.0</li>
+<li>Support highcharts gantt extension (<a href='https://github.com/jbkunst/highcharter/issues/287'>#287</a>)</li>
+<li>Adding missed language options in <code><a href="https://rdrr.io/r/base/options.html">getOption("highcharter.lang")</a></code>.</li>
 <li>Adding <code>hcpxy_add_series</code>, <code>hcpxy_remove_series</code>, <code>hcpxy_update</code>, <code>hcpxy_update_series</code>, <code>hcpxy_add_point</code>, <code>hcpxy_remove_point</code> and <code>hcpxy_loading</code>
 </li>
 <li>Adding <code>hc_loading</code> for use with <code>hcpxy_loading</code>
@@ -224,7 +215,7 @@
 <li>Adding <code>list</code> to <code>hchart</code> supported classes to work with the new data helpers.</li>
 <li>Adding <code>hc_theme_sparkline_vb</code>, <code>hc_theme_hcrt</code> themes.</li>
 <li>boost module is FALSE by default.</li>
-<li>Modifying <code><a href="https://rdrr.io/pkg/highcharter/man/highcharts_demo.html">highcharts_demo()</a></code>, adding caption and credit texts.</li>
+<li>Modifying <code><a href="../reference/highcharts_demo.html">highcharts_demo()</a></code>, adding caption and credit texts.</li>
 <li>All vignettes were moved from the package to favor to avoid CRAN check NOTE and warning. The content was moved to the new website of the package.</li>
 <li>
 <code>htmlwdgtgrid.css</code> were removed from the yaml of <code>highcart</code> <code>hchart</code> widgets to avoid problems with others css frameworks when highcarter is used with shiny. Now <code>hw_grid</code> add <code>htmlwdgtgrid.css</code> automatically. Additionally <code>hw_grid</code> gain new parameters: 1) <code>add_htmlgrid_css</code> To add or not <code>htmlgrid.css</code> and 2) <code>browsable</code> -set as TRUE the default value- so now there is no need to use htmltools::browsable <a href='https://github.com/jbkunst/highcharter/issues/622'>#622</a></li>
@@ -244,7 +235,7 @@
 <a href="#deprecated" class="anchor"></a>Deprecated</h2>
 <ul>
 <li>
-<code>hc_add_dependency_fa</code>, <code>fa_icon</code>, <code>fa_icon_mark</code>, please use fontawesome package <a href="https://github.com/rstudio/fontawesome" class="uri">https://github.com/rstudio/fontawesome</a>. See examples in the new website.</li>
+<code>hc_add_dependency_fa</code>, <code>fa_icon</code>, <code>fa_icon_mark</code>, please use fontawesome package https://github.com/rstudio/fontawesome. See examples in the new website.</li>
 <li>
 <code>hciconarray</code>, please use now <code>type = "item"</code>
 </li>
@@ -325,7 +316,7 @@
 <li>New function <code>hc_boost</code> function to configure boost module options <code>module/boost.js</code> (<a href='https://github.com/jbkunst/highcharter/issues/382'>#382</a>).</li>
 <li>New function <code>hchart_</code> which uses standar evaluation (<a href='https://github.com/jbkunst/highcharter/issues/170'>#170</a>).</li>
 <li>New function <code>hcaes_string</code> (<a href='https://github.com/jbkunst/highcharter/issues/248'>#248</a>).</li>
-<li>New function <code>hcparcord</code>. Inspired <strong>and copy</strong> from <a href="http://rpubs.com/hadley/97970" class="uri">http://rpubs.com/hadley/97970</a> (<a href='https://github.com/jbkunst/highcharter/issues/167'>#167</a>).</li>
+<li>New function <code>hcparcord</code>. Inspired <strong>and copy</strong> from http://rpubs.com/hadley/97970 (<a href='https://github.com/jbkunst/highcharter/issues/167'>#167</a>).</li>
 <li>New functions <code>hc_add_series.lm</code> and <code>hc_add_series.loess</code> (<a href='https://github.com/jbkunst/highcharter/issues/271'>#271</a>).</li>
 <li>New function/theme Super Heroes (<a href='https://github.com/jbkunst/highcharter/issues/286'>#286</a>).</li>
 <li>New function/theme <code>hc_theme_ggplot2</code> to honoring one of the best packages (<a href='https://github.com/jbkunst/highcharter/issues/260'>#260</a>).</li>
@@ -339,7 +330,7 @@
 <ul>
 <li>Adding <code>encoding = "UTF-8"</code> in <code>download_map_data</code> to read characters properly (<a href='https://github.com/jbkunst/highcharter/issues/359'>#359</a>).</li>
 <li>Fixed <code>Error in mutate_impl</code> in <code>hcboxplot</code> (<a href='https://github.com/jbkunst/highcharter/issues/323'>#323</a>).</li>
-<li>Fixed <code><a href="https://rdrr.io/pkg/highcharter/man/export_hc.html">export_hc(..., as = "is")</a></code> does not format javascript correctly (<a href='https://github.com/jbkunst/highcharter/issues/398'>#398</a>).</li>
+<li>Fixed <code><a href="../reference/export_hc.html">export_hc(..., as = "is")</a></code> does not format javascript correctly (<a href='https://github.com/jbkunst/highcharter/issues/398'>#398</a>).</li>
 <li>Added the MIME type to show fonts correctly (<a href='https://github.com/jbkunst/highcharter/issues/308'>#308</a>).</li>
 <li>Fixed vignettes titles <a href='https://github.com/jbkunst/highcharter/issues/244'>#244</a>).</li>
 <li>Fixed bug due conflict between highcharts v5 and draggable-points plugin (<a href='https://github.com/jbkunst/highcharter/issues/273'>#273</a>).</li>
@@ -371,7 +362,7 @@
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
-<code>hchart.data.frame</code> now gains a new <code>mapping</code> argument using <code>hcaes</code> function to define the aesthetics. After <code><a href="https://rdrr.io/pkg/highcharter/man/hchart.html">hchart(df, "line", x = xvar, yvar, group = othervar)</a></code> now: <code><a href="https://rdrr.io/pkg/highcharter/man/hchart.html">hchart(df, "line", hcaes(x = xvar, yvar, color = othervar), ...)</a></code> and therefore <code>...</code> are used like other highcharter functions for give highcharts arguments to the series. See <em>charting data frames</em> vignette.</li>
+<code>hchart.data.frame</code> now gains a new <code>mapping</code> argument using <code>hcaes</code> function to define the aesthetics. After <code><a href="../reference/hchart.html">hchart(df, "line", x = xvar, yvar, group = othervar)</a></code> now: <code><a href="../reference/hchart.html">hchart(df, "line", hcaes(x = xvar, yvar, color = othervar), ...)</a></code> and therefore <code>...</code> are used like other highcharter functions for give highcharts arguments to the series. See <em>charting data frames</em> vignette.</li>
 </ul>
 </div>
 <div id="new-funcionalities" class="section level2">
@@ -381,8 +372,8 @@
 <li>
 <code>hc_add_series</code> is a generic generic function (<a href='https://github.com/jbkunst/highcharter/issues/213'>#213</a>).</li>
 <li>New <code>hcmap</code> function to chart maps (<a href='https://github.com/jbkunst/highcharter/issues/218'>#218</a>). And use remote sources (<a href='https://github.com/jbkunst/highcharter/issues/215'>#215</a>).</li>
-<li>New <em>charting data frames</em> vignette (<a href="http://rpubs.com/jbkunst/230276" class="uri">http://rpubs.com/jbkunst/230276</a>) (<a href='https://github.com/jbkunst/highcharter/issues/220'>#220</a>).</li>
-<li>New <em>charting maps</em> vignette (<a href="http://jkunst.com/highcharter/highmaps.html" class="uri">http://jkunst.com/highcharter/highmaps.html</a>) (<a href='https://github.com/jbkunst/highcharter/issues/218'>#218</a>).</li>
+<li>New <em>charting data frames</em> vignette (http://rpubs.com/jbkunst/230276) (<a href='https://github.com/jbkunst/highcharter/issues/220'>#220</a>).</li>
+<li>New <em>charting maps</em> vignette (http://jkunst.com/highcharter/highmaps.html) (<a href='https://github.com/jbkunst/highcharter/issues/218'>#218</a>).</li>
 <li>
 <code>debug</code> as an option instead of argument. Example <code><a href="https://rdrr.io/r/base/options.html">options(highcharter.debug = TRUE)</a></code> (<a href='https://github.com/jbkunst/highcharter/issues/216'>#216</a>).</li>
 <li>Upgrade to highcharts V5 (<a href='https://github.com/jbkunst/highcharter/issues/154'>#154</a>) (<a href='https://github.com/jbkunst/highcharter/issues/208'>#208</a>).</li>
@@ -390,7 +381,7 @@
 <li>Added export-csv plugin to export chart data to CSV, XLS, HTML or JS array (<a href='https://github.com/jbkunst/highcharter/issues/178'>#178</a>).</li>
 <li>Added Grouped Categories plugin (<a href='https://github.com/jbkunst/highcharter/issues/172'>#172</a>) (<a href='https://github.com/jbkunst/highcharter/issues/193'>#193</a>).</li>
 <li>Added Tooltip delay plugin (<a href='https://github.com/jbkunst/highcharter/issues/181'>#181</a>).</li>
-<li>Added <code>is.highchart</code> according with <em>Best practices</em> in <a href="http://adv-r.had.co.nz/S3.html" class="uri">http://adv-r.had.co.nz/S3.html</a> (<a href='https://github.com/jbkunst/highcharter/issues/179'>#179</a>).</li>
+<li>Added <code>is.highchart</code> according with <em>Best practices</em> in http://adv-r.had.co.nz/S3.html (<a href='https://github.com/jbkunst/highcharter/issues/179'>#179</a>).</li>
 <li>New themes: <code>theme_firefox</code> (<a href='https://github.com/jbkunst/highcharter/issues/191'>#191</a>), <code>theme_tufte</code> (<a href='https://github.com/jbkunst/highcharter/issues/190'>#190</a>). <code>hc_theme_elementary</code> (<a href='https://github.com/jbkunst/highcharter/issues/184'>#184</a>).</li>
 <li>
 <code>hchart.data.frame</code> doesn’t override the color if the column var have a hexadecimal color format (<a href='https://github.com/jbkunst/highcharter/issues/148'>#148</a>).</li>
@@ -438,7 +429,7 @@
 <h2 class="hasAnchor">
 <a href="#new-funcionalities-1" class="anchor"></a>New Funcionalities</h2>
 <ul>
-<li>Include <code>elementId</code> to createWidget. Add the <code><a href="https://rdrr.io/pkg/highcharter/man/hc_elementId.html">hc_elementId()</a></code> to modify this paramter after the creation of the highchart object (<a href='https://github.com/jbkunst/highcharter/issues/140'>#140</a>).</li>
+<li>Include <code>elementId</code> to createWidget. Add the <code><a href="../reference/hc_elementId.html">hc_elementId()</a></code> to modify this paramter after the creation of the highchart object (<a href='https://github.com/jbkunst/highcharter/issues/140'>#140</a>).</li>
 <li>
 <code>hchart</code> support data frames a la <code><a href="https://ggplot2.tidyverse.org/reference/qplot.html">ggplot2::qplot</a></code> (<a href='https://github.com/jbkunst/highcharter/issues/136'>#136</a>).</li>
 <li>
@@ -450,7 +441,7 @@
 <li>New <code>hcboxplot</code>, <code>hcwaffle</code>, <code>hcbar</code>, <code>hcpie</code>, <code>hchist</code>, <code>hcdensity</code>, <code>hcts</code> function to get quick some style of charts. Thanks to <a href='https://github.com/nuo-agostinho'>@nuo-agostinho</a>. <code>hc_add_series_density</code> implementation (<a href='https://github.com/jbkunst/highcharter/issues/99'>#99</a> <a href='https://github.com/jbkunst/highcharter/issues/70'>#70</a>).</li>
 <li>New <code>hc_add_series_bwp</code> to chart box and whisker plots (<a href='https://github.com/jbkunst/highcharter/issues/81'>#81</a>).</li>
 <li>New <code>hc_add_series_list</code> to add list of series (<a href='https://github.com/jbkunst/highcharter/issues/68'>#68</a>).</li>
-<li>New <code>hc_add_series_df_old</code> (!!) shortcut of <code><a href="https://rdrr.io/pkg/highcharter/man/hc_add_series.html">hc_add_series(data = list.parse3(df))</a></code> (<a href='https://github.com/jbkunst/highcharter/issues/76'>#76</a>).</li>
+<li>New <code>hc_add_series_df_old</code> (!!) shortcut of <code><a href="../reference/hc_add_series.html">hc_add_series(data = list.parse3(df))</a></code> (<a href='https://github.com/jbkunst/highcharter/issues/76'>#76</a>).</li>
 <li>Added <code>hc_theme_sparkline</code> (<a href='https://github.com/jbkunst/highcharter/issues/132'>#132</a>).</li>
 <li>Added function to create <code>dataClasses</code> and <code>stops</code> arguments in <code>hc_colorAxis</code> (<a href='https://github.com/jbkunst/highcharter/issues/120'>#120</a>).</li>
 <li>Validate length of data = 1 and apply the <code>list</code> function (<a href='https://github.com/jbkunst/highcharter/issues/119'>#119</a> <a href='https://github.com/jbkunst/highcharter/issues/188'>#188</a> <a href='https://github.com/jbkunst/highcharter/issues/65'>#65</a> <a href='https://github.com/jbkunst/highcharter/issues/71'>#71</a>).</li>
@@ -460,7 +451,7 @@
 <li>Added <code>cross</code> as marker symbol (<a href='https://github.com/jbkunst/highcharter/issues/96'>#96</a>).</li>
 <li>New <code>hc_yAxis_multiples</code> to add automatically arbitraty number of y axis (<a href='https://github.com/jbkunst/highcharter/issues/90'>#90</a> <a href='https://github.com/jbkunst/highcharter/issues/79'>#79</a>).</li>
 <li>New <code>hc_grid</code> to create a grid of highchart objects, inspired from <code>mjs_grid</code> (<a href='https://github.com/jbkunst/highcharter/issues/67'>#67</a> <a href='https://github.com/jbkunst/highcharter/issues/66'>#66</a>).</li>
-<li>Add motion plugin <a href="http://www.highcharts.com/plugin-registry/single/40/Motion" class="uri">http://www.highcharts.com/plugin-registry/single/40/Motion</a> (<a href='https://github.com/jbkunst/highcharter/issues/62'>#62</a>).</li>
+<li>Add motion plugin http://www.highcharts.com/plugin-registry/single/40/Motion (<a href='https://github.com/jbkunst/highcharter/issues/62'>#62</a>).</li>
 </ul>
 </div>
 <div id="changes-7" class="section level2">
@@ -523,7 +514,7 @@
 <a href="#highcharter-020" class="anchor"></a>highcharter 0.2.0<small> 2016-02-25 </small>
 </h1>
 <ul>
-<li>Implemenation of highcharts with boost module <code><a href="https://rdrr.io/pkg/highcharter/man/highchart2.html">highchart2()</a></code> (<a href='https://github.com/jbkunst/highcharter/issues/43'>#43</a>). This include highcharts.js, exporting.js and boost-module.js.</li>
+<li>Implemenation of highcharts with boost module <code><a href="../reference/highchart2.html">highchart2()</a></code> (<a href='https://github.com/jbkunst/highcharter/issues/43'>#43</a>). This include highcharts.js, exporting.js and boost-module.js.</li>
 <li>Highstock implementation/support (<a href='https://github.com/jbkunst/highcharter/issues/10'>#10</a>)</li>
 <li>Highmaps implementation/support (<a href='https://github.com/jbkunst/highcharter/issues/25'>#25</a>)</li>
 <li>Adding themes (<a href='https://github.com/jbkunst/highcharter/issues/35'>#35</a>): 538, economist, dotabuff, google, theme null (<a href='https://github.com/jbkunst/highcharter/issues/19'>#19</a>)</li>
@@ -569,7 +560,7 @@
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
 </div>
 
       </footer>

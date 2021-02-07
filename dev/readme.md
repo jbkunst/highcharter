@@ -3,7 +3,7 @@
 ## Highcharts.js libraries 
 
 To download/update highcharts libraries `dev/download-highcharts-code.R` then modify 
-`inst/htmlwidgets/highchart.yalm`
+`inst/htmlwidgets/highchart.yalm` and `inst/htmlwidgets/highchartzero.yalm`
 
 ## Autogenerate `highcharts-api.R`
 

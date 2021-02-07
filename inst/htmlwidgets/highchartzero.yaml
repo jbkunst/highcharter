@@ -4,7 +4,7 @@ dependencies:
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
   - name: highcharts
-    version: 8.2.2
+    version: 9.0.0
     src: "htmlwidgets/lib/highcharts"
     script:
     - highcharts.js
