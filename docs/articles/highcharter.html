@@ -65,12 +65,8 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
+<li class="divider">
+    <li class="dropdown-header">Get Started</li>
     <li>
       <a href="../articles/hchart.html">hchart Function</a>
     </li>
@@ -78,16 +74,37 @@
       <a href="../articles/highcharts-api.html">Highcharts API</a>
     </li>
     <li>
-      <a href="../articles/highcharts.html">Charts with highcharts</a>
-    </li>
-    <li>
       <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
     </li>
     <li>
-      <a href="../articles/howtos.html">Commons HOW TOs</a>
+      <a href="../articles/showcase.html">Showcase</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">The highchartsJS bundle</li>
+    <li>
+      <a href="../articles/highcharts.html">Charts with highcharts</a>
     </li>
     <li>
       <a href="../articles/maps.html">Maps with highmaps</a>
+    </li>
+    <li>
+      <a href="../articles/stock.html">Stocks with highstock</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Experiments &amp; Examples</li>
+    <li>
+      <a href="../articles/fontawesome.html">Fontawesome integration</a>
+    </li>
+    <li>
+      <a href="../articles/drilldown.html">Drilldown</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">More of highcharter</li>
+    <li>
+      <a href="../articles/themes.html">Themes</a>
+    </li>
+    <li>
+      <a href="../articles/howtos.html">Commons HOW TOs</a>
     </li>
     <li>
       <a href="../articles/modules.html">Modules &amp; plugins</a>
@@ -97,15 +114,6 @@
     </li>
     <li>
       <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
     </li>
   </ul>
 </li>
@@ -203,8 +211,8 @@ $(document).ready(function(){
 <p>So, a basic example would be:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="st">"point"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span>, group <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-aa8fc55dc47eaa602543" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-aa8fc55dc47eaa602543">{
+<div id="htmlwidget-dd0f48529768fa13e4f7" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dd0f48529768fa13e4f7">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -3933,8 +3941,8 @@ $(document).ready(function(){
 ## 6 1967-12-01 pop      199657 0.00777</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">economics_long2</span>, <span class="st">"line"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value01</span>, group <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-a6ffade0807c552b024d" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a6ffade0807c552b024d">{
+<div id="htmlwidget-afc90a45913e59a4a736" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-afc90a45913e59a4a736">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -17921,8 +17929,8 @@ $(document).ready(function(){
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">dfdiam</span>, <span class="st">"heatmap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">clarity</span>, value <span class="op">=</span> <span class="va">price</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Median Price"</span><span class="op">)</span> </code></pre></div>
-<div id="htmlwidget-6ef1c17596451a7c7b0b" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6ef1c17596451a7c7b0b">{
+<div id="htmlwidget-cb03cc6e78247f6c2fe2" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cb03cc6e78247f6c2fe2">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -18525,8 +18533,8 @@ $(document).ready(function(){
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span>, <span class="op">-</span><span class="va">unique</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">mpgman</span>, <span class="st">"treemap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">manufacturer</span>, value <span class="op">=</span> <span class="va">n</span>, color <span class="op">=</span> <span class="va">unique</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-b109008aaf5f3dfde69f" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b109008aaf5f3dfde69f">{
+<div id="htmlwidget-b9b71223f4f523a62558" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b9b71223f4f523a62558">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -18856,8 +18864,8 @@ $(document).ready(function(){
   name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span><span class="op">)</span>,
   showInLegend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># only show the first one in the legend</span>
   <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-d775928f80920020c790" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d775928f80920020c790">{
+<div id="htmlwidget-33afca46780b8975645d" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-33afca46780b8975645d">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -19304,8 +19312,8 @@ $(document).ready(function(){
   <span class="op">)</span>
 
 <span class="va">hc</span></code></pre></div>
-<div id="htmlwidget-dc06148cfe1cd1f9c04f" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dc06148cfe1cd1f9c04f">{
+<div id="htmlwidget-ac28cb872c1778619771" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ac28cb872c1778619771">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -19827,8 +19835,8 @@ $(document).ready(function(){
     color <span class="op">=</span> <span class="fu"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="fl">0.2</span><span class="op">)</span>,  <span class="co"># put a semi transparent color</span>
     zIndex <span class="op">=</span> <span class="op">-</span><span class="fl">3</span> <span class="co"># this is for put the series in a back so the points are showed first</span>
     <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-72fcdbd0e3e443de830a" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-72fcdbd0e3e443de830a">{
+<div id="htmlwidget-a83dc810aa61c5eaa33e" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a83dc810aa61c5eaa33e">{
   "x": {
     "hc_opts": {
       "chart": {
