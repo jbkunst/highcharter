@@ -3,6 +3,9 @@ template:
   params:
     bootswatch: cosmo
     ganalytics: UA-17670833-9
+    docsearch:
+      api_key: dc216f6fb0d79cc6e98d4867892b8fd6
+      index_name: highcharter
 authors:
   Joshua Kunst:
     href: http://jkunst.com
