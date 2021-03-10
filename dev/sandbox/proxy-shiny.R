@@ -40,6 +40,10 @@ ui <- fluidPage(
       highchartOutput("hc_opts2")
     ),
     column(
+      actionButton("set_data", "Update all series data"),
+      highchartOutput("hc_set_data")
+    ),
+    column(
       actionButton("addpoint", "Add point"),
       actionButton("addpoint_w_shift", "Add point with shift"),
       actionButton("rmpoint", "Remove point"),
@@ -180,6 +184,42 @@ server <- function(input, output, session){
         type = sample(c('line', 'column', 'spline', 'area', 'areaspline', 'scatter', 'lollipop', 'bubble'), 1),
         name = str_c("London ", sample(1:10, 1)),
         dataLabels = list(enabled = sample(c(TRUE, FALSE), 1))
+      )
+    
+  })
+  
+  output$hc_set_data <- renderHighchart({ 
+    input$reset
+    
+    df <- data.frame(
+      month = month.abb,
+      A = runif(12, 30, 90),
+      B = runif(12, 30, 90),
+      C = runif(12, 30, 90),
+      D = runif(12, 30, 90)
+    ) %>% tidyr::pivot_longer(A:D, names_to = "name", values_to = "value")
+    
+    hchart(df, "column", hcaes(month, value, group = name)) %>% 
+      hc_xAxis(title = list(text = "")) %>% 
+      hc_yAxis(title = list(text = ""))
+  })
+  
+  observeEvent(input$set_data, { 
+    
+    df <- data.frame(
+      month = month.abb,
+      A = runif(12, 30, 90),
+      B = runif(12, 30, 90),
+      C = runif(12, 30, 90),
+      D = runif(12, 30, 90)
+    ) %>% tidyr::pivot_longer(A:D, names_to = "name", values_to = "value")
+    
+    highchartProxy("hc_set_data") %>%
+      hcpxy_set_data(
+        type = "column",
+        data = df,
+        mapping = hcaes(month, value, group = name),
+        redraw = TRUE
       )
     
   })
