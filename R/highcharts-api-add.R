@@ -638,7 +638,7 @@ hc_add_event_point <- function(hc, series = "series", event = "click") {
   var pointinfo = {series: this.series.name, seriesid: this.series.id,
   name: this.name, x: this.x, y: this.y, category: this.category.name}
   window.x = this;
-  console.log(pointinfo);
+  // console.log(pointinfo);
 
   if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
 }")
@@ -672,7 +672,7 @@ hc_add_event_point <- function(hc, series = "series", event = "click") {
 hc_add_event_series <- function(hc, series = "series", event = "click") {
   fun <- paste0("function(){
   var seriesinfo = {name: this.name }
-  console.log(seriesinfo);
+  // console.log(seriesinfo);
   window.x = this;
   if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
 
