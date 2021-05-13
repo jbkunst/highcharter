@@ -1,9 +1,9 @@
 /*
- Highcharts JS v9.0.0 (2021-02-02)
+ Highcharts JS v9.1.0 (2021-05-03)
 
  Marker clusters module for Highcharts
 
- (c) 2010-2019 Wojciech Chmiel
+ (c) 2010-2021 Wojciech Chmiel
 
  License: www.highcharts.com/license
 */

@@ -1,5 +1,5 @@
 /*
- Highcharts JS v9.0.0 (2021-02-02)
+ Highcharts JS v9.1.0 (2021-05-03)
 
  Item series type for Highcharts
 

@@ -1,9 +1,9 @@
 /*
- Highcharts JS v9.0.0 (2021-02-02)
+ Highcharts JS v9.1.0 (2021-05-03)
 
  Timeline series
 
- (c) 2010-2019 Highsoft AS
+ (c) 2010-2021 Highsoft AS
  Author: Daniel Studencki
 
  License: www.highcharts.com/license

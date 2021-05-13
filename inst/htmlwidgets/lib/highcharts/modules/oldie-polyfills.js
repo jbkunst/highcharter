@@ -1,9 +1,9 @@
 /*
- Highcharts JS v9.0.0 (2021-02-02)
+ Highcharts JS v9.1.0 (2021-05-03)
 
  Old IE (v6, v7, v8) array polyfills for Highcharts v7+.
 
- (c) 2010-2019 Highsoft AS
+ (c) 2010-2021 Highsoft AS
  Author: Torstein Honsi
 
  License: www.highcharts.com/license

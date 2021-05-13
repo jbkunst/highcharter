@@ -1,9 +1,9 @@
 /*
- Highcharts JS v9.0.0 (2021-02-02)
+ Highcharts JS v9.1.0 (2021-05-03)
 
  Highcharts 3D funnel module
 
- (c) 2010-2019 Kacper Madej
+ (c) 2010-2021 Kacper Madej
 
  License: www.highcharts.com/license
 */

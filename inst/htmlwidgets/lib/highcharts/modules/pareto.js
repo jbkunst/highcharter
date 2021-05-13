@@ -1,9 +1,9 @@
 /*
- Highcharts JS v9.0.0 (2021-02-02)
+ Highcharts JS v9.1.0 (2021-05-03)
 
  Pareto series type for Highcharts
 
- (c) 2010-2019 Sebastian Bochan
+ (c) 2010-2021 Sebastian Bochan
 
  License: www.highcharts.com/license
 */
