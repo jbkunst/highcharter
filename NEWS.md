@@ -2,12 +2,24 @@
 
 ## Changes
 
-* Highcharter now uses HighchartsJS 9.0.0
+* Highcharter now uses HighchartsJS 9.1.0
 * Support highcharts gantt extension (#287) 
 * Adding missed language options in `getOption("highcharter.lang")`.
 * Adding `hcpxy_add_series`, `hcpxy_remove_series`, `hcpxy_update`, `hcpxy_update_series`,
 `hcpxy_add_point`, `hcpxy_remove_point` and `hcpxy_loading`
 * Adding `hc_loading` for use with `hcpxy_loading`
+
+## Bugs
+
+* Removing `knitr.figure = FALSE` option in `sizingPolicy = htmlwidgets::sizingPolicy`
+to fix #703 
+
+## Internal
+
+* Back to previous definition in inst/htmlwidegts/highchart.js. From 
+`factory: function(el, width, height) { ... ` to 
+`renderValue: function(el, x, instance) { ...` due this way the widget
+resize to use the space in flexdashboards (WIP).
 
 # highcharter 0.8.2
 
