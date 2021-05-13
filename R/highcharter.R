@@ -70,7 +70,7 @@ highchart <- function(hc_opts = list(),
     elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(
       defaultWidth = "100%",
-      knitr.figure = FALSE,
+      # knitr.figure = FALSE,
       browser.fill = TRUE,
       padding = 0
     )
