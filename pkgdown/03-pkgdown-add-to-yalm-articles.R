@@ -32,6 +32,11 @@ xx <- c("fontawesome", "drilldown")
 
 artcls <- setdiff(artcls, xx)
 
+# shiny
+shiny <- c("shiny", "shiny-events-demo")
+
+artcls <- setdiff(artcls, shiny)
+
 # extras
 artcls <- unique(c("themes", artcls))
 
@@ -45,6 +50,11 @@ yml[["articles"]] <- list(
     title = "The highchartsJS bundle",
     navbar = "The highchartsJS bundle",
     contents = highcharts
+  ),
+  list(
+    title = "Shiny Integration",
+    navbar = "Shiny Integration",
+    contents = shiny
   ),
   list(
     title = "Experiments & Examples",
@@ -67,4 +77,4 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 # build articles ----------------------------------------------------------
 pkgdown::build_articles()
 pkgdown::build_articles_index()
-# pkgdown::build_article("highcharts")
+# pkgdown::build_article("shiny")

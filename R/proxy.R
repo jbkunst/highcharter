@@ -162,7 +162,7 @@ hcpxy_update <- function(proxy, ...) {
 #' @param proxy A `higchartProxy` object.
 #' @param id A character vector indicating the `id` (or `id`s) of the series to update.
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
-#'   The argumnes will be the same for each series. So if you want update data it
+#'   The arguments will be the same for each series. So if you want update data it
 #'   is used this function sequentially for each series.
 #' 
 #' @export

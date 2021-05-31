@@ -1,0 +1,143 @@
+---
+title: Shiny Examples
+author: Joshua Kunst
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+description: >
+  This article show how simple is integrate highcharter widgets into your shiny
+  apps. Here you will find some specific examples like the use of proxy funcions
+  and other apps to give you some inspiration.
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center")
+
+library(tidyverse)
+library(rvest)
+
+doc <- rvest::read_html("https://github.com/jbkunst/highcharter-shiny")
+
+apps <- doc %>% 
+  html_nodes(".js-navigation-open") %>% 
+  html_attr("title") %>% 
+  na.omit() %>% 
+  as.character() %>% 
+  str_subset("^[0-9]{2}")
+
+apps
+
+library(furrr)
+
+plan(multisession, workers = 10)
+
+dinfo <- future_map_dfr(apps, function(x = "03-shinydashboard-n-spakrlines"){ 
+  
+  message(x)
+  
+  url_app <- str_glue("http://jbkunst.shinyapps.io/", x)
+  
+  url_src <- str_glue("https://github.com/jbkunst/highcharter-shiny/tree/master/", x)
+  
+  description <- str_glue(
+    "https://raw.githubusercontent.com/jbkunst/highcharter-shiny/master/{ folder }/DESCRIPTION",
+    folder = x
+    )
+  
+  status <- httr::status_code(httr::GET(description))
+  
+  tmp <- tempfile()
+  
+  if(status == 404) {
+    writeLines("", con = tmp)
+    description <- desc::description$new(file = tmp)
+  } else {
+    download.file(description, tmp)
+    description <- desc::desc(tmp)
+  }
+  
+  readme.dm <- str_glue(
+    "https://raw.githubusercontent.com/jbkunst/highcharter-shiny/master/{ folder }/Readme.md",
+    folder = x
+    )
+  
+  status <- httr::status_code(httr::GET(readme.dm))
+  
+  if(status == 404) {
+    readme.dm <- ""
+  } else {
+    readme.dm <- readLines(readme.dm)
+  }
+  
+  tmp_img <- tempfile(fileext = ".png")
+  
+  tmp_img %>% str_replace_all("\\\\", "/")
+  
+  shot <- webshot2::webshot(
+    url_app, 
+    file = tmp_img, 
+    delay = 10,
+    zoom = 0.5, 
+    vwidth = 1336, 
+    vheight = 768,
+    cliprect = "viewport"
+    )
+  
+  img_uri <- knitr::image_uri(tmp_img)
+  
+  dout <- tibble(
+    app   = x,
+    title = coalesce(description$get("Title"), x),
+    url   = url_app,
+    src   = url_src,
+    shot  = img_uri,
+    text  = list(readme.dm)
+  )
+  
+  # dout <- mutate(dout, across(everything(), as.character))
+  
+  dout
+  
+})
+
+dinfo <- left_join(
+  dinfo,
+  tibble(app = apps) %>% mutate(id = dplyr::row_number()),
+  by = "app"
+  ) %>% 
+  arrange(id) %>% 
+  select(-id, -app)
+
+dinfo
+```
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+pwalk(dinfo, function(title, url, src, shot, text){
+
+  cat("\n")
+  
+  cat(str_c("## ", title, "\n"))
+  
+  cat(str_c("* Live: ", url, "\n"))
+  cat(str_c("* Code: ", src, "\n"))
+  
+  cat("\n")
+  
+  # cat("<img src='", shot, "'/>\n")
+  htmltools::tags$img(src = shot) %>% 
+    htmltools::a(href = url, target = "_blank") %>% 
+    as.character() %>% 
+    cat("\n")
+  
+  htmltools::tags$br() %>% 
+    as.character() %>% 
+    cat("\n")
+  
+  cat(str_c(text, "\n"))
+  
+  cat("\n")
+  
+})
+```
+

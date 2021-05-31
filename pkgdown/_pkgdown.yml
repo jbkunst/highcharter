@@ -202,6 +202,11 @@ articles:
   - highcharts
   - maps
   - stock
+- title: Shiny Integration
+  navbar: Shiny Integration
+  contents:
+  - shiny
+  - shiny-events-demo
 - title: Experiments & Examples
   navbar: Experiments & Examples
   contents:
@@ -211,7 +216,6 @@ articles:
   navbar: More of highcharter
   contents:
   - themes
-  - debug.log
   - hc-api-legend-jsfiddle.png
   - hc-api-legend-title.png
   - hc-api-legend.png
@@ -219,4 +223,3 @@ articles:
   - howtos
   - modules
   - motion
-  - shiny-events-demo
