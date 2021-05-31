@@ -1,5 +1,5 @@
 HTMLWidgets.widget({
-
+  
   name: 'highchart',
 
   type: 'output',
@@ -140,7 +140,6 @@ HTMLWidgets.widget({
       chart.setSize(w, h); 
     }
     
-
   }
 
 });
@@ -221,5 +220,33 @@ if (HTMLWidgets.shinyMode) {
     
   });
   
+  Shiny.addCustomMessageHandler('setData', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    if (typeof chart != 'undefined') {
+      
+      chart.series[msg.serie].setData(
+        data = msg.data,
+        redraw = msg.redraw,
+        animation = msg.animation,
+        updatePoints = msg.updatePoints
+        );
+      
+    }
+    
+  });
+  
+  Shiny.addCustomMessageHandler('redraw', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    if (typeof chart != 'undefined') {
+      
+      chart.redraw();
+      
+    }
+      
+  });
   
 }

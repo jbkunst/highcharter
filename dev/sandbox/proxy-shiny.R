@@ -12,15 +12,15 @@ ui <- fluidPage(
     column(
       actionButton("addpnts", "Add Series"),
       highchartOutput("hc_nd")
-      ),
+    ),
     column(
       actionButton("mkpreds", "Add Series linkedTo existing one"),
       highchartOutput("hc_ts")
-      ),
+    ),
     column(
       actionButton("loading", "Loading"),
       highchartOutput("hc_ld")
-      ),
+    ),
     column(
       actionButton("remove", "Remove series"),
       highchartOutput("hc_rm")
@@ -38,6 +38,10 @@ ui <- fluidPage(
       actionButton("update3", "Update series data"), 
       actionButton("update4", "Update series options"),
       highchartOutput("hc_opts2")
+    ),
+    column(
+      actionButton("set_data", "Update all series data"),
+      highchartOutput("hc_set_data")
     ),
     column(
       actionButton("addpoint", "Add point"),
@@ -112,7 +116,7 @@ server <- function(input, output, session){
       ggplot2::mpg %>% select(displ, cty, cyl), 
       "scatter",
       hcaes(x = displ, y = cty, group = cyl)
-      )
+    )
   })
   
   observeEvent(input$remove_all, { 
@@ -184,6 +188,42 @@ server <- function(input, output, session){
     
   })
   
+  output$hc_set_data <- renderHighchart({ 
+    input$reset
+    
+    df <- data.frame(
+      month = month.abb,
+      A = runif(12, 30, 90),
+      B = runif(12, 30, 90),
+      C = runif(12, 30, 90),
+      D = runif(12, 30, 90)
+    ) %>% tidyr::pivot_longer(A:D, names_to = "name", values_to = "value")
+    
+    hchart(df, "column", hcaes(month, value, group = name)) %>% 
+      hc_xAxis(title = list(text = "")) %>% 
+      hc_yAxis(title = list(text = ""))
+  })
+  
+  observeEvent(input$set_data, { 
+    
+    df <- data.frame(
+      month = month.abb,
+      A = runif(12, 30, 90),
+      B = runif(12, 30, 90),
+      C = runif(12, 30, 90),
+      D = runif(12, 30, 90)
+    ) %>% tidyr::pivot_longer(A:D, names_to = "name", values_to = "value")
+    
+    highchartProxy("hc_set_data") %>%
+      hcpxy_set_data(
+        type = "column",
+        data = df,
+        mapping = hcaes(month, value, group = name),
+        redraw = TRUE
+      )
+    
+  })
+  
   output$hc_addpoint <- renderHighchart({
     input$reset
     
@@ -216,7 +256,7 @@ server <- function(input, output, session){
         id = "ts",
         point = list(x = datetime_to_timestamp(Sys.time()), y = rnorm(1)),
         shift = TRUE
-        )
+      )
     
   })
   
@@ -226,11 +266,9 @@ server <- function(input, output, session){
       hcpxy_remove_point(
         id = "ts",
         i = 0
-        )
+      )
     
   })
-  
-  
   
 }
 
