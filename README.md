@@ -40,6 +40,14 @@ the implemented Highcharts API.
 - `vignette("highchartsjs-api-basics")` explain the relationship between the
 highchartsJS API and highcharter.
 
+## Performance
+
+Processing by Highcharter can be resource intensive; e.g. parsing data structures in R and into the **Highcharts JSON format**. Depending on your usage of the package there can be a benefit in tweaking the performance options:
+
+* `options(highcharter.boost = TRUE)`, activates base R function for parsing data structures within R.
+* `options(highcharter.rjson = TRUE)`, activates rjson::toJSON() instead of the standard shiny::toJSON().
+
+The performance options can be a factor 10x faster, but it is recommended to check the compatibility with your usage. By default the performance options are turned off.
 
 ## Licence 
 

@@ -440,7 +440,7 @@ add_arg_to_df <- function(data, ...) {
 #' @importFrom dplyr mutate do arrange_
 #' @importFrom tibble tibble tibble_
 data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
-  
+
   # check type and fix
   type <- ifelse(type == "point", "scatter", type)
   type <- ifelse((has_name(mapping, "size") | has_name(mapping, "z")) & type == "scatter",
@@ -491,9 +491,24 @@ data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
   if (!has_name(mapping, "group")) {
     data[["group"]] <- "group"
   }
-  
-  if (isTRUE(fast)) {
-    # pre-convert data to json
+
+  # Execute in boost-mode or fast.  
+  if (getOption("highcharter.boost")) {
+    if (getOption("highcharter.verbose")) {
+      message("Mapping group(s) in boost mode.")
+    }
+    
+    # Parse the data in group(s).
+    s <- split(data, data$group) %>% lapply(list_parse)
+    # l <- lapply(1:length(s), function(i) {
+    #   data.frame(group = names(s)[i], data = I(list_parse(s[[i]])))
+    # })
+    data <- data.frame(group = names(s), data = I(s[]))
+
+  } else if (isTRUE(fast)) {
+    if (getOption("highcharter.verbose")) {
+      message("Mapping group(s) with pre-conversion to json.")
+    }
     data <- data %>% 
       group_by(.data$group) %>% 
       do(data = jsonlite::toJSON(select(., -.data$group), 
@@ -501,6 +516,9 @@ data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
                                  verbatim = TRUE)) %>% 
       ungroup()
   } else {
+    if (getOption("highcharter.verbose")) {
+      message("Mapping group(s) in standard mode.")
+    }
     data <- data %>%
       group_by(.data$group) %>%
       do(data = list_parse(select(., -.data$group))) %>%

@@ -57,7 +57,10 @@ highchart <- function(hc_opts = list(),
   }
   
   if (getOption("highcharter.rjson")) {
-    attr(x, 'TOJSON_FUNC') <- rjson::toJSON
+    attr(x, "TOJSON_FUNC") <- rjson::toJSON
+    attr(x, "TOJSON_ARGS") <- NULL
+    if (getOption("highcharter.verbose"))
+      message("Using rjson::toJSON conversion.")
   }
 
   # create widget
