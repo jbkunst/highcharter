@@ -144,6 +144,14 @@
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Shiny Integration</li>
+    <li>
+      <a href="../articles/shiny.html">Shiny Examples</a>
+    </li>
+    <li>
+      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Experiments &amp; Examples</li>
     <li>
       <a href="../articles/fontawesome.html">Fontawesome integration</a>
@@ -164,9 +172,6 @@
     </li>
     <li>
       <a href="../articles/motion.html">Motion plugin</a>
-    </li>
-    <li>
-      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
   </ul>
 </li>
@@ -212,13 +217,28 @@
 <h2 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h2>
 <ul>
-<li>Highcharter now uses HighchartsJS 9.0.0</li>
+<li>Highcharter now uses HighchartsJS 9.1.0</li>
 <li>Support highcharts gantt extension (<a href='https://github.com/jbkunst/highcharter/issues/287'>#287</a>)</li>
 <li>Adding missed language options in <code><a href="https://rdrr.io/r/base/options.html">getOption("highcharter.lang")</a></code>.</li>
 <li>Adding <code>hcpxy_add_series</code>, <code>hcpxy_remove_series</code>, <code>hcpxy_update</code>, <code>hcpxy_update_series</code>, <code>hcpxy_add_point</code>, <code>hcpxy_remove_point</code> and <code>hcpxy_loading</code>
 </li>
+<li>Adding <code>hcpxy_set_date</code> and <code>hcpxy_redraw</code> thanks to <a href='https://github.com/PaulC91'>@PaulC91</a></li>
 <li>Adding <code>hc_loading</code> for use with <code>hcpxy_loading</code>
 </li>
+</ul>
+</div>
+<div id="bugs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bugs" class="anchor"></a>Bugs</h2>
+<ul>
+<li>Removing <code>knitr.figure = FALSE</code> option in <code>sizingPolicy = htmlwidgets::sizingPolicy</code> to fix <a href='https://github.com/jbkunst/highcharter/issues/703'>#703</a></li>
+</ul>
+</div>
+<div id="internal" class="section level2">
+<h2 class="hasAnchor">
+<a href="#internal" class="anchor"></a>Internal</h2>
+<ul>
+<li>Back to previous definition in inst/htmlwidegts/highchart.js. From <code>factory: function(el, width, height) { ...</code> to <code>renderValue: function(el, x, instance) { ...</code> due this way the widget resize to use the space in flexdashboards (WIP).</li>
 </ul>
 </div>
 </div>
@@ -243,9 +263,9 @@
 <li>Added option to switch to <code><a href="https://rdrr.io/pkg/rjson/man/toJSON.html">rjson::toJSON</a></code> for better plotting performance. To use execute <code><a href="https://rdrr.io/r/base/options.html">options(highcharter.rjon =TRUE)</a></code>. See <a href='https://github.com/jbkunst/highcharter/issues/613'>#613</a>. Thanks to <a href='https://github.com/nordicgit70'>@nordicgit70</a>.</li>
 </ul>
 </div>
-<div id="bugs" class="section level2">
+<div id="bugs-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bugs" class="anchor"></a>Bugs</h2>
+<a href="#bugs-1" class="anchor"></a>Bugs</h2>
 <ul>
 <li>Removing deprecated messages by dplyr <a href='https://github.com/jbkunst/highcharter/issues/633'>#633</a> <a href='https://github.com/jbkunst/highcharter/issues/637'>#637</a> thanks to <a href='https://github.com/hdrab127'>@hdrab127</a>.</li>
 </ul>

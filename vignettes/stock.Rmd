@@ -4,10 +4,10 @@ author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
-  The highcharter package include [highstocks](https://www.highcharts.com/demo/stock)
   libraries from highchartsJS to create stock or general timeline charts.
   Features sophisticated navigation for high-volume data, user annotations and
   range selectors.
+  The highcharter package include [highstocks](https://www.highcharts.com/demo/stock)
 editor_options: 
   chunk_output_type: console
 ---
@@ -23,7 +23,7 @@ $(document).ready(function(){
 </script>
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 library(highcharter)
 options(highcharter.theme = hc_theme_hcrt())
 ```

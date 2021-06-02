@@ -23,7 +23,6 @@ indx1
 indx2 <- which(str_detect(index, "id=\"installation\""))
 indx2
 
-
 index_new <- read_lines("pkgdown/index.html")
 
 scripts <- str_subset(index_new, "index_files")
@@ -43,6 +42,8 @@ index_final <- c(
   index_new[index_new1:index_new2],
   index[indx2:length(index)]
 )
+
+index_final
 
 writeLines(index_final, "docs/index.html")
 

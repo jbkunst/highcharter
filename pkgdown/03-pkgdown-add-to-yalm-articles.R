@@ -33,7 +33,7 @@ xx <- c("fontawesome", "drilldown")
 artcls <- setdiff(artcls, xx)
 
 # shiny
-shiny <- c("shiny", "shiny-events-demo")
+shiny <- c("shiny")
 
 artcls <- setdiff(artcls, shiny)
 
@@ -78,3 +78,4 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 pkgdown::build_articles()
 pkgdown::build_articles_index()
 # pkgdown::build_article("shiny")
+# pkgdown::build_article("maps")

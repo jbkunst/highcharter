@@ -11,6 +11,18 @@ editor_options:
   chunk_output_type: console
 ---
 
+<script>
+$(document).ready(function(){ 
+  el = $(".page-header > h1")
+  icon = "magic"
+  text = el.text()
+  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+  el.html(text_new) 
+}) ;
+</script>
+
+Let's check some examples!
+
 ```{r, include=FALSE}
 knitr::opts_chunk$set(fig.align = "center")
 

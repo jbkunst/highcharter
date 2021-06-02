@@ -204,9 +204,7 @@ articles:
   - stock
 - title: Shiny Integration
   navbar: Shiny Integration
-  contents:
-  - shiny
-  - shiny-events-demo
+  contents: shiny
 - title: Experiments & Examples
   navbar: Experiments & Examples
   contents:

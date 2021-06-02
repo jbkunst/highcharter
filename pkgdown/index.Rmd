@@ -11,7 +11,14 @@ Highcharts is very flexible and customizable javascript charting library and
 it has a great and powerful API.
 
 ```{r setup, include = FALSE, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE, 
+  collapse = TRUE, 
+  comment = "#>",
+  out.width="100%"
+  )
+
 library(dplyr)
 library(htmltools)
 library(highcharter)

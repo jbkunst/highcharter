@@ -22,7 +22,7 @@ $(document).ready(function(){
 </script>
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 library(highcharter)
 library(dplyr)
 library(htmltools)
