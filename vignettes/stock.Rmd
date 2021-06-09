@@ -63,28 +63,12 @@ use the `hc_add_series()` function. Don't forget to specify `type = "stock"` to
 activate the navigator, range selector and other features of highstock.   
 
 ```{r}
-highchart(type = "stock") %>% 
-  hc_add_series(x) %>% 
-  hc_add_series(y, type = "ohlc")
-```
-
-In the next example well chart `xts` class data: 
-
-```{r}
-usdjpy <- getSymbols("USD/JPY", src = "oanda", auto.assign = FALSE)
-eurkpw <- getSymbols("EUR/KPW", src = "oanda", auto.assign = FALSE)
-
-class(eurkpw)
-
 hc <- highchart(type = "stock") %>% 
-  hc_title(text = "Charting some Symbols") %>% 
-  hc_subtitle(text = "Data extracted using quantmod package") %>% 
-  hc_add_series(usdjpy, id = "usdjpy", name = "USD/JPY") %>% 
-  hc_add_series(eurkpw, id = "eurkpw", name = "EUR/KPW")
+  hc_add_series(x, id = 1) %>% 
+  hc_add_series(y, type = "ohlc", id = 2)
 
 hc
 ```
-
 ## Flags
 
 Previously we used the `id` parameter. This is necessary 
@@ -95,8 +79,8 @@ library(dplyr)
 
 set.seed(123)
 
-data_flags <- data_frame(
-  date = sample(time(usdjpy), size = 5),
+data_flags <- tibble(
+  date = sample(time(x), size = 5),
   title = sprintf("E #%s", seq_along(date)),
   text = sprintf("An interesting event #%s in %s", seq_along(date), date)
 )
@@ -108,10 +92,8 @@ hc %>%
     data_flags, 
     hcaes(x = date),
     type = "flags", 
-    onSeries = "usdjpy"
+    onSeries = 2
     )
-
-
 ```
 
 ## Advanced Example

@@ -103,8 +103,10 @@ reference:
   - hcpxy_add_point
   - hcpxy_add_series
   - hcpxy_loading
+  - hcpxy_redraw
   - hcpxy_remove_point
   - hcpxy_remove_series
+  - hcpxy_set_data
   - hcpxy_update
   - hcpxy_update_series
   - highchartOutput

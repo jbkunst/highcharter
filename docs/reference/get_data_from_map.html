@@ -148,6 +148,11 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       <a href="../articles/stock.html">Stocks with highstock</a>
     </li>
     <li class="divider"></li>
+    <li class="dropdown-header">Shiny Integration</li>
+    <li>
+      <a href="../articles/shiny.html">Shiny Examples</a>
+    </li>
+    <li class="divider"></li>
     <li class="dropdown-header">Experiments &amp; Examples</li>
     <li>
       <a href="../articles/fontawesome.html">Fontawesome integration</a>
@@ -168,9 +173,6 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
     </li>
     <li>
       <a href="../articles/motion.html">Motion plugin</a>
-    </li>
-    <li>
-      <a href="../articles/shiny-events-demo.html">Shiny Events Demo</a>
     </li>
   </ul>
 </li>
@@ -233,20 +235,20 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>dta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='download_map_data.html'>download_map_data</a></span><span class='op'>(</span><span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span><span class='op'>)</span>
 <span class='fu'>get_data_from_map</span><span class='op'>(</span><span class='va'>dta</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span>
 #&gt;    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> admin2              0.51         0.290 us-ca-083 SB      06083 Santa Barbara 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> admin2              0.45         0.24  us-ca-111 VE      06111 Ventura       
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> admin2              0.38         0.46  us-ca-071 SB      06071 San Bernardino
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> admin2              0.27         0.69  us-ca-115 YU      06115 Yuba          
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> admin2              0.55         0.48  us-ca-101 SU      06101 Sutter        
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> admin2              0.63         0.5   us-ca-031 KI      06031 Kings         
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> admin2              0.34         0.59  us-ca-053 MO      06053 Monterey      
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> admin2              0.2          0.54  us-ca-057 NE      06057 Nevada        
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> admin2              0.4          0.34  us-ca-059 OR      06059 Orange        
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> admin2              0.51         0.54  us-ca-065 RI      06065 Riverside     
-#&gt; </span><span style='color: #949494;'># ... with 48 more rows</span><span></div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         
+#&gt; <span style='color: #BCBCBC;'> 1</span> admin2              0.51          0.29 us-ca-083 SB      06083 Santa Barbara 
+#&gt; <span style='color: #BCBCBC;'> 2</span> admin2              0.45          0.24 us-ca-111 VE      06111 Ventura       
+#&gt; <span style='color: #BCBCBC;'> 3</span> admin2              0.38          0.46 us-ca-071 SB      06071 San Bernardino
+#&gt; <span style='color: #BCBCBC;'> 4</span> admin2              0.27          0.69 us-ca-115 YU      06115 Yuba          
+#&gt; <span style='color: #BCBCBC;'> 5</span> admin2              0.55          0.48 us-ca-101 SU      06101 Sutter        
+#&gt; <span style='color: #BCBCBC;'> 6</span> admin2              0.63          0.5  us-ca-031 KI      06031 Kings         
+#&gt; <span style='color: #BCBCBC;'> 7</span> admin2              0.34          0.59 us-ca-053 MO      06053 Monterey      
+#&gt; <span style='color: #BCBCBC;'> 8</span> admin2              0.2           0.54 us-ca-057 NE      06057 Nevada        
+#&gt; <span style='color: #BCBCBC;'> 9</span> admin2              0.4           0.34 us-ca-059 OR      06059 Orange        
+#&gt; <span style='color: #BCBCBC;'>10</span> admin2              0.51          0.54 us-ca-065 RI      06065 Riverside     
+#&gt; <span style='color: #949494;'># ... with 48 more rows</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

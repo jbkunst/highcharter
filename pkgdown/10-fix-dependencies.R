@@ -1,7 +1,5 @@
 library(tidyverse)
 
-
-
 # files to fix
 files_to_fix <- dir(
   path = "docs/articles",
@@ -19,7 +17,7 @@ depths <- str_extract_all(files_to_fix, "/") %>%
 map2(
   files_to_fix,
   depths,
-  function(f = "docs/articles/articles/replicating-highcharts-demos.html", d = 2){
+  function(f = "docs/articles/howtos.html", d = 1){
 
     message("processing: ", f, "| depth:", d)
 

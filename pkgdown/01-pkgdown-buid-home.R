@@ -13,7 +13,8 @@ try(fs::file_delete("pkgdown/index.html"))
 
 rmarkdown::render("pkgdown/index.Rmd")
 
-title <- '<div id="brand" class="page-header"><img src="logo.png" width ="15%"/> h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div>'
+title <- '<div id="brand" class="page-header"><img src="logo.png" width ="15%" style = "max-width: 150px;
+    max-height: 150px;"/> h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2{rpackage}</div>'
 
 index <- read_lines("docs/index.html")
 

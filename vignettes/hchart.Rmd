@@ -135,9 +135,11 @@ Survival models can be charted.
 ```{r}
 library(survival)
 
-data(lung)
-lung <- dplyr::mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
-fit <- survfit(Surv(time, status) ~ sex, data = lung)
+data(cancer, package = "survival")
+
+lung <- dplyr::mutate(cancer, sex = ifelse(sex == 1, "Male", "Female"))
+
+fit <- survfit(Surv(time, status) ~ sex, data = cancer)
 
 hchart(fit, ranges = TRUE)
 ```
@@ -150,11 +152,9 @@ quantmod package.
 ```{r}
 library(quantmod)
 
-x <- getFX("USD/JPY", auto.assign = FALSE)
-hchart(x)
+x <- getSymbols("GOOG", auto.assign = FALSE)
 
-y <- getSymbols("SPY", auto.assign = FALSE)
-hchart(y)
+hchart(x)
 ```
 
 ## Multivariate Time series

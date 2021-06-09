@@ -3,6 +3,8 @@ title:
 output:
   html_document:
     self_contained: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 Highcharter is a **[R](https://cran.r-project.org/)** wrapper for 
@@ -55,12 +57,15 @@ hc_theme_highcharts_small <-
 options(highcharter.theme = hc_theme_highcharts_small)
 
 # example 1
-data(mpg, package = "ggplot2")
-mpg <- mpg %>%
+mpg <- ggplot2::mpg %>%
   mutate(name = str_c(manufacturer, " ", model)) %>% 
-  select(name, displ, hwy)
-p1 <- hchart(mpg, "point", hcaes(x = displ, y = hwy, name = name), name = "Cars") %>% 
-  hc_colorAxis(stops = color_stops_index, legend = FALSE, visible = FALSE)
+  select(x = displ, y = hwy) %>% 
+  mutate_all(round, 2)
+
+p1 <- hchart(mpg, "point", hcaes(x, y), name = "Cars") %>% 
+  hc_colorAxis(stops = color_stops_index, legend = FALSE, visible = FALSE) %>% 
+  hc_xAxis(title = list(text = "displ")) %>% 
+  hc_xAxis(title = list(text = "hwy")) 
 
 # example 2
 library(forecast)
@@ -71,6 +76,7 @@ p2 <- hchart(
   ) %>%
   hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
   hc_tooltip(shared = TRUE, valueDecimals = 0)
+
 
 # example 3
 data(GNI2014, package = "treemap")
