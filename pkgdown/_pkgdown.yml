@@ -108,6 +108,7 @@ reference:
   - hcpxy_remove_series
   - hcpxy_set_data
   - hcpxy_update
+  - hcpxy_update_point
   - hcpxy_update_series
   - highchartOutput
   - renderHighchart
