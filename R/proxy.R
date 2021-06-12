@@ -191,6 +191,42 @@ hcpxy_update_series <- function(proxy, id = NULL, ...){
   
 }
 
+#' Update options series in a higchartProxy object
+#' 
+#' @param proxy A `higchartProxy` object.
+#' @param id A character indicating the `id` of the series' point to update.
+#' @param id_point A vector value indicating the point's index to update, (0 based).
+#' @param ... Arguments defined in \url{https://api.highcharts.com/class-reference/Highcharts.Point}.
+#'   The arguments will be the same for each series. So if you want update data it
+#'   is used this function sequentially for each point
+#' 
+#' @export
+hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...){
+  
+  checkProxy(proxy)
+  
+  for(i in 1:length(id_point)){
+    
+    if (getOption("highcharter.verbose")) {
+      message("hcpxy_update_point")
+    }
+    
+    proxy$session$sendCustomMessage(
+      type = "updatePoint",
+      message = list(
+        id = proxy$id,
+        idSeries = id,
+        idPoint = id_point[[i]],
+        options = list(...)
+      )
+    )
+    
+  }
+  
+  proxy
+  
+}
+
 
 #' Add point to a series of a higchartProxy object
 #' 

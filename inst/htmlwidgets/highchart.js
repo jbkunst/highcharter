@@ -188,6 +188,14 @@ if (HTMLWidgets.shinyMode) {
     
   });
   
+  Shiny.addCustomMessageHandler('updatePoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).data[msg.idPoint].update(msg.options);
+    
+  });
+  
   Shiny.addCustomMessageHandler('showLoading', function(msg) {
     
     var chart = $("#" + msg.id).highcharts();

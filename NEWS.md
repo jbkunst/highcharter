@@ -2,13 +2,14 @@
 
 ## Changes
 
-* Highcharter now uses HighchartsJS 9.1.0
-* Support highcharts gantt extension (#287) 
+* Highcharter now uses HighchartsJS 9.1.0.
+* Support highcharts gantt extension (#287). 
 * Adding missed language options in `getOption("highcharter.lang")`.
 * Adding `hcpxy_add_series`, `hcpxy_remove_series`, `hcpxy_update`, `hcpxy_update_series`,
-`hcpxy_add_point`, `hcpxy_remove_point` and `hcpxy_loading`
-* Adding `hcpxy_set_date` and `hcpxy_redraw` thanks to @PaulC91
-* Adding `hc_loading` for use with `hcpxy_loading`
+`hcpxy_add_point`, `hcpxy_remove_point` and `hcpxy_loading`.
+* Adding `hcpxy_set_date` and `hcpxy_redraw` thanks to @PaulC91.
+* Adding `hc_loading` for use with `hcpxy_loading`.
+* Adding `hcpxy_update_point` due @zevross (https://twitter.com/zevross/status/1403394816558383105).
 
 ## Bugs
 

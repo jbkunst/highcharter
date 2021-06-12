@@ -16,13 +16,13 @@ dependencies:
     - highcharts-more.js
     - modules/stock.js
     - modules/map.js
-    - modules/annotations.js
     - modules/data.js
+    - modules/exporting.js
+    - modules/offline-exporting.js    
     - modules/drilldown.js
     - modules/item-series.js
-    - modules/offline-exporting.js
     - modules/overlapping-datalabels.js
-    - modules/exporting.js
+    - modules/annotations.js    
     - modules/export-data.js
     - modules/funnel.js
     - modules/heatmap.js
