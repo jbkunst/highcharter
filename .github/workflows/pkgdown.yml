@@ -37,20 +37,20 @@ jobs:
           install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
         shell: Rscript {0}
 
-      - name: Install dependencies
+      - name: Install packages dependencies
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
         shell: Rscript {0}
 
-      - name: Install dependencies
+      - name: Install additional packages for articles
         run: |
-          install.packages("pkgdown", type = "binary")          
+          pak::pkg_install(c("pkgdown", "tidyverse"))
         shell: Rscript {0}
 
       - name: Install package
         run: R CMD INSTALL .
 
-      - name: Deploy package
+      - name: Build site
         run: |
           source("pkgdown/99-pkgdown-run-all.R")
         shell: Rscript {0}
