@@ -44,7 +44,7 @@ jobs:
 
       - name: Install additional packages for articles
         run: |
-          pak::pkg_install(c("pkgdown", "tidyverse", "fontawesome", "rsvg"))
+          pak::pkg_install(c("pkgdown", "tidyverse", "fontawesome", "rsvg", "palmerpenguins"))
         shell: Rscript {0}
 
       - name: Install package
