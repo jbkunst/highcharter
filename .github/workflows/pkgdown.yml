@@ -18,6 +18,9 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      - name: Install system dependencies
+        run: sudo apt install libcurl4-openssl-dev 
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
