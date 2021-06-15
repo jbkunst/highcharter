@@ -20,7 +20,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt install libcurl4-openssl-dev libjq-dev libprotobuf-dev protobuf-compiler libudunits2-dev libgeos-dev libgdal-dev libgeos-dev libproj-dev
+          sudo apt install libcurl4-openssl-dev libjq-dev libprotobuf-dev protobuf-compiler libudunits2-dev libgeos-dev libgdal-dev libgeos-dev libproj-dev libharfbuzz-dev libfribidi-dev
 
       - name: Query dependencies
         run: |
@@ -38,7 +38,6 @@ jobs:
 
       - name: Install pak
         run: |
-          remotes::install_github(c('ludvigolsen/xpectr', 'r-lib/vctrs', 'tidyverse/dplyr', 'tidyverse/tidyr', 'tidyverse/tibble'), dependencies = TRUE)
           install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
         shell: Rscript {0}
 
