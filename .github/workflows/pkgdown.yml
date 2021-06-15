@@ -20,7 +20,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt install libcurl4-openssl-dev libjq-dev libprotobuf-dev protobuf-compiler libudunits2-dev geos geos-devel
+          sudo apt install libcurl4-openssl-dev libjq-dev libprotobuf-dev protobuf-compiler libudunits2-dev libgeos-dev
 
       - name: Query dependencies
         run: |
