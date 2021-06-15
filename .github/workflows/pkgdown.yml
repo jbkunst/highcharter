@@ -38,6 +38,7 @@ jobs:
 
       - name: Install pak
         run: |
+          remotes::install_github(c('ludvigolsen/xpectr', 'r-lib/vctrs', 'tidyverse/dplyr', 'tidyverse/tidyr', 'tidyverse/tibble'), dependencies = TRUE)
           install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
         shell: Rscript {0}
 
