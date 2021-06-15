@@ -9,23 +9,21 @@
 #'   dependency.
 #' @param browsable Logical value indicating if the returned object is converted
 #'   to an HTML object browsable using \code{htmltools::browsable}.
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' charts <- lapply(1:9, function(x) {
 #'   hchart(ts(cumsum(rnorm(100))))
 #' })
-#' 
-#' if(interactive()){
+#'
+#' if (interactive()) {
 #'   hw_grid(charts, rowheight = 300)
 #' }
-#'
 #' @importFrom grDevices n2mfrow
 #' @export
 hw_grid <- function(..., ncol = NULL, rowheight = NULL, add_htmlgrid_css = TRUE, browsable = TRUE) {
-  
   input_list <- as.list(substitute(list(...)))[-1L]
- 
+
   params <- list()
 
   for (i in seq_len(length(input_list))) {
@@ -54,21 +52,20 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL, add_htmlgrid_css = TRUE,
   }
 
   ncolm <- floor(ncol / 2)
-  
+
   # adding htmlwdgtgrid.css dependencies
   dep <- htmlDependency(
     name = "htmlwdgtgrid",
     version = "0.0.9",
-    src  = c(file = system.file("htmlwidgets/lib/highcharts/css", package = "highcharter")),
-    stylesheet  = "htmlwdgtgrid.css",
+    src = c(file = system.file("htmlwidgets/lib/highcharts/css", package = "highcharter")),
+    stylesheet = "htmlwdgtgrid.css",
   )
 
   divs <- map(params, function(x) {
-    
-    if(add_htmlgrid_css) {
+    if (add_htmlgrid_css) {
       x$dependencies <- c(x$dependencies, list(dep))
     }
-    
+
     x$width <- "100%"
 
     if (!is.null(rowheight)) {
@@ -76,15 +73,15 @@ hw_grid <- function(..., ncol = NULL, rowheight = NULL, add_htmlgrid_css = TRUE,
     }
 
     tags$div(class = sprintf("col-1-%s mobile-col-1-%s", ncol, ncolm), x)
-    
   })
 
   divgrid <- tags$div(class = "grid grid-pad", divs)
 
   class(divgrid) <- c(class(divgrid), "htmlwdwtgrid")
-  
-  if(browsable) return(htmltools::browsable(divgrid))
-  
-  divgrid
 
+  if (browsable) {
+    return(htmltools::browsable(divgrid))
+  }
+
+  divgrid
 }

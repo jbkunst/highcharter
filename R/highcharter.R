@@ -26,7 +26,6 @@ highchart <- function(hc_opts = list(),
                       height = NULL,
                       elementId = NULL,
                       google_fonts = getOption("highcharter.google_fonts")) {
-  
   assertthat::assert_that(type %in% c("chart", "stock", "map", "gantt"))
 
   opts <- .join_hc_opts()
@@ -55,9 +54,9 @@ highchart <- function(hc_opts = list(),
   if (getOption("highcharter.debug")) {
     attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
   }
-  
+
   if (getOption("highcharter.rjson")) {
-    attr(x, 'TOJSON_FUNC') <- rjson::toJSON
+    attr(x, "TOJSON_FUNC") <- rjson::toJSON
   }
 
   # create widget
@@ -78,9 +77,8 @@ highchart <- function(hc_opts = list(),
 
   # set sizing for `shinyRenderer`
   hc <- hc_size(hc, width = width, height = height)
-  
+
   hc
-  
 }
 
 #' Reports whether x is a highchart object

@@ -155,7 +155,7 @@
       <h1 data-toc-skip>First steps on highcharter package</h1>
                         <h4 class="author">Joshua Kunst</h4>
             
-            <h4 class="date">2021-06-11</h4>
+            <h4 class="date">2021-06-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/master/vignettes/highcharter.Rmd"><code>vignettes/highcharter.Rmd</code></a></small>
       <div class="hidden name"><code>highcharter.Rmd</code></div>
@@ -221,8 +221,8 @@ $(document).ready(function(){
 <p>So, a basic example would be:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="st">"point"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span>, group <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-92bdc72108865f56879e" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-92bdc72108865f56879e">{
+<div id="htmlwidget-ed7e862fd070b11172cc" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed7e862fd070b11172cc">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -3799,7 +3799,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -3831,7 +3831,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -3923,7 +3927,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],
@@ -3951,8 +3955,8 @@ $(document).ready(function(){
 ## 6 1967-12-01 pop      199657 0.00777</code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">economics_long2</span>, <span class="st">"line"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value01</span>, group <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-adecced46a1754795ce6" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-adecced46a1754795ce6">{
+<div id="htmlwidget-0070fb352fbc84e0d24a" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0070fb352fbc84e0d24a">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -17801,7 +17805,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -17833,7 +17837,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -17925,7 +17933,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],
@@ -17939,8 +17947,8 @@ $(document).ready(function(){
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">dfdiam</span>, <span class="st">"heatmap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">clarity</span>, value <span class="op">=</span> <span class="va">price</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Median Price"</span><span class="op">)</span> </code></pre></div>
-<div id="htmlwidget-3e400807f3a0584fa14b" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3e400807f3a0584fa14b">{
+<div id="htmlwidget-baf65415614dacce91e9" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-baf65415614dacce91e9">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -18406,7 +18414,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -18438,7 +18446,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -18530,7 +18542,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],
@@ -18543,8 +18555,8 @@ $(document).ready(function(){
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span>, <span class="op">-</span><span class="va">unique</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">mpgman</span>, <span class="st">"treemap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">manufacturer</span>, value <span class="op">=</span> <span class="va">n</span>, color <span class="op">=</span> <span class="va">unique</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-161af4c569cb868944f6" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-161af4c569cb868944f6">{
+<div id="htmlwidget-f5b6af021fc5385124de" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f5b6af021fc5385124de">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -18728,7 +18740,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -18760,7 +18772,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -18852,7 +18868,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],
@@ -18874,8 +18890,8 @@ $(document).ready(function(){
   name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span><span class="op">)</span>,
   showInLegend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># only show the first one in the legend</span>
   <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-072e89a9a86285d3fce7" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-072e89a9a86285d3fce7">{
+<div id="htmlwidget-70b6448da8ed6b615f30" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-70b6448da8ed6b615f30">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -19158,7 +19174,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -19190,7 +19206,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -19282,7 +19302,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],
@@ -19322,8 +19342,8 @@ $(document).ready(function(){
   <span class="op">)</span>
 
 <span class="va">hc</span></code></pre></div>
-<div id="htmlwidget-fb73c4bf88ece90c6066" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fb73c4bf88ece90c6066">{
+<div id="htmlwidget-54209ee5861b21fc1d25" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-54209ee5861b21fc1d25">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -19686,7 +19706,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -19718,7 +19738,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -19810,7 +19834,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],
@@ -19845,8 +19869,8 @@ $(document).ready(function(){
     color <span class="op">=</span> <span class="fu"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="fl">0.2</span><span class="op">)</span>,  <span class="co"># put a semi transparent color</span>
     zIndex <span class="op">=</span> <span class="op">-</span><span class="fl">3</span> <span class="co"># this is for put the series in a back so the points are showed first</span>
     <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-fe6d36384c7cfa6009c8" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fe6d36384c7cfa6009c8">{
+<div id="htmlwidget-bf7d37ec99dec3cf0ac9" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf7d37ec99dec3cf0ac9">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -21180,7 +21204,7 @@ $(document).ready(function(){
       "colors": ["#47475c", "#61BC7B", "#508CC8", "#F49952", "#9C9EDB", "#6699a1"],
       "chart": {
         "style": {
-          "fontFamily": "Roboto",
+          "fontFamily": "IBM Plex Sans",
           "color": "#666666"
         }
       },
@@ -21212,7 +21236,11 @@ $(document).ready(function(){
       },
       "legend": {
         "align": "right",
-        "verticalAlign": "bottom"
+        "verticalAlign": "bottom",
+        "itemStyle": {
+          "fontWeight": "normal",
+          "color": "#A2A39C"
+        }
       },
       "xAxis": {
         "gridLineWidth": 1,
@@ -21304,7 +21332,7 @@ $(document).ready(function(){
       }
     },
     "type": "chart",
-    "fonts": ["Roboto", "Alegreya+Sans+SC", "Alegreya+Sans"],
+    "fonts": ["IBM+Plex+Sans", "Alegreya+Sans+SC", "Alegreya+Sans", "Roboto"],
     "debug": true
   },
   "evals": [],

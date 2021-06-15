@@ -17,5 +17,4 @@ and this post  \url{http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparkli
 
 highcharts_demo() \%>\%
   hc_add_theme(hc_theme_sparkline())
-  
 }

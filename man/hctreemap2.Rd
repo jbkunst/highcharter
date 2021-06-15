@@ -25,7 +25,6 @@ highchart plot object
 This function helps create highcharts treemaps from data frames.
 }
 \examples{
-
 \dontrun{
 
 library(tidyverse)

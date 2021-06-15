@@ -1,9 +1,9 @@
 #' Google theme for highcharts
 #'
 #' Google theme for highcharts is based on \url{https://books.google.com/ngrams/}.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
@@ -34,7 +34,6 @@ hc_theme_google <- function(...) {
         tickColor = "#F3F3F3",
         tickWidth = 1
       ),
-
       legendBackgroundColor = "rgba(0, 0, 0, 0.5)",
       background2 = "#505053",
       dataLabelsColor = "#B0B0B3",

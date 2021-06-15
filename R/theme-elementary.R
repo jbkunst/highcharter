@@ -1,9 +1,9 @@
 #' Elementary (OS) theme for highcharts
 #'
 #' Elementary (OS) theme for highcharts was based on \url{https://elementary.io}
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%

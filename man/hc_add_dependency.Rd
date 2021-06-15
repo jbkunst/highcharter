@@ -31,5 +31,4 @@ hchart(mpg, "point", hcaes(displ, hwy),
 hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) \%>\%
   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) \%>\%
   hc_add_dependency("plugins/highcharts-regression.js")
-  
 }

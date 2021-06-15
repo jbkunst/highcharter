@@ -14,12 +14,12 @@
 #' hcspark(x, type = "area")
 #' @export
 hcspark <- function(x = NULL, type = NULL, ...) {
-  
   .Deprecated(
-    msg = "Use type 'hc_theme_sparkline' or hc_theme_sparkline_bv theme instead.")
-  
+    msg = "Use type 'hc_theme_sparkline' or hc_theme_sparkline_bv theme instead."
+  )
+
   stopifnot(is.numeric(x))
-  
+
   highchart() %>%
     hc_plotOptions(
       series = list(showInLegend = FALSE, dataLabels = list(enabled = FALSE)),
@@ -36,19 +36,17 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @param outliers A boolean value to show or not the outliers.
 #' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
 #' @examples
-#' 
 #' \dontrun{
-#'   hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
-#'  } 
+#' hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
+#' }
 #' @importFrom dplyr rename
 #' @importFrom tidyr unnest
 #' @importFrom grDevices boxplot.stats
 #' @importFrom rlang .data
 #' @export
 hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
-  
   .Deprecated("data_to_boxplot")
-  
+
   stopifnot(is.numeric(x))
 
   if (is.null(var)) {
@@ -146,11 +144,11 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 #' @export
 hciconarray <- function(labels, counts, rows = NULL, icons = NULL, size = 4,
                         ...) {
-  
   .Deprecated(
     msg = "Use type 'item' instead (`hchart(df, \"item\", hcaes(name = labels, y = counts))`).
-Item chart provides better behaviour beside is a specific type of chart of HighchartsJS.")
-  
+Item chart provides better behaviour beside is a specific type of chart of HighchartsJS."
+  )
+
   assertthat::assert_that(length(counts) == length(labels))
 
   if (is.null(rows)) {
@@ -232,7 +230,6 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
 #'   (\url{http://api.highcharts.com/highcharts#series}).
 #'
 #' @examples
-#'
 #' \dontrun{
 #'
 #' library("treemap")
@@ -260,7 +257,6 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
 #' @importFrom rlang .data
 #' @export
 hctreemap <- function(tm, ...) {
-  
   .Deprecated("data_to_hierarchical")
 
   assertthat::assert_that(is.list(tm))
@@ -269,7 +265,7 @@ hctreemap <- function(tm, ...) {
     tibble::as_tibble() %>%
     select(-.data$x0, -.data$y0, -.data$w, -.data$h, -.data$stdErr, -.data$vColorValue) %>%
     rename(value = .data$vSize, valuecolor = .data$vColor) %>%
-    mutate_if(is.factor, as.character) 
+    mutate_if(is.factor, as.character)
 
   ndepth <- which(names(df) == "value") - 1
 
@@ -281,8 +277,10 @@ hctreemap <- function(tm, ...) {
 
     if (lvl > 1) {
       df2 <- df2 %>%
-        mutate(parent = names(df)[lvl - 1],
-               parent = highcharter::str_to_id(.data$parent))
+        mutate(
+          parent = names(df)[lvl - 1],
+          parent = highcharter::str_to_id(.data$parent)
+        )
     } else {
       df2 <- df2 %>%
         mutate(parent = NA)
@@ -316,7 +314,6 @@ hctreemap <- function(tm, ...) {
 #'
 #' @return highchart plot object
 #' @examples
-#'
 #' \dontrun{
 #'
 #' library(tidyverse)
@@ -356,9 +353,8 @@ hctreemap <- function(tm, ...) {
 #'
 #' @export
 hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
-  
   .Deprecated("data_to_hierarchical")
-  
+
   assertthat::assert_that(is.data.frame(data))
   assertthat::assert_that(is.character(group_vars))
   assertthat::assert_that(is.character(size_var))

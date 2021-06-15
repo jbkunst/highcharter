@@ -52,5 +52,4 @@ thm <- hc_theme(
 )
 
 hc_add_theme(hc, thm)
-
 }

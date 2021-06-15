@@ -1,9 +1,9 @@
 #' ggplot2 theme for highcharts
 #'
 #' ggplot2 theme is based on \url{https://ggplot2.tidyverse.org/}.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%

@@ -90,7 +90,6 @@ validate_args <- function(name, lstargs) {
 #' @importFrom stringr str_glue
 #' @importFrom htmlwidgets JS
 #' @examples
-#'
 #' \dontrun{
 #' require(dplyr)
 #' require(purrr)
@@ -162,8 +161,7 @@ validate_args <- function(name, lstargs) {
 #' }
 #'
 #' @export
-tooltip_chart <- function(
-                          accesor = NULL,
+tooltip_chart <- function(accesor = NULL,
                           hc_opts = NULL,
                           width = 250,
                           height = 150) {
@@ -341,7 +339,6 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #'
 #' @export
 hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
-  
   hc <- .hc_opt(hc, "motion", enabled = enabled, startIndex = startIndex, ...)
 
   hc
@@ -360,14 +357,14 @@ hc_yAxis_multiples <- function(hc, ...) {
 }
 
 #' Creating multiples yAxis t use with highcharts
-#' 
+#'
 #' @param naxis Number of axis an integer.
 #' @param heights A numeric vector. This values will be normalized.
 #' @param sep A numeric value for the separation (in percentage) for the panes.
 #' @param offset A numeric value (in percentage).
 #' @param turnopposite A logical value to turn the side of each axis or not.
 #' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}.
-#' 
+#'
 #' @examples
 #'
 #' highchart() %>%
@@ -381,7 +378,6 @@ hc_yAxis_multiples <- function(hc, ...) {
 #'   hc_add_series(data = c(20, 40, 10), yAxis = 1) %>%
 #'   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) %>%
 #'   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)
-#'   
 #' @importFrom dplyr bind_cols
 #' @rdname hc_add_yAxis
 #' @export
@@ -425,25 +421,25 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
 }
 
 #' yAxis add highcharter objects
-#' 
+#'
 #' The Y axis or value axis. Normally this is the vertical axis,
 #' though if the chart is inverted this is the horizontal axis.
 #' Add yAxis allows to add multiple axis with a relative height between Y axis.
 #' Based upon the `relative` parameter the height of each Y axis is recalculated.
 #' Otherwise the parameters are as supported by Y axis.
-#' 
-#' @param hc A `highchart` `htmlwidget` object. 
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/yAxis}. 
+#'
+#' @param hc A `highchart` `htmlwidget` object.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/yAxis}.
 #'
 #' @examples
-#' 
+#'
 #' # Retrieve stock data to plot.
-#' aapl <- quantmod::getSymbols("AAPL", 
+#' aapl <- quantmod::getSymbols("AAPL",
 #'   src = "yahoo",
 #'   from = "2020-01-01",
 #'   auto.assign = FALSE
 #' )
-#' 
+#'
 #' # Plot prices and volume with relative height.
 #' highchart(type = "stock") %>%
 #'   hc_title(text = "AAPLE") %>%
@@ -451,40 +447,41 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
 #'   hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) %>%
 #'   hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) %>%
 #'   hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
-#'   
 #' @export
 hc_add_yAxis <- function(hc, ...) {
-  
+
   # author @nordicgit70
-  
+
   assertthat::assert_that(is.highchart(hc))
-  
+
   # Check for single yAxis, by title attribute.
   if (assertthat::has_name(hc$x$hc_opts$yAxis, "title")) {
     # When yAxis only has empty title we can overwrite,
     # otherwise we move yAxis to become first in the list.
     if ((length(hc$x$hc_opts$yAxis) == 1) &&
-        is.null(hc$x$hc_opts$yAxis$title$text)) {
+      is.null(hc$x$hc_opts$yAxis$title$text)) {
       hc <- .hc_opt(hc, "yAxis", ...)
       return(hc)
     } else { # move the existing yAxis
       hc$x$hc_opts$yAxis <- list(hc$x$hc_opts$yAxis)
     }
   }
-  
+
   # Add new yAxis to the list.
   validate_args("yAxis", eval(substitute(alist(...))))
   hc$x$hc_opts$yAxis <- append(hc$x$hc_opts$yAxis, list(list(...)))
-  
+
   # Optional layout with relative heights.
   relative <- list(...)["relative"]
   if (!is.null(relative)) {
     # Calculate the total relative(s) and initiate offset.
-    layout <- Reduce("+", lapply(hc$x$hc_opts$yAxis, function(y) { y$relative }))
+    layout <- Reduce("+", lapply(hc$x$hc_opts$yAxis, function(y) {
+      y$relative
+    }))
     tops <- 0
     for (i in 1:length(hc$x$hc_opts$yAxis)) {
-      part <- as.numeric(hc$x$hc_opts$yAxis[[i]]["relative"]) 
-      height <- round((part * 100)/layout, 3)
+      part <- as.numeric(hc$x$hc_opts$yAxis[[i]]["relative"])
+      height <- round((part * 100) / layout, 3)
       hc$x$hc_opts$yAxis[[i]]["top"] <- paste0(tops, "%")
       hc$x$hc_opts$yAxis[[i]]["height"] <- paste0(height, "%")
       hc$x$hc_opts$yAxis[[i]]["offset"] <- 0
@@ -493,4 +490,3 @@ hc_add_yAxis <- function(hc, ...) {
   }
   return(hc)
 }
-

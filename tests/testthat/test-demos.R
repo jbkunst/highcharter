@@ -24,7 +24,7 @@ test_that("Monthly Average Temperature example works", {
         data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)
       )
     )
-  
+
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
@@ -58,6 +58,6 @@ test_that("Historic and Estimated Worldwide Population works", {
     hc_add_series(name = "Europe", data = c(163, 203, 276, 408, 547, 729, 628)) %>%
     hc_add_series(name = "America", data = c(18, 31, 54, 156, 339, 818, 1201)) %>%
     hc_add_series(name = "Oceania", data = c(2, 2, 2, 6, 13, 30, 46))
-  
+
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })

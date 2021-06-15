@@ -234,26 +234,25 @@ through the Chart.update or Chart.caption.update methods.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='hc_title.html'>hc_title</a></span><span class='op'>(</span>text<span class='op'>=</span> <span class='st'>"Chart with a caption"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='hc_subtitle.html'>hc_subtitle</a></span><span class='op'>(</span>text<span class='op'>=</span> <span class='st'>"This is the subtitle"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span>categories <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Apples"</span>, <span class='st'>"Pears"</span>, <span class='st'>"Banana"</span>, <span class='st'>"Orange"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_title.html'>hc_title</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"Chart with a caption"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_subtitle.html'>hc_subtitle</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='st'>"This is the subtitle"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span>categories <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Apples"</span>, <span class='st'>"Pears"</span>, <span class='st'>"Banana"</span>, <span class='st'>"Orange"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>
     data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span>,
     type <span class='op'>=</span> <span class='st'>"column"</span>,
     name <span class='op'>=</span> <span class='st'>"Fruits"</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>hc_caption</span><span class='op'>(</span>
     text <span class='op'>=</span> <span class='st'>"&lt;b&gt;The caption renders in the bottom, and is part of the exported
     chart.&lt;/b&gt;&lt;br&gt;&lt;em&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit,
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
+    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
     laborum.&lt;/em&gt;'"</span>
   <span class='op'>)</span>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -102,6 +102,6 @@ pokemon <- dfpkmn %>%
   left_join(dficon, by = "id")
 
 pokemon <- pokemon %>%
-  mutate(color_f = ifelse(is.na(color_f), color_1, color_f)) 
+  mutate(color_f = ifelse(is.na(color_f), color_1, color_f))
 
 usethis::use_data(pokemon, overwrite = TRUE)

@@ -28,10 +28,9 @@ hchart.list <- function(object, ...) {
   if (getOption("highcharter.verbose")) {
     message("hchart.list")
   }
-  
-  highchart() %>% 
+
+  highchart() %>%
     hc_add_series(data = object, ...)
-  
 }
 
 #' @export
@@ -213,8 +212,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
 #' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...) {
-  ytitle <- switch(
-    object$type,
+  ytitle <- switch(object$type,
     partial = "Partial ACF",
     covariance = "ACF (cov)",
     correlation = "ACF"
@@ -361,15 +359,17 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
     bind_cols(tibble(ynm), .) %>%
     gather("key", "value", -ynm) %>%
     rename(xnm = .data$key) %>%
-    mutate(xnm = as.character(.data$xnm),
-           ynm = as.character(.data$ynm))
+    mutate(
+      xnm = as.character(.data$xnm),
+      ynm = as.character(.data$ynm)
+    )
 
   ds$xnm <- if (is.null(colnames(object))) str_replace(ds$xnm, "V", "") else ds$xnm
 
   ds <- ds %>%
     left_join(tibble(xnm, xid), by = "xnm") %>%
     left_join(tibble(ynm, yid), by = "ynm") %>%
-    mutate(name = paste(.data$xnm, .data$ynm, sep = ' ~ ')) %>%
+    mutate(name = paste(.data$xnm, .data$ynm, sep = " ~ ")) %>%
     select(x = .data$xid, y = .data$yid, .data$value, .data$name)
 
   fntltp <- JS("function(){
@@ -692,8 +692,9 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 
     if (ranges && !is.null(object$upper)) {
       # Add interval range
-      range <- lapply(ls, function(i)
-        setNames(i[c("x", "low", "up")], NULL))
+      range <- lapply(ls, function(i) {
+        setNames(i[c("x", "low", "up")], NULL)
+      })
 
       hc <- hc %>%
         hc_add_series(

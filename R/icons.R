@@ -26,9 +26,8 @@ fa_icon <- function(iconname = "circle") {
 #' @rdname hc_add_dependency_fa
 #' @export
 fa_icon_mark <- function(iconname = "circle") {
-  
   .Deprecated(msg = "Deprecated function. Use the fontawesome package. Example in the docs website.")
-  
+
   faicos <- readRDS(system.file("extdata/faicos.rds", package = "highcharter"))
 
   idx <- purrr::map_int(iconname, function(icn) which(faicos$name %in% icn))

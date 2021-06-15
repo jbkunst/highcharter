@@ -9,13 +9,11 @@
 
 .onAttach <- function(libname = find.package("highcharter"),
                       pkgname = "highcharter") {
-  
-  if(stats::runif(1) <= 1/3) {
+  if (stats::runif(1) <= 1 / 3) {
     packageStartupMessage("Highcharts (www.highcharts.com) is a Highsoft software product which is")
-    
-    packageStartupMessage("not free for commercial and Governmental use")  
+
+    packageStartupMessage("not free for commercial and Governmental use")
   }
-  
 }
 
 .onLoad <- function(libname = find.package("highcharter"),
@@ -58,7 +56,7 @@
         "May", "June", "July", "August",
         "September", "October", "November", "December"
       ),
-      # navigation 
+      # navigation
       noData = "No data to display",
       numericSymbolMagnitude = 1000,
       numericSymbols = c("k", "M", "G", "T", "P", "E"),
@@ -118,9 +116,11 @@
   options(
     highcharter.theme = hc_theme(
       chart = list(backgroundColor = "transparent"),
-      colors = c("#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
-                 "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1")
-      ),
+      colors = c(
+        "#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
+        "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"
+      )
+    ),
     highcharter.verbose = FALSE,
     highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,
@@ -129,6 +129,6 @@
     highcharter.color_palette = c(
       "#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
       "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"
-      )
+    )
   )
 }

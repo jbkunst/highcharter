@@ -1,14 +1,13 @@
 #' Monokai theme for highcharts
 #'
 #' Monokai is a well know text editor theme.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_monokai())
-#'   
 #' @export
 hc_theme_monokai <- function(...) {
   theme <-

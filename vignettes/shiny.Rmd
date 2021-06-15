@@ -41,10 +41,9 @@ apps <- doc %>%
 apps
 
 library(furrr)
-
 plan(multisession, workers = 10)
-
-dinfo <- future_map_dfr(apps, function(x = "03-shinydashboard-n-spakrlines"){ 
+dinfo <- future_map_dfr(apps, function(x = "03-shinydashboard-n-spakrlines"){
+# dinfo <- map_df(apps, function(x = "05-arma"){ 
   
   message(x)
   

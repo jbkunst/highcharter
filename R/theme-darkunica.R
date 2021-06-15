@@ -1,7 +1,7 @@
 #' Dark Unica theme for highcharts
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
@@ -119,7 +119,6 @@ hc_theme_darkunica <- function(...) {
           color = "#707073"
         )
       ),
-
       drilldown = list(
         activeAxisLabelStyle = list(
           color = "#F0F0F3"
@@ -128,7 +127,6 @@ hc_theme_darkunica <- function(...) {
           color = "#F0F0F3"
         )
       ),
-
       navigation = list(
         buttonOptions = list(
           symbolStroke = "#DDDDDD",
@@ -137,7 +135,6 @@ hc_theme_darkunica <- function(...) {
           )
         )
       ),
-
       rangeSelector = list(
         buttonTheme = list(
           fill = "#505053",
@@ -171,7 +168,6 @@ hc_theme_darkunica <- function(...) {
           color = "silver"
         )
       ),
-
       navigator = list(
         handles = list(
           backgroundColor = "#666",
@@ -187,7 +183,6 @@ hc_theme_darkunica <- function(...) {
           gridLineColor = "#505053"
         )
       ),
-
       scrollbar = list(
         barBackgroundColor = "#808083",
         barBorderColor = "#808083",
@@ -198,7 +193,6 @@ hc_theme_darkunica <- function(...) {
         trackBackgroundColor = "#404043",
         trackBorderColor = "#404043"
       ),
-
       legendBackgroundColor = "rgba(0, 0, 0, 0.5)",
       background2 = "#505053",
       dataLabelsColor = "#B0B0B3",

@@ -230,21 +230,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span>categories <span class='op'>=</span> <span class='va'>month.abb</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Tokyo"</span>, data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span>categories <span class='op'>=</span> <span class='va'>month.abb</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Tokyo"</span>, data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"London"</span>, data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>10</span><span class='op'>)</span>
 
 <span class='va'>hc</span>
 
-<span class='va'>hc</span> <span class='op'>%&gt;%</span> 
+<span class='va'>hc</span> <span class='op'>%&gt;%</span>
   <span class='fu'>hc_chart</span><span class='op'>(</span>
     type <span class='op'>=</span> <span class='st'>"column"</span>,
     options3d <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>enabled <span class='op'>=</span> <span class='cn'>TRUE</span>, beta <span class='op'>=</span> <span class='fl'>15</span>, alpha <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
-    <span class='op'>)</span>
+  <span class='op'>)</span>
 
 
-<span class='va'>hc</span> <span class='op'>%&gt;%</span> 
+<span class='va'>hc</span> <span class='op'>%&gt;%</span>
   <span class='fu'>hc_chart</span><span class='op'>(</span>
     borderColor <span class='op'>=</span> <span class='st'>"#EBBA95"</span>,
     borderRadius <span class='op'>=</span> <span class='fl'>10</span>,
@@ -252,13 +252,11 @@
     backgroundColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
       linearGradient <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>500</span>, <span class='fl'>500</span><span class='op'>)</span>,
       stops <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='st'>'rgb(255, 255, 255)'</span><span class='op'>)</span>,
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>'rgb(200, 200, 255)'</span><span class='op'>)</span>
-             <span class='op'>)</span>
+        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='st'>"rgb(255, 255, 255)"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"rgb(200, 200, 255)"</span><span class='op'>)</span>
       <span class='op'>)</span>
     <span class='op'>)</span>
-
-
+  <span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

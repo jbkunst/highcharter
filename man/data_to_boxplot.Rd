@@ -32,25 +32,20 @@ Helper to transform data frame for boxplot highcharts format
 }
 \examples{
 
-data(pokemon) 
+data(pokemon)
 
 dat <- data_to_boxplot(pokemon, height)
 
 highchart() \%>\%
   hc_xAxis(type = "category") \%>\%
   hc_add_series_list(dat)
-  
+
 dat <- data_to_boxplot(pokemon, height, type_1, name = "height in meters")
 
 highchart() \%>\%
-hc_xAxis(type = "category") \%>\%
-hc_add_series_list(dat)
-
-
+  hc_xAxis(type = "category") \%>\%
+  hc_add_series_list(dat)
 \dontrun{
-
-
-
 
 }
 

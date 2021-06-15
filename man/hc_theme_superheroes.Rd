@@ -16,5 +16,4 @@ The superheroes theme is inspired by \url{https://public.tableau.com/profile/rya
 
 highcharts_demo() \%>\%
   hc_add_theme(hc_theme_superheroes())
-  
 }

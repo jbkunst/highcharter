@@ -25,15 +25,14 @@ the treemap.}
 Helper to transform data frame for treemap/sunburst highcharts format
 }
 \examples{
-
 \dontrun{
 
 library(dplyr)
 data(gapminder, package = "gapminder")
 
-gapminder_2007 <- gapminder::gapminder \%>\% 
-  filter(year  == max(year)) \%>\% 
-  mutate(pop_mm = round(pop/1e6))
+gapminder_2007 <- gapminder::gapminder \%>\%
+  filter(year == max(year)) \%>\%
+  mutate(pop_mm = round(pop / 1e6))
 
 dout <- data_to_hierarchical(gapminder_2007, c(continent, country), pop_mm)
 

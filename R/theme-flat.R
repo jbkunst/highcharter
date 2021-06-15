@@ -1,11 +1,11 @@
 #' Flat theme for highcharts
 #'
-#' Flat and flatdark theme is inspired by 
+#' Flat and flatdark theme is inspired by
 #' \url{https://github.com/chriskempson/base16} and
 #' \url{https://github.com/cttobin/ggthemr#flat}
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
@@ -38,7 +38,6 @@ hc_theme_flat <- function(...) {
         tickColor = "#BDC3C7",
         tickWidth = 1
       ),
-
       legendBackgroundColor = "rgba(0, 0, 0, 0.5)",
       background2 = "#505053",
       dataLabelsColor = "#B0B0B3",

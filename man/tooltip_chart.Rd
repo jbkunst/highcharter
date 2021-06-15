@@ -24,7 +24,6 @@ This function needs to be used in the \code{pointFormatter} argument
 inside of \code{hc_tooltip} function an \code{useHTML = TRUE} option.
 }
 \examples{
-
 \dontrun{
 require(dplyr)
 require(purrr)

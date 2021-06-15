@@ -1,12 +1,11 @@
 #' Bloomberg Graphics theme for highcharts
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_bloom())
-#'   
 #' @export
 hc_theme_bloom <- function(...) {
   theme <-
@@ -103,7 +102,6 @@ hc_theme_bloom <- function(...) {
           color = "#D7D7D8"
         )
       ),
-
       drilldown = list(
         activeAxisLabelStyle = list(
           color = "#F0F0F3"
@@ -112,7 +110,6 @@ hc_theme_bloom <- function(...) {
           color = "#F0F0F3"
         )
       ),
-
       navigation = list(
         buttonOptions = list(
           symbolStroke = "#DDDDDD",

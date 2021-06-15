@@ -1,5 +1,5 @@
 #' Creating highcharter themes
-#' 
+#'
 #' Highcharts is very flexible so you can modify every element of the chart.
 #' There are some exiting themes so you can apply style to charts with few
 #' lines of code.
@@ -43,7 +43,6 @@
 #' )
 #'
 #' hc_add_theme(hc, thm)
-#' 
 #' @export
 hc_theme <- function(...) {
   structure(list(...), class = "hc_theme")
@@ -67,7 +66,6 @@ hc_theme <- function(...) {
 #'     type = "column"
 #'   ) %>%
 #'   hc_add_theme(hc_theme_sandsignika())
-#'   
 #' @export
 hc_add_theme <- function(hc, hc_thm) {
   assert_that(is.highchart(hc), .is_hc_theme(hc_thm))
@@ -102,7 +100,6 @@ hc_add_theme <- function(hc, hc_thm) {
 #'     )
 #'   )
 #' )
-#' 
 #' @export
 hc_theme_merge <- function(...) {
   themes <- list(...)

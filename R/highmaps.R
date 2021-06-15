@@ -32,7 +32,6 @@
 #'   hc_colorAxis(stops = color_stops()) %>%
 #'   hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
 #'   hc_mapNavigation(enabled = TRUE)
-#'   
 #' \dontrun{
 #'
 #' data(worldgeojson, package = "highcharter")
@@ -51,7 +50,6 @@
 #' @importFrom utils tail
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
-  
   assertthat::assert_that(
     is.highchart(hc),
     is.list(map),
@@ -110,7 +108,6 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
 #'   download_map_data = FALSE
 #' )
-#' 
 #' @importFrom htmltools htmlDependency
 #' @importFrom rlang .data
 #' @export

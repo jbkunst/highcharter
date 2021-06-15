@@ -1,7 +1,7 @@
 #' Financial Times theme for highcharts
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
@@ -77,7 +77,6 @@ hc_theme_ft <- function(...) {
           color = "#D7D7D8"
         )
       ),
-
       drilldown = list(
         activeAxisLabelStyle = list(
           color = "#F0F0F3"
@@ -86,7 +85,6 @@ hc_theme_ft <- function(...) {
           color = "#F0F0F3"
         )
       ),
-
       navigation = list(
         buttonOptions = list(
           symbolStroke = "#DDDDDD",

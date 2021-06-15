@@ -13,9 +13,8 @@ data_to_sankey(data = NULL)
 Helper to transform data frame for sankey highcharts format
 }
 \examples{
-
 \dontrun{
-library(dplyr) 
+library(dplyr)
 data(diamonds, package = "ggplot2")
 
 diamonds2 <- select(diamonds, cut, color, clarity)

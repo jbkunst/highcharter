@@ -10,7 +10,6 @@
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_538())
-#'
 #' @export
 hc_theme_538 <- function(...) {
   theme <-
@@ -94,7 +93,6 @@ hc_theme_538 <- function(...) {
           color = "#D7D7D8"
         )
       ),
-
       legendBackgroundColor = "rgba(0, 0, 0, 0.5)",
       background2 = "#505053",
       dataLabelsColor = "#B0B0B3",

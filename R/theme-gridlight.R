@@ -1,7 +1,7 @@
 #' Grid Light theme for highcharts
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
@@ -64,7 +64,6 @@ hc_theme_gridlight <- function(...) {
           lineColor = "#404048"
         )
       ),
-
       background2 = "#F0F0EA"
     )
 

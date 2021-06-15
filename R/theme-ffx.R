@@ -1,9 +1,9 @@
 #' Firefox theme for highcharts
 #'
 #' Firefox theme was inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%

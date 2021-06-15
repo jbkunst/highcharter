@@ -2,14 +2,13 @@
 #'
 #' Theme smpl design is inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r}
 #' and color by \url{https://www.materialui.co/flatuicolors}.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_smpl())
-#'   
 #' @export
 hc_theme_smpl <- function(...) {
   theme <-

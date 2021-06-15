@@ -25,5 +25,4 @@ highchart() \%>\%
   hc_chart(type = "scatter") \%>\%
   hc_add_series(data = list_parse(dta), showInLegend = FALSE) \%>\%
   hc_add_theme(hc_theme_tufte())
-
 }

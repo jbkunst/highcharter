@@ -37,8 +37,7 @@ charts <- lapply(1:9, function(x) {
   hchart(ts(cumsum(rnorm(100))))
 })
 
-if(interactive()){
+if (interactive()) {
   hw_grid(charts, rowheight = 300)
 }
-
 }

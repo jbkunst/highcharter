@@ -2,14 +2,13 @@
 #'
 #' Sparkline theme is based on \url{http://www.highcharts.com/demo/sparkline}
 #' and this post  \url{http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/}.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_sparkline())
-#'   
 #' @export
 hc_theme_sparkline <- function(...) {
   theme <- list(
@@ -94,15 +93,13 @@ hc_theme_sparkline <- function(...) {
 
 
 #' @rdname hc_theme_538
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_sparkline_vb())
-#' 
 #' @export
 hc_theme_sparkline_vb <- function(...) {
-  
   theme <- list(
     chart = list(
       backgroundColor = NULL,
@@ -116,13 +113,13 @@ hc_theme_sparkline_vb <- function(...) {
       style = list(overflow = "visible")
     ),
     xAxis = list(
-      visible = FALSE, 
-      endOnTick = FALSE, 
+      visible = FALSE,
+      endOnTick = FALSE,
       startOnTick = FALSE
     ),
     yAxis = list(
       visible = FALSE,
-      endOnTick = FALSE, 
+      endOnTick = FALSE,
       startOnTick = FALSE
     ),
     tooltip = list(
@@ -154,15 +151,15 @@ hc_theme_sparkline_vb <- function(...) {
       text = ""
     )
   )
-  
+
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
   }
-  
+
   theme
 }

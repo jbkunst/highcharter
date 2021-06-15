@@ -54,10 +54,9 @@ highchart() \%>\%
   hc_add_series(data = c(20, 40, 10), yAxis = 1) \%>\%
   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) \%>\%
   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)
-  
 
 # Retrieve stock data to plot.
-aapl <- quantmod::getSymbols("AAPL", 
+aapl <- quantmod::getSymbols("AAPL",
   src = "yahoo",
   from = "2020-01-01",
   auto.assign = FALSE
@@ -70,5 +69,4 @@ highchart(type = "stock") \%>\%
   hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) \%>\%
   hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) \%>\%
   hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
-  
 }

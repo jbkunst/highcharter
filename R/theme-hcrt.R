@@ -1,32 +1,30 @@
 #' Highcharter theme for highcharts
 #'
 #' hcrt theme is used for the documentation website.
-#' 
+#'
 #' @param ... A named parameters to modify the theme.
-#' 
+#'
 #' @examples
 #'
 #' highcharts_demo() %>%
 #'   hc_add_theme(hc_theme_hcrt())
-#'   
 #' @export
 hc_theme_hcrt <- function(...) {
   theme <-
     hc_theme(
       colors = c(
         "#47475c", # main purple
-        
+
         "#61BC7B", # green
         "#508CC8", # blue
         "#F49952", # orange
-        "#9C9EDB",  # purple
-        
+        "#9C9EDB", # purple
+
         "#6699a1" # gray green
-        
       ),
       chart = list(
         style = list(
-          fontFamily = "Roboto",
+          fontFamily = "IBM Plex Sans",
           color = "#666666"
         )
       ),
@@ -58,7 +56,11 @@ hc_theme_hcrt <- function(...) {
       ),
       legend = list(
         align = "right",
-        verticalAlign = "bottom"
+        verticalAlign = "bottom",
+        itemStyle = list(
+          fontWeight = "normal",
+          color = "#A2A39C"
+        )
       ),
       xAxis = list(
         gridLineWidth = 1,
@@ -96,15 +98,15 @@ hc_theme_hcrt <- function(...) {
         )
       )
     )
-  
+
   theme <- structure(theme, class = "hc_theme")
-  
+
   if (length(list(...)) > 0) {
     theme <- hc_theme_merge(
       theme,
       hc_theme(...)
     )
   }
-  
+
   theme
 }

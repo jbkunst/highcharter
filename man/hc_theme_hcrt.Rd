@@ -16,5 +16,4 @@ hcrt theme is used for the documentation website.
 
 highcharts_demo() \%>\%
   hc_add_theme(hc_theme_hcrt())
-  
 }

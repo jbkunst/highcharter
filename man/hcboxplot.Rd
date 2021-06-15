@@ -21,8 +21,7 @@ hcboxplot(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...)
 Shortcut to make a boxplot
 }
 \examples{
-
 \dontrun{
-  hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
- } 
+hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
+}
 }
