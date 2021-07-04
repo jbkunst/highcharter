@@ -10,6 +10,7 @@
 #' @param ... Additional arguments for the data series
 #'    (\url{http://api.highcharts.com/highcharts#series}).
 #'
+#'
 #' @export
 hchart <- function(object, ...) {
   UseMethod("hchart")
@@ -38,9 +39,11 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
   if (getOption("highcharter.verbose")) {
     message("hchart.data.frame")
   }
-
+  assertthat::assert_that(assertthat::is.string(type), 
+                          msg = "Chart type must be provided.")
+  
   object <- as.data.frame(object)
-
+  
   data <- mutate_mapping(object, mapping)
 
   series <- data_to_series(data, mapping, type = type, ...)

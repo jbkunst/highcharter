@@ -128,3 +128,8 @@ test_that("hchart fails after mispelled chart type", {
   # sactter = scatter mispelled
   expect_error(hchart(mgp, "sactter", hcaes(x = displ, y = hwy, group = class)))
 })
+
+test_that("hchart fails when chart type is not given", {
+  expect_error(hchart(mpg, hcaes(x = displ, y = hwy, group = class)),
+               "type")
+})
