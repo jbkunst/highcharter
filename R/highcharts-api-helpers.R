@@ -347,7 +347,7 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
 #' @rdname hc_add_yAxis
 #' @export
 hc_yAxis_multiples <- function(hc, ...) {
-  if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_yaxis_list") {
+  if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_axis_list") {
     hc$x$hc_opts$yAxis <- list(...)[[1]]
   } else {
     hc$x$hc_opts$yAxis <- list(...)
@@ -355,6 +355,19 @@ hc_yAxis_multiples <- function(hc, ...) {
 
   hc
 }
+
+#' @rdname hc_add_yAxis
+#' @export
+hc_xAxis_multiples <- function(hc, ...) {
+  if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_axis_list") {
+    hc$x$hc_opts$xAxis <- list(...)[[1]]
+  } else {
+    hc$x$hc_opts$xAxis <- list(...)
+  }
+  
+  hc
+}
+
 
 #' Creating multiples yAxis t use with highcharts
 #'
@@ -381,7 +394,7 @@ hc_yAxis_multiples <- function(hc, ...) {
 #' @importFrom dplyr bind_cols
 #' @rdname hc_add_yAxis
 #' @export
-create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
+create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
                          offset = 0, turnopposite = TRUE, ...) {
   pcnt <- function(x) paste0(x * 100, "%")
 
@@ -391,9 +404,7 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
     map(function(x) c(x, sep)) %>%
     unlist() %>%
     head(-1) %>%
-    {
-      . / sum(.)
-    } %>%
+    {. / sum(.)} %>%
     round(5)
 
   tops <- cumsum(c(0, head(heights, -1)))
@@ -413,12 +424,17 @@ create_yaxis <- function(naxis = 2, heights = 1, sep = 0.01,
 
   dfaxis <- bind_cols(dfaxis, tibble(nid = seq(naxis), ...))
 
-  yaxis <- list_parse(dfaxis)
+  axles <- list_parse(dfaxis)
 
-  class(yaxis) <- "hc_yaxis_list"
+  class(axles) <- "hc_axis_list"
 
-  yaxis
+  axles
 }
+
+
+#' @rdname hc_add_yAxis
+#' @export
+create_yaxis <- create_axis
 
 #' yAxis add highcharter objects
 #'

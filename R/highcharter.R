@@ -26,6 +26,7 @@ highchart <- function(hc_opts = list(),
                       height = NULL,
                       elementId = NULL,
                       google_fonts = getOption("highcharter.google_fonts")) {
+  
   assertthat::assert_that(type %in% c("chart", "stock", "map", "gantt"))
 
   opts <- .join_hc_opts()
@@ -98,9 +99,7 @@ is.highchart <- function(x) {
 #' @importFrom htmlwidgets shinyWidgetOutput
 #' @export
 highchartOutput <- function(outputId, width = "100%", height = "400px") {
-  shinyWidgetOutput(outputId, "highchart", width, height,
-    package = "highcharter"
-  )
+  shinyWidgetOutput(outputId, "highchart", width, height, package = "highcharter")
 }
 
 #' Widget render function for use in Shiny
@@ -142,28 +141,49 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'
 #' @export
 highchart2 <- function(hc_opts = list(),
-                       theme = NULL,
+                       theme = getOption("highcharter.theme"),
+                       type = "chart",
                        width = NULL,
                        height = NULL,
                        elementId = NULL,
-                       debug = FALSE,
                        google_fonts = getOption("highcharter.google_fonts")) {
+  
+  assertthat::assert_that(type %in% c("chart", "stock", "map", "gantt"))
+  
+  opts <- .join_hc_opts()
+  
+  if (identical(hc_opts, list())) {
+    hc_opts <- opts$chart
+  }
+  
   unfonts <- NULL
   if (google_fonts) {
     unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
   }
-
+  
+  opts$chart <- NULL
+  
   # forward options using x
   x <- list(
     hc_opts = hc_opts,
     theme = theme,
+    conf_opts = opts,
+    type = type,
     fonts = unfonts,
-    debug = debug
+    debug = getOption("highcharter.debug")
   )
-
+  
+  if (getOption("highcharter.debug")) {
+    attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
+  }
+  
+  if (getOption("highcharter.rjson")) {
+    attr(x, "TOJSON_FUNC") <- rjson::toJSON
+  }
+  
   # create widget
-  htmlwidgets::createWidget(
-    name = "highchart2",
+  hc <- htmlwidgets::createWidget(
+    name = "highchart",
     x,
     width = width,
     height = height,
@@ -171,19 +191,23 @@ highchart2 <- function(hc_opts = list(),
     elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(
       defaultWidth = "100%",
-      knitr.figure = FALSE,
-      knitr.defaultWidth = "100%",
-      browser.fill = TRUE
+      # knitr.figure = FALSE,
+      browser.fill = TRUE,
+      padding = 0
     )
   )
+  
+  # set sizing for `shinyRenderer`
+  hc <- hc_size(hc, width = width, height = height)
+  
+  hc
+  
 }
 
 #' @rdname highchartOutput
 #' @export
 highchartOutput2 <- function(outputId, width = "100%", height = "400px") {
-  shinyWidgetOutput(outputId, "highchart2", width, height,
-    package = "highcharter"
-  )
+  shinyWidgetOutput(outputId, "highchart2", width, height, package = "highcharter")
 }
 
 #' @rdname renderHighchart
@@ -203,8 +227,6 @@ highchartzero <- function(hc_opts = list(),
                           height = NULL,
                           elementId = NULL) {
 
-  # unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
-  # forward options using x
   x <- list(
     hc_opts = hc_opts
   )
@@ -224,4 +246,19 @@ highchartzero <- function(hc_opts = list(),
       browser.fill = TRUE
     )
   )
+}
+
+#' @rdname highchartOutput
+#' @export
+highchartOutputZ <- function(outputId, width = "100%", height = "400px") {
+  shinyWidgetOutput(outputId, "highchartzero", width, height, package = "highcharter")
+}
+
+#' @rdname renderHighchart
+#' @export
+renderHighchartZ <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, highchartOutputZ, env, quoted = TRUE)
 }

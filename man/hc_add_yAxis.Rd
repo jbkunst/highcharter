@@ -2,11 +2,24 @@
 % Please edit documentation in R/highcharts-api-helpers.R
 \name{hc_yAxis_multiples}
 \alias{hc_yAxis_multiples}
+\alias{hc_xAxis_multiples}
+\alias{create_axis}
 \alias{create_yaxis}
 \alias{hc_add_yAxis}
 \title{Creating multiples yAxis t use with highcharts}
 \usage{
 hc_yAxis_multiples(hc, ...)
+
+hc_xAxis_multiples(hc, ...)
+
+create_axis(
+  naxis = 2,
+  heights = 1,
+  sep = 0.01,
+  offset = 0,
+  turnopposite = TRUE,
+  ...
+)
 
 create_yaxis(
   naxis = 2,

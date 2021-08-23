@@ -10,7 +10,11 @@
 * Adding `hcpxy_set_date` and `hcpxy_redraw` thanks to @PaulC91.
 * Adding `hc_loading` for use with `hcpxy_loading`.
 * Adding `hcpxy_update_point` due @zevross (https://twitter.com/zevross/status/1403394816558383105).
-* Update jQuery from 3.5.0 to 3.5.1.
+* Update jQuery from 3.5.0 to 3.5.1. This solve the problem in flexdashboard menu
+when the size of viewport is small (like tables o phones).
+* Adding new data `mountains_panorama`.
+* Adding new function `mountains_panorama`.
+
 
 ## Bugs
 

@@ -3,11 +3,14 @@
 \name{highchartOutput}
 \alias{highchartOutput}
 \alias{highchartOutput2}
+\alias{highchartOutputZ}
 \title{Widget output function for use in Shiny}
 \usage{
 highchartOutput(outputId, width = "100\%", height = "400px")
 
 highchartOutput2(outputId, width = "100\%", height = "400px")
+
+highchartOutputZ(outputId, width = "100\%", height = "400px")
 }
 \arguments{
 \item{outputId}{The name of the input.}

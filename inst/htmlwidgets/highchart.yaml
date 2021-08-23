@@ -16,6 +16,7 @@ dependencies:
     - highcharts-more.js
     - modules/stock.js
     - modules/map.js
+    - modules/accessibility.js
     - modules/data.js
     - modules/exporting.js
     - modules/offline-exporting.js    
@@ -56,7 +57,6 @@ dependencies:
 #    - modules/grid-axis.js
 #    - modules/broken-axis.js
 #    - modules/pareto.js
-#    - modules/accessibility.js
 #    - modules/boost-canvas.js
 #    - modules/histogram-bellcurve.js
 #    - modules/no-data-to-display.js

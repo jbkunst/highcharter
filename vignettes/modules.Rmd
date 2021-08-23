@@ -161,13 +161,13 @@ More details in https://api.highcharts.com/highcharts/plotOptions.series.dragDro
 ```{r}
 set.seed(123)
 
-df <- tibble(id = 1:10, x = rnorm(10), y = rnorm(10))
+df <- tibble(x = runif(10), y = runif(10), z = runif(10), name = paste("cat", 1:10))
 
 hchart(
   df,
   "bubble",
   hcaes(x = x, y = y),
-  showInLegend = TRUE,
+  # showInLegend = TRUE,
   name = "You can move the points",
   cursor = "move",
   dragDrop = list(
@@ -177,15 +177,16 @@ hchart(
   ) %>% 
   hc_add_dependency("modules/draggable-points.js")
 
-highchart() %>% 
-  hc_add_series(
+
+df$x <- NULL
+
+hchart(
   df,
-  "line",
-  hcaes(x = id, y = y),
-  "scatter",
+  "column",
+  hcaes(x = name, y = y),
   showInLegend = TRUE,
   name = "You can move the points only Yaxis direction",
-  cursor = "ns-resize",
+  cursor = 'ns-resize',
   dragDrop = list(
     draggableY = TRUE
     )

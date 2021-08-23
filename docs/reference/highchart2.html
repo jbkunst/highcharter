@@ -180,7 +180,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jbkunst/highcharter">
-    <span class="fas fa-github-alt"></span>
+    <span class="fa fa-github-alt"></span>
      
   </a>
 </li>
@@ -214,11 +214,11 @@
 
     <pre class="usage"><span class='fu'>highchart2</span><span class='op'>(</span>
   hc_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
-  theme <span class='op'>=</span> <span class='cn'>NULL</span>,
+  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"highcharter.theme"</span><span class='op'>)</span>,
+  type <span class='op'>=</span> <span class='st'>"chart"</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
   elementId <span class='op'>=</span> <span class='cn'>NULL</span>,
-  debug <span class='op'>=</span> <span class='cn'>FALSE</span>,
   google_fonts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"highcharter.google_fonts"</span><span class='op'>)</span>
 <span class='op'>)</span>
 
@@ -255,16 +255,16 @@
       <td><p>Use an explicit element ID for the widget.</p></td>
     </tr>
     <tr>
-      <th>debug</th>
-      <td><p>A boolean value if you want to print in the browser console the
-parameters given to <code>highchart</code>.</p></td>
-    </tr>
-    <tr>
       <th>google_fonts</th>
       <td><p>A boolean value. If TRUE (default), adds a reference to the
 Google Fonts API to the HTML head, downloading CSS for the font families
 defined in the Highcharts theme from https://fonts.googleapis.com. Set to
 FALSE if you load your own fonts using CSS.</p></td>
+    </tr>
+    <tr>
+      <th>debug</th>
+      <td><p>A boolean value if you want to print in the browser console the
+parameters given to <code>highchart</code>.</p></td>
     </tr>
     </table>
 

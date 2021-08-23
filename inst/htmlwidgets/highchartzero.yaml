@@ -1,10 +1,11 @@
 dependencies:
   - name: jquery
-    version: 3.5.0
+    version: 3.5.1
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
   - name: highcharts
-    version: 9.0.0
+    version: 9.1.0
     src: "htmlwidgets/lib/highcharts"
     script:
     - highcharts.js
+    - custom/reset.js

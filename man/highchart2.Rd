@@ -7,11 +7,11 @@
 \usage{
 highchart2(
   hc_opts = list(),
-  theme = NULL,
+  theme = getOption("highcharter.theme"),
+  type = "chart",
   width = NULL,
   height = NULL,
   elementId = NULL,
-  debug = FALSE,
   google_fonts = getOption("highcharter.google_fonts")
 )
 
@@ -35,13 +35,13 @@ highchartzero(
 
 \item{elementId}{Use an explicit element ID for the widget.}
 
-\item{debug}{A boolean value if you want to print in the browser console the
-parameters given to \code{highchart}.}
-
 \item{google_fonts}{A boolean value. If TRUE (default), adds a reference to the
 Google Fonts API to the HTML head, downloading CSS for the font families
 defined in the Highcharts theme from https://fonts.googleapis.com. Set to
 FALSE if you load your own fonts using CSS.}
+
+\item{debug}{A boolean value if you want to print in the browser console the
+parameters given to \code{highchart}.}
 }
 \description{
 This widgets don't support options yet.

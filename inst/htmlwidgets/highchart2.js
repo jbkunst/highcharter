@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
   
-  name: 'highchart2',
+  name: 'highchart',
 
   type: 'output',
 
@@ -70,7 +70,63 @@ HTMLWidgets.widget({
     }
     
     Highcharts.setOptions(x.conf_opts);
-     
+    
+    if(x.type == "chart") {
+      if(x.debug) console.log("charting CHART");
+      $("#" + el.id).highcharts(x.hc_opts);
+    } else if (x.type == "stock") {
+      if(x.debug) console.log("charting STOCK");
+      $("#" + el.id).highcharts('StockChart', x.hc_opts);  
+    } else if (x.type == "map"){
+      if(x.debug) console.log("charting MAP");
+
+      x.hc_opts.series = x.hc_opts.series.map(function(e){
+        if(e.geojson === true) {
+          if(x.debug) console.log("geojson\n\t", e.type, "\n\t", typeof(e.series));
+          e.data = Highcharts.geojson(e.data, e.type);
+        }
+        return e;
+      });
+      
+      $("#" + el.id).highcharts('Map', x.hc_opts); 
+      
+      if(x.hc_opts.mapNavigation !== undefined && x.hc_opts.mapNavigation.enabled === true){
+        /* if have navigation option and enabled true: http://stackoverflow.com/questions/7600454 */
+        $("#" + el.id).bind( 'mousewheel DOMMouseScroll', function ( e ) {
+          var e0 = e.originalEvent,
+          delta = e0.wheelDelta || -e0.detail;
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          e.preventDefault();
+
+        });
+        
+      }
+      
+    } else if (x.type == "gantt") {
+      
+      if(x.debug) console.log("charting GANTT");
+      
+      chart = Highcharts.ganttChart(el.id, x.hc_opts);
+      
+    }
+    
+    if(x.hc_opts.motion !== undefined) {
+      
+      $("#" + el.id).css({"position" : "relative" });
+      
+      if(x.debug) console.log("setting MOTION options");
+      
+      var pc = $($("#" + el.id).find("#play-controls")[0]);
+      
+      var ct = x.theme.chart;
+      
+      if(ct.backgroundColor !== undefined) $(pc.find("#play-pause-button")[0]).css({backgroundColor : x.theme.chart.backgroundColor});
+      if(ct.style !== undefined)  $(pc.find("#play-output")[0]).css(x.theme.chart.style);
+      if(ct.style !== undefined && ct.style.color !== undefined) $(pc.find("#play-pause-button")[0]).css({color : x.theme.chart.style.color});
+      
+      
+    } 
+    
   },
 
   resize: function(el, width, height, instance) {
@@ -87,3 +143,118 @@ HTMLWidgets.widget({
   }
 
 });
+
+if (HTMLWidgets.shinyMode) {
+  
+  Shiny.addCustomMessageHandler('addSeries', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.addSeries(msg.series);
+      
+  });
+  
+  Shiny.addCustomMessageHandler('removeSeries', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).remove();
+    
+  });
+  
+  Shiny.addCustomMessageHandler('removeAllSeries', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    while (chart.series.length) {
+      chart.series[0].remove();
+      }
+    
+  });
+  
+  Shiny.addCustomMessageHandler('updateChart', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.update(msg.options);
+   
+  });
+  
+  Shiny.addCustomMessageHandler('updateSeries', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).update(msg.options);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('updatePoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).data[msg.idPoint].update(msg.options);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('showLoading', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    if (msg.showLoading) {
+      
+      chart.showLoading();
+      
+    } else {
+      
+      chart.hideLoading();
+      
+    }
+      
+  });
+  
+  Shiny.addCustomMessageHandler('addPoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).addPoint(msg.point, msg.redraw, msg.shift, msg.animation);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('removePoint', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    chart.get(msg.idSeries).removePoint(msg.i, msg.redraw);
+    
+  });
+  
+  Shiny.addCustomMessageHandler('setData', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    if (typeof chart != 'undefined') {
+      
+      chart.series[msg.serie].setData(
+        data = msg.data,
+        redraw = msg.redraw,
+        animation = msg.animation,
+        updatePoints = msg.updatePoints
+        );
+      
+    }
+    
+  });
+  
+  Shiny.addCustomMessageHandler('redraw', function(msg) {
+    
+    var chart = $("#" + msg.id).highcharts();
+    
+    if (typeof chart != 'undefined') {
+      
+      chart.redraw();
+      
+    }
+      
+  });
+  
+}
