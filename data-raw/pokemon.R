@@ -1,11 +1,63 @@
 library(tidyverse)
 library(rvest)
 
+# bulbapedia --------------------------------------------------------------
+bulbapedia_html <- "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_base_stats_(Generation_VIII-present)" %>% 
+  read_html(encoding = "UTF-8")
+
+dfpkmn <- bulbapedia_html %>%
+  html_node("table.sortable") %>%
+  html_table() 
+  
+dfpkmn <- janitor::remove_constant(dfpkmn)
+
+nms <- names(dfpkmn) %>% 
+  ifelse(. == "#", "id", .) %>% 
+  str_replace_all("Sp. ", "special_") %>% 
+  stringi::stri_trans_general("Latin-ASCII") %>% 
+  str_to_lower()
+
+dfpkmn <- set_names(dfpkmn, nms)
+
+pkmn_icon_url <- bulbapedia_html %>%
+  html_nodes("table.sortable img") %>%
+  html_attr("src")
+
+pkmn_detail_url <- bulbapedia_html %>%
+  html_nodes("table.sortable .plainlinks > a") %>%
+  html_attr("href")
+  
+library(furrr)
+plan(multiprocess(workers = 10))
+
+pkmn_image_url <- furrr::future_map_chr(
+  pkmn_detail_url,
+  function(url = "/wiki/Cryogonal_(Pok%C3%A9mon)"){
+    
+    message(url)
+    
+    pkmn_html <- read_html(paste0("https://bulbapedia.bulbagarden.net", url))
+    
+    pkmn_html %>% 
+      html_node("img[width=\"250\"]") %>% 
+      html_attr("src")
+    
+    }, .progress = TRUE)
+
+pkmn_image_url
+
+dfpkmn <- dfpkmn %>% 
+  mutate(
+    icon_url = pkmn_icon_url,
+    image_url = pkmn_image_url,
+    detail_url = pkmn_detail_url,
+  )
 
 
-path <- function(x) paste0("https://raw.githubusercontent.com/phalt/pokeapi/master/data/v2/csv/", x)
+# pokeapi -----------------------------------------------------------------
+path <- function(x) paste0("https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/", x)
 
-dfpkmn <- read_csv(path("pokemon.csv")) %>%
+dfpkmn2 <- read_csv(path("pokemon.csv")) %>%
   select(-order, -is_default) %>%
   rename(pokemon = identifier)
 
@@ -38,36 +90,6 @@ dfegg <- read_csv(path("egg_groups.csv")) %>%
   select(species_id, ranking, identifier) %>%
   spread(ranking, identifier)
 
-# dfimg <- "https://github.com/phalt/pokeapi/tree/master/data/Pokemon_XY_Sprites" %>%
-#   read_html() %>%
-#   html_nodes("tr.js-navigation-item > .content > .css-truncate a") %>%
-#   map_df(function(x) {
-#     url <- x %>% html_attr("href")
-#     data_frame(
-#       id = str_extract(basename(url), "\\d+"),
-#       url_image = basename(url)
-#     )
-#   }) %>%
-#   mutate(id = as.numeric(id))
-
-url_bulbapedia_list <- "http://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_base_stats_(Generation_VI-present)"
-
-id <- url_bulbapedia_list %>%
-  read_html(encoding = "UTF-8") %>%
-  html_node("table.sortable") %>%
-  html_table() %>%
-  .[[1]] %>%
-  as.numeric()
-
-url_icon <- url_bulbapedia_list %>%
-  read_html() %>%
-  html_nodes("table.sortable img") %>%
-  html_attr("src")
-
-dficon <- data_frame(id, url_icon) %>%
-  filter(!is.na(id)) %>%
-  distinct(id)
-
 dfcolor <- map_df(na.omit(unique(c(dftype$type_1, dftype$type_2))), function(t) {
   # t <- "bug"
   col <- "http://pokemon-uranium.wikia.com/wiki/Template:%s_color" %>%
@@ -90,18 +112,34 @@ dfcolorf <- crossing(
     tibble(color_f = colorRampPalette(c(.$color_1, .$color_2))(n)[round(n * p)])
   })
 
-# THE join
-pokemon <- dfpkmn %>%
+# THE JOIN
+dfpkmn2 <- dfpkmn2 %>%
   left_join(dftype, by = "id") %>%
   left_join(dfstat, by = "id") %>%
   left_join(dfcolor %>% rename(type_1 = type, color_1 = color), by = "type_1") %>%
   left_join(dfcolor %>% rename(type_2 = type, color_2 = color), by = "type_2") %>%
   left_join(dfcolorf, by = c("color_1", "color_2")) %>%
-  left_join(dfegg, by = "species_id") %>%
-  # left_join(dfimg, by = "id") %>%
-  left_join(dficon, by = "id")
+  left_join(dfegg, by = "species_id")
 
-pokemon <- pokemon %>%
+dfpkmn2 <- dfpkmn2 %>%
   mutate(color_f = ifelse(is.na(color_f), color_1, color_f))
+
+
+# final join --------------------------------------------------------------
+
+dfpkmn  <- dfpkmn  %>% distinct(id, .keep_all = TRUE)
+dfpkmn2 <- dfpkmn2 %>% distinct(id, .keep_all = TRUE) %>% 
+  semi_join(dfpkmn, by = "id")
+
+dfpkmn  <- dfpkmn  %>% select(id, pokemon, ends_with("url"))
+dfpkmn2 <- dfpkmn2 %>% select(-pokemon)
+
+
+pokemon <- full_join(dfpkmn2, dfpkmn, by = "id")
+
+pokemon <- pokemon %>% 
+  select(id, pokemon, everything())
+ 
+glimpse(pokemon)
 
 usethis::use_data(pokemon, overwrite = TRUE)

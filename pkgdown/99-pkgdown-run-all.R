@@ -11,3 +11,5 @@ source("pkgdown/03-pkgdown-add-to-yalm-articles.R")
 
 
 
+data(mountains_panorama)
+glimpse(mountains_panorama)

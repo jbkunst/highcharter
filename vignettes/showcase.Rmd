@@ -145,7 +145,7 @@ hchart(
   data_to_hierarchical(pkmn_min, c(type_1, type_2), val, colors = cols),
   type = "treemap",
   # levelIsConstant = FALSE,
-  # allowDrillToNode = TRUE,
+  allowDrillToNode = TRUE,
   levels = lvl_opts,
   tooltip = list(valueDecimals = FALSE)
   ) %>% 

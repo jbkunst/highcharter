@@ -13,7 +13,7 @@
 * Update jQuery from 3.5.0 to 3.5.1. This solve the problem in flexdashboard menu
 when the size of viewport is small (like tables o phones).
 * Adding new data `mountains_panorama`.
-* Adding new function `mountains_panorama`.
+* Update `pokemon` data.
 
 
 ## Bugs

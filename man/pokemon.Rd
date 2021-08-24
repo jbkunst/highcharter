@@ -5,7 +5,7 @@
 \alias{pokemon}
 \title{pokemon}
 \format{
-A \code{data frame} with 718 observations and 20 variables.
+A \code{data frame} with 898 observations and 22 variables.
 }
 \usage{
 pokemon
@@ -36,7 +36,9 @@ Information about 718 pokemon.
 \item \code{color_f}:
 \item \code{egg_group_1}:
 \item \code{egg_group_2}:
-\item \code{url_image}:
+\item \code{icon_url}:
+\item \code{image_url}:
+\item \code{detail_url}:
 }
 }
 

@@ -27,7 +27,10 @@ highchartzero(
 \item{hc_opts}{A \code{list} object containing options defined as
 \url{http://api.highcharts.com/highcharts}.}
 
-\item{theme}{A \code{hc_theme} class object}
+\item{theme}{A \code{hc_theme} class object.}
+
+\item{type}{A character value to set if use Highchart, Highstock or
+Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 
 \item{width}{A numeric input in pixels.}
 
@@ -39,9 +42,6 @@ highchartzero(
 Google Fonts API to the HTML head, downloading CSS for the font families
 defined in the Highcharts theme from https://fonts.googleapis.com. Set to
 FALSE if you load your own fonts using CSS.}
-
-\item{debug}{A boolean value if you want to print in the browser console the
-parameters given to \code{highchart}.}
 }
 \description{
 This widgets don't support options yet.

@@ -1,3 +1,24 @@
+#' Visual comparison of Mountains Panorama
+#'
+#' This data comes from the \url{http://www.highcharts.com/} examples:  
+#' https://www.highcharts.com/demo/3d-area-multiple
+#'
+#' @section Variables:
+#'
+#' \itemize{
+#'
+#'  \item \code{place}: The place.
+#'  \item \code{name}: Name.
+#'  \item \code{heigth}: Heigth.
+#'
+#' }
+#'
+#' @docType data
+#' @name mountains_panorama
+#' @usage mountains_panorama
+#' @format A \code{data frame} with 91 observations and 3 variables.
+"mountains_panorama"
+
 #' City temperatures from a year in wide format
 #'
 #' This data comes from the \url{http://www.highcharts.com/} examples.
@@ -125,13 +146,15 @@
 #'  \item \code{color_f}:
 #'  \item \code{egg_group_1}:
 #'  \item \code{egg_group_2}:
-#'  \item \code{url_image}:
+#'  \item \code{icon_url}:
+#'  \item \code{image_url}:
+#'  \item \code{detail_url}:
 #' }
 #'
 #' @docType data
 #' @name pokemon
 #' @usage pokemon
-#' @format A \code{data frame} with 718 observations and 20 variables.
+#' @format A \code{data frame} with 898 observations and 22 variables.
 "pokemon"
 
 #' stars
