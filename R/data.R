@@ -122,39 +122,12 @@
 
 #' pokemon
 #'
-#' Information about 718 pokemon.
-#'
-#' @section Variables:
-#'
-#' \itemize{
-#'  \item \code{id}:
-#'  \item \code{pokemon}:
-#'  \item \code{species_id}:
-#'  \item \code{height}:
-#'  \item \code{weight}:
-#'  \item \code{base_experience}:
-#'  \item \code{type_1}:
-#'  \item \code{type_2}:
-#'  \item \code{attack}:
-#'  \item \code{defense}:
-#'  \item \code{hp}:
-#'  \item \code{special_attack}:
-#'  \item \code{special_defense}:
-#'  \item \code{speed}:
-#'  \item \code{color_1}:
-#'  \item \code{color_2}:
-#'  \item \code{color_f}:
-#'  \item \code{egg_group_1}:
-#'  \item \code{egg_group_2}:
-#'  \item \code{icon_url}:
-#'  \item \code{image_url}:
-#'  \item \code{detail_url}:
-#' }
+#' Information about 898 pokemon.
 #'
 #' @docType data
 #' @name pokemon
 #' @usage pokemon
-#' @format A \code{data frame} with 898 observations and 22 variables.
+#' @format A \code{data frame} with 898 observations and 24 variables.
 "pokemon"
 
 #' stars

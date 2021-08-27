@@ -42,14 +42,14 @@ apps
 
 library(furrr)
 plan(multisession, workers = 10)
-dinfo <- future_map_dfr(apps, function(x = "03-shinydashboard-n-spakrlines"){
+dinfo <- future_map_dfr(apps, function(x = "03-events-v2"){
 # dinfo <- map_df(apps, function(x = "05-arma"){ 
   
   message(x)
   
-  url_app <- str_glue("http://jbkunst.shinyapps.io/", x)
+  app_url <- str_glue("http://jbkunst.shinyapps.io/", x)
   
-  url_src <- str_glue("https://github.com/jbkunst/highcharter-shiny/tree/master/", x)
+  src_url <- str_glue("https://github.com/jbkunst/highcharter-shiny/tree/master/", x)
   
   description <- str_glue(
     "https://raw.githubusercontent.com/jbkunst/highcharter-shiny/master/{ folder }/DESCRIPTION",
@@ -81,27 +81,27 @@ dinfo <- future_map_dfr(apps, function(x = "03-shinydashboard-n-spakrlines"){
     readme.dm <- readLines(readme.dm)
   }
   
-  tmp_img <- tempfile(fileext = ".png")
+  img_tmp <- tempfile(fileext = ".png")
   
-  tmp_img %>% str_replace_all("\\\\", "/")
+  img_tmp %>% str_replace_all("\\\\", "/")
   
   shot <- webshot2::webshot(
-    url_app, 
-    file = tmp_img, 
-    delay = 10,
+    app_url, 
+    file = img_tmp, 
+    delay = 15,
     zoom = 0.5, 
     vwidth = 1336, 
     vheight = 768,
     cliprect = "viewport"
     )
   
-  img_uri <- knitr::image_uri(tmp_img)
+  img_uri <- knitr::image_uri(img_tmp)
   
   dout <- tibble(
     app   = x,
     title = coalesce(description$get("Title"), x),
-    url   = url_app,
-    src   = url_src,
+    url   = app_url,
+    src   = src_url,
     shot  = img_uri,
     text  = list(readme.dm)
   )
@@ -110,7 +110,7 @@ dinfo <- future_map_dfr(apps, function(x = "03-shinydashboard-n-spakrlines"){
   
   dout
   
-})
+}, .progress = TRUE)
 
 dinfo <- left_join(
   dinfo,

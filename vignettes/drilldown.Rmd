@@ -104,3 +104,53 @@ hchart(
     title = ""
   )
 ```
+
+
+Copy & pasting same code:
+
+```{r}
+pkmn_min <- pokemon %>% 
+  count(type_1, color = type_1_color) %>% 
+  mutate(type_1 = fct_reorder(type_1, .x = n)) %>% 
+  arrange(desc(type_1))
+
+pkmn_ddn <- pokemon %>% 
+  count(type_1, type_2, color = type_mix_color) %>% 
+  arrange(type_1, desc(n)) %>% 
+  mutate(type_2 = ifelse(is.na(type_2), str_c("only ", type_1), type_2)) %>% 
+  group_nest(type_1) %>% 
+  mutate(
+    id = type_1,
+    type = "column",
+    # in the drilldown we'll give the mapping via creating the columns
+    data = map(data, mutate, name = type_2, y  = n),
+    data = map(data, list_parse)
+  )
+  
+hchart(
+  pkmn_min, 
+  type = "column",
+  hcaes(x = type_1, y = n, color = color, drilldown = type_1),
+  name = "Pokémons"
+  ) %>% 
+  hc_drilldown(
+    activeAxisLabelStyle = list(textDecoration = "none"),
+    allowPointDrilldown = TRUE,
+    series = list_parse(pkmn_ddn)
+  ) %>% 
+  hc_yAxis(
+    title = list(text = ""),
+    endOnTick = FALSE,
+    opposite = TRUE
+    ) %>%
+  hc_xAxis(
+    title = list(text = ""),
+    endOnTick = FALSE,
+    gridLineWidth = 0,
+    tickWidth = 0
+    ) %>% 
+  hc_chart(
+    style = list(fontFamily = "Gloria Hallelujah")
+  ) 
+```
+
