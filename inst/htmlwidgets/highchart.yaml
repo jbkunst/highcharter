@@ -16,7 +16,7 @@ dependencies:
     - highcharts-more.js
     - modules/stock.js
     - modules/map.js
-    - modules/accessibility.js
+    # - modules/accessibility.js
     - modules/data.js
     - modules/exporting.js
     - modules/offline-exporting.js    

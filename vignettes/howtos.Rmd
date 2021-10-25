@@ -25,7 +25,7 @@ library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
 
-## Introducction
+## Introduction
 
 
 ```{r}

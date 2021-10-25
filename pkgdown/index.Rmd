@@ -227,7 +227,7 @@ options(highcharter.theme = hc_theme_highcharts)
 
 ```{r}
 library(highcharter)
-# remotes::install_github("allisonhorst/palmerpenguins")
+# install.packages("palmerpenguins")
 data(penguins, package = "palmerpenguins")
 
 hchart(penguins, "scatter", hcaes(x = flipper_length_mm, y = bill_length_mm, group = species))
