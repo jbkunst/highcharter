@@ -145,6 +145,7 @@ reference:
 - title: Data
   desc: Data for examples
   contents:
+  - mountains_panorama
   - citytemp
   - citytemp_long
   - favorite_bars

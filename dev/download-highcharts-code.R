@@ -7,10 +7,10 @@ library(stringr)
 
 # settings ----------------------------------------------------------------
 # version to download
-version <- "9.1.0"
+version <- "9.3.1"
 hccodeurl <- "http://code.highcharts.com"
 
-path      <- sprintf("inst/htmlwidgets/lib/highcharts")
+path       <- sprintf("inst/htmlwidgets/lib/highcharts")
 path_temp  <- sprintf("inst/htmlwidgets/lib/highcharts-temp")
 
 # creating folder structure

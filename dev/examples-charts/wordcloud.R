@@ -1,4 +1,6 @@
 library(rvest)
+library(tidytext)
+
 texts <- read_html("http://www.htmlwidgets.org/develop_intro.html") %>% 
   html_nodes("p") %>% 
   html_text()

@@ -63,8 +63,6 @@ or chart pixel coordinates." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -102,13 +100,19 @@ or chart pixel coordinates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" style="text-decoration: none;" href="../index.html"><span id="navbarbrand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r</span></a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -233,57 +237,57 @@ or chart pixel coordinates.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Ex 1</span>
-<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>29.9</span>, <span class='fl'>71.5</span>, <span class='fl'>106.4</span>, <span class='fl'>129.2</span>, <span class='fl'>144.0</span>, <span class='fl'>176.0</span>, <span class='fl'>135.6</span>, <span class='fl'>148.5</span>, <span class='fl'>216.4</span>, <span class='fl'>194.1</span>, <span class='fl'>95.6</span>, <span class='fl'>54.4</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span>
-    tickInterval <span class='op'>=</span> <span class='fl'>0.5</span>,
-    gridLineWidth <span class='op'>=</span> <span class='fl'>1</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>hc_annotations</span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      labels <span class='op'>=</span>
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3</span>, y <span class='op'>=</span> <span class='fl'>129.2</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
-            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
-          <span class='op'>)</span>,
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>9</span>, y <span class='op'>=</span> <span class='fl'>194.1</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
-            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span>
-          <span class='op'>)</span>,
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>100</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
-            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {point.plotY} px"</span>
-          <span class='op'>)</span>,
-          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
-            text <span class='op'>=</span> <span class='st'>"x: {point.plotX} px&lt;br/&gt;y: {point.plotY} px"</span>
-          <span class='op'>)</span>
-        <span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-<span class='co'># Ex 2</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,
-  y <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
-<span class='op'>)</span>
-
-<span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"area"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>hc_annotations</span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>5</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, text <span class='op'>=</span> <span class='st'>"Middle"</span><span class='op'>)</span>,
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>1</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, text <span class='op'>=</span> <span class='st'>"Start"</span><span class='op'>)</span>
-      <span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'># Ex 1</span></span>
+<span class='r-in'><span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='highcharter-exports.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span></span>
+<span class='r-in'>    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>29.9</span>, <span class='fl'>71.5</span>, <span class='fl'>106.4</span>, <span class='fl'>129.2</span>, <span class='fl'>144.0</span>, <span class='fl'>176.0</span>, <span class='fl'>135.6</span>, <span class='fl'>148.5</span>, <span class='fl'>216.4</span>, <span class='fl'>194.1</span>, <span class='fl'>95.6</span>, <span class='fl'>54.4</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='highcharter-exports.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='hc_xAxis.html'>hc_xAxis</a></span><span class='op'>(</span></span>
+<span class='r-in'>    tickInterval <span class='op'>=</span> <span class='fl'>0.5</span>,</span>
+<span class='r-in'>    gridLineWidth <span class='op'>=</span> <span class='fl'>1</span></span>
+<span class='r-in'>  <span class='op'>)</span> <span class='op'><a href='highcharter-exports.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>hc_annotations</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      labels <span class='op'>=</span></span>
+<span class='r-in'>        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3</span>, y <span class='op'>=</span> <span class='fl'>129.2</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span></span>
+<span class='r-in'>          <span class='op'>)</span>,</span>
+<span class='r-in'>          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>9</span>, y <span class='op'>=</span> <span class='fl'>194.1</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {y}"</span></span>
+<span class='r-in'>          <span class='op'>)</span>,</span>
+<span class='r-in'>          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>100</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>            text <span class='op'>=</span> <span class='st'>"x: {x}&lt;br/&gt;y: {point.plotY} px"</span></span>
+<span class='r-in'>          <span class='op'>)</span>,</span>
+<span class='r-in'>          <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>            point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>            text <span class='op'>=</span> <span class='st'>"x: {point.plotX} px&lt;br/&gt;y: {point.plotY} px"</span></span>
+<span class='r-in'>          <span class='op'>)</span></span>
+<span class='r-in'>        <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Ex 2</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,</span>
+<span class='r-in'>  y <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='highchart.html'>highchart</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='highcharter-exports.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='hc_add_series.html'>hc_add_series</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df</span>, <span class='fu'><a href='hcaes.html'>hcaes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"area"</span><span class='op'>)</span> <span class='op'><a href='highcharter-exports.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>hc_annotations</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>5</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, text <span class='op'>=</span> <span class='st'>"Middle"</span><span class='op'>)</span>,</span>
+<span class='r-in'>        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>point <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>1</span>, xAxis <span class='op'>=</span> <span class='fl'>0</span>, yAxis <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>, text <span class='op'>=</span> <span class='st'>"Start"</span><span class='op'>)</span></span>
+<span class='r-in'>      <span class='op'>)</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -305,7 +309,7 @@ or chart pixel coordinates.</p>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1</p>
 </div>
 
       </footer>

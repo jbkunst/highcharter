@@ -1,8 +1,8 @@
-# highcharter 0.8.2.9000 (pre 0.9.0.0)
+# highcharter 0.9.2.9000
 
 ## Changes
 
-* Highcharter now uses HighchartsJS 9.1.0.
+* Highcharter now uses HighchartsJS 9.3.1.
 * Support highcharts gantt extension (#287). 
 * Adding missed language options in `getOption("highcharter.lang")`.
 * Adding `hcpxy_add_series`, `hcpxy_remove_series`, `hcpxy_update`, `hcpxy_update_series`,
@@ -14,7 +14,6 @@
 when the size of viewport is small (like tables o phones).
 * Adding new data `mountains_panorama`.
 * Update `pokemon` data.
-
 
 ## Bugs
 

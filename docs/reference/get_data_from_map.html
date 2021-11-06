@@ -64,8 +64,6 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -103,13 +101,19 @@ The urls are listed in https://code.highcharts.com/mapdata/." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" style="text-decoration: none;" href="../index.html"><span id="navbarbrand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r</span></a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -233,22 +237,23 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
     <div class='dont-index'><p><code><a href='download_map_data.html'>download_map_data</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='download_map_data.html'>download_map_data</a></span><span class='op'>(</span><span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span><span class='op'>)</span>
-<span class='fu'>get_data_from_map</span><span class='op'>(</span><span class='va'>dta</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 58 x 7</span>
-#&gt;    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         
-#&gt; <span style='color: #BCBCBC;'> 1</span> admin2              0.51          0.29 us-ca-083 SB      06083 Santa Barbara 
-#&gt; <span style='color: #BCBCBC;'> 2</span> admin2              0.45          0.24 us-ca-111 VE      06111 Ventura       
-#&gt; <span style='color: #BCBCBC;'> 3</span> admin2              0.38          0.46 us-ca-071 SB      06071 San Bernardino
-#&gt; <span style='color: #BCBCBC;'> 4</span> admin2              0.27          0.69 us-ca-115 YU      06115 Yuba          
-#&gt; <span style='color: #BCBCBC;'> 5</span> admin2              0.55          0.48 us-ca-101 SU      06101 Sutter        
-#&gt; <span style='color: #BCBCBC;'> 6</span> admin2              0.63          0.5  us-ca-031 KI      06031 Kings         
-#&gt; <span style='color: #BCBCBC;'> 7</span> admin2              0.34          0.59 us-ca-053 MO      06053 Monterey      
-#&gt; <span style='color: #BCBCBC;'> 8</span> admin2              0.2           0.54 us-ca-057 NE      06057 Nevada        
-#&gt; <span style='color: #BCBCBC;'> 9</span> admin2              0.4           0.34 us-ca-059 OR      06059 Orange        
-#&gt; <span style='color: #BCBCBC;'>10</span> admin2              0.51          0.54 us-ca-065 RI      06065 Riverside     
-#&gt; <span style='color: #949494;'># ... with 48 more rows</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>dta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='download_map_data.html'>download_map_data</a></span><span class='op'>(</span><span class='st'>"https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>get_data_from_map</span><span class='op'>(</span><span class='va'>dta</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 58 x 7</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    `hc-group` `hc-middle-x` `hc-middle-y` `hc-key`  `hc-a2` fips  name          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> admin2              0.51          0.29 us-ca-083 SB      06083 Santa Barbara </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> admin2              0.45          0.24 us-ca-111 VE      06111 Ventura       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> admin2              0.38          0.46 us-ca-071 SB      06071 San Bernardino</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> admin2              0.27          0.69 us-ca-115 YU      06115 Yuba          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> admin2              0.55          0.48 us-ca-101 SU      06101 Sutter        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> admin2              0.63          0.5  us-ca-031 KI      06031 Kings         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> admin2              0.34          0.59 us-ca-053 MO      06053 Monterey      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> admin2              0.2           0.54 us-ca-057 NE      06057 Nevada        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> admin2              0.4           0.34 us-ca-059 OR      06059 Orange        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> admin2              0.51          0.54 us-ca-065 RI      06065 Riverside     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># ... with 48 more rows</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -270,7 +275,7 @@ The urls are listed in <a href='https://code.highcharts.com/mapdata/'>https://co
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1</p>
 </div>
 
       </footer>

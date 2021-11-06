@@ -1,6 +1,6 @@
 Package: highcharter
 Type: Package
-Version: 0.8.2.9000
+Version: 0.9.3.9000
 Title: A Wrapper for the 'Highcharts' Library
 Description: A wrapper for the 'Highcharts' library including
     shortcut functions to plot R objects. 'Highcharts'
@@ -26,7 +26,7 @@ Authors@R: c(
 URL: http://jkunst.com/highcharter, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 License: MIT + file LICENSE
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Depends:

@@ -33,8 +33,7 @@ because you can turn the icons into svg text or png files so you can use them in
 html tags or transform to data uri.
 
 ```{r}
-# install.packages("rsvg")
-require(rsvg) # for fontawesome::fa_png
+library(rsvg)
 library(fontawesome)
 library(highcharter)
 library(stringr)

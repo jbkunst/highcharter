@@ -64,8 +64,6 @@ collection." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -103,13 +101,19 @@ collection." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" style="text-decoration: none;" href="../index.html"><span id="navbarbrand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r</span></a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -238,7 +242,7 @@ collection.</p>
       <th>download_map_data</th>
       <td><p>A logical value whether to download
 (add as a dependency) the map. Default <code>TRUE</code> via
-<code><a href='https://rdrr.io/r/base/options.html'>getOption("highcharter.download_map_data")</a></code>.</p></td>
+<code>getOption("highcharter.download_map_data")</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -262,31 +266,35 @@ the joinBy and value are needed.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>hcmap</span><span class='op'>(</span>nullColor <span class='op'>=</span> <span class='st'>"#DADADA"</span><span class='op'>)</span>
-<span class='fu'>hcmap</span><span class='op'>(</span>nullColor <span class='op'>=</span> <span class='st'>"#DADADA"</span>, download_map_data <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'dplyr'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:stats':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"USArrests"</span>, package <span class='op'>=</span> <span class='st'>"datasets"</span><span class='op'>)</span>
-<span class='va'>USArrests</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>USArrests</span>, <span class='st'>"woe-name"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>USArrests</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>hcmap</span><span class='op'>(</span>
-  map <span class='op'>=</span> <span class='st'>"countries/us/us-all"</span>, data <span class='op'>=</span> <span class='va'>USArrests</span>,
-  joinBy <span class='op'>=</span> <span class='st'>"woe-name"</span>, value <span class='op'>=</span> <span class='st'>"UrbanPop"</span>, name <span class='op'>=</span> <span class='st'>"Urban Population"</span>
-<span class='op'>)</span>
-
-<span class='co'># download_map_data = FALSE</span>
-<span class='fu'>hcmap</span><span class='op'>(</span>
-  map <span class='op'>=</span> <span class='st'>"countries/us/us-all"</span>, data <span class='op'>=</span> <span class='va'>USArrests</span>,
-  joinBy <span class='op'>=</span> <span class='st'>"woe-name"</span>, value <span class='op'>=</span> <span class='st'>"UrbanPop"</span>, name <span class='op'>=</span> <span class='st'>"Urban Population"</span>,
-  download_map_data <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='fu'>hcmap</span><span class='op'>(</span>nullColor <span class='op'>=</span> <span class='st'>"#DADADA"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>hcmap</span><span class='op'>(</span>nullColor <span class='op'>=</span> <span class='st'>"#DADADA"</span>, download_map_data <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: dplyr</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: 'dplyr'</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from 'package:stats':</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     filter, lag</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from 'package:base':</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     intersect, setdiff, setequal, union</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"USArrests"</span>, package <span class='op'>=</span> <span class='st'>"datasets"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>USArrests</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>USArrests</span>, <span class='st'>"woe-name"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>USArrests</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>hcmap</span><span class='op'>(</span></span>
+<span class='r-in'>  map <span class='op'>=</span> <span class='st'>"countries/us/us-all"</span>, data <span class='op'>=</span> <span class='va'>USArrests</span>,</span>
+<span class='r-in'>  joinBy <span class='op'>=</span> <span class='st'>"woe-name"</span>, value <span class='op'>=</span> <span class='st'>"UrbanPop"</span>, name <span class='op'>=</span> <span class='st'>"Urban Population"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># download_map_data = FALSE</span></span>
+<span class='r-in'><span class='fu'>hcmap</span><span class='op'>(</span></span>
+<span class='r-in'>  map <span class='op'>=</span> <span class='st'>"countries/us/us-all"</span>, data <span class='op'>=</span> <span class='va'>USArrests</span>,</span>
+<span class='r-in'>  joinBy <span class='op'>=</span> <span class='st'>"woe-name"</span>, value <span class='op'>=</span> <span class='st'>"UrbanPop"</span>, name <span class='op'>=</span> <span class='st'>"Urban Population"</span>,</span>
+<span class='r-in'>  download_map_data <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,7 +316,7 @@ the joinBy and value are needed.</p></td>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1</p>
 </div>
 
       </footer>

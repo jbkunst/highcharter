@@ -16,6 +16,7 @@ highchartzero() %>%
 
 
 # example 2 ---------------------------------------------------------------
+library(igraphdata)
 data(package = "igraphdata")
 
 data(karate, package = "igraphdata")

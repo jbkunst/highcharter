@@ -63,8 +63,6 @@ lines of code." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -102,13 +100,19 @@ lines of code." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" style="text-decoration: none;" href="../index.html"><span id="navbarbrand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r</span></a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/highcharter.html">Get started</a>
 </li>
 <li>
@@ -232,41 +236,41 @@ lines of code.</p>
     <p>More examples and details in <a href='http://www.highcharts.com/docs/chart-design-and-style/themes'>http://www.highcharts.com/docs/chart-design-and-style/themes</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='highcharts_demo.html'>highcharts_demo</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='va'>hc</span>
-
-<span class='va'>thm</span> <span class='op'>&lt;-</span> <span class='fu'>hc_theme</span><span class='op'>(</span>
-  colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span><span class='op'>)</span>,
-  chart <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    backgroundColor <span class='op'>=</span> <span class='st'>"#15C0DE"</span>
-  <span class='op'>)</span>,
-  title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      color <span class='op'>=</span> <span class='st'>"#333333"</span>,
-      fontFamily <span class='op'>=</span> <span class='st'>"Erica One"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>,
-  subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      color <span class='op'>=</span> <span class='st'>"#666666"</span>,
-      fontFamily <span class='op'>=</span> <span class='st'>"Shadows Into Light"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>,
-  legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    itemStyle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      fontFamily <span class='op'>=</span> <span class='st'>"Tangerine"</span>,
-      color <span class='op'>=</span> <span class='st'>"black"</span>
-    <span class='op'>)</span>,
-    itemHoverStyle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      color <span class='op'>=</span> <span class='st'>"gray"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'><a href='hc_add_theme.html'>hc_add_theme</a></span><span class='op'>(</span><span class='va'>hc</span>, <span class='va'>thm</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>hc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='highcharts_demo.html'>highcharts_demo</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>hc</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>thm</span> <span class='op'>&lt;-</span> <span class='fu'>hc_theme</span><span class='op'>(</span></span>
+<span class='r-in'>  colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  chart <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    backgroundColor <span class='op'>=</span> <span class='st'>"#15C0DE"</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      color <span class='op'>=</span> <span class='st'>"#333333"</span>,</span>
+<span class='r-in'>      fontFamily <span class='op'>=</span> <span class='st'>"Erica One"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      color <span class='op'>=</span> <span class='st'>"#666666"</span>,</span>
+<span class='r-in'>      fontFamily <span class='op'>=</span> <span class='st'>"Shadows Into Light"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    itemStyle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      fontFamily <span class='op'>=</span> <span class='st'>"Tangerine"</span>,</span>
+<span class='r-in'>      color <span class='op'>=</span> <span class='st'>"black"</span></span>
+<span class='r-in'>    <span class='op'>)</span>,</span>
+<span class='r-in'>    itemHoverStyle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      color <span class='op'>=</span> <span class='st'>"gray"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='hc_add_theme.html'>hc_add_theme</a></span><span class='op'>(</span><span class='va'>hc</span>, <span class='va'>thm</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -288,7 +292,7 @@ lines of code.</p>
 </p>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1</p>
 </div>
 
       </footer>

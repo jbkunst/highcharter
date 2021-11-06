@@ -1,4 +1,5 @@
-# install.packages("ggplot2movies")
+library(ggplot2movies)
+
 data(movies, package = "ggplot2movies")
 
 df <- movies  %>%

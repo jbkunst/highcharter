@@ -1,10 +1,7 @@
-# Important is:
-# remotes::install_github("r-lib/pkgdown@v1.3.0", force = TRUE, upgrade = "never")
-# remotes::install_github("r-lib/pkgdown", force = TRUE, upgrade = "never")
-# The actual dev version of pkgdown don't detect index.Rmd as a homepage
-# 
-# pkgdown:::build_home_index
+# devtools::install_version("pkgdown", version = "1.6.1", repos = "http://cran.us.r-project.org")
+
 try(fs::file_delete("docs/extra.css"))
+
 fs::file_copy("pkgdown/extra.css", new_path = "docs/extra.css")
 
 pkgdown::build_home(preview = FALSE)

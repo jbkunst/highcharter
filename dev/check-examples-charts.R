@@ -23,7 +23,7 @@ chart_types_with_examples %>%
 
 walk(chart_types_with_examples, function(x){
   message(x)
-  source(x, echo = FALSE, encoding = "utf-8")
+  source(x, echo = TRUE, encoding = "utf-8")
   })
 
 
