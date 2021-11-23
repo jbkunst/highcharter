@@ -174,7 +174,7 @@ hcs %>%
 
 ## packedbubble
 
-```{r code = readLines(here::here("dev/examples-charts/packedbubble.R")), eval=FALSE}
+```{r code = readLines(here::here("dev/examples-charts/packedbubble.R")), eval=TRUE}
 ```
 
 ## venn & euler
