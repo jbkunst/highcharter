@@ -17,5 +17,8 @@ articles:
   showcase: showcase.html
   stock: stock.html
   themes: themes.html
-last_built: 2021-11-23T12:19Z
+last_built: 2021-11-23T13:08Z
+urls:
+  reference: https://jkunst.com/highcharter/reference
+  article: https://jkunst.com/highcharter/articles
 
