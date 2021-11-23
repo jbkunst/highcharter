@@ -1,6 +1,6 @@
 pandoc: 2.14.0.3
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pkgdown: 1.9000.9000.9000
+pkgdown_sha: 8122179c440692487eda000d6542d7734a37d36d
 articles:
   drilldown: drilldown.html
   fontawesome: fontawesome.html
@@ -17,5 +17,5 @@ articles:
   showcase: showcase.html
   stock: stock.html
   themes: themes.html
-last_built: 2021-11-06T03:12Z
+last_built: 2021-11-23T12:19Z
 

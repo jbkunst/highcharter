@@ -25,8 +25,9 @@ library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
 
-## Introduction
+This is a set of example to show  (and rembember) who to do usual needs.
 
+Let's set charts to work with.
 
 ```{r}
 library(highcharter)
@@ -60,7 +61,6 @@ glimpse(preguins_grouped)
 hc2 <- hchart(preguins_grouped, "column", hcaes(x = species, y = flipper_length_mm_mean))
 hc2
 ```
-
 
 
 ## Disabled inactive state 

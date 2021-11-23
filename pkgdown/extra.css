@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Alegreya+Sans|Alegreya+Sans+SC:100,300,400");
+@import url("https://fonts.googleapis.com/css?family=Alegreya+Sans|Alegreya+Sans+SC:100,300,400|Roboto+Mono:400");
 
 @font-face {
   font-family: 'Datalegreya-Gradient';
@@ -34,21 +34,76 @@ body {
 
 #brand {
   font-family: 'Datalegreya-Gradient', sans-serif;
-  font-size: 6em;
-  text-align:center;
-  vertical-align:middle;
-  display: table;
-  width: 100%;
-  margin-top: 30px; /* same as #sidebar */
+  font-size: 2em;
+}
+
+h1, h2, h3, h4, h5, h6,
+#toc > h2,
+.navbar-brand {
+  font-family: 'Alegreya Sans SC', sans-serif;
+  font-weight: 300;
+}
+
+h2 > code {
+    font-size: 1.5rem;
+}
+
+.contents p, 
+.contents li,
+.contents dd
+{
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 16px auto;
+  font-size: 17px;
+  line-height: 30px;
+  margin-bottom: 1em;
+}
+
+.highchart {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+pre code, code {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+}
+
+/* make space between nav items */
+.navbar-nav .nav-item>.nav-link {
+  font-family: 'Alegreya Sans SC', sans-serif;
+  padding-left: 1rem;
+}
+
+dt {
+  font-weight: 300;
+}
+
+/* make space after navbar 
+.page-header, #toc, .links {
+  margin-top: 3rem;
+}
+
+/* make space after navbar 
+.page-header {
+  margin-bottom: 2rem;
+}
+
+
+/*
+.navbar {
+  border-color: #A3EDBA;
+  border-bottom-width: 1px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.05), 0 10px 10px rgba(0,0,0,0.15);
+}
+
+body> .container .row {
+  margin-top: 1.5em;
 }
 
 #navbarbrand {
   font-size: 1.75em;
   font-family: 'Datalegreya-Thin', sans-serif;
-}
-
-.row {
-  margin-top: 30px;
 }
 
 .navbar-default {
@@ -100,33 +155,9 @@ body {
     background-color: #A3EDBA;
 }
 
-h1, h2, h3, h4, h5, h6, .navbar-brand {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  font-weight: 300;
-}
-
-.highchart {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.contents p,
-.contents li {
-  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 16px auto;
-  font-size: 17px;
-  line-height: 30px;
-  margin-bottom: 1em;
-}
-
-/* articles titles */
 dt {
   font-weight: normal;
   font-size: 1.25em;
 }
 
-/* printable sheet */
-@media print {
-  header {display:none;}
-  footer {display:none;}
-}
+*/

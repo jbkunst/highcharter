@@ -1,11 +1,13 @@
 ---
-title: 
+title: "Some title"
 output:
   html_document:
     self_contained: false
 editor_options: 
   chunk_output_type: console
 ---
+
+## What is `highcharter`?
 
 Highcharter is a **[R](https://cran.r-project.org/)** wrapper for 
 **[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.

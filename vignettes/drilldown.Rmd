@@ -24,6 +24,8 @@ $(document).ready(function(){
 Drilldown is the concept of inspecting increasingly high resolution data
 through clicking on chart items like columns, points or pie slices.
 
+## Exmaple I: Gapminder data
+
 ```{r, include=FALSE}
 library(highcharter)
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
@@ -105,6 +107,7 @@ hchart(
   )
 ```
 
+## Exmaple II: Pokémon data
 
 Copy & pasting same code:
 

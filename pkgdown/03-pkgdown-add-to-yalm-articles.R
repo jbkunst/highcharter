@@ -79,5 +79,5 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 pkgdown::build_articles()
 pkgdown::build_articles_index()
-# pkgdown::build_article("shiny")
-# pkgdown::build_article("maps")
+# pkgdown::build_article("howtos")
+# pkgdown::build_article("drilldown")

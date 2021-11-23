@@ -2,12 +2,12 @@
 
 try(fs::dir_delete("docs"))
 
-pkgdown::build_site()
+pkgdown::init_site(pkg = ".")
+
+pkgdown::build_home()
+pkgdown::build_news()
+# pkgdown::build_site(new_process = FALSE)
 
 source("pkgdown/01-pkgdown-buid-home.R")
 source("pkgdown/02-pkgdown-add-to-yalm-reference.R")
 source("pkgdown/03-pkgdown-add-to-yalm-articles.R")
-
-# this script remove duplicate dependencies between articles, move all js to index_files
-# source("pkgdown/10-fix-dependencies.R")
-# source("pkgdown/11-minified-js.R")

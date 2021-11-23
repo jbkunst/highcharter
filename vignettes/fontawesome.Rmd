@@ -32,11 +32,15 @@ the package with the same name by Richard Iannone https://github.com/rstudio/fon
 because you can turn the icons into svg text or png files so you can use them in 
 html tags or transform to data uri.
 
+## Example using `fontawesome` package
+
 ```{r}
 library(rsvg)
 library(fontawesome)
 library(highcharter)
 library(stringr)
+
+set.seed(123)
 
 df <- data.frame(
   a = round(rnorm(10), 2),
@@ -62,7 +66,7 @@ pthon <- fa_to_png_to_datauri(name = "python",    width = 22, fill = pcol)
 
 highchart() %>% 
   hc_title(
-    text = str_c("This is a svg ", fa("rocket", fill = "#CACACA"), " icon"),
+    text = "This is chart using fontawesome icons2",
     useHTML = TRUE
   ) %>% 
   hc_add_series(
@@ -94,7 +98,9 @@ highchart() %>%
   )
 ```
 
-Another example inspired/copied from https://github.com/hrbrmstr/waffle:
+## Another example
+
+Inspired/copied from https://github.com/hrbrmstr/waffle:
 
 ```{r}
 library(dplyr) # to wokr with list columns

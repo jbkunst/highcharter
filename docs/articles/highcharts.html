@@ -4,7 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Highcharts is a SVG-based, multi-platform charting library. The highcharter  package bring all highchartsJS capabilities to your R console. So you can chart from simple charts like column, scatter to more complex charts like streamgraph, packedbubble, vector field among others.
+">
 <title>Charts with highcharts • highcharter</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -12,14 +14,11 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
-<link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Charts with highcharts">
 <meta property="og:description" content="Highcharts is a SVG-based, multi-platform charting library. The highcharter  package bring all highchartsJS capabilities to your R console. So you can chart from simple charts like column, scatter to more complex charts like streamgraph, packedbubble, vector field among others.
 ">
@@ -27,145 +26,87 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-17670833-9"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-17670833-9');
-</script>
+<![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" style="text-decoration: none;" href="../index.html"><span id="navbarbrand">h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r</span></a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <a class="navbar-brand me-2" href="../index.html">highcharter</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.3.9000</small>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-2">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../articles/highcharter.html">Get started</a>
 </li>
-<li>
-  <a href="../articles/highcharter.html">Get started</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li class="divider">
-    <li class="dropdown-header">Get Started</li>
-    <li>
-      <a href="../articles/hchart.html">hchart Function</a>
-    </li>
-    <li>
-      <a href="../articles/highcharts-api.html">Highcharts API</a>
-    </li>
-    <li>
-      <a href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
-    </li>
-    <li>
-      <a href="../articles/showcase.html">Showcase</a>
-    </li>
-    <li class="divider">
-    <li class="dropdown-header">The highchartsJS bundle</li>
-    <li>
-      <a href="../articles/highcharts.html">Charts with highcharts</a>
-    </li>
-    <li>
-      <a href="../articles/maps.html">Maps with highmaps</a>
-    </li>
-    <li>
-      <a href="../articles/stock.html">Stocks with highstock</a>
-    </li>
-    <li class="divider">
-    <li class="dropdown-header">Shiny Integration</li>
-    <li>
-      <a href="../articles/shiny.html">Shiny Examples</a>
-    </li>
-    <li class="divider">
-    <li class="dropdown-header">Experiments &amp; Examples</li>
-    <li>
-      <a href="../articles/fontawesome.html">Fontawesome integration</a>
-    </li>
-    <li>
-      <a href="../articles/drilldown.html">Drilldown</a>
-    </li>
-    <li class="divider">
-    <li class="dropdown-header">More of highcharter</li>
-    <li>
-      <a href="../articles/themes.html">Themes</a>
-    </li>
-    <li>
-      <a href="../articles/howtos.html">Commons HOW TOs</a>
-    </li>
-    <li>
-      <a href="../articles/modules.html">Modules &amp; plugins</a>
-    </li>
-    <li>
-      <a href="../articles/motion.html">Motion plugin</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/jbkunst/highcharter">
-    <span class="fa fa-github-alt"></span>
-     
-  </a>
-</li>
-      </ul>
-<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
-        <div class="form-group">
-          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
-</div>
-      </form>
-      
-    </div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <h6 class="dropdown-header" data-toc-skip>Get Started</h6>
+    <a class="dropdown-item" href="../articles/hchart.html">hchart Function</a>
+    <a class="dropdown-item" href="../articles/highcharts-api.html">Highcharts API</a>
+    <a class="dropdown-item" href="../articles/highchartsjs-api-basics.html">Javascript API Basics</a>
+    <a class="dropdown-item" href="../articles/showcase.html">Showcase</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>The highchartsJS bundle</h6>
+    <a class="dropdown-item" href="../articles/highcharts.html">Charts with highcharts</a>
+    <a class="dropdown-item" href="../articles/maps.html">Maps with highmaps</a>
+    <a class="dropdown-item" href="../articles/stock.html">Stocks with highstock</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Shiny Integration</h6>
+    <a class="dropdown-item" href="../articles/shiny.html">Shiny Examples</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Experiments &amp; Examples</h6>
+    <a class="dropdown-item" href="../articles/fontawesome.html">Fontawesome integration</a>
+    <a class="dropdown-item" href="../articles/drilldown.html">Drilldown</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>More of highcharter</h6>
+    <a class="dropdown-item" href="../articles/themes.html">Themes</a>
+    <a class="dropdown-item" href="../articles/howtos.html">Commons HOW TOs</a>
+    <a class="dropdown-item" href="../articles/modules.html">Modules &amp; plugins</a>
+    <a class="dropdown-item" href="../articles/motion.html">Motion plugin</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/jbkunst/highcharter/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
-
-      
-
-      </header><script src="highcharts_files/header-attrs-2.11/header-attrs.js"></script><script src="highcharts_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="highcharts_files/jquery-3.5.1/jquery.min.js"></script><script src="highcharts_files/proj4js-2.3.15/proj4.js"></script><link href="highcharts_files/highcharts-9.3.1/css/motion.css" rel="stylesheet">
-<script src="highcharts_files/highcharts-9.3.1/highcharts.js"></script><script src="highcharts_files/highcharts-9.3.1/highcharts-3d.js"></script><script src="highcharts_files/highcharts-9.3.1/highcharts-more.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/stock.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/map.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/data.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/exporting.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/drilldown.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/item-series.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/annotations.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/export-data.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/funnel.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/heatmap.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/treemap.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/sankey.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/organization.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/streamgraph.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/sunburst.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/vector.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/wordcloud.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/xrange.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/tilemap.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/venn.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/gantt.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/timeline.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/bullet.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/coloraxis.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/dumbbell.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/lollipop.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/series-label.js"></script><script src="highcharts_files/highcharts-9.3.1/plugins/motion.js"></script><script src="highcharts_files/highcharts-9.3.1/custom/reset.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/boost.js"></script><script src="highcharts_files/highchart-binding-0.9.3.9000/highchart.js"></script><div class="row">
+  </div>
+</nav><div class="container template-article" id="container">
+<script src="highcharts_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="highcharts_files/jquery-3.5.1/jquery.min.js"></script><script src="highcharts_files/proj4js-2.3.15/proj4.js"></script><link href="highcharts_files/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="highcharts_files/highcharts-9.3.1/highcharts.js"></script><script src="highcharts_files/highcharts-9.3.1/highcharts-3d.js"></script><script src="highcharts_files/highcharts-9.3.1/highcharts-more.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/stock.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/map.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/accessibility.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/data.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/exporting.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/drilldown.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/item-series.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/annotations.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/export-data.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/funnel.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/heatmap.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/treemap.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/sankey.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/organization.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/streamgraph.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/sunburst.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/vector.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/wordcloud.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/xrange.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/tilemap.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/venn.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/gantt.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/timeline.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/bullet.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/coloraxis.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/dumbbell.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/lollipop.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/series-label.js"></script><script src="highcharts_files/highcharts-9.3.1/plugins/motion.js"></script><script src="highcharts_files/highcharts-9.3.1/custom/reset.js"></script><script src="highcharts_files/highcharts-9.3.1/modules/boost.js"></script><script src="highcharts_files/highchart-binding-0.9.3.9000/highchart.js"></script><div class="row">
   <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Charts with highcharts</h1>
-                        <h4 class="author">Joshua Kunst</h4>
+    <div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>Charts with highcharts</h1>
+                        <h4 data-toc-skip class="author">Joshua Kunst</h4>
             
-            <h4 class="date">2021-11-06</h4>
+            <h4 data-toc-skip class="date">2021-11-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/master/vignettes/highcharts.Rmd"><code>vignettes/highcharts.Rmd</code></a></small>
-      <div class="hidden name"><code>highcharts.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/HEAD/vignettes/highcharts.Rmd" class="external-link"><code>vignettes/highcharts.Rmd</code></a></small>
+      <div class="d-none name"><code>highcharts.Rmd</code></div>
     </div>
 
     
@@ -179,9 +120,9 @@ $(document).ready(function(){
   el.html(text_new) 
 }) ;
 </script><p>Highcharts is a SVG-based, multi-platform charting library. The highcharter package bring all highchartsJS capabilities to your R console. So you can chart from simple charts like column, scatter to more complex charts like streamgraph, packed bubble, vector field among others.</p>
-<div id="basic-charts" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-charts" class="anchor"></a>Basic charts</h2>
+<div class="section level2">
+<h2 id="basic-charts">Basic charts<a class="anchor" aria-label="anchor" href="#basic-charts"></a>
+</h2>
 <p>Let’s see a preview of what highchartsJS (so highcharter) can chart. First of all a simple data set:</p>
 <table class="table">
 <thead><tr class="header">
@@ -409,29 +350,29 @@ $(document).ready(function(){
 </div>
 </div>
 </div>
-<div id="xrange" class="section level2">
-<h2 class="hasAnchor">
-<a href="#xrange" class="anchor"></a>xrange</h2>
+<div class="section level2">
+<h2 id="xrange">xrange<a class="anchor" aria-label="anchor" href="#xrange"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span>
 
 <span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">7</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
 
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html">months</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">20</span>, size <span class="op">=</span> <span class="va">N</span><span class="op">)</span><span class="op">)</span>,
-  end <span class="op">=</span> <span class="va">start</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html">months</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, size <span class="op">=</span> <span class="va">N</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,
-  cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, length.out <span class="op">=</span> <span class="va">N</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,
-  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
+  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html" class="external-link">months</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">20</span>, size <span class="op">=</span> <span class="va">N</span><span class="op">)</span><span class="op">)</span>,
+  end <span class="op">=</span> <span class="va">start</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html" class="external-link">months</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, size <span class="op">=</span> <span class="va">N</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,
+  cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, length.out <span class="op">=</span> <span class="va">N</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,
+  progress <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.Date</span>, <span class="va">datetime_to_timestamp</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.Date</span>, <span class="va">datetime_to_timestamp</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span>
   <span class="va">df</span>,
   <span class="st">"xrange"</span>,
   <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">start</span>, x2 <span class="op">=</span> <span class="va">end</span>, y <span class="op">=</span> <span class="va">cat</span>, partialFill <span class="op">=</span> <span class="va">progress</span><span class="op">)</span>,
-  dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>enabled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>enabled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_xAxis.html">hc_xAxis</a></span><span class="op">(</span>
     title <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -439,30 +380,30 @@ $(document).ready(function(){
     <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_yAxis.html">hc_yAxis</a></span><span class="op">(</span>
     title <span class="op">=</span> <span class="cn">FALSE</span>,
-    categories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Prototyping"</span>, <span class="st">"Development"</span>, <span class="st">"Testing"</span>, <span class="st">"Validation"</span>, <span class="st">"Modelling"</span><span class="op">)</span>
+    categories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Prototyping"</span>, <span class="st">"Development"</span>, <span class="st">"Testing"</span>, <span class="st">"Validation"</span>, <span class="st">"Modelling"</span><span class="op">)</span>
     <span class="op">)</span></code></pre></div>
 <div id="htmlwidget-767209723a30863ca56b" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-767209723a30863ca56b">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":false,"type":"linear","categories":["Prototyping","Development","Testing","Validation","Modelling"]},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"start":1686009600000,"end":1691280000000,"cat":0,"progress":0.2,"x":1686009600000,"y":0,"x2":1691280000000,"partialFill":0.2},{"start":1675641600000,"end":1680739200000,"cat":1,"progress":0.2,"x":1675641600000,"y":1,"x2":1680739200000,"partialFill":0.2},{"start":1672963200000,"end":1680739200000,"cat":2,"progress":0.3,"x":1672963200000,"y":2,"x2":1680739200000,"partialFill":0.3},{"start":1670284800000,"end":1675641600000,"cat":3,"progress":0.3,"x":1670284800000,"y":3,"x2":1675641600000,"partialFill":0.3},{"start":1678060800000,"end":1683331200000,"cat":4,"progress":0.2,"x":1678060800000,"y":4,"x2":1683331200000,"partialFill":0.2},{"start":1662422400000,"end":1667692800000,"cat":0,"progress":0,"x":1662422400000,"y":0,"x2":1667692800000,"partialFill":0},{"start":1683331200000,"end":1691280000000,"cat":1,"progress":0.2,"x":1683331200000,"y":1,"x2":1691280000000,"partialFill":0.2}],"type":"xrange","dataLabels":{"enabled":true}}],"xAxis":{"type":"datetime","title":false}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-767209723a30863ca56b">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":false,"type":"linear","categories":["Prototyping","Development","Testing","Validation","Modelling"]},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"start":1687478400000,"end":1692748800000,"cat":0,"progress":0.2,"x":1687478400000,"y":0,"x2":1692748800000,"partialFill":0.2},{"start":1677110400000,"end":1682208000000,"cat":1,"progress":0.2,"x":1677110400000,"y":1,"x2":1682208000000,"partialFill":0.2},{"start":1674432000000,"end":1682208000000,"cat":2,"progress":0.3,"x":1674432000000,"y":2,"x2":1682208000000,"partialFill":0.3},{"start":1671753600000,"end":1677110400000,"cat":3,"progress":0.3,"x":1671753600000,"y":3,"x2":1677110400000,"partialFill":0.3},{"start":1679529600000,"end":1684800000000,"cat":4,"progress":0.2,"x":1679529600000,"y":4,"x2":1684800000000,"partialFill":0.2},{"start":1663891200000,"end":1669161600000,"cat":0,"progress":0,"x":1663891200000,"y":0,"x2":1669161600000,"partialFill":0},{"start":1684800000000,"end":1692748800000,"cat":1,"progress":0.2,"x":1684800000000,"y":1,"x2":1692748800000,"partialFill":0.2}],"type":"xrange","dataLabels":{"enabled":true}}],"xAxis":{"type":"datetime","title":false}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="vector" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vector" class="anchor"></a>vector</h2>
+<div class="section level2">
+<h2 id="vector">vector<a class="anchor" aria-label="anchor" href="#vector"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">95</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">95</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
     length <span class="op">=</span> <span class="fl">200</span> <span class="op">-</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>,
     direction <span class="op">=</span> <span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span><span class="op">/</span><span class="fl">200</span> <span class="op">*</span> <span class="fl">360</span>
   <span class="op">)</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
-<pre><code>## Rows: 361
-## Columns: 4
-## $ x         &lt;dbl&gt; 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 8~
-## $ y         &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10,~
-## $ length    &lt;dbl&gt; 190, 185, 180, 175, 170, 165, 160, 155, 150, 145, 140, 135, ~
-## $ direction &lt;dbl&gt; 18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108, 117, 126, 135, ~</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Rows: 361</span>
+<span class="co">## Columns: 4</span>
+<span class="co">## $ x         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 8~</span>
+<span class="co">## $ y         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10,~</span>
+<span class="co">## $ length    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 190, 185, 180, 175, 170, 165, 160, 155, 150, 145, 140, 135, ~</span>
+<span class="co">## $ direction <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108, 117, 126, 135, ~</span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span>
   <span class="va">df</span>,
@@ -475,40 +416,40 @@ $(document).ready(function(){
 <div id="htmlwidget-23741672a15783b59cb9" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
 <script type="application/json" data-for="htmlwidget-23741672a15783b59cb9">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":"y"},"type":"linear","min":0,"max":100},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"x":5,"y":5,"length":190,"direction":18},{"x":10,"y":5,"length":185,"direction":27},{"x":15,"y":5,"length":180,"direction":36},{"x":20,"y":5,"length":175,"direction":45},{"x":25,"y":5,"length":170,"direction":54},{"x":30,"y":5,"length":165,"direction":63},{"x":35,"y":5,"length":160,"direction":72},{"x":40,"y":5,"length":155,"direction":81},{"x":45,"y":5,"length":150,"direction":90},{"x":50,"y":5,"length":145,"direction":99},{"x":55,"y":5,"length":140,"direction":108},{"x":60,"y":5,"length":135,"direction":117},{"x":65,"y":5,"length":130,"direction":126},{"x":70,"y":5,"length":125,"direction":135},{"x":75,"y":5,"length":120,"direction":144},{"x":80,"y":5,"length":115,"direction":153},{"x":85,"y":5,"length":110,"direction":162},{"x":90,"y":5,"length":105,"direction":171},{"x":95,"y":5,"length":100,"direction":180},{"x":5,"y":10,"length":185,"direction":27},{"x":10,"y":10,"length":180,"direction":36},{"x":15,"y":10,"length":175,"direction":45},{"x":20,"y":10,"length":170,"direction":54},{"x":25,"y":10,"length":165,"direction":63},{"x":30,"y":10,"length":160,"direction":72},{"x":35,"y":10,"length":155,"direction":81},{"x":40,"y":10,"length":150,"direction":90},{"x":45,"y":10,"length":145,"direction":99},{"x":50,"y":10,"length":140,"direction":108},{"x":55,"y":10,"length":135,"direction":117},{"x":60,"y":10,"length":130,"direction":126},{"x":65,"y":10,"length":125,"direction":135},{"x":70,"y":10,"length":120,"direction":144},{"x":75,"y":10,"length":115,"direction":153},{"x":80,"y":10,"length":110,"direction":162},{"x":85,"y":10,"length":105,"direction":171},{"x":90,"y":10,"length":100,"direction":180},{"x":95,"y":10,"length":95,"direction":189},{"x":5,"y":15,"length":180,"direction":36},{"x":10,"y":15,"length":175,"direction":45},{"x":15,"y":15,"length":170,"direction":54},{"x":20,"y":15,"length":165,"direction":63},{"x":25,"y":15,"length":160,"direction":72},{"x":30,"y":15,"length":155,"direction":81},{"x":35,"y":15,"length":150,"direction":90},{"x":40,"y":15,"length":145,"direction":99},{"x":45,"y":15,"length":140,"direction":108},{"x":50,"y":15,"length":135,"direction":117},{"x":55,"y":15,"length":130,"direction":126},{"x":60,"y":15,"length":125,"direction":135},{"x":65,"y":15,"length":120,"direction":144},{"x":70,"y":15,"length":115,"direction":153},{"x":75,"y":15,"length":110,"direction":162},{"x":80,"y":15,"length":105,"direction":171},{"x":85,"y":15,"length":100,"direction":180},{"x":90,"y":15,"length":95,"direction":189},{"x":95,"y":15,"length":90,"direction":198},{"x":5,"y":20,"length":175,"direction":45},{"x":10,"y":20,"length":170,"direction":54},{"x":15,"y":20,"length":165,"direction":63},{"x":20,"y":20,"length":160,"direction":72},{"x":25,"y":20,"length":155,"direction":81},{"x":30,"y":20,"length":150,"direction":90},{"x":35,"y":20,"length":145,"direction":99},{"x":40,"y":20,"length":140,"direction":108},{"x":45,"y":20,"length":135,"direction":117},{"x":50,"y":20,"length":130,"direction":126},{"x":55,"y":20,"length":125,"direction":135},{"x":60,"y":20,"length":120,"direction":144},{"x":65,"y":20,"length":115,"direction":153},{"x":70,"y":20,"length":110,"direction":162},{"x":75,"y":20,"length":105,"direction":171},{"x":80,"y":20,"length":100,"direction":180},{"x":85,"y":20,"length":95,"direction":189},{"x":90,"y":20,"length":90,"direction":198},{"x":95,"y":20,"length":85,"direction":207},{"x":5,"y":25,"length":170,"direction":54},{"x":10,"y":25,"length":165,"direction":63},{"x":15,"y":25,"length":160,"direction":72},{"x":20,"y":25,"length":155,"direction":81},{"x":25,"y":25,"length":150,"direction":90},{"x":30,"y":25,"length":145,"direction":99},{"x":35,"y":25,"length":140,"direction":108},{"x":40,"y":25,"length":135,"direction":117},{"x":45,"y":25,"length":130,"direction":126},{"x":50,"y":25,"length":125,"direction":135},{"x":55,"y":25,"length":120,"direction":144},{"x":60,"y":25,"length":115,"direction":153},{"x":65,"y":25,"length":110,"direction":162},{"x":70,"y":25,"length":105,"direction":171},{"x":75,"y":25,"length":100,"direction":180},{"x":80,"y":25,"length":95,"direction":189},{"x":85,"y":25,"length":90,"direction":198},{"x":90,"y":25,"length":85,"direction":207},{"x":95,"y":25,"length":80,"direction":216},{"x":5,"y":30,"length":165,"direction":63},{"x":10,"y":30,"length":160,"direction":72},{"x":15,"y":30,"length":155,"direction":81},{"x":20,"y":30,"length":150,"direction":90},{"x":25,"y":30,"length":145,"direction":99},{"x":30,"y":30,"length":140,"direction":108},{"x":35,"y":30,"length":135,"direction":117},{"x":40,"y":30,"length":130,"direction":126},{"x":45,"y":30,"length":125,"direction":135},{"x":50,"y":30,"length":120,"direction":144},{"x":55,"y":30,"length":115,"direction":153},{"x":60,"y":30,"length":110,"direction":162},{"x":65,"y":30,"length":105,"direction":171},{"x":70,"y":30,"length":100,"direction":180},{"x":75,"y":30,"length":95,"direction":189},{"x":80,"y":30,"length":90,"direction":198},{"x":85,"y":30,"length":85,"direction":207},{"x":90,"y":30,"length":80,"direction":216},{"x":95,"y":30,"length":75,"direction":225},{"x":5,"y":35,"length":160,"direction":72},{"x":10,"y":35,"length":155,"direction":81},{"x":15,"y":35,"length":150,"direction":90},{"x":20,"y":35,"length":145,"direction":99},{"x":25,"y":35,"length":140,"direction":108},{"x":30,"y":35,"length":135,"direction":117},{"x":35,"y":35,"length":130,"direction":126},{"x":40,"y":35,"length":125,"direction":135},{"x":45,"y":35,"length":120,"direction":144},{"x":50,"y":35,"length":115,"direction":153},{"x":55,"y":35,"length":110,"direction":162},{"x":60,"y":35,"length":105,"direction":171},{"x":65,"y":35,"length":100,"direction":180},{"x":70,"y":35,"length":95,"direction":189},{"x":75,"y":35,"length":90,"direction":198},{"x":80,"y":35,"length":85,"direction":207},{"x":85,"y":35,"length":80,"direction":216},{"x":90,"y":35,"length":75,"direction":225},{"x":95,"y":35,"length":70,"direction":234},{"x":5,"y":40,"length":155,"direction":81},{"x":10,"y":40,"length":150,"direction":90},{"x":15,"y":40,"length":145,"direction":99},{"x":20,"y":40,"length":140,"direction":108},{"x":25,"y":40,"length":135,"direction":117},{"x":30,"y":40,"length":130,"direction":126},{"x":35,"y":40,"length":125,"direction":135},{"x":40,"y":40,"length":120,"direction":144},{"x":45,"y":40,"length":115,"direction":153},{"x":50,"y":40,"length":110,"direction":162},{"x":55,"y":40,"length":105,"direction":171},{"x":60,"y":40,"length":100,"direction":180},{"x":65,"y":40,"length":95,"direction":189},{"x":70,"y":40,"length":90,"direction":198},{"x":75,"y":40,"length":85,"direction":207},{"x":80,"y":40,"length":80,"direction":216},{"x":85,"y":40,"length":75,"direction":225},{"x":90,"y":40,"length":70,"direction":234},{"x":95,"y":40,"length":65,"direction":243},{"x":5,"y":45,"length":150,"direction":90},{"x":10,"y":45,"length":145,"direction":99},{"x":15,"y":45,"length":140,"direction":108},{"x":20,"y":45,"length":135,"direction":117},{"x":25,"y":45,"length":130,"direction":126},{"x":30,"y":45,"length":125,"direction":135},{"x":35,"y":45,"length":120,"direction":144},{"x":40,"y":45,"length":115,"direction":153},{"x":45,"y":45,"length":110,"direction":162},{"x":50,"y":45,"length":105,"direction":171},{"x":55,"y":45,"length":100,"direction":180},{"x":60,"y":45,"length":95,"direction":189},{"x":65,"y":45,"length":90,"direction":198},{"x":70,"y":45,"length":85,"direction":207},{"x":75,"y":45,"length":80,"direction":216},{"x":80,"y":45,"length":75,"direction":225},{"x":85,"y":45,"length":70,"direction":234},{"x":90,"y":45,"length":65,"direction":243},{"x":95,"y":45,"length":60,"direction":252},{"x":5,"y":50,"length":145,"direction":99},{"x":10,"y":50,"length":140,"direction":108},{"x":15,"y":50,"length":135,"direction":117},{"x":20,"y":50,"length":130,"direction":126},{"x":25,"y":50,"length":125,"direction":135},{"x":30,"y":50,"length":120,"direction":144},{"x":35,"y":50,"length":115,"direction":153},{"x":40,"y":50,"length":110,"direction":162},{"x":45,"y":50,"length":105,"direction":171},{"x":50,"y":50,"length":100,"direction":180},{"x":55,"y":50,"length":95,"direction":189},{"x":60,"y":50,"length":90,"direction":198},{"x":65,"y":50,"length":85,"direction":207},{"x":70,"y":50,"length":80,"direction":216},{"x":75,"y":50,"length":75,"direction":225},{"x":80,"y":50,"length":70,"direction":234},{"x":85,"y":50,"length":65,"direction":243},{"x":90,"y":50,"length":60,"direction":252},{"x":95,"y":50,"length":55,"direction":261},{"x":5,"y":55,"length":140,"direction":108},{"x":10,"y":55,"length":135,"direction":117},{"x":15,"y":55,"length":130,"direction":126},{"x":20,"y":55,"length":125,"direction":135},{"x":25,"y":55,"length":120,"direction":144},{"x":30,"y":55,"length":115,"direction":153},{"x":35,"y":55,"length":110,"direction":162},{"x":40,"y":55,"length":105,"direction":171},{"x":45,"y":55,"length":100,"direction":180},{"x":50,"y":55,"length":95,"direction":189},{"x":55,"y":55,"length":90,"direction":198},{"x":60,"y":55,"length":85,"direction":207},{"x":65,"y":55,"length":80,"direction":216},{"x":70,"y":55,"length":75,"direction":225},{"x":75,"y":55,"length":70,"direction":234},{"x":80,"y":55,"length":65,"direction":243},{"x":85,"y":55,"length":60,"direction":252},{"x":90,"y":55,"length":55,"direction":261},{"x":95,"y":55,"length":50,"direction":270},{"x":5,"y":60,"length":135,"direction":117},{"x":10,"y":60,"length":130,"direction":126},{"x":15,"y":60,"length":125,"direction":135},{"x":20,"y":60,"length":120,"direction":144},{"x":25,"y":60,"length":115,"direction":153},{"x":30,"y":60,"length":110,"direction":162},{"x":35,"y":60,"length":105,"direction":171},{"x":40,"y":60,"length":100,"direction":180},{"x":45,"y":60,"length":95,"direction":189},{"x":50,"y":60,"length":90,"direction":198},{"x":55,"y":60,"length":85,"direction":207},{"x":60,"y":60,"length":80,"direction":216},{"x":65,"y":60,"length":75,"direction":225},{"x":70,"y":60,"length":70,"direction":234},{"x":75,"y":60,"length":65,"direction":243},{"x":80,"y":60,"length":60,"direction":252},{"x":85,"y":60,"length":55,"direction":261},{"x":90,"y":60,"length":50,"direction":270},{"x":95,"y":60,"length":45,"direction":279},{"x":5,"y":65,"length":130,"direction":126},{"x":10,"y":65,"length":125,"direction":135},{"x":15,"y":65,"length":120,"direction":144},{"x":20,"y":65,"length":115,"direction":153},{"x":25,"y":65,"length":110,"direction":162},{"x":30,"y":65,"length":105,"direction":171},{"x":35,"y":65,"length":100,"direction":180},{"x":40,"y":65,"length":95,"direction":189},{"x":45,"y":65,"length":90,"direction":198},{"x":50,"y":65,"length":85,"direction":207},{"x":55,"y":65,"length":80,"direction":216},{"x":60,"y":65,"length":75,"direction":225},{"x":65,"y":65,"length":70,"direction":234},{"x":70,"y":65,"length":65,"direction":243},{"x":75,"y":65,"length":60,"direction":252},{"x":80,"y":65,"length":55,"direction":261},{"x":85,"y":65,"length":50,"direction":270},{"x":90,"y":65,"length":45,"direction":279},{"x":95,"y":65,"length":40,"direction":288},{"x":5,"y":70,"length":125,"direction":135},{"x":10,"y":70,"length":120,"direction":144},{"x":15,"y":70,"length":115,"direction":153},{"x":20,"y":70,"length":110,"direction":162},{"x":25,"y":70,"length":105,"direction":171},{"x":30,"y":70,"length":100,"direction":180},{"x":35,"y":70,"length":95,"direction":189},{"x":40,"y":70,"length":90,"direction":198},{"x":45,"y":70,"length":85,"direction":207},{"x":50,"y":70,"length":80,"direction":216},{"x":55,"y":70,"length":75,"direction":225},{"x":60,"y":70,"length":70,"direction":234},{"x":65,"y":70,"length":65,"direction":243},{"x":70,"y":70,"length":60,"direction":252},{"x":75,"y":70,"length":55,"direction":261},{"x":80,"y":70,"length":50,"direction":270},{"x":85,"y":70,"length":45,"direction":279},{"x":90,"y":70,"length":40,"direction":288},{"x":95,"y":70,"length":35,"direction":297},{"x":5,"y":75,"length":120,"direction":144},{"x":10,"y":75,"length":115,"direction":153},{"x":15,"y":75,"length":110,"direction":162},{"x":20,"y":75,"length":105,"direction":171},{"x":25,"y":75,"length":100,"direction":180},{"x":30,"y":75,"length":95,"direction":189},{"x":35,"y":75,"length":90,"direction":198},{"x":40,"y":75,"length":85,"direction":207},{"x":45,"y":75,"length":80,"direction":216},{"x":50,"y":75,"length":75,"direction":225},{"x":55,"y":75,"length":70,"direction":234},{"x":60,"y":75,"length":65,"direction":243},{"x":65,"y":75,"length":60,"direction":252},{"x":70,"y":75,"length":55,"direction":261},{"x":75,"y":75,"length":50,"direction":270},{"x":80,"y":75,"length":45,"direction":279},{"x":85,"y":75,"length":40,"direction":288},{"x":90,"y":75,"length":35,"direction":297},{"x":95,"y":75,"length":30,"direction":306},{"x":5,"y":80,"length":115,"direction":153},{"x":10,"y":80,"length":110,"direction":162},{"x":15,"y":80,"length":105,"direction":171},{"x":20,"y":80,"length":100,"direction":180},{"x":25,"y":80,"length":95,"direction":189},{"x":30,"y":80,"length":90,"direction":198},{"x":35,"y":80,"length":85,"direction":207},{"x":40,"y":80,"length":80,"direction":216},{"x":45,"y":80,"length":75,"direction":225},{"x":50,"y":80,"length":70,"direction":234},{"x":55,"y":80,"length":65,"direction":243},{"x":60,"y":80,"length":60,"direction":252},{"x":65,"y":80,"length":55,"direction":261},{"x":70,"y":80,"length":50,"direction":270},{"x":75,"y":80,"length":45,"direction":279},{"x":80,"y":80,"length":40,"direction":288},{"x":85,"y":80,"length":35,"direction":297},{"x":90,"y":80,"length":30,"direction":306},{"x":95,"y":80,"length":25,"direction":315},{"x":5,"y":85,"length":110,"direction":162},{"x":10,"y":85,"length":105,"direction":171},{"x":15,"y":85,"length":100,"direction":180},{"x":20,"y":85,"length":95,"direction":189},{"x":25,"y":85,"length":90,"direction":198},{"x":30,"y":85,"length":85,"direction":207},{"x":35,"y":85,"length":80,"direction":216},{"x":40,"y":85,"length":75,"direction":225},{"x":45,"y":85,"length":70,"direction":234},{"x":50,"y":85,"length":65,"direction":243},{"x":55,"y":85,"length":60,"direction":252},{"x":60,"y":85,"length":55,"direction":261},{"x":65,"y":85,"length":50,"direction":270},{"x":70,"y":85,"length":45,"direction":279},{"x":75,"y":85,"length":40,"direction":288},{"x":80,"y":85,"length":35,"direction":297},{"x":85,"y":85,"length":30,"direction":306},{"x":90,"y":85,"length":25,"direction":315},{"x":95,"y":85,"length":20,"direction":324},{"x":5,"y":90,"length":105,"direction":171},{"x":10,"y":90,"length":100,"direction":180},{"x":15,"y":90,"length":95,"direction":189},{"x":20,"y":90,"length":90,"direction":198},{"x":25,"y":90,"length":85,"direction":207},{"x":30,"y":90,"length":80,"direction":216},{"x":35,"y":90,"length":75,"direction":225},{"x":40,"y":90,"length":70,"direction":234},{"x":45,"y":90,"length":65,"direction":243},{"x":50,"y":90,"length":60,"direction":252},{"x":55,"y":90,"length":55,"direction":261},{"x":60,"y":90,"length":50,"direction":270},{"x":65,"y":90,"length":45,"direction":279},{"x":70,"y":90,"length":40,"direction":288},{"x":75,"y":90,"length":35,"direction":297},{"x":80,"y":90,"length":30,"direction":306},{"x":85,"y":90,"length":25,"direction":315},{"x":90,"y":90,"length":20,"direction":324},{"x":95,"y":90,"length":15,"direction":333},{"x":5,"y":95,"length":100,"direction":180},{"x":10,"y":95,"length":95,"direction":189},{"x":15,"y":95,"length":90,"direction":198},{"x":20,"y":95,"length":85,"direction":207},{"x":25,"y":95,"length":80,"direction":216},{"x":30,"y":95,"length":75,"direction":225},{"x":35,"y":95,"length":70,"direction":234},{"x":40,"y":95,"length":65,"direction":243},{"x":45,"y":95,"length":60,"direction":252},{"x":50,"y":95,"length":55,"direction":261},{"x":55,"y":95,"length":50,"direction":270},{"x":60,"y":95,"length":45,"direction":279},{"x":65,"y":95,"length":40,"direction":288},{"x":70,"y":95,"length":35,"direction":297},{"x":75,"y":95,"length":30,"direction":306},{"x":80,"y":95,"length":25,"direction":315},{"x":85,"y":95,"length":20,"direction":324},{"x":90,"y":95,"length":15,"direction":333},{"x":95,"y":95,"length":10,"direction":342}],"type":"vector","color":"black","name":"Sample vector field"}],"xAxis":{"type":"linear","title":{"text":"x"},"categories":null}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="tilemap" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tilemap" class="anchor"></a>tilemap</h2>
+<div class="section level2">
+<h2 id="tilemap">tilemap<a class="anchor" aria-label="anchor" href="#tilemap"></a>
+</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># example 1</span>
 <span class="co"># http://www.maartenlambrechts.com/2017/10/22/tutorial-a-worldtilegrid-with-ggplot2.html</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
 <span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://gist.githubusercontent.com/maartenzam/787498bbc07ae06b637447dbd430ea0a/raw/9a9dafafb44d8990f85243a9c7ca349acd3a0d07/worldtilegrid.csv"</span>
 
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>
 
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">rename_all</a></span><span class="op">(</span><span class="va">str_replace_all</span>, <span class="st">"\\."</span>, <span class="st">"_"</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">name</span>, <span class="va">region</span>, <span class="va">alpha_2</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html" class="external-link">rename_all</a></span><span class="op">(</span><span class="va">str_replace_all</span>, <span class="st">"\\."</span>, <span class="st">"_"</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">name</span>, <span class="va">region</span>, <span class="va">alpha_2</span><span class="op">)</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
-<pre><code>## Rows: 192
-## Columns: 5
-## $ x       &lt;dbl&gt; 22, 15, 13, 13, 15, 7, 6, 20, 24, 15, 21, 4, 20, 23, 8, 17, 13~
-## $ y       &lt;dbl&gt; 8, 9, 11, 17, 23, 4, 14, 6, 19, 6, 7, 2, 9, 8, 6, 4, 5, 3, 14,~
-## $ name    &lt;chr&gt; "Afghanistan", "Albania", "Algeria", "Angola", "Antarctica", "~
-## $ region  &lt;chr&gt; "Asia", "Europe", "Africa", "Africa", "Antarctica", "Americas"~
-## $ alpha_2 &lt;chr&gt; "AF", "AL", "DZ", "AO", "AQ", "AG", "AR", "AM", "AU", "AT", "A~</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Rows: 192</span>
+<span class="co">## Columns: 5</span>
+<span class="co">## $ x       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 22, 15, 13, 13, 15, 7, 6, 20, 24, 15, 21, 4, 20, 23, 8, 17, 13~</span>
+<span class="co">## $ y       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8, 9, 11, 17, 23, 4, 14, 6, 19, 6, 7, 2, 9, 8, 6, 4, 5, 3, 14,~</span>
+<span class="co">## $ name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Afghanistan", "Albania", "Algeria", "Angola", "Antarctica", "~</span>
+<span class="co">## $ region  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Asia", "Europe", "Africa", "Africa", "Antarctica", "Americas"~</span>
+<span class="co">## $ alpha_2 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "AF", "AL", "DZ", "AO", "AQ", "AG", "AR", "AM", "AU", "AT", "A~</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"tilemap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="op">-</span><span class="va">y</span>, name <span class="op">=</span> <span class="va">name</span>, group <span class="op">=</span> <span class="va">region</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_chart.html">hc_chart</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"tilemap"</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_plotOptions.html">hc_plotOptions</a></span><span class="op">(</span>
-    series <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-      dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    series <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
         enabled <span class="op">=</span> <span class="cn">TRUE</span>,
         format <span class="op">=</span> <span class="st">"{point.alpha_2}"</span>,
         color <span class="op">=</span> <span class="st">"white"</span>,
-        style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>textOutline <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+        style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>textOutline <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
       <span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
@@ -522,21 +463,21 @@ $(document).ready(function(){
 <div id="htmlwidget-d6facaf5e0f5b7b2b1fa" style="width:100%;height:800px;" class="highchart html-widget"></div>
 <script type="application/json" data-for="htmlwidget-d6facaf5e0f5b7b2b1fa">{"x":{"hc_opts":{"chart":{"reflow":true,"type":"tilemap","height":800},"title":{"text":null},"yAxis":{"title":{"text":["-","y"]},"type":"linear","visible":false},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":true,"dataLabels":{"enabled":true,"format":"{point.alpha_2}","color":"white","style":{"textOutline":false}}},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"name":"Africa","data":[{"x":13,"y":-11,"name":"Algeria","region":"Africa","alpha_2":"DZ"},{"x":13,"y":-17,"name":"Angola","region":"Africa","alpha_2":"AO"},{"x":15,"y":-14,"name":"Benin","region":"Africa","alpha_2":"BJ"},{"x":15,"y":-18,"name":"Botswana","region":"Africa","alpha_2":"BW"},{"x":13,"y":-13,"name":"Burkina Faso","region":"Africa","alpha_2":"BF"},{"x":15,"y":-16,"name":"Burundi","region":"Africa","alpha_2":"BI"},{"x":14,"y":-15,"name":"Cameroon","region":"Africa","alpha_2":"CM"},{"x":10,"y":-15,"name":"Cabo Verde","region":"Africa","alpha_2":"CV"},{"x":16,"y":-14,"name":"Central African Republic","region":"Africa","alpha_2":"CF"},{"x":14,"y":-13,"name":"Chad","region":"Africa","alpha_2":"TD"},{"x":18,"y":-18,"name":"Comoros","region":"Africa","alpha_2":"KM"},{"x":14,"y":-16,"name":"Congo","region":"Africa","alpha_2":"CG"},{"x":15,"y":-15,"name":"Congo (Democratic Republic of the)","region":"Africa","alpha_2":"CD"},{"x":12,"y":-15,"name":"Côte d'Ivoire","region":"Africa","alpha_2":"CI"},{"x":17,"y":-13,"name":"Djibouti","region":"Africa","alpha_2":"DJ"},{"x":16,"y":-11,"name":"Egypt","region":"Africa","alpha_2":"EG"},{"x":13,"y":-16,"name":"Equatorial Guinea","region":"Africa","alpha_2":"GQ"},{"x":16,"y":-13,"name":"Eritrea","region":"Africa","alpha_2":"ER"},{"x":17,"y":-14,"name":"Ethiopia","region":"Africa","alpha_2":"ET"},{"x":14,"y":-17,"name":"Gabon","region":"Africa","alpha_2":"GA"},{"x":12,"y":-12,"name":"Gambia","region":"Africa","alpha_2":"GM"},{"x":13,"y":-14,"name":"Ghana","region":"Africa","alpha_2":"GH"},{"x":11,"y":-14,"name":"Guinea","region":"Africa","alpha_2":"GN"},{"x":11,"y":-13,"name":"Guinea-Bissau","region":"Africa","alpha_2":"GW"},{"x":17,"y":-15,"name":"Kenya","region":"Africa","alpha_2":"KE"},{"x":17,"y":-19,"name":"Lesotho","region":"Africa","alpha_2":"LS"},{"x":12,"y":-14,"name":"Liberia","region":"Africa","alpha_2":"LR"},{"x":15,"y":-11,"name":"Libya","region":"Africa","alpha_2":"LY"},{"x":19,"y":-19,"name":"Madagascar","region":"Africa","alpha_2":"MG"},{"x":15,"y":-17,"name":"Malawi","region":"Africa","alpha_2":"MW"},{"x":14,"y":-12,"name":"Mali","region":"Africa","alpha_2":"ML"},{"x":11,"y":-12,"name":"Mauritania","region":"Africa","alpha_2":"MR"},{"x":19,"y":-20,"name":"Mauritius","region":"Africa","alpha_2":"MU"},{"x":12,"y":-11,"name":"Morocco","region":"Africa","alpha_2":"MA"},{"x":16,"y":-17,"name":"Mozambique","region":"Africa","alpha_2":"MZ"},{"x":15,"y":-19,"name":"Namibia","region":"Africa","alpha_2":null},{"x":15,"y":-12,"name":"Niger","region":"Africa","alpha_2":"NE"},{"x":13,"y":-15,"name":"Nigeria","region":"Africa","alpha_2":"NG"},{"x":16,"y":-16,"name":"Rwanda","region":"Africa","alpha_2":"RW"},{"x":11,"y":-16,"name":"Sao Tome and Principe","region":"Africa","alpha_2":"ST"},{"x":13,"y":-12,"name":"Senegal","region":"Africa","alpha_2":"SN"},{"x":18,"y":-17,"name":"Seychelles","region":"Africa","alpha_2":"SC"},{"x":12,"y":-13,"name":"Sierra Leone","region":"Africa","alpha_2":"SL"},{"x":18,"y":-14,"name":"Somalia","region":"Africa","alpha_2":"SO"},{"x":16,"y":-20,"name":"South Africa","region":"Africa","alpha_2":"ZA"},{"x":15,"y":-13,"name":"South Sudan","region":"Africa","alpha_2":"SS"},{"x":16,"y":-12,"name":"Sudan","region":"Africa","alpha_2":"SD"},{"x":16,"y":-19,"name":"Swaziland","region":"Africa","alpha_2":"SZ"},{"x":17,"y":-16,"name":"Tanzania","region":"Africa","alpha_2":"TZ"},{"x":14,"y":-14,"name":"Togo","region":"Africa","alpha_2":"TG"},{"x":14,"y":-11,"name":"Tunisia","region":"Africa","alpha_2":"TN"},{"x":16,"y":-15,"name":"Uganda","region":"Africa","alpha_2":"UG"},{"x":14,"y":-18,"name":"Zambia","region":"Africa","alpha_2":"ZM"},{"x":16,"y":-18,"name":"Zimbabwe","region":"Africa","alpha_2":"ZW"}],"type":"tilemap"},{"name":"Americas","data":[{"x":7,"y":-4,"name":"Antigua & Barbuda","region":"Americas","alpha_2":"AG"},{"x":6,"y":-14,"name":"Argentina","region":"Americas","alpha_2":"AR"},{"x":4,"y":-2,"name":"Bahamas","region":"Americas","alpha_2":"BS"},{"x":8,"y":-6,"name":"Barbados","region":"Americas","alpha_2":"BB"},{"x":2,"y":-3,"name":"Belize","region":"Americas","alpha_2":"BZ"},{"x":6,"y":-11,"name":"Bolivia","region":"Americas","alpha_2":"BO"},{"x":8,"y":-11,"name":"Brazil","region":"Americas","alpha_2":"BR"},{"x":1,"y":-1,"name":"Canada","region":"Americas","alpha_2":"CA"},{"x":6,"y":-13,"name":"Chile","region":"Americas","alpha_2":"CL"},{"x":5,"y":-9,"name":"Colombia","region":"Americas","alpha_2":"CO"},{"x":3,"y":-7,"name":"Costa Rica","region":"Americas","alpha_2":"CR"},{"x":4,"y":-3,"name":"Cuba","region":"Americas","alpha_2":"CU"},{"x":7,"y":-7,"name":"Dominica","region":"Americas","alpha_2":"DM"},{"x":6,"y":-4,"name":"Dominican Republic","region":"Americas","alpha_2":"DO"},{"x":5,"y":-10,"name":"Ecuador","region":"Americas","alpha_2":"EC"},{"x":1,"y":-5,"name":"El Salvador","region":"Americas","alpha_2":"SV"},{"x":8,"y":-1,"name":"Greenland","region":"Americas","alpha_2":"GL"},{"x":7,"y":-8,"name":"Grenada","region":"Americas","alpha_2":"GD"},{"x":1,"y":-4,"name":"Guatemala","region":"Americas","alpha_2":"GT"},{"x":6,"y":-10,"name":"Guyana","region":"Americas","alpha_2":"GY"},{"x":5,"y":-4,"name":"Haiti","region":"Americas","alpha_2":"HT"},{"x":2,"y":-5,"name":"Honduras","region":"Americas","alpha_2":"HN"},{"x":4,"y":-4,"name":"Jamaica","region":"Americas","alpha_2":"JM"},{"x":1,"y":-3,"name":"Mexico","region":"Americas","alpha_2":"MX"},{"x":2,"y":-6,"name":"Nicaragua","region":"Americas","alpha_2":"NI"},{"x":4,"y":-8,"name":"Panama","region":"Americas","alpha_2":"PA"},{"x":6,"y":-12,"name":"Paraguay","region":"Americas","alpha_2":"PY"},{"x":5,"y":-11,"name":"Peru","region":"Americas","alpha_2":"PE"},{"x":6,"y":-5,"name":"St. Kitts & Nevis","region":"Americas","alpha_2":"KN"},{"x":7,"y":-5,"name":"St. Lucia","region":"Americas","alpha_2":"LC"},{"x":7,"y":-6,"name":"St. Vincent & the Grenadines","region":"Americas","alpha_2":"VC"},{"x":7,"y":-11,"name":"Suriname","region":"Americas","alpha_2":"SR"},{"x":7,"y":-9,"name":"Trinidad & Tobago","region":"Americas","alpha_2":"TT"},{"x":1,"y":-2,"name":"United States of America","region":"Americas","alpha_2":"US"},{"x":7,"y":-12,"name":"Uruguay","region":"Americas","alpha_2":"UY"},{"x":6,"y":-9,"name":"Venezuela","region":"Americas","alpha_2":"VE"}],"type":"tilemap"},{"name":"Antarctica","data":[{"x":15,"y":-23,"name":"Antarctica","region":"Antarctica","alpha_2":"AQ"}],"type":"tilemap"},{"name":"Asia","data":[{"x":22,"y":-8,"name":"Afghanistan","region":"Asia","alpha_2":"AF"},{"x":20,"y":-6,"name":"Armenia","region":"Asia","alpha_2":"AM"},{"x":21,"y":-7,"name":"Azerbaijan","region":"Asia","alpha_2":"AZ"},{"x":20,"y":-9,"name":"Bahrain","region":"Asia","alpha_2":"BH"},{"x":23,"y":-8,"name":"Bangladesh","region":"Asia","alpha_2":"BD"},{"x":24,"y":-7,"name":"Bhutan","region":"Asia","alpha_2":"BT"},{"x":25,"y":-12,"name":"Brunei Darussalam","region":"Asia","alpha_2":"BN"},{"x":25,"y":-10,"name":"Cambodia","region":"Asia","alpha_2":"KH"},{"x":24,"y":-6,"name":"China","region":"Asia","alpha_2":"CN"},{"x":17,"y":-10,"name":"Cyprus","region":"Asia","alpha_2":"CY"},{"x":21,"y":-6,"name":"Georgia","region":"Asia","alpha_2":"GE"},{"x":22,"y":-9,"name":"India","region":"Asia","alpha_2":"IN"},{"x":25,"y":-13,"name":"Indonesia","region":"Asia","alpha_2":"ID"},{"x":20,"y":-8,"name":"Iran (Islamic Republic of)","region":"Asia","alpha_2":"IR"},{"x":20,"y":-7,"name":"Iraq","region":"Asia","alpha_2":"IQ"},{"x":18,"y":-10,"name":"Israel","region":"Asia","alpha_2":"IL"},{"x":27,"y":-6,"name":"Japan","region":"Asia","alpha_2":"JP"},{"x":18,"y":-8,"name":"Jordan","region":"Asia","alpha_2":"JO"},{"x":24,"y":-5,"name":"Kazakhstan","region":"Asia","alpha_2":"KZ"},{"x":25,"y":-6,"name":"North Korea","region":"Asia","alpha_2":"KP"},{"x":25,"y":-7,"name":"South Korea","region":"Asia","alpha_2":"KR"},{"x":19,"y":-8,"name":"Kuwait","region":"Asia","alpha_2":"KW"},{"x":23,"y":-6,"name":"Kyrgyzstan","region":"Asia","alpha_2":"KG"},{"x":25,"y":-9,"name":"Lao People's Democratic Republic","region":"Asia","alpha_2":"LA"},{"x":18,"y":-9,"name":"Lebanon","region":"Asia","alpha_2":"LB"},{"x":24,"y":-11,"name":"Malaysia","region":"Asia","alpha_2":"MY"},{"x":21,"y":-12,"name":"Maldives","region":"Asia","alpha_2":"MV"},{"x":25,"y":-5,"name":"Mongolia","region":"Asia","alpha_2":"MN"},{"x":24,"y":-8,"name":"Myanmar","region":"Asia","alpha_2":"MM"},{"x":23,"y":-9,"name":"Nepal","region":"Asia","alpha_2":"NP"},{"x":19,"y":-11,"name":"Oman","region":"Asia","alpha_2":"OM"},{"x":21,"y":-8,"name":"Pakistan","region":"Asia","alpha_2":"PK"},{"x":26,"y":-11,"name":"Philippines","region":"Asia","alpha_2":"PH"},{"x":19,"y":-10,"name":"Qatar","region":"Asia","alpha_2":"QA"},{"x":19,"y":-9,"name":"Saudi Arabia","region":"Asia","alpha_2":"SA"},{"x":24,"y":-13,"name":"Singapore","region":"Asia","alpha_2":"SG"},{"x":22,"y":-11,"name":"Sri Lanka","region":"Asia","alpha_2":"LK"},{"x":19,"y":-7,"name":"Syria","region":"Asia","alpha_2":"SY"},{"x":23,"y":-7,"name":"Tajikistan","region":"Asia","alpha_2":"TJ"},{"x":24,"y":-10,"name":"Thailand","region":"Asia","alpha_2":"TH"},{"x":25,"y":-14,"name":"Timor-Leste","region":"Asia","alpha_2":"TL"},{"x":18,"y":-7,"name":"Turkey","region":"Asia","alpha_2":"TR"},{"x":22,"y":-7,"name":"Turkmenistan","region":"Asia","alpha_2":"TM"},{"x":20,"y":-10,"name":"United Arab Emirates","region":"Asia","alpha_2":"AE"},{"x":22,"y":-6,"name":"Uzbekistan","region":"Asia","alpha_2":"UZ"},{"x":26,"y":-9,"name":"Viet Nam","region":"Asia","alpha_2":"VN"},{"x":18,"y":-11,"name":"Yemen","region":"Asia","alpha_2":"YE"}],"type":"tilemap"},{"name":"Europe","data":[{"x":15,"y":-9,"name":"Albania","region":"Europe","alpha_2":"AL"},{"x":15,"y":-6,"name":"Austria","region":"Europe","alpha_2":"AT"},{"x":17,"y":-4,"name":"Belarus","region":"Europe","alpha_2":"BY"},{"x":13,"y":-5,"name":"Belgium","region":"Europe","alpha_2":"BE"},{"x":15,"y":-7,"name":"Bosnia & Herzegovina","region":"Europe","alpha_2":"BA"},{"x":17,"y":-7,"name":"Bulgaria","region":"Europe","alpha_2":"BG"},{"x":14,"y":-7,"name":"Croatia","region":"Europe","alpha_2":"HR"},{"x":15,"y":-5,"name":"Czech Republic","region":"Europe","alpha_2":"CZ"},{"x":14,"y":-3,"name":"Denmark","region":"Europe","alpha_2":"DK"},{"x":17,"y":-2,"name":"Estonia","region":"Europe","alpha_2":"EE"},{"x":17,"y":-1,"name":"Finland","region":"Europe","alpha_2":"FI"},{"x":12,"y":-5,"name":"France","region":"Europe","alpha_2":"FR"},{"x":14,"y":-4,"name":"Germany","region":"Europe","alpha_2":"DE"},{"x":16,"y":-9,"name":"Greece","region":"Europe","alpha_2":"GR"},{"x":16,"y":-6,"name":"Hungary","region":"Europe","alpha_2":"HU"},{"x":10,"y":-1,"name":"Iceland","region":"Europe","alpha_2":"IS"},{"x":10,"y":-4,"name":"Ireland","region":"Europe","alpha_2":"IE"},{"x":13,"y":-7,"name":"Italy","region":"Europe","alpha_2":"IT"},{"x":16,"y":-8,"name":"Kosovo","region":"Europe","alpha_2":"XK"},{"x":17,"y":-3,"name":"Latvia","region":"Europe","alpha_2":"LV"},{"x":16,"y":-4,"name":"Lithuania","region":"Europe","alpha_2":"LT"},{"x":13,"y":-6,"name":"Luxembourg","region":"Europe","alpha_2":"LU"},{"x":17,"y":-8,"name":"Macedonia","region":"Europe","alpha_2":"MK"},{"x":11,"y":-8,"name":"Malta","region":"Europe","alpha_2":"MT"},{"x":18,"y":-5,"name":"Moldova (Republic of)","region":"Europe","alpha_2":"MD"},{"x":15,"y":-8,"name":"Montenegro","region":"Europe","alpha_2":"ME"},{"x":13,"y":-4,"name":"Netherlands","region":"Europe","alpha_2":"NL"},{"x":15,"y":-1,"name":"Norway","region":"Europe","alpha_2":"NO"},{"x":15,"y":-4,"name":"Poland","region":"Europe","alpha_2":"PL"},{"x":11,"y":-6,"name":"Portugal","region":"Europe","alpha_2":"PT"},{"x":17,"y":-6,"name":"Romania","region":"Europe","alpha_2":"RO"},{"x":25,"y":-4,"name":"Russian Federation","region":"Europe","alpha_2":"RU"},{"x":16,"y":-7,"name":"Serbia","region":"Europe","alpha_2":"RS"},{"x":16,"y":-5,"name":"Slovakia","region":"Europe","alpha_2":"SK"},{"x":14,"y":-6,"name":"Slovenia","region":"Europe","alpha_2":"SI"},{"x":12,"y":-6,"name":"Spain","region":"Europe","alpha_2":"ES"},{"x":16,"y":-1,"name":"Sweden","region":"Europe","alpha_2":"SE"},{"x":14,"y":-5,"name":"Switzerland","region":"Europe","alpha_2":"CH"},{"x":17,"y":-5,"name":"Ukraine","region":"Europe","alpha_2":"UA"},{"x":11,"y":-4,"name":"Great Britain and Northern Ireland","region":"Europe","alpha_2":"GB"}],"type":"tilemap"},{"name":"Oceania","data":[{"x":24,"y":-19,"name":"Australia","region":"Oceania","alpha_2":"AU"},{"x":27,"y":-19,"name":"Fiji","region":"Oceania","alpha_2":"FJ"},{"x":27,"y":-17,"name":"Kiribati","region":"Oceania","alpha_2":"KI"},{"x":26,"y":-15,"name":"Marshall Islands","region":"Oceania","alpha_2":"MH"},{"x":26,"y":-16,"name":"Micronesia (Federated States of)","region":"Oceania","alpha_2":"FM"},{"x":26,"y":-17,"name":"Nauru","region":"Oceania","alpha_2":"NR"},{"x":26,"y":-21,"name":"New Zealand","region":"Oceania","alpha_2":"NZ"},{"x":25,"y":-16,"name":"Palau","region":"Oceania","alpha_2":"PW"},{"x":25,"y":-17,"name":"Papua New Guinea","region":"Oceania","alpha_2":"PG"},{"x":28,"y":-18,"name":"Samoa","region":"Oceania","alpha_2":"WS"},{"x":26,"y":-18,"name":"Solomon Islands","region":"Oceania","alpha_2":"SB"},{"x":28,"y":-19,"name":"Tonga","region":"Oceania","alpha_2":"TO"},{"x":27,"y":-18,"name":"Tuvalu","region":"Oceania","alpha_2":"TV"},{"x":26,"y":-19,"name":"Vanuatu","region":"Oceania","alpha_2":"VU"}],"type":"tilemap"}],"xAxis":{"type":"linear","title":{"text":"x"},"visible":false},"tooltip":{"headerFormat":"","pointFormat":"<b>{point.name}<\/b> is in <b>{point.region}<\/b>"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="packedbubble" class="section level2">
-<h2 class="hasAnchor">
-<a href="#packedbubble" class="anchor"></a>packedbubble</h2>
+<div class="section level2">
+<h2 id="packedbubble">packedbubble<a class="anchor" aria-label="anchor" href="#packedbubble"></a>
+</h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">gapminder</span>, package <span class="op">=</span> <span class="st">"gapminder"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gapminder</span>, package <span class="op">=</span> <span class="st">"gapminder"</span><span class="op">)</span>
 
 <span class="va">gapminder</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">pop</span>, <span class="va">continent</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">pop</span>, <span class="va">continent</span><span class="op">)</span>
 
 <span class="va">hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">gapminder</span>, <span class="st">"packedbubble"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">country</span>, value <span class="op">=</span> <span class="va">pop</span>, group <span class="op">=</span> <span class="va">continent</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">q95</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">gapminder</span><span class="op">$</span><span class="va">pop</span>, <span class="fl">.95</span><span class="op">)</span><span class="op">)</span>
+<span class="va">q95</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">gapminder</span><span class="op">$</span><span class="va">pop</span>, <span class="fl">.95</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">hc</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_tooltip.html">hc_tooltip</a></span><span class="op">(</span>
@@ -544,25 +485,25 @@ $(document).ready(function(){
     pointFormat <span class="op">=</span> <span class="st">"&lt;b&gt;{point.name}:&lt;/b&gt; {point.value}"</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_plotOptions.html">hc_plotOptions</a></span><span class="op">(</span>
-    packedbubble <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    packedbubble <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
       maxSize <span class="op">=</span> <span class="st">"150%"</span>,
       zMin <span class="op">=</span> <span class="fl">0</span>,
-      layoutAlgorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+      layoutAlgorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
         gravitationalConstant <span class="op">=</span>  <span class="fl">0.05</span>,
         splitSeries <span class="op">=</span>  <span class="cn">TRUE</span>, <span class="co"># TRUE to group points</span>
         seriesInteraction <span class="op">=</span> <span class="cn">TRUE</span>,
         dragBetweenSeries <span class="op">=</span> <span class="cn">TRUE</span>,
         parentNodeLimit <span class="op">=</span> <span class="cn">TRUE</span>
       <span class="op">)</span>,
-      dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+      dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
         enabled <span class="op">=</span> <span class="cn">TRUE</span>,
         format <span class="op">=</span> <span class="st">"{point.name}"</span>,
-        filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
           property <span class="op">=</span> <span class="st">"y"</span>,
           operator <span class="op">=</span> <span class="st">"&gt;"</span>,
           value <span class="op">=</span> <span class="va">q95</span>
         <span class="op">)</span>,
-        style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
           color <span class="op">=</span> <span class="st">"black"</span>,
           textOutline <span class="op">=</span> <span class="st">"none"</span>,
           fontWeight <span class="op">=</span> <span class="st">"normal"</span>
@@ -571,26 +512,26 @@ $(document).ready(function(){
     <span class="op">)</span>
   <span class="op">)</span></code></pre></div>
 </div>
-<div id="venn-euler" class="section level2">
-<h2 class="hasAnchor">
-<a href="#venn-euler" class="anchor"></a>venn &amp; euler</h2>
+<div class="section level2">
+<h2 id="venn-euler">venn &amp; euler<a class="anchor" aria-label="anchor" href="#venn-euler"></a>
+</h2>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/highchart.html">highchart</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_chart.html">hc_chart</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"venn"</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_add_series.html">hc_add_series</a></span><span class="op">(</span>
-    dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"20px"</span><span class="op">)</span><span class="op">)</span>,
+    dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"20px"</span><span class="op">)</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">"Venn Diagram"</span>,
-    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
         name <span class="op">=</span> <span class="st">"People who are&lt;br&gt;breaking my heart."</span>,
-        sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span>
+        sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span>
         <span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
         name <span class="op">=</span> <span class="st">"People who are shaking&lt;br&gt; my confidence daily."</span>,
-        sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"B"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span>
+        sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"B"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">5</span>
         <span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-        name <span class="op">=</span> <span class="st">"Cecilia"</span>, sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+        name <span class="op">=</span> <span class="st">"Cecilia"</span>, sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
       <span class="op">)</span>
   <span class="op">)</span></code></pre></div>
 <div id="htmlwidget-2f8220dda1413fa7b913" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
@@ -599,24 +540,24 @@ $(document).ready(function(){
   <span class="fu"><a href="../reference/hc_chart.html">hc_chart</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"venn"</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_add_series.html">hc_add_series</a></span><span class="op">(</span>
     name <span class="op">=</span> <span class="st">"Euler Diagram"</span>,
-    dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"20px"</span><span class="op">)</span><span class="op">)</span>,
-    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Animals"</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"B"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Four Legs"</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Mineral"</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+    dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"20px"</span><span class="op">)</span><span class="op">)</span>,
+    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Animals"</span>, value <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"B"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Four Legs"</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>, value <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Mineral"</span>, value <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span></code></pre></div>
 <div id="htmlwidget-4d98ecc6a7bce25e95cf" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
 <script type="application/json" data-for="htmlwidget-4d98ecc6a7bce25e95cf">{"x":{"hc_opts":{"chart":{"reflow":true,"type":"venn"},"title":{"text":null},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"series":[{"name":"Euler Diagram","dataLabels":{"style":{"fontSize":"20px"}},"data":[{"sets":["A"],"name":"Animals","value":5},{"sets":["B"],"name":"Four Legs","value":1},{"sets":["B","A"],"value":1},{"sets":["C"],"name":"Mineral","value":2}]}]},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="solidgauge" class="section level2">
-<h2 class="hasAnchor">
-<a href="#solidgauge" class="anchor"></a>solidgauge</h2>
+<div class="section level2">
+<h2 id="solidgauge">solidgauge<a class="anchor" aria-label="anchor" href="#solidgauge"></a>
+</h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">col_stops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.4</span>, <span class="fl">.8</span><span class="op">)</span>,
-  c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#55BF3B'</span>, <span class="st">'#DDDF0D'</span>, <span class="st">'#DF5353'</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">col_stops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
+  q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.4</span>, <span class="fl">.8</span><span class="op">)</span>,
+  c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#55BF3B'</span>, <span class="st">'#DDDF0D'</span>, <span class="st">'#DF5353'</span><span class="op">)</span>,
   stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
@@ -625,7 +566,7 @@ $(document).ready(function(){
   <span class="fu"><a href="../reference/hc_pane.html">hc_pane</a></span><span class="op">(</span>
     startAngle <span class="op">=</span> <span class="op">-</span><span class="fl">90</span>,
     endAngle <span class="op">=</span> <span class="fl">90</span>,
-    background <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    background <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
       outerRadius <span class="op">=</span> <span class="st">'100%'</span>,
       innerRadius <span class="op">=</span> <span class="st">'60%'</span>,
       shape <span class="op">=</span> <span class="st">"arc"</span>
@@ -639,37 +580,37 @@ $(document).ready(function(){
     tickAmount <span class="op">=</span> <span class="fl">2</span>,
     min <span class="op">=</span> <span class="fl">0</span>,
     max <span class="op">=</span> <span class="fl">100</span>,
-    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">26</span>, style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"22px"</span><span class="op">)</span><span class="op">)</span>
+    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">26</span>, style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"22px"</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/hc_add_series.html">hc_add_series</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="fl">90</span>,
-    dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
       y <span class="op">=</span> <span class="op">-</span><span class="fl">50</span>,
       borderWidth <span class="op">=</span> <span class="fl">0</span>,
       useHTML <span class="op">=</span> <span class="cn">TRUE</span>,
-      style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"40px"</span><span class="op">)</span>
+      style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fontSize <span class="op">=</span> <span class="st">"40px"</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_size.html">hc_size</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></code></pre></div>
 <div id="htmlwidget-7a55dcb7a06bbff1b49e" style="width:100%;height:300px;" class="highchart html-widget"></div>
 <script type="application/json" data-for="htmlwidget-7a55dcb7a06bbff1b49e">{"x":{"hc_opts":{"chart":{"reflow":true,"type":"solidgauge","height":300},"title":{"text":null},"yAxis":{"title":{"text":null},"stops":[[0.15,"#55BF3B"],[0.4,"#DDDF0D"],[0.8,"#DF5353"]],"lineWidth":0,"minorTickWidth":0,"tickAmount":2,"min":0,"max":100,"labels":{"y":26,"style":{"fontSize":"22px"}}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"pane":{"startAngle":-90,"endAngle":90,"background":{"outerRadius":"100%","innerRadius":"60%","shape":"arc"}},"tooltip":{"enabled":false},"series":[{"data":[90],"dataLabels":{"y":-50,"borderWidth":0,"useHTML":true,"style":{"fontSize":"40px"}}}]},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="bullet" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bullet" class="anchor"></a>bullet</h2>
+<div class="section level2">
+<h2 id="bullet">bullet<a class="anchor" aria-label="anchor" href="#bullet"></a>
+</h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,
-  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
+  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,
+  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,
   x <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
   <span class="op">)</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
-<pre><code>## Rows: 6
-## Columns: 3
-## $ y      &lt;int&gt; 8, 9, 10, 7, 6, 5
-## $ target &lt;int&gt; 9, 6, 5, 10, 7, 8
-## $ x      &lt;chr&gt; "A", "B", "C", "D", "E", "F"</code></pre>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Rows: 6</span>
+<span class="co">## Columns: 3</span>
+<span class="co">## $ y      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 8, 9, 10, 7, 6, 5</span>
+<span class="co">## $ target <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 9, 6, 5, 10, 7, 8</span>
+<span class="co">## $ x      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "A", "B", "C", "D", "E", "F"</span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"bullet"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, target <span class="op">=</span> <span class="va">target</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/hc_chart.html">hc_chart</a></span><span class="op">(</span>inverted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span>
@@ -677,10 +618,10 @@ $(document).ready(function(){
     min <span class="op">=</span> <span class="fl">0</span>,
     max <span class="op">=</span> <span class="fl">10</span>,
     gridLineWidth <span class="op">=</span> <span class="fl">0</span>,
-    plotBands <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"#666"</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">7</span>, to <span class="op">=</span> <span class="fl">9</span>, color <span class="op">=</span> <span class="st">"#999"</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">9</span>, to <span class="op">=</span> <span class="fl">10</span>, color <span class="op">=</span> <span class="st">"#bbb"</span><span class="op">)</span>
+    plotBands <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"#666"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">7</span>, to <span class="op">=</span> <span class="fl">9</span>, color <span class="op">=</span> <span class="st">"#999"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">9</span>, to <span class="op">=</span> <span class="fl">10</span>, color <span class="op">=</span> <span class="st">"#bbb"</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/hc_xAxis.html">hc_xAxis</a></span><span class="op">(</span>
@@ -688,11 +629,11 @@ $(document).ready(function(){
     gridLineColor <span class="op">=</span> <span class="st">"white"</span>
   <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_plotOptions.html">hc_plotOptions</a></span><span class="op">(</span>
-    series <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    series <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
       pointPadding <span class="op">=</span> <span class="fl">0.25</span>,
       pointWidth <span class="op">=</span> <span class="fl">15</span>,
       borderWidth <span class="op">=</span> <span class="fl">0</span>,
-      targetOptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">'200%'</span><span class="op">)</span>
+      targetOptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">'200%'</span><span class="op">)</span>
       <span class="op">)</span>
     <span class="op">)</span> <span class="op"><a href="../reference/highcharter-exports.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/hc_size.html">hc_size</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></code></pre></div>
@@ -700,10 +641,8 @@ $(document).ready(function(){
 <script type="application/json" data-for="htmlwidget-2dc7173b9d96e4df10d9">{"x":{"hc_opts":{"chart":{"reflow":true,"inverted":true,"height":300},"title":{"text":null},"yAxis":{"title":{"text":"y"},"type":"linear","min":0,"max":10,"gridLineWidth":0,"plotBands":[{"from":0,"to":7,"color":"#666"},{"from":7,"to":9,"color":"#999"},{"from":9,"to":10,"color":"#bbb"}]},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false,"pointPadding":0.25,"pointWidth":15,"borderWidth":0,"targetOptions":{"width":"200%"}},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"y":8,"target":9,"name":"A"},{"y":9,"target":6,"name":"B"},{"y":10,"target":5,"name":"C"},{"y":7,"target":10,"name":"D"},{"y":6,"target":7,"name":"E"},{"y":5,"target":8,"name":"F"}],"type":"bullet","color":"black"}],"xAxis":{"type":"category","title":{"text":"x"},"gridLineWidth":15,"gridLineColor":"white"}},"theme":{"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px"}},"subtitle":{"align":"left","style":{"fontFamily":"Alegreya Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"Alegreya Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"Roboto","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#A2A39C"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"valueDecimals":2}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":["IBM+Plex+Sans","Alegreya+Sans+SC","Alegreya+Sans","Roboto"],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
   </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+ <div class="col-md-3" id="pkgdown-sidebar">
+        <nav id="toc"><h2>On this page</h2>
     </nav>
 </div>
 
@@ -711,38 +650,22 @@ $(document).ready(function(){
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="http://jkunst.com">Joshua Kunst</a></p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by Joshua Kunst.</p>
 </div>
 
-<p style="text-align: center;">
-	<span class="fa fa-code"></span> 
-	with <span class="red pulse fa fa-heart" style="color:red"></span>,
-	Open Source &amp; <span class="fa fa-coffee" style="color:#6f4e37"></span>
-</p>
-
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
-  docsearch({
-    
-    
-    apiKey: 'dc216f6fb0d79cc6e98d4867892b8fd6',
-    indexName: 'highcharter',
-    inputSelector: 'input#search-input.form-control',
-    transformData: function(hits) {
-      return hits.map(function (hit) {
-        hit.url = updateHitURL(hit);
-        return hit;
-      });
-    }
-  });
-</script>
-</body>
+
+  
+
+  </body>
 </html>
