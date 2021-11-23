@@ -263,7 +263,7 @@ hc_fill %>%
   hc_add_theme(hc_theme_handdrawn())
 ```
 
-Example from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/.
+Example from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/ and inspired by https://www.amcharts.com/demos/pictorial-column-chart/ 
 
 ```{r}
 highchart() %>% 
@@ -275,6 +275,18 @@ highchart() %>%
     borderColor = "#CACACA",
     pointFormat = 'The height for <b>{point.name}</b> is <b>{point.y}</b>'
     ) %>% 
+  hc_chart(
+    plotBackgroundColor = list(
+      linearGradient = c(0, 0, 0, 500),
+      stops = list(
+        list(0.0, 'rgb(240, 178, 79)'),
+        list(0.5, 'rgb(202, 108, 70)'),
+        list(0.9, 'rgb(12, 5, 36)')
+        )
+      )
+  ) %>% 
+  hc_xAxis(gridLineColor = 'transparent') %>% 
+  hc_yAxis(gridLineColor = 'transparent') %>% 
   hc_add_series(
     type = "column",
     showInLegend = FALSE,
