@@ -635,7 +635,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   marker <- list(list(fillColor = markerColor, symbol = symbol, enabled = TRUE))
 
   if (markTimes) {
-    mark <- object$n.censor == 1
+    mark <- object$n.censor >= 1
   } else {
     mark <- FALSE
   }
