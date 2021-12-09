@@ -19,6 +19,8 @@ when the size of viewport is small (like tables o phones).
 
 * Removing `knitr.figure = FALSE` option in `sizingPolicy = htmlwidgets::sizingPolicy`
 to fix #703 
+* Update hchart.survfit function to display censor points when multiple individuals
+  are censored at the same time point. This fixes #742.
 
 ## Internal
 
