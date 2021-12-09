@@ -173,6 +173,7 @@ hcmap <- function(map = "custom/world",
 #' @seealso \code{\link{hcmap}}
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file
+#' @importFrom stringr str_remove
 #' @export
 download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
                               quiet = FALSE) {
@@ -186,6 +187,7 @@ download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
   mapdata <- readLines(tmpfile, warn = FALSE, encoding = "UTF-8")
   mapdata[1] <- gsub(".* = ", "", mapdata[1])
   mapdata <- paste(mapdata, collapse = "\n")
+  mapdata <- stringr::str_remove(mapdata, ";$")
   mapdata <- jsonlite::fromJSON(mapdata, simplifyVector = FALSE)
 
   if (showinfo) {
