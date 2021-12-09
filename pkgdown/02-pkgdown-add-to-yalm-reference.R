@@ -32,7 +32,7 @@ dfun <- dfun %>%
 # deprecated functions ----------------------------------------------------
 fun_hc_dep <- c("hcparcords", "hcspark", "hctreemap", "hctreemap2",
                 "hciconarray", "hcboxplot", "hc_add_dependency_fa", "fa_icon",
-                "fa_icon_mark")
+                "fa_icon_mark", "create_yaxis")
 
 fun_hc_dep
 

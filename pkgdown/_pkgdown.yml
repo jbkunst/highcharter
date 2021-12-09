@@ -184,6 +184,7 @@ reference:
   - hc_add_dependency_fa
   - fa_icon
   - fa_icon_mark
+  - create_yaxis
 articles:
 - title: Get Started
   navbar: Get Started

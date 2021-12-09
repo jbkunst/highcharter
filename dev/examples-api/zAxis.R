@@ -4,7 +4,6 @@ df <- data.frame(
   z = sample(1:5)
 )
 
-# Note the 3d requiere highchart2() due have the 3d module
 highchart() %>%
   hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) %>% 
   hc_chart(

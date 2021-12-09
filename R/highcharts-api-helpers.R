@@ -20,8 +20,10 @@ validate_args <- function(name, lstargs) {
 #' @importFrom rlist list.merge
 .hc_opt <- function(hc, name, ...) {
   assertthat::assert_that(is.highchart(hc))
-
-  validate_args(name, eval(substitute(alist(...))))
+  
+  if(!name %in% c("yAxis")) {
+    validate_args(name, eval(substitute(alist(...))))  
+  }
 
   if (is.null(hc$x$hc_opts[[name]])) {
     hc$x$hc_opts[[name]] <- list(...)
@@ -352,7 +354,6 @@ hc_yAxis_multiples <- function(hc, ...) {
   } else {
     hc$x$hc_opts$yAxis <- list(...)
   }
-
   hc
 }
 
@@ -364,9 +365,20 @@ hc_xAxis_multiples <- function(hc, ...) {
   } else {
     hc$x$hc_opts$xAxis <- list(...)
   }
-  
   hc
 }
+
+#' @rdname hc_add_yAxis
+#' @export
+hc_zAxis_multiples <- function(hc, ...) {
+  if (length(list(...)) == 1 & class(list(...)[[1]]) == "hc_axis_list") {
+    hc$x$hc_opts$zAxis <- list(...)[[1]]
+  } else {
+    hc$x$hc_opts$zAxis <- list(...)
+  }
+  hc
+}
+
 
 
 #' Creating multiples yAxis t use with highcharts
@@ -381,16 +393,17 @@ hc_xAxis_multiples <- function(hc, ...) {
 #' @examples
 #'
 #' highchart() %>%
-#'   hc_yAxis_multiples(create_yaxis(naxis = 2, heights = c(2, 1))) %>%
+#'   hc_yAxis_multiples(create_axis(naxis = 2, heights = c(2, 1))) %>%
 #'   hc_add_series(data = c(1, 3, 2), yAxis = 0) %>%
 #'   hc_add_series(data = c(20, 40, 10), yAxis = 1)
-#'
+#'  
 #' highchart() %>%
-#'   hc_yAxis_multiples(create_yaxis(naxis = 3, lineWidth = 2, title = list(text = NULL))) %>%
+#'   hc_yAxis_multiples(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) %>%
 #'   hc_add_series(data = c(1, 3, 2)) %>%
-#'   hc_add_series(data = c(20, 40, 10), yAxis = 1) %>%
-#'   hc_add_series(data = c(200, 400, 500), type = "columnn", yAxis = 2) %>%
-#'   hc_add_series(data = c(500, 300, 400), type = "columnn", yAxis = 2)
+#'   hc_add_series(data = c(20, 40, 10), type = "area", yAxis = 1) %>%
+#'   hc_add_series(data = c(200, 400, 500), yAxis = 2) %>%
+#'   hc_add_series(data = c(500, 300, 400), type = "areaspline", yAxis = 2)
+#'    
 #' @importFrom dplyr bind_cols
 #' @rdname hc_add_yAxis
 #' @export
@@ -434,7 +447,10 @@ create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
 
 #' @rdname hc_add_yAxis
 #' @export
-create_yaxis <- create_axis
+create_yaxis <- function(...){
+  .Deprecated(msg = "Deprecated function. Use the `create_axis` function.")
+  create_axis(...)
+}
 
 #' yAxis add highcharter objects
 #'

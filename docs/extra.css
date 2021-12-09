@@ -79,6 +79,10 @@ dt {
   font-weight: 300;
 }
 
+form[role=search]{
+  visibility: hidden;
+}
+
 /* make space after navbar 
 .page-header, #toc, .links {
   margin-top: 3rem;

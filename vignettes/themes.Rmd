@@ -74,25 +74,6 @@ themes <- help.search("theme", package = "highcharter") %>%
   arrange(name) %>% 
   pull(name)
 
-# themes <- dir("R", full.names = TRUE) %>%
-#   str_subset("theme") %>%
-#   setdiff("R/theme.R") %>%
-#   map(readLines) %>%
-#   reduce(c) %>%
-#   str_subset(" <- function") %>%
-#   str_remove(" <-.*")
-#
-# dput(themes)
-# 
-# themes <- c("hc_theme_538", "hc_theme_alone", "hc_theme_bloom", "hc_theme_chalk", 
-# "hc_theme_darkunica", "hc_theme_db", "hc_theme_economist", "hc_theme_elementary", 
-# "hc_theme_ffx", "hc_theme_flat", "hc_theme_flatdark", "hc_theme_ft", 
-# "hc_theme_ggplot2", "hc_theme_google", "hc_theme_gridlight", 
-# "hc_theme_handdrawn", "hc_theme_hcrt", "hc_theme_monokai", "hc_theme_null", 
-# "hc_theme_sandsignika", "hc_theme_smpl", "hc_theme_sparkline", 
-# "hc_theme_sparkline_vb", "hc_theme_superheroes", "hc_theme_tufte", 
-# "hc_theme_tufte2")
-
 themes <- str_subset(themes, "spark", negate = TRUE)
 
 thms <- unique(c("hc_theme_smpl", "hc_theme_db", themes))
@@ -104,8 +85,12 @@ thms %>%
 
     t %>%
       str_replace_all("hc_theme_", "") %>%
-      tags$a(`data-target` = paste0("#", t), `data-toggle` = "tab") %>%
-      tags$li(class = if (t == thms[1]) "active" else NULL)
+      tags$a(
+        class = if (t == thms[1]) "active" else NULL,
+        class="nav-link"
+        ) %>%
+      tags$li(class = "nav-item")
+    
   }) %>%
   tags$ul(class = "nav nav-pills", id = "myTab", .)
 

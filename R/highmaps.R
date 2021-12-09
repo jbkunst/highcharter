@@ -90,24 +90,26 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'
 #' @examples
 #'
-#' hcmap(nullColor = "#DADADA")
-#' hcmap(nullColor = "#DADADA", download_map_data = FALSE)
+#' options(highcharter.download_map_data = TRUE)
+#'
+#' # hcmap(nullColor = "#DADADA")
+#' # hcmap(nullColor = "#DADADA", download_map_data = FALSE)
 #'
 #' require(dplyr)
 #' data("USArrests", package = "datasets")
 #' USArrests <- mutate(USArrests, "woe-name" = rownames(USArrests))
 #'
-#' hcmap(
-#'   map = "countries/us/us-all", data = USArrests,
-#'   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population"
-#' )
+#' # hcmap(
+#' #   map = "countries/us/us-all", data = USArrests,
+#' #   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population"
+#' # )
 #'
 #' # download_map_data = FALSE
-#' hcmap(
-#'   map = "countries/us/us-all", data = USArrests,
-#'   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
-#'   download_map_data = FALSE
-#' )
+#' # hcmap(
+#' #    map = "countries/us/us-all", data = USArrests,
+#' #   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
+#' #   download_map_data = FALSE
+#' # )
 #' @importFrom htmltools htmlDependency
 #' @importFrom rlang .data
 #' @export

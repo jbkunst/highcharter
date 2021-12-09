@@ -103,7 +103,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>First steps on highcharter package</h1>
                         <h4 data-toc-skip class="author">Joshua Kunst</h4>
             
-            <h4 data-toc-skip class="date">2021-11-23</h4>
+            <h4 data-toc-skip class="date">2021-11-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/HEAD/vignettes/highcharter.Rmd" class="external-link"><code>vignettes/highcharter.Rmd</code></a></small>
       <div class="d-none name"><code>highcharter.Rmd</code></div>
@@ -168,8 +168,8 @@ $(document).ready(function(){
 <p>So, a basic example would be:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="st">"point"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span>, group <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-22f99454e56b80c243d9" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-22f99454e56b80c243d9">{
+<div id="htmlwidget-093efc4eed37f4e7fb95" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-093efc4eed37f4e7fb95">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -3902,8 +3902,8 @@ $(document).ready(function(){
 <span class="co">## <span style="color: #BCBCBC;">6</span> 1967-12-01 pop      <span style="text-decoration: underline;">199</span>657 0.007<span style="text-decoration: underline;">77</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">economics_long2</span>, <span class="st">"line"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value01</span>, group <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-687e4950de7d26971cfb" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-687e4950de7d26971cfb">{
+<div id="htmlwidget-b84f53409edbcec2006c" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b84f53409edbcec2006c">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -17894,8 +17894,8 @@ $(document).ready(function(){
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">dfdiam</span>, <span class="st">"heatmap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">clarity</span>, value <span class="op">=</span> <span class="va">price</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Median Price"</span><span class="op">)</span> </code></pre></div>
-<div id="htmlwidget-1fda9cc3e81a89a9e9b9" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1fda9cc3e81a89a9e9b9">{
+<div id="htmlwidget-cd0d3ce5ee65ab7b7ea7" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cd0d3ce5ee65ab7b7ea7">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -18502,8 +18502,8 @@ $(document).ready(function(){
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span>, <span class="op">-</span><span class="va">unique</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">mpgman</span>, <span class="st">"treemap"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">manufacturer</span>, value <span class="op">=</span> <span class="va">n</span>, color <span class="op">=</span> <span class="va">unique</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-637fee5b7631a39580a5" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-637fee5b7631a39580a5">{
+<div id="htmlwidget-0603cbae627d143517ad" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0603cbae627d143517ad">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -18837,8 +18837,8 @@ $(document).ready(function(){
   name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Year 1999"</span>, <span class="st">"Year 2008"</span><span class="op">)</span>,
   showInLegend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># only show the first one in the legend</span>
   <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-91514876d931f1a5a08a" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-91514876d931f1a5a08a">{
+<div id="htmlwidget-e672718bd6ff0b83698c" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e672718bd6ff0b83698c">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -19289,8 +19289,8 @@ $(document).ready(function(){
   <span class="op">)</span>
 
 <span class="va">hc</span></code></pre></div>
-<div id="htmlwidget-07b81e7adc1a5b8e6026" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-07b81e7adc1a5b8e6026">{
+<div id="htmlwidget-ae66739752f091d88c0c" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ae66739752f091d88c0c">{
   "x": {
     "hc_opts": {
       "chart": {
@@ -19816,8 +19816,8 @@ $(document).ready(function(){
     color <span class="op">=</span> <span class="fu"><a href="../reference/hex_to_rgba.html">hex_to_rgba</a></span><span class="op">(</span><span class="st">"gray"</span>, <span class="fl">0.2</span><span class="op">)</span>,  <span class="co"># put a semi transparent color</span>
     zIndex <span class="op">=</span> <span class="op">-</span><span class="fl">3</span> <span class="co"># this is for put the series in a back so the points are showed first</span>
     <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-5958e0b3205c3f05f76d" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5958e0b3205c3f05f76d">{
+<div id="htmlwidget-2d3d040c3b4bf609461c" style="width:100%;height:432.632880098888px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2d3d040c3b4bf609461c">{
   "x": {
     "hc_opts": {
       "chart": {
