@@ -92,7 +92,7 @@ validate_args <- function(name, lstargs) {
 #' @importFrom stringr str_glue
 #' @importFrom htmlwidgets JS
 #' @examples
-#' \dontrun{
+#' 
 #' require(dplyr)
 #' require(purrr)
 #' require(tidyr)
@@ -160,7 +160,7 @@ validate_args <- function(name, lstargs) {
 #'       )
 #'     )
 #'   )
-#' }
+#' 
 #'
 #' @export
 tooltip_chart <- function(accesor = NULL,
