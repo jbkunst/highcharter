@@ -7,14 +7,16 @@ collection."><meta property="og:image" content="https://jkunst.com/highcharter/l
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
-    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">highcharter</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.3.9000</small>
 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -67,11 +69,12 @@ collection."><meta property="og:image" content="https://jkunst.com/highcharter/l
   </a>
 </li>
       </ul></div>
+
+    
   </div>
-</nav><div class="container template-reference-topic" id="container">
+</nav><div class="container template-reference-topic">
 <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Shortcut for create map from <a href="https://code.highcharts.com/mapdata/" class="external-link">https://code.highcharts.com/mapdata/</a>
 collection.</h1>
       <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/HEAD/R/highmaps.R" class="external-link"><code>R/highmaps.R</code></a></small>
@@ -83,19 +86,18 @@ collection.</h1>
 collection.</p>
     </div>
 
-    <div class="ref-usage section level2 sourceCode">
-    <h2>Usage</h2>
-    <pre class="sourceCode r"><code><span class="fu">hcmap</span><span class="op">(</span>
+    <div class="section level2">
+    <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">hcmap</span><span class="op">(</span>
   map <span class="op">=</span> <span class="st">"custom/world"</span>,
   download_map_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"highcharter.download_map_data"</span><span class="op">)</span>,
   data <span class="op">=</span> <span class="cn">NULL</span>,
   value <span class="op">=</span> <span class="cn">NULL</span>,
   joinBy <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">...</span>
-<span class="op">)</span></code></pre>
+<span class="op">)</span></code></pre></div>
     </div>
 
-    <div id="ref-sections">
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>map</dt>
@@ -116,11 +118,10 @@ the joinBy and value are needed.</p></dd>
 <dd><p>Additional shared arguments for the data series
 (<a href="http://api.highcharts.com/highcharts#series" class="external-link">http://api.highcharts.com/highcharts#series</a>).</p></dd>
 </dl></div>
-    </div>
 
-    <div id="examples">
-    <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>highcharter.download_map_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># hcmap(nullColor = "#DADADA")</span></span>
@@ -143,11 +144,8 @@ the joinBy and value are needed.</p></dd>
 <span class="r-in"><span class="co"># )</span></span>
 </code></pre></div>
     </div>
-  </div>
-  <div class="col-md-3" id="pkgdown-sidebar">
-    <nav id="toc"><h2>On this page</h2>
-    </nav></div>
-</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
@@ -155,7 +153,7 @@ the joinBy and value are needed.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>

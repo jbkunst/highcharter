@@ -3,14 +3,16 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
-    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">highcharter</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.3.9000</small>
 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -63,11 +65,12 @@
   </a>
 </li>
       </ul></div>
+
+    
   </div>
-</nav><div class="container template-reference-topic" id="container">
+</nav><div class="container template-reference-topic">
 <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Function to export js file the configuration options</h1>
       <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/HEAD/R/export_hc.R" class="external-link"><code>R/export_hc.R</code></a></small>
       <div class="d-none name"><code>export_hc.Rd</code></div>
@@ -77,12 +80,11 @@
     <p>Function to export js file the configuration options</p>
     </div>
 
-    <div class="ref-usage section level2 sourceCode">
-    <h2>Usage</h2>
-    <pre class="sourceCode r"><code><span class="fu">export_hc</span><span class="op">(</span><span class="va">hc</span>, filename <span class="op">=</span> <span class="cn">NULL</span>, as <span class="op">=</span> <span class="st">"is"</span>, name <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre>
+    <div class="section level2">
+    <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">export_hc</span><span class="op">(</span><span class="va">hc</span>, filename <span class="op">=</span> <span class="cn">NULL</span>, as <span class="op">=</span> <span class="st">"is"</span>, name <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
-    <div id="ref-sections">
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>hc</dt>
@@ -97,11 +99,10 @@ One of 'is', 'container', 'variable'.</p></dd>
 <code>as</code> is <code>'variable'</code> and the css/js selector if is <code>as</code> is
 container.</p></dd>
 </dl></div>
-    </div>
 
-    <div id="examples">
-    <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="va">fn</span> <span class="op">&lt;-</span> <span class="st">"function(){</span>
 <span class="r-in">  console.log('Category: ' + this.category);</span>
 <span class="r-in">  alert('Category: ' + this.category);</span>
@@ -126,11 +127,8 @@ container.</p></dd>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
-  </div>
-  <div class="col-md-3" id="pkgdown-sidebar">
-    <nav id="toc"><h2>On this page</h2>
-    </nav></div>
-</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
@@ -138,7 +136,7 @@ container.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>

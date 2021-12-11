@@ -3,14 +3,16 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body>
-    <a href="#container" class="visually-hidden-focusable">Skip to contents</a>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
     <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    
     <a class="navbar-brand me-2" href="index.html">highcharter</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.3.9000</small>
 
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -63,11 +65,12 @@
   </a>
 </li>
       </ul></div>
+
+    
   </div>
-</nav><div class="container template-title-body" id="container">
+</nav><div class="container template-title-body">
 <div class="row">
-  <div class="contents col-md-9">
-    <div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="logo.png" class="logo" alt=""><h1>NA</h1>
       <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/HEAD/.github/PULL_REQUEST_TEMPLATE.md" class="external-link"><code>.github/PULL_REQUEST_TEMPLATE.md</code></a></small>
     </div>
@@ -78,7 +81,7 @@
 <p>Before you submit a pull request, please do the following:</p>
 <ul><li><p>Add an entry to NEWS concisely describing what you changed.</p></li>
 <li><p>Add unit tests in the tests/testthat directory.</p></li>
-<li><p>Run Build-&gt;Check Package in the RStudio IDE, or <code><a href="https://devtools.r-lib.org//reference/check.html" class="external-link">devtools::check()</a></code>, to make sure your change did not add any messages, warnings, or errors.</p></li>
+<li><p>Run Build-&gt;Check Package in the RStudio IDE, or <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>, to make sure your change did not add any messages, warnings, or errors.</p></li>
 </ul><p>Doing these things will make it easier for the plumber development team to evaluate your pull request. Even so, we may still decide to modify your code or even not merge it at all. Factors that may prevent us from merging the pull request include:</p>
 <ul><li>breaking backward compatibility</li>
 <li>adding a feature that we do not consider relevant for plumber</li>
@@ -101,18 +104,12 @@
 <hr><p>Brief description of the original problem and the approach behind your solution.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># insert reprex here</span></code></pre></div>
-<p>PR task list: - [ ] Update NEWS - [ ] Add tests - [ ] Update documentation with <code><a href="https://devtools.r-lib.org//reference/document.html" class="external-link">devtools::document()</a></code></p>
+<p>PR task list: - [ ] Update NEWS - [ ] Add tests - [ ] Update documentation with <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code></p>
 </div>
 
 
-  </div>
-
-  <div class="col-md-3" id="pkgdown-sidebar">
-    <nav id="toc"><h2 data-toc-skip>Contents</h2>
-    </nav></div>
-
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
@@ -120,7 +117,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>
