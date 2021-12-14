@@ -14,9 +14,10 @@ get_hc_series_from_df(data, type = NULL, ...)
 \item{...}{Aesthetic mappings as \code{x y group color low high}.}
 }
 \description{
-This function is used in hchart.data.frame and hc_add_series_df
+This function is used in \code{hchart.data.frame}.
 }
 \examples{
 
 highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
+
 }

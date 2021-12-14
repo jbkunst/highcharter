@@ -253,7 +253,7 @@ color_classes <- function(breaks = NULL,
 
 #' Auxiliar function to get series and options from tidy frame for hchart.data.frame
 #'
-#' This function is used in hchart.data.frame and hc_add_series_df
+#' This function is used in \code{hchart.data.frame}.
 #'
 #' @param data A `data.frame` object.
 #' @param type The type of chart. Possible values are line, scatter, point, column.
@@ -262,6 +262,7 @@ color_classes <- function(breaks = NULL,
 #' @examples
 #'
 #' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
+#' 
 #' @importFrom tibble has_name
 #' @importFrom rlang .data
 get_hc_series_from_df <- function(data, type = NULL, ...) {
