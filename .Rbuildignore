@@ -30,3 +30,4 @@ index.Rmd
 ^.here
 ^.github$
 ^\.github$
+^CRAN-SUBMISSION$
