@@ -1,3 +1,7 @@
+# highcharter 0.9.4.9000
+
+## Changes
+
 # highcharter 0.9.4
 
 ## Changes
