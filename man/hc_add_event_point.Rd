@@ -15,7 +15,7 @@ hc_add_event_series(hc, series = "series", event = "click")
 \item{series}{The name of type of series to apply the event.}
 
 \item{event}{The name of event: click, mouseOut,  mouseOver. See
-\url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
+\url{https://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
 for more details.}
 }
 \description{

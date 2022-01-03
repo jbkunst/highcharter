@@ -15,7 +15,7 @@ hcboxplot(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...)
 
 \item{outliers}{A boolean value to show or not the outliers.}
 
-\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
+\item{...}{Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.}
 }
 \description{
 Shortcut to make a boxplot

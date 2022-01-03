@@ -11,7 +11,7 @@ A \code{data frame} with 91 observations and 3 variables.
 mountains_panorama
 }
 \description{
-This data comes from the \url{http://www.highcharts.com/} examples:
+This data comes from the \url{https://www.highcharts.com/} examples:
 https://www.highcharts.com/demo/3d-area-multiple
 }
 \section{Variables}{

@@ -11,7 +11,7 @@ A \code{data frame} with 36 observations and 3 variables.
 citytemp_long
 }
 \description{
-This data comes from the \url{http://www.highcharts.com/} examples.
+This data comes from the \url{https://www.highcharts.com/} examples.
 }
 \section{Variables}{
 

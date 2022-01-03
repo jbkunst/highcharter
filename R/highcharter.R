@@ -5,7 +5,7 @@
 #' other applications.
 #'
 #' @param hc_opts A `list` object containing options defined as
-#'    \url{http://api.highcharts.com/highcharts}.
+#'    \url{https://api.highcharts.com/highcharts/}.
 #' @param theme A \code{hc_theme} class object-
 #' @param type A character value to set if use Highchart, Highstock or
 #'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.
@@ -127,7 +127,7 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' other applications.
 #'
 #' @param hc_opts A `list` object containing options defined as
-#'    \url{http://api.highcharts.com/highcharts}.
+#'    \url{https://api.highcharts.com/highcharts/}.
 #' @param theme A \code{hc_theme} class object.
 #' @param type A character value to set if use Highchart, Highstock or
 #'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.

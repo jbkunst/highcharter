@@ -1,10 +1,10 @@
 Package: highcharter
 Type: Package
-Version: 0.9.3.9000
+Version: 0.9.4
 Title: A Wrapper for the 'Highcharts' Library
 Description: A wrapper for the 'Highcharts' library including
     shortcut functions to plot R objects. 'Highcharts'
-    <http://www.highcharts.com/> is a charting library offering
+    <https://www.highcharts.com/> is a charting library offering
     numerous chart types with a simple configuration syntax.
 Authors@R: c(
   person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
@@ -23,7 +23,7 @@ Authors@R: c(
   person("Bart", "Oortwijn", role = c("ctb"), comment = "rjson option, hc_add_yAxis, and GH issues collaborator"),
   person("Paul", "Campbell", role = c("ctb"), comment = "additional proxy methods")
   )
-URL: http://jkunst.com/highcharter, https://github.com/jbkunst/highcharter
+URL: https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 License: MIT + file LICENSE
 RoxygenNote: 7.1.2

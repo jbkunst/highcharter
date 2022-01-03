@@ -11,7 +11,7 @@ hc_theme_handdrawn(...)
 }
 \description{
 Hand Drawn theme for highcharts. Inspired by
-\url{https://www.amcharts.com/inspiration/hand-drawn/}.
+\url{https://www.amcharts.com/demos/}.
 }
 \examples{
 

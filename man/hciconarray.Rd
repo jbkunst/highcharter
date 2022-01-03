@@ -17,7 +17,7 @@ hciconarray(labels, counts, rows = NULL, icons = NULL, size = 4, ...)
 
 \item{size}{Font size}
 
-\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
+\item{...}{Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.}
 }
 \description{
 Shortcut to make icon arrays charts

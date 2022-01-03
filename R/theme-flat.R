@@ -2,7 +2,7 @@
 #'
 #' Flat and flatdark theme is inspired by
 #' \url{https://github.com/chriskempson/base16} and
-#' \url{https://github.com/cttobin/ggthemr#flat}
+#' \url{https://github.com/Mikata-Project/ggthemr#flat}
 #'
 #' @param ... A named parameters to modify the theme.
 #'

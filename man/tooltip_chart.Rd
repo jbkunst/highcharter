@@ -9,7 +9,7 @@ tooltip_chart(accesor = NULL, hc_opts = NULL, width = 250, height = 150)
 \arguments{
 \item{accesor}{A string indicating the name of the column where the data is.}
 
-\item{hc_opts}{A list of options using the  \url{http://api.highcharts.com/highcharts}
+\item{hc_opts}{A list of options using the  \url{https://api.highcharts.com/highcharts/}
 syntax.}
 
 \item{width}{A numeric input in pixels indicating the with of the tooltip.}

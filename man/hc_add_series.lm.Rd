@@ -35,7 +35,7 @@
 \item{fillOpacity}{fillOpacity to the confidence interval.}
 
 \item{...}{Arguments defined in
-\url{http://api.highcharts.com/highcharts#chart}.}
+\url{https://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 hc_add_series for lm and loess objects

@@ -19,7 +19,7 @@ required.}
 \item{joinBy}{What property to join the  \code{map} and \code{df}}
 
 \item{...}{Additional shared arguments for the data series
-(\url{http://api.highcharts.com/highcharts#series}).}
+(\url{https://api.highcharts.com/highcharts/series}).}
 }
 \description{
 Add a map series

@@ -129,7 +129,7 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...) {
 #' @param fillOpacity The opacity of bands.
 #' @param name The name of the series.
 #' @param ... Arguments defined in
-#'   \url{http://api.highcharts.com/highcharts#chart}.
+#'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @export
 hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
                                    addLevels = TRUE, fillOpacity = 0.1, name = NULL, ...) {
@@ -252,7 +252,7 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
 #' @param color A stringr color.
 #' @param fillOpacity fillOpacity to the confidence interval.
 #' @param ... Arguments defined in
-#'   \url{http://api.highcharts.com/highcharts#chart}.
+#'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @importFrom broom augment
 #' @importFrom rlang .data
 #' @export
@@ -299,7 +299,7 @@ hc_add_series.loess <- hc_add_series.lm
 #' @param mapping The mapping, same idea as \code{ggplot2}.
 #' @param fast convert to json during the composition of a highchart object
 #' @param ... Arguments defined in
-#'   \url{http://api.highcharts.com/highcharts#chart}.
+#'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @importFrom rlang .data
 #' @export
 hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), fast = FALSE, ...) {
@@ -626,7 +626,7 @@ hc_add_series_list <- function(hc, x) {
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param series The name of type of series to apply the event.
 #' @param event The name of event: click, mouseOut,  mouseOver. See
-#'   \url{http://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
+#'   \url{https://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
 #'   for more details.
 #'
 #' @note Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and

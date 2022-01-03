@@ -25,7 +25,7 @@ library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
 
-This is a set of example to show  (and rembember) who to do usual needs.
+This is a set of example to show (and remember) who to do usual needs.
 
 Let's set charts to work with.
 

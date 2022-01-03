@@ -10,8 +10,8 @@ hc_theme_sparkline(...)
 \item{...}{A named parameters to modify the theme.}
 }
 \description{
-Sparkline theme is based on \url{http://www.highcharts.com/demo/sparkline}
-and this post  \url{http://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/}.
+Sparkline theme is based on \url{https://www.highcharts.com/demo/sparkline}
+and this post  \url{https://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/}.
 }
 \examples{
 

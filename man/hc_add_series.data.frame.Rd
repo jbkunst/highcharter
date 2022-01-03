@@ -18,7 +18,7 @@
 \item{fast}{convert to json during the composition of a highchart object}
 
 \item{...}{Arguments defined in
-\url{http://api.highcharts.com/highcharts#chart}.}
+\url{https://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 hc_add_series for data frames objects

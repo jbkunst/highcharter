@@ -12,7 +12,7 @@ hc_theme_flat(...)
 \description{
 Flat and flatdark theme is inspired by
 \url{https://github.com/chriskempson/base16} and
-\url{https://github.com/cttobin/ggthemr#flat}
+\url{https://github.com/Mikata-Project/ggthemr#flat}
 }
 \examples{
 

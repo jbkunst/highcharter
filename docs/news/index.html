@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">highcharter</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,9 +76,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.2.9000" id="highcharter-0929000">highcharter 0.9.2.9000<a class="anchor" aria-label="anchor" href="#highcharter-0929000"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.4" id="highcharter-094">highcharter 0.9.4<a class="anchor" aria-label="anchor" href="#highcharter-094"></a></h2>
 <div class="section level3">
-<h3 id="changes-0-9-2-9000">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-2-9000"></a></h3>
+<h3 id="changes-0-9-4">Changes<a class="anchor" aria-label="anchor" href="#changes-0-9-4"></a></h3>
 <ul><li>Highcharter now uses HighchartsJS 9.3.1.</li>
 <li>Support highcharts gantt extension (<a href="https://github.com/jbkunst/highcharter/issues/287" class="external-link">#287</a>).</li>
 <li>Adding missed language options in <code>getOption("highcharter.lang")</code>.</li>
@@ -91,11 +91,12 @@
 <li>Update <code>pokemon</code> data.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bugs-0-9-2-9000">Bugs<a class="anchor" aria-label="anchor" href="#bugs-0-9-2-9000"></a></h3>
-<ul><li>Removing <code>knitr.figure = FALSE</code> option in <code>sizingPolicy = htmlwidgets::sizingPolicy</code> to fix <a href="https://github.com/jbkunst/highcharter/issues/703" class="external-link">#703</a></li>
+<h3 id="bugs-0-9-4">Bugs<a class="anchor" aria-label="anchor" href="#bugs-0-9-4"></a></h3>
+<ul><li>Fix url in documentations via <code><a href="https://devtools.r-lib.org/reference/check_rhub.html" class="external-link">devtools::check_rhub()</a></code>.</li>
+<li>Removing <code>knitr.figure = FALSE</code> option in <code>sizingPolicy = htmlwidgets::sizingPolicy</code> to fix <a href="https://github.com/jbkunst/highcharter/issues/703" class="external-link">#703</a></li>
 </ul></div>
 <div class="section level3">
-<h3 id="internal-0-9-2-9000">Internal<a class="anchor" aria-label="anchor" href="#internal-0-9-2-9000"></a></h3>
+<h3 id="internal-0-9-4">Internal<a class="anchor" aria-label="anchor" href="#internal-0-9-4"></a></h3>
 <ul><li>Back to previous definition in inst/htmlwidegts/highchart.js. From <code>factory: function(el, width, height) { ...</code> to <code>renderValue: function(el, x, instance) { ...</code> due this way the widget resize to use the space in flexdashboards (WIP).</li>
 </ul></div>
 </div>

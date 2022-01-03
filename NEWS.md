@@ -1,4 +1,4 @@
-# highcharter 0.9.2.9000
+# highcharter 0.9.4
 
 ## Changes
 
@@ -17,6 +17,7 @@ when the size of viewport is small (like tables o phones).
 
 ## Bugs
 
+* Fix url in documentations via `devtools::check_rhub()`.
 * Removing `knitr.figure = FALSE` option in `sizingPolicy = htmlwidgets::sizingPolicy`
 to fix #703 
 

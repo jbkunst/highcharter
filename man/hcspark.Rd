@@ -11,7 +11,7 @@ hcspark(x = NULL, type = NULL, ...)
 
 \item{type}{Type sparkline: line, bar, etc.}
 
-\item{...}{Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.}
+\item{...}{Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.}
 }
 \description{
 Shortcut to make spkarlines

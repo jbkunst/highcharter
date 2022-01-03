@@ -16,7 +16,7 @@ highchart(
 }
 \arguments{
 \item{hc_opts}{A \code{list} object containing options defined as
-\url{http://api.highcharts.com/highcharts}.}
+\url{https://api.highcharts.com/highcharts/}.}
 
 \item{theme}{A \code{hc_theme} class object-}
 

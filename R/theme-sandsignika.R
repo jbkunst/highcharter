@@ -17,7 +17,7 @@ hc_theme_sandsignika <- function(...) {
       chart = list(
         backgroundColor = NULL,
         divBackgroundImage =
-          "http://www.highcharts.com/samples/graphics/sand.png",
+          "https://www.highcharts.com/samples/graphics/sand.png",
         style = list(
           fontFamily = "Signika, serif"
         )

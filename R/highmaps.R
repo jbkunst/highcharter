@@ -7,7 +7,7 @@
 #' @param value A string value with the name of the variable to chart.
 #' @param joinBy What property to join the  \code{map} and \code{df}
 #' @param ... Additional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   (\url{https://api.highcharts.com/highcharts/series}).
 #'
 #' @examples
 #'
@@ -86,7 +86,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @param value A string value with the name of the variable to chart.
 #' @param joinBy What property to join the \code{map} and \code{df}.
 #' @param ... Additional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   (\url{https://api.highcharts.com/highcharts/series}).
 #'
 #' @examples
 #'

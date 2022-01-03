@@ -16,7 +16,7 @@ hctreemap2(data, group_vars, size_var, color_var = NULL, ...)
 \item{color_var}{string name of column containing numeric data to color by. defaults to same column as \code{size_var}}
 
 \item{...}{additional shared arguments for the data series
-(\url{http://api.highcharts.com/highcharts#series}).}
+(\url{https://api.highcharts.com/highcharts/series}).}
 }
 \value{
 highchart plot object

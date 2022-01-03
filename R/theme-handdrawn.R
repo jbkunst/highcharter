@@ -1,7 +1,7 @@
 #' Hand Drawn theme for highcharts
 #'
 #' Hand Drawn theme for highcharts. Inspired by
-#' \url{https://www.amcharts.com/inspiration/hand-drawn/}.
+#' \url{https://www.amcharts.com/demos/}.
 #'
 #' @param ... A named parameters to modify the theme.
 #'

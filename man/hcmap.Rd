@@ -30,7 +30,7 @@ the joinBy and value are needed.}
 \item{joinBy}{What property to join the \code{map} and \code{df}.}
 
 \item{...}{Additional shared arguments for the data series
-(\url{http://api.highcharts.com/highcharts#series}).}
+(\url{https://api.highcharts.com/highcharts/series}).}
 }
 \description{
 Shortcut for create map from \url{https://code.highcharts.com/mapdata/}

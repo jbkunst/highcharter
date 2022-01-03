@@ -4,7 +4,7 @@
 #' There are some exiting themes so you can apply style to charts with few
 #' lines of code.
 #'
-#' More examples and details in \url{http://www.highcharts.com/docs/chart-design-and-style/themes}.
+#' More examples and details in \url{https://www.highcharts.com/docs/chart-design-and-style/themes}.
 #'
 #' @param ... A list of named parameters.
 #'

@@ -10,7 +10,7 @@ hcparcords(df, ...)
 \item{df}{A data frame object.}
 
 \item{...}{Additional shared arguments for the data series
-(\url{http://api.highcharts.com/highcharts#series}) for the
+(\url{https://api.highcharts.com/highcharts/series}) for the
 \code{hchar.data.frame} function.}
 }
 \description{

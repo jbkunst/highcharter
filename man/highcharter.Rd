@@ -6,7 +6,7 @@
 \title{An \code{htmlwidget} interface to the
 Highcharts javascript chart library}
 \description{
-Highcharts \url{http://www.highcharts.com/} is a mature javascript
+Highcharts \url{https://www.highcharts.com/} is a mature javascript
 charting library. Highcharts provide a various type of charts, from
 scatters to heatmaps or treemaps.
 }

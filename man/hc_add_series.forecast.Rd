@@ -28,7 +28,7 @@
 \item{name}{The name of the series.}
 
 \item{...}{Arguments defined in
-\url{http://api.highcharts.com/highcharts#chart}.}
+\url{https://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 hc_add_series for forecast objects

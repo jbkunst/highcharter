@@ -38,7 +38,7 @@ validate_args <- function(name, lstargs) {
 }
 
 .hc_tooltip_table <- function(hc, ...) {
-  # http://stackoverflow.com/a/22327749/829971
+  # https://stackoverflow.com/a/22327749/829971
   hc %>%
     highcharter::hc_tooltip(
       shared = TRUE,
@@ -50,7 +50,7 @@ validate_args <- function(name, lstargs) {
 }
 
 .hc_tooltip_sort <- function(hc, ...) {
-  # http://stackoverflow.com/a/16954666/829971
+  # https://stackoverflow.com/a/16954666/829971
   hc %>%
     highcharter::hc_tooltip(
       shared = TRUE,
@@ -84,7 +84,7 @@ validate_args <- function(name, lstargs) {
 #' inside of `hc_tooltip` function an `useHTML = TRUE` option.
 #'
 #' @param accesor A string indicating the name of the column where the data is.
-#' @param hc_opts A list of options using the  \url{http://api.highcharts.com/highcharts}
+#' @param hc_opts A list of options using the  \url{https://api.highcharts.com/highcharts/}
 #'   syntax.
 #' @param width	A numeric input in pixels indicating the with of the tooltip.
 #' @param height	A numeric input in pixels indicating the height of the tooltip.
@@ -337,7 +337,7 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 #' @param hc A \code{highchart} \code{htmlwidget} object.
 #' @param enabled Enable the motion plugin.
 #' @param startIndex start index, default to 0.
-#' @param ... Arguments defined in \url{https://github.com/larsac07/Motion-Highcharts-Plugin/wiki}.
+#' @param ... Arguments defined in \url{https://github.com/TorsteinHonsi/Motion-Highcharts-Plugin/wiki}.
 #'
 #' @export
 hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
@@ -388,7 +388,7 @@ hc_zAxis_multiples <- function(hc, ...) {
 #' @param sep A numeric value for the separation (in percentage) for the panes.
 #' @param offset A numeric value (in percentage).
 #' @param turnopposite A logical value to turn the side of each axis or not.
-#' @param ... Arguments defined in \url{http://api.highcharts.com/highcharts/yAxis}.
+#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/yAxis}.
 #'
 #' @examples
 #'

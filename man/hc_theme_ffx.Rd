@@ -10,7 +10,7 @@ hc_theme_ffx(...)
 \item{...}{A named parameters to modify the theme.}
 }
 \description{
-Firefox theme was inspired by \url{https://www.mozilla.org/en-US/styleguide/}.
+Firefox theme was inspired by \url{https://mozilla.design/}.
 }
 \examples{
 

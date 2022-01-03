@@ -8,7 +8,7 @@
 #'
 #' @param object  A R object.
 #' @param ... Additional arguments for the data series
-#'    (\url{http://api.highcharts.com/highcharts#series}).
+#'    (\url{https://api.highcharts.com/highcharts/series}).
 #'
 #' @export
 hchart <- function(object, ...) {

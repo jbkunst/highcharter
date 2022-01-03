@@ -28,11 +28,11 @@ pkmn_detail_url <- bulbapedia_html %>%
   html_attr("href")
   
 library(furrr)
-plan(multiprocess(workers = 10))
+plan(multisession(workers = 10))
 
 dfpkmn_detail <- furrr::future_map_dfr(
   pkmn_detail_url,
-  function(url = "/wiki/Rattata_(Pok%C3%A9mon)"){
+  function(url = "/wiki/Slowpoke_(Pok%C3%A9mon)"){
     
     message(url)
     # url <- "/wiki/Necrozma_(Pokémon)"

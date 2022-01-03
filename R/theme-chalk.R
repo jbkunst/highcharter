@@ -3,7 +3,7 @@
 #' @param ... A named parameters to modify the theme.
 #'
 #' Chalk theme for highcharts was inspired by
-#' \url{https://www.amcharts.com/inspiration/hand-drawn/}.
+#' \url{https://www.amcharts.com/demos/}.
 #'
 #' @examples
 #'

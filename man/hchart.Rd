@@ -10,7 +10,7 @@ hchart(object, ...)
 \item{object}{A R object.}
 
 \item{...}{Additional arguments for the data series
-(\url{http://api.highcharts.com/highcharts#series}).}
+(\url{https://api.highcharts.com/highcharts/series}).}
 }
 \description{
 \code{hchart} uses \code{highchart} to draw a particular plot for an

@@ -13,7 +13,7 @@ hc_motion(hc, enabled = TRUE, startIndex = 0, ...)
 
 \item{startIndex}{start index, default to 0.}
 
-\item{...}{Arguments defined in \url{https://github.com/larsac07/Motion-Highcharts-Plugin/wiki}.}
+\item{...}{Arguments defined in \url{https://github.com/TorsteinHonsi/Motion-Highcharts-Plugin/wiki}.}
 }
 \description{
 The Motion Highcharts Plugin adds an interactive HTML5 player

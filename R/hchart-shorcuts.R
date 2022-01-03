@@ -1,7 +1,7 @@
 #' Shortcut to make spkarlines
 #' @param x A numeric vector.
 #' @param type Type sparkline: line, bar, etc.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
+#' @param ... Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.
 #'
 #' @examples
 #'
@@ -34,7 +34,7 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 #' @param var A string vector same length of x.
 #' @param var2 A string vector same length of x.
 #' @param outliers A boolean value to show or not the outliers.
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
+#' @param ... Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.
 #' @examples
 #' \dontrun{
 #' hcboxplot(x = iris$Sepal.Length, var = iris$Species, color = "red")
@@ -138,7 +138,7 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
 #' @param rows A integer to set
 #' @param icons A character vector same length (o length 1) as labels
 #' @param size Font size
-#' @param ... Additional arguments for the data series \url{http://api.highcharts.com/highcharts#series}.
+#' @param ... Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.
 #' @importFrom dplyr ungroup group_by
 #' @importFrom rlang .data
 #' @export
@@ -227,7 +227,7 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
 #'
 #' @param tm A \code{treemap} object from the treemap package.
 #' @param ... Additional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   (\url{https://api.highcharts.com/highcharts/series}).
 #'
 #' @examples
 #' \dontrun{
@@ -310,7 +310,7 @@ hctreemap <- function(tm, ...) {
 #' @param size_var string name of column containing numeric data to aggregate by
 #' @param color_var string name of column containing numeric data to color by. defaults to same column as \code{size_var}
 #' @param ... additional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}).
+#'   (\url{https://api.highcharts.com/highcharts/series}).
 #'
 #' @return highchart plot object
 #' @examples
@@ -434,7 +434,7 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
 #' Shortcut to create parallel coordinates
 #' @param df A data frame object.
 #' @param ... Additional shared arguments for the data series
-#'   (\url{http://api.highcharts.com/highcharts#series}) for the
+#'   (\url{https://api.highcharts.com/highcharts/series}) for the
 #'   \code{hchar.data.frame} function.
 #' @examples
 #' require(viridisLite)
