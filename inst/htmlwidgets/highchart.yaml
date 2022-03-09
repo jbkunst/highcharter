@@ -8,7 +8,7 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 9.3.1
+    version: 10.0.0
     src: "htmlwidgets/lib/highcharts"
     script:
     - highcharts.js
@@ -79,6 +79,9 @@ dependencies:
 #    - modules/sonification.js
 #    - modules/stock-tools.js
 #    - modules/treegrid.js
+#    - modules/arc-diagram.js
+#    - modules/heikinashi.js
+#    - modules/hollowcandlestick.js
 #    - plugins/grouped-categories.js
     - plugins/motion.js
 #    - plugins/multicolor_series.js

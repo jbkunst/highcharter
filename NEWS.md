@@ -2,6 +2,8 @@
 
 ## Changes
 
+* Highcharter now uses HighchartsJS 10.0.0.
+
 # highcharter 0.9.4
 
 ## Changes

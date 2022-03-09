@@ -7,7 +7,7 @@ library(stringr)
 
 # settings ----------------------------------------------------------------
 # version to download
-version <- "9.3.1"
+version <- "10.0.0"
 hccodeurl <- "http://code.highcharts.com"
 
 path       <- sprintf("inst/htmlwidgets/lib/highcharts")
@@ -132,7 +132,8 @@ file.copy(
 try(fs::dir_delete(path_temp))
 
 # change the version on yaml ----------------------------------------------
-walk(1:15, ~ message("change version on inst/htmlwidgets/highchart.yaml and inst/htmlwidgets/highchartzero.yaml"))
+walk(1:5, ~ message("change version on inst/htmlwidgets/highchart.yaml and inst/htmlwidgets/highchartzero.yaml"))
+walk(1:5, ~ message("Line 11 in inst/htmlwidgets/highchart.yaml"))
 
 
 
