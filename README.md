@@ -12,6 +12,7 @@
 [![check-mac](https://github.com/jbkunst/highcharter/workflows/check-mac/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-mac)
 [![check-linux](https://github.com/jbkunst/highcharter/workflows/check-linux/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-linux)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
+ [![R-CMD-check](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml)
 
 ## Installation
 
