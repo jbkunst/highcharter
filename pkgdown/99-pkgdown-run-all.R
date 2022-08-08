@@ -14,6 +14,7 @@ pkgdown::preview_site(path = "/reference")
 
 
 # rticles -----------------------------------------------------------------
+options(rmarkdown.html_vignette.check_title = FALSE)
 # source("pkgdown/03-pkgdown-add-to-yalm-articles.R")
 pkgdown::build_articles_index()
 pkgdown::build_articles()
