@@ -1,13 +1,29 @@
-# devtools::install_version("pkgdown", version = "1.6.1", repos = "http://cran.us.r-project.org")
-
-try(fs::dir_delete("docs"))
-
+# cleanup start -----------------------------------------------------------
+pkgdown::clean_site(pkg = ".")
 pkgdown::init_site(pkg = ".")
 
-pkgdown::build_home()
+# index -------------------------------------------------------------------
+pkgdown::build_home(preview = TRUE)
 pkgdown::build_news()
-# pkgdown::build_site(new_process = FALSE)
 
-source("pkgdown/01-pkgdown-buid-home.R")
-source("pkgdown/02-pkgdown-add-to-yalm-reference.R")
-source("pkgdown/03-pkgdown-add-to-yalm-articles.R")
+# reference ---------------------------------------------------------------
+# source("pkgdown/02-pkgdown-add-to-yalm-reference.R")
+pkgdown::build_reference_index()
+pkgdown::build_reference()
+pkgdown::preview_site(path = "/reference")
+
+
+# rticles -----------------------------------------------------------------
+# source("pkgdown/03-pkgdown-add-to-yalm-articles.R")
+pkgdown::build_articles_index()
+pkgdown::build_articles()
+pkgdown::preview_site(path = "/articles")
+
+
+# build -------------------------------------------------------------------
+pkgdown::build_site()
+
+
+# source("pkgdown/01-pkgdown-buid-home.R")
+# source("pkgdown/02-pkgdown-add-to-yalm-reference.R")
+# source("pkgdown/03-pkgdown-add-to-yalm-articles.R")

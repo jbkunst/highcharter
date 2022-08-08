@@ -117,18 +117,19 @@ dt_tstp <- datetime_to_timestamp
 #'
 #' @examples
 #'
-#' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725"))
+#' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725", "red"))
 #' @importFrom grDevices col2rgb
 #' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
-  x %>%
+  rgb <- x %>%
     col2rgb() %>%
-    t() %>%
-    as.data.frame() %>%
-    unite_(col = "rgba", from = c("red", "green", "blue"), sep = ",") %>%
-    .[[1]] %>%
-    sprintf("rgba(%s,%s)", ., alpha)
+    # t() %>%
+    as.data.frame() |> 
+    map_chr(str_c, collapse = ",")
+  
+  rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
+  rgba
 }
 
 #' Chart a demo for testing themes

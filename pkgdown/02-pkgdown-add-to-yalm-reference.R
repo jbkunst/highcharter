@@ -177,9 +177,9 @@ yml[["reference"]] <- list(
 write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 # build reference ---------------------------------------------------------
-pkgdown::build_reference_index()
-pkgdown::build_reference()
-pkgdown::preview_site(path = "/reference")
+# pkgdown::build_reference_index()
+# pkgdown::build_reference()
+# pkgdown::preview_site(path = "/reference")
 
 
 

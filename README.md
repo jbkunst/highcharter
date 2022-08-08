@@ -6,13 +6,30 @@
 [![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jbkunst/highcharter?branch=master)
 [![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+[![R-CMD-check](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml)
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![check-windows](https://github.com/jbkunst/highcharter/workflows/check-windows/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-windows)
-[![check-mac](https://github.com/jbkunst/highcharter/workflows/check-mac/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-mac)
-[![check-linux](https://github.com/jbkunst/highcharter/workflows/check-linux/badge.svg)](https://github.com/jbkunst/highcharter/actions?workflow=check-linux)
 [![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
- [![R-CMD-check](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml)
+
+Highcharter is a **[R](https://cran.r-project.org/)** wrapper for 
+**[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.
+Highcharts is very flexible and customizable javascript charting library and 
+it has a great and powerful API.
+
+The main features of highcharter are:
+
+* Chart various R objects with one function: with `hchart(x)` you can 
+chart `data.frames`, `numeric` or `character` vectors, `ts`,
+ `xts`, `forecast`, `survfit`  objects.
+* Support Highstock You can create a candlestick charts in 2 lines 
+of code. Support `xts` class from the {quantmod} package.
+* Support Highmaps Create choropleth charts or add 
+information in `geojson` format.
+* Themes: you configure your chart in multiples ways. There are
+ implemented themes like economist, financial times, google, 538 among 
+ others.
+* A lot of features and plugins: motion, draggable points, font-awesome,
+tooltips, annotations.
 
 ## Installation
 
@@ -33,8 +50,9 @@ remotes::install_github("jbkunst/highcharter")
 There are a lot of vignettes to show how highcharter works and what you 
 can do:
 
-- `vignette("highcharter")` explore the basics of the package. 
-- `vignette("showcase")` to see how much highcharts is flexible in terms of 
+- `vignette("highcharter")` to explore the basics of the package. 
+- `vignette("first-steps")` to know how to make a visualization from a data frame. 
+- `vignette("showcase")` to see highcharts flexibility in terms of 
 customization and design.
 - `vignette("highcharts-api")` show the main functions to configure charts with
 the implemented Highcharts API.

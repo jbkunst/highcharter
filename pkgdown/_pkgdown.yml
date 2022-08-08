@@ -38,6 +38,7 @@ reference:
   - hc_rangeSelector
   - hc_scrollbar
   - hc_mapNavigation
+  - hc_mapView
   - highchart2
   - highchartzero
 - title: Additional function to use Highcharts API
@@ -190,10 +191,11 @@ articles:
   navbar: Get Started
   contents:
   - highcharter
+  - first-steps
+  - showcase
   - hchart
   - highcharts-api
   - highchartsjs-api-basics
-  - showcase
 - title: The highchartsJS bundle
   navbar: The highchartsJS bundle
   contents:

@@ -15,10 +15,11 @@ artcls <- dir("vignettes") |>
 # get_started
 get_started <- c(
   "highcharter",
+  "first-steps",
+  "showcase",
   "hchart",
   "highcharts-api",
-  "highchartsjs-api-basics",
-  "showcase"
+  "highchartsjs-api-basics"
   )
 
 artcls <- setdiff(artcls, get_started)
@@ -76,10 +77,9 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 
 # build articles ----------------------------------------------------------
-options(rmarkdown.html_vignette.check_title = FALSE)
-
-pkgdown::build_articles()
-pkgdown::build_articles_index()
+# options(rmarkdown.html_vignette.check_title = FALSE)
+# pkgdown::build_articles()
+# pkgdown::build_articles_index()
 # pkgdown::build_article("themes")
 # pkgdown::build_article("drilldown")
-pkgdown::preview_site()
+# pkgdown::preview_site()
