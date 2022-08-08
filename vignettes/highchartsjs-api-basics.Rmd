@@ -121,7 +121,7 @@ To adjust these properties in R (where the properties are single strings or numb
 it's a direct translation from javascript property to R function argument like so:
 
 ```{r}
-hc %>%
+hc |>
   hc_legend(
     layout = "vertical",
     align = "left",
@@ -161,7 +161,7 @@ legend header text and adding an underline to the legend header (with a CSS prop
 looks like this:
 
 ```{r}
-hc %>% 
+hc |> 
   hc_legend(
     layout = "vertical",
     align = "left",

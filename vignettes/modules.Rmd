@@ -69,7 +69,7 @@ hchart(
     lineWidth = 5,
     name = "%eq | r2: %r",
     hideInLegend = FALSE)
-  ) %>%
+  ) |>
   hc_add_dependency("plugins/highcharts-regression.js")
 ```
 
@@ -81,8 +81,8 @@ hchart(
   "scatter",
   hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
   regression = TRUE
-  ) %>%
-  hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>%
+  ) |>
+  hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
   hc_add_dependency("plugins/highcharts-regression.js")
 ```
 
@@ -101,17 +101,17 @@ library(dplyr) # for select function
 
 data(mpg, package = "ggplot2")
 
-mpgg <- mpg %>% 
-  filter(!manufacturer %in% c("volkswagen", "chevrolet")) %>% 
-  filter(class %in% c("compact", "midsize", "subcompact")) %>% 
-  group_by(class, manufacturer) %>% 
-  summarize(count = n()) %>% 
+mpgg <- mpg |> 
+  filter(!manufacturer %in% c("volkswagen", "chevrolet")) |> 
+  filter(class %in% c("compact", "midsize", "subcompact")) |> 
+  group_by(class, manufacturer) |> 
+  summarize(count = n()) |> 
   ungroup()
 
-categories_grouped <- mpgg %>%
-  select(class, manufacturer) %>%
-  group_by(name = class) %>% 
-  summarise(categories = list(manufacturer)) %>% 
+categories_grouped <- mpgg |>
+  select(class, manufacturer) |>
+  group_by(name = class) |> 
+  summarise(categories = list(manufacturer)) |> 
   list_parse()
 
 hchart(
@@ -119,13 +119,13 @@ hchart(
   "column", 
   name = "Cars",
   hcaes(y = count)
-  ) %>% 
+  ) |> 
   hc_xAxis(
     # specify the grouped categories
     categories = categories_grouped, 
     # styling a little bit
     labels = list(style = list(fontSize = "10px"))
-    ) %>%
+    ) |>
   hc_add_dependency("plugins/grouped-categories.js")
 ```
 
@@ -149,8 +149,8 @@ df <- tibble(
   col = rep(colors, each = n/10, length.out = n)
 )
 
-hchart(df, "coloredarea", hcaes(x, y, segmentColor = col)) %>% 
-   hc_add_series(df, "coloredline", hcaes(x, y2 , segmentColor = col)) %>% 
+hchart(df, "coloredarea", hcaes(x, y, segmentColor = col)) |> 
+   hc_add_series(df, "coloredline", hcaes(x, y2 , segmentColor = col)) |> 
    hc_add_dependency("plugins/multicolor_series.js")
 ```
 
@@ -174,7 +174,7 @@ hchart(
     draggableX = TRUE,
     draggableY = TRUE
     )
-  ) %>% 
+  ) |> 
   hc_add_dependency("modules/draggable-points.js")
 
 
@@ -190,7 +190,7 @@ hchart(
   dragDrop = list(
     draggableY = TRUE
     )
-  ) %>% 
+  ) |> 
   hc_add_dependency("modules/draggable-points.js")
 ```
 
@@ -202,12 +202,12 @@ Example taken from https://jsfiddle.net/gh/get/library/pure/highcharts/highchart
 
 ```{r}
 # base chart without series
-hc_fill <- highchart() %>% 
+hc_fill <- highchart() |> 
   # add dependency
-  hc_add_dependency("modules/pattern-fill.js") %>% 
-  hc_chart(type = 'area') %>% 
-  hc_title(text = 'Pattern fill plugin demo') %>% 
-  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) %>% 
+  hc_add_dependency("modules/pattern-fill.js") |> 
+  hc_chart(type = 'area') |> 
+  hc_title(text = 'Pattern fill plugin demo') |> 
+  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) |> 
   hc_plotOptions(
     area = list(
       fillColor = list(
@@ -225,7 +225,7 @@ hc_fill <- highchart() %>%
     )
 
 # test with 2 series
-hc_fill %>% 
+hc_fill |> 
   hc_add_series(
     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6),
     color= '#88e',
@@ -234,7 +234,7 @@ hc_fill %>%
         color = '#11d'
       )
     )
-    ) %>% 
+    ) |> 
   hc_add_series(
     data = c(NA, NA, NA, NA, NA, 43.1, 95.6, 148.5, 216.4, 194.1, 95.6, 54.4),
     color = '#e88',
@@ -250,7 +250,7 @@ More examples for fun.
 
 ```{r}
 # test with 1 series and a theme
-hc_fill %>% 
+hc_fill |> 
   hc_add_series(
     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
     color= '#000',
@@ -259,22 +259,22 @@ hc_fill %>%
         color = '#000'
       )
     )
-    ) %>% 
+    ) |> 
   hc_add_theme(hc_theme_handdrawn())
 ```
 
 Example from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/ and inspired by https://www.amcharts.com/demos/pictorial-column-chart/ 
 
 ```{r}
-highchart() %>% 
+highchart() |> 
   # add the module
-  hc_add_dependency("modules/pattern-fill.js") %>% 
-  hc_size(heigh = 350) %>% 
-  hc_xAxis(type = 'category') %>% 
+  hc_add_dependency("modules/pattern-fill.js") |> 
+  hc_size(heigh = 350) |> 
+  hc_xAxis(type = 'category') |> 
   hc_tooltip(
     borderColor = "#CACACA",
     pointFormat = 'The height for <b>{point.name}</b> is <b>{point.y}</b>'
-    ) %>% 
+    ) |> 
   # hc_chart(
   #   plotBackgroundColor = list(
   #     linearGradient = c(0, 0, 0, 500),
@@ -284,9 +284,9 @@ highchart() %>%
   #       list(0.9, 'rgb(12, 5, 36)')
   #       )
   #     )
-  # ) %>% 
-  # hc_xAxis(gridLineColor = 'transparent') %>% 
-  # hc_yAxis(gridLineColor = 'transparent') %>% 
+  # ) |> 
+  # hc_xAxis(gridLineColor = 'transparent') |> 
+  # hc_yAxis(gridLineColor = 'transparent') |> 
   hc_add_series(
     type = "column",
     showInLegend = FALSE,
@@ -344,9 +344,9 @@ And the last one.
 ```{r}
 dim(volcano)
 
-highchart() %>% 
-  hc_add_dependency("modules/pattern-fill.js") %>% 
-  hc_add_theme(hc_theme_null()) %>% 
+highchart() |> 
+  hc_add_dependency("modules/pattern-fill.js") |> 
+  hc_add_theme(hc_theme_null()) |> 
   hc_add_series(
     type = "area", # area needs fill color
     name = "Maunga Whau Volcano",

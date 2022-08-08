@@ -18,7 +18,7 @@ possible options for a series.
 }
 \examples{
 
-highchart() |>  
+highchart() \%>\%  
   hc_series(
     list(
       name = "Tokyo",

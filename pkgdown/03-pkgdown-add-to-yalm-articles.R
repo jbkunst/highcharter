@@ -7,8 +7,9 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 # data --------------------------------------------------------------------
 yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
-artcls <- dir("vignettes") %>% 
-  basename() %>% 
+artcls <- dir("vignettes") |> 
+  basename() |> 
+  str_subset("png$", negate = TRUE) |> 
   str_remove(".Rmd")
 
 # get_started

@@ -45,14 +45,14 @@ library(highcharter)
 
 data("citytemp")
 
-hc <- highchart() %>% 
-  hc_xAxis(categories = citytemp$month) %>% 
+hc <- highchart() |> 
+  hc_xAxis(categories = citytemp$month) |> 
   hc_add_series(
     name = "Tokyo", data = citytemp$tokyo
-    ) %>% 
+    ) |> 
   hc_add_series(
     name = "London", data = citytemp$london
-    ) %>% 
+    ) |> 
   hc_add_series(
     name = "Other city",
     data = (citytemp$tokyo + citytemp$london)/2
@@ -66,7 +66,7 @@ hc
 With `hc_chart` you can define general chart options.
 
 ```{r}
-hc %>% 
+hc |> 
   hc_chart(
     borderColor = '#EBBA95',
     borderRadius = 10,
@@ -84,7 +84,7 @@ hc %>%
 Now change type to column and add 3d effect.
 
 ```{r}
-hc <- hc %>% 
+hc <- hc |> 
   hc_chart(
     type = "column",
     options3d = list(
@@ -105,21 +105,21 @@ A good chart always have at least title, right? Then you can do it better adding
 using a subtitle or caption, even link to the source of data:
 
 ```{r}
-hc %>% 
+hc |> 
   hc_title(
     text = "This is the title of the chart"
-    ) %>% 
+    ) |> 
   hc_subtitle(
     text = "This is an intereseting subtitle to give
     context for the chart or some interesting fact"
-    ) %>% 
+    ) |> 
   hc_caption(
     text = "This is a long text to give some 
     subtle details of the data which can be relevant to the reader. 
     This is usually a long text that's why I'm trying to put a 
     <i>loooooong</i> text.", 
     useHTML = TRUE
-    ) %>% 
+    ) |> 
   hc_credits(
     text = "Chart created using R and highcharter",
     href = "http://jkunst.com/highcharter",
@@ -132,11 +132,11 @@ hc %>%
 Usually is desirable get control or modify the behavior of the axis:
 
 ```{r}
-hc %>% 
+hc |> 
   hc_xAxis(
     title = list(text = "Month in x Axis"),
     opposite = TRUE
-    ) %>% 
+    ) |> 
   hc_yAxis(
     title = list(text = "Temperature <b>in y Axis</b>", useHTML = TRUE),
     opposite = TRUE,
@@ -150,7 +150,7 @@ hc %>%
 A good feature is `plotLines` and `plotBand` which you can use in both axis. For example:
 
 ```{r}
-hc %>% 
+hc |> 
   hc_xAxis(
     plotLines = list(
       list(
@@ -162,7 +162,7 @@ hc %>%
         zIndex = 1
         )
       )
-    ) %>% 
+    ) |> 
   hc_yAxis(
     plotBands = list(
       list(
@@ -180,13 +180,13 @@ hc %>%
 ## Legend & tooltip
 
 ```{r}
-hc %>%
+hc |>
   hc_legend(
     align = "left",
     verticalAlign = "top",
     layout = "vertical",
     x = 0, y = 100
-    ) %>%
+    ) |>
   hc_tooltip(
     crosshairs = TRUE,
     backgroundColor = "#F0F0F0",

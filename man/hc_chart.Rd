@@ -16,21 +16,21 @@ General options for the chart.
 }
 \examples{
 
-hc <- highchart() |> 
-  hc_xAxis(categories = month.abb) |> 
-  hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
+hc <- highchart() \%>\% 
+  hc_xAxis(categories = month.abb) \%>\% 
+  hc_add_series(name = "Tokyo", data = sample(1:12)) \%>\% 
   hc_add_series(name = "London", data = sample(1:12) + 10)
 
 hc
 
-hc |> 
+hc \%>\% 
   hc_chart(
     type = "column",
     options3d = list(enabled = TRUE, beta = 15, alpha = 15)
     )
 
 
-hc |> 
+hc \%>\% 
   hc_chart(
     borderColor = "#EBBA95",
     borderRadius = 10,

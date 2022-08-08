@@ -22,8 +22,8 @@ leg_900_opts <- list(align = "right", verticalAlign = "middle",  layout = "verti
 
 
 # change the with of the container/windows to see the effect
-highchart() |> 
-  hc_add_series(data = cumsum(rnorm(100))) |> 
+highchart() \%>\% 
+  hc_add_series(data = cumsum(rnorm(100))) \%>\% 
   hc_responsive(
     rules = list(
       # remove legend if there is no much space

@@ -38,27 +38,27 @@ options(download.file.method = "libcurl")
 library(tidyverse)
 data(gapminder, package = "gapminder")
 
-gapminder2007 <- gapminder %>% 
-  filter(year == max(year)) %>% 
-  select(-year) %>% 
-  mutate(pop = pop/1e6) %>% 
+gapminder2007 <- gapminder |> 
+  filter(year == max(year)) |> 
+  select(-year) |> 
+  mutate(pop = pop/1e6) |> 
   arrange(desc(pop))
 
-gapminder_column <- gapminder2007 %>%
-  group_by(continent) %>% 
+gapminder_column <- gapminder2007 |>
+  group_by(continent) |> 
   summarise(
     lifeExp = weighted.mean(lifeExp, pop),
     gdpPercap = weighted.mean(gdpPercap, pop),
     pop = sum(pop)
-  ) %>% 
-  mutate_if(is.numeric, round) %>% 
-  arrange(desc(pop)) %>% 
+  ) |> 
+  mutate_if(is.numeric, round) |> 
+  arrange(desc(pop)) |> 
   mutate(continent = fct_inorder(continent))
 
 gapminder_column
 
-gapminder_drilldown <- gapminder2007 %>% 
-  group_nest(continent) %>% 
+gapminder_drilldown <- gapminder2007 |> 
+  group_nest(continent) |> 
   mutate(
     id = continent,
     type = "column",
@@ -87,21 +87,21 @@ hchart(
   hcaes(x = continent, y = pop, name = continent, drilldown = continent),
   name = "Population",
   colorByPoint = TRUE
-) %>% 
+) |> 
   hc_drilldown(
     allowPointDrilldown = TRUE,
     series = list_parse(gapminder_drilldown)
-  ) %>% 
+  ) |> 
   hc_tooltip(
     pointFormat = tt, # "{point.name} {point.pop}"
     useHTML = TRUE,
     valueDecimals = 0
-  ) %>% 
+  ) |> 
   hc_yAxis(
     title = list(text = "Population in millions (log scale)"),
     type = "logarithmic",
     minorTickInterval = 'auto'
-  ) %>% 
+  ) |> 
   hc_xAxis(
     title = ""
   )
@@ -112,16 +112,16 @@ hchart(
 Copy & pasting same code:
 
 ```{r}
-pkmn_min <- pokemon %>% 
-  count(type_1, color = type_1_color) %>% 
-  mutate(type_1 = fct_reorder(type_1, .x = n)) %>% 
+pkmn_min <- pokemon |> 
+  count(type_1, color = type_1_color) |> 
+  mutate(type_1 = fct_reorder(type_1, .x = n)) |> 
   arrange(desc(type_1))
 
-pkmn_ddn <- pokemon %>% 
-  count(type_1, type_2, color = type_mix_color) %>% 
-  arrange(type_1, desc(n)) %>% 
-  mutate(type_2 = ifelse(is.na(type_2), str_c("only ", type_1), type_2)) %>% 
-  group_nest(type_1) %>% 
+pkmn_ddn <- pokemon |> 
+  count(type_1, type_2, color = type_mix_color) |> 
+  arrange(type_1, desc(n)) |> 
+  mutate(type_2 = ifelse(is.na(type_2), str_c("only ", type_1), type_2)) |> 
+  group_nest(type_1) |> 
   mutate(
     id = type_1,
     type = "column",
@@ -135,23 +135,23 @@ hchart(
   type = "column",
   hcaes(x = type_1, y = n, color = color, drilldown = type_1),
   name = "Pokémons"
-  ) %>% 
+  ) |> 
   hc_drilldown(
     activeAxisLabelStyle = list(textDecoration = "none"),
     allowPointDrilldown = TRUE,
     series = list_parse(pkmn_ddn)
-  ) %>% 
+  ) |> 
   hc_yAxis(
     title = list(text = ""),
     endOnTick = FALSE,
     opposite = TRUE
-    ) %>%
+    ) |>
   hc_xAxis(
     title = list(text = ""),
     endOnTick = FALSE,
     gridLineWidth = 0,
     tickWidth = 0
-    ) %>% 
+    ) |> 
   hc_chart(
     style = list(fontFamily = "Gloria Hallelujah")
   ) 

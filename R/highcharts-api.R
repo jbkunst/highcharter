@@ -14,14 +14,14 @@
 #' @examples
 #' 
 #' # Ex 1
-#' highchart() |> 
+#' highchart() %>% 
 #'   hc_add_series(
 #'     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
-#'   ) |> 
+#'   ) %>% 
 #'   hc_xAxis(
 #'     tickInterval = 0.5,
 #'     gridLineWidth = 1  
-#'   ) |> 
+#'   ) %>% 
 #'   hc_annotations(
 #'     list(
 #'       labels = 
@@ -52,8 +52,8 @@
 #'   y = 1:10
 #' )
 #' 
-#' highchart() |> 
-#'   hc_add_series(data = df, hcaes(x = x, y = y), type = "area") |> 
+#' highchart() %>% 
+#'   hc_add_series(data = df, hcaes(x = x, y = y), type = "area") %>% 
 #'   hc_annotations(
 #'     list(
 #'       labels = list(
@@ -100,10 +100,10 @@ hc_annotations <- function(hc, ...) {
 #' 
 #' plot(x)
 #' 
-#' hc1 <- highchart() |>
-#'   hc_chart(zoomType = "x") |>
-#'   hc_add_series(data = x) |> 
-#'   hc_title(text = "No boost") |> 
+#' hc1 <- highchart() %>%
+#'   hc_chart(zoomType = "x") %>%
+#'   hc_add_series(data = x) %>% 
+#'   hc_title(text = "No boost") %>% 
 #'   hc_boost(
 #'     enabled = FALSE # Default
 #'   )
@@ -114,10 +114,10 @@ hc_annotations <- function(hc, ...) {
 #' # some of the standard Highcharts features (such as animation), and focuses
 #' # on pushing as many points as possible as quickly as possible.
 #' 
-#' hc2 <- highchart() |>
-#'   hc_chart(zoomType = "x") |>
-#'   hc_add_series(data = x) |> 
-#'   hc_title(text = "With boost") |> 
+#' hc2 <- highchart() %>%
+#'   hc_chart(zoomType = "x") %>%
+#'   hc_add_series(data = x) %>% 
+#'   hc_title(text = "With boost") %>% 
 #'   hc_boost(enabled = TRUE)
 #' 
 #' hc2
@@ -139,17 +139,17 @@ hc_annotations <- function(hc, ...) {
 #' # # unnamed list
 #' # ds <- list_parse2(as.data.frame(mvr))
 #' # 
-#' # highchart() |>
-#' #   hc_chart(zoomType = "xy") |>
-#' #   hc_xAxis(min = -vx, max = vx) |> 
-#' #   hc_yAxis(min = -vy, max = vy) |> 
+#' # highchart() %>%
+#' #   hc_chart(zoomType = "xy") %>%
+#' #   hc_xAxis(min = -vx, max = vx) %>% 
+#' #   hc_yAxis(min = -vy, max = vy) %>% 
 #' #   hc_add_series(
 #' #     data = ds, #list
 #' #     type = "scatter",
 #' #     name = "A lot of points!",
 #' #     color = 'rgba(0,0,0,0.1)',
 #' #     marker = list(radius = 2)
-#' #     ) |> 
+#' #     ) %>% 
 #' #   hc_boost(
 #' #     enabled = TRUE 
 #' #   )
@@ -157,10 +157,10 @@ hc_annotations <- function(hc, ...) {
 #' # dat <- as.data.frame(mvr)
 #' # names(dat) <- c("x", "y")
 #' # 
-#' # highchart() |>
-#' #   hc_chart(zoomType = "xy") |>
-#' #   hc_xAxis(min = -vx, max = vx) |> 
-#' #   hc_yAxis(min = -vy, max = vy) |> 
+#' # highchart() %>%
+#' #   hc_chart(zoomType = "xy") %>%
+#' #   hc_xAxis(min = -vx, max = vx) %>% 
+#' #   hc_yAxis(min = -vy, max = vy) %>% 
 #' #   hc_add_series(
 #' #     data = dat,
 #' #     type = "scatter",
@@ -168,7 +168,7 @@ hc_annotations <- function(hc, ...) {
 #' #     name = "A lot of points!",
 #' #     color = 'rgba(0,0,0,0.1)',
 #' #     marker = list(radius = 2)
-#' #   ) |> 
+#' #   ) %>% 
 #' #   hc_boost(enabled = TRUE)
 #' # 
 #' # # Ex3
@@ -178,15 +178,15 @@ hc_annotations <- function(hc, ...) {
 #' # s <- s/(max(s) + min(s))
 #' # s <- round(s, 2)
 #' # 
-#' # series <- s |>
-#' #   purrr::map(~ stats::arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 20) |>
-#' #   purrr::map(as.vector) |>
-#' #   purrr::map(round, 2) |>
+#' # series <- s %>%
+#' #   purrr::map(~ stats::arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 20) %>%
+#' #   purrr::map(as.vector) %>%
+#' #   purrr::map(round, 2) %>%
 #' #   purrr::map(~ list(data = .x))
 #' # 
-#' # highchart() |>
-#' #   hc_add_series_list(series) |>
-#' #   hc_chart(zoomType = "x") |> 
+#' # highchart() %>%
+#' #   hc_add_series_list(series) %>%
+#' #   hc_chart(zoomType = "x") %>% 
 #' #   hc_boost(enabled = TRUE)
 #' 
 #' @export
@@ -207,15 +207,15 @@ hc_boost <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
-#'   hc_title(text= "Chart with a caption") |> 
-#'   hc_subtitle(text= "This is the subtitle") |> 
-#'   hc_xAxis(categories = c("Apples", "Pears", "Banana", "Orange")) |> 
+#' highchart() %>% 
+#'   hc_title(text= "Chart with a caption") %>% 
+#'   hc_subtitle(text= "This is the subtitle") %>% 
+#'   hc_xAxis(categories = c("Apples", "Pears", "Banana", "Orange")) %>% 
 #'   hc_add_series(
 #'     data = c(1, 4, 3, 5),
 #'     type = "column",
 #'     name = "Fruits"
-#'   ) |> 
+#'   ) %>% 
 #'   hc_caption(
 #'     text = "<b>The caption renders in the bottom, and is part of the exported
 #'     chart.</b><br><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -243,21 +243,21 @@ hc_caption <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' hc <- highchart() |> 
-#'   hc_xAxis(categories = month.abb) |> 
-#'   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
+#' hc <- highchart() %>% 
+#'   hc_xAxis(categories = month.abb) %>% 
+#'   hc_add_series(name = "Tokyo", data = sample(1:12)) %>% 
 #'   hc_add_series(name = "London", data = sample(1:12) + 10)
 #' 
 #' hc
 #' 
-#' hc |> 
+#' hc %>% 
 #'   hc_chart(
 #'     type = "column",
 #'     options3d = list(enabled = TRUE, beta = 15, alpha = 15)
 #'     )
 #' 
 #' 
-#' hc |> 
+#' hc %>% 
 #'   hc_chart(
 #'     borderColor = "#EBBA95",
 #'     borderRadius = 10,
@@ -317,8 +317,8 @@ hc_chart <- function(hc, ...) {
 #' 
 #' data(mpg, package = "ggplot2")
 #' 
-#' mpgman2 <- mpg |> 
-#'   group_by(manufacturer, year) |> 
+#' mpgman2 <- mpg %>% 
+#'   group_by(manufacturer, year) %>% 
 #'   dplyr::summarise(
 #'     n = dplyr::n(),
 #'     displ = mean(displ),
@@ -332,12 +332,12 @@ hc_chart <- function(hc, ...) {
 #'   colorKey = "displ",
 #'   # color = c("#FCA50A", "#FCFFA4"),
 #'   name = c("Year 1999", "Year 2008")
-#'   ) |> 
+#'   ) %>% 
 #'   hc_colorAxis(min = 0, max = 5)
 #' 
 #' 
 #' # defaults to yAxis
-#' hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width)) |> 
+#' hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width)) %>% 
 #'   hc_colorAxis(
 #'     minColor = "red",
 #'     maxColor = "blue"
@@ -356,11 +356,11 @@ hc_chart <- function(hc, ...) {
 #' 
 #' M <- round(matrix(rnorm(50*50), ncol = 50), 2)
 #' 
-#' hchart(M) |> 
+#' hchart(M) %>% 
 #'   hc_colorAxis(stops = stops)
 #' 
 #' # Ex3
-#' hchart(volcano) |>
+#' hchart(volcano) %>%
 #'   hc_colorAxis(stops = stops, max = 200)
 #' 
 #' @export
@@ -385,10 +385,10 @@ hc_colorAxis <- function(hc, ...) {
 #' cols <- viridis(3)
 #' cols <- substr(cols, 0, 7)
 #' 
-#' highchart() |> 
-#'   hc_add_series(data = sample(1:12)) |> 
-#'   hc_add_series(data = sample(1:12) + 10) |> 
-#'   hc_add_series(data = sample(1:12) + 20) |> 
+#' highchart() %>% 
+#'   hc_add_series(data = sample(1:12)) %>% 
+#'   hc_add_series(data = sample(1:12) + 10) %>% 
+#'   hc_add_series(data = sample(1:12) + 20) %>% 
 #'   hc_colors(cols)
 #' 
 #' @export
@@ -416,9 +416,9 @@ hc_colors <- function(hc, colors) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
-#'   hc_xAxis(categories = citytemp$month) |> 
-#'   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
+#' highchart() %>% 
+#'   hc_xAxis(categories = citytemp$month) %>% 
+#'   hc_add_series(name = "Tokyo", data = sample(1:12)) %>% 
 #'   hc_credits(
 #'     enabled = TRUE,
 #'     text = "htmlwidgets.org",
@@ -457,16 +457,16 @@ hc_credits <- function(hc, ...) {
 #' 
 #' df
 #' 
-#' hc <- highchart() |>
-#'   hc_title(text = "Basic drilldown") |>
-#'   hc_xAxis(type = "category") |>
-#'   hc_legend(enabled = FALSE) |>
+#' hc <- highchart() %>%
+#'   hc_title(text = "Basic drilldown") %>%
+#'   hc_xAxis(type = "category") %>%
+#'   hc_legend(enabled = FALSE) %>%
 #'   hc_plotOptions(
 #'     series = list(
 #'       boderWidth = 0,
 #'       dataLabels = list(enabled = TRUE)
 #'     )
-#'   ) |>
+#'   ) %>%
 #'   hc_add_series(
 #'     data = df,
 #'     type = "column",
@@ -490,7 +490,7 @@ hc_credits <- function(hc, ...) {
 #' 
 #' dsfru <- list_parse2(dffru)
 #' 
-#' hc <- hc |>
+#' hc <- hc %>%
 #'   hc_drilldown(
 #'     allowPointDrilldown = TRUE,
 #'     series = list(
@@ -526,9 +526,9 @@ hc_drilldown <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
-#'   hc_xAxis(categories = month.abb) |> 
-#'   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
+#' highchart() %>% 
+#'   hc_xAxis(categories = month.abb) %>% 
+#'   hc_add_series(name = "Tokyo", data = sample(1:12)) %>% 
 #'   hc_exporting(
 #'     enabled = TRUE, # always enabled
 #'     filename = "custom-file-name"
@@ -552,8 +552,8 @@ hc_exporting <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |>
-#'   hc_add_series(data = sample(1:12)) |> 
+#' highchart() %>%
+#'   hc_add_series(data = sample(1:12)) %>% 
 #'   hc_labels(
 #'     items = list(
 #'       list(
@@ -591,11 +591,11 @@ hc_labels <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
-#'   hc_xAxis(categories = month.abb) |> 
-#'   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
-#'   hc_add_series(name = "London", data = sample(1:12) + 10) |>
-#'   hc_add_series(name = "Other City", data = sample(1:12) + 20) |>
+#' highchart() %>% 
+#'   hc_xAxis(categories = month.abb) %>% 
+#'   hc_add_series(name = "Tokyo", data = sample(1:12)) %>% 
+#'   hc_add_series(name = "London", data = sample(1:12) + 10) %>%
+#'   hc_add_series(name = "Other City", data = sample(1:12) + 20) %>%
 #'   hc_legend(
 #'     align = "left",
 #'     verticalAlign = "top",
@@ -626,7 +626,7 @@ hc_legend <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highcharts_demo() |> 
+#' highcharts_demo() %>% 
 #'   hc_loading(
 #'     hideDuration = 1000,
 #'     showDuration = 1000
@@ -649,17 +649,17 @@ hc_loading <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
+#' highchart() %>% 
 #'   hc_chart(
 #'   type = "gauge",
 #'   plotBackgroundColor = NULL,
 #'   plotBackgroundImage = NULL,
 #'   plotBorderWidth = 0,
 #'   plotShadow = FALSE
-#'   ) |> 
+#'   ) %>% 
 #'   hc_title(
 #'     text = "Speedometer"
-#'   ) |> 
+#'   ) %>% 
 #'   hc_pane(
 #'     startAngle = -150,
 #'     endAngle = 150,
@@ -691,10 +691,10 @@ hc_loading <- function(hc, ...) {
 #'       outerRadius = "105%",
 #'       innerRadius = "103%"
 #'     ))
-#'   ) |> 
+#'   ) %>% 
 #'   hc_add_series(
 #'     data = list(80), name = "speed", tooltip = list(valueSuffix = " km/h")
-#'   ) |> 
+#'   ) %>% 
 #'   
 #'   
 #'   hc_yAxis(
@@ -753,10 +753,10 @@ hc_pane <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
+#' highchart() %>% 
 #'   hc_add_series(
 #'     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
-#'   ) |> 
+#'   ) %>% 
 #'   hc_plotOptions(
 #'     line = list(
 #'       color = "blue",
@@ -790,8 +790,8 @@ hc_plotOptions <- function(hc, ...) {
 #' 
 #' 
 #' # change the with of the container/windows to see the effect
-#' highchart() |> 
-#'   hc_add_series(data = cumsum(rnorm(100))) |> 
+#' highchart() %>% 
+#'   hc_add_series(data = cumsum(rnorm(100))) %>% 
 #'   hc_responsive(
 #'     rules = list(
 #'       # remove legend if there is no much space
@@ -825,7 +825,7 @@ hc_responsive <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |>  
+#' highchart() %>%  
 #'   hc_series(
 #'     list(
 #'       name = "Tokyo",
@@ -856,11 +856,11 @@ hc_series <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
+#' highchart() %>% 
 #'   hc_add_series(
 #'     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
 #'     type = "column"
-#'   ) |> 
+#'   ) %>% 
 #'   hc_subtitle(
 #'     text = "And this is a subtitle with more information",
 #'     align = "left",
@@ -883,11 +883,11 @@ hc_subtitle <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |> 
+#' highchart() %>% 
 #'   hc_add_series(
 #'     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
 #'     type = "column"
-#'     ) |> 
+#'     ) %>% 
 #'   hc_title(
 #'     text = "This is a title with <i>margin</i> and <b>Strong or bold text</b>",
 #'     margin = 20,
@@ -916,9 +916,9 @@ hc_title <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |>
-#'   hc_add_series(data = sample(1:12)) |> 
-#'   hc_add_series(data = sample(1:12) + 10) |> 
+#' highchart() %>%
+#'   hc_add_series(data = sample(1:12)) %>% 
+#'   hc_add_series(data = sample(1:12) + 10) %>% 
 #'   hc_tooltip(
 #'     crosshairs = TRUE,
 #'     borderWidth = 5,
@@ -961,11 +961,11 @@ hc_tooltip <- function(hc, ..., sort = FALSE, table = FALSE) {
 #' 
 #' @examples
 #' 
-#' highchart() |>
+#' highchart() %>%
 #'   hc_add_series(
 #'     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
 #'     type = "spline"
-#'     ) |> 
+#'     ) %>% 
 #'   hc_xAxis(
 #'     title = list(text = "x Axis at top"),
 #'     alternateGridColor = "#FDFFD5",
@@ -1001,11 +1001,11 @@ hc_xAxis <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart() |>
+#' highchart() %>%
 #'   hc_add_series(
 #'     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
 #'     type = "spline"
-#'   ) |> 
+#'   ) %>% 
 #'   hc_yAxis(
 #'     title = list(text = "y Axis at right"),
 #'     opposite = TRUE,
@@ -1048,8 +1048,8 @@ hc_yAxis <- function(hc, ...) {
 #'   z = sample(1:5)
 #' )
 #' 
-#' highchart() |>
-#'   hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) |> 
+#' highchart() %>%
+#'   hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) %>% 
 #'   hc_chart(
 #'     type = "scatter3d",
 #'     options3d = list(
@@ -1065,7 +1065,7 @@ hc_yAxis <- function(hc, ...) {
 #'         )
 #'       )
 #'     )
-#'   ) |> 
+#'   ) %>% 
 #'   hc_zAxis(
 #'     title = list(text = "Z axis is here"),
 #'     startOnTick = FALSE,
@@ -1094,9 +1094,9 @@ hc_zAxis <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart(type = "stock") |> 
-#'   hc_add_series(AirPassengers) |> 
-#'   hc_rangeSelector(selected = 4) |> 
+#' highchart(type = "stock") %>% 
+#'   hc_add_series(AirPassengers) %>% 
+#'   hc_rangeSelector(selected = 4) %>% 
 #'   hc_navigator(
 #'     outlineColor = "gray",
 #'     outlineWidth = 2,
@@ -1131,15 +1131,15 @@ hc_navigator <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' hc <- highchart(type = "stock") |> 
+#' hc <- highchart(type = "stock") %>% 
 #'   hc_add_series(AirPassengers)
 #' 
 #' hc
 #' 
-#' hc |> 
+#' hc %>% 
 #'   hc_rangeSelector(enabled = FALSE)
 #' 
-#' hc |> 
+#' hc %>% 
 #'   hc_rangeSelector(
 #'     verticalAlign = "bottom",
 #'     selected = 4
@@ -1168,9 +1168,9 @@ hc_rangeSelector <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' highchart(type = "stock") |> 
-#'   hc_add_series(AirPassengers) |> 
-#'   hc_rangeSelector(selected = 4) |> 
+#' highchart(type = "stock") %>% 
+#'   hc_add_series(AirPassengers) %>% 
+#'   hc_rangeSelector(selected = 4) %>% 
 #'   hc_scrollbar(
 #'     barBackgroundColor = "gray",
 #'     barBorderRadius = 7,
@@ -1203,7 +1203,7 @@ hc_scrollbar <- function(hc, ...) {
 #' 
 #' @examples
 #' 
-#' hcmap(download_map_data = FALSE) |> 
+#' hcmap(download_map_data = FALSE) %>% 
 #'   hc_mapNavigation(
 #'     enabled = TRUE,
 #'     enableMouseWheelZoom = TRUE,
@@ -1233,8 +1233,8 @@ hc_mapNavigation <- function(hc, ...) {
 #' 
 #' map
 #' 
-#' map |> 
-#'   hc_mapView(zoom = 10) |> 
+#' map %>% 
+#'   hc_mapView(zoom = 10) %>% 
 #'   hc_mapNavigation(enabled = TRUE)
 #'   
 #'   

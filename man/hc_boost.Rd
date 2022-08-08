@@ -37,10 +37,10 @@ x <- round(x, 3)
 
 plot(x)
 
-hc1 <- highchart() |>
-  hc_chart(zoomType = "x") |>
-  hc_add_series(data = x) |> 
-  hc_title(text = "No boost") |> 
+hc1 <- highchart() \%>\%
+  hc_chart(zoomType = "x") \%>\%
+  hc_add_series(data = x) \%>\% 
+  hc_title(text = "No boost") \%>\% 
   hc_boost(
     enabled = FALSE # Default
   )
@@ -51,10 +51,10 @@ hc1
 # some of the standard Highcharts features (such as animation), and focuses
 # on pushing as many points as possible as quickly as possible.
 
-hc2 <- highchart() |>
-  hc_chart(zoomType = "x") |>
-  hc_add_series(data = x) |> 
-  hc_title(text = "With boost") |> 
+hc2 <- highchart() \%>\%
+  hc_chart(zoomType = "x") \%>\%
+  hc_add_series(data = x) \%>\% 
+  hc_title(text = "With boost") \%>\% 
   hc_boost(enabled = TRUE)
 
 hc2
@@ -76,17 +76,17 @@ hc2
 # # unnamed list
 # ds <- list_parse2(as.data.frame(mvr))
 # 
-# highchart() |>
-#   hc_chart(zoomType = "xy") |>
-#   hc_xAxis(min = -vx, max = vx) |> 
-#   hc_yAxis(min = -vy, max = vy) |> 
+# highchart() \%>\%
+#   hc_chart(zoomType = "xy") \%>\%
+#   hc_xAxis(min = -vx, max = vx) \%>\% 
+#   hc_yAxis(min = -vy, max = vy) \%>\% 
 #   hc_add_series(
 #     data = ds, #list
 #     type = "scatter",
 #     name = "A lot of points!",
 #     color = 'rgba(0,0,0,0.1)',
 #     marker = list(radius = 2)
-#     ) |> 
+#     ) \%>\% 
 #   hc_boost(
 #     enabled = TRUE 
 #   )
@@ -94,10 +94,10 @@ hc2
 # dat <- as.data.frame(mvr)
 # names(dat) <- c("x", "y")
 # 
-# highchart() |>
-#   hc_chart(zoomType = "xy") |>
-#   hc_xAxis(min = -vx, max = vx) |> 
-#   hc_yAxis(min = -vy, max = vy) |> 
+# highchart() \%>\%
+#   hc_chart(zoomType = "xy") \%>\%
+#   hc_xAxis(min = -vx, max = vx) \%>\% 
+#   hc_yAxis(min = -vy, max = vy) \%>\% 
 #   hc_add_series(
 #     data = dat,
 #     type = "scatter",
@@ -105,7 +105,7 @@ hc2
 #     name = "A lot of points!",
 #     color = 'rgba(0,0,0,0.1)',
 #     marker = list(radius = 2)
-#   ) |> 
+#   ) \%>\% 
 #   hc_boost(enabled = TRUE)
 # 
 # # Ex3
@@ -115,15 +115,15 @@ hc2
 # s <- s/(max(s) + min(s))
 # s <- round(s, 2)
 # 
-# series <- s |>
-#   purrr::map(~ stats::arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 20) |>
-#   purrr::map(as.vector) |>
-#   purrr::map(round, 2) |>
+# series <- s \%>\%
+#   purrr::map(~ stats::arima.sim(round(N/n), model = list(ar = .x)) + .x * n * 20) \%>\%
+#   purrr::map(as.vector) \%>\%
+#   purrr::map(round, 2) \%>\%
 #   purrr::map(~ list(data = .x))
 # 
-# highchart() |>
-#   hc_add_series_list(series) |>
-#   hc_chart(zoomType = "x") |> 
+# highchart() \%>\%
+#   hc_add_series_list(series) \%>\%
+#   hc_chart(zoomType = "x") \%>\% 
 #   hc_boost(enabled = TRUE)
 
 }

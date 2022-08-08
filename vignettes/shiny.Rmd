@@ -31,11 +31,11 @@ library(rvest)
 
 doc <- rvest::read_html("https://github.com/jbkunst/highcharter-shiny")
 
-apps <- doc %>% 
-  html_nodes(".js-navigation-open") %>% 
-  html_attr("title") %>% 
-  na.omit() %>% 
-  as.character() %>% 
+apps <- doc |> 
+  html_nodes(".js-navigation-open") |> 
+  html_attr("title") |> 
+  na.omit() |> 
+  as.character() |> 
   str_subset("^[0-9]{2}")
 
 apps
@@ -83,7 +83,7 @@ dinfo <- map_df(apps, function(x = "05-arma"){
   
   img_tmp <- tempfile(fileext = ".png")
   
-  img_tmp %>% str_replace_all("\\\\", "/")
+  img_tmp |> str_replace_all("\\\\", "/")
   
   shot <- webshot2::webshot(
     app_url, 
@@ -114,10 +114,10 @@ dinfo <- map_df(apps, function(x = "05-arma"){
 
 dinfo <- left_join(
   dinfo,
-  tibble(app = apps) %>% mutate(id = dplyr::row_number()),
+  tibble(app = apps) |> mutate(id = dplyr::row_number()),
   by = "app"
-  ) %>% 
-  arrange(id) %>% 
+  ) |> 
+  arrange(id) |> 
   select(-id, -app)
 
 dinfo
@@ -136,13 +136,13 @@ pwalk(dinfo, function(title, url, src, shot, text){
   cat("\n")
   
   # cat("<img src='", shot, "'/>\n")
-  htmltools::tags$img(src = shot) %>% 
-    htmltools::a(href = url, target = "_blank") %>% 
-    as.character() %>% 
+  htmltools::tags$img(src = shot) |> 
+    htmltools::a(href = url, target = "_blank") |> 
+    as.character() |> 
     cat("\n")
   
-  htmltools::tags$br() %>% 
-    as.character() %>% 
+  htmltools::tags$br() |> 
+    as.character() |> 
     cat("\n")
   
   cat(str_c(text, "\n"))

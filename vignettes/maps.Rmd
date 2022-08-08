@@ -47,8 +47,8 @@ hcmap("countries/nz/nz-all")
 
 hcmap("custom/usa-and-canada", showInLegend = FALSE)
 
-hcmap("countries/us/us-ca-all") %>%
-  hc_title(text = "California") %>% 
+hcmap("countries/us/us-ca-all") |>
+  hc_title(text = "California") |> 
   hc_subtitle(text = "You can use the same functions to modify your map!")
 ```
 
@@ -75,9 +75,9 @@ mapdata <- get_data_from_map(download_map_data("custom/usa-and-canada"))
 
 glimpse(mapdata)
 
-data_fake <- mapdata %>%
-  select(code = `hc-a2`) %>%
-  mutate(value = 1e5 * abs(rt(nrow(.), df = 10)))
+data_fake <- mapdata |>
+  select(code = `hc-a2`) |>
+  mutate(value = 1e5 * abs(rt(nrow(mapdata), df = 10)))
 
 glimpse(data_fake)
 ```
@@ -120,18 +120,18 @@ data <- tibble(
   )
 
 # auxiliar variable
-data <- data %>% 
+data <- data |> 
   mutate(value = cumsum(!duplicated(tz)))
 
 
 # now we'll create the dataClasses
-dta_clss <- data %>% 
-  mutate(value = cumsum(!duplicated(tz))) %>% 
-  group_by(tz) %>% 
-  summarise(value = unique(value)) %>% 
-  arrange(value) %>% 
-  rename(name = tz, from = value) %>% 
-  mutate(to = from + 1) %>% 
+dta_clss <- data |> 
+  mutate(value = cumsum(!duplicated(tz))) |> 
+  group_by(tz) |> 
+  summarise(value = unique(value)) |> 
+  arrange(value) |> 
+  rename(name = tz, from = value) |> 
+  mutate(to = from + 1) |> 
   list_parse()
 
 hcmap(
@@ -142,11 +142,11 @@ hcmap(
   value = "value",
   tooltip = list(pointFormat = "{point.name} {point.tz}"),
   dataLabels = list(enabled = TRUE, format = "{point.country}")
-  ) %>%
+  ) |>
   hc_colorAxis(
     dataClassColor = "category",
     dataClasses = dta_clss
-    ) %>% 
+    ) |> 
   hc_title(text = "Europe Time Zones")
 ```
 
@@ -166,24 +166,24 @@ cities <- data.frame(
   z = c(1, 2, 3, 2)
 )
 
-hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
+hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
   hc_add_series(
     data = cities, 
     type = "mappoint",
     name = "Cities", 
     minSize = "1%",
     maxSize = "5%"
-    ) %>%
+    ) |>
   hc_mapNavigation(enabled = TRUE)
 
-hcmap("countries/gb/gb-all", showInLegend = FALSE) %>%
+hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
   hc_add_series(
     data = cities, 
     type = "mapbubble",
     name = "Cities", 
     minSize = "1%",
     maxSize = "5%"
-    ) %>%
+    ) |>
   hc_mapNavigation(enabled = TRUE)
 ```
 
@@ -205,16 +205,16 @@ south_america_countries <- c(
     "Suriname", "Guyana", "Colombia"
   ) 
 
-airports <- airports %>%
-  filter(country %in% south_america_countries) %>%
-  rename(lat = latitude, lon = longitude) %>%
+airports <- airports |>
+  filter(country %in% south_america_countries) |>
+  rename(lat = latitude, lon = longitude) |>
   filter(lon < -30)
 
 hcmap(
   "custom/south-america",
   name = "South America",
   showInLegend = FALSE
-) %>%
+) |>
   hc_add_series(
     data = airports,
     type = "mappoint",
@@ -225,7 +225,7 @@ hcmap(
       pointFormat = "{point.name}: {point.altitude:,.0f} feets <br>
       ({point.lat:,.2f}, {point.lon:,.2f})"
     )
-  ) %>%
+  ) |>
   hc_chart(zoomType = "xy")
 ```
 
@@ -241,12 +241,12 @@ library(httr)
 library(jsonlite)
 library(geojsonio)
 
-ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json") %>%
-  content() %>%
-  fromJSON(simplifyVector = FALSE) %>%
+ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json") |>
+  content() |>
+  fromJSON(simplifyVector = FALSE) |>
   as.json()
 
-ausmap <- highchart(type = "map") %>%
+ausmap <- highchart(type = "map") |>
   hc_add_series(mapData = ausgeojson, showInLegend = FALSE)
 ausmap
 ```
@@ -261,7 +261,7 @@ airports <- filter(airports, country == "Australia", name != "Roma Street Railwa
 airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
 class(airp_geojson)
 
-ausmap %>%
+ausmap |>
   hc_add_series(
     data = airp_geojson,
     type = "mappoint",
@@ -303,14 +303,14 @@ The data is ready. Remember you can keep using the rest of the API to
 customize your map.
 
 ```{r, eval=TRUE}
-highchart(type = "map") %>%
-  hc_chart(backgroundColor = "#161C20") %>%
+highchart(type = "map") |>
+  hc_chart(backgroundColor = "#161C20") |>
   hc_add_series(
     mapData = world,
     showInLegend = FALSE,
     nullColor = "#424242",
     borderWidth = 0
-  ) %>%
+  ) |>
   hc_add_series(
     data = marine,
     type = "mapline",
@@ -318,7 +318,7 @@ highchart(type = "map") %>%
     color = "#2980b9",
     name = "Marine currents",
     tooltip = list(pointFormat = "{point.properties.NOMBRE}")
-  ) %>%
+  ) |>
   hc_add_series(
     data = plates,
     type = "mapline",
@@ -328,7 +328,7 @@ highchart(type = "map") %>%
     color = "#d35400",
     name = "Plates",
     tooltip = list(pointFormat = "{point.properties.TIPO}")
-  ) %>%
+  ) |>
   hc_add_series(
     data = volcano,
     type = "mappoint",

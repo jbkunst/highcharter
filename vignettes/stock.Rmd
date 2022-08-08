@@ -51,8 +51,8 @@ Obviously you can use the implemented API functions to edit the chart:
 ```{r}
 y <- getSymbols("AMZN", auto.assign = FALSE)
 
-hchart(y, type = "ohlc") %>% 
-  hc_title(text = "This is a Open-high-low-close chart with a custom theme") %>% 
+hchart(y, type = "ohlc") |> 
+  hc_title(text = "This is a Open-high-low-close chart with a custom theme") |> 
   hc_add_theme(hc_theme_db())
 ```
 
@@ -63,8 +63,8 @@ use the `hc_add_series()` function. Don't forget to specify `type = "stock"` to
 activate the navigator, range selector and other features of highstock.   
 
 ```{r}
-hc <- highchart(type = "stock") %>% 
-  hc_add_series(x, id = 1) %>% 
+hc <- highchart(type = "stock") |> 
+  hc_add_series(x, id = 1) |> 
   hc_add_series(y, type = "ohlc", id = 2)
 
 hc
@@ -87,7 +87,7 @@ data_flags <- tibble(
 
 glimpse(data_flags)
 
-hc %>% 
+hc |> 
   hc_add_series(
     data_flags, 
     hcaes(x = date),
@@ -112,18 +112,18 @@ SPY.RSI.SellLevel <- xts(rep(70, NROW(SPY)), index(SPY))
 SPY.RSI.BuyLevel <- xts(rep(30, NROW(SPY)), index(SPY))
 
 
-highchart(type = "stock") %>% 
+highchart(type = "stock") |> 
   # create axis :)
-  hc_yAxis_multiples(create_yaxis(3, height = c(2, 1, 1), turnopposite = TRUE)) %>% 
+  hc_yAxis_multiples(create_yaxis(3, height = c(2, 1, 1), turnopposite = TRUE)) |> 
   # series :D
-  hc_add_series(SPY, yAxis = 0, name = "SPY") %>% 
-  hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") %>% 
-  hc_add_series(SPY.SMA.200, yAxis = 0, name = "Slow MA") %>% 
-  hc_add_series(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") %>% 
-  hc_add_series(SPY.RSI.14, yAxis = 2, name = "Osciallator", color = hex_to_rgba("green", 0.7)) %>%
-  hc_add_series(SPY.RSI.SellLevel, color = hex_to_rgba("red", 0.7), yAxis = 2, name = "Sell level") %>% 
-  hc_add_series(SPY.RSI.BuyLevel, color = hex_to_rgba("blue", 0.7), yAxis = 2, name = "Buy level") %>% 
-  hc_tooltip(valueDecimals = 2) %>% 
+  hc_add_series(SPY, yAxis = 0, name = "SPY") |> 
+  hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") |> 
+  hc_add_series(SPY.SMA.200, yAxis = 0, name = "Slow MA") |> 
+  hc_add_series(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") |> 
+  hc_add_series(SPY.RSI.14, yAxis = 2, name = "Osciallator", color = hex_to_rgba("green", 0.7)) |>
+  hc_add_series(SPY.RSI.SellLevel, color = hex_to_rgba("red", 0.7), yAxis = 2, name = "Sell level") |> 
+  hc_add_series(SPY.RSI.BuyLevel, color = hex_to_rgba("blue", 0.7), yAxis = 2, name = "Buy level") |> 
+  hc_tooltip(valueDecimals = 2) |> 
   hc_size(height = 800)
 ```
 

@@ -66,6 +66,8 @@ Suggests:
     forecast,
     geojsonio,
     testthat,
+    idbr,
+    webshot2,
     covr,
     spelling
 LazyData: true

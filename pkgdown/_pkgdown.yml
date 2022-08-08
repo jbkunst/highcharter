@@ -212,10 +212,6 @@ articles:
   navbar: More of highcharter
   contents:
   - themes
-  - hc-api-legend-jsfiddle.png
-  - hc-api-legend-title.png
-  - hc-api-legend.png
-  - help-hc-legend.png
   - howtos
   - modules
   - motion

@@ -17,17 +17,17 @@ gauges and polar charts.
 }
 \examples{
 
-highchart() |> 
+highchart() \%>\% 
   hc_chart(
   type = "gauge",
   plotBackgroundColor = NULL,
   plotBackgroundImage = NULL,
   plotBorderWidth = 0,
   plotShadow = FALSE
-  ) |> 
+  ) \%>\% 
   hc_title(
     text = "Speedometer"
-  ) |> 
+  ) \%>\% 
   hc_pane(
     startAngle = -150,
     endAngle = 150,
@@ -59,10 +59,10 @@ highchart() |>
       outerRadius = "105\%",
       innerRadius = "103\%"
     ))
-  ) |> 
+  ) \%>\% 
   hc_add_series(
     data = list(80), name = "speed", tooltip = list(valueSuffix = " km/h")
-  ) |> 
+  ) \%>\% 
   
   
   hc_yAxis(

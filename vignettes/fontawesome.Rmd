@@ -64,11 +64,11 @@ pcol <- "#3CAB48"
 rproj <- fa_to_png_to_datauri(name = "r-project", width = 22, fill = rcol)
 pthon <- fa_to_png_to_datauri(name = "python",    width = 22, fill = pcol)
 
-highchart() %>% 
+highchart() |> 
   hc_title(
     text = "This is chart using fontawesome icons2",
     useHTML = TRUE
-  ) %>% 
+  ) |> 
   hc_add_series(
     df,
     "scatter",
@@ -77,7 +77,7 @@ highchart() %>%
     color = rcol,
     marker = list(symbol = str_glue("url({data_uri})", data_uri = rproj)),
     icon = rproj
-  ) %>% 
+  ) |> 
   hc_add_series(
     df,
     "scatter",
@@ -86,7 +86,7 @@ highchart() %>%
     color = pcol,
     marker = list(symbol = str_glue("url({data_uri})", data_uri = pthon)),
     icon = pthon
-  ) %>% 
+  ) |> 
   hc_tooltip(
     pointFormat = str_c(
       "<b>",
@@ -109,13 +109,13 @@ library(purrr) # to wokr with list columns
 df2 <- tibble(
   type = c("fruit", "samminch", "pizza"),
   amount = c(46, 54, 80),
-  faico = c("apple-alt", "bread-slice", "pizza-slice"),
+  faico = c("apple", "bread-slice", "pizza-slice"),
   col = c("#d35400", "#907E4D", "#F89101")
 )
 
 df2
 
-df2 <- df2 %>% 
+df2 <- df2 |> 
   mutate(
     uri = map2_chr(faico, col, ~fa_to_png_to_datauri(.x, fill = .y)),
     marker = map(uri, ~ list(symbol = str_glue("url({data_uri})", data_uri = .x)))
@@ -127,14 +127,14 @@ hchart(
   hcaes(name = type, y = amount),
   name = "What I eat",
   showInLegend = TRUE
-  ) %>% 
+  ) |> 
   hc_plotOptions(
     # avoid hide series due bug
     series = list(point = list(events = list(legendItemClick = JS("function(e) {e.preventDefault() }"))))
-  ) %>% 
+  ) |> 
   hc_legend(
     labelFormat =  '{name} <span style="opacity: 0.4">{y}</span>'
-  ) %>% 
+  ) |> 
   hc_colors(pull(df2, col))
 ```
 

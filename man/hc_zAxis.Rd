@@ -24,8 +24,8 @@ df <- data.frame(
   z = sample(1:5)
 )
 
-highchart() |>
-  hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) |> 
+highchart() \%>\%
+  hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) \%>\% 
   hc_chart(
     type = "scatter3d",
     options3d = list(
@@ -41,7 +41,7 @@ highchart() |>
         )
       )
     )
-  ) |> 
+  ) \%>\% 
   hc_zAxis(
     title = list(text = "Z axis is here"),
     startOnTick = FALSE,

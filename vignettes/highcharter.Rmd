@@ -95,16 +95,16 @@ Now, a heatmap and a treemap.
 ```{r}
 library(dplyr)
 
-dfdiam <- diamonds %>% 
-  group_by(cut, clarity) %>%
+dfdiam <- diamonds |> 
+  group_by(cut, clarity) |>
   summarize(price = median(price))
 
 hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price), name = "Median Price") 
 
-mpgman <- mpg %>% 
-  group_by(manufacturer) %>% 
+mpgman <- mpg |> 
+  group_by(manufacturer) |> 
   summarise(n = n(),
-            unique = length(unique(model))) %>% 
+            unique = length(unique(model))) |> 
   arrange(-n, -unique)
 
 hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n, color = unique))
@@ -142,7 +142,7 @@ library(broom)
 
 modlss <- loess(dist ~ speed, data = cars)
 
-fit <- arrange(augment(modlss), speed) %>% 
+fit <- arrange(augment(modlss), speed) |> 
   mutate(.se = predict(modlss, se = TRUE)$se.fit)
 
 head(fit)
@@ -173,7 +173,7 @@ hc_add_series(<highcarter_object>, <data.frame>, <type_of_chart>, hcaes(<aesthet
 
 # or with the pipe:
 
-<highcarter_object> %>% hc_add_series(<data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)
+<highcarter_object> |> hc_add_series(<data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)
 
 ```
 
@@ -183,7 +183,7 @@ spline then the arearange. So we'll use `hc_add_series` 2 times.
 ```{r}
 qtint <- qt(0.975, predict(modlss, se = TRUE)$df)
 
-hc %>%
+hc |>
   hc_add_series(
     fit,
     type = "spline",
@@ -192,7 +192,7 @@ hc %>%
     id = "fit", # this is for link the arearange series to this one and have one legend
     lineWidth = 1,
     showInLegend = TRUE
-    ) %>% 
+    ) |> 
   hc_add_series(
     fit,
     type = "arearange",

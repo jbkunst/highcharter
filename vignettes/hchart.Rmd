@@ -48,8 +48,8 @@ data(diamonds, economics_long, package = "ggplot2")
 
 hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group = species))
 
-penguins2 <- penguins %>%
-  count(species, island) %>%
+penguins2 <- penguins |>
+  count(species, island) |>
   glimpse()
 
 hchart(penguins2, "column", hcaes(x = island, y = n, group = species))
@@ -58,7 +58,7 @@ hchart(penguins2, "column", hcaes(x = island, y = n, group = species))
 Check automatically if the x column is date class:
 
 ```{r}
-economics_long2 <- economics_long %>%
+economics_long2 <- economics_long |>
   filter(variable %in% c("pop", "uempmed", "unemploy"))
 
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
@@ -87,7 +87,7 @@ hchart(x, type = "column")
 ## Time Series
 
 ```{r}
-hchart(LakeHuron, name = "Level") %>% 
+hchart(LakeHuron, name = "Level") |> 
   hc_title(text = "Level of Lake Huron 1875–1972")
 ```
 
@@ -182,7 +182,7 @@ hchart(princomp(USArrests, cor = TRUE))
 ```{r}
 data(volcano)
 
-hchart(volcano) %>% # changing default color
+hchart(volcano) |> # changing default color
   hc_colorAxis(
     stops = color_stops(colors = c("#000004FF", "#56106EFF", "#BB3754FF", "#F98C0AFF", "#FCFFA4FF"))
     )
