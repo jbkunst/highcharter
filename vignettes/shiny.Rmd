@@ -25,7 +25,14 @@ $(document).ready(function(){
 }) ;
 </script>
 
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval = FALSE)
+library(highcharter)
+```
+
 Let's check some examples!
+
+
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(fig.align = "center")

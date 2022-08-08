@@ -25,7 +25,7 @@ $(document).ready(function(){
 </script>
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval = FALSE)
 library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(), highcharter.download_map_data = TRUE)
 ```
