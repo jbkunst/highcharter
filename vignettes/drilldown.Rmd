@@ -32,45 +32,45 @@ through clicking on chart items like columns, points or pie slices.
 
 ```{r, include=FALSE}
 library(highcharter)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval = FALSE)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
 
 
 ```{r}
-# library(tidyverse)
-# data(gapminder, package = "gapminder")
-# 
-# gapminder2007 <- gapminder |> 
-#   filter(year == max(year)) |> 
-#   select(-year) |> 
-#   mutate(pop = pop/1e6) |> 
-#   arrange(desc(pop))
-# 
-# gapminder_column <- gapminder2007 |>
-#   group_by(continent) |> 
-#   summarise(
-#     lifeExp = weighted.mean(lifeExp, pop),
-#     gdpPercap = weighted.mean(gdpPercap, pop),
-#     pop = sum(pop)
-#   ) |> 
-#   mutate_if(is.numeric, round) |> 
-#   arrange(desc(pop)) |> 
-#   mutate(continent = fct_inorder(continent))
-# 
-# gapminder_column
-# 
-# gapminder_drilldown <- gapminder2007 |> 
-#   group_nest(continent) |> 
-#   mutate(
-#     id = continent,
-#     type = "column",
-#     # in the drilldown we'll give the mapping via creating the columns
-#     data = map(data, mutate, name = country, y  = pop),
-#     data = map(data, list_parse)
-#   )
-# 
-# gapminder_drilldown
+library(tidyverse)
+data(gapminder, package = "gapminder")
+
+gapminder2007 <- gapminder |>
+  filter(year == max(year)) |>
+  select(-year) |>
+  mutate(pop = pop/1e6) |>
+  arrange(desc(pop))
+
+gapminder_column <- gapminder2007 |>
+  group_by(continent) |>
+  summarise(
+    lifeExp = weighted.mean(lifeExp, pop),
+    gdpPercap = weighted.mean(gdpPercap, pop),
+    pop = sum(pop)
+  ) |>
+  mutate_if(is.numeric, round) |>
+  arrange(desc(pop)) |>
+  mutate(continent = fct_inorder(continent))
+
+gapminder_column
+
+gapminder_drilldown <- gapminder2007 |>
+  group_nest(continent) |>
+  mutate(
+    id = continent,
+    type = "column",
+    # in the drilldown we'll give the mapping via creating the columns
+    data = map(data, mutate, name = country, y  = pop),
+    data = map(data, list_parse)
+  )
+
+gapminder_drilldown
 ```
 
 The data is ready. Now, in this example due the continents and countries have
@@ -79,35 +79,35 @@ the tooltips:
 
 
 ```{r}
-# x <- c("Population (MM)", "Life expectancy at birth", "GDP per capita (US$)")
-# y <- c("{point.pop}", "{point.lifeExp}", "$ {point.gdpPercap}")
-# 
-# tt <- tooltip_table(x, y)
-# 
-# hchart(
-#   gapminder_column,
-#   "column",
-#   hcaes(x = continent, y = pop, name = continent, drilldown = continent),
-#   name = "Population",
-#   colorByPoint = TRUE
-# ) |> 
-#   hc_drilldown(
-#     allowPointDrilldown = TRUE,
-#     series = list_parse(gapminder_drilldown)
-#   ) |> 
-#   hc_tooltip(
-#     pointFormat = tt, # "{point.name} {point.pop}"
-#     useHTML = TRUE,
-#     valueDecimals = 0
-#   ) |> 
-#   hc_yAxis(
-#     title = list(text = "Population in millions (log scale)"),
-#     type = "logarithmic",
-#     minorTickInterval = 'auto'
-#   ) |> 
-#   hc_xAxis(
-#     title = ""
-#   )
+x <- c("Population (MM)", "Life expectancy at birth", "GDP per capita (US$)")
+y <- c("{point.pop}", "{point.lifeExp}", "$ {point.gdpPercap}")
+
+tt <- tooltip_table(x, y)
+
+hchart(
+  gapminder_column,
+  "column",
+  hcaes(x = continent, y = pop, name = continent, drilldown = continent),
+  name = "Population",
+  colorByPoint = TRUE
+) |>
+  hc_drilldown(
+    allowPointDrilldown = TRUE,
+    series = list_parse(gapminder_drilldown)
+  ) |>
+  hc_tooltip(
+    pointFormat = tt, # "{point.name} {point.pop}"
+    useHTML = TRUE,
+    valueDecimals = 0
+  ) |>
+  hc_yAxis(
+    title = list(text = "Population in millions (log scale)"),
+    type = "logarithmic",
+    minorTickInterval = 'auto'
+  ) |>
+  hc_xAxis(
+    title = ""
+  )
 ```
 
 ## Exmaple II: Pokémon data
