@@ -125,7 +125,7 @@ hex_to_rgba <- function(x, alpha = 1) {
   rgb <- x %>%
     col2rgb() %>%
     # t() %>%
-    as.data.frame() |> 
+    as.data.frame() %>%
     map_chr(str_c, collapse = ",")
   
   rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
