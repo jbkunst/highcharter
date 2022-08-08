@@ -8,9 +8,9 @@
 }(function (HC) {
 	'use strict';
 	/**
-	 * Grouped Categories v1.2.0 (2021-05-10)
+	 * Grouped Categories v1.3.0 (2022-03-14)
 	 *
-	 * (c) 2012-2021 Black Label
+	 * (c) 2012-2022 Black Label
 	 *
 	 * License: Creative Commons Attribution (CC)
 	 */
@@ -494,7 +494,7 @@
 	tickProto.render = function (index, old, opacity) {
 		protoTickRender.call(this, index, old, opacity);
 
-		var treeCat = this.axis.categories[this.pos];
+		var treeCat = this.axis.categories && this.axis.categories[this.pos];
 
 		if (!this.axis.isGrouped || !treeCat || this.pos > this.axis.max) {
 			return;

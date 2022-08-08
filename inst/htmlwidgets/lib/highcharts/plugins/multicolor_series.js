@@ -1,5 +1,5 @@
 /**
-* Multicolor Series v2.3.0 (2022-02-24)
+* Multicolor Series v2.4.0(2022-03-15)
 *
 * (c) 2012-2022 Black Label
 *
@@ -248,8 +248,11 @@
 			[series.tracker, series.markerGroup].forEach(function (track) {
 				track.addClass(PREFIX + 'tracker')
 				.on('mouseover', onMouseOver)
-				.on('mouseout', function (e) { pointer.onTrackerMouseOut(e); })
-				.css(css);
+				.on('mouseout', function (e) { pointer.onTrackerMouseOut(e); });
+
+				if (css) {
+					track.css(css);
+				}
 				
 				if (hasTouch) {
 					track.on('touchstart', onMouseOver);
