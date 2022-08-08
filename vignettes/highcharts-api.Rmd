@@ -9,6 +9,10 @@ description: >
   main functions with simple examples.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Highcharts API}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

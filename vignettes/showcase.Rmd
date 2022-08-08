@@ -8,6 +8,10 @@ description: >
   highcharter can do in terms of customization and design.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Showcase}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

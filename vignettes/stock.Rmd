@@ -10,6 +10,10 @@ description: >
   The highcharter package include [highstocks](https://www.highcharts.com/demo/stock)
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Stocks with highstocks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}   
 ---
 
 <script>

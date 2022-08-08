@@ -9,6 +9,10 @@ description: >
 output: rmarkdown::html_vignette
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Drilldown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}   
 ---
 
 <script>

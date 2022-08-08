@@ -8,6 +8,10 @@ description: >
   functions to get a chart from a data frame and some basic examples.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{First steps on highcharter package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}   
 ---
 
 <script>

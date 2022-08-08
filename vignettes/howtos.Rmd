@@ -7,6 +7,10 @@ description: >
   A list of examples of commons _how to_s.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Commons HOW TOs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}      
 ---
 
 <script>

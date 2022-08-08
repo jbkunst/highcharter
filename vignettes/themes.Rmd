@@ -9,6 +9,10 @@ description: >
   functions to create your own or merge themes.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Themes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}   
 ---
 
 <script>

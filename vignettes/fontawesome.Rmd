@@ -9,9 +9,9 @@ output: rmarkdown::html_vignette
 editor_options: 
   chunk_output_type: console
 vignette: >
-  %\VignetteIndexEntry{fontawesome}
+  %\VignetteIndexEntry{Fontawesome integration}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}  
+  %\VignetteEncoding{UTF-8} 
 ---
 
 <script>

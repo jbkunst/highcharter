@@ -9,6 +9,10 @@ description: >
   and other apps to give you some inspiration.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Shiny Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

@@ -7,6 +7,10 @@ description: >
   Let's know about what can we do using highcharter.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Highcharter}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

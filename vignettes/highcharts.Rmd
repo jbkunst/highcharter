@@ -10,6 +10,10 @@ description: >
   streamgraph, packedbubble, vector field among others.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Charts with highcharts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 <script>

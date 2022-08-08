@@ -9,6 +9,10 @@ description: >
   as in data export formats or adjusting regressions or smoothing.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Modules & plugins}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

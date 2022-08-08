@@ -8,6 +8,10 @@ description:
   The highcharter package include [highmaps](https://www.highcharts.com/demo/maps) 
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Maps with highmaps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

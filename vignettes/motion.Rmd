@@ -5,6 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Motion plugin}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}    
 ---
 
 <script>

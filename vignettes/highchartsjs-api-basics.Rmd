@@ -8,6 +8,10 @@ description: >
    available in highcharter and the underlying highchartsJS API in more detail.
 editor_options: 
   chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Javascript API Basics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
 ---
 
 <script>
