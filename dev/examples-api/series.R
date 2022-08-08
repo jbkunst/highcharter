@@ -1,4 +1,4 @@
-highchart() %>%  
+highchart() |>  
   hc_series(
     list(
       name = "Tokyo",

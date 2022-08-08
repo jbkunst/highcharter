@@ -12,14 +12,16 @@ hc_mapNavigation(hc, ...)
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highmaps/mapNavigation}.}
 }
 \description{
-Mapnavigation options for highcharter objects
+The mapNavigation option handles buttons for navigation in addition to
+mousewheel and doubleclick handlers for map zooming.
 }
 \examples{
 
-hcmap(download_map_data = TRUE) \%>\%
+hcmap(download_map_data = FALSE) |> 
   hc_mapNavigation(
     enabled = TRUE,
     enableMouseWheelZoom = TRUE,
     enableDoubleClickZoom = TRUE
   )
+
 }

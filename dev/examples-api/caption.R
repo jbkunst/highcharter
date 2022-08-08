@@ -1,12 +1,12 @@
-highchart() %>% 
-  hc_title(text= "Chart with a caption") %>% 
-  hc_subtitle(text= "This is the subtitle") %>% 
-  hc_xAxis(categories = c("Apples", "Pears", "Banana", "Orange")) %>% 
+highchart() |> 
+  hc_title(text= "Chart with a caption") |> 
+  hc_subtitle(text= "This is the subtitle") |> 
+  hc_xAxis(categories = c("Apples", "Pears", "Banana", "Orange")) |> 
   hc_add_series(
     data = c(1, 4, 3, 5),
     type = "column",
     name = "Fruits"
-  ) %>% 
+  ) |> 
   hc_caption(
     text = "<b>The caption renders in the bottom, and is part of the exported
     chart.</b><br><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit,

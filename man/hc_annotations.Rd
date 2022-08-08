@@ -19,46 +19,46 @@ or chart pixel coordinates.
 \examples{
 
 # Ex 1
-highchart() \%>\%
+highchart() |> 
   hc_add_series(
     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
-  ) \%>\%
+  ) |> 
   hc_xAxis(
     tickInterval = 0.5,
-    gridLineWidth = 1
-  ) \%>\%
+    gridLineWidth = 1  
+  ) |> 
   hc_annotations(
     list(
-      labels =
+      labels = 
         list(
           list(
             point = list(x = 3, y = 129.2, xAxis = 0, yAxis = 0),
             text = "x: {x}<br/>y: {y}"
-          ),
+            ),
           list(
             point = list(x = 9, y = 194.1, xAxis = 0, yAxis = 0),
             text = "x: {x}<br/>y: {y}"
-          ),
+            ),
           list(
             point = list(x = 5, y = 100, xAxis = 0),
             text = "x: {x}<br/>y: {point.plotY} px"
-          ),
+            ),
           list(
             point = list(x = 0, y = 0),
             text = "x: {point.plotX} px<br/>y: {point.plotY} px"
+            )
           )
-        )
+      )
     )
-  )
-
+  
 # Ex 2
 df <- data.frame(
   x = 1:10,
   y = 1:10
 )
 
-highchart() \%>\%
-  hc_add_series(data = df, hcaes(x = x, y = y), type = "area") \%>\%
+highchart() |> 
+  hc_add_series(data = df, hcaes(x = x, y = y), type = "area") |> 
   hc_annotations(
     list(
       labels = list(
@@ -67,4 +67,5 @@ highchart() \%>\%
       )
     )
   )
+
 }

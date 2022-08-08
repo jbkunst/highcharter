@@ -1,6 +1,6 @@
-highchart(type = "stock") %>% 
-  hc_add_series(AirPassengers) %>% 
-  hc_rangeSelector(selected = 4) %>% 
+highchart(type = "stock") |> 
+  hc_add_series(AirPassengers) |> 
+  hc_rangeSelector(selected = 4) |> 
   hc_scrollbar(
     barBackgroundColor = "gray",
     barBorderRadius = 7,

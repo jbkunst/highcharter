@@ -50,7 +50,7 @@ dfopts <- dfopts %>%
 
 # run examples for each function ------------------------------------------
 # run examples to check at least don't have errors
-# dont assing if you want to see the outputs
+# don't assign if you want to see the outputs
 dfopts %>%
   pull(option) %>%
   str_c("dev/examples-api/", ., ".R") %>%
@@ -237,7 +237,7 @@ file.copy(
   overwrite = TRUE
 )
 
-message("devtools::document() & devtools::build()")
+cli::cli_h1("devtools::document() & devtools::build()")
 devtools::document()
 devtools::build()
 
