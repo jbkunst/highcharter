@@ -44,5 +44,26 @@ hchart(
 )
 ```
 
+Among its features {highcharter} can chart various objects depending of
+its class with the generic `hchart` function.
+
+```{r}
+x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
+
+hchart(x, name = "data") 
+```
+
+One of the nicest class which `hchart` can plot is the `forecast`
+class from the {forecast} package.
+
+
+```{r}
+library(forecast)
+
+airforecast <- forecast(auto.arima(AirPassengers), level = 95)
+
+hchart(airforecast)
+```
+
 
 
