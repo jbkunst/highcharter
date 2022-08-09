@@ -27,7 +27,7 @@ $(document).ready(function(){
 </script>
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval = FALSE)
 library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
@@ -178,7 +178,7 @@ hcs |>
 
 ## packedbubble
 
-```{r code = readLines(here::here("dev/examples-charts/packedbubble.R")), eval=TRUE}
+```{r code = readLines(here::here("dev/examples-charts/packedbubble.R"))}
 ```
 
 ## venn & euler
