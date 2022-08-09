@@ -70,6 +70,7 @@ Suggests:
     webshot2,
     covr,
     palmerpenguins,
+    treemap,
     spelling
 LazyData: true
 Language: en-US
