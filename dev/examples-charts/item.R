@@ -17,14 +17,6 @@ hchart(
   showInLegend = TRUE
 )
 
-# hchart(
-#   df, "item", hcaes(name = name, y = count, label = abbrv),
-#   marker = list(symbol = "square"),
-#   rows = 5,
-#   name = "Representatives",
-#   showInLegend = TRUE
-# )
-
 hchart(
   df,
   "item", 
