@@ -72,6 +72,8 @@ Suggests:
     palmerpenguins,
     treemap,
     gapminder,
+    forcats,
+    stringr,
     spelling
 LazyData: true
 Language: en-US

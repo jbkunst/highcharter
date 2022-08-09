@@ -41,7 +41,11 @@ options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 
 
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(forcats)
+library(purrr)
+library(stringr)
+
 data(gapminder, package = "gapminder")
 
 gapminder2007 <- gapminder |>
