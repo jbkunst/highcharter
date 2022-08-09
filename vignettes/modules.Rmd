@@ -59,6 +59,7 @@ the equation on the legend.
 library(highcharter)
 
 data(penguins, package = "palmerpenguins")
+
 penguins <- penguins[complete.cases(penguins),]
 
 hchart(
