@@ -195,10 +195,18 @@ hcs |>
 ```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))}
 ```
 
-
 ## bullet
 
 ```{r code = readLines(here::here("dev/examples-charts/bullet.R"))}
 ```
 
+## item
+
+```{r code = readLines(here::here("dev/examples-charts/item.R"))}
+```
+
+## sankey
+
+```{r code = readLines(here::here("dev/examples-charts/sankey.R"))}
+```
 
