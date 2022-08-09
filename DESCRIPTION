@@ -74,6 +74,8 @@ Suggests:
     gapminder,
     forcats,
     stringr,
+    rsvg,
+    fontawesome,
     spelling
 LazyData: true
 Language: en-US
