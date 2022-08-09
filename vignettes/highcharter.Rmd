@@ -65,5 +65,62 @@ airforecast <- forecast(auto.arima(AirPassengers), level = 95)
 hchart(airforecast)
 ```
 
+See more example of `hchart` in `vignette("hchart")`.
 
+## <span class="fa fa-line-chart"></span> Highstock
+
+With highcharter you can use the highstock library which 
+include sophisticated navigation options like_
+
+- Small navigator series
+- Preset date ranges
+- Date picker
+- Scrolling and panning.
+
+With {highcharter} it is easy make candlesticks or ohlc charts using
+time series data. For example, using data from 
+[{quantmod}](http://www.quantmod.com/) package:
+
+```{r}
+library(quantmod)
+
+x <- getSymbols("GOOG", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
+
+highchart(type = "stock") |> 
+  hc_add_series(x) |> 
+  hc_add_series(y, type = "ohlc")
+```
+
+## <span class="fa fa-map-o"></span> Highmaps
+
+We can chart maps elements and choropleth using the highmaps and 
+build interactive maps to display data linked to geographic objects. 
+
+```{r}
+data(GNI2014, package = "treemap")
+
+hcmap(
+  "custom/world-robinson-lowres",
+  data = GNI2014,
+  name = "Gross national income per capita",
+  value = "GNI",
+  borderWidth = 0,
+  nullColor = "#d3d3d3",
+  joinBy = c("iso-a3", "iso3")
+) |>
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
+    type = "logarithmic"
+  ) 
+```
+
+## What now?
+
+Since you know the basics now it could be interesting:
+
+- Go motivate yourself with the `vignette("showcase")` and observe everything that can be 
+done with the {highcharter} package.
+- Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
+- See all chart you can make in `vignette("highcharts")`.
 
