@@ -76,6 +76,7 @@ Suggests:
     stringr,
     rsvg,
     fontawesome,
-    spelling
+    readr,
+    spelling,
 LazyData: true
 Language: en-US
