@@ -69,7 +69,7 @@ Suggests:
     idbr,
     webshot2,
     covr,
-    penguins,
+    palmerpenguins,
     spelling
 LazyData: true
 Language: en-US
