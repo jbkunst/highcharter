@@ -3,8 +3,6 @@ title: Highcharter
 author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-description: >
-  Let's know about what can we do using highcharter.
 editor_options: 
   chunk_output_type: console
 vignette: >
