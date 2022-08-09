@@ -69,6 +69,7 @@ Suggests:
     idbr,
     webshot2,
     covr,
+    penguins,
     spelling
 LazyData: true
 Language: en-US
