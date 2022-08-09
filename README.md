@@ -5,11 +5,13 @@
 [![Project Status: Active – The project has reached a stable, usablestate and is being activelydeveloped.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jbkunst/highcharter?branch=master)
-[![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
+
 [![R-CMD-check](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml)
-[![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg)](https://github.com/jbkunst/highcharter/issues)
-[![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?style=social&label=Github)](https://github.com/jbkunst/highcharter)
+
+[![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter/issues)
+[![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter/issues)
+[![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter/issues)
+[![Github Stars](https://img.shields.io/github/stars/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter)
 
 Highcharter is a **[R](https://cran.r-project.org/)** wrapper for 
 **[Highcharts](https://www.highcharts.com/)**  javascript library and its modules.
