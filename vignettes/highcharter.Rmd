@@ -111,15 +111,15 @@ build interactive maps to display data linked to geographic objects.
 <!--   hc_colorAxis( -->
 <!--     stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)), -->
 <!--     type = "logarithmic" -->
-<!--   )  -->
+<!--   ) -->
 <!-- ``` -->
 
-<!-- ## What now? -->
+## What now?
 
-<!-- Since you know the basics now it could be interesting: -->
+Since you know the basics now it could be interesting:
 
-<!-- - Go motivate yourself with the `vignette("showcase")` and observe everything that can be  -->
-<!-- done with the {highcharter} package. -->
-<!-- - Learn to configure graphics using the implemented API in `vignette("highcharts-api")`. -->
-<!-- - See all chart you can make in `vignette("highcharts")`. -->
+- Go motivate yourself with the `vignette("showcase")` and observe everything that can be
+done with the {highcharter} package.
+- Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
+- See all chart you can make in `vignette("highcharts")`.
 
