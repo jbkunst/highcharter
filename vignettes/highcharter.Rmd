@@ -11,6 +11,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}    
 ---
 
+<script>
+  $(document).ready(function(){ 
+    el = $(".page-header > h1")
+    icon = "rocket"
+    text = el.text()
+    text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
+    el.html(text_new) 
+  }) ;
+</script>
 
 
 ```{r}
