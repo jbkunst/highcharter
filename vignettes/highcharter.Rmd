@@ -21,17 +21,28 @@ vignette: >
   }) ;
 </script>
 
-```{r}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(highcharter)
 options(highcharter.theme = hc_theme_hcrt())
 ```
 
+## <span class="fa fa-bar-chart"></span> Highcharts
+
+let us start start with a simple example using `hchart` function.
 
 ```{r}
 library(highcharter)
 
-highcharts_demo()
+# install.packages("palmerpenguins")
+data(penguins, package = "palmerpenguins") 
+
+hchart(
+  penguins,
+  "scatter",
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species)
+)
 ```
+
 
 
