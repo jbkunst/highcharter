@@ -1,6 +1,8 @@
 # example 1
 # http://www.maartenlambrechts.com/2017/10/22/tutorial-a-worldtilegrid-with-ggplot2.html
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(stringr)
 
 url <- "https://gist.githubusercontent.com/maartenzam/787498bbc07ae06b637447dbd430ea0a/raw/9a9dafafb44d8990f85243a9c7ca349acd3a0d07/worldtilegrid.csv"
 
