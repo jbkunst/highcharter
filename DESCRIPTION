@@ -71,6 +71,7 @@ Suggests:
     covr,
     palmerpenguins,
     treemap,
+    gapminder,
     spelling
 LazyData: true
 Language: en-US

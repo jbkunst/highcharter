@@ -5,9 +5,7 @@
 [![Project Status: Active – The project has reached a stable, usablestate and is being activelydeveloped.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Codecov test coverage](https://codecov.io/gh/jbkunst/highcharter/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jbkunst/highcharter?branch=master)
-
 [![R-CMD-check](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jbkunst/highcharter/actions/workflows/R-CMD-check.yaml)
-
 [![Last commit](https://img.shields.io/github/last-commit/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-raw/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed-raw/jbkunst/highcharter.svg?logo=github&color=brightgreen)](https://github.com/jbkunst/highcharter/issues)
