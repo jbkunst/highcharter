@@ -1,5 +1,5 @@
 ---
-title: Stocks with highstock
+title: Stocks with highstocks
 author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
