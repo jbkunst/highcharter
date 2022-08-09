@@ -25,9 +25,13 @@ $(document).ready(function(){
 </script>
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval = FALSE)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE
+)
 library(highcharter)
-options(highcharter.theme = hc_theme_hcrt(), highcharter.download_map_data = TRUE)
+options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+options(highcharter.download_map_data = TRUE)
 ```
 
 The highcharter package include [highmaps](https://www.highcharts.com/demo/maps) 
