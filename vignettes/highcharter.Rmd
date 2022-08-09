@@ -45,12 +45,12 @@ hchart(
 ```
 
 Among its features {highcharter} can chart various objects depending of
-its class with the generic `hchart` function.
+its class with the generic `hchart` function. In the next example `x` is numeric:
 
 ```{r}
 x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 
-hchart(x, name = "data") 
+hchart(x, name = "data", color = "#17b8b6") 
 ```
 
 One of the nicest class which `hchart` can plot is the `forecast`
@@ -118,7 +118,7 @@ hcmap(
 
 Since you know the basics now it could be interesting:
 
-- Go motivate yourself with the `vignette("showcase")` and observe everything that can be
+- Go motivate yourself with the `vignette("showcase")` and look everything that can be
 done with the {highcharter} package.
 - Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
 - See all chart you can make in `vignette("highcharts")`.
