@@ -28,7 +28,10 @@ $(document).ready(function(){
 
 ```{r, include=FALSE}
 library(highcharter)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval=FALSE)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE
+)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 options(download.file.method = "libcurl")
 ```
@@ -46,7 +49,7 @@ of chart and then define the aesthetics for each variable.
 ```{r}
 library(highcharter)
 library(dplyr)
-# remotes::install_github("allisonhorst/palmerpenguins")
+
 data(penguins, package = "palmerpenguins")
 data(diamonds, economics_long, package = "ggplot2")
 
