@@ -1,6 +1,7 @@
 library(lubridate)
 
 N <- 7
+
 set.seed(1234)
 
 df <- tibble(
