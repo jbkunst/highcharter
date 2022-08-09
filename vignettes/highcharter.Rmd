@@ -65,20 +65,19 @@ airforecast <- forecast(auto.arima(AirPassengers), level = 95)
 hchart(airforecast)
 ```
 
-See more example of `hchart` in `vignette("hchart")`.
+See more examples of `hchart` in `vignette("hchart")`.
 
 ## <span class="fa fa-line-chart"></span> Highstock
 
-With highcharter you can use the highstock library which 
-include sophisticated navigation options like_
+With {highcharter} you can use the highstock library which 
+include sophisticated navigation options like:
 
 - Small navigator series
 - Preset date ranges
 - Date picker
 - Scrolling and panning.
 
-With {highcharter} it is easy make candlesticks or ohlc charts using
-time series data. For example, using data from 
+It is easy make candlesticks or ohlc charts using time series data. For example, using data from 
 [{quantmod}](http://www.quantmod.com/) package:
 
 ```{r}
