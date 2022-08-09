@@ -24,36 +24,33 @@ $(document).ready(function(){
 </script>
 
 ```{r, warning = FALSE, message = FALSE, echo = FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval=FALSE)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  out.width = "100%",
+  eval = TRUE
+)
 library(highcharter)
-options(highcharter.theme = hc_theme_hcrt(), highcharter.debug = TRUE)
+options(highcharter.theme = hc_theme_hcrt(),
+        highcharter.debug = TRUE)
 ```
 
 ## <span class="fa fa-bar-chart"></span> Highcharts
 
 let us start start with a simple example using `hchart` function.
 
-```{r, echo=FALSE}
-hc_theme_highcharts <- 
-  hc_theme_hcrt(
-    chart = list(backgroundColor = "transparent"),
-    plotOptions = list(
-      series = list(showInLegend = FALSE),
-      line = list(lineWidth = 1.2)
-      ),
-    tooltip = list(valueDecimals = 2)
-  )
-
-options(highcharter.theme = hc_theme_highcharts)
-```
-
 
 ```{r}
 library(highcharter)
-# install.packages("palmerpenguins")
-data(penguins, package = "palmerpenguins")
 
-hchart(penguins, "scatter", hcaes(x = flipper_length_mm, y = bill_length_mm, group = species))
+# install.packages("palmerpenguins")
+data(penguins, package = "palmerpenguins") 
+
+hchart(
+  penguins,
+  "scatter",
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species)
+  )
 ```
 
 Among its features highcharter can chart various objects depending of
@@ -96,8 +93,8 @@ library(quantmod)
 x <- getSymbols("GOOG", auto.assign = FALSE)
 y <- getSymbols("AMZN", auto.assign = FALSE)
 
-highchart(type = "stock") %>% 
-   hc_add_series(x) %>% 
+highchart(type = "stock") |> 
+   hc_add_series(x) |> 
    hc_add_series(y, type = "ohlc")
 ```
 
@@ -109,15 +106,16 @@ build interactive maps to display data linked to geographic objects.
 ```{r}
 data(GNI2014, package = "treemap")
 
+
 hcmap(
-  "custom/world-robinson-lowres", 
+  "custom/world-robinson-lowres",
   data = GNI2014,
-  name = "Gross national income per capita", 
+  name = "Gross national income per capita",
   value = "GNI",
   borderWidth = 0,
   nullColor = "#d3d3d3",
   joinBy = c("iso-a3", "iso3")
-  ) %>%
+  ) |>
   hc_colorAxis(
     stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
     type = "logarithmic"
