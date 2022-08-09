@@ -91,10 +91,10 @@ highchart(type = "stock") |>
   hc_add_series(y, type = "ohlc")
 ```
 
-<!-- ## <span class="fa fa-map-o"></span> Highmaps -->
+## <span class="fa fa-map-o"></span> Highmaps
 
-<!-- We can chart maps elements and choropleth using the highmaps and  -->
-<!-- build interactive maps to display data linked to geographic objects.  -->
+We can chart maps elements and choropleth using the highmaps and
+build interactive maps to display data linked to geographic objects.
 
 <!-- ```{r} -->
 <!-- data(GNI2014, package = "treemap") -->
