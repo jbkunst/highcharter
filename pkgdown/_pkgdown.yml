@@ -1,5 +1,8 @@
 url: https://jkunst.com/highcharter/
 lang: en
+authors:
+  Joshua Kunst:
+    href: https://jkunst.com
 template:
   bootstrap: 5
   bslib:
@@ -7,13 +10,11 @@ template:
     heading_font:
       google:
         family: "Alegreya Sans SC"
-        wght : 300
+        wght : "300"
     base_font:
       google:
         family: "IBM Plex Sans"
     code_font: {google: "JetBrains Mono"}
-    
-    
 navbar:
   bg: primary
 reference:
