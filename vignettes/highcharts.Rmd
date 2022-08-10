@@ -170,10 +170,10 @@ hcs |>
 <!-- ```{r code = readLines(here::here("dev/examples-charts/xrange.R"))} -->
 <!-- ``` -->
 
-<!-- ## vector -->
+## vector
 
-<!-- ```{r code = readLines(here::here("dev/examples-charts/vector.R"))} -->
-<!-- ``` -->
+```{r code = readLines(here::here("dev/examples-charts/vector.R"))}
+```
 
 <!-- ## tilemap -->
 
