@@ -175,38 +175,38 @@ hcs |>
 ```{r code = readLines(here::here("dev/examples-charts/vector.R"))}
 ```
 
-## tilemap
+<!-- ## tilemap -->
 
-```{r code = readLines(here::here("dev/examples-charts/tilemap.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/tilemap.R"))} -->
+<!-- ``` -->
 
-## packedbubble
+<!-- ## packedbubble -->
 
-```{r code = readLines(here::here("dev/examples-charts/packedbubble.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/packedbubble.R"))} -->
+<!-- ``` -->
 
-## venn & euler
+<!-- ## venn & euler -->
 
-```{r code = readLines(here::here("dev/examples-charts/venn.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/venn.R"))} -->
+<!-- ``` -->
 
-## solidgauge
+<!-- ## solidgauge -->
 
-```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))} -->
+<!-- ``` -->
 
-## bullet
+<!-- ## bullet -->
 
-```{r code = readLines(here::here("dev/examples-charts/bullet.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/bullet.R"))} -->
+<!-- ``` -->
 
-## item
+<!-- ## item -->
 
-```{r code = readLines(here::here("dev/examples-charts/item.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/item.R"))} -->
+<!-- ``` -->
 
-## sankey
+<!-- ## sankey -->
 
-```{r code = readLines(here::here("dev/examples-charts/sankey.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/sankey.R"))} -->
+<!-- ``` -->
 

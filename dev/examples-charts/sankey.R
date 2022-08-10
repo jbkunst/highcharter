@@ -33,7 +33,7 @@ hchart(UKvisits,
 
 data(diamonds, package = "ggplot2")
 
-diamonds2 <- select(diamonds, cut, color, clarity)
+diamonds2 <- dplyr::select(diamonds, cut, color, clarity)
 
 data_to_sankey(diamonds2)
 

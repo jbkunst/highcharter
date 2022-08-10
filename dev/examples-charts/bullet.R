@@ -4,7 +4,7 @@ df <- data.frame(
   x = LETTERS[1:6]
   )
 
-glimpse(df)
+dplyr::glimpse(df)
 
 hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
   hc_chart(inverted = TRUE) %>%
