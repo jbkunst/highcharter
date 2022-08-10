@@ -165,10 +165,10 @@ hcs |>
 ```
 
 
-## xrange
+<!-- ## xrange -->
 
-```{r code = readLines(here::here("dev/examples-charts/xrange.R"))}
-```
+<!-- ```{r code = readLines(here::here("dev/examples-charts/xrange.R"))} -->
+<!-- ``` -->
 
 ## vector
 
