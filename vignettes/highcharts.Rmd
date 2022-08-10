@@ -14,6 +14,8 @@ vignette: >
   %\VignetteIndexEntry{Charts with highcharts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+resource_files:
+  - dev/examples-charts/vector.R 
 ---
 
 <script>
