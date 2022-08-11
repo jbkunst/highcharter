@@ -8,7 +8,7 @@ library(stringr)
 
 url <- "https://gist.githubusercontent.com/maartenzam/787498bbc07ae06b637447dbd430ea0a/raw/9a9dafafb44d8990f85243a9c7ca349acd3a0d07/worldtilegrid.csv"
 
-data <- read_csv(url)
+data <- suppressMessages(read_csv(url))
 
 data <- data %>% 
   rename_all(str_replace_all, "\\.", "_") %>% 
