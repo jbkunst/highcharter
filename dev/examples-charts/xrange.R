@@ -1,3 +1,6 @@
+#' ## xrange
+#' 
+
 library(lubridate)
 
 N <- 7

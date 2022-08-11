@@ -32,7 +32,8 @@ $(document).ready(function(){
 library(highcharter)
 knitr::opts_chunk$set(
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  out.width = "100%"
 )
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 options(download.file.method = "libcurl")
@@ -159,56 +160,23 @@ hcs <- c(
   )  |> 
   map(create_hc) 
 
-hcs |> 
-  map(hc_size, height = 300) %>% 
-  {print(hw_grid(.)); .} |> 
-  map(tags$div, class = "col-sm-4") |> 
+hcs |>
+  map(hc_size, height = 300) %>%
+  # {print(hw_grid(.)); .} |>
+  map(tags$div, class = "col-sm-4") |>
   tags$div(class = "row")
 ```
 
 
-<!-- ## xrange -->
 
-<!-- ```{r code = readLines(here::here("dev/examples-charts/xrange.R"))} -->
-<!-- ``` -->
-
-## vector
-
-```{r code = readLines(here::here("dev/examples-charts/vector.R"))}
+```{r, echo=FALSE, results='asis'}
+fs <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
+for(f in fs){
+  message(f)
+  res <- knitr::spin_child(
+    here::here(f)
+    # here::here("dev/examples-charts/xrange.R")
+    )
+  cat(res, sep = '\n')  
+}
 ```
-
-<!-- ## tilemap -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/tilemap.R"))} -->
-<!-- ``` -->
-
-<!-- ## packedbubble -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/packedbubble.R"))} -->
-<!-- ``` -->
-
-<!-- ## venn & euler -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/venn.R"))} -->
-<!-- ``` -->
-
-<!-- ## solidgauge -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/solidgauge.R"))} -->
-<!-- ``` -->
-
-<!-- ## bullet -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/bullet.R"))} -->
-<!-- ``` -->
-
-<!-- ## item -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/item.R"))} -->
-<!-- ``` -->
-
-<!-- ## sankey -->
-
-<!-- ```{r code = readLines(here::here("dev/examples-charts/sankey.R"))} -->
-<!-- ``` -->
-

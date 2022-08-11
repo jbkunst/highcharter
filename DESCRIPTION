@@ -78,6 +78,10 @@ Suggests:
     fontawesome,
     readr,
     here,
+    rvest,
+    tidytext,
+    igraphdata,
+    ggplot2movies,
     spelling,
 LazyData: true
 Language: en-US
