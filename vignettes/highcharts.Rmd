@@ -14,8 +14,6 @@ vignette: >
   %\VignetteIndexEntry{Charts with highcharts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-resource_files:
-  - dev/examples-charts/vector.R 
 ---
 
 <script>
@@ -156,7 +154,9 @@ hcs <- c(
   "polarline", "polarcolumn", "polarcolumnrange",
   "streamgraph", "item", "wordcloud", "timeline",
   
-  "sankey", "dependencywheel", "organization"
+  "sankey",
+  # "organization"
+  "dependencywheel"
   )  |> 
   map(create_hc) 
 
@@ -167,10 +167,12 @@ hcs |>
   tags$div(class = "row")
 ```
 
-
-
 ```{r, echo=FALSE, results='asis'}
 fs <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
+fs <- stringr::str_subset(
+  fs,
+  "xrange"
+)
 for(f in fs){
   message(f)
   res <- knitr::spin_child(
