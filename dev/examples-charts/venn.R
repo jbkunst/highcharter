@@ -1,3 +1,6 @@
+#' ## venn
+#' 
+
 highchart() %>% 
   hc_chart(type = "venn") %>% 
   hc_add_series(

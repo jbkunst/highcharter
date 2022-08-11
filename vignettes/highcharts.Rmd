@@ -168,10 +168,13 @@ hcs |>
 ```
 
 ```{r, echo=FALSE, results='asis'}
-fs <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
-fs <- stringr::str_subset(fs, "xrange|wordcloud|packedbubble|tilemap|vector|errorbar|venn")
+ff <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
+fs <- stringr::str_subset(ff, "xrange|wordcloud|packedbubble|tilemap|vector|errorbar|venn|item")
+
+# setdiff(ff, fs) |> basename()
 
 for(f in fs){
+  message(f)
   res <- knitr::spin_child(here::here(f))
   cat(res, sep = '\n')  
 }

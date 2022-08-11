@@ -1,3 +1,6 @@
+#' ## vector
+#' 
+#' 
 x <- seq(5, 95, by = 5)
 
 df <- expand.grid(x = x, y = x) %>% 
@@ -5,8 +8,6 @@ df <- expand.grid(x = x, y = x) %>%
     length = 200 - (x + y),
     direction = (x + y)/200 * 360
   )
-
-glimpse(df)
 
 hchart(
   df,

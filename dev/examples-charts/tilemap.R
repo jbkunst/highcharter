@@ -1,4 +1,6 @@
-# example 1
+#' ## tilemap
+#' 
+
 # http://www.maartenlambrechts.com/2017/10/22/tutorial-a-worldtilegrid-with-ggplot2.html
 library(dplyr)
 library(readr)
@@ -11,8 +13,6 @@ data <- read_csv(url)
 data <- data %>% 
   rename_all(str_replace_all, "\\.", "_") %>% 
   select(x, y, name, region, alpha_2)
-
-glimpse(data)
 
 hchart(data, "tilemap", hcaes(x = x, y = -y, name = name, group = region)) %>% 
   hc_chart(type = "tilemap") %>% 

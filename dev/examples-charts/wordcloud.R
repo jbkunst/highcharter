@@ -16,6 +16,4 @@ data <- read_html("http://www.htmlwidgets.org/develop_intro.html") |>
   anti_join(tidytext::stop_words, by = "word") |> 
   head(60)
 
-dplyr::glimpse(data)
-
 hchart(data, "wordcloud", hcaes(name = word, weight = log(n)))

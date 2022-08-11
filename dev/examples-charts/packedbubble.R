@@ -1,3 +1,6 @@
+#' ## packedbubble
+#' 
+#' 
 library(dplyr)
 
 data(gapminder, package = "gapminder")

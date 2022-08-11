@@ -1,3 +1,5 @@
+#' ## item
+#' 
 df <- data.frame(
   stringsAsFactors = FALSE,
   name = c(
@@ -10,14 +12,8 @@ df <- data.frame(
     "Alternative for Germany"
   ),
   count = c(69, 153, 67, 80, 200, 46, 94),
-  col = c(
-    "#BE3075",
-    "#EB001F",
-    "#64A12D",
-    "#FFED00",
-    "#000000",
-    "#008AC5",
-    "#009EE0"
+  col = c("#BE3075", "#EB001F", "#64A12D", "#FFED00",
+          "#000000", "#008AC5", "#009EE0"
   ),
   abbrv = c("DIE LINKE", "SPD", "GRÜNE", "FDP", "CDU", "CSU", "AfD")
 )
