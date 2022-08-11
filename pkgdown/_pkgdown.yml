@@ -14,7 +14,7 @@ template:
     base_font:
       google:
         family: "IBM Plex Sans"
-    code_font: {google: "JetBrains Mono"}
+    code_font: {google: "Inconsolata"}
 navbar:
   bg: primary
 reference:
