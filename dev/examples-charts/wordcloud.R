@@ -3,20 +3,19 @@
 library(rvest)
 library(tidytext)
 
-texts <- read_html("http://www.htmlwidgets.org/develop_intro.html") %>% 
-  html_nodes("p") %>% 
-  html_text()
+data <- read_html("http://www.htmlwidgets.org/develop_intro.html") |> 
+  html_nodes("p") |> 
+  html_text() |> 
+  map(str_to_lower) |> 
+  reduce(str_c) |> 
+  str_split("\\s+") |> 
+  unlist() |> 
+  tibble() |> 
+  setNames("word") |> 
+  count(word, sort = TRUE) |> 
+  anti_join(tidytext::stop_words, by = "word") |> 
+  head(60)
 
-data <- texts %>% 
-  map(str_to_lower) %>% 
-  reduce(str_c) %>% 
-  str_split("\\s+") %>% 
-  unlist() %>% 
-  data_frame(word = .) %>% 
-  count(word, sort = TRUE) %>% 
-  anti_join(tidytext::stop_words, by = "word") %>% 
-  head(50)
+dplyr::glimpse(data)
 
-data
-
-hchart(data, "wordcloud", hcaes(name = word, weight = n))
+hchart(data, "wordcloud", hcaes(name = word, weight = log(n)))
