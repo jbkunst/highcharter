@@ -29,6 +29,8 @@ $(document).ready(function(){
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 library(highcharter)
 library(dplyr)
+library(purrr)
+library(stringr)
 library(htmltools)
 library(ggplot2)
 ```
@@ -63,9 +65,7 @@ hc
 
 Here you'll find the themes to change the look of your charts.
 
-```{r, echo=FALSE, results='asis', eval=FALSE}
-library(tidyverse)
-
+```{r, echo=FALSE, results='asis'}
 themes <- help.search("theme", package = "highcharter")$matches
 themes <- themes |> 
   tibble::as_tibble() |>
@@ -94,7 +94,7 @@ themes |>
       dplyr::first()
 
     tagList(
-      tags$h3(t),
+      tags$h3(stringr::str_remove(t, "hc_theme_")),
       content
     )
     
