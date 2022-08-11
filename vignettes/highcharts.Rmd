@@ -171,7 +171,8 @@ hcs |>
 ff <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
 ff <- stringr::str_subset(ff, ".R")
 
-fs <- stringr::str_subset(ff, "xrange|wordcloud|packedbubble|tilemap|vector|errorbar|venn|item|gantt|solidgauge|lollipop")
+fs <- stringr::str_subset(ff, "xrange|wordcloud|packedbubble|tilemap|vector|errorbar|venn|item")
+# |gantt|solidgauge|lollipop
 
 # setdiff(ff, fs) |> basename()
 
