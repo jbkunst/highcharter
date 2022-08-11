@@ -82,6 +82,7 @@ Suggests:
     tidytext,
     igraphdata,
     ggplot2movies,
+    janitor,
     spelling,
 LazyData: true
 Language: en-US
