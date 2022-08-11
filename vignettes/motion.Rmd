@@ -33,7 +33,7 @@ options(download.file.method = "libcurl")
 
 ## Example I 
 
-```{r}
+```{r, eval=FALSE}
 library(idbr)
 library(purrr)
 library(dplyr)
