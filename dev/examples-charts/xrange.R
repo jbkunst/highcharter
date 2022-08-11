@@ -13,7 +13,7 @@ df <- tibble(
   cat = rep(1:5, length.out = N) - 1,
   progress = round(stats::runif(N), 1)
 ) |> 
-  mutate_if(df, is.Date, datetime_to_timestamp)
+  mutate_if(is.Date, datetime_to_timestamp)
 
 hchart(
   df,
