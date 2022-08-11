@@ -155,7 +155,7 @@ hcs <- c(
   "streamgraph", "item", "wordcloud", "timeline",
   
   "sankey",
-  # "organization"
+  "organization",
   "dependencywheel"
   )  |> 
   map(create_hc) 
@@ -169,16 +169,11 @@ hcs |>
 
 ```{r, echo=FALSE, results='asis'}
 fs <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
-fs <- stringr::str_subset(
-  fs,
-  "xrange"
-)
+fs <- stringr::str_subset(fs, "xrange")
+fs <- stringr::str_subset(fs, "wordcloud")
+
 for(f in fs){
-  message(f)
-  res <- knitr::spin_child(
-    here::here(f)
-    # here::here("dev/examples-charts/xrange.R")
-    )
+  res <- knitr::spin_child(here::here(f))
   cat(res, sep = '\n')  
 }
 ```
