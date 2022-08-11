@@ -169,7 +169,7 @@ hcs |>
 
 ```{r, echo=FALSE, results='asis'}
 fs <- dir(here::here("dev/examples-charts/"), full.names = TRUE)
-fs <- stringr::str_subset(fs, "xrange|wordcloud")
+fs <- stringr::str_subset(fs, "xrange|wordcloud|packedbubble|tilemap|vector|errorbar|venn")
 
 for(f in fs){
   res <- knitr::spin_child(here::here(f))
