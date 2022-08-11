@@ -1,3 +1,4 @@
+#' ## solidgauge
 col_stops <- data.frame(
   q = c(0.15, 0.4, .8),
   c = c('#55BF3B', '#DDDF0D', '#DF5353'),

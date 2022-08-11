@@ -1,6 +1,4 @@
 #' ## vector
-#' 
-#' 
 x <- seq(5, 95, by = 5)
 
 df <- expand.grid(x = x, y = x) %>% 

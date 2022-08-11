@@ -1,3 +1,4 @@
+#' ## errorbar
 example_dat <- tibble(
   Type = c("Human", "High-Elf", "Orc"), 
   key = c("World1", "World2", "World3")
