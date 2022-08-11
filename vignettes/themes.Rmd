@@ -26,7 +26,7 @@ $(document).ready(function(){
 </script>
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%", eval = FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 library(highcharter)
 library(dplyr)
 library(htmltools)
@@ -63,7 +63,7 @@ hc
 
 Here you'll find the themes to change the look of your charts.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results='asis'}
 library(tidyverse)
 
 themes <- help.search("theme", package = "highcharter")$matches
@@ -80,41 +80,27 @@ themes <- themes |>
 
 themes <- str_subset(themes, "spark", negate = TRUE)
 
-thms <- unique(c("hc_theme_smpl", "hc_theme_db", themes))
+themes <- unique(c("hc_theme_smpl", "hc_theme_db", themes))
 # thms <- sample(thms, 5)
 
 # generate tabs
-thms2 <- thms |>
-  map(function(t) { # t <- sample(thms, 1)
-
-    t |>
-      str_replace_all("hc_theme_", "") |>
-      tags$a(
-        class = if (t == thms[1]) "active" else NULL,
-        class="nav-link"
-        ) |>
-      tags$li(class = "nav-item")
+themes |>
+  map(function(t) { # t <- sample(themes, 1)
     
-  }) 
-
-tags$ul(class = "nav nav-pills", id = "myTab", thms2)
-
-tags$br()
-
-thms |>
-  map(function(t) { # t <- sample(thms, 1)
-
     thm <- get(t)()
 
     content <- list(hc) |>
-      map(hc_add_theme, thm)
+      map(hc_add_theme, thm) |> 
+      dplyr::first()
 
-    tags$div(content, id = t, class = "tab-pane", class = if (t == thms[1]) "active" else NULL)
+    tagList(
+      tags$h3(t),
+      content
+    )
     
-  }) |>
-  tags$div(class = "tab-content")
+  }) |> 
+  htmltools::as.tags()
 ```
-
 
 ## Creating themes
 
