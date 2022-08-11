@@ -10,7 +10,7 @@ template:
     heading_font:
       google:
         family: "Alegreya Sans SC"
-        wght : "300"
+        wght : 400
     base_font:
       google:
         family: "IBM Plex Sans"
