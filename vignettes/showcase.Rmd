@@ -25,7 +25,6 @@ $(document).ready(function(){
 </script>
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 ```
@@ -38,7 +37,7 @@ highcharter can do in terms of customization and design.
 > This is a bar graph describing my favorite pies including a pie chart describing my favorite bars.
 > - _Marshall Eriksen_
 
-```{r bar}
+```{r bar, echo=FALSE}
 data(favorite_bars)
 data(favorite_pies)
 
@@ -105,10 +104,13 @@ highchart() |>
     )
 ```
 
+```{r bar, eval=FALSE}
+```
+
 
 ## Pokemon
 
-```{r pokemon}
+```{r pokemon, echo=FALSE}
 library(dplyr)
 data(pokemon)
 
@@ -173,12 +175,14 @@ hchart(
   hc_size(height = 700)
 ```
 
+```{r pokemon, eval=FALSE}
+```
 
 ## Weathers Radials
 
 Example inspired by http://weather-radials.com/.
 
-```{r weather}
+```{r weather, echo=FALSE}
 library(highcharter)
 data(weather)
 
@@ -224,11 +228,14 @@ hchart(
   )
 ```
 
+```{r weather, eval=FALSE}
+```
+
 ## Stars
 
 Inspired by Nadieh Bremer's [block](http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47).
 
-```{r stars}
+```{r stars, echo=FALSE}
 data(stars)
 
 colors <- c(
@@ -289,11 +296,14 @@ hchart(
     )
 ```
 
+```{r stars, eval=FALSE}
+```
+
 ## The Impact of Vaccines
 
 From [WSJ graphic: Battling Infectious Diseases in the 20th Century](http://graphics.wsj.com/infectious-diseases-and-vaccines/): 
 
-```{r vaccines}
+```{r vaccines, echo=FALSE}
 data(vaccines)
 
 fntltp <- JS("function(){
@@ -349,6 +359,8 @@ hchart(
     align = "left",
     valueDecimals = 0
   ) |>
-  hc_size(height = 1000)
+  hc_size(height = 900)
 ```
 
+```{r vaccines, eval=FALSE}
+```
