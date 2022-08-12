@@ -1,3 +1,11 @@
+# quick testing -----------------------------------------------------------
+pkgdown::clean_site(pkg = ".")
+pkgdown::init_site(pkg = ".")
+pkgdown::build_home_index()
+pkgdown::preview_page("index.html")
+pkgdown::build_article(name = "showcase")
+pkgdown::preview_page("articles/showcase.html")
+
 # cleanup start -----------------------------------------------------------
 pkgdown::clean_site(pkg = ".")
 pkgdown::init_site(pkg = ".")
@@ -18,7 +26,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 # source("pkgdown/03-pkgdown-add-to-yalm-articles.R")
 # pkgdown::build_article(name = "highcharter")
 # pkgdown::build_article(name = "highcharts")
-# pkgdown::preview_page('articles/highcharts.html')
+# pkgdown::preview_page("articles/highcharts.html")
 pkgdown::build_articles_index()
 pkgdown::build_articles()
 pkgdown::preview_site(path = "/articles")
