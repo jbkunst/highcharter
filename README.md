@@ -31,6 +31,10 @@ information in `geojson` format.
 * A lot of features and plugins: motion, draggable points, font-awesome,
 tooltips, annotations.
 
+<div w3-include-html="extra-index-examples.html"></div>
+
+<iframe src="extra-index-examples.html" scrolling="no" frameborder="no"></iframe>
+
 ## Installation
 
 CRAN version:
