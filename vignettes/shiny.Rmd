@@ -28,6 +28,8 @@ $(document).ready(function(){
 ```{r, include=FALSE}
 library(highcharter)
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+
+knitr::opts_chunk$set(eval = FALSE)
 ```
 
 Let's check some examples!
