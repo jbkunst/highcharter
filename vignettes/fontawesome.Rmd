@@ -23,10 +23,8 @@ $(document).ready(function(){
   el.html(text_new) 
 }) ;
 </script>
-
 ```{r, include=FALSE}
 library(highcharter)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
 options(download.file.method = "libcurl")
 ```

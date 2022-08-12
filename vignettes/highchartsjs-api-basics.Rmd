@@ -26,7 +26,6 @@ $(document).ready(function(){
 
 ```{r, include=FALSE}
 library(highcharter)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, out.width="100%")
 ```
 
 ## Introduction
