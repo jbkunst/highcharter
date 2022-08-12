@@ -18,8 +18,8 @@ annotations that support labels.
 }
 \examples{
 
-highchart() \%>\%
-  hc_add_series(data = sample(1:12)) \%>\% 
+highchart() |>
+  hc_add_series(data = sample(1:12)) |> 
   hc_labels(
     items = list(
       list(

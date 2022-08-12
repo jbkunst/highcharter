@@ -32,16 +32,16 @@ df <- tibble(
 
 df
 
-hc <- highchart() \%>\%
-  hc_title(text = "Basic drilldown") \%>\%
-  hc_xAxis(type = "category") \%>\%
-  hc_legend(enabled = FALSE) \%>\%
+hc <- highchart() |>
+  hc_title(text = "Basic drilldown") |>
+  hc_xAxis(type = "category") |>
+  hc_legend(enabled = FALSE) |>
   hc_plotOptions(
     series = list(
       boderWidth = 0,
       dataLabels = list(enabled = TRUE)
     )
-  ) \%>\%
+  ) |>
   hc_add_series(
     data = df,
     type = "column",
@@ -65,7 +65,7 @@ dsan <- list_parse2(dfan)
 
 dsfru <- list_parse2(dffru)
 
-hc <- hc \%>\%
+hc <- hc |>
   hc_drilldown(
     allowPointDrilldown = TRUE,
     series = list(
