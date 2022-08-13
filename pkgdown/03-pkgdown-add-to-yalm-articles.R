@@ -25,22 +25,14 @@ get_started <- c(
 artcls <- setdiff(artcls, get_started)
 
 # highcharts
-highcharts <- c("highcharts", "maps", "stock")
+highcharts <- c("highcharts", "maps", "stock", "themes", "modules")
 
 artcls <- setdiff(artcls, highcharts)
 
 # Xperiments n Xamples
-xx <- c("fontawesome", "drilldown")
-
-artcls <- setdiff(artcls, xx)
-
-# shiny
-shiny <- c("shiny")
-
-artcls <- setdiff(artcls, shiny)
-
-# extras
-artcls <- unique(c("themes", artcls))
+# xx <- c("fontawesome", "drilldown")
+xx <- artcls
+xx <- unique(c("howtos", "shiny", xx))
 
 yml[["articles"]] <- list(
   list(
@@ -54,19 +46,9 @@ yml[["articles"]] <- list(
     contents = highcharts
   ),
   list(
-    title = "Shiny Integration",
-    navbar = "Shiny Integration",
-    contents = shiny
-  ),
-  list(
     title = "Experiments & Examples",
     navbar = "Experiments & Examples",
     contents = xx
-  ),
-  list(
-    title = "More of highcharter",
-    navbar = "More of highcharter", 
-    contents = artcls
   )
 )
 
