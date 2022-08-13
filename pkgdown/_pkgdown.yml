@@ -9,27 +9,29 @@ template:
     primary: '#47475C'
     heading_font:
       google:
-        family: "Alegreya Sans SC"
-        wght : 400
+        family: Alegreya Sans SC
+        wght: 400
     base_font:
       google:
-        family: "IBM Plex Sans"
-    code_font: {google: "Inconsolata"}
+        family: IBM Plex Sans
+    code_font:
+      google: Inconsolata
 navbar:
   bg: primary
   structure:
-    right: [search, twitter, github]
+    right:
+    - search
+    - twitter
+    - github
   components:
     twitter:
       icon: fa-twitter
       href: http://twitter.com/jbkunst
-      aria-label: Twitter  
-      
+      aria-label: Twitter
 figures:
-  message: false
-  warning: false
-  out.width: "100%"
-  
+  message: no
+  warning: no
+  out.width: 100%
 reference:
 - title: Highcharts API
   desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).
@@ -226,18 +228,13 @@ articles:
   - highcharts
   - maps
   - stock
-- title: Shiny Integration
-  navbar: Shiny Integration
-  contents: shiny
+  - themes
+  - modules
 - title: Experiments & Examples
   navbar: Experiments & Examples
   contents:
-  - fontawesome
-  - drilldown
-- title: More of highcharter
-  navbar: More of highcharter
-  contents:
-  - themes
   - howtos
-  - modules
+  - shiny
+  - drilldown
+  - fontawesome
   - motion
