@@ -1,3 +1,9 @@
+# highcharter 0.9.4.9001
+
+## Changes
+
+* enable accessibility.js module
+
 # highcharter 0.9.4.9000
 
 ## Changes
