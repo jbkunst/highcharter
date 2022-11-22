@@ -12,6 +12,8 @@ artcls <- dir("vignettes") |>
   str_subset("png$", negate = TRUE) |> 
   str_remove(".Rmd")
 
+artcls
+
 # get_started
 get_started <- c(
   "highcharter",
@@ -25,14 +27,22 @@ get_started <- c(
 artcls <- setdiff(artcls, get_started)
 
 # highcharts
-highcharts <- c("highcharts", "maps", "stock", "themes", "modules")
+highcharts <- c("highcharts", "maps", "stock")
 
 artcls <- setdiff(artcls, highcharts)
 
 # Xperiments n Xamples
-# xx <- c("fontawesome", "drilldown")
-xx <- artcls
-xx <- unique(c("howtos", "shiny", xx))
+xx <- c("fontawesome", "drilldown")
+
+artcls <- setdiff(artcls, xx)
+
+# shiny
+shiny <- c("shiny")
+
+artcls <- setdiff(artcls, shiny)
+
+# extras
+artcls <- unique(c("themes", artcls))
 
 yml[["articles"]] <- list(
   list(
@@ -46,9 +56,19 @@ yml[["articles"]] <- list(
     contents = highcharts
   ),
   list(
+    title = "Shiny Integration",
+    navbar = "Shiny Integration",
+    contents = shiny
+  ),
+  list(
     title = "Experiments & Examples",
     navbar = "Experiments & Examples",
     contents = xx
+  ),
+  list(
+    title = "More of highcharter",
+    navbar = "More of highcharter", 
+    contents = artcls
   )
 )
 
