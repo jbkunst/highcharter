@@ -1,4 +1,4 @@
-pandoc: 2.14.2
+pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
@@ -18,7 +18,7 @@ articles:
   showcase: showcase.html
   stock: stock.html
   themes: themes.html
-last_built: 2022-08-13T22:52Z
+last_built: 2022-11-22T20:50Z
 urls:
   reference: https://jkunst.com/highcharter/reference
   article: https://jkunst.com/highcharter/articles
