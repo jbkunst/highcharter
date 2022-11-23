@@ -34,6 +34,22 @@ body {
   font-size: 5em;
 }
 
+.contents p, 
+.contents li,
+.contents dd
+{
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 16px auto;
+  font-size: 17px;
+  line-height: 30px;
+  margin-bottom: 1em;
+}
+
+.highchart {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 /*
 h1, h2, h3, h4, h5, h6,
 #toc > h2,
@@ -68,6 +84,7 @@ pre code, code {
 }
 
 /* make space between nav items */
+/*
 .navbar-nav .nav-item>.nav-link {
   font-family: 'Alegreya Sans SC', sans-serif;
   padding-left: 1rem;
@@ -80,6 +97,7 @@ dt {
 form[role=search]{
   visibility: hidden;
 }
+*/
 
 /* make space after navbar 
 .page-header, #toc, .links {
