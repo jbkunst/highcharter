@@ -1,0 +1,165 @@
+@font-face {
+  font-family: 'Datalegreya-Gradient';
+  /* src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Gradient.otf'); */
+  src: local('Datalegreya'), url('https://fonts.cdnfonts.com/s/19716/Datalegreya-Gradient.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: 'Datalegreya-Thin';
+	/* src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Thin.otf'); */
+	src: local('Datalegreya'), url('https://fonts.cdnfonts.com/s/19716/Datalegreya-Thin.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+  -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  -moz-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  -ms-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#highcharter {
+  font-family: 'Datalegreya-Gradient', sans-serif;
+  font-size: 5em;
+}
+
+/*
+h1, h2, h3, h4, h5, h6,
+#toc > h2,
+.navbar-brand {
+  font-family: 'Alegreya Sans SC', sans-serif;
+  font-weight: 300;
+}
+
+h2 > code {
+    font-size: 1.5rem;
+}
+
+.contents p, 
+.contents li,
+.contents dd
+{
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 16px auto;
+  font-size: 17px;
+  line-height: 30px;
+  margin-bottom: 1em;
+}
+
+.highchart {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+pre code, code {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+}
+
+/* make space between nav items */
+.navbar-nav .nav-item>.nav-link {
+  font-family: 'Alegreya Sans SC', sans-serif;
+  padding-left: 1rem;
+}
+
+dt {
+  font-weight: 300;
+}
+
+form[role=search]{
+  visibility: hidden;
+}
+
+/* make space after navbar 
+.page-header, #toc, .links {
+  margin-top: 3rem;
+}
+
+/* make space after navbar 
+.page-header {
+  margin-bottom: 2rem;
+}
+
+
+/*
+.navbar {
+  border-color: #A3EDBA;
+  border-bottom-width: 1px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.05), 0 10px 10px rgba(0,0,0,0.15);
+}
+
+body> .container .row {
+  margin-top: 1.5em;
+}
+
+#navbarbrand {
+  font-size: 1.75em;
+  font-family: 'Datalegreya-Thin', sans-serif;
+}
+
+.navbar-default {
+  background-color: #47475C;
+  border-color: #A3EDBA;
+  border-bottom-width: 1px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.22);
+  
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.nav li>a:focus, .nav li>a:hover {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.nav-pills>li.active>a, 
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  color: #ffffff;
+  background-color: #A3EDBA;
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover, 
+.dropdown-menu>.active>a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #A3EDBA;
+}
+
+dt {
+  font-weight: normal;
+  font-size: 1.25em;
+}
+
+*/
