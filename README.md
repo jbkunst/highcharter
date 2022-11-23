@@ -31,9 +31,14 @@ information in `geojson` format.
 * A lot of features and plugins: motion, draggable points, font-awesome,
 tooltips, annotations.
 
-<div w3-include-html="extra-index-examples.html"></div>
-
-<iframe src="extra-index-examples.html" scrolling="no" frameborder="no"></iframe>
+<iframe 
+  src="index-examples.html" 
+  frameborder="0" 
+  marginheight="0" 
+  marginwidth="0" 
+  width="100%" 
+  height="1000px" 
+  scrolling="auto"></iframe>
 
 ## Installation
 

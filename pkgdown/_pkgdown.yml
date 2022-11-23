@@ -15,7 +15,7 @@ template:
       google:
         family: IBM Plex Sans
     code_font:
-      google: Inconsolata
+      google: Fira Mono
 navbar:
   bg: primary
   structure:

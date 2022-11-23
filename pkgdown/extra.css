@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Alegreya+Sans|Alegreya+Sans+SC:100,300,400|Roboto+Mono:400");
-
 @font-face {
   font-family: 'Datalegreya-Gradient';
   /* src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Gradient.otf'); */
@@ -17,7 +15,6 @@
 }
 
 body {
-  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
   -moz-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
   -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
@@ -32,11 +29,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#brand {
+#highcharter {
   font-family: 'Datalegreya-Gradient', sans-serif;
-  font-size: 2em;
+  font-size: 5em;
 }
 
+/*
 h1, h2, h3, h4, h5, h6,
 #toc > h2,
 .navbar-brand {

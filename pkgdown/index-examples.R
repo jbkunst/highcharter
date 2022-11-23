@@ -189,13 +189,18 @@ divplots
 # export ------------------------------------------------------------------
 # install.packages("connectwidgets")
 
-hw_grid(
+g <- hw_grid(
   p1, p2, 
   p3, p4, 
   p5, p6, 
   p7, p8,
   ncol = 2,
   rowheight = 250
-) |> 
-  htmltools::save_html("pkgdown/index-examples.html")
+)
 
+try(dir.create("pkgdown/assets/"))
+
+htmltools::save_html(
+  html   = g, 
+  file   = "pkgdown/assets/index-examples.html"
+  )
