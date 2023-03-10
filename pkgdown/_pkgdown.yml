@@ -98,7 +98,7 @@ reference:
   desc: |-
     Function to help manipulate data to use in specific arguments or
         some types of series. For example create valid arguments in `dataClasses`,
-        `stops` or `pointFormatter` parameters and create the rigth type of format
+        `stops` or `pointFormatter` parameters and create the right type of format
         to create treemaps, sunburst or sankey charts.
   contents:
   - color_classes
