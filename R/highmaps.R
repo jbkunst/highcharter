@@ -185,8 +185,7 @@ download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
   tmpfile <- tempfile(fileext = ".js")
   download.file(url, tmpfile, quiet = quiet)
   mapdata <- readLines(tmpfile, warn = FALSE, encoding = "UTF-8")
-  mapdata[1] <- gsub(".* = ", "", mapdata[1])
-  mapdata <- paste(mapdata, collapse = "\n")
+  mapdata <- gsub(".*]=", "", mapdata)
   mapdata <- stringr::str_remove(mapdata, ";$")
   mapdata <- jsonlite::fromJSON(mapdata, simplifyVector = FALSE)
 
