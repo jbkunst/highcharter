@@ -445,14 +445,6 @@ create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
   axles
 }
 
-
-#' @rdname hc_add_yAxis
-#' @export
-create_yaxis <- function(...){
-  .Deprecated(msg = "Deprecated function. Use the `create_axis` function.")
-  create_axis(...)
-}
-
 #' yAxis add highcharter objects
 #'
 #' The Y axis or value axis. Normally this is the vertical axis,
