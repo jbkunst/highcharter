@@ -2,13 +2,10 @@
 % Please edit documentation in R/highcharter.R
 \name{renderHighchart}
 \alias{renderHighchart}
-\alias{renderHighchart2}
 \alias{renderHighchartZ}
 \title{Widget render function for use in Shiny}
 \usage{
 renderHighchart(expr, env = parent.frame(), quoted = FALSE)
-
-renderHighchart2(expr, env = parent.frame(), quoted = FALSE)
 
 renderHighchartZ(expr, env = parent.frame(), quoted = FALSE)
 }

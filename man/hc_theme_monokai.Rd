@@ -14,6 +14,6 @@ Monokai is a well know text editor theme.
 }
 \examples{
 
-highcharts_demo() \%>\%
+highcharts_demo() |>
   hc_add_theme(hc_theme_monokai())
 }

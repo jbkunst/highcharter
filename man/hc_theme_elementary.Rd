@@ -14,6 +14,6 @@ Elementary (OS) theme for highcharts was based on \url{https://elementary.io}
 }
 \examples{
 
-highcharts_demo() \%>\%
+highcharts_demo() |>
   hc_add_theme(hc_theme_elementary())
 }

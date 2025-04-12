@@ -14,6 +14,6 @@ Firefox theme was inspired by \url{https://mozilla.design/}.
 }
 \examples{
 
-highcharts_demo() \%>\%
+highcharts_demo() |>
   hc_add_theme(hc_theme_ffx())
 }

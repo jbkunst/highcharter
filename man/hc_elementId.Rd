@@ -16,6 +16,6 @@ Function to modify the \code{id} for the container.
 }
 \examples{
 
-hchart(rnorm(10)) \%>\%
+hchart(rnorm(10)) |>
   hc_elementId("newid")
 }

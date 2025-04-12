@@ -14,6 +14,6 @@ Flatdark theme for highcharts
 }
 \examples{
 
-highcharts_demo() \%>\%
+highcharts_demo() |>
   hc_add_theme(hc_theme_flatdark())
 }

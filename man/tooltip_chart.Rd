@@ -31,16 +31,16 @@ require(tidyr)
 require(gapminder)
 data(gapminder, package = "gapminder")
 
-gp <- gapminder \%>\%
-  arrange(desc(year)) \%>\%
+gp <- gapminder |>
+  arrange(desc(year)) |>
   distinct(country, .keep_all = TRUE)
 
-gp2 <- gapminder \%>\%
-  nest(-country) \%>\%
+gp2 <- gapminder |>
+  nest(-country) |>
   mutate(
     data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
     data = map(data, list_parse)
-  ) \%>\%
+  ) |>
   rename(ttdata = data)
 
 gptot <- left_join(gp, gp2)
@@ -55,19 +55,19 @@ hc <- hchart(
     size = pop,
     group = continent
   )
-) \%>\%
+) |>
   hc_yAxis(type = "logarithmic")
 
-hc \%>\%
+hc |>
   hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(accesor = "ttdata"))
 
-hc \%>\%
+hc |>
   hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(
     accesor = "ttdata",
     hc_opts = list(chart = list(type = "column"))
   ))
 
-hc \%>\%
+hc |>
   hc_tooltip(
     useHTML = TRUE,
     positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
@@ -81,7 +81,7 @@ hc \%>\%
     )
   )
 
-hc \%>\%
+hc |>
   hc_tooltip(
     useHTML = TRUE,
     pointFormatter = tooltip_chart(

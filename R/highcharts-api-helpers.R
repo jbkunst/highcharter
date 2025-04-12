@@ -417,10 +417,10 @@ create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
   heights <- (heights / sum(heights)) |>
     map(function(x) c(x, sep)) |>
     unlist() |>
-    head(-1) |>
-    {. / sum(.)} |>
-    round(5)
-
+    head(-1) 
+  
+  heights <- round(heights/sum(heights), 5)
+  
   tops <- cumsum(c(0, head(heights, -1)))
 
   tops <- pcnt(tops)

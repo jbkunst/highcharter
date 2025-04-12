@@ -23,15 +23,15 @@ lines of code.
 }
 \examples{
 
-highcharts_demo() \%>\%
+highcharts_demo() |>
   hc_add_theme(hc_theme_538())
 
-highcharts_demo() \%>\%
+highcharts_demo() |>
   hc_add_theme(hc_theme_sparkline_vb())
 
-highchart() \%>\%
-  hc_chart(type = "column") \%>\%
-  hc_add_series(data = round(1 + abs(rnorm(12)), 2), showInLegend = FALSE) \%>\%
-  hc_xAxis(categories = month.abb) \%>\%
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_add_series(data = round(1 + abs(rnorm(12)), 2), showInLegend = FALSE) |>
+  hc_xAxis(categories = month.abb) |>
   hc_add_theme(hc_theme_tufte2())
 }

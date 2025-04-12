@@ -5,7 +5,6 @@
 \alias{hc_xAxis_multiples}
 \alias{hc_zAxis_multiples}
 \alias{create_axis}
-\alias{create_yaxis}
 \alias{hc_add_yAxis}
 \title{Creating multiples yAxis t use with highcharts}
 \usage{
@@ -23,8 +22,6 @@ create_axis(
   turnopposite = TRUE,
   ...
 )
-
-create_yaxis(...)
 
 hc_add_yAxis(hc, ...)
 }
@@ -52,16 +49,16 @@ Otherwise the parameters are as supported by Y axis.
 }
 \examples{
 
-highchart() \%>\%
-  hc_yAxis_multiples(create_axis(naxis = 2, heights = c(2, 1))) \%>\%
-  hc_add_series(data = c(1, 3, 2), yAxis = 0) \%>\%
+highchart() |>
+  hc_yAxis_multiples(create_axis(naxis = 2, heights = c(2, 1))) |>
+  hc_add_series(data = c(1, 3, 2), yAxis = 0) |>
   hc_add_series(data = c(20, 40, 10), yAxis = 1)
  
-highchart() \%>\%
-  hc_yAxis_multiples(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) \%>\%
-  hc_add_series(data = c(1, 3, 2)) \%>\%
-  hc_add_series(data = c(20, 40, 10), type = "area", yAxis = 1) \%>\%
-  hc_add_series(data = c(200, 400, 500), yAxis = 2) \%>\%
+highchart() |>
+  hc_yAxis_multiples(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) |>
+  hc_add_series(data = c(1, 3, 2)) |>
+  hc_add_series(data = c(20, 40, 10), type = "area", yAxis = 1) |>
+  hc_add_series(data = c(200, 400, 500), yAxis = 2) |>
   hc_add_series(data = c(500, 300, 400), type = "areaspline", yAxis = 2)
    
 
@@ -73,10 +70,10 @@ aapl <- quantmod::getSymbols("AAPL",
 )
 
 # Plot prices and volume with relative height.
-highchart(type = "stock") \%>\%
-  hc_title(text = "AAPLE") \%>\%
-  hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) \%>\%
-  hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) \%>\%
-  hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) \%>\%
+highchart(type = "stock") |>
+  hc_title(text = "AAPLE") |>
+  hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) |>
+  hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) |>
+  hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) |>
   hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
 }

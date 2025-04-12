@@ -750,10 +750,9 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
   mx <- max(abs(dfobs[, 2:3]))
   mc <- max(abs(dfcomp))
 
-  dfcomp <- dfcomp |>
-    {
-      . / mc * mx
-    } |>
+  dfcomp <- dfcomp
+  dfcomp <- dfcomp / mc * mx
+  dfcomp <- dfcomp |> 
     as.data.frame() |>
     setNames(c("x", "y")) |>
     rownames_to_column("name") |>
