@@ -29,7 +29,7 @@ hchart.list <- function(object, ...) {
     message("hchart.list")
   }
 
-  highchart() %>%
+  highchart() |>
     hc_add_series(data = object, ...)
 }
 
@@ -53,18 +53,18 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
     hc <- hc_colorAxis(hc, auxpar = NULL)
   }
 
-  hc <- hc %>%
-    hc_add_series_list(series) %>%
+  hc <- hc |>
+    hc_add_series_list(series) |>
     hc_xAxis(
       type = opts$xAxis_type,
       title = list(text = as.character(mapping$x)),
       categories = opts$xAxis_categories
-    ) %>%
+    ) |>
     hc_yAxis(
       type = opts$yAxis_type,
       title = list(text = as.character(mapping$y)),
       categories = opts$yAxis_categories
-    ) %>%
+    ) |>
     hc_plotOptions(
       series = list(
         showInLegend = opts$series_plotOptions_showInLegend
@@ -96,9 +96,9 @@ hchart.histogram <- function(object, ...) {
     name = sprintf("(%s, %s]", object$mids - d / 2, object$mids + d / 2)
   )
 
-  highchart() %>%
-    hc_chart(zoomType = "x") %>%
-    hc_tooltip(formatter = JS("function() { return  this.point.name + '<br/>' + this.y; }")) %>%
+  highchart() |>
+    hc_chart(zoomType = "x") |>
+    hc_tooltip(formatter = JS("function() { return  this.point.name + '<br/>' + this.y; }")) |>
     hc_add_series(
       data = list_parse(df),
       type = "column",
@@ -112,8 +112,8 @@ hchart.histogram <- function(object, ...) {
 
 #' @export
 hchart.character <- function(object, type = "column", ...) {
-  highchart() %>%
-    hc_xAxis(type = "category") %>%
+  highchart() |>
+    hc_xAxis(type = "category") |>
     hc_add_series(data = object, type = type, ...)
 }
 
@@ -122,21 +122,21 @@ hchart.factor <- hchart.character
 
 #' @export
 hchart.ts <- function(object, ...) {
-  highchart() %>%
-    hc_xAxis(type = "datetime") %>%
+  highchart() |>
+    hc_xAxis(type = "datetime") |>
     hc_add_series(data = object, ...)
 }
 
 #' @export
 hchart.xts <- function(object, ...) {
-  highchart(type = "stock") %>%
+  highchart(type = "stock") |>
     hc_add_series(data = object, ...)
 }
 
 #' @export
 hchart.forecast <- function(object, addOriginal = TRUE, addLevels = TRUE, ...) {
-  highchart() %>%
-    hc_xAxis(type = "datetime") %>%
+  highchart() |>
+    hc_xAxis(type = "datetime") |>
     hc_add_series(
       data = object, addOriginal = addOriginal,
       addLevels = addLevels, ...
@@ -150,7 +150,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
   tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean[[1]])))
   nms <- attr(object$x, "dimnames")[[2]]
 
-  hc <- hchart.mts2(object$x) %>%
+  hc <- hchart.mts2(object$x) |>
     hc_plotOptions(
       series = list(
         marker = list(enabled = FALSE)
@@ -158,11 +158,11 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
     )
 
   # means
-  hc <- hc %>% hc_add_series(data = NULL, id = "forecasts", name = "forecasts")
+  hc <- hc |> hc_add_series(data = NULL, id = "forecasts", name = "forecasts")
 
   for (i in seq(ntss)) {
     nm <- nms[i]
-    hc <- hc %>%
+    hc <- hc |>
       hc_add_series(object$mean[[nm]],
         name = paste("forecast", nm),
         yAxis = i - 1, linkedTo = "forecasts", ...
@@ -175,7 +175,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
     idlvl <- paste0("level", lvls[lvl])
     nmlvl <- paste("level", lvls[lvl])
 
-    hc <- hc %>% hc_add_series(data = NULL, id = idlvl, name = nmlvl, ...)
+    hc <- hc |> hc_add_series(data = NULL, id = idlvl, name = nmlvl, ...)
 
     for (i in seq(ntss)) {
       nm <- nms[i]
@@ -186,7 +186,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
         l = as.vector(object$lower[[i]][, lvl])
       )
 
-      hc <- hc %>%
+      hc <- hc |>
         hc_add_series(
           data = list_parse2(dfbands),
           name = paste(nmlvl, nm),
@@ -225,7 +225,7 @@ hchart.acf <- function(object, ...) {
     y = object$acf[, , ]
   )
 
-  hc <- highchart() %>%
+  hc <- highchart() |>
     hc_add_series(
       data = list_parse(ds),
       type = "column",
@@ -234,7 +234,7 @@ hchart.acf <- function(object, ...) {
     )
 
   if (object$type != "covariance") {
-    hc <- hc %>%
+    hc <- hc |>
       hc_yAxis(
         plotLines = list(
           list(width = 1, value = sv, color = "gray"),
@@ -259,15 +259,15 @@ hchart.mts <- function(object, ..., separate = TRUE,
 }
 
 hchart.mts1 <- function(object, ...) {
-  hc <- highchart() %>%
+  hc <- highchart() |>
     hc_xAxis(type = "datetime")
 
   for (i in seq(dim(object)[2])) {
     nm <- attr(object, "dimnames")[[2]][i]
     if ("ts" %in% class(object[, i])) {
-      hc <- hc %>% hc_add_series(object[, i], name = nm, id = nm, ...)
+      hc <- hc |> hc_add_series(object[, i], name = nm, id = nm, ...)
     } else {
-      hc <- hc %>% hc_add_series(object[, i], name = nm, id = nm, ...)
+      hc <- hc |> hc_add_series(object[, i], name = nm, id = nm, ...)
     }
   }
 
@@ -277,11 +277,11 @@ hchart.mts1 <- function(object, ...) {
 hchart.mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01) {
   ntss <- ncol(object)
 
-  hc <- highchart() %>%
-    hc_xAxis(type = "datetime") %>%
+  hc <- highchart() |>
+    hc_xAxis(type = "datetime") |>
     hc_tooltip(shared = TRUE)
 
-  hc <- hc %>%
+  hc <- hc |>
     hc_yAxis_multiples(
       create_yaxis(ntss,
         heights = heights, turnopposite = TRUE,
@@ -294,7 +294,7 @@ hchart.mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01)
 
   for (col in seq(ntss)) {
     nm <- namestss[col]
-    hc <- hc %>% hc_add_series(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
+    hc <- hc |> hc_add_series(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
   }
 
 
@@ -354,11 +354,11 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   ynm <- as.character(ynm)
   yid <- seq(length(ynm)) - pos
 
-  ds <- as.data.frame(df) %>%
-    tibble::as_tibble() %>%
-    bind_cols(tibble(ynm), .) %>%
-    gather("key", "value", -ynm) %>%
-    rename(xnm = .data$key) %>%
+  ds <- as.data.frame(df) |>
+    tibble::as_tibble() |>
+    bind_cols(tibble(ynm), .) |>
+    gather("key", "value", -ynm) |>
+    rename(xnm = .data$key) |>
     mutate(
       xnm = as.character(.data$xnm),
       ynm = as.character(.data$ynm)
@@ -366,10 +366,10 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
 
   ds$xnm <- if (is.null(colnames(object))) str_replace(ds$xnm, "V", "") else ds$xnm
 
-  ds <- ds %>%
-    left_join(tibble(xnm, xid), by = "xnm") %>%
-    left_join(tibble(ynm, yid), by = "ynm") %>%
-    mutate(name = paste(.data$xnm, .data$ynm, sep = " ~ ")) %>%
+  ds <- ds |>
+    left_join(tibble(xnm, xid), by = "xnm") |>
+    left_join(tibble(ynm, yid), by = "ynm") |>
+    mutate(name = paste(.data$xnm, .data$ynm, sep = " ~ ")) |>
     select(x = .data$xid, y = .data$yid, .data$value, .data$name)
 
   fntltp <- JS("function(){
@@ -377,26 +377,26 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
                    Highcharts.numberFormat(this.point.value, 2)
                }")
 
-  hc <- highchart() %>%
-    hc_add_series(data = list_parse(ds), type = "heatmap") %>%
+  hc <- highchart() |>
+    hc_add_series(data = list_parse(ds), type = "heatmap") |>
     hc_plotOptions(
       series = list(
         showInLegend = showInLegend,
         boderWidth = 0,
         dataLabels = list(enabled = label)
       )
-    ) %>%
-    hc_tooltip(formatter = fntltp) %>%
-    hc_legend(enabled = TRUE) %>%
+    ) |>
+    hc_tooltip(formatter = fntltp) |>
+    hc_legend(enabled = TRUE) |>
     hc_colorAxis(auxarg = TRUE)
 
   if (ismatrix) {
-    hc <- hc %>%
-      hc_xAxis(visible = FALSE) %>%
+    hc <- hc |>
+      hc_xAxis(visible = FALSE) |>
       hc_yAxis(visible = FALSE, reversed = TRUE)
   } else {
-    hc <- hc %>%
-      hc_xAxis(categories = xnm, title = list(text = ""), opposite = TRUE) %>%
+    hc <- hc |>
+      hc_xAxis(categories = xnm, title = list(text = ""), opposite = TRUE) |>
       hc_yAxis(categories = ynm, title = list(text = ""), reversed = TRUE)
   }
 
@@ -427,15 +427,15 @@ hchart.dist <- function(object, ...) {
 hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
 
   # data
-  dfv <- layout(object) %>%
-    round(digits) %>%
-    data.frame() %>%
-    tibble::as_tibble() %>%
+  dfv <- layout(object) |>
+    round(digits) |>
+    data.frame() |>
+    tibble::as_tibble() |>
     setNames(c("x", "y"))
 
-  dfvex <- object %>%
-    vertex_attr() %>%
-    data.frame(stringsAsFactors = FALSE) %>%
+  dfvex <- object |>
+    vertex_attr() |>
+    data.frame(stringsAsFactors = FALSE) |>
     tibble::as_tibble()
 
   if (nrow(dfvex) > 0) {
@@ -443,27 +443,27 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   }
 
   if (is.null(dfv[["name"]])) {
-    dfv <- dfv %>% mutate(name = seq(nrow(dfv)))
+    dfv <- dfv |> mutate(name = seq(nrow(dfv)))
   }
 
   names(dfv) <- str_replace_all(names(dfv), "\\.", "_")
 
-  dfe <- object %>%
-    get.edgelist() %>%
-    data.frame(stringsAsFactors = FALSE) %>%
-    tibble::as_tibble() %>%
-    setNames(c("from", "to")) %>%
-    left_join(dfv %>%
-      select(.data$name, .data$x, .data$y) %>%
-      setNames(c("from", "xf", "yf")), by = "from") %>%
-    left_join(dfv %>%
-      select(.data$name, .data$x, .data$y) %>%
-      setNames(c("to", "xt", "yt")), by = "to") %>%
+  dfe <- object |>
+    get.edgelist() |>
+    data.frame(stringsAsFactors = FALSE) |>
+    tibble::as_tibble() |>
+    setNames(c("from", "to")) |>
+    left_join(dfv |>
+      select(.data$name, .data$x, .data$y) |>
+      setNames(c("from", "xf", "yf")), by = "from") |>
+    left_join(dfv |>
+      select(.data$name, .data$x, .data$y) |>
+      setNames(c("to", "xt", "yt")), by = "to") |>
     mutate(linkedTo = "e")
 
-  dfex <- object %>%
-    edge_attr() %>%
-    data.frame(stringsAsFactors = FALSE) %>%
+  dfex <- object |>
+    edge_attr() |>
+    data.frame(stringsAsFactors = FALSE) |>
     tibble::as_tibble()
 
   if (nrow(dfex) > 0) {
@@ -474,23 +474,23 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   type <- "scatter"
 
   if ("size" %in% names(dfv)) {
-    dfv <- dfv %>% rename(z = .data$size)
+    dfv <- dfv |> rename(z = .data$size)
     type <- "bubble"
   }
 
   if ("group" %in% names(dfv)) {
-    dfv <- dfv %>% rename(groupvar = .data$group)
+    dfv <- dfv |> rename(groupvar = .data$group)
   }
 
   if ("width" %in% names(dfe)) {
-    dfe <- dfe %>% rename(lineWidth = .data$width)
+    dfe <- dfe |> rename(lineWidth = .data$width)
   }
 
   if (!"color" %in% names(dfe)) {
-    dfe <- dfe %>% mutate("color" = hex_to_rgba("#d3d3d3", 0.5))
+    dfe <- dfe |> mutate("color" = hex_to_rgba("#d3d3d3", 0.5))
   }
 
-  dse <- list_parse(dfe) %>%
+  dse <- list_parse(dfe) |>
     map(function(x) {
       x$data <- list(
         list(x = x$xf, y = x$yf),
@@ -507,23 +507,23 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
     sprintf("{point.%s}", vattrs)
   )
 
-  hc <- highchart() %>%
-    hc_chart(zoomType = "xy", type = "line") %>%
+  hc <- highchart() |>
+    hc_chart(zoomType = "xy", type = "line") |>
     hc_tooltip(
       useHTML = TRUE
-    ) %>%
+    ) |>
     hc_plotOptions(
       line = list(enableMouseTracking = FALSE),
       bubble = list(
         marker = list(fillOpacity = 0.65),
         minSize = 5, maxSize = 20
       )
-    ) %>%
+    ) |>
     hc_add_theme(
       hc_theme_null(legend = list(enabled = TRUE))
     )
 
-  hc <- hc %>%
+  hc <- hc |>
     hc_add_series(
       data = list_parse(dfv),
       type = type, name = "nodes", zIndex = 3,
@@ -534,17 +534,17 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
     )
 
   if ("label" %in% names(dfv)) {
-    hc <- hc %>%
+    hc <- hc |>
       hc_add_series(
-        data = list_parse(dfv %>% select(.data$x, .data$y, .data$label)),
+        data = list_parse(dfv |> select(.data$x, .data$y, .data$label)),
         type = "scatter", name = "labels", zIndex = 4,
         marker = list(radius = 0), enableMouseTracking = FALSE,
         dataLabels = list(enabled = TRUE, format = "{point.label}")
       )
   }
 
-  hc <- hc %>%
-    hc_add_series(data = NULL, name = "edges", id = "e") %>%
+  hc <- hc |>
+    hc_add_series(data = NULL, name = "edges", id = "e") |>
     hc_add_series_list(dse)
 
   hc
@@ -645,9 +645,9 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
   ymin <- ifelse(min(yValues) >= 0, 0, min(yValues))
   ymax <- ifelse(max(yValues) <= 1, 1, max(yValues))
 
-  hc <- highchart() %>%
-    hc_tooltip(shared = TRUE) %>%
-    hc_yAxis(min = ymin, max = ymax) %>%
+  hc <- highchart() |>
+    hc_tooltip(shared = TRUE) |>
+    hc_yAxis(min = ymin, max = ymax) |>
     hc_plotOptions(line = list(marker = list(enabled = FALSE)))
 
   count <- 0
@@ -683,7 +683,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
     }
 
 
-    hc <- hc %>%
+    hc <- hc |>
       hc_add_series(
         data = c(first, ls), step = "left", name = name, zIndex = 1,
         color = JS(sprintf("Highcharts.getOptions().colors[%s]", count)),
@@ -696,7 +696,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
         setNames(i[c("x", "low", "up")], NULL)
       })
 
-      hc <- hc %>%
+      hc <- hc |>
         hc_add_series(
           data = range, step = "left", name = "Ranges",
           type = "arearange", zIndex = 0, linkedTo = ":previous",
@@ -708,7 +708,7 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
     count <- count + 1
   }
 
-  hc <- hc %>%
+  hc <- hc |>
     hc_plotOptions(
       series = list(
         states = list(hover = list(enabled = FALSE))
@@ -740,9 +740,9 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
     lam <- 1
   }
 
-  dfobs <- (scores[, choices] / lam) %>%
-    as.data.frame() %>%
-    setNames(c("x", "y")) %>%
+  dfobs <- (scores[, choices] / lam) |>
+    as.data.frame() |>
+    setNames(c("x", "y")) |>
     rownames_to_column("name")
 
   dfcomp <- loadings[, choices] * lam
@@ -750,28 +750,28 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
   mx <- max(abs(dfobs[, 2:3]))
   mc <- max(abs(dfcomp))
 
-  dfcomp <- dfcomp %>%
+  dfcomp <- dfcomp |>
     {
       . / mc * mx
-    } %>%
-    as.data.frame() %>%
-    setNames(c("x", "y")) %>%
-    rownames_to_column("name") %>%
-    as_tibble() %>%
-    group_by(.data$name) %>%
-    do(data = list(c(0, 0), c(.$x, .$y))) %>%
+    } |>
+    as.data.frame() |>
+    setNames(c("x", "y")) |>
+    rownames_to_column("name") |>
+    as_tibble() |>
+    group_by(.data$name) |>
+    do(data = list(c(0, 0), c(.$x, .$y))) |>
     list_parse()
 
-  highchart() %>%
+  highchart() |>
     hc_plotOptions(
       line = list(
         marker = list(enabled = FALSE)
       )
-    ) %>%
+    ) |>
     hc_add_series(
       data = list_parse(dfobs), name = "observations", type = "scatter",
       dataLabels = list(enabled = TRUE, format = "{point.name}"), ...
-    ) %>%
+    ) |>
     hc_add_series_list(dfcomp)
 }
 

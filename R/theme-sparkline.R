@@ -7,7 +7,7 @@
 #'
 #' @examples
 #'
-#' highcharts_demo() %>%
+#' highcharts_demo() |>
 #'   hc_add_theme(hc_theme_sparkline())
 #' @export
 hc_theme_sparkline <- function(...) {
@@ -96,7 +96,7 @@ hc_theme_sparkline <- function(...) {
 #'
 #' @examples
 #'
-#' highcharts_demo() %>%
+#' highcharts_demo() |>
 #'   hc_add_theme(hc_theme_sparkline_vb())
 #' @export
 hc_theme_sparkline_vb <- function(...) {

@@ -29,8 +29,8 @@ NULL
 #' @rdname highcharter-exports
 NULL
 
-#' @importFrom magrittr %>%
-#' @name %>%
+#' @importFrom magrittr |>
+#' @name |>
 #' @export
 #' @rdname highcharter-exports
 NULL

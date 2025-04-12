@@ -57,14 +57,14 @@ hc_theme <- function(...) {
 #'
 #' @examples
 #'
-#' highchart() %>%
+#' highchart() |>
 #'   hc_add_series(
 #'     data = c(
 #'       7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
 #'       26.5, 23.3, 18.3, 13.9, 9.6
 #'     ),
 #'     type = "column"
-#'   ) %>%
+#'   ) |>
 #'   hc_add_theme(hc_theme_sandsignika())
 #' @export
 hc_add_theme <- function(hc, hc_thm) {
@@ -115,10 +115,10 @@ hc_theme_merge <- function(...) {
   unls <- unlist(lst)
   unls <- unls[grepl("fontFamily", names(unls))]
 
-  fonts <- unls %>%
-    str_replace_all(",\\s+sans-serif|,\\s+serif", "") %>%
-    str_replace_all("\\s+", "+") %>%
-    str_trim() %>%
+  fonts <- unls |>
+    str_replace_all(",\\s+sans-serif|,\\s+serif", "") |>
+    str_replace_all("\\s+", "+") |>
+    str_trim() |>
     unlist()
 
   fonts

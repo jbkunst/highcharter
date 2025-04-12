@@ -6,7 +6,7 @@
 #'
 #' @examples
 #'
-#' highcharts_demo() %>%
+#' highcharts_demo() |>
 #'   hc_add_theme(hc_theme_google())
 #' @export
 hc_theme_google <- function(...) {

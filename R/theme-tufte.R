@@ -11,9 +11,9 @@
 #'   y = 2 * 1:n + rnorm(n)
 #' )
 #'
-#' highchart() %>%
-#'   hc_chart(type = "scatter") %>%
-#'   hc_add_series(data = list_parse(dta), showInLegend = FALSE) %>%
+#' highchart() |>
+#'   hc_chart(type = "scatter") |>
+#'   hc_add_series(data = list_parse(dta), showInLegend = FALSE) |>
 #'   hc_add_theme(hc_theme_tufte())
 #' @export
 hc_theme_tufte <- function(...) {
@@ -58,10 +58,10 @@ hc_theme_tufte <- function(...) {
 #'
 #' @examples
 #'
-#' highchart() %>%
-#'   hc_chart(type = "column") %>%
-#'   hc_add_series(data = round(1 + abs(rnorm(12)), 2), showInLegend = FALSE) %>%
-#'   hc_xAxis(categories = month.abb) %>%
+#' highchart() |>
+#'   hc_chart(type = "column") |>
+#'   hc_add_series(data = round(1 + abs(rnorm(12)), 2), showInLegend = FALSE) |>
+#'   hc_xAxis(categories = month.abb) |>
 #'   hc_add_theme(hc_theme_tufte2())
 #' @export
 hc_theme_tufte2 <- function(...) {

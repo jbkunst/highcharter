@@ -8,7 +8,7 @@
 #'
 #' @examples
 #'
-#' highcharts_demo() %>%
+#' highcharts_demo() |>
 #'   hc_add_theme(hc_theme_538())
 #' @export
 hc_theme_538 <- function(...) {

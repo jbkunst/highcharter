@@ -15,7 +15,7 @@
 #'   alert('Category: ' + this.category);
 #' }"
 #'
-#' hc <- highcharts_demo() %>%
+#' hc <- highcharts_demo() |>
 #'   hc_plotOptions(
 #'     series = list(
 #'       cursor = "pointer",

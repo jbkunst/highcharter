@@ -20,12 +20,12 @@ hcspark <- function(x = NULL, type = NULL, ...) {
 
   stopifnot(is.numeric(x))
 
-  highchart() %>%
+  highchart() |>
     hc_plotOptions(
       series = list(showInLegend = FALSE, dataLabels = list(enabled = FALSE)),
       line = list(marker = list(enabled = FALSE))
-    ) %>%
-    hc_add_series(data = x, type = type, ...) %>%
+    ) |>
+    hc_add_series(data = x, type = type, ...) |>
     hc_add_theme(hc_theme_sparkline())
 }
 
@@ -59,9 +59,9 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   df <- tibble(x, g1 = var, g2 = var2)
 
   get_box_values <- function(x) {
-    boxplot.stats(x)$stats %>%
-      t() %>%
-      as.data.frame() %>%
+    boxplot.stats(x)$stats |>
+      t() |>
+      as.data.frame() |>
       setNames(c("low", "q1", "median", "q3", "high"))
   }
 
@@ -69,28 +69,28 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
     boxplot.stats(x)$out
   }
 
-  series_box <- df %>%
-    group_by(.data$g1, .data$g2) %>%
-    do(data = get_box_values(.$x)) %>%
-    ungroup() %>%
-    unnest(cols = c(data)) %>%
-    group_by(.data$g2) %>%
-    do(data = list_parse(rename(select(., -.data$g2), name = .data$g1))) %>%
-    mutate(type = "boxplot") %>%
+  series_box <- df |>
+    group_by(.data$g1, .data$g2) |>
+    do(data = get_box_values(.$x)) |>
+    ungroup() |>
+    unnest(cols = c(data)) |>
+    group_by(.data$g2) |>
+    do(data = list_parse(rename(select(., -.data$g2), name = .data$g1))) |>
+    mutate(type = "boxplot") |>
     mutate(id = as.character(.data$g2))
 
   if (length(list(...)) > 0) {
     series_box <- add_arg_to_df(series_box, ...)
   }
 
-  series_out <- df %>%
-    group_by(.data$g1, .data$g2) %>%
-    do(data = get_outliers_values(.$x)) %>%
-    ungroup() %>%
-    filter(map_lgl(data, ~ length(.x) != 0)) %>%
-    group_by(.data$g2) %>%
-    do(data = list_parse(select(., name = .data$g1, y = .data$data))) %>%
-    mutate(type = "scatter") %>%
+  series_out <- df |>
+    group_by(.data$g1, .data$g2) |>
+    do(data = get_outliers_values(.$x)) |>
+    ungroup() |>
+    filter(map_lgl(data, ~ length(.x) != 0)) |>
+    group_by(.data$g2) |>
+    do(data = list_parse(select(., name = .data$g1, y = .data$data))) |>
+    mutate(type = "scatter") |>
     mutate(linkedTo = as.character(.data$g2))
 
   if (length(list(...)) > 0) {
@@ -108,9 +108,9 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   }
 
 
-  hc <- highchart() %>%
-    hc_chart(type = "bar") %>%
-    hc_xAxis(type = "category") %>%
+  hc <- highchart() |>
+    hc_chart(type = "bar") |>
+    hc_xAxis(type = "category") |>
     hc_plotOptions(series = list(
       marker = list(
         symbol = "circle"
@@ -120,8 +120,8 @@ hcboxplot <- function(x = NULL, var = NULL, var2 = NULL, outliers = TRUE, ...) {
   hc <- hc_add_series_list(hc, list_parse(series_box))
 
   if (is.na(var2) || is.na(var)) {
-    hc <- hc %>%
-      hc_xAxis(categories = "") %>%
+    hc <- hc |>
+      hc_xAxis(categories = "") |>
       hc_plotOptions(series = list(showInLegend = FALSE))
   }
 
@@ -160,40 +160,40 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
     w <- ceiling(sum(counts) / rows)
   }
 
-  ds <- tibble(x = rep(1:w, h), y = rep(1:h, each = w)) %>%
-    head(sum(counts)) %>%
-    mutate(y = -.data$y) %>%
-    mutate(gr = rep(seq_along(labels), times = counts)) %>%
+  ds <- tibble(x = rep(1:w, h), y = rep(1:h, each = w)) |>
+    head(sum(counts)) |>
+    mutate(y = -.data$y) |>
+    mutate(gr = rep(seq_along(labels), times = counts)) |>
     left_join(tibble(gr = seq_along(labels), name = as.character(labels)),
       by = "gr"
-    ) %>%
-    group_by(.data$name) %>%
-    do(data = list_parse2(tibble(.$x, .$y))) %>%
-    ungroup() %>%
+    ) |>
+    group_by(.data$name) |>
+    do(data = list_parse2(tibble(.$x, .$y))) |>
+    ungroup() |>
     left_join(tibble(labels = as.character(labels), counts),
       by = c("name" = "labels")
-    ) %>%
-    arrange_("-counts") %>%
+    ) |>
+    arrange_("-counts") |>
     mutate(percent = .data$counts / sum(.data$counts) * 100)
 
   if (!is.null(icons)) {
     assertthat::assert_that(length(icons) %in% c(1, length(labels)))
 
-    dsmrk <- ds %>%
-      mutate(iconm = icons) %>%
-      group_by(.data$name) %>%
+    dsmrk <- ds |>
+      mutate(iconm = icons) |>
+      group_by(.data$name) |>
       do(marker = list(symbol = fa_icon_mark(.$iconm)))
 
-    ds <- ds %>%
-      left_join(dsmrk, by = "name") %>%
+    ds <- ds |>
+      left_join(dsmrk, by = "name") |>
       mutate(icon = fa_icon(icons))
   }
 
   ds <- mutate(ds, ...)
 
-  hc <- highchart() %>%
-    hc_chart(type = "scatter") %>%
-    hc_add_series_list(ds) %>%
+  hc <- highchart() |>
+    hc_chart(type = "scatter") |>
+    hc_add_series_list(ds) |>
     hc_plotOptions(
       series =
         list(
@@ -204,8 +204,8 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
             legendItemClick = JS("function () { return false; }")
           )
         )
-    ) %>%
-    hc_tooltip(pointFormat = "{point.series.options.counts} ({point.series.options.percent:.2f}%)") %>%
+    ) |>
+    hc_tooltip(pointFormat = "{point.series.options.counts} ({point.series.options.percent:.2f}%)") |>
     hc_add_theme(
       hc_theme_merge(
         getOption("highcharter.theme"),
@@ -214,7 +214,7 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
     )
 
   if (!is.null(icons)) {
-    hc <- hc %>% hc_add_dependency_fa()
+    hc <- hc |> hc_add_dependency_fa()
   }
 
   hc
@@ -245,8 +245,8 @@ Item chart provides better behaviour beside is a specific type of chart of Highc
 #'   draw = FALSE
 #' )
 #'
-#' hctreemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") %>%
-#'   hc_title(text = "Gross National Income World Data") %>%
+#' hctreemap(tm, allowDrillToNode = TRUE, layoutAlgorithm = "squarified") |>
+#'   hc_title(text = "Gross National Income World Data") |>
 #'   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
 #'                              Pop: {point.value:,.0f}<br>
 #'                              GNI: {point.valuecolor:,.0f}")
@@ -261,28 +261,28 @@ hctreemap <- function(tm, ...) {
 
   assertthat::assert_that(is.list(tm))
 
-  df <- tm$tm %>%
-    tibble::as_tibble() %>%
-    select(-.data$x0, -.data$y0, -.data$w, -.data$h, -.data$stdErr, -.data$vColorValue) %>%
-    rename(value = .data$vSize, valuecolor = .data$vColor) %>%
+  df <- tm$tm |>
+    tibble::as_tibble() |>
+    select(-.data$x0, -.data$y0, -.data$w, -.data$h, -.data$stdErr, -.data$vColorValue) |>
+    rename(value = .data$vSize, valuecolor = .data$vColor) |>
     mutate_if(is.factor, as.character)
 
   ndepth <- which(names(df) == "value") - 1
 
   ds <- map_df(seq(ndepth), function(lvl) {
-    df2 <- df %>%
-      filter_(sprintf("level == %s", lvl)) %>%
-      rename(name = names(df)[lvl]) %>%
+    df2 <- df |>
+      filter_(sprintf("level == %s", lvl)) |>
+      rename(name = names(df)[lvl]) |>
       mutate(id = highcharter::str_to_id(.data$name))
 
     if (lvl > 1) {
-      df2 <- df2 %>%
+      df2 <- df2 |>
         mutate(
           parent = names(df)[lvl - 1],
           parent = highcharter::str_to_id(.data$parent)
         )
     } else {
-      df2 <- df2 %>%
+      df2 <- df2 |>
         mutate(parent = NA)
     }
 
@@ -326,7 +326,7 @@ hctreemap <- function(tm, ...) {
 #'   index3 = sample(LETTERS[11:15], 500, replace = T),
 #'   value = rpois(500, 5),
 #'   color_value = rpois(500, 5)
-#' ) %>%
+#' ) |>
 #'   hctreemap2(
 #'     group_vars = c("index1", "index2", "index3"),
 #'     size_var = "value",
@@ -338,11 +338,11 @@ hctreemap <- function(tm, ...) {
 #'       list(level = 2, dataLabels = list(enabled = FALSE)),
 #'       list(level = 3, dataLabels = list(enabled = FALSE))
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   hc_colorAxis(
 #'     minColor = brewer.pal(7, "Greens")[1],
 #'     maxColor = brewer.pal(7, "Greens")[7]
-#'   ) %>%
+#'   ) |>
 #'   hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
 #'              Value: {point.value:,.0f}<br>
 #'              Color Value: {point.colorValue:,.0f}")
@@ -364,31 +364,31 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
   size_sym <- rlang::sym(size_var)
   color_sym <- rlang::sym(ifelse(is.null(color_var), size_var, color_var))
 
-  if (data %>%
-    select(!!!group_syms) %>%
-    map(unique) %>%
-    unlist() %>%
+  if (data |>
+    select(!!!group_syms) |>
+    map(unique) |>
+    unlist() |>
     anyDuplicated()) {
     stop("Treemap data uses same label at multiple levels.")
   }
 
-  data <- data %>% mutate_at(group_vars, as.character)
+  data <- data |> mutate_at(group_vars, as.character)
 
   name_cell <- function(..., depth) paste0(list(...), seq_len(depth), collapse = "")
 
   data_at_depth <- function(depth) {
-    data %>%
-      group_by(!!!group_syms) %>%
+    data |>
+      group_by(!!!group_syms) |>
       summarise(
         value = sum(!!size_sym),
         colorValue = sum(!!color_sym)
-      ) %>%
-      ungroup() %>%
+      ) |>
+      ungroup() |>
       mutate(
         name = !!group_syms[[depth]],
         level = depth
-      ) %>%
-      mutate_at(group_vars, as.character()) %>%
+      ) |>
+      mutate_at(group_vars, as.character()) |>
       {
         if (depth == 1) {
           mutate(., id = paste0(name, 1))
@@ -406,24 +406,24 @@ hctreemap2 <- function(data, group_vars, size_var, color_var = NULL, ...) {
       }
   }
 
-  treemap_df <- seq_along(group_vars) %>%
-    map(data_at_depth) %>%
+  treemap_df <- seq_along(group_vars) |>
+    map(data_at_depth) |>
     bind_rows()
 
-  data_list <- treemap_df %>%
-    highcharter::list_parse() %>%
+  data_list <- treemap_df |>
+    highcharter::list_parse() |>
     purrr::map(~ .[!is.na(.)])
 
-  colorVals <- treemap_df %>%
-    filter(level == length(group_vars)) %>%
+  colorVals <- treemap_df |>
+    filter(level == length(group_vars)) |>
     pull(colorValue)
 
-  highchart() %>%
+  highchart() |>
     hc_add_series(
       data = data_list,
       type = "treemap",
       allowDrillToNode = TRUE, ...
-    ) %>%
+    ) |>
     hc_colorAxis(
       min = min(colorVals),
       max = max(colorVals),
@@ -469,8 +469,8 @@ hcparcords <- function(df, ...) {
 
   df <- tidyr::gather(df, "var", "val", setdiff(names(df), ".row"))
 
-  hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row")) %>%
-    hc_plotOptions(series = list(showInLegend = FALSE)) %>%
-    hc_yAxis(min = 0, max = 1) %>%
+  hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row")) |>
+    hc_plotOptions(series = list(showInLegend = FALSE)) |>
+    hc_yAxis(min = 0, max = 1) |>
     hc_tooltip(sort = TRUE, table = TRUE, valueDecimals = 2)
 }

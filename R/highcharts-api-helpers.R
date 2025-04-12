@@ -3,8 +3,8 @@ validate_args <- function(name, lstargs) {
   lenlst <- length(lstargsnn)
 
   if (lenlst != 0) {
-    chrargs <- lstargsnn %>%
-      unlist() %>%
+    chrargs <- lstargsnn |>
+      unlist() |>
       as.character()
 
     chrargs <- paste0("'", chrargs, "'", collapse = ", ")
@@ -39,7 +39,7 @@ validate_args <- function(name, lstargs) {
 
 .hc_tooltip_table <- function(hc, ...) {
   # https://stackoverflow.com/a/22327749/829971
-  hc %>%
+  hc |>
     highcharter::hc_tooltip(
       shared = TRUE,
       useHTML = TRUE,
@@ -51,7 +51,7 @@ validate_args <- function(name, lstargs) {
 
 .hc_tooltip_sort <- function(hc, ...) {
   # https://stackoverflow.com/a/16954666/829971
-  hc %>%
+  hc |>
     highcharter::hc_tooltip(
       shared = TRUE,
       formatter = JS(
@@ -99,16 +99,16 @@ validate_args <- function(name, lstargs) {
 #' require(gapminder)
 #' data(gapminder, package = "gapminder")
 #'
-#' gp <- gapminder %>%
-#'   arrange(desc(year)) %>%
+#' gp <- gapminder |>
+#'   arrange(desc(year)) |>
 #'   distinct(country, .keep_all = TRUE)
 #'
-#' gp2 <- gapminder %>%
-#'   nest(-country) %>%
+#' gp2 <- gapminder |>
+#'   nest(-country) |>
 #'   mutate(
 #'     data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
 #'     data = map(data, list_parse)
-#'   ) %>%
+#'   ) |>
 #'   rename(ttdata = data)
 #'
 #' gptot <- left_join(gp, gp2)
@@ -123,19 +123,19 @@ validate_args <- function(name, lstargs) {
 #'     size = pop,
 #'     group = continent
 #'   )
-#' ) %>%
+#' ) |>
 #'   hc_yAxis(type = "logarithmic")
 #'
-#' hc %>%
+#' hc |>
 #'   hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(accesor = "ttdata"))
 #'
-#' hc %>%
+#' hc |>
 #'   hc_tooltip(useHTML = TRUE, pointFormatter = tooltip_chart(
 #'     accesor = "ttdata",
 #'     hc_opts = list(chart = list(type = "column"))
 #'   ))
 #'
-#' hc %>%
+#' hc |>
 #'   hc_tooltip(
 #'     useHTML = TRUE,
 #'     positioner = JS("function () { return { x: this.chart.plotLeft + 10, y: 10}; }"),
@@ -149,7 +149,7 @@ validate_args <- function(name, lstargs) {
 #'     )
 #'   )
 #'
-#' hc %>%
+#' hc |>
 #'   hc_tooltip(
 #'     useHTML = TRUE,
 #'     pointFormatter = tooltip_chart(
@@ -197,11 +197,11 @@ tooltip_chart <- function(accesor = NULL,
   hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
 
   # remove "\"" to have access to the point object
-  ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") %>% unlist()
+  ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") |> unlist()
   for (t in ts) hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
 
   # remove "\"" in the options
-  ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") %>% unlist()
+  ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") |> unlist()
   for (t in ts) {
     t2 <- str_replace_all(t, "\"", "")
     hcopts <- str_replace(hcopts, t, t2)
@@ -286,7 +286,7 @@ tooltip_table <- function(x, y,
 #'
 #' @examples
 #'
-#' hchart(rnorm(10)) %>%
+#' hchart(rnorm(10)) |>
 #'   hc_elementId("newid")
 #' @export
 hc_elementId <- function(hc, id = NULL) {
@@ -393,16 +393,16 @@ hc_zAxis_multiples <- function(hc, ...) {
 #'
 #' @examples
 #'
-#' highchart() %>%
-#'   hc_yAxis_multiples(create_axis(naxis = 2, heights = c(2, 1))) %>%
-#'   hc_add_series(data = c(1, 3, 2), yAxis = 0) %>%
+#' highchart() |>
+#'   hc_yAxis_multiples(create_axis(naxis = 2, heights = c(2, 1))) |>
+#'   hc_add_series(data = c(1, 3, 2), yAxis = 0) |>
 #'   hc_add_series(data = c(20, 40, 10), yAxis = 1)
 #'  
-#' highchart() %>%
-#'   hc_yAxis_multiples(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) %>%
-#'   hc_add_series(data = c(1, 3, 2)) %>%
-#'   hc_add_series(data = c(20, 40, 10), type = "area", yAxis = 1) %>%
-#'   hc_add_series(data = c(200, 400, 500), yAxis = 2) %>%
+#' highchart() |>
+#'   hc_yAxis_multiples(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) |>
+#'   hc_add_series(data = c(1, 3, 2)) |>
+#'   hc_add_series(data = c(20, 40, 10), type = "area", yAxis = 1) |>
+#'   hc_add_series(data = c(200, 400, 500), yAxis = 2) |>
 #'   hc_add_series(data = c(500, 300, 400), type = "areaspline", yAxis = 2)
 #'    
 #' @importFrom dplyr bind_cols
@@ -414,11 +414,11 @@ create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
 
   heights <- rep(heights, length = naxis)
 
-  heights <- (heights / sum(heights)) %>%
-    map(function(x) c(x, sep)) %>%
-    unlist() %>%
-    head(-1) %>%
-    {. / sum(.)} %>%
+  heights <- (heights / sum(heights)) |>
+    map(function(x) c(x, sep)) |>
+    unlist() |>
+    head(-1) |>
+    {. / sum(.)} |>
     round(5)
 
   tops <- cumsum(c(0, head(heights, -1)))
@@ -428,11 +428,11 @@ create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
 
   dfaxis <- tibble(height = heights, top = tops, offset = offset)
 
-  dfaxis <- dfaxis %>% dplyr::filter(seq_len(nrow(dfaxis)) %% 2 != 0)
+  dfaxis <- dfaxis |> dplyr::filter(seq_len(nrow(dfaxis)) %% 2 != 0)
 
   if (turnopposite) {
     ops <- rep_len(c(FALSE, TRUE), length.out = nrow(dfaxis))
-    dfaxis <- dfaxis %>%
+    dfaxis <- dfaxis |>
       mutate(opposite = ops)
   }
 
@@ -474,11 +474,11 @@ create_yaxis <- function(...){
 #' )
 #'
 #' # Plot prices and volume with relative height.
-#' highchart(type = "stock") %>%
-#'   hc_title(text = "AAPLE") %>%
-#'   hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) %>%
-#'   hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) %>%
-#'   hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) %>%
+#' highchart(type = "stock") |>
+#'   hc_title(text = "AAPLE") |>
+#'   hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) |>
+#'   hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) |>
+#'   hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) |>
 #'   hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
 #' @export
 hc_add_yAxis <- function(hc, ...) {

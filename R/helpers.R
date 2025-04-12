@@ -22,9 +22,9 @@ list_parse <- function(df) {
     }
   }
 
-  purrr::map_if(df, is.factor, as.character) %>%
-    as_tibble() %>%
-    list.parse() %>%
+  purrr::map_if(df, is.factor, as.character) |>
+    as_tibble() |>
+    list.parse() |>
     setNames(NULL)
 }
 
@@ -34,7 +34,7 @@ list_parse <- function(df) {
 list_parse2 <- function(df) {
   assertthat::assert_that(is.data.frame(df))
 
-  list_parse(df) %>%
+  list_parse(df) |>
     map(setNames, NULL)
 }
 
@@ -51,14 +51,14 @@ list_parse2 <- function(df) {
 str_to_id <- function(x) {
   assertthat::assert_that(is.character(x) | is.factor(x))
 
-  x %>%
-    as.character() %>%
-    stringr::str_trim() %>%
-    stringr::str_to_lower() %>%
-    stringr::str_replace_all("\\s+", "_") %>%
-    stringr::str_replace_all("\\\\|/", "_") %>%
-    stringr::str_replace_all("\\[|\\]", "_") %>%
-    stringr::str_replace_all("_+", "_") %>%
+  x |>
+    as.character() |>
+    stringr::str_trim() |>
+    stringr::str_to_lower() |>
+    stringr::str_replace_all("\\s+", "_") |>
+    stringr::str_replace_all("\\\\|/", "_") |>
+    stringr::str_replace_all("\\[|\\]", "_") |>
+    stringr::str_replace_all("_+", "_") |>
     stringr::str_replace_all("_$|^_", "")
 }
 
@@ -71,11 +71,11 @@ str_to_id_vec <- function(x) {
     var = x,
     id = str_to_id(x),
     un = cumsum(duplicated(id))
-  ) %>%
+  ) |>
     mutate(
       un = ifelse(un == 0, "", str_c("_", un)),
       id2 = str_c(id, un)
-    ) %>%
+    ) |>
     pull("id2")
 }
 
@@ -122,10 +122,10 @@ dt_tstp <- datetime_to_timestamp
 #' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
-  rgb <- x %>%
-    col2rgb() %>%
-    # t() %>%
-    as.data.frame() %>%
+  rgb <- x |>
+    col2rgb() |>
+    # t() |>
+    as.data.frame() |>
     map_chr(str_c, collapse = ",")
   
   rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
@@ -168,16 +168,16 @@ highcharts_demo <- function() {
     row.names = c(NA, 12L), class = c("tbl_df", "tbl", "data.frame")
   )
 
-  highchart() %>%
-    hc_title(text = "Monthly Average Temperature") %>%
-    hc_subtitle(text = "Source: WorldClimate.com") %>%
-    hc_caption(text = "This is a caption text to show the style of this type of text") %>%
-    hc_credits(text = "Made with highcharter", href = "http://jkunst.com/highcharter/", enabled = TRUE) %>%
-    hc_yAxis(title = list(text = "Temperature")) %>%
-    hc_xAxis(title = list(text = "Months")) %>%
-    hc_xAxis(categories = dtemp$month) %>%
-    hc_add_series(name = "Tokyo", data = dtemp$tokyo) %>%
-    hc_add_series(name = "London", data = dtemp$london) %>%
+  highchart() |>
+    hc_title(text = "Monthly Average Temperature") |>
+    hc_subtitle(text = "Source: WorldClimate.com") |>
+    hc_caption(text = "This is a caption text to show the style of this type of text") |>
+    hc_credits(text = "Made with highcharter", href = "http://jkunst.com/highcharter/", enabled = TRUE) |>
+    hc_yAxis(title = list(text = "Temperature")) |>
+    hc_xAxis(title = list(text = "Months")) |>
+    hc_xAxis(categories = dtemp$month) |>
+    hc_add_series(name = "Tokyo", data = dtemp$tokyo) |>
+    hc_add_series(name = "London", data = dtemp$london) |>
     hc_add_series(name = "Berlin", data = dtemp$berlin)
 }
 
@@ -326,10 +326,10 @@ get_hc_series_from_df <- function(data, type = NULL, ...) {
 
   data[["charttpye"]] <- type
 
-  dfs <- data %>%
-    group_by(.data$group, .data$charttpye) %>%
-    do(data = list_parse(select(., -.data$group, -.data$charttpye))) %>%
-    ungroup() %>%
+  dfs <- data |>
+    group_by(.data$group, .data$charttpye) |>
+    do(data = list_parse(select(., -.data$group, -.data$charttpye))) |>
+    ungroup() |>
     rename(name = .data$group, type = .data$charttpye)
 
   if (!has_name(parsc, "group")) {
@@ -372,7 +372,7 @@ random_id <- function(n = 1, length = 10) {
 #'
 #' hchart("A")
 #'
-#' highchart() %>%
+#' highchart() |>
 #'   hc_add_series(data = 1)
 #' @noRd
 fix_1_length_data <- function(x) {
@@ -403,9 +403,9 @@ df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
   stopifnot(hasName(df, "y"))
   stopifnot(hasName(df, "text"))
 
-  df %>%
-    rowwise() %>%
-    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) %>%
-    select(-x, -y) %>%
+  df |>
+    rowwise() |>
+    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) |>
+    select(-x, -y) |>
     list_parse()
 }

@@ -29,7 +29,7 @@ hcpxy_add_series <- function(proxy, data = NULL, ...) {
 
   stopifnot(!is.null(data))
 
-  hcaux <- highchart() %>%
+  hcaux <- highchart() |>
     hc_add_series(data = data, ...)
 
   series <- hcaux[["x"]][["hc_opts"]][["series"]]

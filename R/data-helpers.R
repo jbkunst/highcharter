@@ -1,7 +1,7 @@
 get_box_values <- function(x) {
-  boxplot.stats(x)$stats %>%
-    t() %>%
-    as.data.frame() %>%
+  boxplot.stats(x)$stats |>
+    t() |>
+    as.data.frame() |>
     setNames(c("low", "q1", "median", "q3", "high"))
 }
 
@@ -25,14 +25,14 @@ get_outliers_values <- function(x) {
 #'
 #' dat <- data_to_boxplot(pokemon, height)
 #'
-#' highchart() %>%
-#'   hc_xAxis(type = "category") %>%
+#' highchart() |>
+#'   hc_xAxis(type = "category") |>
 #'   hc_add_series_list(dat)
 #'
 #' dat <- data_to_boxplot(pokemon, height, type_1, name = "height in meters")
 #'
-#' highchart() %>%
-#'   hc_xAxis(type = "category") %>%
+#' highchart() |>
+#'   hc_xAxis(type = "category") |>
 #'   hc_add_series_list(dat)
 #' \dontrun{
 #'
@@ -46,49 +46,49 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
     !missing(variable)
   )
 
-  dx <- data %>%
+  dx <- data |>
     transmute(x := {{ variable }})
 
   if (!missing(group_var)) {
-    dg <- data %>%
+    dg <- data |>
       select({{ group_var }})
   } else {
     dg <- data.frame(rep(0, nrow(dx)))
   }
 
   if (!missing(group_var2)) {
-    dg2 <- data %>%
+    dg2 <- data |>
       select({{ group_var2 }})
   } else {
     dg2 <- data.frame(rep(NA, nrow(dx)))
   }
 
-  dg <- dg %>% setNames("name")
-  dg2 <- dg2 %>% setNames("series")
+  dg <- dg |> setNames("name")
+  dg2 <- dg2 |> setNames("series")
 
   dat <- bind_cols(dx, dg, dg2)
 
-  dat1 <- dat %>%
-    group_by(series, name) %>%
-    summarise(data = list(get_box_values(x)), .groups = "drop") %>%
-    unnest(cols = data) %>%
-    group_nest(series) %>%
-    mutate(data = map(data, list_parse)) %>%
-    rename(name = series) %>%
-    mutate(id = name) %>%
+  dat1 <- dat |>
+    group_by(series, name) |>
+    summarise(data = list(get_box_values(x)), .groups = "drop") |>
+    unnest(cols = data) |>
+    group_nest(series) |>
+    mutate(data = map(data, list_parse)) |>
+    rename(name = series) |>
+    mutate(id = name) |>
     mutate(type = "boxplot", ...)
   # list_parse()
 
   if (add_outliers) {
-    dat2 <- dat %>%
-      mutate(name = as.numeric(factor(name)) - 1) %>%
-      group_by(series, name) %>%
-      summarise(y = list(get_outliers_values(x)), .groups = "drop") %>%
-      unnest(cols = y) %>%
-      rename(x = name) %>%
-      group_nest(series) %>%
-      mutate(data = map(data, list_parse)) %>%
-      rename(linkedTo = series) %>%
+    dat2 <- dat |>
+      mutate(name = as.numeric(factor(name)) - 1) |>
+      group_by(series, name) |>
+      summarise(y = list(get_outliers_values(x)), .groups = "drop") |>
+      unnest(cols = y) |>
+      rename(x = name) |>
+      group_nest(series) |>
+      mutate(data = map(data, list_parse)) |>
+      rename(linkedTo = series) |>
       mutate(type = "scatter", showInLegend = FALSE, ...)
 
     dout <- bind_rows(dat1, dat2)
@@ -115,8 +115,8 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 #' library(dplyr)
 #' data(gapminder, package = "gapminder")
 #'
-#' gapminder_2007 <- gapminder::gapminder %>%
-#'   filter(year == max(year)) %>%
+#' gapminder_2007 <- gapminder::gapminder |>
+#'   filter(year == max(year)) |>
 #'   mutate(pop_mm = round(pop / 1e6))
 #'
 #' dout <- data_to_hierarchical(gapminder_2007, c(continent, country), pop_mm)
@@ -131,7 +131,7 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 #' @importFrom purrr reduce
 #' @export
 data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption("highcharter.color_palette")) {
-  dat <- data %>%
+  dat <- data |>
     select({{ group_vars }}, {{ size_var }})
 
   ngvars <- ncol(dat) - 1
@@ -141,46 +141,46 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption(
   gvars <- names(dat)[seq(1, ngvars)]
 
   # group to calculate the sum if there are duplicated combinations
-  dat <- dat %>%
-    group_by_at(all_of(gvars)) %>%
-    summarise(value = sum(value, na.rm = TRUE), .groups = "drop") %>%
-    ungroup() %>%
-    mutate_if(is.factor, as.character) %>%
+  dat <- dat |>
+    group_by_at(all_of(gvars)) |>
+    summarise(value = sum(value, na.rm = TRUE), .groups = "drop") |>
+    ungroup() |>
+    mutate_if(is.factor, as.character) |>
     arrange(desc(value))
 
   dout <- map(seq_along(gvars), function(depth = 1) {
-    datg <- dat %>%
-      select(1:depth) %>%
+    datg <- dat |>
+      select(1:depth) |>
       distinct()
 
-    datg_name <- datg %>%
-      select(depth) %>%
+    datg_name <- datg |>
+      select(depth) |>
       rename_all(~"name")
 
-    datg_id <- datg %>%
-      unite("id", everything(), sep = "_") %>%
+    datg_id <- datg |>
+      unite("id", everything(), sep = "_") |>
       mutate(id = str_to_id_vec(id))
 
-    datg_parent <- datg %>%
-      select(1:(depth - 1)) %>%
-      unite("parent", everything(), sep = "_") %>%
+    datg_parent <- datg |>
+      select(1:(depth - 1)) |>
+      unite("parent", everything(), sep = "_") |>
       mutate(parent = str_to_id(parent))
 
     dd <- list(datg_name, datg_id)
 
     # depth != 1 add parents
-    if (depth != 1) dd <- dd %>% append(list(datg_parent))
+    if (depth != 1) dd <- dd |> append(list(datg_parent))
 
     # depth == 1 add colors
     if (depth == 1 & !is.null(colors)) {
-      dd <- dd %>% append(list(tibble(color = rep(colors, length.out = nrow(datg)))))
+      dd <- dd |> append(list(tibble(color = rep(colors, length.out = nrow(datg)))))
     }
 
     # depth == lastdepth add value
-    if (depth == ngvars) dd <- dd %>% append(list(dat %>% select(value)))
+    if (depth == ngvars) dd <- dd |> append(list(dat |> select(value)))
 
-    dd <- dd %>%
-      bind_cols() %>%
+    dd <- dd |>
+      bind_cols() |>
       mutate(level = depth)
 
     dd
@@ -224,19 +224,19 @@ data_to_sankey <- function(data = NULL) {
   dcmb <- tibble::tibble(
     var1 = names(data),
     var2 = dplyr::lead(var1)
-  ) %>%
+  ) |>
     dplyr::filter(complete.cases(.))
 
   # sankey data
   dsnky <- purrr::pmap_df(dcmb, function(var1 = "cut", var2 = "color") {
-    data %>%
-      select(all_of(var1), all_of(var2)) %>%
-      group_by_all() %>%
-      count() %>%
-      ungroup() %>%
-      setNames(c("from", "to", "weight")) %>%
-      mutate_if(is.factor, as.character) %>%
-      mutate_at(vars(1, 2), as.character) %>%
+    data |>
+      select(all_of(var1), all_of(var2)) |>
+      group_by_all() |>
+      count() |>
+      ungroup() |>
+      setNames(c("from", "to", "weight")) |>
+      mutate_if(is.factor, as.character) |>
+      mutate_at(vars(1, 2), as.character) |>
       mutate(id := paste0(from, to))
   })
 

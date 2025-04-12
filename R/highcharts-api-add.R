@@ -5,8 +5,8 @@
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @examples
 #'
-#' highchart() %>%
-#'   hc_add_series(data = abs(rnorm(5)), type = "column") %>%
+#' highchart() |>
+#'   hc_add_series(data = abs(rnorm(5)), type = "column") |>
 #'   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "orange")
 #' @export
 hc_add_series <- function(hc, data = NULL, ...) {
@@ -63,9 +63,9 @@ hc_add_series.ts <- function(hc, data, ...) {
   }
 
   # http://stackoverflow.com/questions/29202021/
-  timestamps <- data %>%
-    stats::time() %>%
-    zoo::as.Date() %>%
+  timestamps <- data |>
+    stats::time() |>
+    zoo::as.Date() |>
     datetime_to_timestamp()
 
   series <- list_parse2(data.frame(timestamps, as.vector(data)))
@@ -158,7 +158,7 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
         u = as.vector(data$upper[, m])
       )
 
-      hc <- hc %>%
+      hc <- hc |>
         hc_add_series(
           data = list_parse2(dfbands),
           name = nmf[m],
@@ -203,10 +203,10 @@ hc_add_series.character <- function(hc, data, ...) {
     message("hc_add_series.character")
   }
 
-  series <- data %>%
-    table() %>%
-    as.data.frame(stringsAsFactors = FALSE) %>%
-    setNames(c("name", "y")) %>%
+  series <- data |>
+    table() |>
+    as.data.frame(stringsAsFactors = FALSE) |>
+    setNames(c("name", "y")) |>
     list_parse()
 
   hc_add_series(hc, data = series, ...)
@@ -261,10 +261,10 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
     message(sprintf("hc_add_series.%s", class(data)))
   }
 
-  data2 <- data %>%
-    augment() %>%
-    as.matrix.data.frame() %>%
-    as.data.frame() %>%
+  data2 <- data |>
+    augment() |>
+    as.matrix.data.frame() |>
+    as.data.frame() |>
     tibble::as_tibble()
   data2 <- arrange_(data2, .dots = names(data2)[2])
   data2 <- mutate(data2, x = names(data2)[2])
@@ -272,11 +272,11 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
 
   rid <- random_id()
 
-  hc %>%
+  hc |>
     hc_add_series(data2,
       type = type, hcaes_("x", ".fitted"),
       id = rid, color = color, ...
-    ) %>%
+    ) |>
     hc_add_series(data2,
       type = "arearange",
       hcaes_("x",
@@ -410,7 +410,7 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
 
   tran <- as.character(mapping)
   newv <- names(mapping)
-  list_names <- setNames(tran, newv) %>% lapply(rlang::parse_quo, env = globalenv())
+  list_names <- setNames(tran, newv) |> lapply(rlang::parse_quo, env = globalenv())
 
   data <- dplyr::mutate(data, !!!list_names)
   # Reserverd  highcharts names (#241)
@@ -493,17 +493,17 @@ data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
 
   if (isTRUE(fast)) {
     # pre-convert data to json
-    data <- data %>%
-      group_by(.data$group) %>%
+    data <- data |>
+      group_by(.data$group) |>
       do(data = jsonlite::toJSON(select(., -.data$group),
         dataframe = "rows",
         verbatim = TRUE
-      )) %>%
+      )) |>
       ungroup()
   } else {
-    data <- data %>%
-      group_by(.data$group) %>%
-      do(data = list_parse(select(., -.data$group))) %>%
+    data <- data |>
+      group_by(.data$group) |>
+      do(data = list_parse(select(., -.data$group))) |>
       ungroup()
   }
 
@@ -577,8 +577,8 @@ data_to_options <- function(data, type) {
 hc_rm_series <- function(hc, names = NULL) {
   stopifnot(!is.null(names))
 
-  positions <- hc$x$hc_opts$series %>%
-    map("name") %>%
+  positions <- hc$x$hc_opts$series |>
+    map("name") |>
     unlist()
 
   position <- which(positions %in% names)
@@ -599,8 +599,8 @@ hc_rm_series <- function(hc, names = NULL) {
 #'   list(data = cumsum(rnorm(100, 2, 5)), name = x)
 #' })
 #'
-#' highchart() %>%
-#'   hc_plotOptions(series = list(marker = list(enabled = FALSE))) %>%
+#' highchart() |>
+#'   hc_plotOptions(series = list(marker = list(enabled = FALSE))) |>
 #'   hc_add_series_list(ds)
 #' @export
 hc_add_series_list <- function(hc, x) {
@@ -744,11 +744,11 @@ hc_add_annotations <- function(hc, x) {
 #' hchart(mpg, "point", hcaes(displ, hwy),
 #'   regression = TRUE,
 #'   regressionSettings = list(type = "polynomial", order = 5, hideInLegend = TRUE)
-#' ) %>%
+#' ) |>
 #'   hc_add_dependency("plugins/highcharts-regression.js")
 #'
-#' hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) %>%
-#'   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) %>%
+#' hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) |>
+#'   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
 #'   hc_add_dependency("plugins/highcharts-regression.js")
 #' @details See `vignette("modules")`
 #' @importFrom purrr map_chr
