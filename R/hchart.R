@@ -423,6 +423,7 @@ hchart.dist <- function(object, ...) {
 
 #' Plot igraph objects using Highcharts
 #' 
+#' @param object A igraph object.
 #' @param layout A layout from igraph package.
 #' @param ... Additional arguments for the data series
 #'    (\url{https://api.highcharts.com/highcharts/series}). 
