@@ -298,7 +298,7 @@ hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01)
   }
 
   hc
-  
+
 }
 
 #' @export
@@ -421,21 +421,47 @@ hchart.dist <- function(object, ...) {
   hchart.matrix(as.matrix(object))
 }
 
-#' @importFrom igraph vertex_attr edge_attr get.edgelist layout_nicely
+#' Plot igraph objects using Highcharts
+#' 
+#' @param layout A layout from igraph package.
+#' @param ... Additional arguments for the data series
+#'    (\url{https://api.highcharts.com/highcharts/series}). 
 #' @importFrom stats setNames
 #' @importFrom rlang .data
+#' @examples
+#' 
+#' if(require("igraph")) {
+#' 
+#' N <- 40
+#' net <- sample_gnp(N, p = 2 / N)
+#' wc <- cluster_walktrap(net)
+#' V(net)$label <- seq(N)
+#' V(net)$name <- paste("I'm #", seq(N))
+#' V(net)$page_rank <- round(page.rank(net)$vector, 2)
+#' V(net)$betweenness <- round(betweenness(net), 2)
+#' V(net)$degree <- degree(net)
+#' V(net)$size <- V(net)$degree
+#' V(net)$comm <- membership(wc)
+#' V(net)$color <- colorize(membership(wc))
+#' hchart(net, layout = layout_with_fr)
+#' 
+#' }
+#' 
+#' 
 #' @export
-hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
-
+hchart.igraph <- function(object, ..., layout = NULL) {
+  # @importFrom igraph vertex_attr edge_attr get.edgelist layout_nicely
+  requireNamespace("igraph") 
   # data
+  if(missing(layout)) layout <- igraph::layout_nicely
   dfv <- layout(object) |>
-    round(digits) |>
+    round(5) |>
     data.frame() |>
     tibble::as_tibble() |>
     setNames(c("x", "y"))
 
   dfvex <- object |>
-    vertex_attr() |>
+    igraph::vertex_attr() |>
     data.frame(stringsAsFactors = FALSE) |>
     tibble::as_tibble()
 
@@ -450,7 +476,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
   names(dfv) <- str_replace_all(names(dfv), "\\.", "_")
 
   dfe <- object |>
-    get.edgelist() |>
+    igraph::get.edgelist() |>
     data.frame(stringsAsFactors = FALSE) |>
     tibble::as_tibble() |>
     setNames(c("from", "to")) |>
@@ -463,7 +489,7 @@ hchart.igraph <- function(object, ..., layout = layout_nicely, digits = 2) {
     mutate(linkedTo = "e")
 
   dfex <- object |>
-    edge_attr() |>
+    igraph::edge_attr() |>
     data.frame(stringsAsFactors = FALSE) |>
     tibble::as_tibble()
 

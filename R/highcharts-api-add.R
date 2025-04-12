@@ -79,14 +79,22 @@ hc_add_series.ts <- function(hc, data, ...) {
 #' @param data A `xts` object.
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @importFrom xts is.xts
-#' @importFrom quantmod is.OHLC
+#' @examples
+#' 
+#' if(require("quantmod")){
+#'   x <- getSymbols("GOOG", auto.assign = FALSE)
+#'   hchart(x) 
+#' }
+#' 
 #' @export
 hc_add_series.xts <- function(hc, data, ...) {
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.xts")
   }
 
-  if (is.OHLC(data)) {
+  requireNamespace("quantmod")
+
+  if (quantmod::is.OHLC(data)) {
     return(hc_add_series.ohlc(hc, data, ...))
   }
 

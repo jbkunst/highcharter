@@ -21,3 +21,11 @@
 \description{
 hc_add_series for xts objects
 }
+\examples{
+
+if(require("quantmod")){
+  x <- getSymbols("GOOG", auto.assign = FALSE)
+  hchart(x) 
+}
+
+}
