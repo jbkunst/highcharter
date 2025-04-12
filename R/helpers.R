@@ -79,7 +79,6 @@ str_to_id_vec <- function(x) {
     pull("id2")
 }
 
-
 #' Date to timestamps
 #'
 #' Turn a date time vector to \code{timestamp} format
@@ -105,10 +104,6 @@ datetime_to_timestamp <- function(dt) {
 
   tmstmp
 }
-
-#' @rdname datetime_to_timestamp
-#' @export
-dt_tstp <- datetime_to_timestamp
 
 #' Transform colors from hexadecimal format to rgba hc notation
 #'
