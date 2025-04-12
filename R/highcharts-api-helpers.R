@@ -476,7 +476,6 @@ create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
 hc_add_yAxis <- function(hc, ...) {
 
   # author @nordicgit70
-
   assertthat::assert_that(is.highchart(hc))
 
   # Check for single yAxis, by title attribute.
