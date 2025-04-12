@@ -17,4 +17,5 @@ Function to create \code{stops} argument in \code{hc_colorAxis}
 \examples{
 
 color_stops(5)
+
 }

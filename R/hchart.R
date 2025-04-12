@@ -250,15 +250,15 @@ hchart.acf <- function(object, ...) {
 hchart.mts <- function(object, ..., separate = TRUE,
                        heights = rep(1, ncol(object))) {
   if (separate) {
-    hc <- hchart.mts2(object, heights = heights, ...)
+    hc <- hchart_mts2(object, heights = heights, ...)
   } else {
-    hc <- hchart.mts1(object, ...)
+    hc <- hchart_mts1(object, ...)
   }
 
   hc
 }
 
-hchart.mts1 <- function(object, ...) {
+hchart_mts1 <- function(object, ...) {
   hc <- highchart() |>
     hc_xAxis(type = "datetime")
 
@@ -274,7 +274,7 @@ hchart.mts1 <- function(object, ...) {
   hc
 }
 
-hchart.mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01) {
+hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01) {
   ntss <- ncol(object)
 
   hc <- highchart() |>

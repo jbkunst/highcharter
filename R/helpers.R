@@ -39,6 +39,7 @@ get_outliers_values <- function(x) {
 #' }
 #'
 #' @importFrom dplyr transmute group_nest
+#' @importFrom grDevices boxplot.stats
 #' @export
 data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL, add_outliers = FALSE, ...) {
   stopifnot(
@@ -499,6 +500,8 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 #' @examples
 #'
 #' color_stops(5)
+#' 
+#' @importFrom purrr map
 #' @export
 color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
   palcols <- grDevices::colorRampPalette(colors)(n)
