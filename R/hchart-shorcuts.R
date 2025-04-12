@@ -1,34 +1,3 @@
-#' Shortcut to make spkarlines
-#' @param x A numeric vector.
-#' @param type Type sparkline: line, bar, etc.
-#' @param ... Additional arguments for the data series \url{https://api.highcharts.com/highcharts/series}.
-#'
-#' @examples
-#'
-#' set.seed(123)
-#' x <- cumsum(rnorm(10))
-#'
-#' hcspark(x)
-#' hcspark(x, "columnn")
-#' hcspark(c(1, 4, 5), "pie")
-#' hcspark(x, type = "area")
-#' @export
-hcspark <- function(x = NULL, type = NULL, ...) {
-  .Deprecated(
-    msg = "Use type 'hc_theme_sparkline' or hc_theme_sparkline_bv theme instead."
-  )
-
-  stopifnot(is.numeric(x))
-
-  highchart() |>
-    hc_plotOptions(
-      series = list(showInLegend = FALSE, dataLabels = list(enabled = FALSE)),
-      line = list(marker = list(enabled = FALSE))
-    ) |>
-    hc_add_series(data = x, type = type, ...) |>
-    hc_add_theme(hc_theme_sparkline())
-}
-
 #' Shortcut to make icon arrays charts
 #' @param labels A character vector
 #' @param counts A integer vector
