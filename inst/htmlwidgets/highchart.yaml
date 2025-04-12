@@ -8,7 +8,7 @@ dependencies:
     src: "htmlwidgets/lib/proj4js"
     script: proj4.js
   - name: highcharts
-    version: 10.2.0
+    version: 12.2.0
     src: "htmlwidgets/lib/highcharts"
     script:
     - highcharts.js
@@ -47,6 +47,7 @@ dependencies:
     - modules/dumbbell.js
     - modules/lollipop.js
     - modules/series-label.js
+    - modules/series-on-point.js
 #    - modules/drag-panes.js
 #    - modules/marker-clusters.js
 #    - modules/datagrouping.js

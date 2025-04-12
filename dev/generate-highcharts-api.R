@@ -8,12 +8,12 @@ get_options <- function(url) {
 
   apihmtl <- read_html(url)
   
-  opts <- apihmtl %>% 
-    html_node("#options") %>% 
+  opts <- apihmtl |> 
+    html_node("#options") |> 
     html_nodes(".title")
   
-  opts_text <- html_text(opts) %>% 
-    str_trim() %>% 
+  opts_text <- html_text(opts) |> 
+    str_trim() |> 
     str_remove_all(":") 
   
   opts_url <- html_attr(opts, "href")
@@ -29,11 +29,11 @@ dfopts <- c(
   "https://api.highcharts.com/highcharts",
   "https://api.highcharts.com/highstock",
   "https://api.highcharts.com/highmaps"
-) %>% 
+) |> 
   map_df(get_options)
 
-dfopts %>% 
-  count(option) %>% 
+dfopts |> 
+  count(option) |> 
   arrange(n)
 
 dfopts <- distinct(dfopts, option, .keep_all = TRUE)
@@ -41,28 +41,22 @@ dfopts <- distinct(dfopts, option, .keep_all = TRUE)
 opts_to_remove <- c(
   "global", "lang", "noData",
   "defs", "data", "accessibility",
-  "stockTools", "navigation", "time"
+  "stockTools", "navigation", "time",
+  "sonification", "mapView"
   )
 
-dfopts <- dfopts %>% 
+dfopts <- dfopts |> 
   filter(!option %in% opts_to_remove)
-
 
 # run examples for each function ------------------------------------------
 # run examples to check at least don't have errors
 # don't assign if you want to see the outputs
-dfopts %>%
-  pull(option) %>%
-  str_c("dev/examples-api/", ., ".R") %>%
+str_glue("dev/examples-api/{dfopts$option}.R") |> 
   walk(function(script){
     
-    message("Running ", script)
-    try({
-      source(script, echo = FALSE)
-    })
-        
+    cli::cli_progress_step("Running {script}")
+    try({source(script, echo = FALSE)})        
   })
-
 
 # write doc & examples ----------------------------------------------------
 if(file.exists(fout)) file.remove(fout)
@@ -76,13 +70,10 @@ txt <- c(
 
 write_lines(txt, fout)
 
-dfopts %>% 
-  pmap(function(option, url){
+dfopts |> 
+  pmap(function(option = "tooltip", url = "https://api.highcharts.com/highcharts/annotations"){
     
-    # option <- "tooltip"
-    # url <- "https://api.highcharts.com/highcharts/annotations"
-    
-    message(option, ": ", url)
+    cli::cli_progress_step("{option}: {url}")    
     
     if(option == "colors") {
       
@@ -96,16 +87,15 @@ dfopts %>%
       
       doc <- read_html(url) 
       
-      roxy1 <- doc %>% 
-        html_node("#option-list") %>% 
-        html_node("div") %>% 
-        html_text() %>% 
-        str_trim() %>% 
-        str_split("\n", simplify = TRUE) %>% 
-        str_trim() %>% 
-        c("") %>% 
-        str_c("#' ", .)
-      
+      roxy1 <- doc |> 
+        html_node("#option-list") |> 
+        html_node("div") |> 
+        html_text() |> 
+        str_trim() |> 
+        str_split("\n", simplify = TRUE) |> 
+        str_trim() |> 
+        c("")
+      roxy1 <- str_c("#' ", roxy1)
       
     }
       
@@ -153,9 +143,9 @@ dfopts %>%
     
     roxy2
     
-    roxy3 <- read_lines(str_glue("dev/examples-api/{ opt }.R", opt = option)) %>% 
-      str_c("", ., "") %>% 
-      str_c("#' ", .)
+    roxy3 <- read_lines(str_glue("dev/examples-api/{ opt }.R", opt = option)) 
+    roxy3 <- str_c("", roxy3, "")
+    roxy3 <- str_c("#' ", roxy3)
     
     roxy3
     
@@ -217,7 +207,7 @@ hc_{ opt } <- function(hc, ...) {{
     
     fun
     
-    txt <- c(roxy1, roxy2, roxy3, fun) %>% 
+    txt <- c(roxy1, roxy2, roxy3, fun) |> 
       str_c(collapse = "\n") 
     
     
@@ -229,8 +219,7 @@ hc_{ opt } <- function(hc, ...) {{
     
   })
 
-
-message("Copying to R folder")
+cli::cli_h1("Copying to R folder")
 file.copy(
   fout, 
   file.path("R", basename(fout)),
@@ -240,4 +229,6 @@ file.copy(
 cli::cli_h1("devtools::document() & devtools::build()")
 devtools::document()
 devtools::build()
-
+devtools::install(dependencies = FALSE)
+library(highcharter)
+highcharter::highcharts_demo()

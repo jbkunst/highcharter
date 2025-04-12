@@ -26,7 +26,7 @@ Authors@R: c(
 URL: https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 License: MIT + file LICENSE
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Depends:

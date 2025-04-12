@@ -13,7 +13,8 @@ hc_exporting(hc, ...)
 }
 \description{
 Options for the exporting module. For an overview on the matter, see
-the docs.
+the docs and
+read our Fair Usage Policy.
 }
 \examples{
 

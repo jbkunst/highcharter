@@ -1,13 +1,1 @@
-/*
- Highcharts JS v10.2.0 (2022-07-05)
-
- Arrow Symbols
-
- (c) 2017-2021 Lars A. V. Cabrera
-
- License: www.highcharts.com/license
-*/
-(function(a){"object"===typeof module&&module.exports?(a["default"]=a,module.exports=a):"function"===typeof define&&define.amd?define("highcharts/modules/arrow-symbols",["highcharts"],function(b){a(b);a.Highcharts=b;return a}):a("undefined"!==typeof Highcharts?Highcharts:void 0)})(function(a){function b(a,f,b,g){a.hasOwnProperty(f)||(a[f]=g.apply(null,b),"function"===typeof CustomEvent&&window.dispatchEvent(new CustomEvent("HighchartsModuleLoaded",{detail:{path:f,module:a[f]}})))}a=a?a._modules:{};
-b(a,"Extensions/ArrowSymbols.js",[a["Core/Renderer/SVG/SVGRenderer.js"]],function(a){function b(a,d,b,c){return[["M",a,d+c/2],["L",a+b,d],["L",a,d+c/2],["L",a+b,d+c]]}function h(a,b,e,c){return[["M",a+e,b],["L",a,b+c/2],["L",a+e,b+c],["Z"]]}function g(a,b,e,c){return h(a,b,e/2,c)}a=a.prototype.symbols;a.arrow=b;a["arrow-filled"]=h;a["arrow-filled-half"]=g;a["arrow-half"]=function(a,d,e,c){return b(a,d,e/2,c)};a["triangle-left"]=h;a["triangle-left-half"]=g;return a});b(a,"masters/modules/arrow-symbols.src.js",
-[],function(){})});
-//# sourceMappingURL=arrow-symbols.js.map
+!function(e,r){"object"==typeof exports&&"object"==typeof module?module.exports=r(e._Highcharts):"function"==typeof define&&define.amd?define("highcharts/modules/arrow-symbols",["highcharts/highcharts"],function(e){return r(e)}):"object"==typeof exports?exports["highcharts/modules/arrow-symbols"]=r(e._Highcharts):e.Highcharts=r(e.Highcharts)}("undefined"==typeof window?this:window,e=>(()=>{"use strict";var r={944:r=>{r.exports=e}},t={};function o(e){var n=t[e];if(void 0!==n)return n.exports;var a=t[e]={exports:{}};return r[e](a,a.exports,o),a.exports}o.n=e=>{var r=e&&e.__esModule?()=>e.default:()=>e;return o.d(r,{a:r}),r},o.d=(e,r)=>{for(var t in r)o.o(r,t)&&!o.o(e,t)&&Object.defineProperty(e,t,{enumerable:!0,get:r[t]})},o.o=(e,r)=>Object.prototype.hasOwnProperty.call(e,r);var n={};o.d(n,{default:()=>c});var a=o(944),i=o.n(a);function s(e,r,t,o){return[["M",e,r+o/2],["L",e+t,r],["L",e,r+o/2],["L",e+t,r+o]]}function f(e,r,t,o){return s(e,r,t/2,o)}function u(e,r,t,o){return[["M",e+t,r],["L",e,r+o/2],["L",e+t,r+o],["Z"]]}function l(e,r,t,o){return u(e,r,t/2,o)}({compose:function(e){let r=e.prototype.symbols;r.arrow=s,r["arrow-filled"]=u,r["arrow-filled-half"]=l,r["arrow-half"]=f,r["triangle-left"]=u,r["triangle-left-half"]=l}}).compose(i().SVGRenderer);let c=i();return n.default})());

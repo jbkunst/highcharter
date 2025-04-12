@@ -7,7 +7,7 @@ library(stringr)
 
 # settings ----------------------------------------------------------------
 # version to download
-version <- "10.2.0"
+version <- "12.2.0"
 hccodeurl <- "http://code.highcharts.com"
 
 path       <- sprintf("inst/htmlwidgets/lib/highcharts")
@@ -32,6 +32,8 @@ unzip(file_temp, exdir = folder_temp)
 files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
   str_subset("src.js$", negate = TRUE) %>% 
   str_subset("js.map$", negate = TRUE)
+
+basename(files)
 
 main <- str_subset(files, "code/highcharts")
 main
@@ -85,7 +87,7 @@ tibble(m = modules_yalm) %>%
 
 # plugins -----------------------------------------------------------------
 files <- c(
-  "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
+  # "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
   "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
   "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
   # "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",

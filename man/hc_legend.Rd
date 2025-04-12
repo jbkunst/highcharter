@@ -18,11 +18,6 @@ of pie charts) is represented by a symbol and its name in the legend.
 It is possible to override the symbol creator function and create
 custom legend symbols.
 }
-\details{
-A Highmaps legend by default contains one legend item per series, but if
-a colorAxis is defined, the axis will be displayed in the legend.
-Either as a gradient, or as multiple legend items for dataClasses.
-}
 \examples{
 
 highchart() |> 

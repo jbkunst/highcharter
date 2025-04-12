@@ -13,7 +13,7 @@ hc_scrollbar(hc, ...)
 }
 \description{
 The scrollbar is a means of panning over the X axis of a stock chart.
-Scrollbars can  also be applied to other types of axes.
+Scrollbars can also be applied to other types of axes.
 Another approach to scrollable charts is the chart.scrollablePlotArea option that
 is especially suitable for simpler cartesian charts on mobile.
 In styled mode, all the presentational options for the

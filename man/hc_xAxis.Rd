@@ -18,11 +18,6 @@ multiple axes, the xAxis node is an array of configuration objects.
 See the Axis class for programmatic
 access to the axis.
 }
-\details{
-In Highmaps, the axis is hidden, but it is used behind the scenes to
-control features like zooming and panning. Zooming is in effect the same
-as setting the extremes of one of the exes.
-}
 \examples{
 
 highchart() |>

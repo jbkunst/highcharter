@@ -2,6 +2,7 @@
 % Please edit documentation in R/highcharter-package.R
 \docType{package}
 \name{highcharter}
+\alias{highcharter-package}
 \alias{highcharter}
 \title{An \code{htmlwidget} interface to the
 Highcharts javascript chart library}
@@ -9,6 +10,15 @@ Highcharts javascript chart library}
 Highcharts \url{https://www.highcharts.com/} is a mature javascript
 charting library. Highcharts provide a various type of charts, from
 scatters to heatmaps or treemaps.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jkunst.com/highcharter/}
+  \item \url{https://github.com/jbkunst/highcharter}
+  \item Report bugs at \url{https://github.com/jbkunst/highcharter/issues}
+}
+
 }
 \author{
 Joshua Kunst (@jbkunst)

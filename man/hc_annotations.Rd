@@ -13,7 +13,7 @@ hc_annotations(hc, ...)
 }
 \description{
 A basic type of an annotation. It allows to add custom labels
-or shapes. The items  can be tied to points, axis coordinates
+or shapes. The items can be tied to points, axis coordinates
 or chart pixel coordinates.
 }
 \examples{
