@@ -38,7 +38,9 @@ get_outliers_values <- function(x) {
 #'
 #' }
 #'
-#' @importFrom dplyr transmute group_nest
+#' @importFrom dplyr transmute group_nest rename group_by bind_rows
+#' @importFrom tidyr unnest
+#' @importFrom purrr map_if
 #' @importFrom grDevices boxplot.stats
 #' @export
 data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL, add_outliers = FALSE, ...) {

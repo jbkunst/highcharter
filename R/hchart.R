@@ -283,7 +283,7 @@ hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01)
 
   hc <- hc |>
     hc_yAxis_multiples(
-      create_yaxis(ntss,
+      create_axis(ntss,
         heights = heights, turnopposite = TRUE,
         title = list(text = NULL), offset = 0, lineWidth = 2,
         showFirstLabel = FALSE, showLastLabel = FALSE, ...
@@ -310,7 +310,7 @@ hchart.stl <- function(object, ..., heights = c(2, 1, 1, 1), sep = 0.01) {
 
   attr(tss, "dimnames")[[2]] <- gsub("tss\\.", "", attr(tss, "dimnames")[[2]])
 
-  hchart.mts2(tss)
+  hchart_mts2(tss)
 }
 
 #' @export
