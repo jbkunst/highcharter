@@ -38,7 +38,7 @@ get_outliers_values <- function(x) {
 #'
 #' }
 #'
-#' @importFrom dplyr transmute group_nest rename group_by bind_rows
+#' @importFrom dplyr transmute group_nest rename group_by bind_rows summarise
 #' @importFrom tidyr unnest
 #' @importFrom purrr map_if
 #' @importFrom grDevices boxplot.stats
@@ -210,7 +210,7 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption(
 #' hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
 #' }
 #'
-#' @importFrom dplyr all_of count group_by_all vars
+#' @importFrom dplyr all_of count group_by_all vars mutate_at
 #' @importFrom stats complete.cases
 #' @export
 data_to_sankey <- function(data = NULL) {
@@ -353,6 +353,7 @@ str_to_id <- function(x) {
 }
 
 #' @rdname str_to_id
+#' @importFrom dplyr pull
 str_to_id_vec <- function(x) {
 
   # x <- c("A_ aa", "A_  Aa", "a_   aa"
@@ -552,6 +553,7 @@ color_classes <- function(breaks = NULL,
 #' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #' 
 #' @importFrom tibble has_name
+#' @importFrom dplyr ungroup
 #' @importFrom rlang .data
 get_hc_series_from_df <- function(data, type = NULL, ...) {
   assertthat::assert_that(is.data.frame(data))

@@ -129,15 +129,9 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param hc_opts A `list` object containing options defined as
 #'    \url{https://api.highcharts.com/highcharts/}.
 #' @param theme A \code{hc_theme} class object.
-#' @param type A character value to set if use Highchart, Highstock or
-#'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.
 #' @param width A numeric input in pixels.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
-#' @param google_fonts A boolean value. If TRUE (default), adds a reference to the
-#'   Google Fonts API to the HTML head, downloading CSS for the font families
-#'   defined in the Highcharts theme from https://fonts.googleapis.com. Set to
-#'   FALSE if you load your own fonts using CSS.
 #'
 #' @export
 highchartzero <- function(hc_opts = list(),

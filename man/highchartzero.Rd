@@ -23,14 +23,6 @@ highchartzero(
 \item{height}{A numeric input in pixels.}
 
 \item{elementId}{Use an explicit element ID for the widget.}
-
-\item{type}{A character value to set if use Highchart, Highstock or
-Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
-
-\item{google_fonts}{A boolean value. If TRUE (default), adds a reference to the
-Google Fonts API to the HTML head, downloading CSS for the font families
-defined in the Highcharts theme from https://fonts.googleapis.com. Set to
-FALSE if you load your own fonts using CSS.}
 }
 \description{
 This widgets don't support options yet.

@@ -150,7 +150,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
   tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean[[1]])))
   nms <- attr(object$x, "dimnames")[[2]]
 
-  hc <- hchart.mts2(object$x) |>
+  hc <- hchart_mts2(object$x) |>
     hc_plotOptions(
       series = list(
         marker = list(enabled = FALSE)
@@ -297,8 +297,8 @@ hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01)
     hc <- hc |> hc_add_series(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
   }
 
-
   hc
+  
 }
 
 #' @export
@@ -323,7 +323,7 @@ hchart.ets <- function(object, ...) {
 
   colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
 
-  hc <- hchart.mts2(data)
+  hc <- hchart_mts2(data)
 
   hc <- hc_title(hc, text = paste("Decomposition by", object$method, "method"))
 
@@ -355,8 +355,9 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   yid <- seq(length(ynm)) - pos
 
   ds <- as.data.frame(df) |>
-    tibble::as_tibble() |>
-    bind_cols(tibble(ynm), .) |>
+    tibble::as_tibble()
+  ds <- bind_cols(tibble(ynm), ds)
+  ds <- ds |>
     gather("key", "value", -ynm) |>
     rename(xnm = .data$key) |>
     mutate(
