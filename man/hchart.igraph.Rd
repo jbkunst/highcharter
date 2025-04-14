@@ -7,6 +7,8 @@
 \method{hchart}{igraph}(object, ..., layout = NULL)
 }
 \arguments{
+\item{object}{An igraph object.}
+
 \item{...}{Additional arguments for the data series
 (\url{https://api.highcharts.com/highcharts/series}).}
 

@@ -22,7 +22,7 @@ dependencies:
     - modules/offline-exporting.js    
     - modules/drilldown.js
     - modules/item-series.js
-    - modules/overlapping-datalabels.js
+#    - modules/overlapping-datalabels.js
     - modules/annotations.js    
     - modules/export-data.js
     - modules/funnel.js

@@ -74,7 +74,3 @@ highchartsJS API and highcharter.
 Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.
 
 Highcharts (https://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.
-
-## Discount for highcharter users
-
-Highsoft provide a discount to the highcharter users. It is a 50% discount on our Single Developer license. More details in https://newsletter.highcharts.com/foss/.
