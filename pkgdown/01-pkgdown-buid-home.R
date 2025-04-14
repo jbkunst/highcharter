@@ -1,10 +1,13 @@
 # devtools::install_version("pkgdown", version = "1.6.1", repos = "http://cran.us.r-project.org")
-
 # try(fs::file_delete("docs/extra.css"))
+fs::dir_delete("docs")
+fs::dir_create("docs")
 
-fs::file_copy("pkgdown/extra.css", new_path = "docs/extra.css", overwrite = TRUE)
+# fs::file_copy("pkgdown/extra.css", new_path = "docs/extra.css", overwrite = TRUE)
 
 pkgdown::build_home()
+
+pkgdown::preview_site()
 
 Sys.sleep(1)
 

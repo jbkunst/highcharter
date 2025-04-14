@@ -17,7 +17,7 @@
 * Adding `hc_loading` for use with `hcpxy_loading`.
 * Adding `hcpxy_update_point` due @zevross (https://twitter.com/zevross/status/1403394816558383105).
 * Update jQuery from 3.5.0 to 3.5.1. This solve the problem in flexdashboard menu
-when the size of viewport is small (like tables o phones).
+when the size of viewport is small (like tablets o phones).
 * Adding new data `mountains_panorama`.
 * Update `pokemon` data.
 

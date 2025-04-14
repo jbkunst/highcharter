@@ -184,23 +184,16 @@ divplots <- htmltools::tagList(
     )
   )
 
-divplots
-
-# export ------------------------------------------------------------------
-# install.packages("connectwidgets")
-
-g <- hw_grid(
-  p1, p2, 
-  p3, p4, 
-  p5, p6, 
-  p7, p8,
-  ncol = 2,
-  rowheight = 250
-)
-
-try(dir.create("pkgdown/assets/"))
+page <- bslib::page(divplots)
 
 htmltools::save_html(
-  html   = g, 
+  html   = page, 
   file   = "pkgdown/assets/index-examples.html"
   )
+
+# try(dir.create("pkgdown/assets/"))
+# 
+# htmltools::save_html(
+#   html   = g, 
+#   file   = "pkgdown/assets/index-examples.html"
+#   )

@@ -126,6 +126,11 @@ HTMLWidgets.widget({
       
       
     } 
+
+    var chart = $("#" +el.id).highcharts();
+    var w = chart.renderTo.clientWidth; 
+    var h = chart.renderTo.clientHeight; 
+    chart.setSize(w, h); 
     
   },
 
