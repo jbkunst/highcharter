@@ -201,8 +201,10 @@ download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
 #' The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 #' @param mapdata A list obtained from \code{\link{download_map_data}}.
 #' @examples
+#' \dontrun{
 #' dta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
 #' get_data_from_map(dta)
+#' }
 #' @seealso \code{\link{download_map_data}}
 #' @importFrom purrr map_lgl
 #' @export
