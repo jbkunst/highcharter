@@ -3,6 +3,7 @@
 ## Changes
 
 * Highcharter now uses HighchartsJS 10.2.0.
+* Fix `download_map_data` to prevent 403 Forbidden errors when fetching data.
 
 # highcharter 0.9.4
 
