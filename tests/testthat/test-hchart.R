@@ -50,7 +50,7 @@ test_that("hchart returns a valid graph after valid data input", {
 
   V(net)$label <- seq(N)
   V(net)$name <- paste("I'm #", seq(N))
-  V(net)$page_rank <- round(page.rank(net)$vector, 2)
+  V(net)$page_rank <- round(page_rank(net)$vector, 2)
   V(net)$betweenness <- round(betweenness(net), 2)
   V(net)$degree <- degree(net)
   V(net)$size <- V(net)$degree

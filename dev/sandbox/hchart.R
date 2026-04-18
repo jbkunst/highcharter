@@ -90,7 +90,7 @@ wc <- cluster_walktrap(net)
 
 V(net)$label <- 1:40
 V(net)$name <- 1:40
-V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$page_rank <- round(page_rank(net)$vector, 2)
 V(net)$betweenness <- round(betweenness(net), 2)
 V(net)$degree <- degree(net)
 V(net)$size <- V(net)$degree

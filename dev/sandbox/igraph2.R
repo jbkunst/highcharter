@@ -38,8 +38,8 @@ wc <- cluster_walktrap(g)
 nc <- length(unique(membership(wc)))
 
 V(g)$label <- V(g)$name
-V(g)$page_rank <- round(page.rank(g)$vector, 2)
-V(g)$page_rank <- round(page.rank(g)$vector, 2)
+V(g)$page_rank <- round(page_rank(g)$vector, 2)
+V(g)$page_rank <- round(page_rank(g)$vector, 2)
 V(g)$betweenness <- round(betweenness(g), 2)
 V(g)$degree <- degree(g)
 V(g)$size <- V(g)$degree
