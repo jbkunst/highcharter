@@ -54,7 +54,7 @@ test_that("hchart returns a valid graph after valid data input", {
   V(net)$betweenness <- round(betweenness(net), 2)
   V(net)$degree <- degree(net)
   V(net)$size <- V(net)$degree
-  V(net)$comm <- membership(wc)
+  V(net)$comm <- as.vector(membership(wc))
   V(net)$color <- colorize(membership(wc))
 
   h <- hchart(net, layout = layout_with_fr)

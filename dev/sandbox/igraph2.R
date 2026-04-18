@@ -35,7 +35,7 @@ g <- graph.data.frame(relationships, directed = FALSE, vertices = v)
 
 wc <- cluster_walktrap(g)
 
-nc <- length(unique(membership(wc)))
+nc <- length(unique(as.vector(membership(wc))))
 
 V(g)$label <- V(g)$name
 V(g)$page_rank <- round(page_rank(g)$vector, 2)
@@ -43,7 +43,7 @@ V(g)$page_rank <- round(page_rank(g)$vector, 2)
 V(g)$betweenness <- round(betweenness(g), 2)
 V(g)$degree <- degree(g)
 V(g)$size <- V(g)$degree
-V(g)$comm <- membership(wc)
+V(g)$comm <- as.vector(membership(wc))
 V(g)$color <- colorize(membership(wc))
 
 #+
