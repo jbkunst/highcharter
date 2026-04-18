@@ -47,7 +47,6 @@ reference:
   - hc_credits
   - hc_drilldown
   - hc_exporting
-  - hc_labels
   - hc_legend
   - hc_loading
   - hc_pane
