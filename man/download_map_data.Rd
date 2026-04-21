@@ -4,7 +4,12 @@
 \alias{download_map_data}
 \title{Helper function to download the map data form a url}
 \usage{
-download_map_data(url = "custom/world.js", showinfo = FALSE, quiet = FALSE)
+download_map_data(
+  url = "custom/world.js",
+  showinfo = FALSE,
+  quiet = FALSE,
+  method = "curl"
+)
 }
 \arguments{
 \item{url}{The map's url.}
@@ -13,6 +18,9 @@ download_map_data(url = "custom/world.js", showinfo = FALSE, quiet = FALSE)
 are the keys to add data in \code{hcmap}.}
 
 \item{quiet}{Boolean parameter to turn off download messages (on by default).}
+
+\item{method}{A string value for the download method used by
+\code{\link[utils]{download.file}}.}
 }
 \description{
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.

@@ -162,6 +162,8 @@ hcmap <- function(map = "custom/world",
 #' @param showinfo Show the properties of the downloaded map to know how
 #'   are the keys to add data in \code{hcmap}.
 #' @param quiet Boolean parameter to turn off download messages (on by default).
+#' @param method A string value for the download method used by
+#'   \code{\link[utils]{download.file}}.
 #' @examples
 #' \dontrun{
 #' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
@@ -176,14 +178,14 @@ hcmap <- function(map = "custom/world",
 #' @importFrom stringr str_remove
 #' @export
 download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
-                              quiet = FALSE) {
+                              quiet = FALSE, method = "curl") {
   url <- sprintf(
     "https://code.highcharts.com/mapdata/%s",
     fix_map_name(url)
   )
 
   tmpfile <- tempfile(fileext = ".js")
-  download.file(url, tmpfile, quiet = quiet)
+  download.file(url, tmpfile, quiet = quiet, method = method)
   mapdata <- readLines(tmpfile, warn = FALSE, encoding = "UTF-8")
   mapdata[1] <- gsub(".* = ", "", mapdata[1])
   mapdata <- paste(mapdata, collapse = "\n")

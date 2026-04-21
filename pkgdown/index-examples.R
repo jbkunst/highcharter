@@ -100,11 +100,11 @@ net <- sample_pa(N)
 wc <- cluster_walktrap(net)
 V(net)$label <- 1:N
 V(net)$name <- 1:N
-V(net)$page_rank <- round(page.rank(net)$vector, 2)
+V(net)$page_rank <- round(page_rank(net)$vector, 2)
 V(net)$betweenness <- round(betweenness(net), 2)
 V(net)$degree <- degree(net)
 V(net)$size <- V(net)$degree + 1
-V(net)$comm <- membership(wc)
+V(net)$comm <- as.vector(membership(wc))
 V(net)$color <- colorize(membership(wc), viridisLite::magma(length(wc)))
 p5 <- hchart(net, layout = layout_with_fr, maxSize = 13)
 
