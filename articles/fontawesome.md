@@ -1,0 +1,125 @@
+# Fontawesome integration
+
+The easiest way to use fontawesome icons with highcharter is using the
+the package with the same name by Richard Iannone
+<https://github.com/rstudio/fontawesome> because you can turn the icons
+into svg text or png files so you can use them in html tags or transform
+to data uri.
+
+## Example using `fontawesome` package
+
+``` r
+library(rsvg)
+library(fontawesome)
+library(highcharter)
+library(stringr)
+
+set.seed(123)
+
+df <- data.frame(
+  a = round(rnorm(10), 2),
+  b = round(rnorm(10), 2)
+)
+
+fa_to_png_to_datauri <- function(name, ...) {
+
+  tmpfl <- tempfile(fileext = ".png")
+
+  fontawesome::fa_png(name, file = tmpfl, ...)
+
+  knitr::image_uri(tmpfl)
+
+}
+
+# specify colors tu reuse in the series/tooltips
+rcol <- "#4C83B6"
+pcol <- "#3CAB48"
+
+rproj <- fa_to_png_to_datauri(name = "r-project", width = 22, fill = rcol)
+pthon <- fa_to_png_to_datauri(name = "python",    width = 22, fill = pcol)
+
+highchart() |>
+  hc_title(
+    text = "This is chart using fontawesome icons2",
+    useHTML = TRUE
+  ) |>
+  hc_add_series(
+    df,
+    "scatter",
+    hcaes(a, b),
+    name = "R icons",
+    color = rcol,
+    marker = list(symbol = str_glue("url({data_uri})", data_uri = rproj)),
+    icon = rproj
+  ) |>
+  hc_add_series(
+    df,
+    "scatter",
+    hcaes(b, a),
+    name = "Python icons",
+    color = pcol,
+    marker = list(symbol = str_glue("url({data_uri})", data_uri = pthon)),
+    icon = pthon
+  ) |>
+  hc_tooltip(
+    pointFormat = str_c(
+      "<b>",
+      "<img style='vertical-align:middle' height='15' src='{series.options.icon}'/> ",
+      "[{point.x}, {point.y}]",
+      "</b>"
+    ),
+    useHTML = TRUE
+  )
+```
+
+## Another example
+
+Inspired/copied from <https://github.com/hrbrmstr/waffle>:
+
+``` r
+library(dplyr) # to wokr with list columns
+library(purrr) # to wokr with list columns
+
+df2 <- tibble(
+  type = c("fruit", "samminch", "pizza"),
+  amount = c(46, 54, 80),
+  faico = c("apple", "bread-slice", "pizza-slice"),
+  col = c("#d35400", "#907E4D", "#F89101")
+)
+
+df2
+```
+
+    ## # A tibble: 3 × 4
+    ##   type     amount faico       col    
+    ##   <chr>     <dbl> <chr>       <chr>  
+    ## 1 fruit        46 apple       #d35400
+    ## 2 samminch     54 bread-slice #907E4D
+    ## 3 pizza        80 pizza-slice #F89101
+
+``` r
+df2 <- df2 |>
+  mutate(
+    uri = map2_chr(faico, col, ~fa_to_png_to_datauri(.x, fill = .y)),
+    marker = map(uri, ~ list(symbol = str_glue("url({data_uri})", data_uri = .x)))
+  )
+
+hchart(
+  df2,
+  "item",
+  hcaes(name = type, y = amount),
+  name = "What I eat",
+  showInLegend = TRUE
+  ) |>
+  hc_plotOptions(
+    # avoid hide series due bug
+    series = list(point = list(events = list(legendItemClick = JS("function(e) {e.preventDefault() }"))))
+  ) |>
+  hc_legend(
+    labelFormat =  '{name} <span style="opacity: 0.4">{y}</span>'
+  ) |>
+  hc_colors(pull(df2, col))
+```
+
+More details in item chart in this link
+<https://www.highcharts.com/docs/chart-and-series-types/item-chart>.

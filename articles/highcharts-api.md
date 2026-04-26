@@ -1,0 +1,174 @@
+# Highcharts API
+
+Highcharts have a rich API which allows you to have control of the
+entire chart, from title, subtitle to axis ticks, labels, annotations.
+We’ll review the main functions with simple examples.
+
+## Before to start
+
+- There’s not default arguments. All arguments need to be named.
+- You can see more examples for arguments in
+  <https://api.highcharts.com/highcharts/>.
+
+If this is clear, we can continue.
+
+Now, let’s create a simple chart:
+
+``` r
+library(highcharter)
+
+data("citytemp")
+
+hc <- highchart() |> 
+  hc_xAxis(categories = citytemp$month) |> 
+  hc_add_series(
+    name = "Tokyo", data = citytemp$tokyo
+    ) |> 
+  hc_add_series(
+    name = "London", data = citytemp$london
+    ) |> 
+  hc_add_series(
+    name = "Other city",
+    data = (citytemp$tokyo + citytemp$london)/2
+    )
+
+hc
+```
+
+## Chart
+
+With `hc_chart` you can define general chart options.
+
+``` r
+hc |> 
+  hc_chart(
+    borderColor = '#EBBA95',
+    borderRadius = 10,
+    borderWidth = 2,
+    backgroundColor = list(
+      linearGradient = c(0, 0, 500, 500),
+      stops = list(
+        list(0, 'rgb(255, 255, 255)'),
+        list(1, 'rgb(200, 200, 255)')
+        )
+      )
+    )
+```
+
+Now change type to column and add 3d effect.
+
+``` r
+hc <- hc |> 
+  hc_chart(
+    type = "column",
+    options3d = list(
+      enabled = TRUE, 
+      beta = 15,
+      alpha = 15
+      )
+    )
+hc
+```
+
+``` r
+# back to the line!
+hc <- hc_chart(hc, type = "line", options3d = list(enabled = FALSE))
+```
+
+## Title, subtitle, caption and credits
+
+A good chart always have at least title, right? Then you can do it
+better adding relevant information using a subtitle or caption, even
+link to the source of data:
+
+``` r
+hc |> 
+  hc_title(
+    text = "This is the title of the chart"
+    ) |> 
+  hc_subtitle(
+    text = "This is an intereseting subtitle to give
+    context for the chart or some interesting fact"
+    ) |> 
+  hc_caption(
+    text = "This is a long text to give some 
+    subtle details of the data which can be relevant to the reader. 
+    This is usually a long text that's why I'm trying to put a 
+    <i>loooooong</i> text.", 
+    useHTML = TRUE
+    ) |> 
+  hc_credits(
+    text = "Chart created using R and highcharter",
+    href = "http://jkunst.com/highcharter",
+    enabled = TRUE
+    )
+```
+
+## Axis
+
+Usually is desirable get control or modify the behavior of the axis:
+
+``` r
+hc |> 
+  hc_xAxis(
+    title = list(text = "Month in x Axis"),
+    opposite = TRUE
+    ) |> 
+  hc_yAxis(
+    title = list(text = "Temperature <b>in y Axis</b>", useHTML = TRUE),
+    opposite = TRUE,
+    minorTickInterval = "auto",
+    minorGridLineDashStyle = "LongDashDotDot",
+    showFirstLabel = FALSE,
+    showLastLabel = FALSE
+  )
+```
+
+A good feature is `plotLines` and `plotBand` which you can use in both
+axis. For example:
+
+``` r
+hc |> 
+  hc_xAxis(
+    plotLines = list(
+      list(
+        label = list(text = "This is a plotLine"),
+        color = "#FF0000",
+        width = 2,
+        value = 4,
+        # the zIndex is used to put the label text over the grid lines 
+        zIndex = 1
+        )
+      )
+    ) |> 
+  hc_yAxis(
+    plotBands = list(
+      list(
+        from = 20,
+        to = 50,
+        color = hex_to_rgba("red", 0.1),
+        label = list(text = "This is a plotBand"),
+        # the zIndex is used to put the label text over the grid lines 
+        zIndex = 1
+        )
+      )
+    ) 
+```
+
+## Legend & tooltip
+
+``` r
+hc |>
+  hc_legend(
+    align = "left",
+    verticalAlign = "top",
+    layout = "vertical",
+    x = 0, y = 100
+    ) |>
+  hc_tooltip(
+    crosshairs = TRUE,
+    backgroundColor = "#F0F0F0",
+    shared = TRUE, 
+    borderWidth = 5
+    )
+```

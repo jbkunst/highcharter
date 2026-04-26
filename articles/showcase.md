@@ -1,0 +1,323 @@
+# Showcase
+
+In this vignette we’ll review some examples to show what highcharts and
+highcharter can do in terms of customization and design.
+
+## HIMYM example
+
+> This is a bar graph describing my favorite pies including a pie chart
+> describing my favorite bars. - *Marshall Eriksen*
+
+``` r
+data(favorite_bars)
+data(favorite_pies)
+
+highchart() |> 
+  # Data
+  hc_add_series(
+    favorite_pies, 
+    "column",
+    hcaes(
+      x = pie,
+      y = percent
+      ),
+    name = "Pie"
+    ) |>
+  hc_add_series(
+    favorite_bars,
+    "pie",
+    hcaes(
+      name = bar,
+      y = percent
+      ),
+    name = "Bars"
+    ) |>
+  # Options for each type of series
+  hc_plotOptions(
+    series = list(
+      showInLegend = FALSE,
+      pointFormat = "{point.y}%",
+      colorByPoint = TRUE
+      ),
+    pie = list(
+      center = c('30%', '10%'),
+      size = 120,
+      dataLabels = list(enabled = FALSE)
+      )
+    ) |>
+  # Axis
+  hc_yAxis(
+    title = list(text = "percentage of tastiness"),
+    labels = list(format = "{value}%"), 
+    max = 100
+  ) |> 
+  hc_xAxis(
+    categories = favorite_pies$pie
+    ) |>
+  # Titles, subtitle, caption and credits
+  hc_title(
+    text = "How I Met Your Mother: Pie Chart Bar Graph"
+  ) |> 
+  hc_subtitle(
+    text = "This is a bar graph describing my favorite pies
+    including a pie chart describing my favorite bars"
+  ) |>
+  hc_caption(
+    text = "The values represented are in percentage of tastiness and awesomeness."
+    ) |> 
+  hc_credits(
+    enabled = TRUE, text = "Source: HIMYM",
+    href = "https://www.youtube.com/watch?v=f_J8QU1m0Ng",
+    style = list(fontSize = "12px")
+  ) |> 
+  hc_size(
+    height = 600
+    )
+```
+
+## Pokemon
+
+``` r
+library(dplyr)
+data(pokemon)
+
+lvl_opts <-  list(
+    list(
+      level = 1,
+      borderWidth = 0,
+      borderColor = "transparent",
+      dataLabels = list(
+        enabled = TRUE,
+        align = "left",
+        verticalAlign = "top",
+        style = list(
+          fontSize = "12px", 
+          textOutline = FALSE,
+          color = "white",
+          fontWeight = "normal"
+          )
+      )
+    ),
+    list(
+      level = 2,
+      borderWidth = 0,
+      borderColor = "transparent",
+      colorVariation = list(key = "brightness", to = 0.250),
+      dataLabels = list(enabled = FALSE),
+      style = list(
+        fontSize = "8px",
+        textOutline = FALSE, 
+        color = "white", 
+        fontWeight = "normal"
+        )
+    )
+  )
+
+pkmn_min <- pokemon |> 
+  select(type_1, type_2, type_1_color) |>
+  mutate(type_1 = stringr::str_to_title(type_1)) |> 
+  mutate(type_2 = ifelse(is.na(type_2), type_1, paste(type_1, "-", type_2))) |>
+  mutate(val = 1)
+
+cols <- pkmn_min |> 
+  count(type_1, type_2, type_1_color, sort = TRUE) |> 
+  pull(type_1_color) |> 
+  unique()
+
+hchart(
+  data_to_hierarchical(pkmn_min, c(type_1, type_2), val, colors = cols),
+  type = "treemap",
+  # levelIsConstant = FALSE,
+  allowDrillToNode = TRUE,
+  levels = lvl_opts,
+  tooltip = list(valueDecimals = FALSE)
+  ) |> 
+  hc_chart(
+    style = list(fontFamily = "Gloria Hallelujah")
+  ) |> 
+  hc_title(
+    text = "Gotta Catch 'Em All!",
+    style = list(fontFamily = "Gloria Hallelujah")
+    ) |> 
+  hc_size(height = 700)
+```
+
+## Weathers Radials
+
+Example inspired by <http://weather-radials.com/>.
+
+``` r
+library(highcharter)
+data(weather)
+
+x <- c("Min", "Mean", "Max")
+y <- sprintf("{point.%s}°", c("min_temperaturec", "mean_temperaturec", "max_temperaturec"))
+
+tltip <- tooltip_table(x, y)
+
+hchart(
+  weather,
+  type = "columnrange",
+  hcaes(
+    x = date, 
+    low = min_temperaturec, 
+    high = max_temperaturec,
+    color = mean_temperaturec
+    )
+  ) |>
+  hc_chart(
+    polar = TRUE
+    ) |>
+  hc_yAxis(
+    max = 30,
+    min = -10,
+    labels = list(format = "{value} C"),
+    showFirstLabel = FALSE
+  ) |>
+  hc_xAxis(
+    title = list(text = ""), 
+    gridLineWidth = 0.5,
+    labels = list(format = "{value: %b}")
+  ) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = tltip,
+    headerFormat = as.character(tags$small("{point.x:%d %B, %Y}"))
+  ) |> 
+  hc_title(
+    text = "Climatical characteristics of San Francisco"
+  ) |> 
+  hc_size(
+    height = 600
+  )
+```
+
+## Stars
+
+Inspired by Nadieh Bremer’s
+[block](http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47).
+
+``` r
+data(stars)
+
+colors <- c(
+  "#FB1108", "#FD150B", "#FA7806", "#FBE426", "#FCFB8F",
+  "#F3F5E7", "#C7E4EA", "#ABD6E6", "#9AD2E1"
+)
+
+stars$color <- highcharter::colorize(log(stars$temp), colors)
+
+x <- c("Luminosity", "Temperature", "Distance", "Radius")
+y <- sprintf("{point.%s:.2f}", c("lum", "temp", "distance", "radiussun"))
+
+tltip <- tooltip_table(x, y)
+
+hchart(
+  stars,
+  "scatter",
+  hcaes(
+    temp, 
+    lum, 
+    size = radiussun, 
+    color = color
+    ),
+  minSize = 2,
+  maxSize = 20
+  ) |>
+  hc_chart(
+    # backgroundColor = "black"
+    backgroundColor = hex_to_rgba("black", 0.5),
+    divBackgroundImage = "https://img.freepik.com/free-photo/beautiful-shining-stars-night-sky_181624-622.jpg"
+    ) |>
+  hc_xAxis(
+    title = list(text = "Temperature"),
+    type = "logarithmic",
+    gridLineWidth = 0,
+    reversed = TRUE
+    ) |>
+  hc_yAxis(
+    title = list(text = "Luminosity"),
+    type = "logarithmic", 
+    gridLineWidth = 0
+    ) |>
+  hc_title(
+    style = list(color = hex_to_rgba("white", 0.5)),
+    text = "Our nearest Stars"
+    ) |>
+  hc_subtitle(
+    style = list(color = hex_to_rgba("white", 0.5)),
+    text = "In a Hertzsprung-Russell diagram"
+    ) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    headerFormat = "",
+    pointFormat = tltip
+    ) |>
+  hc_size(
+    height = 700
+    )
+```
+
+## The Impact of Vaccines
+
+From [WSJ graphic: Battling Infectious Diseases in the 20th
+Century](http://graphics.wsj.com/infectious-diseases-and-vaccines/):
+
+``` r
+data(vaccines)
+
+fntltp <- JS("function(){
+  return this.point.x + ' ' +  this.series.yAxis.categories[this.point.y] + ': ' +
+  Highcharts.numberFormat(this.point.value, 2);
+}")
+
+plotline <- list(
+  color = "#fde725", value = 1963, width = 2, zIndex = 5,
+  label = list(
+    text = "Vaccine Intoduced", verticalAlign = "top",
+    style = list(color = "#606060"), textAlign = "left",
+    rotation = 0, y = -5
+  )
+)
+
+hchart(
+  vaccines, 
+  "heatmap", 
+  hcaes(
+    x = year,
+    y = state, 
+    value = count
+    )
+  ) |>
+  hc_colorAxis(
+    stops = color_stops(10, viridisLite::inferno(10, direction = -1)),
+    type = "logarithmic"
+  ) |>
+  hc_yAxis(
+    title = list(text = ""),
+    reversed = TRUE, 
+    offset = -20,
+    tickLength = 0,
+    gridLineWidth = 0, 
+    minorGridLineWidth = 0,
+    labels = list(style = list(fontSize = "9px"))
+  ) |>
+  hc_tooltip(
+    formatter = fntltp
+    ) |>
+  hc_xAxis(
+    plotLines = list(plotline)) |>
+  hc_title(
+    text = "Infectious Diseases and Vaccines"
+    ) |>
+  hc_subtitle(
+    text = "Number of cases per 100,000 people"
+  ) |> 
+  hc_legend(
+    layout = "horizontal",
+    verticalAlign = "top",
+    align = "left",
+    valueDecimals = 0
+  ) |>
+  hc_size(height = 900)
+```

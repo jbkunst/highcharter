@@ -1,0 +1,101 @@
+# Highcharter
+
+##  Highcharts
+
+let us start start with a simple example using `hchart` function.
+
+``` r
+library(highcharter)
+
+# install.packages("palmerpenguins")
+data(penguins, package = "palmerpenguins") 
+
+hchart(
+  penguins,
+  "scatter",
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species)
+)
+```
+
+Among its features {highcharter} can chart various objects depending of
+its class with the generic `hchart` function. In the next example `x` is
+numeric:
+
+``` r
+x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
+
+hchart(x, name = "data", color = "#17b8b6") 
+```
+
+One of the nicest class which `hchart` can plot is the `forecast` class
+from the {forecast} package.
+
+``` r
+library(forecast)
+
+airforecast <- forecast(auto.arima(AirPassengers), level = 95)
+
+hchart(airforecast)
+```
+
+See more examples of `hchart` in
+[`vignette("hchart")`](https://jkunst.com/highcharter/articles/hchart.md).
+
+##  Highstock
+
+With {highcharter} you can use the highstock library which include
+sophisticated navigation options like:
+
+- Small navigator series
+- Preset date ranges
+- Date picker
+- Scrolling and panning.
+
+It is easy make candlesticks or ohlc charts using time series data. For
+example, using data from [{quantmod}](http://www.quantmod.com/) package:
+
+``` r
+library(quantmod)
+
+x <- getSymbols("GOOG", auto.assign = FALSE)
+y <- getSymbols("AMZN", auto.assign = FALSE)
+
+highchart(type = "stock") |> 
+  hc_add_series(x) |> 
+  hc_add_series(y, type = "ohlc")
+```
+
+##  Highmaps
+
+We can chart maps elements and choropleth using the highmaps and build
+interactive maps to display data linked to geographic objects.
+
+``` r
+data(GNI2014, package = "treemap")
+
+hcmap(
+  "custom/world-robinson-lowres",
+  data = GNI2014,
+  name = "Gross national income per capita",
+  value = "GNI",
+  borderWidth = 0,
+  nullColor = "#d3d3d3",
+  joinBy = c("iso-a3", "iso3")
+) |>
+  hc_colorAxis(
+    stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
+    type = "logarithmic"
+  )
+```
+
+## What now?
+
+Since you know the basics now it could be interesting:
+
+- Go motivate yourself with the
+  [`vignette("showcase")`](https://jkunst.com/highcharter/articles/showcase.md)
+  and look everything that can be done with the {highcharter} package.
+- Learn to configure graphics using the implemented API in
+  [`vignette("highcharts-api")`](https://jkunst.com/highcharter/articles/highcharts-api.md).
+- See all chart you can make in
+  [`vignette("highcharts")`](https://jkunst.com/highcharter/articles/highcharts.md).

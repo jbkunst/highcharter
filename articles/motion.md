@@ -1,0 +1,146 @@
+# Motion plugin
+
+## Example I
+
+``` r
+library(idbr)
+library(purrr)
+library(dplyr)
+
+idb_api_key("35f116582d5a89d11a47c7ffbfc2ba309133f09d")
+yrs <-  seq(1980, 2030, by = 5)
+
+df <- map_df(c("male", "female"), function(sex){
+  mutate(idb1("US", yrs, sex = sex), sex_label = sex)
+})
+
+names(df) <- tolower(names(df))
+
+df <- df |>
+  mutate(population = pop*ifelse(sex_label == "male", -1, 1))
+
+series <- df |> 
+  group_by(sex_label, age) |> 
+  do(data = list(sequence = .$population)) |> 
+  ungroup() |> 
+  group_by(sex_label) |> 
+  do(data = .$data) |>
+  mutate(name = sex_label) |> 
+  list_parse()
+
+maxpop <- max(abs(df$population))
+
+xaxis <- list(
+  categories = sort(unique(df$age)),
+  reversed = FALSE, tickInterval = 5,
+  labels = list(step = 5)
+  )
+
+highchart() |>
+  hc_chart(type = "bar") |>
+  hc_motion(
+    enabled = TRUE, 
+    labels = yrs, 
+    series = c(0,1),
+    autoplay = TRUE, 
+    updateInterval = 10
+    ) |> 
+  hc_add_series_list(series) |> 
+  hc_plotOptions(
+    series = list(stacking = "normal"),
+    bar = list(groupPadding = 0, pointPadding =  0, borderWidth = 0)
+  ) |> 
+  hc_tooltip(
+    shared = FALSE,
+    formatter = JS("function () { return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' + 'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);}")
+  ) |> 
+  hc_yAxis(
+    labels = list(
+      formatter = JS("function(){ return Math.abs(this.value) / 1000000 + 'M'; }") 
+    ),
+    tickInterval = 0.5e6,
+    min = -maxpop,
+    max = maxpop) |> 
+  hc_xAxis(
+    xaxis,
+    rlist::list.merge(xaxis, list(opposite = TRUE, linkedTo = 0))
+  )
+```
+
+``` r
+# highchart() |> 
+#   hc_xAxis(min = 0, max = 10) |> 
+#   hc_yAxis(min = 0, max = 10) |> 
+#   hc_motion(enabled = TRUE) |> 
+#   hc_add_series(
+#     type = "bubble",
+#     data = list(
+#       list(
+#         sequence = list(
+#           list(x = 1, y = 1, z = 10),
+#           list(x = 2, y = 3, z = 5),
+#           list(x = 3, y = 5, z = 8)
+#           )
+#         )
+#       )
+#     )
+# 
+# 
+# highchart() |> 
+#   hc_xAxis(min = 0, max = 10) |> 
+#   hc_yAxis(min = 0, max = 10) |> 
+#   hc_add_series(
+#     type = "bubble",
+#     data = list(
+#       list(x = 1, y = 1, z = 10)
+#     )
+#   )
+# 
+# 
+# library(highcharter)
+# 
+# highchart() |> 
+#   hc_chart(type = "scatter") |> 
+#   hc_yAxis(max = 6, min = 0) |> 
+#   hc_xAxis(max = 6, min = 0) |>
+#   hc_add_series(name = "Australia",
+#                 data = list(
+#                   list(sequence = list(c(1,1),c(2,2),c(3,3),c(4,4)))
+#                 )) |>
+#   hc_add_series(name = "United States",
+#                 data = list(
+#                   list(sequence = list(c(0,0),c(3,2),c(4,3),c(4,1)))
+#                 )) |>
+#   hc_add_series(name = "China",
+#                 data = list(
+#                   list(sequence = list(c(3,2),c(2,2),c(1,1),c(2,5)))
+#                 )) |> 
+#   hc_motion(enabled = TRUE,
+#             labels = 2000:2003,
+#             series = c(0,1,2))
+# 
+# 
+# list(x = )
+# 
+#     
+# 
+# highchart() |> 
+#   hc_chart(type = "column") |> 
+#   hc_yAxis(max = 6, min = 0) |> 
+#   hc_add_series(name = "A", data = c(2,3,4), zIndex = -10) |> 
+#   hc_add_series(name = "B",
+#                 data = list(
+#                   list(sequence = c(1,2,3,4)),
+#                   list(sequence = c(3,2,1,3)),
+#                   list(sequence = c(2,5,4,3))
+#                 )) |> 
+#   hc_add_series(name = "C",
+#                 data = list(
+#                   list(sequence = c(3,2,1,3)),
+#                   list(sequence = c(2,5,4,3)),
+#                   list(sequence = c(1,2,3,4))
+#                 )) |> 
+#   hc_motion(enabled = TRUE,
+#             labels = 2000:2003,
+#             series = c(1,2))
+```

@@ -1,0 +1,246 @@
+# Drilldown
+
+Drilldown is the concept of inspecting increasingly high resolution data
+through clicking on chart items like columns, points or pie slices.
+
+## Exmaple I: Gapminder data
+
+``` r
+library(dplyr)
+library(forcats)
+library(purrr)
+library(stringr)
+
+data(gapminder, package = "gapminder")
+
+gapminder2007 <- gapminder |>
+  filter(year == max(year)) |>
+  select(-year) |>
+  mutate(pop = pop/1e6) |>
+  arrange(desc(pop))
+
+gapminder_column <- gapminder2007 |>
+  group_by(continent) |>
+  summarise(
+    lifeExp = weighted.mean(lifeExp, pop),
+    gdpPercap = weighted.mean(gdpPercap, pop),
+    pop = sum(pop)
+  ) |>
+  mutate_if(is.numeric, round) |>
+  arrange(desc(pop)) |>
+  mutate(continent = fct_inorder(continent))
+
+gapminder_column
+```
+
+    ## # A tibble: 5 × 4
+    ##   continent lifeExp gdpPercap   pop
+    ##   <fct>       <dbl>     <dbl> <dbl>
+    ## 1 Asia           69      5432  3812
+    ## 2 Africa         55      2561   930
+    ## 3 Americas       75     21603   899
+    ## 4 Europe         78     25244   586
+    ## 5 Oceania        81     32885    25
+
+``` r
+gapminder_drilldown <- gapminder2007 |>
+  group_nest(continent) |>
+  mutate(
+    id = continent,
+    type = "column",
+    # in the drilldown we'll give the mapping via creating the columns
+    data = map(data, mutate, name = country, y  = pop),
+    data = map(data, list_parse)
+  )
+
+gapminder_drilldown
+```
+
+    ## # A tibble: 5 × 4
+    ##   continent data        id       type  
+    ##   <fct>     <list>      <fct>    <chr> 
+    ## 1 Africa    <list [52]> Africa   column
+    ## 2 Americas  <list [25]> Americas column
+    ## 3 Asia      <list [33]> Asia     column
+    ## 4 Europe    <list [30]> Europe   column
+    ## 5 Oceania   <list [2]>  Oceania  column
+
+The data is ready. Now, in this example due the continents and countries
+have the sames values (pop, lifeExp, …) we can use the same
+`pointFormat` for the tooltips:
+
+``` r
+x <- c("Population (MM)", "Life expectancy at birth", "GDP per capita (US$)")
+y <- c("{point.pop}", "{point.lifeExp}", "$ {point.gdpPercap}")
+
+tt <- tooltip_table(x, y)
+
+hchart(
+  gapminder_column,
+  "column",
+  hcaes(x = continent, y = pop, name = continent, drilldown = continent),
+  name = "Population",
+  colorByPoint = TRUE
+) |>
+  hc_drilldown(
+    allowPointDrilldown = TRUE,
+    series = list_parse(gapminder_drilldown)
+  ) |>
+  hc_tooltip(
+    pointFormat = tt, # "{point.name} {point.pop}"
+    useHTML = TRUE,
+    valueDecimals = 0
+  ) |>
+  hc_yAxis(
+    title = list(text = "Population in millions (log scale)"),
+    type = "logarithmic",
+    minorTickInterval = 'auto'
+  ) |>
+  hc_xAxis(
+    title = ""
+  )
+```
+
+## Exmaple II: Pokémon data
+
+Same recipe, different data. Just copy & pasting code:
+
+``` r
+pkmn_min <- pokemon |>
+  count(type_1, color = type_1_color) |>
+  mutate(type_1 = fct_reorder(type_1, .x = n)) |>
+  arrange(desc(type_1))
+
+pkmn_ddn <- pokemon |>
+  count(type_1, type_2, color = type_mix_color) |>
+  arrange(type_1, desc(n)) |>
+  mutate(type_2 = ifelse(is.na(type_2), str_c("only ", type_1), type_2)) |>
+  group_nest(type_1) |>
+  mutate(
+    id = type_1,
+    type = "column",
+    # in the drilldown we'll give the mapping via creating the columns
+    data = map(data, mutate, name = type_2, y  = n),
+    data = map(data, list_parse)
+  )
+
+hchart(
+  pkmn_min,
+  type = "column",
+  hcaes(x = type_1, y = n, color = color, drilldown = type_1),
+  name = "Pokémons"
+  ) |>
+  hc_drilldown(
+    activeAxisLabelStyle = list(textDecoration = "none"),
+    allowPointDrilldown = TRUE,
+    series = list_parse(pkmn_ddn)
+  ) |>
+  hc_yAxis(
+    title = list(text = ""),
+    endOnTick = FALSE,
+    opposite = TRUE
+    ) |>
+  hc_xAxis(
+    title = list(text = ""),
+    endOnTick = FALSE,
+    gridLineWidth = 0,
+    tickWidth = 0
+    ) |>
+  hc_chart(
+    style = list(fontFamily = "Gloria Hallelujah")
+  )
+```
+
+## Example III: Custom tooltips and colors
+
+(Example thanks to Claire).
+
+``` r
+dtrees <- tibble(
+  tree = c("A", "B"),
+  apples = c(5, 7),
+  species = c("Fuji", "Gala"),
+  trunk_size = c(30, 40)
+  ) |> 
+  # rowise is used to avoid vectorization in tags$td, ie, do it row by row
+  rowwise() |> 
+  mutate(
+    tooltip_text = list(
+      tags$table(
+        tags$tr(tags$th("Tree"), tags$td(tree)),
+        tags$tr(tags$th("# Apples"), tags$td(apples))
+      )
+    )
+  ) |> 
+  ungroup() |> 
+  mutate(
+    tooltip_text = map_chr(tooltip_text, as.character),
+    # clean text
+    tooltip_text = str_trim(str_squish(tooltip_text))
+    )
+
+dflowers <- tibble(
+  tree = c(rep("A", 3), rep("B", 4)),
+  rose = c("R1", "R2", "R3", "R4", "R5", "R6", "R7"),
+  petals = c(10, 13, 15, 20, 24, 26, 27),
+  color = c(
+    "gray",
+    "#FFB6C1",
+    "#8B0000",
+    "purple",
+    "#FF10F0",
+    "#ffffbf",
+    "red"
+  ),
+  price = c(3, 2, 4, 3.5, 5, 2.5, 4.5)
+  ) |>   
+  rowwise() |> 
+  mutate(
+    tooltip_text = list(
+      tags$table(
+        tags$tr(tags$th("Flower"), tags$td(rose)),
+        tags$tr(tags$th("# Petals"), tags$td(petals)),
+        tags$tr(tags$th("Price"), tags$td(str_c("$ ", price)))
+      )
+    )  
+  ) |> 
+  ungroup() |> 
+  mutate(
+    tooltip_text = map_chr(tooltip_text, as.character),
+    # clean text
+    tooltip_text = str_trim(str_squish(tooltip_text))
+  )
+
+dflowers_dd <- dflowers |>
+  group_nest(id = tree) |>
+  mutate(
+    type = "column",
+    data = map(data, mutate, name = rose, y = petals),
+    data = map(data, list_parse),
+    name = "Petals"
+  )
+
+hchart(
+  dtrees,
+  "column",
+  hcaes(tree, apples, drilldown = tree),
+  name = "Apples",
+  colorByPoint = TRUE
+) |>
+  hc_drilldown(
+    breadcrumbs = list(
+      format = 'back to {level.name} series',
+      # enabled = FALSE,
+      showFullPath = FALSE
+      ),
+    allowPointDrilldown = TRUE,
+    series = list_parse(dflowers_dd)
+    ) |>
+  hc_yAxis(title = list(text  = "")) |>
+  hc_xAxis(title = list(text  = "")) |>
+  hc_tooltip(
+    headerFormat = "", # remove header
+    pointFormat = "{point.tooltip_text}",
+    useHTML = TRUE
+    )
+```

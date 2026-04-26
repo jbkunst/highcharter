@@ -1,0 +1,409 @@
+# Modules & plugins
+
+There are many plugins for highcharts created by both the Highsoft team
+and the community. The plugins can from adding features to series or
+legends, as well as in data export formats or adjusting regressions or
+smoothing.
+
+Since there are many and some of them are for a particular or unusual
+use, they are not included in `highchart`. This is why these can be
+incorporated into the `htmlwidget` using the`hc_add_dependency`
+function.
+
+It should be noted that from time to time the plugins interfere with
+each other so you must be careful in using them.
+
+## Regression
+
+This plugin was created by Ignacio Vazquez (<https://github.com/phpepe>)
+and let you add a regression series to any existing series on your
+chart. Calculates the r-squared value (coefficient of determination) and
+optionally prints it on the legend. If Linear or Polynomial regression
+is selected, you can print the equation on the legend.
+
+``` r
+library(highcharter)
+
+data(penguins, package = "palmerpenguins")
+
+penguins <- penguins[complete.cases(penguins),]
+
+hchart(
+  penguins,
+  "scatter",
+  name = "Penguins",
+  # opacity = 0.35,
+  hcaes(x = flipper_length_mm, y = bill_length_mm),
+  regression = TRUE,
+  regressionSettings = list(
+    type = "polynomial",
+    dashStyle = "ShortDash",
+    color = "skyblue",
+    order = 3,
+    lineWidth = 5,
+    name = "%eq | r2: %r",
+    hideInLegend = FALSE)
+  ) |>
+  hc_add_dependency("plugins/highcharts-regression.js")
+```
+
+Even you can get a regression for each series/group.
+
+``` r
+hchart(
+  penguins, 
+  "scatter",
+  hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
+  regression = TRUE
+  ) |>
+  hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
+  hc_add_dependency("plugins/highcharts-regression.js")
+```
+
+A detail of the each parameter can be found in the github page of this
+plugin:
+<https://github.com/streamlinesocial/highcharts-regression#regression-settings>.
+
+## Grouped Categories
+
+Home page: <http://blacklabel.github.io/grouped_categories/>
+
+Let’s try an example:
+
+``` r
+library(purrr) # map function to make grouped categories argument
+library(dplyr) # for select function 
+
+data(mpg, package = "ggplot2")
+
+mpgg <- mpg |> 
+  filter(!manufacturer %in% c("volkswagen", "chevrolet")) |> 
+  filter(class %in% c("compact", "midsize", "subcompact")) |> 
+  group_by(class, manufacturer) |> 
+  summarize(count = n()) |> 
+  ungroup()
+
+categories_grouped <- mpgg |>
+  select(class, manufacturer) |>
+  group_by(name = class) |> 
+  summarise(categories = list(manufacturer)) |> 
+  list_parse()
+
+hchart(
+  mpgg,
+  "column", 
+  name = "Cars",
+  hcaes(y = count)
+  ) |> 
+  hc_xAxis(
+    # specify the grouped categories
+    categories = categories_grouped, 
+    # styling a little bit
+    labels = list(style = list(fontSize = "10px"))
+    ) |>
+  hc_add_dependency("plugins/grouped-categories.js")
+```
+
+## Colored area and colored line
+
+More information in <https://github.com/blacklabel/multicolor_series>.
+
+``` r
+library(dplyr)
+
+set.seed(123)
+
+n <- 200
+
+colors <- sample(viridisLite::cividis(5, end = .9))
+
+df <- tibble(
+  x = 1:n,
+  y = abs(arima.sim(n = n, model = list(ar = c(0.9)))) + 2,
+  y2 = 10 + y,
+  col = rep(colors, each = n/10, length.out = n)
+)
+
+hchart(df, "coloredarea", hcaes(x, y, segmentColor = col)) |> 
+   hc_add_series(df, "coloredline", hcaes(x, y2 , segmentColor = col)) |> 
+   hc_add_dependency("plugins/multicolor_series.js")
+```
+
+## Draggable-points
+
+More details in
+<https://api.highcharts.com/highcharts/plotOptions.series.dragDrop>.
+
+``` r
+set.seed(123)
+
+df <- tibble(x = runif(10), y = runif(10), z = runif(10), name = paste("cat", 1:10))
+
+hchart(
+  df,
+  "bubble",
+  hcaes(x = x, y = y),
+  # showInLegend = TRUE,
+  name = "You can move the points",
+  cursor = "move",
+  dragDrop = list(
+    draggableX = TRUE,
+    draggableY = TRUE
+    )
+  ) |> 
+  hc_add_dependency("modules/draggable-points.js")
+```
+
+``` r
+df$x <- NULL
+
+hchart(
+  df,
+  "column",
+  hcaes(x = name, y = y),
+  showInLegend = TRUE,
+  name = "You can move the points only Yaxis direction",
+  cursor = 'ns-resize',
+  dragDrop = list(
+    draggableY = TRUE
+    )
+  ) |> 
+  hc_add_dependency("modules/draggable-points.js")
+```
+
+## Pattern fills
+
+More information in
+<https://www.highcharts.com/blog/tutorials/pattern-fills/>.
+
+Example taken from
+<https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/pattern-fill-area>.
+
+``` r
+# base chart without series
+hc_fill <- highchart() |> 
+  # add dependency
+  hc_add_dependency("modules/pattern-fill.js") |> 
+  hc_chart(type = 'area') |> 
+  hc_title(text = 'Pattern fill plugin demo') |> 
+  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) |> 
+  hc_plotOptions(
+    area = list(
+      fillColor = list(
+        pattern = list(
+          path = list(
+            d = 'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
+            strokeWidth = 3
+            ),
+          width = 10,
+          height = 10,
+          opacity = 0.4
+          )
+        )
+      )
+    )
+
+# test with 2 series
+hc_fill |> 
+  hc_add_series(
+    data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6),
+    color= '#88e',
+    fillColor = list(
+      pattern = list(
+        color = '#11d'
+      )
+    )
+    ) |> 
+  hc_add_series(
+    data = c(NA, NA, NA, NA, NA, 43.1, 95.6, 148.5, 216.4, 194.1, 95.6, 54.4),
+    color = '#e88',
+    fillColor = list(
+      pattern = list(
+        color= '#d11'
+      )
+    )
+  )
+```
+
+More examples for fun.
+
+``` r
+# test with 1 series and a theme
+hc_fill |> 
+  hc_add_series(
+    data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
+    color= '#000',
+    fillColor = list(
+      pattern = list(
+        color = '#000'
+      )
+    )
+    ) |> 
+  hc_add_theme(hc_theme_handdrawn())
+```
+
+Example from
+<https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/>
+and inspired by <https://www.amcharts.com/demos/pictorial-column-chart/>
+
+``` r
+highchart() |> 
+  # add the module
+  hc_add_dependency("modules/pattern-fill.js") |> 
+  hc_size(heigh = 350) |> 
+  hc_xAxis(type = 'category') |> 
+  hc_tooltip(
+    borderColor = "#CACACA",
+    pointFormat = 'The height for <b>{point.name}</b> is <b>{point.y}</b>'
+    ) |> 
+  # hc_chart(
+  #   plotBackgroundColor = list(
+  #     linearGradient = c(0, 0, 0, 500),
+  #     stops = list(
+  #       list(0.0, 'rgb(240, 178, 79)'),
+  #       list(0.5, 'rgb(202, 108, 70)'),
+  #       list(0.9, 'rgb(12, 5, 36)')
+  #       )
+  #     )
+  # ) |> 
+  # hc_xAxis(gridLineColor = 'transparent') |> 
+  # hc_yAxis(gridLineColor = 'transparent') |> 
+  hc_add_series(
+    type = "column",
+    showInLegend = FALSE,
+    pointWidth = 110,
+    pointPadding = 0.25,
+    borderColor = "transparent",
+    borderWidth = 0,
+    data = list(
+      list(
+        name = "Petronas",
+        y = 100,
+        color = list(
+          pattern = list(
+             image = 'https://www.svgrepo.com/show/27082/petronas-towers.svg',
+             aspectRatio = 1.3
+          )
+        )
+      ),
+      list(
+        name = 'Pisa',
+        y = 150,
+        color = list(
+          pattern = list(
+            image = 'https://www.svgrepo.com/show/1171/tower-of-pisa.svg',
+            aspectRatio = 1
+          )
+        )
+      ),
+      list(
+        name = 'Eiffel tower',
+        y = 200,
+        color = list(
+          pattern = list(
+            image = 'https://www.svgrepo.com/show/19456/tokyo-tower.svg',
+            aspectRatio = 0.8
+            )
+          )
+      ),
+      list(
+        name = 'Ahu-tongariki',
+        y = 250,
+        color = list(
+          pattern = list(
+            image = 'https://www.svgrepo.com/show/27081/ahu-tongariki.svg',
+            aspectRatio = 0.75
+          )
+        )
+      )
+    )
+  )
+```
+
+And the last one.
+
+``` r
+dim(volcano)
+```
+
+    ## [1] 87 61
+
+``` r
+highchart() |> 
+  hc_add_dependency("modules/pattern-fill.js") |> 
+  hc_add_theme(hc_theme_null()) |> 
+  hc_add_series(
+    type = "area", # area needs fill color
+    name = "Maunga Whau Volcano",
+    color = "transparent",
+    data = as.numeric(volcano[40, ]) - min(volcano[40, ]) + 1,
+    fillColor = list(
+      pattern = list(
+        image = 'https://cdn.pixabay.com/photo/2014/12/04/02/02/wall-556100_960_720.jpg'
+        )
+      )
+    )
+```
+
+## List of modules and plugins in highcharter
+
+You can use the next modules, plugins and and custom scripts:
+
+``` r
+dir(system.file("htmlwidgets/lib/highcharts/modules", package = "highcharter"))
+```
+
+    ##  [1] "accessibility.js"          "annotations-advanced.js"  
+    ##  [3] "annotations.js"            "arc-diagram.js"           
+    ##  [5] "arrow-symbols.js"          "boost-canvas.js"          
+    ##  [7] "boost.js"                  "broken-axis.js"           
+    ##  [9] "bullet.js"                 "coloraxis.js"             
+    ## [11] "contour.js"                "current-date-indicator.js"
+    ## [13] "cylinder.js"               "data-tools.js"            
+    ## [15] "data.js"                   "datagrouping.js"          
+    ## [17] "debugger.js"               "dependency-wheel.js"      
+    ## [19] "dotplot.js"                "drag-panes.js"            
+    ## [21] "draggable-points.js"       "drilldown.js"             
+    ## [23] "dumbbell.js"               "export-data.js"           
+    ## [25] "exporting.js"              "flowmap.js"               
+    ## [27] "full-screen.js"            "funnel.js"                
+    ## [29] "funnel3d.js"               "gantt.js"                 
+    ## [31] "geoheatmap.js"             "grid-axis.js"             
+    ## [33] "heatmap.js"                "heikinashi.js"            
+    ## [35] "histogram-bellcurve.js"    "hollowcandlestick.js"     
+    ## [37] "item-series.js"            "lollipop.js"              
+    ## [39] "map.js"                    "marker-clusters.js"       
+    ## [41] "mouse-wheel-zoom.js"       "navigator.js"             
+    ## [43] "networkgraph.js"           "no-data-to-display.js"    
+    ## [45] "non-cartesian-zoom.js"     "offline-exporting.js"     
+    ## [47] "organization.js"           "parallel-coordinates.js"  
+    ## [49] "pareto.js"                 "pathfinder.js"            
+    ## [51] "pattern-fill.js"           "pictorial.js"             
+    ## [53] "pointandfigure.js"         "price-indicator.js"       
+    ## [55] "pyramid3d.js"              "renko.js"                 
+    ## [57] "sankey.js"                 "series-label.js"          
+    ## [59] "series-on-point.js"        "solid-gauge.js"           
+    ## [61] "sonification.js"           "static-scale.js"          
+    ## [63] "stock-tools.js"            "stock.js"                 
+    ## [65] "streamgraph.js"            "sunburst.js"              
+    ## [67] "textpath.js"               "tiledwebmap.js"           
+    ## [69] "tilemap.js"                "timeline.js"              
+    ## [71] "treegraph.js"              "treegrid.js"              
+    ## [73] "treemap.js"                "variable-pie.js"          
+    ## [75] "variwide.js"               "vector.js"                
+    ## [77] "venn.js"                   "windbarb.js"              
+    ## [79] "wordcloud.js"              "xrange.js"
+
+``` r
+dir(system.file("htmlwidgets/lib/highcharts/plugins", package = "highcharter"))
+```
+
+    ## [1] "draggable-legend.js"      "grouped-categories.js"   
+    ## [3] "highcharts-regression.js" "motion.js"
+
+``` r
+dir(system.file("htmlwidgets/lib/highcharts/custom", package = "highcharter"))
+```
+
+    ## [1] "appear.js"          "delay-animation.js" "reset.js"          
+    ## [4] "symbols-extra.js"   "text-symbols.js"    "tooltip-delay.js"
