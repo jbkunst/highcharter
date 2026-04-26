@@ -1,8 +1,8 @@
 # Simple theme for highcharts
 
 Theme smpl design is inspired by
-<https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r> and color
-by <https://materialui.co/flatuicolors>.
+<https://github.com/hrbrmstr/hrbrthemes> and color by
+<https://materialui.co/flatuicolors>.
 
 ## Usage
 

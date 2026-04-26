@@ -72,6 +72,10 @@
 <ul><li>Removed <code>hc_labels()</code> in favor of <code><a href="../reference/hc_annotations.html">hc_annotations()</a></code>. This follows the Highcharts API change where the top-level <code>labels</code> option was removed. Users should migrate custom chart labels to annotations.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="package-requirements-0-12-6-0">Package requirements<a class="anchor" aria-label="anchor" href="#package-requirements-0-12-6-0"></a></h3>
+<ul><li>Updated <code>Depends</code> to require R 4.1.0 or later (<code>R (&gt;= 4.1.0)</code>).</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bugs-0-12-6-0">Bugs<a class="anchor" aria-label="anchor" href="#bugs-0-12-6-0"></a></h3>
 <ul><li>Fix <code>download_map_data</code> to prevent 403 Forbidden errors when fetching data.</li>
 <li>Wrapped examples making network calls in <code>\dontrun{}</code> (<code>get_data_from_map</code> and <code>hc_mapNavigation</code>) to fix CRAN Package Check 403 errors.</li>

@@ -1,6 +1,6 @@
 # Firefox theme for highcharts
 
-Firefox theme was inspired by <https://mozilla.design/>.
+Firefox theme was inspired by <https://brand.mozilla.com/all-brands>.
 
 ## Usage
 

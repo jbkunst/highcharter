@@ -1,7 +1,7 @@
 # Superheroes theme for highcharts
 
 The superheroes theme is inspired by
-<https://public.tableau.com/profile/ryansmith#!/vizhome/HeroesofNewYork/SuperheroesinNewYork>
+<https://public.tableau.com/app/profile/ryansmith/viz/HeroesofNewYork/SuperheroesinNewYork>
 
 ## Usage
 

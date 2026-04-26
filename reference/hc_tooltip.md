@@ -21,13 +21,11 @@ hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 
 - sort:
 
-  Logical value to implement sort according `this.point`
-  <http://stackoverflow.com/a/16954666/829971>.
+  Logical value to implement sort according `this.point`.
 
 - table:
 
-  Logical value to implement table in tooltip:
-  <http://stackoverflow.com/a/22327749/829971>.
+  Logical value to implement table in tooltip.
 
 ## Examples
 

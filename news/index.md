@@ -14,6 +14,10 @@
   option was removed. Users should migrate custom chart labels to
   annotations.
 
+### Package requirements
+
+- Updated `Depends` to require R 4.1.0 or later (`R (>= 4.1.0)`).
+
 ### Bugs
 
 - Fix `download_map_data` to prevent 403 Forbidden errors when fetching
