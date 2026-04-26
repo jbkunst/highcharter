@@ -1,8 +1,4 @@
-# highcharter (development version)
-
-# highcharter 0.13.0
-
-# highcharter 0.12.6.0
+# highcharter 0.12.6.1
 
 ## Changes
 
