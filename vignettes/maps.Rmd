@@ -46,8 +46,8 @@ Let's try some maps:
 
 ```{r, warning=FALSE, message=FALSE}
 library(highcharter)
-hcmap("countries/nz/nz-all")
 
+hcmap("countries/nz/nz-all")
 
 hcmap("custom/usa-and-canada", showInLegend = FALSE)
 
@@ -198,7 +198,8 @@ Another example:
 library(dplyr)
 
 airports <- read.csv(
-  "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
+  # "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
+  "https://datacatalogfiles.worldbank.org/ddh-published/0038117/2/DR0046411/airport_volume_airport_locations.csv",
   stringsAsFactors = FALSE
   )
 
@@ -210,8 +211,8 @@ south_america_countries <- c(
   ) 
 
 airports <- airports |>
-  filter(country %in% south_america_countries) |>
-  rename(lat = latitude, lon = longitude) |>
+  filter(Country.Name %in% south_america_countries) |>
+  rename(lat = Airport1Latitude, lon = Airport1Longitude) |>
   filter(lon < -30)
 
 hcmap(
@@ -252,6 +253,7 @@ ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master
 
 ausmap <- highchart(type = "map") |>
   hc_add_series(mapData = ausgeojson, showInLegend = FALSE)
+
 ausmap
 ```
 
@@ -259,10 +261,18 @@ We can still adding data:
 
 
 ```{r}
-airports <- read.csv("https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv")
-airports <- filter(airports, country == "Australia", name != "Roma Street Railway Station")
+airports <- read.csv(
+  # "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
+  "https://datacatalogfiles.worldbank.org/ddh-published/0038117/2/DR0046411/airport_volume_airport_locations.csv",
+  stringsAsFactors = FALSE
+  )
 
-airp_geojson <- geojson_json(airports, lat = "latitude", lon = "longitude")
+airports <- airports |> 
+  filter(Country.Name == "Australia", Name != "Roma Street Railway Station") |> 
+  rename(name = Name)
+
+airp_geojson <- geojson_json(airports, lat = "Airport1Latitude", lon = "Airport1Longitude")
+
 class(airp_geojson)
 
 ausmap |>
@@ -279,7 +289,125 @@ ausmap |>
 
 Let's download some geojson files and make a map.
 
-```{r, eval=TRUE}
+```{r}
+library(jsonlite)
+
+geojson <- fromJSON(
+  "https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/australia.geo.json",
+  simplifyVector = FALSE
+)
+
+features <- geojson$features
+
+map_features <- Filter(
+  \(x) x$geometry$type %in% c("Polygon", "MultiPolygon"),
+  features
+)
+
+line_features <- Filter(
+  \(x) x$geometry$type %in% c("LineString", "MultiLineString"),
+  features
+)
+
+point_features <- Filter(
+  \(x) x$geometry$type == "Point",
+  features
+)
+
+geojson_map <- geojson
+geojson_map$features <- map_features
+
+geojson_lines <- geojson
+geojson_lines$features <- line_features
+
+geojson_points <- geojson
+geojson_points$features <- point_features
+
+
+highchart(type = "map") |>
+  hc_add_series(
+    type = "map",
+    mapData = geojson_map,
+    name = "Map areas",
+    data = list()
+  ) |>
+  hc_add_series(
+    type = "mapline",
+    data = line_features,
+    name = "Lines"
+  ) |>
+  hc_add_series(
+    type = "mappoint",
+    data = point_features,
+    name = "Points"
+  )
+
+`%||%` <- function(x, y) if (is.null(x)) y else x
+point_data <- lapply(point_features, \(f) {
+  coords <- f$geometry$coordinates
+
+  list(
+    name = f$properties$name %||% NA_character_,
+    lon = coords[[1]],
+    lat = coords[[2]]
+  )
+})
+
+highchart(type = "map") |>
+  hc_add_series(
+    type = "map",
+    mapData = geojson_map,
+    name = "Map",
+    color = "#8b8a",
+    nullColor = "#8b8a",
+    dataLabels = list(
+      enabled = TRUE,
+      format = '{point.name}',
+      style = list(
+        width = "80px", # force line-wrap
+        textTransform = "uppercase",
+        fontWeight = "normal",
+        textOutline = "none",
+        color = "var(--highcharts-neutral-color-100, black)",
+        opacity = 0.5
+      )
+    ),
+    tooltip = list(
+      pointFormat = "{point.name}"
+    )
+  ) |>
+  hc_add_series(
+    type = "mapline",
+    data = line_features,
+    name = "Rivers",
+    states = list(
+      hover = list(
+        lineWidth = 3
+      )
+    ),
+    color = "#2B8CBE", # river blue
+    tooltip = list(
+      pointFormat = "{point.properties.NAME}"
+    )
+  ) |>
+  hc_add_series(
+    type = "mappoint",
+    data = point_data,
+    name = "Cities",
+    type = "mappoint",
+    color = "black",
+    marker = list(
+      radius = 2
+    ),
+    dataLabels = list(
+      align = "left",
+      verticalAlign = "middle"
+    ),
+    animation = FALSE
+  )
+```
+
+```{r, eval=FALSE, echo=FALSE}
 getContent <- function(url) {
   library(httr)
   content(GET(url))
@@ -301,12 +429,7 @@ plates <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EP
 # http://cedeusdata.geosteiniger.cl/layers/geonode:mundo_volcanes
 volcano <- getContent("http://cedeusdata.geosteiniger.cl/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Amundo_volcanes&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature")
 # volcano <- geojsonio::as.json(volcano)
-```
 
-The data is ready. Remember you can keep using the rest of the API to 
-customize your map.
-
-```{r, eval=TRUE}
 highchart(type = "map") |>
   hc_chart(backgroundColor = "#161C20") |>
   hc_add_series(

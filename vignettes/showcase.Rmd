@@ -265,7 +265,7 @@ hchart(
   hc_chart(
     # backgroundColor = "black"
     backgroundColor = hex_to_rgba("black", 0.5),
-    divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
+    divBackgroundImage = "https://img.freepik.com/free-photo/beautiful-shining-stars-night-sky_181624-622.jpg"
     ) |>
   hc_xAxis(
     title = list(text = "Temperature"),
