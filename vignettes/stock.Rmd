@@ -117,7 +117,7 @@ SPY.RSI.BuyLevel <- xts(rep(30, NROW(SPY)), index(SPY))
 
 highchart(type = "stock") |> 
   # create axis :)
-  hc_yAxis_multiples(create_yaxis(3, height = c(2, 1, 1), turnopposite = TRUE)) |> 
+  hc_yAxis_multiples(create_axis(3, height = c(2, 1, 1), turnopposite = TRUE)) |> 
   # series :D
   hc_add_series(SPY, yAxis = 0, name = "SPY") |> 
   hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") |> 
