@@ -15,8 +15,10 @@ Helper function to get the data inside the map data
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 }
 \examples{
+\dontrun{
 dta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
 get_data_from_map(dta)
+}
 }
 \seealso{
 \code{\link{download_map_data}}

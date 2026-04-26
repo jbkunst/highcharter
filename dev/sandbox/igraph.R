@@ -72,7 +72,7 @@ V(net)$label <- V(net)$name %>%
   map_chr(function(x) {
     x %>% unlist() %>% str_c(collapse = "")
   })
-V(net)$size <- degree(net)  # page.rank(net)$vector
+V(net)$size <- degree(net)  # page_rank(net)$vector
 
 cl <- cluster_resolution(net)
 

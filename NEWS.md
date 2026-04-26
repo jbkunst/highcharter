@@ -3,6 +3,12 @@
 ## Changes
 
 * Highcharter now uses HighchartsJS 10.2.0.
+* Fix `download_map_data` to prevent 403 Forbidden errors when fetching data.
+
+## Bugs
+
+* Wrapped examples making network calls in `\dontrun{}` (`get_data_from_map` and `hc_mapNavigation`) to fix CRAN Package Check 403 errors.
+* Renamed internal helper function `hchart.pca` to `hchart_pca` to resolve an unregistered S3 method mismatch NOTE.
 
 # highcharter 0.9.4
 

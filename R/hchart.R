@@ -438,11 +438,11 @@ hchart.dist <- function(object, ...) {
 #' wc <- cluster_walktrap(net)
 #' V(net)$label <- seq(N)
 #' V(net)$name <- paste("I'm #", seq(N))
-#' V(net)$page_rank <- round(page.rank(net)$vector, 2)
+#' V(net)$page_rank <- round(page_rank(net)$vector, 2)
 #' V(net)$betweenness <- round(betweenness(net), 2)
 #' V(net)$degree <- degree(net)
 #' V(net)$size <- V(net)$degree
-#' V(net)$comm <- membership(wc)
+#' V(net)$comm <- as.vector(membership(wc))
 #' V(net)$color <- colorize(membership(wc))
 #' hchart(net, layout = layout_with_fr)
 #' 
@@ -754,7 +754,7 @@ hchart.density <- function(object, type = "area", ...) {
 }
 
 #' @importFrom dplyr as_tibble
-hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
+hchart_pca <- function(sdev, n.obs, scores, loadings, ...,
                        choices = 1L:2L, scale = 1) {
   stopifnot(length(choices) == 2L)
   stopifnot(0 <= scale | scale <= 1)
@@ -804,7 +804,7 @@ hchart.pca <- function(sdev, n.obs, scores, loadings, ...,
 
 #' @export
 hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  hchart.pca(object$sdev, object$n.obs, object$scores, object$loadings,
+  hchart_pca(object$sdev, object$n.obs, object$scores, object$loadings,
     choices = choices, scale = scale, ...
   )
 }
@@ -812,7 +812,7 @@ hchart.princomp <- function(object, ..., choices = 1L:2L, scale = 1) {
 #' @importFrom dplyr as_tibble
 #' @export
 hchart.prcomp <- function(object, ..., choices = 1L:2L, scale = 1) {
-  hchart.pca(object$sdev, nrow(object$x), object$x, object$rotation,
+  hchart_pca(object$sdev, nrow(object$x), object$x, object$rotation,
     choices = choices, scale = scale, ...
   )
 }
