@@ -1,6 +1,6 @@
 #' Superheroes theme for highcharts
 #'
-#' The superheroes theme is inspired by \url{https://public.tableau.com/profile/ryansmith#!/vizhome/HeroesofNewYork/SuperheroesinNewYork}
+#' The superheroes theme is inspired by \url{https://public.tableau.com/app/profile/ryansmith/viz/HeroesofNewYork/SuperheroesinNewYork}
 #'
 #' @param ... A named parameters to modify the theme.
 #'

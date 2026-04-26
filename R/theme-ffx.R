@@ -1,6 +1,6 @@
 #' Firefox theme for highcharts
 #'
-#' Firefox theme was inspired by \url{https://mozilla.design/}.
+#' Firefox theme was inspired by \url{https://brand.mozilla.com/all-brands}.
 #'
 #' @param ... A named parameters to modify the theme.
 #'

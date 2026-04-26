@@ -31,3 +31,4 @@ index.Rmd
 ^.github$
 ^\.github$
 ^CRAN-SUBMISSION$
+^.*\.qmd$

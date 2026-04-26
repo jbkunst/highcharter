@@ -116,7 +116,7 @@
 #' @docType data
 #' @name globaltemp
 #' @usage globaltemp
-#' @source \url{http://www.climate-lab-book.ac.uk/2016/spiralling-global-temperatures/}
+#' @source \url{https://www.climate-lab-book.ac.uk/2016/spiralling-global-temperatures/}
 #' @format A \code{data frame} with 1992 observations and 4 variables.
 "globaltemp"
 

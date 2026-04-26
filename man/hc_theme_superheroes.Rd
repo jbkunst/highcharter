@@ -10,7 +10,7 @@ hc_theme_superheroes(...)
 \item{...}{A named parameters to modify the theme.}
 }
 \description{
-The superheroes theme is inspired by \url{https://public.tableau.com/profile/ryansmith#!/vizhome/HeroesofNewYork/SuperheroesinNewYork}
+The superheroes theme is inspired by \url{https://public.tableau.com/app/profile/ryansmith/viz/HeroesofNewYork/SuperheroesinNewYork}
 }
 \examples{
 

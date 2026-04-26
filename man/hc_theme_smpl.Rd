@@ -10,7 +10,7 @@ hc_theme_smpl(...)
 \item{...}{A named parameters to modify the theme.}
 }
 \description{
-Theme smpl design is inspired by \url{https://github.com/hrbrmstr/hrbrmisc/blob/master/R/themes.r}
+Theme smpl design is inspired by \url{https://github.com/hrbrmstr/hrbrthemes}
 and color by \url{https://materialui.co/flatuicolors}.
 }
 \examples{

@@ -31,7 +31,7 @@ RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Depends:
-    R (>= 2.10)
+    R (>= 4.1.0)
 Imports:
     htmlwidgets,
     purrr,

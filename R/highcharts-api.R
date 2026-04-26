@@ -875,10 +875,8 @@ hc_title <- function(hc, ...) {
 #' 
 #' @param hc A `highchart` `htmlwidget` object. 
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/tooltip}. 
-#' @param sort Logical value to implement sort according `this.point`
-#'   \url{http://stackoverflow.com/a/16954666/829971}.
-#' @param table Logical value to implement table in tooltip: 
-#'   \url{http://stackoverflow.com/a/22327749/829971}.
+#' @param sort Logical value to implement sort according `this.point`.
+#' @param table Logical value to implement table in tooltip.
 #' 
 #' @examples
 #' 
