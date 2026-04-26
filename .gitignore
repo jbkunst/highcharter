@@ -33,5 +33,6 @@ revdep/*
 # now docs is in gh-pages branch
 docs/
 docs/*
-pkgdown/assets/lib/*
 docs/assets/lib/
+pkgdown/assets/lib/*
+
