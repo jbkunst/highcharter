@@ -10,6 +10,8 @@ yml <- yaml::read_yaml("pkgdown/_pkgdown.yml")
 
 # the package needs to be build
 message(rep("the package needs to be build\n", 50))
+devtools::build()
+
 dfun <- help.search("*", package = "highcharter") %>%
   .$matches %>% 
   tibble::as_tibble() %>%
@@ -21,7 +23,7 @@ dfun <- help.search("*", package = "highcharter") %>%
 fun_hc_api <- read_lines("R/highcharts-api.R") %>% 
   str_subset(" <- function") %>% 
   str_remove(" <-.*") %>% 
-  c("highchart", "hchart", ., "highchart2", "highchartzero")
+  c("highchart", "hchart", ., "highchartzero")
 
 fun_hc_api
 
@@ -30,9 +32,7 @@ dfun <- dfun %>%
 
 
 # deprecated functions ----------------------------------------------------
-fun_hc_dep <- c("hcparcords", "hcspark", "hctreemap", "hctreemap2",
-                "hciconarray", "hcboxplot", "hc_add_dependency_fa", "fa_icon",
-                "fa_icon_mark", "create_yaxis")
+fun_hc_dep <- c("hcparcords", "create_axis")
 
 fun_hc_dep
 
@@ -106,7 +106,7 @@ fun_hc_hpr <- dfun %>%
   filter(str_detect(name, "data_to|^color|^tooltip_")) %>% 
   distinct() %>% 
   pull(name) %>% 
-  c(., "hex_to_rgba", "datetime_to_timestamp", "dt_tstp", "df_to_annotations_labels")
+  c(., "hex_to_rgba", "datetime_to_timestamp", "df_to_annotations_labels")
 
 fun_hc_hpr
 
@@ -177,8 +177,8 @@ yml[["reference"]] <- list(
 write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 # build reference ---------------------------------------------------------
-# pkgdown::build_reference_index()
-# pkgdown::build_reference()
+pkgdown::build_reference_index()
+pkgdown::build_reference()
 # pkgdown::preview_site(path = "/reference")
 
 

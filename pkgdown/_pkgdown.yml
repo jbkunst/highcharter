@@ -47,7 +47,6 @@ reference:
   - hc_credits
   - hc_drilldown
   - hc_exporting
-  - hc_labels
   - hc_legend
   - hc_loading
   - hc_pane
@@ -64,8 +63,6 @@ reference:
   - hc_rangeSelector
   - hc_scrollbar
   - hc_mapNavigation
-  - hc_mapView
-  - highchart2
   - highchartzero
 - title: Additional function to use Highcharts API
   desc: Helpers function to add or modify elements, like plugins (as {htmltools} dependencies),
@@ -98,7 +95,7 @@ reference:
   desc: |-
     Function to help manipulate data to use in specific arguments or
         some types of series. For example create valid arguments in `dataClasses`,
-        `stops` or `pointFormatter` parameters and create the right type of format
+        `stops` or `pointFormatter` parameters and create the rigth type of format
         to create treemaps, sunburst or sankey charts.
   contents:
   - color_classes
@@ -111,7 +108,6 @@ reference:
   - tooltip_table
   - hex_to_rgba
   - datetime_to_timestamp
-  - dt_tstp
   - df_to_annotations_labels
 - title: Shiny and proxy functions
   desc: |-
@@ -187,12 +183,12 @@ reference:
   - get_hc_series_from_df
   - hcaes
   - hcaes_string
+  - hchart.igraph
   - hchart.survfit
   - hcmap
   - highcharter-exports
   - highcharter
   - highcharts_demo
-  - hw_grid
   - is.hexcolor
   - is.highchart
   - list_parse
@@ -203,15 +199,7 @@ reference:
   desc: Functions that will be removed in the next version of the package.
   contents:
   - hcparcords
-  - hcspark
-  - hctreemap
-  - hctreemap2
-  - hciconarray
-  - hcboxplot
-  - hc_add_dependency_fa
-  - fa_icon
-  - fa_icon_mark
-  - create_yaxis
+  - create_axis
 articles:
 - title: Get Started
   navbar: Get Started
@@ -228,13 +216,18 @@ articles:
   - highcharts
   - maps
   - stock
-  - themes
-  - modules
+- title: Shiny Integration
+  navbar: Shiny Integration
+  contents: shiny
 - title: Experiments & Examples
   navbar: Experiments & Examples
   contents:
-  - howtos
-  - shiny
-  - drilldown
   - fontawesome
+  - drilldown
+- title: More of highcharter
+  navbar: More of highcharter
+  contents:
+  - themes
+  - howtos
+  - modules
   - motion

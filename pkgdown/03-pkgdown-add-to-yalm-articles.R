@@ -79,9 +79,13 @@ write_yaml(x = yml, file = "pkgdown/_pkgdown.yml")
 
 
 # build articles ----------------------------------------------------------
-# options(rmarkdown.html_vignette.check_title = FALSE)
-# pkgdown::build_articles()
-# pkgdown::build_articles_index()
+options(rmarkdown.html_vignette.check_title = FALSE)
+pkgdown::build_articles()
+pkgdown::build_articles_index()
+
 # pkgdown::build_article("themes")
 # pkgdown::build_article("drilldown")
-# pkgdown::preview_site()
+# pkgdown::build_article("maps")
+# pkgdown::build_article("stock")
+
+pkgdown::preview_site()
