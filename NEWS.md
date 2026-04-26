@@ -1,12 +1,16 @@
-# highcharter 0.9.4.9000
+# highcharter 0.12.6.0
 
 ## Changes
 
-* Highcharter now uses HighchartsJS 10.2.0.
-* Fix `download_map_data` to prevent 403 Forbidden errors when fetching data.
+* Highcharter now uses HighchartsJS 10.6.0.
+
+## Breaking changes
+
+* Removed `hc_labels()` in favor of `hc_annotations()`. This follows the Highcharts API change where the top-level `labels` option was removed. Users should migrate custom chart labels to annotations.
 
 ## Bugs
 
+* Fix `download_map_data` to prevent 403 Forbidden errors when fetching data.
 * Wrapped examples making network calls in `\dontrun{}` (`get_data_from_map` and `hc_mapNavigation`) to fix CRAN Package Check 403 errors.
 * Renamed internal helper function `hchart.pca` to `hchart_pca` to resolve an unregistered S3 method mismatch NOTE.
 

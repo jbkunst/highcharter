@@ -38,7 +38,9 @@ tooltips, annotations.
   marginwidth="0" 
   width="100%" 
   height="1000px" 
-  scrolling="auto"></iframe>
+  scrolling="no"
+  style="border:0; overflow:hidden;">
+</iframe>
 
 ## Installation
 
