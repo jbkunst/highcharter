@@ -12,9 +12,14 @@ hc_annotations(hc, ...)
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}.}
 }
 \description{
-A basic type of an annotation. It allows to add custom labels
-or shapes. The items can be tied to points, axis coordinates
-or chart pixel coordinates.
+A collection of annotations to add to the chart. The basic annotation allows
+adding custom labels or shapes. The items can be tied to points, axis
+coordinates or chart pixel coordinates.
+General options for all annotations can be set using the
+Highcharts.setOptions function. In this case only single objects are
+supported, because it alters the defaults for all items. For initialization
+in the chart constructors however, arrays of annotations are supported.
+See more in the general docs.
 }
 \examples{
 

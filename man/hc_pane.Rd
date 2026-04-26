@@ -14,6 +14,8 @@ hc_pane(hc, ...)
 \description{
 The pane serves as a container for axes and backgrounds for circular
 gauges and polar charts.
+When used in Highcharts.setOptions for theming, the pane must be a single
+object, otherwise arrays are supported.
 }
 \examples{
 

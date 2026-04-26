@@ -33,7 +33,7 @@ values. This can be used for ranges between two values, but also for
 a true category. However, when your data is categorized, it may be as
 convenient to add each category to a separate series.
 Color axis does not work with: sankey, sunburst, dependencywheel,
-networkgraph, wordcloud, venn, gauge and solidgauge series
+networkgraph, venn, gauge and solidgauge series
 types.
 Since v7.2.0 colorAxis can also be an array of options objects.
 See the Axis object for

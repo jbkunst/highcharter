@@ -12,7 +12,7 @@ hc_credits(hc, ...)
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/credits}.}
 }
 \description{
-Highchart by default puts a credits label in the lower right corner
+Highcharts by default puts a credits label in the lower right corner
 of the chart. This can be changed using these options.
 }
 \examples{

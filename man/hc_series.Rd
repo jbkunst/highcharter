@@ -12,9 +12,7 @@ hc_series(hc, ...)
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/series}.}
 }
 \description{
-Series options for specific data and the data itself. In TypeScript you
-have to cast the series options to specific series types, to get all
-possible options for a series.
+Series options for specific data and the data itself.
 }
 \examples{
 
