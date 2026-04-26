@@ -7,7 +7,7 @@ library(stringr)
 
 # settings ----------------------------------------------------------------
 # version to download
-version <- "12.2.0"
+version <- "12.6.0"
 hccodeurl <- "http://code.highcharts.com"
 
 path       <- sprintf("inst/htmlwidgets/lib/highcharts")
@@ -22,15 +22,16 @@ file_temp <- tempfile(fileext = ".zip")
 
 download.file(
   sprintf("https://code.highcharts.com/zips/Highcharts-%s.zip", version),
-  file_temp
+  file_temp,
+  method = "curl"
 )
 
 folder_temp <- tempdir()
 
 unzip(file_temp, exdir = folder_temp)
 
-files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) %>% 
-  str_subset("src.js$", negate = TRUE) %>% 
+files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) |> 
+  str_subset("src.js$", negate = TRUE) |> 
   str_subset("js.map$", negate = TRUE)
 
 basename(files)
@@ -55,34 +56,34 @@ file.copy(
 
 
 # map ---------------------------------------------------------------------
-urlmapmodule <- sprintf("https://code.highcharts.com/maps/%s/modules/map.js", version)
+# urlmapmodule <- sprintf("https://code.highcharts.com/maps/%s/modules/map.js", version)
 
-download.file(
-  urlmapmodule,
-  file.path(path_temp, "modules", basename(urlmapmodule))
-)
+# download.file(
+#   urlmapmodule,
+#   file.path(path_temp, "modules", basename(urlmapmodule))
+# )
 
 # check what modules are missing in yaml ----------------------------------
 modules <- dir(file.path(path, "modules")) 
 modules
 
-modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") %>% 
-  str_subset("modules/") %>%
-  str_extract("modules/.*") %>% 
-  str_trim() %>% 
+modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") |> 
+  str_subset("modules/") |>
+  str_extract("modules/.*") |> 
+  str_trim() |> 
   basename()
 
 # copy and paste if this is not empty
-setdiff(modules, modules_yalm) %>% 
-  str_c("#    - modules/", ., "\n") %>% 
+setdiff(modules, modules_yalm) |>
+  (\(x) str_c("#    - modules/", x, "\n"))() |>
   message()
 
 # sobran
 setdiff(modules_yalm, modules)
 
 # repetidos en yalm
-tibble(m = modules_yalm) %>% 
-  count(m, sort = TRUE) %>% 
+tibble(m = modules_yalm) |> 
+  count(m, sort = TRUE) |> 
   filter(n > 1)
 
 # plugins -----------------------------------------------------------------
@@ -136,8 +137,3 @@ try(fs::dir_delete(path_temp))
 # change the version on yaml ----------------------------------------------
 walk(1:5, ~ message("change version on inst/htmlwidgets/highchart.yaml and inst/htmlwidgets/highchartzero.yaml"))
 walk(1:5, ~ message("Line 11 in inst/htmlwidgets/highchart.yaml"))
-
-
-
-
-
