@@ -1,6 +1,6 @@
 # Changelog
 
-## highcharter 0.12.6.0
+## highcharter 0.12.6.1
 
 ### Changes
 
