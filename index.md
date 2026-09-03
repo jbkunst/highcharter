@@ -44,12 +44,14 @@ The main features of highcharter are:
 CRAN version:
 
 ``` r
+
 install.packages("highcharter")
 ```
 
 Development version:
 
 ``` r
+
 remotes::install_github("jbkunst/highcharter")
 ```
 

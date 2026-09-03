@@ -26,6 +26,7 @@ hc_add_series(hc, data = NULL, ...)
 ## Examples
 
 ``` r
+
 highchart() |>
   hc_add_series(data = abs(rnorm(5)), type = "column") |>
   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "orange")

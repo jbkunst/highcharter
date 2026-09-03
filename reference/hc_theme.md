@@ -24,6 +24,7 @@ More examples and details in
 ## Examples
 
 ``` r
+
 hc <- highcharts_demo()
 
 hc

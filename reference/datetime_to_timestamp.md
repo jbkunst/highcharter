@@ -17,6 +17,7 @@ datetime_to_timestamp(dt)
 ## Examples
 
 ``` r
+
 datetime_to_timestamp(
   as.Date(c("2015-05-08", "2015-09-12"),
     format = "%Y-%m-%d"

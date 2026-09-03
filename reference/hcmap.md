@@ -49,6 +49,7 @@ hcmap(
 ## Examples
 
 ``` r
+
 options(highcharter.download_map_data = TRUE)
 
 # hcmap(nullColor = "#DADADA")

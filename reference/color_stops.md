@@ -21,6 +21,7 @@ color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))
 ## Examples
 
 ``` r
+
 color_stops(5)
 #> [[1]]
 #> [[1]][[1]]

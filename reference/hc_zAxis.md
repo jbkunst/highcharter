@@ -22,6 +22,7 @@ hc_zAxis(hc, ...)
 ## Examples
 
 ``` r
+
 df <- data.frame(
   x = sample(1:5),
   y = sample(1:5),

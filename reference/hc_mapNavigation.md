@@ -23,6 +23,7 @@ hc_mapNavigation(hc, ...)
 ## Examples
 
 ``` r
+
 hcmap(download_map_data = FALSE) |> 
   hc_mapNavigation(
     enabled = TRUE,

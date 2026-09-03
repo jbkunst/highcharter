@@ -25,6 +25,7 @@ hc_size(hc, width = NULL, height = NULL)
 ## Examples
 
 ``` r
+
 hc <- hchart(ts(rnorm(100)), showInLegend = FALSE)
 
 hc_size(hc, 200, 200)

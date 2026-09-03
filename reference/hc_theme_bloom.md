@@ -17,6 +17,7 @@ hc_theme_bloom(...)
 ## Examples
 
 ``` r
+
 highcharts_demo() |>
   hc_add_theme(hc_theme_bloom())
 

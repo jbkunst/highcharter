@@ -28,6 +28,7 @@ hc_scrollbar(hc, ...)
 ## Examples
 
 ``` r
+
 highchart(type = "stock") |> 
   hc_add_series(AirPassengers) |> 
   hc_rangeSelector(selected = 4) |> 

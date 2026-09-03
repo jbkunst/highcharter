@@ -25,6 +25,7 @@ get_hc_series_from_df(data, type = NULL, ...)
 ## Examples
 
 ``` r
+
 highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
 #> [[1]]
 #> [[1]]$type

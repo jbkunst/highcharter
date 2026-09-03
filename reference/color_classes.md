@@ -21,6 +21,7 @@ color_classes(breaks = NULL, colors = c("#440154", "#21908C", "#FDE725"))
 ## Examples
 
 ``` r
+
 color_classes(c(0, 10, 20, 50))
 #> [[1]]
 #> [[1]]$from

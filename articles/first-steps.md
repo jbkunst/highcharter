@@ -35,6 +35,7 @@ aesthetics explicit in every highcharts functions.
 First, show some data to work with.
 
 ``` r
+
 data("mpg", "diamonds", "economics_long", package = "ggplot2")
 head(mpg)
 ```
@@ -62,6 +63,7 @@ In general we’ll use this structure to get a chart:
 So, a basic example would be:
 
 ``` r
+
 hchart(mpg, "point", hcaes(x = displ, y = cty, group = year))
 ```
 
@@ -70,6 +72,7 @@ hchart(mpg, "point", hcaes(x = displ, y = cty, group = year))
 Let’s try other charts to get familiar with the syntax.
 
 ``` r
+
 data(economics_long, package = "ggplot2")
 
 economics_long2 <- dplyr::filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
@@ -88,12 +91,14 @@ head(economics_long2)
     ## 6 1967-12-01 pop      199657 0.00777
 
 ``` r
+
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ```
 
 Now, a heatmap and a treemap.
 
 ``` r
+
 library(dplyr)
 
 dfdiam <- diamonds |> 
@@ -104,6 +109,7 @@ hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price), name = "Me
 ```
 
 ``` r
+
 mpgman <- mpg |> 
   group_by(manufacturer) |> 
   summarise(n = n(),
@@ -121,6 +127,7 @@ in the legend as well the tooltip. You can modify the colors and a lot
 of properties.
 
 ``` r
+
 mpgman2 <- count(mpg, manufacturer, year)
 
 hchart(
@@ -143,6 +150,7 @@ Using the `broom` package is really nice due the you can transform
 models to tidy data:
 
 ``` r
+
 library(broom)
 
 modlss <- loess(dist ~ speed, data = cars)
@@ -167,6 +175,7 @@ In this case we’ll chart the original data first and store in a variable
 called `hc` (for highcharts):
 
 ``` r
+
 hc <- hchart(
   cars,
   type = "scatter",
@@ -194,6 +203,7 @@ In this case we will add 2 groups of series. The 1st to add will be the
 spline then the arearange. So we’ll use `hc_add_series` 2 times.
 
 ``` r
+
 qtint <- qt(0.975, predict(modlss, se = TRUE)$df)
 
 hc |>

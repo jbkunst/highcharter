@@ -14,6 +14,7 @@ Then you can add more series using
 [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md).
 
 ``` r
+
 library(quantmod)
 
 x <- getSymbols("GOOG", auto.assign = FALSE)
@@ -24,6 +25,7 @@ hchart(x)
 Obviously you can use the implemented API functions to edit the chart:
 
 ``` r
+
 y <- getSymbols("AMZN", auto.assign = FALSE)
 
 hchart(y, type = "ohlc") |> 
@@ -39,6 +41,7 @@ function. Don’t forget to specify `type = "stock"` to activate the
 navigator, range selector and other features of highstock.
 
 ``` r
+
 hc <- highchart(type = "stock") |> 
   hc_add_series(x, id = 1) |> 
   hc_add_series(y, type = "ohlc", id = 2)
@@ -52,6 +55,7 @@ Previously we used the `id` parameter. This is necessary to add flags to
 relate series and flags:
 
 ``` r
+
 library(dplyr)
 
 set.seed(123)
@@ -72,6 +76,7 @@ glimpse(data_flags)
     ## $ text  <chr> "An interesting event #1 in 2016-10-12", "An interesting event …
 
 ``` r
+
 hc |> 
   hc_add_series(
     data_flags, 
@@ -87,6 +92,7 @@ You can do what you want. Use all the highchartsJS API to add axis,
 series, bands, etc.
 
 ``` r
+
 SPY <- getSymbols("SPY", from = Sys.Date() - lubridate::years(1), auto.assign = FALSE)
 SPY <- adjustOHLC(SPY)
 

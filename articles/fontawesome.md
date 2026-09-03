@@ -9,6 +9,7 @@ to data uri.
 ## Example using `fontawesome` package
 
 ``` r
+
 library(rsvg)
 library(fontawesome)
 library(highcharter)
@@ -77,6 +78,7 @@ highchart() |>
 Inspired/copied from <https://github.com/hrbrmstr/waffle>:
 
 ``` r
+
 library(dplyr) # to wokr with list columns
 library(purrr) # to wokr with list columns
 
@@ -98,6 +100,7 @@ df2
     ## 3 pizza        80 pizza-slice #F89101
 
 ``` r
+
 df2 <- df2 |>
   mutate(
     uri = map2_chr(faico, col, ~fa_to_png_to_datauri(.x, fill = .y)),

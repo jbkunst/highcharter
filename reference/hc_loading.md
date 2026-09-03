@@ -27,6 +27,7 @@ hc_loading(hc, ...)
 ## Examples
 
 ``` r
+
 highcharts_demo() |> 
   hc_loading(
     hideDuration = 1000,

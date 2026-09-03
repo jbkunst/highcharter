@@ -11,6 +11,7 @@ This function works like `qplot`: You pass the data, choose the type of
 chart and then define the aesthetics for each variable.
 
 ``` r
+
 library(highcharter)
 library(dplyr)
 
@@ -21,6 +22,7 @@ hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group
 ```
 
 ``` r
+
 penguins2 <- penguins |>
   count(species, island) |>
   glimpse()
@@ -33,12 +35,14 @@ penguins2 <- penguins |>
     ## $ n       <int> 44, 56, 52, 68, 124
 
 ``` r
+
 hchart(penguins2, "column", hcaes(x = island, y = n, group = species))
 ```
 
 Check automatically if the x column is date class:
 
 ``` r
+
 economics_long2 <- economics_long |>
   filter(variable %in% c("pop", "uempmed", "unemploy"))
 
@@ -48,6 +52,7 @@ hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ## Numeric & Histograms
 
 ``` r
+
 x <- diamonds$price
 hchart(x)
 ```
@@ -55,12 +60,14 @@ hchart(x)
 ## Densities
 
 ``` r
+
 hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
 ```
 
 ## Character & Factor
 
 ``` r
+
 x <- diamonds$cut
 hchart(x, type = "column")
 ```
@@ -68,6 +75,7 @@ hchart(x, type = "column")
 ## Time Series
 
 ``` r
+
 hchart(LakeHuron, name = "Level") |> 
   hc_title(text = "Level of Lake Huron 1875–1972")
 ```
@@ -75,6 +83,7 @@ hchart(LakeHuron, name = "Level") |>
 ## Seasonal Decomposition of Time Series by Loess
 
 ``` r
+
 x <- stl(log(AirPassengers), "per")
 hchart(x)
 ```
@@ -82,6 +91,7 @@ hchart(x)
 ## Forecast package
 
 ``` r
+
 library(forecast)
 
 x <- forecast(ets(USAccDeaths), h = 48, level = 95)
@@ -91,6 +101,7 @@ hchart(x)
 ## Igraph package
 
 ``` r
+
 library(igraph)
 N <- 40
 
@@ -114,6 +125,7 @@ hchart(net, layout = layout_with_fr)
 Survival models can be charted.
 
 ``` r
+
 library(survival)
 
 data(cancer, package = "survival")
@@ -131,6 +143,7 @@ The highstock extension is used to chart `xts` and `xts ohlc` classes
 from the quantmod package.
 
 ``` r
+
 library(quantmod)
 
 x <- getSymbols("GOOG", auto.assign = FALSE)
@@ -141,6 +154,7 @@ hchart(x)
 ## Multivariate Time series
 
 ``` r
+
 x <- cbind(mdeaths, fdeaths)
 hchart(x)
 ```
@@ -148,6 +162,7 @@ hchart(x)
 ## Autocovariance & Autocorrelation
 
 ``` r
+
 x <- acf(diff(AirPassengers), plot = FALSE)
 hchart(x)
 ```
@@ -155,12 +170,14 @@ hchart(x)
 ## Principal Components
 
 ``` r
+
 hchart(princomp(USArrests, cor = TRUE))
 ```
 
 ## Matrix
 
 ``` r
+
 data(volcano)
 
 hchart(volcano) |> # changing default color
@@ -172,6 +189,7 @@ hchart(volcano) |> # changing default color
 ## Distance matrix
 
 ``` r
+
 mtcars2 <- mtcars[1:20, ]
 x <- dist(mtcars2)
 hchart(x)
@@ -180,5 +198,6 @@ hchart(x)
 ## Correlation matrix
 
 ``` r
+
 hchart(cor(mtcars))
 ```

@@ -22,6 +22,7 @@ list_parse2(df)
 ## Examples
 
 ``` r
+
 x <- data.frame(a = 1:3, type = c("A", "C", "B"), stringsAsFactors = FALSE)
 list_parse(x)
 #> [[1]]

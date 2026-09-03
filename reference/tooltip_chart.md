@@ -35,6 +35,7 @@ of `hc_tooltip` function an `useHTML = TRUE` option.
 ## Examples
 
 ``` r
+
 require(dplyr)
 require(purrr)
 require(tidyr)

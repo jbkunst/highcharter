@@ -27,6 +27,7 @@ See
 ## Examples
 
 ``` r
+
 data(mpg, package = "ggplot2")
 
 hchart(mpg, "point", hcaes(displ, hwy),

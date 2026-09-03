@@ -6,6 +6,7 @@ through clicking on chart items like columns, points or pie slices.
 ## Exmaple I: Gapminder data
 
 ``` r
+
 library(dplyr)
 library(forcats)
 library(purrr)
@@ -43,6 +44,7 @@ gapminder_column
     ## 5 Oceania        81     32885    25
 
 ``` r
+
 gapminder_drilldown <- gapminder2007 |>
   group_nest(continent) |>
   mutate(
@@ -70,6 +72,7 @@ have the sames values (pop, lifeExp, …) we can use the same
 `pointFormat` for the tooltips:
 
 ``` r
+
 x <- c("Population (MM)", "Life expectancy at birth", "GDP per capita (US$)")
 y <- c("{point.pop}", "{point.lifeExp}", "$ {point.gdpPercap}")
 
@@ -106,6 +109,7 @@ hchart(
 Same recipe, different data. Just copy & pasting code:
 
 ``` r
+
 pkmn_min <- pokemon |>
   count(type_1, color = type_1_color) |>
   mutate(type_1 = fct_reorder(type_1, .x = n)) |>
@@ -156,6 +160,7 @@ hchart(
 (Example thanks to Claire).
 
 ``` r
+
 dtrees <- tibble(
   tree = c("A", "B"),
   apples = c(5, 7),

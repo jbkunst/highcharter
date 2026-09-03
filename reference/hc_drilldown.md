@@ -24,6 +24,7 @@ hc_drilldown(hc, ...)
 ## Examples
 
 ``` r
+
 library(highcharter)
 library(dplyr)
 library(purrr)

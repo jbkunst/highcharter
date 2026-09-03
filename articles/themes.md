@@ -7,6 +7,7 @@ merge themes.
 Let’s start with a simple bar chart and see the default theme:
 
 ``` r
+
 library(highcharter)
 library(dplyr)
 
@@ -80,6 +81,7 @@ Here you’ll find the themes to change the look of your charts.
 You can create your own themes!
 
 ``` r
+
 my_own_theme <- hc_theme(
   colors = c("red", "green", "blue"),
   chart = list(
@@ -118,6 +120,7 @@ hc |>
 You can merge themes too.
 
 ``` r
+
 thm <- hc_theme_merge(
   hc_theme_darkunica(),
   hc_theme(

@@ -23,6 +23,7 @@ hc_pane(hc, ...)
 ## Examples
 
 ``` r
+
 highchart() |> 
   hc_chart(
   type = "gauge",

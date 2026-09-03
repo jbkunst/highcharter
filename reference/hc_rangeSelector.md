@@ -25,6 +25,7 @@ hc_rangeSelector(hc, ...)
 ## Examples
 
 ``` r
+
 hc <- highchart(type = "stock") |> 
   hc_add_series(AirPassengers)
 

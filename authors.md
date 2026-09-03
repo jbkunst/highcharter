@@ -54,12 +54,13 @@
 Source:
 [`DESCRIPTION`](https://github.com/jbkunst/highcharter/blob/main/DESCRIPTION)
 
-Kunst J (2026). *highcharter: A Wrapper for the 'Highcharts' Library*.
-https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter.
+Kunst J (2026). *highcharter: A Wrapper for the 'Highcharts' Library*. R
+package version 0.12.6.1, <https://jkunst.com/highcharter/>.
 
     @Manual{,
       title = {highcharter: A Wrapper for the 'Highcharts' Library},
       author = {Joshua Kunst},
       year = {2026},
-      note = {https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter},
+      note = {R package version 0.12.6.1},
+      url = {https://jkunst.com/highcharter/},
     }

@@ -3,6 +3,7 @@
 ## Example I
 
 ``` r
+
 library(idbr)
 library(purrr)
 library(dplyr)
@@ -68,6 +69,7 @@ highchart() |>
 ```
 
 ``` r
+
 # highchart() |> 
 #   hc_xAxis(min = 0, max = 10) |> 
 #   hc_yAxis(min = 0, max = 10) |> 

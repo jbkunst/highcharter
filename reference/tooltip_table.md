@@ -34,6 +34,7 @@ tooltip_table(x, y, title = NULL, img = NULL, ...)
 ## Examples
 
 ``` r
+
 x <- c("Income:", "Genre", "Runtime")
 y <- c(
   "$ {point.y}", "{point.series.options.extra.genre}",

@@ -28,6 +28,7 @@ hc_annotations(hc, ...)
 ## Examples
 
 ``` r
+
 # Ex 1
 highchart() |> 
   hc_add_series(

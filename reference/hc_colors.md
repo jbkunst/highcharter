@@ -22,6 +22,7 @@ hc_colors(hc, colors)
 ## Examples
 
 ``` r
+
 library(viridisLite)
 
 cols <- viridis(3)

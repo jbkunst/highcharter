@@ -23,6 +23,7 @@ hc_caption(hc, ...)
 ## Examples
 
 ``` r
+
 highchart() |> 
   hc_title(text= "Chart with a caption") |> 
   hc_subtitle(text= "This is the subtitle") |> 

@@ -22,6 +22,7 @@ optionally prints it on the legend. If Linear or Polynomial regression
 is selected, you can print the equation on the legend.
 
 ``` r
+
 library(highcharter)
 
 data(penguins, package = "palmerpenguins")
@@ -50,6 +51,7 @@ hchart(
 Even you can get a regression for each series/group.
 
 ``` r
+
 hchart(
   penguins, 
   "scatter",
@@ -71,6 +73,7 @@ Home page: <http://blacklabel.github.io/grouped_categories/>
 Let’s try an example:
 
 ``` r
+
 library(purrr) # map function to make grouped categories argument
 library(dplyr) # for select function 
 
@@ -109,6 +112,7 @@ hchart(
 More information in <https://github.com/blacklabel/multicolor_series>.
 
 ``` r
+
 library(dplyr)
 
 set.seed(123)
@@ -135,6 +139,7 @@ More details in
 <https://api.highcharts.com/highcharts/plotOptions.series.dragDrop>.
 
 ``` r
+
 set.seed(123)
 
 df <- tibble(x = runif(10), y = runif(10), z = runif(10), name = paste("cat", 1:10))
@@ -155,6 +160,7 @@ hchart(
 ```
 
 ``` r
+
 df$x <- NULL
 
 hchart(
@@ -180,6 +186,7 @@ Example taken from
 <https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/pattern-fill-area>.
 
 ``` r
+
 # base chart without series
 hc_fill <- highchart() |> 
   # add dependency
@@ -228,6 +235,7 @@ hc_fill |>
 More examples for fun.
 
 ``` r
+
 # test with 1 series and a theme
 hc_fill |> 
   hc_add_series(
@@ -247,6 +255,7 @@ Example from
 and inspired by <https://www.amcharts.com/demos/pictorial-column-chart/>
 
 ``` r
+
 highchart() |> 
   # add the module
   hc_add_dependency("modules/pattern-fill.js") |> 
@@ -323,12 +332,14 @@ highchart() |>
 And the last one.
 
 ``` r
+
 dim(volcano)
 ```
 
     ## [1] 87 61
 
 ``` r
+
 highchart() |> 
   hc_add_dependency("modules/pattern-fill.js") |> 
   hc_add_theme(hc_theme_null()) |> 
@@ -350,6 +361,7 @@ highchart() |>
 You can use the next modules, plugins and and custom scripts:
 
 ``` r
+
 dir(system.file("htmlwidgets/lib/highcharts/modules", package = "highcharter"))
 ```
 
@@ -395,6 +407,7 @@ dir(system.file("htmlwidgets/lib/highcharts/modules", package = "highcharter"))
     ## [79] "wordcloud.js"              "xrange.js"
 
 ``` r
+
 dir(system.file("htmlwidgets/lib/highcharts/plugins", package = "highcharter"))
 ```
 
@@ -402,6 +415,7 @@ dir(system.file("htmlwidgets/lib/highcharts/plugins", package = "highcharter"))
     ## [3] "highcharts-regression.js" "motion.js"
 
 ``` r
+
 dir(system.file("htmlwidgets/lib/highcharts/custom", package = "highcharter"))
 ```
 

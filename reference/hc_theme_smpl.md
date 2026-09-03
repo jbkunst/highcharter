@@ -19,6 +19,7 @@ hc_theme_smpl(...)
 ## Examples
 
 ``` r
+
 highcharts_demo() |>
   hc_add_theme(hc_theme_smpl())
 

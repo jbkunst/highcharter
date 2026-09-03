@@ -25,6 +25,7 @@ mutate_mapping(data, mapping, drop = FALSE)
 ## Examples
 
 ``` r
+
 df <- head(mtcars)
 mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
 #>                    mpg cyl disp  hp drat    wt  qsec vs am gear carb x      y

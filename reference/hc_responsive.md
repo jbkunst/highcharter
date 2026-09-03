@@ -23,6 +23,7 @@ hc_responsive(hc, ...)
 ## Examples
 
 ``` r
+
 leg_500_opts <- list(enabled = FALSE)
 leg_900_opts <- list(align = "right", verticalAlign = "middle",  layout = "vertical")
 

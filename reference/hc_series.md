@@ -21,6 +21,7 @@ hc_series(hc, ...)
 ## Examples
 
 ``` r
+
 highchart() |>  
   hc_series(
     list(

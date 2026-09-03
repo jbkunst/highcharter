@@ -9,6 +9,7 @@ highcharter can do in terms of customization and design.
 > describing my favorite bars. - *Marshall Eriksen*
 
 ``` r
+
 data(favorite_bars)
 data(favorite_pies)
 
@@ -78,6 +79,7 @@ highchart() |>
 ## Pokemon
 
 ``` r
+
 library(dplyr)
 data(pokemon)
 
@@ -147,6 +149,7 @@ hchart(
 Example inspired by <http://weather-radials.com/>.
 
 ``` r
+
 library(highcharter)
 data(weather)
 
@@ -198,6 +201,7 @@ Inspired by Nadieh Bremer’s
 [block](http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47).
 
 ``` r
+
 data(stars)
 
 colors <- c(
@@ -264,6 +268,7 @@ From [WSJ graphic: Battling Infectious Diseases in the 20th
 Century](http://graphics.wsj.com/infectious-diseases-and-vaccines/):
 
 ``` r
+
 data(vaccines)
 
 fntltp <- JS("function(){

@@ -27,6 +27,7 @@ hchart(object, ..., layout = NULL)
 ## Examples
 
 ``` r
+
 if(require("igraph")) {
 
 N <- 40

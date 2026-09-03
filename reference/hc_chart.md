@@ -21,6 +21,7 @@ hc_chart(hc, ...)
 ## Examples
 
 ``` r
+
 hc <- highchart() |> 
   hc_xAxis(categories = month.abb) |> 
   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 

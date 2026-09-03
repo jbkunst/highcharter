@@ -17,6 +17,7 @@ hc_theme_tufte(...)
 ## Examples
 
 ``` r
+
 n <- 15
 
 dta <- data.frame(

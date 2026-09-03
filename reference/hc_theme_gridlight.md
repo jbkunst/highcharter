@@ -17,6 +17,7 @@ hc_theme_gridlight(...)
 ## Examples
 
 ``` r
+
 highcharts_demo() |>
   hc_add_theme(hc_theme_gridlight())
 

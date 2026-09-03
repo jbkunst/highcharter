@@ -23,6 +23,7 @@ hc_theme_tufte2(...)
 ## Examples
 
 ``` r
+
 highcharts_demo() |>
   hc_add_theme(hc_theme_538())
 

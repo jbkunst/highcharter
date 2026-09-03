@@ -21,6 +21,7 @@ hc_add_theme(hc, hc_thm)
 ## Examples
 
 ``` r
+
 highchart() |>
   hc_add_series(
     data = c(

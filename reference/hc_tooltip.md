@@ -30,6 +30,7 @@ hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 ## Examples
 
 ``` r
+
 highchart() |>
   hc_add_series(data = sample(1:12)) |> 
   hc_add_series(data = sample(1:12) + 10) |> 

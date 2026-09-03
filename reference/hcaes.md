@@ -20,6 +20,7 @@ hcaes(x, y, ...)
 ## Examples
 
 ``` r
+
 hcaes(x = xval, color = colorvar, group = grvar)
 #> $x
 #> xval

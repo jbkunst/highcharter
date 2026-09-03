@@ -25,6 +25,7 @@ df_to_annotations_labels(df, xAxis = 0, yAxis = 0)
 ## Examples
 
 ``` r
+
 df <- data.frame(text = c("hi", "bye"), x = c(0, 1), y = c(1, 0))
 
 df_to_annotations_labels(df)

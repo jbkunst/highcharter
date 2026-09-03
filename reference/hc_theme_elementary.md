@@ -18,6 +18,7 @@ hc_theme_elementary(...)
 ## Examples
 
 ``` r
+
 highcharts_demo() |>
   hc_add_theme(hc_theme_elementary())
 

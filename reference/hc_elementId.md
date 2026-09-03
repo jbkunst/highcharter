@@ -21,6 +21,7 @@ hc_elementId(hc, id = NULL)
 ## Examples
 
 ``` r
+
 hchart(rnorm(10)) |>
   hc_elementId("newid")
 

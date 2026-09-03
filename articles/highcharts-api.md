@@ -15,6 +15,7 @@ If this is clear, we can continue.
 Now, let’s create a simple chart:
 
 ``` r
+
 library(highcharter)
 
 data("citytemp")
@@ -40,6 +41,7 @@ hc
 With `hc_chart` you can define general chart options.
 
 ``` r
+
 hc |> 
   hc_chart(
     borderColor = '#EBBA95',
@@ -58,6 +60,7 @@ hc |>
 Now change type to column and add 3d effect.
 
 ``` r
+
 hc <- hc |> 
   hc_chart(
     type = "column",
@@ -71,6 +74,7 @@ hc
 ```
 
 ``` r
+
 # back to the line!
 hc <- hc_chart(hc, type = "line", options3d = list(enabled = FALSE))
 ```
@@ -82,6 +86,7 @@ better adding relevant information using a subtitle or caption, even
 link to the source of data:
 
 ``` r
+
 hc |> 
   hc_title(
     text = "This is the title of the chart"
@@ -109,6 +114,7 @@ hc |>
 Usually is desirable get control or modify the behavior of the axis:
 
 ``` r
+
 hc |> 
   hc_xAxis(
     title = list(text = "Month in x Axis"),
@@ -128,6 +134,7 @@ A good feature is `plotLines` and `plotBand` which you can use in both
 axis. For example:
 
 ``` r
+
 hc |> 
   hc_xAxis(
     plotLines = list(
@@ -158,6 +165,7 @@ hc |>
 ## Legend & tooltip
 
 ``` r
+
 hc |>
   hc_legend(
     align = "left",

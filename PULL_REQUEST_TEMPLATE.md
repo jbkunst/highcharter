@@ -38,6 +38,7 @@ explicitly asked for, or you’ve used `reprex::reprex(..., si = TRUE)` to
 hide it away.
 
 ``` r
+
 reprex::reprex({
   library(highcharter)
   # insert reprex here
@@ -53,6 +54,7 @@ Brief description of the original problem and the approach behind your
 solution.
 
 ``` r
+
 # insert reprex here
 ```
 

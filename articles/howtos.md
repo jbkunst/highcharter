@@ -5,6 +5,7 @@ This is a set of example to show (and remember) who to do usual needs.
 Let’s set charts to work with.
 
 ``` r
+
 library(highcharter)
 library(dplyr)
 data(penguins, package = "palmerpenguins")
@@ -29,6 +30,7 @@ glimpse(penguins)
     ## $ species           <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
 
 ``` r
+
 hc <- hchart(penguins, "scatter", hcaes(x = flipper_length_mm, y = bill_length_mm, group = species)) 
 hc
 ```
@@ -36,6 +38,7 @@ hc
 And:
 
 ``` r
+
 preguins_grouped <- penguins |> 
   group_by(species) |> 
   summarise(flipper_length_mm_mean = mean(flipper_length_mm))
@@ -49,6 +52,7 @@ glimpse(preguins_grouped)
     ## $ flipper_length_mm_mean <dbl> 191.16, 194.68, 216.00
 
 ``` r
+
 hc2 <- hchart(preguins_grouped, "column", hcaes(x = species, y = flipper_length_mm_mean))
 hc2
 ```
@@ -60,6 +64,7 @@ opacity. To avoid this behaviour you can set `opactiy = 1` in the
 `series.states.inactive`:
 
 ``` r
+
 hc |>
   hc_plotOptions(
     series = list(states = list(inactive = list(opacity = 1)))
@@ -78,6 +83,7 @@ Remember `hc2`. If we want a new order we can give the explicit order
 using `hc_xAxis`:
 
 ``` r
+
 lvls <- preguins_grouped |> 
   mutate(
     species = forcats::fct_relevel(species, "Gentoo", after  = 0)

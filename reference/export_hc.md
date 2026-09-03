@@ -31,6 +31,7 @@ export_hc(hc, filename = NULL, as = "is", name = NULL)
 ## Examples
 
 ``` r
+
 fn <- "function(){
   console.log('Category: ' + this.category);
   alert('Category: ' + this.category);

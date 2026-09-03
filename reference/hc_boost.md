@@ -29,6 +29,7 @@ hc_boost(hc, ...)
 ## Examples
 
 ``` r
+
 # #  Ex 1
 # options(highcharter.rjson = FALSE)
 # 

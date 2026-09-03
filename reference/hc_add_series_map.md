@@ -43,6 +43,7 @@ This function force the highchart object to be map type.
 ## Examples
 
 ``` r
+
 library("dplyr")
 #> 
 #> ######################### Warning from 'xts' package ##########################

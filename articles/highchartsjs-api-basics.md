@@ -18,6 +18,7 @@ To explore this relationship, we’ll be looking at the Palmer penguins
 dataset.
 
 ``` r
+
 library(palmerpenguins)
 
 head(penguins)
@@ -39,6 +40,7 @@ a dataset. To build a scatter plot of the Palmer penguins’ bill length
 vs flipper length split by species we would use the following code:
 
 ``` r
+
 library(highcharter)
 
 hc <- hchart(
@@ -63,6 +65,7 @@ with
 function in R to see how we could go about that.
 
 ``` r
+
 ?hc_legend
 ```
 
@@ -112,6 +115,7 @@ or numbers) it’s a direct translation from javascript property to R
 function argument like so:
 
 ``` r
+
 hc |>
   hc_legend(
     layout = "vertical",
@@ -155,6 +159,7 @@ the legend header text and adding an underline to the legend header
 (with a CSS property) looks like this:
 
 ``` r
+
 hc |> 
   hc_legend(
     layout = "vertical",

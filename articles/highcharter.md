@@ -5,6 +5,7 @@
 let us start start with a simple example using `hchart` function.
 
 ``` r
+
 library(highcharter)
 
 # install.packages("palmerpenguins")
@@ -22,6 +23,7 @@ its class with the generic `hchart` function. In the next example `x` is
 numeric:
 
 ``` r
+
 x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 
 hchart(x, name = "data", color = "#17b8b6") 
@@ -31,6 +33,7 @@ One of the nicest class which `hchart` can plot is the `forecast` class
 from the {forecast} package.
 
 ``` r
+
 library(forecast)
 
 airforecast <- forecast(auto.arima(AirPassengers), level = 95)
@@ -55,6 +58,7 @@ It is easy make candlesticks or ohlc charts using time series data. For
 example, using data from [{quantmod}](http://www.quantmod.com/) package:
 
 ``` r
+
 library(quantmod)
 
 x <- getSymbols("GOOG", auto.assign = FALSE)
@@ -71,6 +75,7 @@ We can chart maps elements and choropleth using the highmaps and build
 interactive maps to display data linked to geographic objects.
 
 ``` r
+
 data(GNI2014, package = "treemap")
 
 hcmap(

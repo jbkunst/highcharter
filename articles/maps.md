@@ -17,16 +17,19 @@ info as a `mapData` argument.
 Let’s try some maps:
 
 ``` r
+
 library(highcharter)
 
 hcmap("countries/nz/nz-all")
 ```
 
 ``` r
+
 hcmap("custom/usa-and-canada", showInLegend = FALSE)
 ```
 
 ``` r
+
 hcmap("countries/us/us-ca-all") |>
   hc_title(text = "California") |> 
   hc_subtitle(text = "You can use the same functions to modify your map!")
@@ -52,6 +55,7 @@ the map and data:
   map data.
 
 ``` r
+
 require(dplyr)
 
 mapdata <- get_data_from_map(download_map_data("custom/usa-and-canada"))
@@ -84,6 +88,7 @@ glimpse(mapdata)
     ## $ type          <chr> "State", "State", "State", "Province", "State", "State",…
 
 ``` r
+
 data_fake <- mapdata |>
   select(code = `hc-a2`) |>
   mutate(value = 1e5 * abs(rt(nrow(mapdata), df = 10)))
@@ -100,6 +105,7 @@ If we compare this 2 data frames the `hc-key` is same code that `code`.
 So we’ll use these columns as keys:
 
 ``` r
+
 hcmap(
   "custom/usa-and-canada",
   data = data_fake,
@@ -120,6 +126,7 @@ hcmap(
 ## Categorized areas
 
 ``` r
+
 data <- tibble(
   country = 
     c("PT", "IE", "GB", "IS",
@@ -173,6 +180,7 @@ is necessary a data frame with `lat`, `lon` columns, and `name`, `z` are
 optional:
 
 ``` r
+
 cities <- data.frame(
   name = c("London", "Birmingham", "Glasgow", "Liverpool"),
   lat = c(51.507222, 52.483056, 55.858, 53.4),
@@ -192,6 +200,7 @@ hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
 ```
 
 ``` r
+
 hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
   hc_add_series(
     data = cities, 
@@ -206,25 +215,21 @@ hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
 Another example:
 
 ``` r
+
 library(dplyr)
 
-airports <- read.csv(
-  # "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
-  "https://datacatalogfiles.worldbank.org/ddh-published/0038117/2/DR0046411/airport_volume_airport_locations.csv",
-  stringsAsFactors = FALSE
-  )
-
-south_america_countries <- c(
-    "Brazil", "Ecuador", "Venezuela",
-    "Chile", "Argentina", "Peru",
-    "Uruguay", "Paraguay", "Bolivia", 
-    "Suriname", "Guyana", "Colombia"
-  ) 
-
-airports <- airports |>
-  filter(Country.Name %in% south_america_countries) |>
-  rename(lat = Airport1Latitude, lon = Airport1Longitude) |>
-  filter(lon < -30)
+airports <- tibble::tribble(
+  ~name, ~lat, ~lon,
+  "Santiago", -33.39, -70.79,
+  "Buenos Aires", -34.82, -58.54,
+  "São Paulo", -23.44, -46.47,
+  "Lima", -12.02, -77.11,
+  "Bogotá", 4.70, -74.15,
+  "Quito", -0.13, -78.36,
+  "Montevideo", -34.84, -56.03,
+  "Asunción", -25.24, -57.52,
+  "La Paz", -16.51, -68.19
+)
 
 hcmap(
   "custom/south-america",
@@ -238,7 +243,7 @@ hcmap(
     color = hex_to_rgba("darkred", alpha = 0.3),
     maxSize = "10",
     tooltip = list(
-      pointFormat = "{point.name}: {point.altitude:,.0f} feets <br>
+      pointFormat = "{point.name}<br>
       ({point.lat:,.2f}, {point.lon:,.2f})"
     )
   ) |>
@@ -252,6 +257,7 @@ you can use `hc_add_series` as usual without use `geojson = TRUE`
 parameter/argument.
 
 ``` r
+
 library(httr)
 library(jsonlite)
 library(geojsonio)
@@ -270,17 +276,18 @@ ausmap
 We can still adding data:
 
 ``` r
-airports <- read.csv(
-  # "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
-  "https://datacatalogfiles.worldbank.org/ddh-published/0038117/2/DR0046411/airport_volume_airport_locations.csv",
-  stringsAsFactors = FALSE
-  )
 
-airports <- airports |> 
-  filter(Country.Name == "Australia", Name != "Roma Street Railway Station") |> 
-  rename(name = Name)
+airports <- tibble::tribble(
+  ~name, ~lat, ~lon,
+  "Sydney", -33.94, 151.18,
+  "Melbourne", -37.67, 144.84,
+  "Brisbane", -27.38, 153.12,
+  "Perth", -31.94, 115.97,
+  "Adelaide", -34.95, 138.53,
+  "Darwin", -12.41, 130.88
+)
 
-airp_geojson <- geojson_json(airports, lat = "Airport1Latitude", lon = "Airport1Longitude")
+airp_geojson <- geojson_json(airports, lat = "lat", lon = "lon")
 
 class(airp_geojson)
 ```
@@ -289,6 +296,7 @@ class(airp_geojson)
     ## [4] "json"
 
 ``` r
+
 ausmap |>
   hc_add_series(
     data = airp_geojson,
@@ -304,6 +312,7 @@ ausmap |>
 Let’s download some geojson files and make a map.
 
 ``` r
+
 library(jsonlite)
 
 geojson <- fromJSON(
@@ -358,6 +367,7 @@ highchart(type = "map") |>
 ```
 
 ``` r
+
 `%||%` <- function(x, y) if (is.null(x)) y else x
 point_data <- lapply(point_features, \(f) {
   coords <- f$geometry$coordinates

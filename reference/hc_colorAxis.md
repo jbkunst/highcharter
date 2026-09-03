@@ -39,6 +39,7 @@ hc_colorAxis(hc, ...)
 ## Examples
 
 ``` r
+
 library(dplyr)
 
 data(mpg, package = "ggplot2")

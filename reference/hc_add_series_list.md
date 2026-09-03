@@ -21,6 +21,7 @@ hc_add_series_list(hc, x)
 ## Examples
 
 ``` r
+
 ds <- lapply(seq(5), function(x) {
   list(data = cumsum(rnorm(100, 2, 5)), name = x)
 })

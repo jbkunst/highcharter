@@ -17,6 +17,7 @@ hc_theme_merge(...)
 ## Examples
 
 ``` r
+
 thm <- hc_theme_merge(
   hc_theme_darkunica(),
   hc_theme(

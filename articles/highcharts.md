@@ -12,6 +12,7 @@ Let’s see a preview of what highchartsJS (so highcharter) can chart.
 First of all a simple data set:
 
 ``` r
+
 library(dplyr)
 library(stringr)
 library(purrr)
@@ -59,6 +60,7 @@ df <- df |>
 ## errorbar
 
 ``` r
+
 example_dat <- tibble(
   Type = c("Human", "High-Elf", "Orc"), 
   key = c("World1", "World2", "World3")
@@ -95,6 +97,7 @@ hchart(
 ## item
 
 ``` r
+
 df <- data.frame(
   stringsAsFactors = FALSE,
   name = c(
@@ -136,6 +139,7 @@ hchart(
 ## packedbubble
 
 ``` r
+
 library(dplyr)
 
 data(gapminder, package = "gapminder")
@@ -185,6 +189,7 @@ hc %>%
 ## solidgauge
 
 ``` r
+
 col_stops <- data.frame(
   q = c(0.15, 0.4, .8),
   c = c('#55BF3B', '#DDDF0D', '#DF5353'),
@@ -227,6 +232,7 @@ highchart() %>%
 ## tilemap
 
 ``` r
+
 # http://www.maartenlambrechts.com/2017/10/22/tutorial-a-worldtilegrid-with-ggplot2.html
 library(dplyr)
 library(readr)
@@ -264,6 +270,7 @@ hchart(data, "tilemap", hcaes(x = x, y = -y, name = name, group = region)) %>%
 ## vector
 
 ``` r
+
 x <- seq(5, 95, by = 5)
 
 df <- expand.grid(x = x, y = x) %>% 
@@ -285,6 +292,7 @@ hchart(
 ## venn
 
 ``` r
+
 highchart() %>% 
   hc_chart(type = "venn") %>% 
   hc_add_series(
@@ -306,6 +314,7 @@ highchart() %>%
 ```
 
 ``` r
+
 highchart() %>% 
   hc_chart(type = "venn") %>% 
   hc_add_series(
@@ -323,6 +332,7 @@ highchart() %>%
 ## wordcloud
 
 ``` r
+
 library(rvest)
 library(tidytext)
 
@@ -345,6 +355,7 @@ hchart(data, "wordcloud", hcaes(name = word, weight = log(n)))
 ## xrange
 
 ``` r
+
 library(lubridate)
 
 N <- 7
