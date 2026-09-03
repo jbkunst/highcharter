@@ -1,5 +1,8 @@
 url: https://jkunst.com/highcharter/
-
+lang: en
+authors:
+  Joshua Kunst:
+    href: https://jkunst.com
 template:
   includes:
     in_header: |
@@ -11,3 +14,230 @@ template:
         gtag('js', new Date());
         gtag('config', 'G-ECZ9XLT78C');
       </script>
+  bootstrap: 5
+  bslib:
+    primary: '#47475C'
+    heading_font:
+      google:
+        family: Alegreya Sans SC
+        wght: 400
+    base_font:
+      google:
+        family: IBM Plex Sans
+    code_font:
+      google: Fira Mono
+navbar:
+  bg: primary
+  structure:
+    right:
+    - search
+    - twitter
+    - github
+  components:
+    twitter:
+      icon: fa-twitter
+      href: http://twitter.com/jbkunst
+      aria-label: Twitter
+figures:
+  message: no
+  warning: no
+  out.width: 100%
+reference:
+- title: Highcharts API
+  desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).
+  contents:
+  - highchart
+  - hchart
+  - hc_annotations
+  - hc_boost
+  - hc_caption
+  - hc_chart
+  - hc_colorAxis
+  - hc_colors
+  - hc_credits
+  - hc_drilldown
+  - hc_exporting
+  - hc_legend
+  - hc_loading
+  - hc_pane
+  - hc_plotOptions
+  - hc_responsive
+  - hc_series
+  - hc_subtitle
+  - hc_title
+  - hc_tooltip
+  - hc_xAxis
+  - hc_yAxis
+  - hc_zAxis
+  - hc_navigator
+  - hc_rangeSelector
+  - hc_scrollbar
+  - hc_mapNavigation
+  - highchartzero
+- title: Additional function to use Highcharts API
+  desc: Helpers function to add or modify elements, like plugins (as {htmltools} dependencies),
+    events or annotations.
+  contents:
+  - hc_add_annotation
+  - hc_add_dependency
+  - hc_add_event_point
+  - hc_yAxis_multiples
+  - hc_elementId
+  - hc_motion
+  - hc_rm_series
+  - hc_size
+- title: Add data
+  desc: Functions to add data from R objects to a highcharts charts.
+  contents:
+  - hc_add_series
+  - hc_add_series.character
+  - hc_add_series.data.frame
+  - hc_add_series.density
+  - hc_add_series.forecast
+  - hc_add_series.geo_json
+  - hc_add_series.lm
+  - hc_add_series.numeric
+  - hc_add_series.ts
+  - hc_add_series.xts
+  - hc_add_series_list
+  - hc_add_series_map
+- title: Data helpers
+  desc: |-
+    Function to help manipulate data to use in specific arguments or
+        some types of series. For example create valid arguments in `dataClasses`,
+        `stops` or `pointFormatter` parameters and create the rigth type of format
+        to create treemaps, sunburst or sankey charts.
+  contents:
+  - color_classes
+  - color_stops
+  - colorize
+  - data_to_boxplot
+  - data_to_hierarchical
+  - data_to_sankey
+  - tooltip_chart
+  - tooltip_table
+  - hex_to_rgba
+  - datetime_to_timestamp
+  - df_to_annotations_labels
+- title: Shiny and proxy functions
+  desc: |-
+    Functions to create highcharts in shinyapps or rmarkdown documents.
+        Proxy functions allow you maniupulate a highchart widget from server side in a
+        shiny app.
+  contents:
+  - highchartProxy
+  - hcpxy_add_point
+  - hcpxy_add_series
+  - hcpxy_loading
+  - hcpxy_redraw
+  - hcpxy_remove_point
+  - hcpxy_remove_series
+  - hcpxy_set_data
+  - hcpxy_update
+  - hcpxy_update_point
+  - hcpxy_update_series
+  - highchartOutput
+  - renderHighchart
+- title: Themes
+  desc: Functions to customize the look of your chart.
+  contents:
+  - hc_theme
+  - hc_add_theme
+  - hc_theme_merge
+  - hc_theme_538
+  - hc_theme_alone
+  - hc_theme_bloom
+  - hc_theme_chalk
+  - hc_theme_darkunica
+  - hc_theme_db
+  - hc_theme_economist
+  - hc_theme_elementary
+  - hc_theme_ffx
+  - hc_theme_flat
+  - hc_theme_flatdark
+  - hc_theme_ft
+  - hc_theme_ggplot2
+  - hc_theme_google
+  - hc_theme_gridlight
+  - hc_theme_handdrawn
+  - hc_theme_hcrt
+  - hc_theme_monokai
+  - hc_theme_null
+  - hc_theme_sandsignika
+  - hc_theme_smpl
+  - hc_theme_sparkline
+  - hc_theme_superheroes
+  - hc_theme_tufte
+- title: Data
+  desc: Data for examples
+  contents:
+  - mountains_panorama
+  - citytemp
+  - citytemp_long
+  - favorite_bars
+  - favorite_pies
+  - globaltemp
+  - pokemon
+  - stars
+  - unemployment
+  - uscountygeojson
+  - usgeojson
+  - vaccines
+  - weather
+  - worldgeojson
+- title: Extra functions
+  contents:
+  - download_map_data
+  - export_hc
+  - get_data_from_map
+  - get_hc_series_from_df
+  - hcaes
+  - hcaes_string
+  - hchart.igraph
+  - hchart.survfit
+  - hcmap
+  - highcharter-exports
+  - highcharter
+  - highcharts_demo
+  - is.hexcolor
+  - is.highchart
+  - list_parse
+  - mutate_mapping
+  - random_id
+  - str_to_id
+- title: Deprecated functions
+  desc: Functions that will be removed in the next version of the package.
+  contents:
+  - hcparcords
+  - create_axis
+articles:
+- title: Get Started
+  navbar: Get Started
+  contents:
+  - highcharter
+  - first-steps
+  - showcase
+  - hchart
+  - highcharts-api
+  - highchartsjs-api-basics
+- title: The highchartsJS bundle
+  navbar: The highchartsJS bundle
+  contents:
+  - highcharts
+  - maps
+  - stock
+- title: Shiny Integration
+  navbar: Shiny Integration
+  contents: shiny
+- title: Experiments & Examples
+  navbar: Experiments & Examples
+  contents:
+  - fontawesome
+  - drilldown
+- title: More of highcharter
+  navbar: More of highcharter
+  contents:
+  - themes
+  - howtos
+  - modules
+  - motion
