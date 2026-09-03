@@ -197,23 +197,18 @@ Another example:
 ```{r}
 library(dplyr)
 
-airports <- read.csv(
-  # "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
-  "https://datacatalogfiles.worldbank.org/ddh-published/0038117/2/DR0046411/airport_volume_airport_locations.csv",
-  stringsAsFactors = FALSE
-  )
-
-south_america_countries <- c(
-    "Brazil", "Ecuador", "Venezuela",
-    "Chile", "Argentina", "Peru",
-    "Uruguay", "Paraguay", "Bolivia", 
-    "Suriname", "Guyana", "Colombia"
-  ) 
-
-airports <- airports |>
-  filter(Country.Name %in% south_america_countries) |>
-  rename(lat = Airport1Latitude, lon = Airport1Longitude) |>
-  filter(lon < -30)
+airports <- tibble::tribble(
+  ~name, ~lat, ~lon,
+  "Santiago", -33.39, -70.79,
+  "Buenos Aires", -34.82, -58.54,
+  "São Paulo", -23.44, -46.47,
+  "Lima", -12.02, -77.11,
+  "Bogotá", 4.70, -74.15,
+  "Quito", -0.13, -78.36,
+  "Montevideo", -34.84, -56.03,
+  "Asunción", -25.24, -57.52,
+  "La Paz", -16.51, -68.19
+)
 
 hcmap(
   "custom/south-america",
@@ -227,7 +222,7 @@ hcmap(
     color = hex_to_rgba("darkred", alpha = 0.3),
     maxSize = "10",
     tooltip = list(
-      pointFormat = "{point.name}: {point.altitude:,.0f} feets <br>
+      pointFormat = "{point.name}<br>
       ({point.lat:,.2f}, {point.lon:,.2f})"
     )
   ) |>
