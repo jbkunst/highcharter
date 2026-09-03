@@ -256,17 +256,17 @@ We can still adding data:
 
 
 ```{r}
-airports <- read.csv(
-  # "https://raw.githubusercontent.com/ajdapretnar/datasets/master/data/global_airports.csv",
-  "https://datacatalogfiles.worldbank.org/ddh-published/0038117/2/DR0046411/airport_volume_airport_locations.csv",
-  stringsAsFactors = FALSE
-  )
+airports <- tibble::tribble(
+  ~name, ~lat, ~lon,
+  "Sydney", -33.94, 151.18,
+  "Melbourne", -37.67, 144.84,
+  "Brisbane", -27.38, 153.12,
+  "Perth", -31.94, 115.97,
+  "Adelaide", -34.95, 138.53,
+  "Darwin", -12.41, 130.88
+)
 
-airports <- airports |> 
-  filter(Country.Name == "Australia", Name != "Roma Street Railway Station") |> 
-  rename(name = Name)
-
-airp_geojson <- geojson_json(airports, lat = "Airport1Latitude", lon = "Airport1Longitude")
+airp_geojson <- geojson_json(airports, lat = "lat", lon = "lon")
 
 class(airp_geojson)
 
