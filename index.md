@@ -24,6 +24,14 @@ Highcharter is a **[R](https://cran.r-project.org/)** wrapper for
 modules. Highcharts is very flexible and customizable javascript
 charting library and it has a great and powerful API.
 
+## Motivation
+
+R has long had interfaces to JavaScript visualization libraries such as
+Plotly and, later, other rich charting ecosystems. `highcharter` exists
+to bring Highcharts into that same R ecosystem through an `htmlwidget`:
+exposing Highcharts, Highstock and Highmaps while making their API
+practical to use with common R objects and workflows.
+
 The main features of highcharter are:
 
 - Chart various R objects with one function: with `hchart(x)` you can
