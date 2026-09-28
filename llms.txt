@@ -26,11 +26,9 @@ charting library and it has a great and powerful API.
 
 ## Motivation
 
-R has long had interfaces to JavaScript visualization libraries such as
-Plotly and, later, other rich charting ecosystems. `highcharter` exists
-to bring Highcharts into that same R ecosystem through an `htmlwidget`:
-exposing Highcharts, Highstock and Highmaps while making their API
-practical to use with common R objects and workflows.
+`highcharter` brings the Highcharts JavaScript library to R through an
+`htmlwidget`, making its interactive charts, maps, stock charts and
+customization options available through an R-friendly interface.
 
 The main features of highcharter are:
 
