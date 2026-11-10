@@ -32,3 +32,4 @@ index.Rmd
 ^\.github$
 ^CRAN-SUBMISSION$
 ^.*\.qmd$
+^AGENTS\.md$

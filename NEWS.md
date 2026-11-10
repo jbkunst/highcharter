@@ -1,8 +1,15 @@
+# highcharter (development version)
+
+* Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included
+  by default, including keyboard navigation (#755).
+* Widgets with reflow enabled now follow changes in their container dimensions.
+* The chart gallery includes a weighted arc diagram example (#829).
+
 # highcharter 0.12.6.1
 
 ## Changes
 
-* Highcharter now uses HighchartsJS 10.6.0.
+* Highcharter now uses HighchartsJS 12.6.0.
 
 ## Breaking changes
 
