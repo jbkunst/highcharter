@@ -1,139 +1,67 @@
-# packages ----------------------------------------------------------------
-library(purrr)
-library(rvest)
-library(dplyr)
-library(yaml)
-library(stringr)
+# From the repository root: Rscript dev/download-highcharts-code.R 12.6.2
+update_highcharts <- function(version = NULL) {
+  bundle <- normalizePath("dev/highcharts-bundle")
+  widgets <- normalizePath("inst/htmlwidgets")
+  vendor <- file.path(widgets, "lib", "highcharts")
+  npm <- if (.Platform$OS.type == "windows") "npm.cmd" else "npm"
 
-# settings ----------------------------------------------------------------
-# version to download
-version <- "12.6.0"
-hccodeurl <- "http://code.highcharts.com"
+  if (!is.null(version) && !grepl("^[0-9]+\\.[0-9]+\\.[0-9]+([-+][A-Za-z0-9.+-]+)?$", version)) {
+    stop("Supply an exact Highcharts release, e.g. 12.6.2.")
+  }
 
-path       <- sprintf("inst/htmlwidgets/lib/highcharts")
-path_temp  <- sprintf("inst/htmlwidgets/lib/highcharts-temp")
+  # Resolve and build in isolation so a failed npm install or build leaves the checkout intact.
+  stage <- tempfile("highcharts-")
+  dir.create(stage)
+  previous_dir <- setwd(stage)
+  on.exit({
+    setwd(previous_dir)
+    unlink(stage, recursive = TRUE)
+  })
+  manifests <- c("package.json", "package-lock.json")
+  fs::file_copy(file.path(bundle, c(manifests, "entry.js", "build.mjs")), ".")
 
-# creating folder structure
-folders <- c("", "modules", "plugins", "css", "custom")
-try(map(file.path(path_temp, folders), dir.create))
+  install <- "ci"
+  if (!is.null(version)) {
+    install <- c("install", "--save-dev", "--save-exact", paste0("highcharts@", version))
+  }
+  if (system2(npm, install) != 0L) stop("Could not install Highcharts.")
+  if (system2(npm, c("run", "build", "--", "highcharter-bundle.js")) != 0L) {
+    stop("Could not build the Highcharts bundle.")
+  }
 
-# main files --------------------------------------------------------------
-file_temp <- tempfile(fileext = ".zip")
+  upstream <- file.path("node_modules", "highcharts")
+  installed <- jsonlite::read_json(file.path(upstream, "package.json"))$version
+  if (!is.null(version) && installed != version) stop("Unexpected Highcharts version: ", installed)
+  core <- c("highcharts.js", "highcharts-more.js", "highcharts-3d.js")
+  modules <- list.files(file.path(upstream, "modules"), pattern = "\\.js$")
+  modules <- modules[!endsWith(modules, ".src.js")]
+  assets <- c(core, file.path("modules", modules))
+  if (!length(modules) || !all(file.exists(file.path(upstream, assets)))) {
+    stop("Incomplete Highcharts distribution: ", installed)
+  }
 
-download.file(
-  sprintf("https://code.highcharts.com/zips/Highcharts-%s.zip", version),
-  file_temp,
-  method = "curl"
-)
+  # In these two manifests the version follows the dependency name. Keep comments and formatting.
+  widgets_yaml <- c("highchart.yaml", "highchartzero.yaml")
+  for (widget in widgets_yaml) {
+    lines <- readLines(file.path(widgets, widget))
+    fields <- trimws(lines)
+    rows <- which(fields %in% c("- name: highcharts", "- name: highcharts-motion")) + 1L
+    if (!("- name: highcharts" %in% fields) || !isTRUE(all(startsWith(fields[rows], "version: ")))) {
+      stop("Could not locate the Highcharts dependency version in ", widget)
+    }
+    lines[rows] <- sub("version: [^ #]+", paste("version:", installed), lines[rows])
+    writeLines(lines, widget)
+  }
 
-folder_temp <- tempdir()
+  fs::file_copy(file.path(upstream, assets), file.path(vendor, assets), overwrite = TRUE)
+  obsolete <- setdiff(list.files(file.path(vendor, "modules"), pattern = "\\.js$"), modules)
+  if (length(obsolete)) fs::file_delete(file.path(vendor, "modules", obsolete))
+  fs::file_copy("highcharter-bundle.js", file.path(widgets, "lib"), overwrite = TRUE)
+  fs::file_copy(widgets_yaml, widgets, overwrite = TRUE)
+  fs::file_copy(manifests, bundle, overwrite = TRUE)
+  message("Highcharts ", installed, " ready (bundle and ", length(modules), " standalone modules).")
+}
 
-unzip(file_temp, exdir = folder_temp)
-
-files <- dir(folder_temp, recursive = TRUE, full.names = TRUE) |> 
-  str_subset("src.js$", negate = TRUE) |> 
-  str_subset("js.map$", negate = TRUE)
-
-basename(files)
-
-main <- str_subset(files, "code/highcharts")
-main
-  
-file.copy(
-  main,
-  file.path(path_temp, basename(main)),
-  overwrite = TRUE
-)
-
-modules <- str_subset(files, "code/modules")
-modules
-
-file.copy(
-  modules,
-  file.path(path_temp, "modules", basename(modules)),
-  overwrite = TRUE
-)
-
-
-# map ---------------------------------------------------------------------
-# urlmapmodule <- sprintf("https://code.highcharts.com/maps/%s/modules/map.js", version)
-
-# download.file(
-#   urlmapmodule,
-#   file.path(path_temp, "modules", basename(urlmapmodule))
-# )
-
-# check what modules are missing in yaml ----------------------------------
-modules <- dir(file.path(path, "modules")) 
-modules
-
-modules_yalm <- readLines("inst/htmlwidgets/highchart.yaml") |> 
-  str_subset("modules/") |>
-  str_extract("modules/.*") |> 
-  str_trim() |> 
-  basename()
-
-# copy and paste if this is not empty
-setdiff(modules, modules_yalm) |>
-  (\(x) str_c("#    - modules/", x, "\n"))() |>
-  message()
-
-# sobran
-setdiff(modules_yalm, modules)
-
-# repetidos en yalm
-tibble(m = modules_yalm) |> 
-  count(m, sort = TRUE) |> 
-  filter(n > 1)
-
-# plugins -----------------------------------------------------------------
-files <- c(
-  # "http://blacklabel.github.io/multicolor_series/js/multicolor_series.js",
-  "https://raw.githubusercontent.com/larsac07/Motion-Highcharts-Plugin/master/motion.js",
-  "https://raw.githubusercontent.com/highcharts/draggable-legend/master/draggable-legend.js",
-  # "https://raw.githubusercontent.com/rudovjan/highcharts-tooltip-delay/master/tooltip-delay.js",
-  "https://raw.githubusercontent.com/blacklabel/grouped_categories/master/grouped-categories.js",
-  "https://raw.githubusercontent.com/streamlinesocial/highcharts-regression/master/highcharts-regression.js"
-  # "https://raw.githubusercontent.com/highcharts/pattern-fill/master/pattern-fill-v2.js",
-  # "https://raw.githubusercontent.com/blacklabel/annotations/master/js/annotations.js",
-  # "https://raw.githubusercontent.com/highcharts/export-csv/master/export-csv.js",
-  # "https://raw.githubusercontent.com/highcharts/draggable-points/master/draggable-points.js",
-  )
-
-walk2(
-  files,
-  file.path(path_temp, "plugins", basename(files)),
-  download.file
-)
-
-# customs -----------------------------------------------------------------
-file.copy(
-  dir(file.path(path, "custom"), full.names = TRUE),
-  str_replace(dir(file.path(path, "custom"), full.names = TRUE), path, path_temp),
-  overwrite = TRUE
-)
-
-file.copy(
-  dir(file.path(path, "css"), full.names = TRUE),
-  str_replace(dir(file.path(path, "css"), full.names = TRUE), path, path_temp),
-  overwrite = TRUE
-)
-
-# moving ------------------------------------------------------------------
-try(fs::dir_delete(path))
-
-try(fs::dir_create(path))
-
-try(map(file.path(path, folders), fs::dir_create))
-
-file.copy(
-  dir(file.path(path_temp), full.names = TRUE, recursive = TRUE),
-  str_replace(dir(file.path(path_temp), full.names = TRUE, recursive = TRUE), path_temp, path),
-  overwrite = TRUE
-)
-
-try(fs::dir_delete(path_temp))
-
-# change the version on yaml ----------------------------------------------
-walk(1:5, ~ message("change version on inst/htmlwidgets/highchart.yaml and inst/htmlwidgets/highchartzero.yaml"))
-walk(1:5, ~ message("Line 11 in inst/htmlwidgets/highchart.yaml"))
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) > 1L) stop("Usage: Rscript dev/download-highcharts-code.R [version]")
+update_highcharts(if (length(args)) args[[1L]])

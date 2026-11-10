@@ -1,12 +1,25 @@
-# Readme plz!
+# Development
 
-## Highcharts.js libraries 
+## Update Highcharts
 
-To download/update highcharts libraries:
+Run this from the repository root, with Node.js, npm and the R packages
+`fs` and `jsonlite` installed:
 
-1. Run `dev/download-highcharts-code.R` setting the higchartsJS version (12.2.0 for example),
-2. Then modify `inst/htmlwidgets/highchart.yalm` with the respective version (12.2.0 for example) and,
-3. don't forget `inst/htmlwidgets/highchartzero.yalm`
+```sh
+Rscript dev/download-highcharts-code.R 12.6.2
+```
+
+Pass the exact release you want, or omit the version to rebuild from the committed lockfile.
+The command installs Highcharts in a temporary directory, builds the bundle, and updates
+the npm manifests, standalone official scripts and both widget YAML files. Review the diff
+and run the [widget grid](highcharts-bundle/README.md) against the updated package.
+
+[Motion](https://github.com/larsac07/Motion-Highcharts-Plugin),
+[grouped categories](https://github.com/blacklabel/grouped_categories),
+[draggable legend](https://github.com/highcharts/draggable-legend) and
+[regression](https://github.com/streamlinesocial/highcharts-regression) are third-party plugins.
+Their copies in `inst/htmlwidgets/lib/highcharts/plugins/` are maintained independently
+of Highcharts. The CSS and highcharter's custom scripts are also maintained in the repository.
 
 ## Autogenerate `highcharts-api.R`
 
