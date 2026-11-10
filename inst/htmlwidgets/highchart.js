@@ -23,7 +23,7 @@ HTMLWidgets.widget({
       console.log("conf_opts", x.conf_opts);
     }
 
-    if(x.fonts !== undefined) {
+    if(x.fonts != null) {
       
       x.fonts = ((typeof(x.fonts) == "string") ? [x.fonts] : x.fonts);
     
@@ -128,9 +128,7 @@ HTMLWidgets.widget({
     } 
 
     var chart = $("#" +el.id).highcharts();
-    var w = chart.renderTo.clientWidth; 
-    var h = chart.renderTo.clientHeight; 
-    chart.setSize(w, h); 
+    chart.setSize(null, null, false);
     
   },
 
@@ -140,9 +138,7 @@ HTMLWidgets.widget({
     var chart = $("#" +el.id).highcharts();
     
     if (chart && chart.options.chart.reflow === true) {  // _check for reflow option_
-      var w = chart.renderTo.clientWidth; 
-      var h = chart.renderTo.clientHeight; 
-      chart.setSize(w, h); 
+      chart.setSize(null, null, false);
     }
     
   }

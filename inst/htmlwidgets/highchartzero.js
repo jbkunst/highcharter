@@ -24,9 +24,7 @@ HTMLWidgets.widget({
     var chart = $("#" +el.id).highcharts();
     
     if (chart && chart.options.chart.reflow === true) {  // _check for reflow option_
-      var w = chart.renderTo.clientWidth; 
-      var h = chart.renderTo.clientHeight; 
-      chart.setSize(w, h); 
+      chart.setSize(null, null, false);
     }
     
   }

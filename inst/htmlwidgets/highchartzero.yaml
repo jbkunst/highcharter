@@ -5,7 +5,8 @@ dependencies:
     script: jquery.min.js
   - name: highcharts
     version: 12.6.0
-    src: "htmlwidgets/lib/highcharts"
+    src: "htmlwidgets/lib"
     script:
-    - highcharts.js
-    - custom/reset.js
+      - highcharter-bundle.js
+      - highcharts/custom/reset.js
+    all_files: false
