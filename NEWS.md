@@ -2,6 +2,13 @@
 
 * Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included
   by default, including keyboard navigation (#755).
+* The bundle now includes the official chart types and common feature modules. A new
+  `highchartstock()` widget adds Stock Tools, advanced annotations and technical indicators.
+  Third-party Motion, Regression, Grouped Categories and Draggable Legend plugins remain optional.
+* Highcharts updates now run entirely from `dev/highcharts-bundle`; the build generates
+  both bundles and synchronizes widget YAML versions.
+* `hcpxy_set_extremes()` controls an x-axis range from Shiny. `hcpxy_set_data()`
+  can now target a series by ID, which is safer when Stock indicators change series order.
 * Widgets with reflow enabled now follow changes in their container dimensions.
 * The chart gallery includes a weighted arc diagram example (#829).
 

@@ -26,7 +26,26 @@ highchart <- function(hc_opts = list(),
                       height = NULL,
                       elementId = NULL,
                       google_fonts = getOption("highcharter.google_fonts")) {
-  
+  .highchart_widget(
+    name = "highchart",
+    hc_opts = hc_opts,
+    theme = theme,
+    type = type,
+    width = width,
+    height = height,
+    elementId = elementId,
+    google_fonts = google_fonts
+  )
+}
+
+.highchart_widget <- function(name,
+                              hc_opts,
+                              theme,
+                              type,
+                              width,
+                              height,
+                              elementId,
+                              google_fonts) {
   assertthat::assert_that(type %in% c("chart", "stock", "map", "gantt"))
 
   opts <- .join_hc_opts()
@@ -62,7 +81,7 @@ highchart <- function(hc_opts = list(),
 
   # create widget
   hc <- htmlwidgets::createWidget(
-    name = "highchart",
+    name = name,
     x,
     width = width,
     height = height,
@@ -82,12 +101,39 @@ highchart <- function(hc_opts = list(),
   hc
 }
 
+#' Create a Highcharts Stock widget with Stock Tools
+#'
+#' `highchartstock()` creates a Stock chart with the official Stock Tools GUI,
+#' advanced annotations and technical indicators. Use `highchart(type = "stock")`
+#' for a Stock chart without these additional interface assets.
+#'
+#' @inheritParams highchart
+#' @export
+highchartstock <- function(hc_opts = list(),
+                           theme = getOption("highcharter.theme"),
+                           width = NULL,
+                           height = NULL,
+                           elementId = NULL,
+                           google_fonts = getOption("highcharter.google_fonts")) {
+  .highchart_widget(
+    name = "highchartstock",
+    hc_opts = hc_opts,
+    theme = theme,
+    type = "stock",
+    width = width,
+    height = height,
+    elementId = elementId,
+    google_fonts = google_fonts
+  )
+}
+
 #' Reports whether x is a highchart object
 #'
 #' @param x An object to test
 #' @export
 is.highchart <- function(x) {
-  inherits(x, "highchart") || inherits(x, "highchart2") || inherits(x, "highchartzero")
+  inherits(x, "highchart") || inherits(x, "highchart2") ||
+    inherits(x, "highchartstock") || inherits(x, "highchartzero")
 }
 
 #' Widget output function for use in Shiny
@@ -115,6 +161,21 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
     expr <- substitute(expr)
   } # force quoted
   shinyRenderWidget(expr, highchartOutput, env, quoted = TRUE)
+}
+
+#' @rdname highchartOutput
+#' @export
+highchartStockOutput <- function(outputId, width = "100%", height = "400px") {
+  shinyWidgetOutput(outputId, "highchartstock", width, height, package = "highcharter")
+}
+
+#' @rdname renderHighchart
+#' @export
+renderHighchartStock <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+  shinyRenderWidget(expr, highchartStockOutput, env, quoted = TRUE)
 }
 
 

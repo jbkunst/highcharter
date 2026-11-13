@@ -62,11 +62,11 @@ remotes::install_github("jbkunst/highcharter")
 
 ## Highcharts bundle
 
-`highchart()` and `highchartzero()` share one bundled Highcharts engine per page.
-Charts, Stock, Maps, Gantt, 3D and keyboard navigation are included. Each widget
-keeps its own chart and resizes to its container when reflow is enabled.
-Use `hc_add_dependency()` for optional modules and third-party plugins.
-The R package ships with the compiled JavaScript.
+`highchart()`, `highchartstock()` and `highchartzero()` share one bundled Highcharts
+engine per page. Charts, Stock, Maps, Gantt, official series, accessibility and common
+feature modules are included. `highchartstock()` adds the Stock Tools GUI and technical
+indicators. Third-party plugins remain optional through `hc_add_dependency()`.
+Each widget keeps its own chart and resizes to its container when reflow is enabled.
 
 See the [maintainer guide](dev/readme.md#update-highcharts) to update Highcharts
 and the [bundle guide](dev/highcharts-bundle/README.md) to change the module selection

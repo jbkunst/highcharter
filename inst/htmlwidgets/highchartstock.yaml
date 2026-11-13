@@ -1,0 +1,21 @@
+dependencies:
+  - name: jquery
+    version: 3.5.1
+    src: "htmlwidgets/lib/jquery"
+    script: jquery.min.js
+  - name: highcharts
+    version: 12.6.0
+    src: "htmlwidgets/lib"
+    script:
+      - highcharter-bundle.js
+      - highcharts/custom/reset.js
+      - highcharts/custom/highcharter-widget.js
+    all_files: false
+  - name: highcharts-stock-tools
+    version: 12.6.0
+    src: "htmlwidgets/lib/stock-tools"
+    script: highcharter-stock-tools.js
+    stylesheet:
+      - css/stocktools/gui.css
+      - css/annotations/popup.css
+    all_files: true

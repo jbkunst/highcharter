@@ -13,10 +13,5 @@ dependencies:
     script:
       - highcharter-bundle.js
       - highcharts/custom/reset.js
-    all_files: false
-  - name: highcharts-motion
-    version: 12.6.0
-    src: "htmlwidgets/lib/highcharts"
-    script: plugins/motion.js
-    stylesheet: css/motion.css
+      - highcharts/custom/highcharter-widget.js
     all_files: false

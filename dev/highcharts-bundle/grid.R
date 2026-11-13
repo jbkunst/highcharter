@@ -32,8 +32,7 @@ bellcurve <- highchart() |>
   hc_add_series(type = "bellcurve", baseSeries = "scores", name = "Distribution")
 pattern <- list(pattern = list(path = "M 0 0 L 8 8", width = 8, height = 8, color = "#347a81"))
 extension <- highchart() |>
-  hc_add_series(type = "column", data = values, color = pattern) |>
-  hc_add_dependency("modules/pattern-fill.js")
+  hc_add_series(type = "column", data = values, color = pattern)
 
 charts <- list(
   "Line · keyboard navigation" = line, "Stock" = stock, "Map" = map, "3D" = columns,

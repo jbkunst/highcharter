@@ -343,6 +343,17 @@ hc_size <- function(hc, width = NULL, height = NULL) {
 hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   hc <- .hc_opt(hc, "motion", enabled = enabled, startIndex = startIndex, ...)
 
+  if (enabled) {
+    dep <- htmltools::htmlDependency(
+      name = "highcharts-motion",
+      version = "1.0.0",
+      src = c(file = system.file("htmlwidgets/lib/highcharts", package = "highcharter")),
+      script = "plugins/motion.js",
+      stylesheet = "css/motion.css"
+    )
+    hc$dependencies <- c(hc$dependencies, list(dep))
+  }
+
   hc
 }
 

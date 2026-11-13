@@ -280,14 +280,20 @@ hcpxy_remove_point <- function(proxy, id = NULL, i = NULL, redraw = TRUE) {
 #' @param updatePoints boolean When this is TRUE, points will be updated instead of replaced whenever possible.
 #'   This occurs a) when the updated data is the same length as the existing data, b) when points are matched by their id's, or c) when points can be matched by X values.
 #'   This allows updating with animation and performs better. In this case, the original array is not passed by reference. Set FALSE to prevent.
+#' @param id Optional character vector with the target series ID. This is safer
+#'   than a numeric position when indicators or other dynamic series are present.
 #'
 #' @export
-hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE, animation = NULL, updatePoints = TRUE) {
+hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
+                           animation = NULL, updatePoints = TRUE, id = NULL) {
   checkProxy(proxy)
 
   data <- mutate_mapping(data, mapping)
 
   series <- data_to_series(data, mapping, type = type)
+  if (!is.null(id)) {
+    stopifnot(is.character(id), length(id) == length(series))
+  }
 
   for (i in 1:length(series)) {
     proxy$session$sendCustomMessage(
@@ -295,6 +301,7 @@ hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
       message = list(
         id = proxy$id,
         serie = i - 1,
+        idSeries = if (is.null(id)) NULL else id[[i]],
         data = series[[i]]$data,
         redraw = redraw,
         animation = animation,
@@ -302,6 +309,53 @@ hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
       )
     )
   }
+
+  proxy
+}
+
+#' Set axis extremes for a higchartProxy object
+#'
+#' This controls the visible range without rebuilding the chart. It is useful
+#' for Stock charts and their navigator, and also works with regular charts.
+#'
+#' @param proxy A `higchartProxy` object.
+#' @param min,max Minimum and maximum axis values. Dates and date-times are
+#'   converted to Highcharts timestamps. Use `NULL` for both to reset the range.
+#' @param axis Zero-based x-axis index or a character axis ID.
+#' @param redraw Whether to redraw the chart after changing the range.
+#' @param animation Whether to animate the range change, or an animation options
+#'   list.
+#'
+#' @export
+hcpxy_set_extremes <- function(proxy, min = NULL, max = NULL, axis = 0,
+                               redraw = TRUE, animation = TRUE) {
+  checkProxy(proxy)
+
+  valid_axis <- (is.numeric(axis) && length(axis) == 1 &&
+    is.finite(axis) && axis >= 0 && axis == floor(axis)) ||
+    (is.character(axis) && length(axis) == 1 && nzchar(axis))
+  stopifnot(valid_axis)
+
+  normalize_extreme <- function(value) {
+    if (is.null(value)) return(NULL)
+    if (inherits(value, "Date") || inherits(value, "POSIXt")) {
+      value <- datetime_to_timestamp(value)
+    }
+    stopifnot(is.numeric(value), length(value) == 1, is.finite(value))
+    as.numeric(value)
+  }
+
+  proxy$session$sendCustomMessage(
+    type = "setExtremes",
+    message = list(
+      id = proxy$id,
+      axis = axis,
+      min = normalize_extreme(min),
+      max = normalize_extreme(max),
+      redraw = redraw,
+      animation = animation
+    )
+  )
 
   proxy
 }

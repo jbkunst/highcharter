@@ -7,18 +7,19 @@ npm ci
 npm run build
 ```
 
-Commit the generated `inst/htmlwidgets/lib/highcharter-bundle.js` with the build sources.
+Commit the generated base bundle and `inst/htmlwidgets/lib/stock-tools/`
+with the build sources.
 Installing or using the R package does not require Node.js.
 
-`entry.js` selects the official Highcharts modules. Stock, Maps and Gantt extend the same
-Highcharts instance as the standard charts. Keep Boost last among the module imports.
-The htmlwidgets dependency lists load highcharter's theme reset and third-party plugins
-separately.
+`entry.js` selects the official chart and feature modules. Stock, Maps and Gantt extend
+the same Highcharts instance as standard charts. Keep Boost last among the module imports.
+`build.mjs` also creates the optional Stock Tools addon from the official indicators,
+advanced annotations and toolbar assets. Third-party plugins remain separate.
 
 For a Highcharts release upgrade, use the [maintainer command](../readme.md#update-highcharts)
-from the repository root to update the bundle and standalone modules together.
+from the repository root. The build updates all widget YAML versions automatically.
 
-To exercise the installed R package, run `Rscript grid.R` from this directory and open
-`preview/index.html`. The grid combines Chart, Stock, Maps, 3D, derived series and an
-optional pattern-fill module. Use Tab and the arrow keys on the first chart to check
-keyboard navigation.
+To exercise the installed R package, run `Rscript ../R/test-highcharts-bundle.R` from
+this directory and open `preview/index.html`. The gallery covers the shared data shapes,
+specialized series, Stock Tools and mixed widgets. Use Tab and the arrow keys on the first
+chart to check keyboard navigation.

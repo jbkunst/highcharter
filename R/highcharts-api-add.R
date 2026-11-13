@@ -766,6 +766,13 @@ hc_add_annotations <- function(hc, x) {
 hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
   stopifnot(!is.null(name))
 
+  if (startsWith(name, "modules/")) {
+    if (getOption("highcharter.verbose")) {
+      message("Official Highcharts modules are included in the main bundle.")
+    }
+    return(hc)
+  }
+
   yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
   yml <- yaml.load_file(yml)[[1]]
 

@@ -1,25 +1,29 @@
 # Development
 
+The staged cleanup of dependencies, the R API, articles, themes and pkgdown is
+tracked in the [simplification plan](simplification-plan.md).
+
 ## Update Highcharts
 
-Run this from the repository root, with Node.js, npm and the R packages
-`fs` and `jsonlite` installed:
+Run this from the repository root with Node.js and npm installed:
 
 ```sh
-Rscript dev/download-highcharts-code.R 12.6.2
+npm --prefix dev/highcharts-bundle run update -- 12.6.2
 ```
 
-Pass the exact release you want, or omit the version to rebuild from the committed lockfile.
-The command installs Highcharts in a temporary directory, builds the bundle, and updates
-the npm manifests, standalone official scripts and both widget YAML files. Review the diff
-and run the [widget grid](highcharts-bundle/README.md) against the updated package.
+Pass the exact release you want. The command pins Highcharts in the npm manifests,
+builds the base and Stock Tools bundles, copies Stock Tools CSS and icons, and updates
+the Highcharts versions in all widget YAML files. To reproduce the committed version,
+run `npm ci` and `npm run build` from `dev/highcharts-bundle`. Review the diff and run
+the [widget gallery](highcharts-bundle/README.md) against the updated package.
 
 [Motion](https://github.com/larsac07/Motion-Highcharts-Plugin),
 [grouped categories](https://github.com/blacklabel/grouped_categories),
 [draggable legend](https://github.com/highcharts/draggable-legend) and
 [regression](https://github.com/streamlinesocial/highcharts-regression) are third-party plugins.
 Their copies in `inst/htmlwidgets/lib/highcharts/plugins/` are maintained independently
-of Highcharts. The CSS and highcharter's custom scripts are also maintained in the repository.
+of Highcharts and are loaded only when requested. The CSS and highcharter's custom scripts
+are also maintained in the repository.
 
 ## Autogenerate `highcharts-api.R`
 

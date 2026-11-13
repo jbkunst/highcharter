@@ -9,4 +9,5 @@ dependencies:
     script:
       - highcharter-bundle.js
       - highcharts/custom/reset.js
+      - highcharts/custom/highcharter-widget.js
     all_files: false
