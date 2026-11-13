@@ -56,8 +56,11 @@ field being changed (for example, the ordered FT line palette). Keep historical
 values where the source only provides a general brand palette.
 
 Run `testthat::test_local(filter = "themes")` and render `vignettes/themes.Rmd`
-to compare charts. For the Bootstrap integration, use the Shiny example
-in the vignette and toggle the color mode.
+to compare charts. After installing the package, render
+`Rscript tests/browser/themes.R /tmp/themes.html` and open the result to check
+axis placement for a preset, an explicit override and a neighboring chart.
+For the Bootstrap integration, use the Shiny example in the vignette and
+toggle the color mode.
 
 ## Maintain language presets
 

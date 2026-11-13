@@ -1,4 +1,5 @@
-colors: ['#F92672', '#66D9EF', '#A6E22E', '#A6E22E']
+# https://github.com/microsoft/vscode/blob/main/extensions/theme-monokai/themes/monokai-color-theme.json
+colors: ['#F92672', '#66D9EF', '#A6E22E', '#FD971F']
 chart:
   backgroundColor: '#272822'
   style:
@@ -19,6 +20,12 @@ legend:
     fontWeight: normal
     color: '#A2A39C'
 xAxis:
+  labels:
+    style:
+      color: '#A2A39C'
+  title:
+    style:
+      color: '#A2A39C'
   gridLineDashStyle: Dot
   gridLineWidth: 1
   gridLineColor: '#A2A39C'
@@ -27,6 +34,12 @@ xAxis:
   tickColor: '#A2A39C'
   tickWidth: 1
 yAxis:
+  labels:
+    style:
+      color: '#A2A39C'
+  title:
+    style:
+      color: '#A2A39C'
   gridLineDashStyle: Dot
   gridLineColor: '#A2A39C'
   lineColor: '#A2A39C'

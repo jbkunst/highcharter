@@ -146,22 +146,33 @@ uses circles wherever a series displays point markers.
 [Cloudscape chart colors](https://cloudscape.design/foundation/visual-foundation/data-vis-colors/) ·
 [Cloudscape chart styles](https://github.com/cloudscape-design/chart-components/blob/31ed24741b10928d1638245c725c1a0d155b29a4/src/internal/chart-styles.ts).
 
+The `538` and `bloom` presets preserve highcharter's historical FiveThirtyEight
+and Bloomberg Graphics palettes. The `darkunica`, `gridlight` and
+`sandsignika` presets follow the themes shipped with Highcharts 12.6.0.
+
 Tufte uses a gray palette, the Cardo font and small y-axis ticks, leaving
 the plotting area open.
 
 The remaining presets use the same sales data, except for the compact
-single-series sparkline examples. The chalkboard, paper and sand textures
+single-series sparkline examples. The white area in `sparkline_vb` is shown
+on a teal value-box background. The chalkboard, paper and sand textures
 are embedded in the widgets and work offline.
 
 ```{r gallery, echo=FALSE}
 other <- setdiff(hc_themes(), c("ft", "economist"))
 htmltools::tagList(lapply(other, function(name) {
   chart <- if (name %in% c("sparkline", "sparkline_vb")) {
-    highchart(height = 85) |> hc_add_series(data = c(14, 17, 15, 21, 23, 24))
+    highchart(height = 85) |>
+      hc_add_series(type = if (name == "sparkline_vb") "area" else "line",
+                    name = "Sales", data = c(14, 17, 15, 21, 23, 24))
   } else {
     sales_chart()
   }
-  htmltools::tagList(htmltools::tags$h3(name), hc_add_theme(chart, hc_theme(name)))
+  chart <- hc_add_theme(chart, hc_theme(name))
+  if (name == "sparkline_vb") {
+    chart <- htmltools::div(style = "background-color: #166B70", chart)
+  }
+  htmltools::tagList(htmltools::tags$h3(name), chart)
 }))
 ```
 

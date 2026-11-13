@@ -27,13 +27,13 @@ tooltip:
     color: '#FFFFFF'
 subtitle:
   style:
-    color: '#666666'
+    color: '#C0C0C0'
 xAxis:
   gridLineColor: '#2E3740'
   gridLineWidth: 1
   labels:
     style:
-      color: '#525252'
+      color: '#C0C0C0'
   lineColor: '#2E3740'
   tickColor: '#2E3740'
   title:
@@ -45,10 +45,10 @@ yAxis:
   gridLineWidth: 1
   labels:
     style:
-      color: '#525252'
-    lineColor: '#2E3740'
-    tickColor: '#2E3740'
-    title:
-      style:
-        color: '#FFFFFF'
-      text: null
+      color: '#C0C0C0'
+  lineColor: '#2E3740'
+  tickColor: '#2E3740'
+  title:
+    style:
+      color: '#FFFFFF'
+    text: null

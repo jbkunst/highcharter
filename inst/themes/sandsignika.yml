@@ -1,4 +1,6 @@
-colors: ['#F45B5B', '#8085E9', '#8D4654', '#7798BF', '#AAEEEE', '#FF0066', '#EEAAEE', '#55BF3B', '#DF5353']
+# https://github.com/highcharts/highcharts-dist/blob/v12.6.0/es-modules/Extensions/Themes/SandSignika.js
+colors: ['#F45B5B', '#8085E9', '#8D4654', '#7798BF', '#AAEEEE', '#FF0066',
+  '#EEAAEE', '#55BF3B', '#DF5353', '#7798BF', '#AAEEEE']
 chart:
   backgroundColor: null
   divBackgroundImage: !image sand.png
@@ -15,6 +17,7 @@ subtitle:
 tooltip:
   borderWidth: 0
 legend:
+  backgroundColor: '#E0E0E8'
   itemStyle:
     fontWeight: bold
     fontSize: 13px
@@ -28,7 +31,7 @@ yAxis:
       color: '#6e6e70'
 plotOptions:
   series:
-    shadow: false
+    shadow: true
   candlestick:
     lineColor: '#404048'
   map:

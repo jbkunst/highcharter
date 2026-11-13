@@ -1,3 +1,4 @@
+# Historical Bloomberg Graphics adaptation. Examples: https://www.bloomberg.com/graphics
 colors: ['#E10033', '#000000', '#767676', '#E4E4E4']
 chart:
   backgroundColor: '#FFFFFF'
@@ -66,9 +67,9 @@ labels:
     color: '#D7D7D8'
 drilldown:
   activeAxisLabelStyle:
-    color: '#F0F0F3'
+    color: '#000000'
   activeDataLabelStyle:
-    color: '#F0F0F3'
+    color: '#000000'
 navigation:
   buttonOptions:
     symbolStroke: '#DDDDDD'

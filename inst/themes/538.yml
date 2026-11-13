@@ -1,3 +1,4 @@
+# Historical FiveThirtyEight adaptation. Examples: https://github.com/fivethirtyeight/data
 colors: ['#FF2700', '#008FD5', '#77AB43', '#636464', '#C4C4C4']
 chart:
   backgroundColor: '#F0F0F0'
@@ -24,7 +25,7 @@ xAxis:
   tickWidth: 1
   title:
     style:
-      color: '#A0A0A3'
+      color: '#636464'
 yAxis:
   gridLineColor: '#D7D7D8'
   labels:
@@ -37,7 +38,7 @@ yAxis:
   tickWidth: 1
   title:
     style:
-      color: '#A0A0A3'
+      color: '#636464'
 tooltip:
   backgroundColor: rgba(0, 0, 0, 0.85)
   style:

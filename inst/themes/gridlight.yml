@@ -1,4 +1,6 @@
-colors: ['#7CB5EC', '#F7A35C', '#90EE7E', '#7798BF', '#AAEEEE', '#FF0066', '#EEAAEE', '#55BF3B']
+# https://github.com/highcharts/highcharts-dist/blob/v12.6.0/es-modules/Extensions/Themes/GridLight.js
+colors: ['#7CB5EC', '#F7A35C', '#90EE7E', '#7798BF', '#AAEEEE', '#FF0066',
+  '#EEAAEE', '#55BF3B', '#DF5353', '#7798BF', '#AAEEEE']
 chart:
   backgroundColor: null
   style:
@@ -13,6 +15,7 @@ tooltip:
   backgroundColor: rgba(219,219,216,0.8)
   shadow: false
 legend:
+  backgroundColor: '#F0F0EA'
   itemStyle:
     fontWeight: bold
     fontSize: 13px

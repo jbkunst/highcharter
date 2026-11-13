@@ -1,4 +1,6 @@
-colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee', '#55BF3B']
+# https://github.com/highcharts/highcharts-dist/blob/v12.6.0/es-modules/Extensions/Themes/DarkUnica.js
+colors: ['#2B908F', '#90EE7E', '#F45B5B', '#7798BF', '#AAEEEE', '#FF0066',
+  '#EEAAEE', '#55BF3B', '#DF5353', '#7798BF', '#AAEEEE']
 chart:
   backgroundColor:
     linearGradient:
@@ -51,7 +53,9 @@ tooltip:
 plotOptions:
   series:
     dataLabels:
-      color: '#B0B0B3'
+      color: '#F0F0F3'
+      style:
+        fontSize: 13px
     marker:
       lineColor: '#333'
   boxplot:
@@ -61,6 +65,10 @@ plotOptions:
   errorbar:
     color: white
 legend:
+  backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  title:
+    style:
+      color: '#C0C0C0'
   itemStyle:
     color: '#E0E0E3'
   itemHoverStyle:

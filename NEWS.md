@@ -1,5 +1,10 @@
 # highcharter (development version)
 
+* The classic Highcharts themes use the 12.6.0 palettes and legend backgrounds.
+  Dark presets have more legible axis labels. Monokai now uses four distinct
+  series colors. The Bloom preset places its value axis on the right, and
+  sparkline presets hide their legends by default.
+
 * The chalk, handdrawn and sandsignika presets embed their original backgrounds
   for offline use. The Carbon preset draws horizontal and vertical gridlines
   and uses circular point markers across series.

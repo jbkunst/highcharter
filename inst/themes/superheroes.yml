@@ -7,6 +7,9 @@ chart:
     fontFamily: Oswald
     fontWeight: normal
 xAxis:
+  labels:
+    style:
+      color: '#FFFFFF'
   gridLineColor: '#46627f'
   lineColor: '#46627f'
   tickColor: '#46627f'
@@ -14,6 +17,9 @@ xAxis:
     style:
       color: '#FFFFFF'
 yAxis:
+  labels:
+    style:
+      color: '#FFFFFF'
   gridLineColor: '#46627f'
   tickColor: '#46627f'
   title:

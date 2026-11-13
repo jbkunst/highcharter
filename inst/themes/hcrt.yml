@@ -26,7 +26,7 @@ legend:
   verticalAlign: bottom
   itemStyle:
     fontWeight: normal
-    color: '#A2A39C'
+    color: '#666666'
 xAxis:
   gridLineWidth: 1
   gridLineColor: '#F3F3F3'

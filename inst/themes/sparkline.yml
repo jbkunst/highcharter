@@ -9,6 +9,8 @@ chart:
   skipClone: true
 title:
   text: ''
+legend:
+  enabled: false
 xAxis:
   labels:
     enabled: false

@@ -92,16 +92,29 @@
     setBackground(el, x);
     if (x.conf_opts) Highcharts.setOptions(x.conf_opts);
 
+    // Highcharts reads opposite from each axis's constructor options before
+    // applying global theme defaults. Explicit chart options take precedence.
+    var options = Object.assign({}, x.hc_opts);
+    ['xAxis', 'yAxis'].forEach(function(key) {
+      var themeAxis = x.theme && x.theme[key];
+      if (!themeAxis || themeAxis.opposite === undefined) return;
+      function positionAxis(axis) {
+        return Object.assign({ opposite: themeAxis.opposite }, axis);
+      }
+      options[key] = Array.isArray(options[key]) ?
+        options[key].map(positionAxis) : positionAxis(options[key]);
+    });
+
     var chart;
     if (x.type === 'stock') {
-      chart = Highcharts.stockChart(el, x.hc_opts);
+      chart = Highcharts.stockChart(el, options);
     } else if (x.type === 'map') {
-      prepareMapSeries(x.hc_opts, x.debug);
-      chart = Highcharts.mapChart(el, x.hc_opts);
+      prepareMapSeries(options, x.debug);
+      chart = Highcharts.mapChart(el, options);
     } else if (x.type === 'gantt') {
-      chart = Highcharts.ganttChart(el, x.hc_opts);
+      chart = Highcharts.ganttChart(el, options);
     } else {
-      chart = Highcharts.chart(el, x.hc_opts);
+      chart = Highcharts.chart(el, options);
     }
 
     if (x.hc_opts.motion !== undefined) {

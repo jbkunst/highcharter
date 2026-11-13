@@ -243,7 +243,7 @@ without accidental network access.
   The [maintenance guide](readme.md#maintain-language-presets) records the
   upstream pack and the global language reads to recheck on a bundle upgrade.
 
-### 7. Themes
+### 7. Themes — done
 
 The approved collection uses one YAML file per preset, a common constructor
 and a session setter. The 28 presets include 25 historical names plus
@@ -251,6 +251,17 @@ Carbon, Cloudscape and bslib. The gallery documents the former `tufte2` style as
 customization of `tufte`. FT and Economist were refreshed. The historical constructors
 were replaced by `hc_theme(preset)`. The [themes vignette](../vignettes/themes.Rmd) documents
 the migration and compares the presets using the same data.
+
+The visual review covered all 28 presets with the bundled Highcharts 12.6.0.
+
+| Presets | Review outcome |
+| --- | --- |
+| `ft`, `economist`, `carbon`, `cloudscape`, `bslib`, `tufte` | Editorial palettes, design systems, Bootstrap inheritance and the single Tufte preset were covered in the first pass. |
+| `darkunica`, `gridlight`, `sandsignika` | Checked the versioned Highcharts settings, including the full color sequences and legend backgrounds. |
+| `538`, `bloom`, `db`, `elementary`, `ffx`, `google` | Kept the historical brand palettes. Checked contrast and actual axis placement in the rendered charts. |
+| `alone`, `flat`, `flatdark`, `ggplot2`, `hcrt`, `monokai`, `smpl`, `superheroes` | Checked text, grids and series colors against each plotting surface. |
+| `chalk`, `handdrawn` | Checked series and labels over their embedded board and paper textures. |
+| `null`, `sparkline`, `sparkline_vb` | Checked hidden axes, compact layouts and the white value-box sparkline on a colored surface. |
 
 ### 8. pkgdown and the home page
 
