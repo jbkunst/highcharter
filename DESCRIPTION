@@ -9,17 +9,8 @@ Description: A wrapper for the 'Highcharts' library including
 Authors@R: c(
     person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
     person("Nuno", "Agostinho", role = "ctb"),
-    person("Danton", "Noriega", role = "ctb"),
-    person("Charlie Joey", "Hadley", role = "ctb"),
-    person("Eduardo", "Flores", role = "ctb"),
-    person("Dean", "Kilfoyle", role = "ctb"),
-    person("Kamil", "Slowikowski", role = "ctb", comment = c(ORCID = "0000-0002-2843-6370")),
-    person("Christian", "Minich", role = "ctb"),
-    person("Jonathan", "Armond", role = "ctb"),
-    person("David", "Breuer", role = "ctb"),
     person("Mauricio", "Vargas", role = "ctb"),
-    person("Michael", "Yan", role = "ctb"),
-    person("Paul", "Campbell", role = "ctb"),
+    person("Charlie Joey", "Hadley", role = "ctb"),
     person("Marc", "Kupietz", role = "ctb")
     )
 URL: https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter

@@ -293,13 +293,11 @@ repository, including ideas and examples originally contributed through issues.
 [Contributor acknowledgements](../NEWS.md#contributor-acknowledgements) records
 each person's name, contribution and supporting project history.
 
-Joshua Kunst remains the sole author and maintainer. `Authors@R` retains 13
-contributors and the existing ORCID. The two historical entries moved to NEWS
-had verifiable accounts with no visible contributions on their public calendars
-from November 14, 2025 through November 13, 2026. The review followed renamed
-accounts through their original pull requests and retained the entry whose
-current profile could not be verified. Public calendars are a limited,
-point-in-time observation. All 15 contributors are credited in the release notes.
+Joshua Kunst is the sole author and maintainer in `Authors@R`. The four
+contributors listed there are Nuno Agostinho, Mauricio Vargas, Charlie Joey
+Hadley and Marc Kupietz. The release notes preserve the credits for all 15
+contributors in the review, including Kamil Slowikowski's ORCID and a
+personal thank you to the early highcharter community.
 
 ### 10. Final validation and migration notes
 

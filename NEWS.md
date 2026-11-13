@@ -37,8 +37,17 @@
 
 ## Contributor acknowledgements
 
-Thank you to the people who contributed features, fixes, tests and examples
-across highcharter releases. Joshua Kunst is the package author and maintainer.
+A special thank you to everyone who helped build highcharter in its early
+years, before AI coding assistants were commonplace. Dean shared his work on
+boxplots, Adline made it possible to plot a matrix as a heatmap, and Paul
+helped Shiny users update a chart without rebuilding it. Those features grew
+out of people taking the time to share an example, write a patch or work
+through a bug together.
+
+I'm grateful to each of you who did that early work and to everyone who has
+kept the package working since. Thank you for your time and generosity.
+
+Joshua Kunst
 
 | Contributor | Contribution | Project history |
 | --- | --- | --- |
@@ -48,7 +57,7 @@ across highcharter releases. Joshua Kunst is the package author and maintainer.
 | Eduardo Flores | The first tidy-data helper for adding series. | [PR #114](https://github.com/jbkunst/highcharter/pull/114) |
 | Dean Kilfoyle | The original boxplot helper and suggestions for its implementation. | [issue #81](https://github.com/jbkunst/highcharter/issues/81) |
 | Adline Dsilva | The original matrix heatmap implementation. | [implementation](https://github.com/jbkunst/highcharter/commit/a4a04dd80252a4831b6a01cd909501bc22666d8d) |
-| Kamil Slowikowski | JavaScript serialization fixes for chart export and the `JS()` re-export. | [export fix](https://github.com/jbkunst/highcharter/commit/e6fe81a9ae3ab7d12a34f35e0a19b3b51fa1f42c), [re-export](https://github.com/jbkunst/highcharter/commit/4bcf29689b81931f4c9fc9d93e33f3057e83bb6e) |
+| [Kamil Slowikowski](https://orcid.org/0000-0002-2843-6370) | JavaScript serialization fixes for chart export and the `JS()` re-export. | [export fix](https://github.com/jbkunst/highcharter/commit/e6fe81a9ae3ab7d12a34f35e0a19b3b51fa1f42c), [re-export](https://github.com/jbkunst/highcharter/commit/4bcf29689b81931f4c9fc9d93e33f3057e83bb6e) |
 | Christian Minich | Tidy evaluation and quasiquotation in aesthetic mappings. | [PR #423](https://github.com/jbkunst/highcharter/pull/423) |
 | Jonathan Armond | Preserving unmapped columns in `mutate_mapping()`. | [fix](https://github.com/jbkunst/highcharter/commit/5f54456a763d83683d0c9e2578e78f8e0b638815) |
 | David Breuer | The `quiet` option for map downloads. | [PR #450](https://github.com/jbkunst/highcharter/pull/450) |
