@@ -138,11 +138,9 @@ change_theme <- hc_theme("carbon", colorAxis = list(
 ))
 ```
 
-Carbon draws gridlines in both directions. The original Tufte presets share a
-gray palette and the Cardo font. `tufte` leaves the plotting area open and
-keeps small y-axis ticks. `tufte2` adds an x-axis baseline and overlays white
-horizontal lines on the data. Compare their column charts below to see how
-those lines divide each bar.
+Carbon draws gridlines in both directions and uses a circle wherever a series
+displays a point marker. Tufte uses a gray palette, the Cardo font and small
+y-axis ticks, leaving the plotting area open.
 
 The remaining presets use the same sales data, except for the compact
 single-series sparkline examples. The chalkboard, paper and sand textures
@@ -156,7 +154,6 @@ htmltools::tagList(lapply(other, function(name) {
   } else {
     sales_chart()
   }
-  if (name %in% c("tufte", "tufte2")) chart <- hc_chart(chart, type = "column")
   htmltools::tagList(htmltools::tags$h3(name), hc_add_theme(chart, hc_theme(name)))
 }))
 ```
@@ -165,9 +162,18 @@ htmltools::tagList(lapply(other, function(name) {
 
 Replace `hc_theme_ft()` with `hc_theme("ft")`. A previous call to
 `options(highcharter.theme = hc_theme_ft())` becomes `hc_set_theme("ft")`.
-All 26 original preset names remain available, including `db` (Dotabuff),
-`ffx` (Firefox), `elementary` (elementary OS) and `google` (Google Books
-Ngram Viewer). With `carbon` and `bslib`, the collection contains 28 presets.
+The collection contains 27 presets, including `db` (Dotabuff), `ffx`
+(Firefox), `elementary` (elementary OS) and `google` (Google Books Ngram
+Viewer). To reproduce the former `tufte2` style on a column chart, add an
+x-axis baseline and draw white gridlines over the columns.
+
+```{r}
+bars <- hc_theme("tufte",
+  xAxis = list(lineWidth = 1, lineColor = "#737373", tickWidth = 0),
+  yAxis = list(lineWidth = 1, tickWidth = 0, gridLineColor = "white", gridZIndex = 4)
+)
+sales_chart() |> hc_chart(type = "column") |> hc_add_theme(bars)
+```
 
 ```{r restore, include=FALSE}
 options(old_options)

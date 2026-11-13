@@ -4,7 +4,7 @@ test_that("the packaged presets produce themes for widgets", {
     "538", "alone", "bloom", "bslib", "carbon", "chalk", "darkunica", "db",
     "economist", "elementary", "ffx", "flat", "flatdark", "ft", "ggplot2",
     "google", "gridlight", "handdrawn", "hcrt", "monokai", "null", "sandsignika",
-    "smpl", "sparkline", "sparkline_vb", "superheroes", "tufte", "tufte2"
+    "smpl", "sparkline", "sparkline_vb", "superheroes", "tufte"
   ))
   for (name in presets) {
     theme <- hc_theme(name)
@@ -14,6 +14,7 @@ test_that("the packaged presets produce themes for widgets", {
   expect_identical(hc_theme("ft")$chart$backgroundColor, "#FFF1E5")
   expect_equal(length(unique(hc_theme("economist")$colors)), 6)
   expect_identical(hc_theme("carbon")$colors[1], "#6929C4")
+  expect_identical(hc_theme("carbon")$plotOptions$series$marker$symbol, "circle")
   expect_identical(hc_theme("superheroes")$xAxis$gridLineDashStyle, hc_theme("flat")$xAxis$gridLineDashStyle)
   expect_s3_class(hc_theme("sparkline")$tooltip$positioner, "JS_EVAL")
 })

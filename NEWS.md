@@ -1,12 +1,14 @@
 # highcharter (development version)
 
 * The chalk, handdrawn and sandsignika presets embed their original backgrounds
-  for offline use. The Carbon preset draws horizontal and vertical gridlines.
+  for offline use. The Carbon preset draws horizontal and vertical gridlines
+  and uses circular point markers across series.
 * Theme presets now use `hc_theme("ft")` and live in individual YAML files.
   `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or
   a custom theme for subsequent charts. See `vignette("themes", package = "highcharter")`.
 * This release replaces the per-preset constructors with one public constructor.
-  All 26 original preset names remain available. It refreshes `ft` and `economist` and adds
+  The collection keeps `tufte` as its single Tufte preset. The theme vignette
+  shows how to recreate the former `tufte2` bar style. This release refreshes `ft` and `economist` and adds
   `carbon` and `bslib`. The latter inherits Bootstrap colors and the base font.
 * `hc_set_language("es")` sets the language for new charts in the current R
   process. Use `hc_set_language("en")` to switch to English.
