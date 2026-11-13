@@ -25,7 +25,8 @@ highchartzero(
 \item{elementId}{Use an explicit element ID for the widget.}
 }
 \description{
-This widgets don't support options yet.
+This minimal widget uses the current \code{highcharter.lang} option unless
+\code{hc_opts$lang} is supplied explicitly.
 }
 \details{
 This function creates a Highchart chart using \pkg{htmlwidgets}. The

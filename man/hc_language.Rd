@@ -2,12 +2,12 @@
 % Please edit documentation in R/language.R
 \name{hc_language}
 \alias{hc_language}
-\alias{hc_add_language}
-\title{Language presets for Highcharts widgets}
+\alias{hc_set_language}
+\title{Set the default language for Highcharts widgets}
 \usage{
 hc_language(locale = "en", ...)
 
-hc_add_language(hc, language, ...)
+hc_set_language(locale, ...)
 }
 \arguments{
 \item{locale}{Use a language code: \code{"en"} (English), \code{"es"} (Spanish),
@@ -17,35 +17,22 @@ formatting. Other languages use English labels and their own formatting.}
 
 \item{...}{Named Highcharts \code{lang} options to override, including nested
 lists such as \code{exportData = list(categoryHeader = "Product")}.}
-
-\item{hc}{A highchart widget.}
-
-\item{language}{A locale string or a named list of Highcharts \code{lang} options,
-including an existing hand-written translation.}
 }
 \value{
-\code{hc_language()} returns a plain list suitable for the
-\code{highcharter.lang} option. \code{hc_add_language()} returns the widget with
-its language replaced. Supply chart-specific overrides in \code{...}.
+\code{hc_language()} returns a Highcharts \code{lang} list.
+\code{hc_set_language()} invisibly returns the previous option.
 }
 \description{
-Language presets for Highcharts widgets
+\code{hc_set_language()} sets the \code{highcharter.lang} option for charts created
+afterwards in the current R process. \code{hc_language()} builds a language
+list with the same arguments and leaves the current option unchanged.
 }
 \details{
-Set \code{options(highcharter.lang = ...)} at application startup for
-a shared default. Inside a Shiny session, use \code{hc_add_language()} in the
-render expression to choose a language for that viewer.
-
 The Spanish and Portuguese presets cover common chart controls, downloads,
 Stock range selection and basic accessibility labels. Highcharts supplies
 the English defaults for untranslated text and the French language pack.
 }
 \examples{
-old <- options(highcharter.lang = hc_language("es"))
+hc_set_language("es")
 highchart() |> hc_add_series(data = c(3, 1, 4))
-options(old)
-
-highchart() |>
-  hc_add_series(data = c(3, 1, 4)) |>
-  hc_add_language("pt", loading = "Aguarde...")
 }

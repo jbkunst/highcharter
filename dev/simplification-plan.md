@@ -228,8 +228,9 @@ without accidental network access.
 
 ### 6. Languages and locale options — done
 
-- `hc_language()` returns a plain list for `options(highcharter.lang = ...)`.
-  `hc_add_language()` applies a preset or a hand-written list to one widget.
+- `hc_set_language()` sets the default for new widgets in the current R process
+  and invisibly returns the previous option for restoration with `options()`.
+  `hc_language()` returns the preset as a plain list.
   Current public export count: 123 (121 at the baseline).
 - The public examples use one code per language: `en`, `es`, `pt`, `fr`.
   Regional tags share the same dictionary.

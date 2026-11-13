@@ -181,7 +181,8 @@ renderHighchartStock <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 #' Create a Highcharts chart widget
 #'
-#' This widgets don't support options yet.
+#' This minimal widget uses the current `highcharter.lang` option unless
+#' `hc_opts$lang` is supplied explicitly.
 #'
 #' This function creates a Highchart chart using \pkg{htmlwidgets}. The
 #' widget can be rendered on HTML pages generated from R Markdown, Shiny, or
@@ -200,6 +201,10 @@ highchartzero <- function(hc_opts = list(),
                           width = NULL,
                           height = NULL,
                           elementId = NULL) {
+
+  if (is.null(hc_opts$lang)) {
+    hc_opts$lang <- getOption("highcharter.lang")
+  }
 
   x <- list(
     hc_opts = hc_opts

@@ -39,7 +39,9 @@ are also maintained in the repository.
 
 ## Maintain language presets
 
-The hand-written helpers in `R/language.R` use ordinary Highcharts `lang` lists.
+`hc_set_language()` delegates to `options(highcharter.lang = hc_language(...))`.
+Widgets capture the current setting at construction, so changing or restoring
+it before rendering preserves the language of each existing widget.
 The generator already excludes `lang`. Spanish and Portuguese strings live in
 `inst/lang/`. The French pack is the upstream
 [`fr-FR.json` for 12.6.0](https://github.com/highcharts/highcharts/blob/v12.6.0/i18n/highcharts/fr-FR.json).

@@ -9,8 +9,12 @@ stock <- function(id) {
     hc_yAxis(tickInterval = 1000) |>
     hc_add_series(data = list(c(dates[1], 1000), c(dates[2], 5000)))
 }
-options(highcharter.lang = hc_language("es-CL"))
-charts <- tagList(stock("es"), stock("pt") |> hc_add_language("pt-BR"))
+old <- hc_set_language("es")
+spanish <- stock("es")
+hc_set_language("pt")
+portuguese <- stock("pt")
+options(old)
+charts <- tagList(spanish, portuguese)
 
 # Run after htmlwidgets has rendered both charts. Exercise the Spanish chart
 # again after the Portuguese one has initialized its own Stock controls.

@@ -1,7 +1,8 @@
 # highcharter (development version)
 
-* `hc_language("es")` supplies a language list for `options(highcharter.lang = ...)`.
-  `hc_add_language()` applies a preset or a hand-written list to one widget.
+* `hc_set_language("es")` sets the language for new charts in the current R
+  process. Use `hc_set_language("en")` to switch to English.
+  `hc_language()` returns the corresponding options list.
   Spanish, Portuguese and French include translated controls. Regional tags select
   the browser's date and number formats. The default English short weekdays now
   start on Sunday, matching Highcharts' weekday index.

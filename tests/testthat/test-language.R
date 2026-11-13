@@ -30,18 +30,30 @@ test_that("the default abbreviated weekdays have the Highcharts Sunday-first ord
                    c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
 })
 
-test_that("app and per-widget languages remain independent", {
-  old <- options(highcharter.lang = hc_language("es-CL", decimalPoint = ","))
+test_that("the setter snapshots the language for new widgets and restores the option", {
+  manual <- list(loading = "Initial text")
+  old <- options(highcharter.lang = manual)
   on.exit(options(old), add = TRUE)
-  manual <- list(locale = "fr-CA", loading = "Patientez")
-  for (widget in list(highchart(), highchartstock(), highchartzero())) {
-    localized <- hc_add_language(widget, manual, noData = "Pas de données")
-    expect_identical(localized$x$hc_opts$lang, c(manual, list(noData = "Pas de données")))
-    expect_null(localized$x$conf_opts$lang)
-    english <- hc_add_language(localized, "en")
-    expect_identical(english$x$hc_opts$lang, list(locale = "en"))
-  }
-  expect_identical(highchart()$x$conf_opts$lang, getOption("highcharter.lang"))
-  expect_identical(getOption("highcharter.lang")$locale, "es-CL")
-  expect_error(hc_add_language(highchart(), list("unnamed")), "named list")
+
+  result <- withVisible(hc_set_language("es", loading = "Un momento"))
+  expect_false(result$visible)
+  expect_identical(result$value, list(highcharter.lang = manual))
+  spanish <- hc_language("es", loading = "Un momento")
+  expect_identical(getOption("highcharter.lang"), spanish)
+
+  chart <- highchart()
+  stock <- highchartstock()
+  zero <- highchartzero()
+  custom <- highchartzero(hc_opts = list(lang = manual))
+  hc_set_language("pt")
+  expect_identical(chart$x$conf_opts$lang, spanish)
+  expect_identical(stock$x$conf_opts$lang, spanish)
+  expect_identical(zero$x$hc_opts$lang, spanish)
+  expect_identical(custom$x$hc_opts$lang, manual)
+  expect_identical(highchart()$x$conf_opts$lang, hc_language("pt"))
+
+  expect_error(hc_set_language("es_CL"), "language code")
+  expect_identical(getOption("highcharter.lang"), hc_language("pt"))
+  options(result$value)
+  expect_identical(getOption("highcharter.lang"), manual)
 })
