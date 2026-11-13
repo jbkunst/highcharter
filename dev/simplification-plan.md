@@ -286,24 +286,20 @@ Definition of done: one documented pkgdown command, no duplicated source for the
 index, a responsive home page and browser checks for animation, keyboard and
 reduced-motion behavior.
 
-### 9. Contributors and project attribution
+### 9. Contributors and project attribution — done
 
-Do not remove a historical contributor from `Authors@R` merely because their
-GitHub account is inactive. `ctb` records attribution for shipped work; it is
-not a list of current maintainers.
+The November 2026 review matched all 15 contributor entries to work in the
+repository, including ideas and examples originally contributed through issues.
+[Contributor acknowledgements](../NEWS.md#contributor-acknowledgements) records
+each person's name, contribution and supporting project history.
 
-- Verify that every `Authors@R` entry corresponds to an identifiable
-  contribution and merge duplicate identities.
-- Keep current maintainer roles (`cre`, active maintainers) distinct from `ctb`.
-- Move longer acknowledgements and inactive-community thanks to a CONTRIBUTORS
-  or acknowledgements section if that makes DESCRIPTION easier to maintain.
-- Check current GitHub status only when executing this stage; do not infer it
-  from commit age alone.
-- Preserve attribution in git history and release notes even if an invalid or
-  duplicate DESCRIPTION entry is corrected.
-
-Definition of done: documented criteria, a reviewed mapping from names to
-contributions and no loss of legitimate attribution.
+Joshua Kunst remains the sole author and maintainer. `Authors@R` retains 13
+contributors and the existing ORCID. The two historical entries moved to NEWS
+had verifiable accounts with no visible contributions on their public calendars
+from November 14, 2025 through November 13, 2026. The review followed renamed
+accounts through their original pull requests and retained the entry whose
+current profile could not be verified. Public calendars are a limited,
+point-in-time observation. All 15 contributors are credited in the release notes.
 
 ### 10. Final validation and migration notes
 

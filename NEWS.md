@@ -35,6 +35,29 @@
 * Widgets with reflow enabled now follow changes in their container dimensions.
 * The chart gallery includes a weighted arc diagram example (#829).
 
+## Contributor acknowledgements
+
+Thank you to the people who contributed features, fixes, tests and examples
+across highcharter releases. Joshua Kunst is the package author and maintainer.
+
+| Contributor | Contribution | Project history |
+| --- | --- | --- |
+| Nuno Agostinho | Survival curves, density plots, scatter series and map data download fixes. | [PR #109](https://github.com/jbkunst/highcharter/pull/109), [scatter example](https://github.com/jbkunst/highcharter/commit/574e9b84218c7f93a4243bea8c42f97751e9f4ba), [PR #844](https://github.com/jbkunst/highcharter/pull/844) |
+| Danton Noriega | Character-based aesthetic mappings for programmatic use. | [PR #249](https://github.com/jbkunst/highcharter/pull/249) |
+| Charlie Joey Hadley | Support for multiple event types in `hc_add_event_point()`. | [implementation](https://github.com/jbkunst/highcharter/commit/3cfc22b49193185444ce95684e5b0545d75a0a57) |
+| Eduardo Flores | The first tidy-data helper for adding series. | [PR #114](https://github.com/jbkunst/highcharter/pull/114) |
+| Dean Kilfoyle | The original boxplot helper and suggestions for its implementation. | [issue #81](https://github.com/jbkunst/highcharter/issues/81) |
+| Adline Dsilva | The original matrix heatmap implementation. | [implementation](https://github.com/jbkunst/highcharter/commit/a4a04dd80252a4831b6a01cd909501bc22666d8d) |
+| Kamil Slowikowski | JavaScript serialization fixes for chart export and the `JS()` re-export. | [export fix](https://github.com/jbkunst/highcharter/commit/e6fe81a9ae3ab7d12a34f35e0a19b3b51fa1f42c), [re-export](https://github.com/jbkunst/highcharter/commit/4bcf29689b81931f4c9fc9d93e33f3057e83bb6e) |
+| Christian Minich | Tidy evaluation and quasiquotation in aesthetic mappings. | [PR #423](https://github.com/jbkunst/highcharter/pull/423) |
+| Jonathan Armond | Preserving unmapped columns in `mutate_mapping()`. | [fix](https://github.com/jbkunst/highcharter/commit/5f54456a763d83683d0c9e2578e78f8e0b638815) |
+| David Breuer | The `quiet` option for map downloads. | [PR #450](https://github.com/jbkunst/highcharter/pull/450) |
+| Mauricio Vargas | Package testing, coverage and GitHub Actions. | [coverage](https://github.com/jbkunst/highcharter/commit/9f562f08d6f4a7f6542bf71e4c1d7576a9a32833), [CI](https://github.com/jbkunst/highcharter/commit/3982b2d6f73adcef5bf61d54d658e18a70288b46) |
+| Michael Yan | The example that motivated the treemap and sunburst data helper. | [attribution](https://github.com/jbkunst/highcharter/commit/93986f83602d40583345979ba02c91b89a795a46) |
+| Bart Oortwijn | The optional `rjson` serializer, `hc_add_yAxis()` and support on GitHub issues. | [serialization](https://github.com/jbkunst/highcharter/commit/1b9d2946c6e00592809652378ce21fc5f9458ae9), [axis helper](https://github.com/jbkunst/highcharter/commit/b7438eb3854a1121e55b3f92402d98b408bcd300) |
+| Paul Campbell | The Shiny proxies for updating series data and redrawing charts. | [proxy methods](https://github.com/jbkunst/highcharter/commit/f0838eefc4d107f2f9133f61b64b6a65ddb233e6) |
+| Marc Kupietz | CRAN check fixes, including an S3 method naming correction. | [PR #843](https://github.com/jbkunst/highcharter/pull/843) |
+
 # highcharter 0.12.6.1
 
 ## Changes
