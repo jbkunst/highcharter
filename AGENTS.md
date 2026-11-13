@@ -9,6 +9,6 @@ Follow the [mAI principles](https://github.com/jbkunst/mai-principles).
 
 ## Highcharts updates
 
-Use the [maintainer command](dev/readme.md#update-highcharts) from the repository root.
+Follow the [bundle update and package versioning instructions](dev/readme.md#update-highcharts) when updating Highcharts or preparing a highcharter release.
 Edit the module selection in `dev/highcharts-bundle/entry.js` and regenerate the compiled JavaScript.
 The [bundle guide](dev/highcharts-bundle/README.md) covers the build and the mixed-widget grid.

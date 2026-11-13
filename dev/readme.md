@@ -17,6 +17,15 @@ the affected examples in a fresh R session with those packages absent.
 
 ## Update Highcharts
 
+For highcharter releases, use `0.MAJOR.MINOR.REVISION` in `DESCRIPTION`.
+`MAJOR.MINOR` follows the bundled Highcharts release line. Start `REVISION` at
+zero for each new line and increment it for each highcharter release on that
+line, including releases that update only the Highcharts patch. For example,
+highcharter `0.12.6.1` bundles Highcharts `12.6.0`. The next highcharter
+release on the `12.6` line would be `0.12.6.2`, and the first on `12.7`
+would be `0.12.7.0`. The exact Highcharts version is pinned in
+[`package.json`](highcharts-bundle/package.json).
+
 Run this from the repository root with Node.js and npm installed:
 
 ```sh
