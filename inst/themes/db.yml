@@ -1,0 +1,54 @@
+# Historical highcharter adaptation of Dotabuff: https://www.dotabuff.com/truesight
+colors: ['#A9CF54', '#C23C2A', '#FFFFFF', '#979797', '#FBB829']
+chart:
+  backgroundColor: '#242F39'
+  style:
+    color: white
+legend:
+  enabled: true
+  align: right
+  verticalAlign: bottom
+  itemStyle:
+    color: '#C0C0C0'
+  itemHoverStyle:
+    color: '#C0C0C0'
+  itemHiddenStyle:
+    color: '#444444'
+title:
+  text: null
+  style:
+    color: '#FFFFFF'
+tooltip:
+  backgroundColor: '#1C242D'
+  borderColor: '#1C242D'
+  borderWidth: 1
+  borderRadius: 0
+  style:
+    color: '#FFFFFF'
+subtitle:
+  style:
+    color: '#666666'
+xAxis:
+  gridLineColor: '#2E3740'
+  gridLineWidth: 1
+  labels:
+    style:
+      color: '#525252'
+  lineColor: '#2E3740'
+  tickColor: '#2E3740'
+  title:
+    style:
+      color: '#FFFFFF'
+    text: null
+yAxis:
+  gridLineColor: '#2E3740'
+  gridLineWidth: 1
+  labels:
+    style:
+      color: '#525252'
+    lineColor: '#2E3740'
+    tickColor: '#2E3740'
+    title:
+      style:
+        color: '#FFFFFF'
+      text: null

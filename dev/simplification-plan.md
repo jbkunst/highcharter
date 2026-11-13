@@ -246,9 +246,9 @@ without accidental network access.
 ### 7. Themes
 
 The approved collection uses one YAML file per preset, a common constructor
-and a session setter. The 24 presets include the refreshed FT and Economist
-styles plus Carbon and bslib. The historical constructors and four retired
-styles were removed. The [themes vignette](../vignettes/themes.Rmd) documents
+and a session setter. The 28 presets include all 26 historical names plus
+Carbon and bslib. FT and Economist were refreshed. The historical constructors
+were replaced by `hc_theme(preset)`. The [themes vignette](../vignettes/themes.Rmd) documents
 the migration and compares the presets using the same data.
 
 ### 8. pkgdown and the home page

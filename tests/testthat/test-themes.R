@@ -1,7 +1,11 @@
 test_that("the packaged presets produce themes for widgets", {
   presets <- hc_themes()
-  expect_length(presets, 24)
-  expect_false(any(c("db", "ffx", "google", "elementary") %in% presets))
+  expect_setequal(presets, c(
+    "538", "alone", "bloom", "bslib", "carbon", "chalk", "darkunica", "db",
+    "economist", "elementary", "ffx", "flat", "flatdark", "ft", "ggplot2",
+    "google", "gridlight", "handdrawn", "hcrt", "monokai", "null", "sandsignika",
+    "smpl", "sparkline", "sparkline_vb", "superheroes", "tufte", "tufte2"
+  ))
   for (name in presets) {
     theme <- hc_theme(name)
     expect_s3_class(theme, "hc_theme")

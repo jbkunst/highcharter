@@ -29,5 +29,5 @@ hcmap("custom/asia", data = fakedata, value = "fakevalue", joinBy = "hc-a2") %>%
   hc_colorAxis(stops = color_stops()) %>%
   hc_legend(valueDecimals = 0, valueSuffix = "%") %>%
   hc_mapNavigation(enabled = TRUE) %>% 
-  hc_add_theme(hc_theme("flatdark"))
+  hc_add_theme(hc_theme("db"))
 

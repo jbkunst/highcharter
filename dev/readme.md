@@ -45,6 +45,10 @@ keep a source URL in a comment for brand adaptations. A variant can use
 `extends: flat` to inherit options from a packaged preset. The sparkline's
 tooltip uses `!js` for its Highcharts callback. Only packaged files are read.
 
+When updating a brand preset, cite the upstream chart specification for the
+field being changed (for example, the ordered FT line palette). Keep historical
+values where the source only provides a general brand palette.
+
 Run `testthat::test_local(filter = "themes")` and render `vignettes/themes.Rmd`
 to compare charts. For the Bootstrap integration, use the Shiny example
 in the vignette and toggle the color mode.

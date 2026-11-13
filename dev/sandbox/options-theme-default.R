@@ -6,7 +6,7 @@ hc$x$hc_opts
 hc$x$theme
 
 
-hc_set_theme("flatdark")
+hc_set_theme("db")
 
 highcharts_demo()
 
@@ -24,7 +24,7 @@ hc_set_theme("chalk")
 
 hc2 <- highcharts_demo()
 
-hc_set_theme("flatdark")
+hc_set_theme("db")
 
 hc3 <- highchart() %>% 
   hc_add_series(data = rexp(100))

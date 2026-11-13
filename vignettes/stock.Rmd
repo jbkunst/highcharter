@@ -56,7 +56,7 @@ y <- getSymbols("AMZN", auto.assign = FALSE)
 
 hchart(y, type = "ohlc") |> 
   hc_title(text = "This is a Open-high-low-close chart with a custom theme") |> 
-  hc_add_theme(hc_theme("flatdark"))
+  hc_add_theme(hc_theme("db"))
 ```
 
 ## Candlestick and OHLC charts

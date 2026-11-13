@@ -157,9 +157,9 @@ htmltools::tagList(lapply(other, function(name) {
 
 Replace `hc_theme_ft()` with `hc_theme("ft")`. A previous call to
 `options(highcharter.theme = hc_theme_ft())` becomes `hc_set_theme("ft")`.
-The collection retires `db`, `ffx`, `elementary` and `google`. For a dark
-chart, try `flatdark`. For a brand-specific palette, pass `colors` to
-`hc_theme()`.
+All 26 original preset names remain available, including `db` (Dotabuff),
+`ffx` (Firefox), `elementary` (elementary OS) and `google` (Google Books
+Ngram Viewer). With `carbon` and `bslib`, the collection contains 28 presets.
 
 ```{r restore, include=FALSE}
 options(old_options)
