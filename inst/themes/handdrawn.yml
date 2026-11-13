@@ -1,7 +1,7 @@
 # https://www.amcharts.com/demos/
 colors: ['#171314', '#3C3938', '#62605D', '#888782']
 chart:
-  divBackgroundImage: https://www.amcharts.com/inspiration/hand-drawn/bg.jpg
+  divBackgroundImage: !image handdrawn.jpg
   backgroundColor: transparent
   style:
     fontFamily: Berkshire Swash

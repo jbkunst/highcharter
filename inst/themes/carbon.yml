@@ -1,5 +1,6 @@
 # IBM Carbon light categorical sequence and blue sequential scale endpoints.
 # https://carbondesignsystem.com/data-visualization/color-palettes/
+# Default x/y grid: https://github.com/carbon-design-system/carbon-charts/blob/main/packages/core/src/configuration.ts
 colors: ['#6929C4', '#1192E8', '#005D5D', '#9F1853', '#FA4D56', '#570408', '#198038', '#002D9C', '#EE538B',
   '#B28600', '#009D9A', '#012749', '#8A3800', '#A56EFF']
 chart:
@@ -16,12 +17,15 @@ subtitle:
   style:
     color: '#161616'
 xAxis:
+  gridLineWidth: 1
+  gridLineColor: '#DCDCDC'
   lineColor: '#DCDCDC'
   tickLength: 0
   labels:
     style:
       color: '#161616'
 yAxis:
+  gridLineWidth: 1
   gridLineColor: '#DCDCDC'
   labels:
     style:

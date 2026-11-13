@@ -1,5 +1,7 @@
 # highcharter (development version)
 
+* The chalk, handdrawn and sandsignika presets embed their original backgrounds
+  for offline use. The Carbon preset draws horizontal and vertical gridlines.
 * Theme presets now use `hc_theme("ft")` and live in individual YAML files.
   `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or
   a custom theme for subsequent charts. See `vignette("themes", package = "highcharter")`.

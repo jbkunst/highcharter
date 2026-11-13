@@ -1,6 +1,6 @@
 colors: ['#FFFFFF', '#D8D7D6', '#B2B0AD', '#8C8984']
 chart:
-  divBackgroundImage: https://www.amcharts.com/inspiration/chalk/bg.jpg
+  divBackgroundImage: !image chalk.jpg
   backgroundColor: transparent
   style:
     fontFamily: Shadows Into Light

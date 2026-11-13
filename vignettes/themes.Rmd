@@ -138,8 +138,15 @@ change_theme <- hc_theme("carbon", colorAxis = list(
 ))
 ```
 
-Compare the remaining presets on the same data. The sparkline variants use
-a shorter chart and a single series.
+Carbon draws gridlines in both directions. The original Tufte presets share a
+gray palette and the Cardo font. `tufte` leaves the plotting area open and
+keeps small y-axis ticks. `tufte2` adds an x-axis baseline and overlays white
+horizontal lines on the data. Compare their column charts below to see how
+those lines divide each bar.
+
+The remaining presets use the same sales data, except for the compact
+single-series sparkline examples. The chalkboard, paper and sand textures
+are embedded in the widgets and work offline.
 
 ```{r gallery, echo=FALSE}
 other <- setdiff(hc_themes(), c("ft", "economist"))
@@ -149,6 +156,7 @@ htmltools::tagList(lapply(other, function(name) {
   } else {
     sales_chart()
   }
+  if (name %in% c("tufte", "tufte2")) chart <- hc_chart(chart, type = "column")
   htmltools::tagList(htmltools::tags$h3(name), hc_add_theme(chart, hc_theme(name)))
 }))
 ```

@@ -50,11 +50,20 @@ hc_themes <- function() {
     stop("Circular theme inheritance: ", paste(c(parents, name), collapse = " -> "), call. = FALSE)
   }
   path <- system.file("themes", paste0(name, ".yml"), package = "highcharter", mustWork = TRUE)
-  theme <- yaml::read_yaml(path, handlers = list(js = htmlwidgets::JS), eval.expr = FALSE)
+  theme <- yaml::read_yaml(path, handlers = list(js = htmlwidgets::JS, image = .theme_image),
+                           eval.expr = FALSE)
   if (is.null(theme$extends)) return(theme)
   base <- .read_theme_preset(theme$extends, c(parents, name))
   theme$extends <- NULL
   .merge_theme_options(base, theme)
+}
+
+.theme_image <- function(filename) {
+  path <- system.file("themes", "backgrounds", filename, package = "highcharter", mustWork = TRUE)
+  mime <- switch(tools::file_ext(filename), jpg = "image/jpeg", png = "image/png",
+                 stop("Unknown theme image format: ", filename, call. = FALSE))
+  bytes <- readBin(path, "raw", file.size(path))
+  paste0("data:", mime, ";base64,", gsub("\n", "", jsonlite::base64_enc(bytes), fixed = TRUE))
 }
 
 .merge_theme_options <- function(base, overrides) {

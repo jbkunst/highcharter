@@ -1,7 +1,7 @@
 colors: ['#F45B5B', '#8085E9', '#8D4654', '#7798BF', '#AAEEEE', '#FF0066', '#EEAAEE', '#55BF3B', '#DF5353']
 chart:
   backgroundColor: null
-  divBackgroundImage: https://www.highcharts.com/samples/graphics/sand.png
+  divBackgroundImage: !image sand.png
   style:
     fontFamily: Signika, serif
 title:

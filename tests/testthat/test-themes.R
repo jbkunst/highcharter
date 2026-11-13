@@ -18,6 +18,20 @@ test_that("the packaged presets produce themes for widgets", {
   expect_s3_class(hc_theme("sparkline")$tooltip$positioner, "JS_EVAL")
 })
 
+test_that("textured presets embed the original files in the widget", {
+  files <- c(chalk = "chalk.jpg", handdrawn = "handdrawn.jpg", sandsignika = "sand.png")
+  for (name in names(files)) {
+    image <- highchart(theme = hc_theme(name))$x$theme$chart$divBackgroundImage
+    expect_match(image, "^data:image/(jpeg|png);base64,")
+    expect_false(grepl("\n", image, fixed = TRUE))
+    file <- system.file("themes", "backgrounds", files[[name]], package = "highcharter")
+    expect_identical(jsonlite::base64_dec(sub("^[^,]*,", "", image)), readBin(file, "raw", file.size(file)))
+  }
+  carbon <- hc_theme("carbon")
+  expect_equal(carbon$xAxis$gridLineWidth, 1)
+  expect_equal(carbon$yAxis$gridLineWidth, 1)
+})
+
 test_that("themes merge nested options, preserving null fields and replacing arrays", {
   gradient <- list(stops = list(list(0, "white"), list(1, "blue")))
   theme <- hc_theme("darkunica", chart = list(backgroundColor = gradient))

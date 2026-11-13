@@ -43,7 +43,13 @@ Each file in `inst/themes/` defines one preset. Its filename is the name
 accepted by `hc_theme()`. Use Highcharts option names, quote hex colors and
 keep a source URL in a comment for brand adaptations. A variant can use
 `extends: flat` to inherit options from a packaged preset. The sparkline's
-tooltip uses `!js` for its Highcharts callback. Only packaged files are read.
+tooltip uses `!js` for its Highcharts callback. For a bundled texture,
+`divBackgroundImage: !image filename.jpg` embeds the file from
+`inst/themes/backgrounds/` in the widget. The chalk and paper images come
+from the original amCharts [chalk](https://web.archive.org/web/20140523101521id_/http://www.amcharts.com/inspiration/chalk/bg.jpg)
+and [hand-drawn](https://web.archive.org/web/20140523101529id_/http://www.amcharts.com/inspiration/hand-drawn/bg.jpg)
+samples. The [sand tile](https://github.com/highcharts/highcharts/blob/v12.6.0/samples/graphics/sand.png)
+comes from the Highcharts samples. Only packaged files are read.
 
 When updating a brand preset, cite the upstream chart specification for the
 field being changed (for example, the ordered FT line palette). Keep historical
