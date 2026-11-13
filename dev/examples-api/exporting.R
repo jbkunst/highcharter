@@ -1,7 +1,7 @@
-highchart() |> 
-  hc_xAxis(categories = month.abb) |> 
-  hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
+# Open the chart menu to download the image or the underlying temperatures.
+highcharts_demo() |>
   hc_exporting(
-    enabled = TRUE, # always enabled
-    filename = "custom-file-name"
-    )
+    enabled = TRUE,
+    filename = "monthly-city-temperatures",
+    buttons = list(contextButton = list(menuItems = c("downloadPNG", "downloadCSV")))
+  )

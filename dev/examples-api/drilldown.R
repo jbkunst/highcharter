@@ -1,63 +1,21 @@
-library(highcharter)
-library(dplyr)
-library(purrr)
-
-df <- tibble(
-  name = c("Animals", "Fruits"),
-  y = c(5, 2),
-  drilldown = tolower(name)
+items <- data.frame(
+  category = c(rep("Animals", 5), rep("Fruits", 2)),
+  name = c("Cats", "Dogs", "Cows", "Sheep", "Pigs", "Apples", "Oranges"),
+  y = c(4, 3, 1, 2, 1, 4, 2)
 )
+totals <- aggregate(y ~ category, items, sum)
+detail <- lapply(totals$category, function(category) {
+  rows <- items[items$category == category, c("name", "y")]
+  list(id = category, name = category, data = list_parse(rows))
+})
 
-df
-
-hc <- highchart() |>
-  hc_title(text = "Basic drilldown") |>
+# Click a total to see the items that make it up. The breadcrumb takes you back.
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_title(text = "Item counts by category") |>
   hc_xAxis(type = "category") |>
+  hc_yAxis(title = list(text = "Count")) |>
   hc_legend(enabled = FALSE) |>
-  hc_plotOptions(
-    series = list(
-      borderWidth = 0,
-      dataLabels = list(enabled = TRUE)
-    )
-  ) |>
-  hc_add_series(
-    data = df,
-    type = "column",
-    hcaes(name = name, y = y),
-    name = "Things",
-    colorByPoint = TRUE
-  )
-
-dfan <- data.frame(
-  name = c("Cats", "Dogs", "Cows", "Sheep", "Pigs"),
-  value = c(4, 3, 1, 2, 1)
-)
-
-dffru <- data.frame(
-  name = c("Apple", "Oranges"),
-  value = c(4, 2)
-)
-
-
-dsan <- list_parse2(dfan)
-
-dsfru <- list_parse2(dffru)
-
-hc <- hc |>
-  hc_drilldown(
-    allowPointDrilldown = TRUE,
-    series = list(
-      list(
-        id = "animals",
-        data = dsan
-      ),
-      list(
-        id = "fruits",
-        data = dsfru
-      )
-    )
-  )
-
-hc
-
-
+  hc_add_series(totals, "column", hcaes(name = category, y = y, drilldown = category),
+                name = "Items", colorByPoint = TRUE) |>
+  hc_drilldown(series = detail)

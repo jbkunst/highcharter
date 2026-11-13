@@ -2,14 +2,13 @@
 % Please edit documentation in R/helpers.R
 \name{highcharts_demo}
 \alias{highcharts_demo}
-\title{Chart a demo for testing themes}
+\title{Monthly temperatures in Tokyo, London and Berlin}
 \usage{
 highcharts_demo()
 }
 \description{
-Chart a demo for testing themes
+Use this line chart of \link{citytemp} to try themes and chart options.
 }
 \examples{
-
 highcharts_demo()
 }
