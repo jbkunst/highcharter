@@ -6,7 +6,7 @@ library(viridisLite)
 color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
 
 hc_theme_highcharts_small <- 
-  hc_theme_hcrt(
+  hc_theme("hcrt",
     chart = list(backgroundColor = "transparent"),
     plotOptions = list(
       series = list(showInLegend = FALSE, marker = list(radius = 2)),
@@ -27,7 +27,7 @@ hc_theme_highcharts_small <-
     tooltip = list(valueDecimals = 2)
   )
 
-options(highcharter.theme = hc_theme_highcharts_small)
+hc_set_theme(hc_theme_highcharts_small)
 
 
 # example 1: scatter ------------------------------------------------------
@@ -148,7 +148,7 @@ colssotps <- list_parse2(
 )
 
 p7 <- hchart(m) %>% 
-  hc_add_theme(hc_theme_null()) %>% 
+  hc_add_theme(hc_theme("null")) %>%
   hc_legend(enabled = FALSE) %>% 
   hc_colorAxis(stops = colssotps)
 

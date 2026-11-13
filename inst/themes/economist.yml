@@ -1,0 +1,31 @@
+# Adaptation of the existing palette, with dark and light blue first.
+# https://education.economist.com/blog/interviews/tips-for-visualising-data-like-the-economist
+colors: ['#014D64', '#7AD2F6', '#00887D', '#7C260B', '#EE8F71', '#676767']
+chart:
+  backgroundColor: '#D5E4EB'
+  style:
+    fontFamily: Arial, sans-serif
+title:
+  align: left
+  style:
+    color: '#242424'
+    fontWeight: bold
+subtitle:
+  align: left
+  style:
+    color: '#242424'
+xAxis:
+  lineColor: '#FFFFFF'
+  tickLength: 0
+  labels:
+    style:
+      color: '#242424'
+yAxis:
+  gridLineColor: '#FFFFFF'
+  labels:
+    style:
+      color: '#242424'
+legend:
+  align: left
+  itemStyle:
+    color: '#242424'

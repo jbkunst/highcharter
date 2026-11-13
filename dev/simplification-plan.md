@@ -243,25 +243,13 @@ without accidental network access.
   The [maintenance guide](readme.md#maintain-language-presets) records the
   upstream pack and the global language reads to recheck on a bundle upgrade.
 
-### 7. Themes — proposal required before implementation
+### 7. Themes
 
-There are currently 26 theme presets. Do not add more until they are
-reviewed as a set.
-
-- Render the same representative charts with every theme.
-- Check contrast, accessibility, font/network requirements and compatibility
-  with current Highcharts.
-- Identify duplicate, obsolete and brand-specific themes.
-- Define a small canonical collection: default, light, dark, minimal,
-  presentation and sparkline are possible roles, not final names.
-- Evaluate a registry/getter so theme discovery does not require dozens of
-  exports. Keep old wrappers through a deprecation cycle if the public surface
-  changes.
-- Add a new theme only when it is visually distinct, accessible and maintained.
-
-Definition of done: an approved proposal with screenshots, a keep/deprecate
-table and a migration path. Breaking changes require an explicit maintainer
-decision and release note.
+The approved collection uses one YAML file per preset, a common constructor
+and a session setter. The 24 presets include the refreshed FT and Economist
+styles plus Carbon and bslib. The historical constructors and four retired
+styles were removed. The [themes vignette](../vignettes/themes.Rmd) documents
+the migration and compares the presets using the same data.
 
 ### 8. pkgdown and the home page
 

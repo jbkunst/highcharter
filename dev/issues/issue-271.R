@@ -2,7 +2,7 @@ rm(list = ls())
 library(highcharter)
 library(tidyverse)
 library(broom)
-options(highcharter.verbose = TRUE, highcharter.theme = hc_theme_smpl())
+options(highcharter.verbose = TRUE, highcharter.theme = hc_theme("smpl"))
 
 
 hchart(cars, "point", hcaes(speed, dist), regression = TRUE) %>% 

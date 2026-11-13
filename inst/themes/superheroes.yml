@@ -1,0 +1,37 @@
+# https://public.tableau.com/app/profile/ryansmith/viz/HeroesofNewYork/SuperheroesinNewYork
+extends: flat
+chart:
+  backgroundColor: '#0B486B'
+  style:
+    color: white
+    fontFamily: Oswald
+    fontWeight: normal
+xAxis:
+  gridLineColor: '#46627f'
+  lineColor: '#46627f'
+  tickColor: '#46627f'
+  title:
+    style:
+      color: '#FFFFFF'
+yAxis:
+  gridLineColor: '#46627f'
+  tickColor: '#46627f'
+  title:
+    style:
+      color: '#FFFFFF'
+title:
+  style:
+    fontSize: 2em
+    fontFamily: Bangers
+    color: '#FFFFFF'
+subtitle:
+  style:
+    color: '#FFFFFF'
+legend:
+  itemStyle:
+    color: white
+    fontWeight: normal
+  itemHoverStyle:
+    color: '#C0C0C0'
+  itemHiddenStyle:
+    color: '#444444'

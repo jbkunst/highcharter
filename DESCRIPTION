@@ -51,7 +51,9 @@ Imports:
     rlang (>= 0.1.1),
     rjson,
     methods
+VignetteBuilder: knitr
 Suggests:
+    bslib,
     knitr,
     rmarkdown,
     survival,

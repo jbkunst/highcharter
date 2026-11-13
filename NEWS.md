@@ -1,5 +1,11 @@
 # highcharter (development version)
 
+* Theme presets now use `hc_theme("ft")` and live in individual YAML files.
+  `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or
+  a custom theme for subsequent charts. See `vignette("themes", package = "highcharter")`.
+* This release removes the per-preset constructors and retires `db`, `ffx`,
+  `elementary` and `google`. It refreshes `ft` and `economist` and adds
+  `carbon` and `bslib`. The latter inherits Bootstrap colors and the base font.
 * `hc_set_language("es")` sets the language for new charts in the current R
   process. Use `hc_set_language("en")` to switch to English.
   `hc_language()` returns the corresponding options list.

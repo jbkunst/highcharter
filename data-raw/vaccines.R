@@ -42,7 +42,7 @@ plotline <- list(
   )
 )
 
-thm <- hc_theme_smpl(
+thm <- hc_theme("smpl",
   yAxis = list(
     offset = -20,
     tickLength = 0,

@@ -1,7 +1,7 @@
 library(highcharter)
 library(tidyverse)
 library(gapminder)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 gp <- gapminder %>% 
   arrange(desc(year)) %>% 

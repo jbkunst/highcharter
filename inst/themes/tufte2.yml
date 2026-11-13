@@ -1,0 +1,10 @@
+extends: tufte
+xAxis:
+  lineWidth: 1
+  lineColor: '#737373'
+  tickWidth: 0
+yAxis:
+  lineWidth: 1
+  tickWidth: 0
+  gridLineColor: white
+  gridZIndex: 4

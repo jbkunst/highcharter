@@ -108,7 +108,7 @@ fig <- (lapply(split(ed, ed$year), function(ed) {
         textDecoration = 'none'
       )
     ) %>%
-    hc_add_theme(hc_theme_db())
+    hc_add_theme(hc_theme("flatdark"))
 }))
 
 hw_grid(fig, rowheight = 500, ncol = 1) %>% browsable()

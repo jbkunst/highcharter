@@ -1,7 +1,7 @@
 #' http://stackoverflow.com/questions/41533909/how-to-make-synchronized-charts-for-highcharts-in-r
 library(highcharter)
 library(dplyr)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 
 d <- data_frame(week = rep(1:5, 2),

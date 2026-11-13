@@ -1,166 +1,166 @@
 ---
-title: Themes
-author: Joshua Kunst
-date: "`r Sys.Date()`"
+title: "Chart themes"
 output: rmarkdown::html_vignette
-description: >
-  Highcharts is very flexible for create or themes.
-  In Highcarter there are some predefined themes and some 
-  functions to create your own or merge themes.
-editor_options: 
-  chunk_output_type: console
+description: >-
+  Use a preset, build a theme in R, or inherit the typography and colors of a Bootstrap page.
 vignette: >
-  %\VignetteIndexEntry{Themes}
+  %\VignetteIndexEntry{Chart themes}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}   
+  %\VignetteEncoding{UTF-8}
 ---
 
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "paint-brush"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
-
-```{r, include=FALSE}
-library(highcharter)
-library(dplyr)
-library(purrr)
-library(stringr)
-library(htmltools)
-library(ggplot2)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(error = FALSE)
+old_options <- options("highcharter.theme")
 ```
 
-Highcharts is very flexible for create or themes.
-In Highcarter there are some predefined themes and some 
-functions to create your own or merge themes.
+## Choose a theme
 
-Let's start with a simple bar chart and see the default theme:
+Set a default at the top of a script to use the same theme for subsequent
+charts. Widgets capture the theme when you create them. This example plots
+monthly sales for the same two regions throughout the article.
 
 ```{r}
 library(highcharter)
-library(dplyr)
 
-data(diamonds, package = "ggplot2")
+hc_set_theme("ft")
 
-data <- count(diamonds, cut, color)
+sales_chart <- function() {
+  highchart(height = 260) |>
+    hc_title(text = "Monthly sales") |>
+    hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun")) |>
+    hc_yAxis(title = list(text = "Units")) |>
+    hc_add_series(name = "North", data = c(14, 17, 15, 21, 23, 24)) |>
+    hc_add_series(name = "South", data = c(12, 14, 16, 17, 17, 20))
+}
 
-hc <- hchart(data, "column", hcaes(x = color, y = n, group = cut)) |>
-  hc_yAxis(title = list(text = "Cases")) |>
-  hc_title(text = "Diamonds Are Forever") |>
-  hc_subtitle(text = "Source: Diamonds data set") |>
-  hc_credits(enabled = TRUE, text = "http://jkunst.com/highcharter/") |>
-  hc_tooltip(sort = TRUE, table = TRUE) |> 
-  hc_caption(text = "This is a caption text to show the style of this type of text")
-
-hc
+sales_chart()
 ```
 
-
-## Themes
-
-Here you'll find the themes to change the look of your charts.
-
-```{r, echo=FALSE, results='asis'}
-themes <- help.search("theme", package = "highcharter")$matches
-themes <- themes |> 
-  tibble::as_tibble() |>
-  janitor::clean_names() |>
-  select(name, title) |>
-  distinct() |>
-  filter(str_detect(name, "hc_theme_*")) |>
-  filter(!name %in% c("hc_theme_merge", "hc_theme")) |>
-  mutate(title = str_replace(title, " theme for highcharts", "")) |>
-  arrange(name) |> 
-  pull(name)
-
-themes <- str_subset(themes, "spark", negate = TRUE)
-
-themes <- unique(c("hc_theme_smpl", "hc_theme_db", themes))
-# thms <- sample(thms, 5)
-
-# generate tabs
-themes |>
-  map(function(t) { # t <- sample(themes, 1)
-    
-    thm <- get(t)()
-
-    content <- list(hc) |>
-      map(hc_add_theme, thm) |> 
-      dplyr::first()
-
-    tagList(
-      tags$h3(stringr::str_remove(t, "hc_theme_")),
-      content
-    )
-    
-  }) |> 
-  htmltools::as.tags()
-```
-
-## Creating themes
-
-You can create your own themes!
+To change a single chart, pass a theme to `highchart(theme = ...)` when
+constructing it, or apply one to an existing widget.
 
 ```{r}
-my_own_theme <- hc_theme(
-  colors = c("red", "green", "blue"),
-  chart = list(
-    backgroundColor = NULL,
-    divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
-  ),
-  title = list(
-    style = list(
-      color = "#333333",
-      fontFamily = "Lato"
-    )
-  ),
-  subtitle = list(
-    style = list(
-      color = "#666666",
-      fontFamily = "Shadows Into Light"
-    )
-  ),
-  legend = list(
-    itemStyle = list(
-      fontFamily = "Tangerine",
-      color = "black"
-    ),
-    itemHoverStyle = list(
-      color = "gray"
-    )
-  )
-)
-
-hc |>
-  hc_add_theme(my_own_theme)
+sales_chart() |> hc_add_theme(hc_theme("economist"))
 ```
 
-## Merge Themes
+## Create a theme in R
 
-You can merge themes too.
+A theme accepts the same option names as Highcharts. Start from scratch or
+override specific fields of a preset. For example, changing the colors below
+preserves Carbon's typography, background and gridlines.
 
 ```{r}
-thm <- hc_theme_merge(
-  hc_theme_darkunica(),
-  hc_theme(
-    chart = list(
-      backgroundColor = "transparent",
-      divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
-    ),
-    title = list(
-      style = list(
-        color = "white",
-        fontFamily = "Griffy",
-        fontSize = "25px"
-      )
-    )
-  )
+team <- hc_theme(
+  colors = c("#005F73", "#CA6702"),
+  title = list(align = "left"),
+  chart = list(backgroundColor = "transparent")
 )
 
-hc |>
-  hc_add_theme(thm)
+team_carbon <- hc_theme("carbon", colors = team$colors)
+hc_set_theme(team_carbon)
+sales_chart()
+```
+
+Use `hc_theme_merge(hc_theme("carbon"), team)` to reuse all of the options in
+`team`. Nested fields merge by name. A supplied array replaces the previous
+array, so a two-color palette stays two colors long.
+
+## Inherit a Shiny app's theme
+
+Use `hc_set_theme("bslib")` once at app startup. With Bootstrap 5.3, the
+browser resolves the primary series color, base font, text, gridlines and
+tooltip against the CSS around each chart. The transparent background lets
+the card or page show through. Text and gridlines follow the page's color
+mode. Other series use a categorical palette that you can replace with
+`hc_colors()`. Chart titles use the base font.
+
+```{r shiny, eval=FALSE}
+library(shiny)
+library(bslib)
+library(highcharter)
+
+hc_set_theme("bslib")
+
+ui <- page_fluid(
+  theme = bs_theme(version = 5, primary = "#783356", base_font = "Georgia"),
+  input_dark_mode(),
+  highchartOutput("sales")
+)
+
+server <- function(input, output, session) {
+  output$sales <- renderHighchart(sales_chart())
+}
+
+shinyApp(ui, server)
+```
+
+If the project uses a `_brand.yml`, put the same choices there and use
+`theme = bs_theme(version = 5, brand = TRUE)`. The chart takes the values that
+bslib applies to the page. A standalone HTML widget uses the preset's
+fallback colors and system font.
+
+```yaml
+color:
+  primary: "#783356"
+typography:
+  base: Georgia
+```
+
+In a multi-user Shiny app, apply per-user choices with
+`hc_add_theme(hc_theme(input$preset))` inside `renderHighchart()`.
+The setter changes an R process option shared by its sessions.
+
+## The collection
+
+```{r}
+hc_themes()
+```
+
+The FT adaptation uses its web paper color and categorical line palette.
+Its separate bar palette applies to bars and columns with `colorByPoint = TRUE`.
+For several bar series, pass `hc_theme("ft")$plotOptions$bar$colors` to
+`hc_colors()`. The Economist adaptation uses dark and light blue as its first two series.
+Carbon uses IBM's categorical sequence and blue sequential scale for maps
+and heatmaps. The editorial presets are highcharter adaptations.
+[FT chart colors](https://ft-interactive.github.io/g-chartcolour/) ·
+[The Economist on chart colors](https://education.economist.com/blog/interviews/tips-for-visualising-data-like-the-economist) ·
+[IBM Carbon palettes](https://carbondesignsystem.com/data-visualization/color-palettes/).
+
+For a Carbon map of changes around zero, use a symmetric range and set the
+neutral color at the midpoint. Reversing the signs would reverse the
+interpretation of the two ends of this scale.
+
+```{r}
+change_theme <- hc_theme("carbon", colorAxis = list(
+  min = -10, max = 10,
+  stops = list(list(0, "#491D8B"), list(0.5, "#FFFFFF"), list(1, "#004144"))
+))
+```
+
+Compare the remaining presets on the same data. The sparkline variants use
+a shorter chart and a single series.
+
+```{r gallery, echo=FALSE}
+other <- setdiff(hc_themes(), c("ft", "economist"))
+htmltools::tagList(lapply(other, function(name) {
+  chart <- if (name %in% c("sparkline", "sparkline_vb")) {
+    highchart(height = 85) |> hc_add_series(data = c(14, 17, 15, 21, 23, 24))
+  } else {
+    sales_chart()
+  }
+  htmltools::tagList(htmltools::tags$h3(name), hc_add_theme(chart, hc_theme(name)))
+}))
+```
+
+## Migrate an existing script
+
+Replace `hc_theme_ft()` with `hc_theme("ft")`. A previous call to
+`options(highcharter.theme = hc_theme_ft())` becomes `hc_set_theme("ft")`.
+The collection retires `db`, `ffx`, `elementary` and `google`. For a dark
+chart, try `flatdark`. For a brand-specific palette, pass `colors` to
+`hc_theme()`.
+
+```{r restore, include=FALSE}
+options(old_options)
 ```

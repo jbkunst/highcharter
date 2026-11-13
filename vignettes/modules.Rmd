@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 ```{r, include=FALSE}
 library(highcharter)
-options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 options(download.file.method = "libcurl")
 ```
 
@@ -235,7 +235,7 @@ hc_fill |>
       )
     )
     ) |> 
-  hc_add_theme(hc_theme_handdrawn())
+  hc_add_theme(hc_theme("handdrawn"))
 ```
 
 Example from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/infographic/ and inspired by https://www.amcharts.com/demos/pictorial-column-chart/ 
@@ -318,7 +318,7 @@ And the last one.
 dim(volcano)
 
 highchart() |> 
-  hc_add_theme(hc_theme_null()) |> 
+  hc_add_theme(hc_theme("null")) |>
   hc_add_series(
     type = "area", # area needs fill color
     name = "Maunga Whau Volcano",

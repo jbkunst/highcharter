@@ -1,6 +1,6 @@
 # 274
 library(highcharter)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 
 # AnomalyDetection --------------------------------------------------------

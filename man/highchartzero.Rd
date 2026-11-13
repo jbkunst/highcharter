@@ -6,7 +6,7 @@
 \usage{
 highchartzero(
   hc_opts = list(),
-  theme = NULL,
+  theme = getOption("highcharter.theme"),
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -25,7 +25,8 @@ highchartzero(
 \item{elementId}{Use an explicit element ID for the widget.}
 }
 \description{
-This minimal widget uses the current \code{highcharter.lang} option unless
+This minimal widget uses the current \code{highcharter.theme} and \code{highcharter.lang}
+options. It uses the language option unless
 \code{hc_opts$lang} is supplied explicitly.
 }
 \details{

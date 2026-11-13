@@ -1,0 +1,49 @@
+colors: ['#F45B5B', '#8085E9', '#8D4654', '#7798BF', '#AAEEEE', '#FF0066', '#EEAAEE', '#55BF3B', '#DF5353']
+chart:
+  backgroundColor: null
+  divBackgroundImage: https://www.highcharts.com/samples/graphics/sand.png
+  style:
+    fontFamily: Signika, serif
+title:
+  style:
+    color: black
+    fontSize: 16px
+    fontWeight: bold
+subtitle:
+  style:
+    color: black
+tooltip:
+  borderWidth: 0
+legend:
+  itemStyle:
+    fontWeight: bold
+    fontSize: 13px
+xAxis:
+  labels:
+    style:
+      color: '#6e6e70'
+yAxis:
+  labels:
+    style:
+      color: '#6e6e70'
+plotOptions:
+  series:
+    shadow: false
+  candlestick:
+    lineColor: '#404048'
+  map:
+    shadow: false
+navigator:
+  xAxis:
+    gridLineColor: '#D0D0D8'
+rangeSelector:
+  buttonTheme:
+    fill: white
+    stroke: '#C0C0C8'
+    stroke-width: 1
+    states:
+      select:
+        fill: '#D0D0D8'
+scrollbar:
+  trackBorderColor: '#C0C0C8'
+background2: '#E0E0E8'

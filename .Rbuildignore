@@ -1,6 +1,6 @@
 ^pkgdown$
 ^docs$
-^vignettes/.*$
+^vignettes/(?!themes\.Rmd$).*$
 ^_pkgdown\.yml$
 ^CRAN-RELEASE$
 # old versions

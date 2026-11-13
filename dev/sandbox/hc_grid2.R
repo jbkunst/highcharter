@@ -1,7 +1,7 @@
 library(dplyr)
 data(diamonds, package = "ggplot2")
 diamonds <- sample_n(diamonds, 1000)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 df <- diamonds %>%
   group_by(cut) %>% 

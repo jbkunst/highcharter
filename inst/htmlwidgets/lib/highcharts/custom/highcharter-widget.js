@@ -63,10 +63,16 @@
   function setBackground(el, x) {
     var themeChart = x.theme && x.theme.chart ? x.theme.chart : {};
     var optionsChart = x.hc_opts.chart || {};
-    var image = themeChart.divBackgroundImage || optionsChart.divBackgroundImage;
+    var image = Object.prototype.hasOwnProperty.call(optionsChart, 'divBackgroundImage') ?
+      optionsChart.divBackgroundImage : themeChart.divBackgroundImage;
     if (image) {
       el.style.backgroundImage = 'url(' + image + ')';
       el.style.backgroundSize = 'cover';
+      el.dataset.highcharterBackground = 'true';
+    } else if (el.dataset.highcharterBackground) {
+      el.style.backgroundImage = '';
+      el.style.backgroundSize = '';
+      delete el.dataset.highcharterBackground;
     }
   }
 
@@ -82,9 +88,9 @@
 
     loadFonts(x.fonts);
     ResetHighchartsOptions();
-    if (x.theme !== null) Highcharts.setOptions(x.theme);
+    if (x.theme) Highcharts.setOptions(x.theme);
     setBackground(el, x);
-    Highcharts.setOptions(x.conf_opts);
+    if (x.conf_opts) Highcharts.setOptions(x.conf_opts);
 
     var chart;
     if (x.type === 'stock') {

@@ -548,7 +548,7 @@ hchart.igraph <- function(object, ..., layout = NULL) {
       )
     ) |>
     hc_add_theme(
-      hc_theme_null(legend = list(enabled = TRUE))
+      hc_theme("null", legend = list(enabled = TRUE))
     )
 
   hc <- hc |>

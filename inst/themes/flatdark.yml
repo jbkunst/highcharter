@@ -1,0 +1,29 @@
+extends: flat
+chart:
+  backgroundColor: '#34495e'
+xAxis:
+  gridLineColor: '#46627f'
+  lineColor: '#46627f'
+  tickColor: '#46627f'
+  title:
+    style:
+      color: '#FFFFFF'
+yAxis:
+  gridLineColor: '#46627f'
+  tickColor: '#46627f'
+  title:
+    style:
+      color: '#FFFFFF'
+title:
+  style:
+    color: '#FFFFFF'
+subtitle:
+  style:
+    color: '#666666'
+legend:
+  itemStyle:
+    color: '#C0C0C0'
+  itemHoverStyle:
+    color: '#C0C0C0'
+  itemHiddenStyle:
+    color: '#444444'

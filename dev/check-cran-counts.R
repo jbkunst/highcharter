@@ -27,7 +27,7 @@ data <- pcks |>
 hchart(data, type = "line", hcaes(x = date, y = count, group = package)) |> 
   hc_chart(zoomType = "x") |> 
   hc_tooltip(sort = TRUE, table = TRUE) |>
-  hc_add_theme(hc_theme_smpl()) |> 
+  hc_add_theme(hc_theme("smpl")) |>
   hc_navigator(enabled = TRUE) |> 
   hc_yAxis(endOnTick = FALSE)
 
@@ -36,7 +36,7 @@ data |>
   hchart(type = "line", hcaes(x = date, y = count, group = package)) |> 
   hc_chart(zoomType = "x") |>
   hc_tooltip(sort = TRUE, table = TRUE) |>
-  # hc_add_theme(hc_theme_smpl()) |> 
+  # hc_add_theme(hc_theme("smpl")) |>
   # hc_navigator(enabled = TRUE) |> 
   hc_xAxis(title = list(text = "")) |> 
   hc_yAxis(title = list(text = "")) |> 

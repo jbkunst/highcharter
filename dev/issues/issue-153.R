@@ -10,7 +10,7 @@ library(highcharter)
 library(dplyr)
 library(tidyr)
 
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 #+
 txt <- "Month | Impressions | Clicks |  CTR | CPC | Position | Cost | Conversions | Conv.rate | Cost_conv

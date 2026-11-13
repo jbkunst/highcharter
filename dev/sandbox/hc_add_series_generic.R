@@ -1,11 +1,11 @@
 #' work with length(data) == 1
 highchart() %>%
   hc_add_series(data = 1) %>% 
-  hc_add_theme(hc_theme_538())
+  hc_add_theme(hc_theme("538"))
 
 highchart() %>%
   hc_add_series(data = list(1)) %>% 
-  hc_add_theme(hc_theme_538())
+  hc_add_theme(hc_theme("538"))
 
 # data.frame --------------------------------------------------------------
 data <- mtcars %>% mutate(x = hp, y = disp)

@@ -1,4 +1,4 @@
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 options(highcharter.debug = TRUE)
 
 rarima <- function(model = list(ar = 0.5), n = NULL, ...) {

@@ -43,7 +43,7 @@ hc <- highchart() %>%
   hc_add_series(SPY.RSI.SellLevel, color = "red", yAxis = 2, name = "Sell level", enableMouseTracking = FALSE) %>% 
   hc_add_series(SPY.RSI.BuyLevel, color = "blue", yAxis = 2, name = "Buy level", enableMouseTracking = FALSE) %>% 
   # I <3 themes
-  hc_add_theme(hc_theme_smpl())
+  hc_add_theme(hc_theme("smpl"))
 
 hc
 

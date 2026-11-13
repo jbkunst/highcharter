@@ -1,6 +1,6 @@
 library(data.table)
 library(highcharter)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 mydata <- data.table(
   year = rep(2001:2015,3),

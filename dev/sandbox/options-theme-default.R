@@ -6,7 +6,7 @@ hc$x$hc_opts
 hc$x$theme
 
 
-options(highcharter.theme = hc_theme_db())
+hc_set_theme("flatdark")
 
 highcharts_demo()
 
@@ -16,15 +16,15 @@ highcharts_demo()
 
 
 
-options(highcharter.theme = hc_theme_flat())
+hc_set_theme("flat")
 
 hc <- highcharts_demo()
 
-options(highcharter.theme = hc_theme_chalk())
+hc_set_theme("chalk")
 
 hc2 <- highcharts_demo()
 
-options(highcharter.theme = hc_theme_db())
+hc_set_theme("flatdark")
 
 hc3 <- highchart() %>% 
   hc_add_series(data = rexp(100))

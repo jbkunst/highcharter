@@ -38,7 +38,7 @@ highchart() %>%
                 marker = list(symbol = fa_icon_mark("truck")),
                 icon = fa_icon("truck"), name = "truck",
                 color = "rgba(194, 60, 42, 0.75)") %>% 
-  hc_add_theme(hc_theme_db()) %>% 
+  hc_add_theme(hc_theme("flatdark")) %>%
   hc_chart(zoomType = "xy")
 
 

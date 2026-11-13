@@ -1,0 +1,16 @@
+colors: ['#737373', '#D8D7D6', '#B2B0AD', '#8C8984']
+chart:
+  style:
+    fontFamily: Cardo
+xAxis:
+  lineWidth: 0
+  minorGridLineWidth: 0
+  lineColor: transparent
+  tickColor: '#737373'
+yAxis:
+  lineWidth: 0
+  minorGridLineWidth: 0
+  lineColor: transparent
+  tickColor: '#737373'
+  tickWidth: 1
+  gridLineColor: transparent

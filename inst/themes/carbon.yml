@@ -1,0 +1,35 @@
+# IBM Carbon light categorical sequence and blue sequential scale endpoints.
+# https://carbondesignsystem.com/data-visualization/color-palettes/
+colors: ['#6929C4', '#1192E8', '#005D5D', '#9F1853', '#FA4D56', '#570408', '#198038', '#002D9C', '#EE538B',
+  '#B28600', '#009D9A', '#012749', '#8A3800', '#A56EFF']
+chart:
+  backgroundColor: '#FFFFFF'
+  style:
+    fontFamily: IBM Plex Sans, sans-serif
+title:
+  align: left
+  style:
+    color: '#161616'
+    fontWeight: bold
+subtitle:
+  align: left
+  style:
+    color: '#161616'
+xAxis:
+  lineColor: '#DCDCDC'
+  tickLength: 0
+  labels:
+    style:
+      color: '#161616'
+yAxis:
+  gridLineColor: '#DCDCDC'
+  labels:
+    style:
+      color: '#161616'
+legend:
+  align: left
+  itemStyle:
+    color: '#161616'
+colorAxis:
+  minColor: '#EDF5FF'
+  maxColor: '#002D9C'

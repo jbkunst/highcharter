@@ -1,0 +1,49 @@
+# https://www.highcharts.com/demo/sparkline
+# https://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/
+chart:
+  backgroundColor: null
+  margins: [0, 0, 0, 0]
+  spacingTop: 0
+  spacingRight: 0
+  spacingBottom: 0
+  spacingLeft: 0
+  plotBorderWidth: 0
+  borderWidth: 0
+  style:
+    overflow: visible
+xAxis:
+  visible: false
+  endOnTick: false
+  startOnTick: false
+yAxis:
+  visible: false
+  endOnTick: false
+  startOnTick: false
+tooltip:
+  outside: false
+  shadow: false
+  borderColor: transparent
+  botderWidth: 0
+  backgroundColor: transparent
+  style:
+    textOutline: 5px white
+plotOptions:
+  series:
+    marker:
+      enabled: false
+    shadow: false
+    fillOpacity: 0.25
+    color: '#FFFFFFBF'
+    fillColor:
+      linearGradient:
+        x1: 0
+        y1: 1
+        x2: 0
+        y2: 0
+      stops:
+      - [0, '#FFFFFF00']
+      - [0.5, '#FFFFFF7F']
+      - [1, '#FFFFFFFF']
+credits:
+  enabled: false
+  text: ''

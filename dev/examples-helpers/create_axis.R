@@ -25,7 +25,7 @@ for(i in 1:ncol(R)) {
 
 
 hc <- hc_scrollbar(hc, enabled = TRUE) %>%
-  hc_add_theme(hc_theme_flat())
+  hc_add_theme(hc_theme("flat"))
 
 hc
 

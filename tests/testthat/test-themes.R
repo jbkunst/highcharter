@@ -1,109 +1,54 @@
-test_that("my_own_theme example works", {
-  library(dplyr)
-
-  data(diamonds, package = "ggplot2")
-
-  d <- count(diamonds, cut, color)
-
-  my_own_theme <- hc_theme(
-    colors = c("red", "green", "blue"),
-    chart = list(
-      backgroundColor = NULL,
-      divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
-    ),
-    title = list(
-      style = list(
-        color = "#333333",
-        fontFamily = "Lato"
-      )
-    ),
-    subtitle = list(
-      style = list(
-        color = "#666666",
-        fontFamily = "Shadows Into Light"
-      )
-    ),
-    legend = list(
-      itemStyle = list(
-        fontFamily = "Tangerine",
-        color = "black"
-      ),
-      itemHoverStyle = list(
-        color = "gray"
-      )
-    )
-  )
-
-  h <- hchart(d, "column", hcaes(x = color, y = n, group = cut)) %>%
-    hc_yAxis(title = list(text = "Cases")) %>%
-    hc_title(text = "Diamonds Are Forever") %>%
-    hc_subtitle(text = "Source: Diamonds data set") %>%
-    hc_credits(enabled = TRUE, text = "jkunst.com") %>%
-    hc_tooltip(sort = TRUE, table = TRUE) %>%
-    hc_add_theme(my_own_theme)
-
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+test_that("the packaged presets produce themes for widgets", {
+  presets <- hc_themes()
+  expect_length(presets, 24)
+  expect_false(any(c("db", "ffx", "google", "elementary") %in% presets))
+  for (name in presets) {
+    theme <- hc_theme(name)
+    expect_s3_class(theme, "hc_theme")
+    expect_identical(hc_add_theme(highchart(), theme)$x$theme, theme)
+  }
+  expect_identical(hc_theme("ft")$chart$backgroundColor, "#FFF1E5")
+  expect_equal(length(unique(hc_theme("economist")$colors)), 6)
+  expect_identical(hc_theme("carbon")$colors[1], "#6929C4")
+  expect_identical(hc_theme("superheroes")$xAxis$gridLineDashStyle, hc_theme("flat")$xAxis$gridLineDashStyle)
+  expect_s3_class(hc_theme("sparkline")$tooltip$positioner, "JS_EVAL")
 })
 
-test_that("hc_theme_merge example works", {
-  library(dplyr)
-
-  data(diamonds, package = "ggplot2")
-
-  d <- count(diamonds, cut, color)
-
-  thm <- hc_theme_merge(
-    hc_theme_darkunica(),
-    hc_theme(
-      chart = list(
-        backgroundColor = "transparent",
-        divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
-      ),
-      title = list(
-        style = list(
-          color = "white",
-          fontFamily = "Open Sans"
-        )
-      )
-    )
-  )
-
-  h <- hchart(d, "column", hcaes(x = color, y = n, group = cut)) %>%
-    hc_yAxis(title = list(text = "Cases")) %>%
-    hc_title(text = "Diamonds Are Forever") %>%
-    hc_subtitle(text = "Source: Diamonds data set") %>%
-    hc_credits(enabled = TRUE, text = "jkunst.com") %>%
-    hc_tooltip(sort = TRUE, table = TRUE) %>%
-    hc_add_theme(thm)
-
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+test_that("themes merge nested options, preserving null fields and replacing arrays", {
+  gradient <- list(stops = list(list(0, "white"), list(1, "blue")))
+  theme <- hc_theme("darkunica", chart = list(backgroundColor = gradient))
+  expect_identical(theme$chart$backgroundColor$stops, gradient$stops)
+  expect_true("linearGradient" %in% names(theme$chart$backgroundColor))
+  expect_identical(hc_theme(colors = "red")$colors, list("red"))
+  replacement <- hc_theme(chart = list(backgroundColor = NULL), colors = c("red", "blue"))
+  combined <- hc_theme_merge(theme, replacement)
+  expect_true("backgroundColor" %in% names(combined$chart))
+  expect_null(combined$chart$backgroundColor)
+  expect_identical(combined$colors, replacement$colors)
+  expect_identical(combined$chart$style, theme$chart$style)
+  expect_error(hc_theme("ft", list()), "Name each")
 })
 
-test_that("Test all themes", {
-  h <- highcharts_demo()
+test_that("the setter snapshots names and custom themes for each widget", {
+  old <- options("highcharter.theme")
+  on.exit(options(old))
+  previous <- hc_set_theme("ft")
+  expect_identical(previous, old)
+  first <- highchart()
+  theme <- hc_theme(colors = c("#005F73", "#CA6702"))
+  hc_set_theme(theme)
+  expect_identical(first$x$theme, hc_theme("ft"))
+  expect_identical(highchartstock()$x$theme, theme)
+  expect_identical(highchartzero()$x$theme, theme)
+  expect_identical(highchart(theme = first$x$theme)$x$theme, first$x$theme)
+  expect_error(hc_set_theme("../ft"), "Choose a theme")
+  expect_identical(getOption("highcharter.theme"), theme)
+})
 
-  expect_true(all(class(hc_add_theme(h, hc_theme_538())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_alone())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_bloom())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_chalk())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_darkunica())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_db())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_economist())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_elementary())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_ffx())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_flat())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_flatdark())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_ft())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_ggplot2())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_google())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_gridlight())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_handdrawn())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_monokai())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_null())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_sandsignika())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_smpl())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_sparkline())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_superheroes())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_tufte())) %in% c("highchart", "htmlwidget")))
-  expect_true(all(class(hc_add_theme(h, hc_theme_tufte2())) %in% c("highchart", "htmlwidget")))
+test_that("CSS font variables do not create Google Fonts requests", {
+  expect_length(highchart(theme = hc_theme("bslib"))$x$fonts, 0)
+  off <- highchart(google_fonts = FALSE)
+  expect_length(hc_add_theme(off, hc_theme("carbon"))$x$fonts, 0)
+  expect_identical(unname(highchart(theme = hc_theme("carbon"), google_fonts = TRUE)$x$fonts),
+                   "IBM+Plex+Sans")
 })

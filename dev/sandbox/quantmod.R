@@ -24,4 +24,4 @@ hc %>%
                       title = c("E1", "E2"), 
                       text = c("This is event 1", "This is the event 2"),
                       id = "usdjpy") %>% 
-  hc_add_theme(hc_theme_gridlight())
+  hc_add_theme(hc_theme("gridlight"))

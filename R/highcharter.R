@@ -68,6 +68,7 @@ highchart <- function(hc_opts = list(),
     conf_opts = opts,
     type = type,
     fonts = unfonts,
+    google_fonts = google_fonts,
     debug = getOption("highcharter.debug")
   )
 
@@ -181,7 +182,8 @@ renderHighchartStock <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 #' Create a Highcharts chart widget
 #'
-#' This minimal widget uses the current `highcharter.lang` option unless
+#' This minimal widget uses the current `highcharter.theme` and `highcharter.lang`
+#' options. It uses the language option unless
 #' `hc_opts$lang` is supplied explicitly.
 #'
 #' This function creates a Highchart chart using \pkg{htmlwidgets}. The
@@ -197,7 +199,7 @@ renderHighchartStock <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'
 #' @export
 highchartzero <- function(hc_opts = list(),
-                          theme = NULL,
+                          theme = getOption("highcharter.theme"),
                           width = NULL,
                           height = NULL,
                           elementId = NULL) {
@@ -206,8 +208,12 @@ highchartzero <- function(hc_opts = list(),
     hc_opts$lang <- getOption("highcharter.lang")
   }
 
+  google_fonts <- getOption("highcharter.google_fonts")
   x <- list(
-    hc_opts = hc_opts
+    hc_opts = hc_opts,
+    theme = theme,
+    google_fonts = google_fonts,
+    fonts = if (google_fonts) unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
   )
 
   # create widget

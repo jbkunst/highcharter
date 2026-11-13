@@ -69,5 +69,5 @@ highchart(type = "map") %>%
                 name = "Ports & Harbors ", color = 'rgba(100, 100, 250, 0.8)',
                 tooltip = list(pointFormat = "{point.properties.port}")) %>% 
   hc_mapNavigation(enabled = TRUE) %>% 
-  hc_add_theme(hc_theme_db())
+  hc_add_theme(hc_theme("flatdark"))
 

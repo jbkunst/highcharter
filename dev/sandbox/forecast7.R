@@ -4,7 +4,7 @@ library(highcharter)
 suppressPackageStartupMessages(library(forecast))
 library(ggplot2)
 
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 # autoplot of a ts object
 autoplot(mdeaths)

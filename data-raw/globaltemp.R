@@ -18,7 +18,7 @@ data("globaltemp")
 hchart(globaltemp, type = "spline", x = date, y = median)
 
 # setting theme
-thm <- hc_theme_darkunica(
+thm <- hc_theme("darkunica",
   chart = list(
     style = list(fontFamily = "Roboto Condensed"),
     backgroundColor = "#323331"

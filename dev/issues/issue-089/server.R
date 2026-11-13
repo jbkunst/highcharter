@@ -68,7 +68,7 @@ server = function(input, output, session) {
       hc_add_series_xts(SPY.RSI.SellLevel, color = "red", yAxis = 2, name = "Sell level", enableMouseTracking = FALSE,forced=TRUE,groupPixelWidth=240) %>% 
       hc_add_series_xts(SPY.RSI.BuyLevel, color = "blue", yAxis = 2, name = "Buy level", enableMouseTracking = FALSE,forced=TRUE,groupPixelWidth=240) %>% 
       # I <3 themes
-      hc_add_theme(hc_theme_538())%>%
+      hc_add_theme(hc_theme("538"))%>%
       hc_chart(zoomType = "xy") %>%
       hc_xAxis(
         events = list(

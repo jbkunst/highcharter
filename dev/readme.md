@@ -37,6 +37,18 @@ Their copies in `inst/htmlwidgets/lib/highcharts/plugins/` are maintained indepe
 of Highcharts and are loaded only when requested. The CSS and highcharter's custom scripts
 are also maintained in the repository.
 
+## Maintain theme presets
+
+Each file in `inst/themes/` defines one preset. Its filename is the name
+accepted by `hc_theme()`. Use Highcharts option names, quote hex colors and
+keep a source URL in a comment for brand adaptations. A variant can use
+`extends: flat` to inherit options from a packaged preset. The sparkline's
+tooltip uses `!js` for its Highcharts callback. Only packaged files are read.
+
+Run `testthat::test_local(filter = "themes")` and render `vignettes/themes.Rmd`
+to compare charts. For the Bootstrap integration, use the Shiny example
+in the vignette and toggle the color mode.
+
 ## Maintain language presets
 
 `hc_set_language()` delegates to `options(highcharter.lang = hc_language(...))`.

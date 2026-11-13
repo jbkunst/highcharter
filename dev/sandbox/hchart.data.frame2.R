@@ -13,7 +13,7 @@ library(dplyr)
 # library(ggplot2)
 # library(broom)
 
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 #### DATA ####
 df <- data.frame(xval = 1:10) %>% 

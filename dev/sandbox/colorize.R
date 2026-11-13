@@ -28,7 +28,7 @@ colorize <- function(x, colors = viridis::viridis(10)) {
 
 colors <- c("#084594", "#2171B5", "#4292C6", "#6BAED6", "#9ECAE1", "#C6DBEF", "#DEEBF7", "#F7FBFF")
 
-options(highcharter.theme = hc_theme_flatdark())
+hc_set_theme("flatdark")
 
 mtcarts2 <- mtcars %>% mutate(x = wt, y = mpg, z = x) 
   

@@ -69,7 +69,7 @@ diamonds <- diamonds[-6]
 map(names(diamonds), function(x){
   diamonds[[x]] %>% 
     hchart(showInLegend = FALSE) %>% 
-    hc_add_theme(hc_theme_smpl()) %>% 
+    hc_add_theme(hc_theme("smpl")) %>%
     hc_title(text = x) %>% 
     hc_yAxis(title = list(text = ""))
   }) %>% 
@@ -90,7 +90,7 @@ map(ids, function(x){
   highchart(type = "map") %>% 
     hc_add_serie(data = wrld, type = "map", color = "red", showInLegend = FALSE) %>% 
     hc_title(text = wrld$features[[1]]$properties$name) %>% 
-    hc_add_theme(hc_theme_smpl())
+    hc_add_theme(hc_theme("smpl"))
   }) %>% 
   hw_grid(rowheight = 155, ncol = 4)  %>% browsable()
 

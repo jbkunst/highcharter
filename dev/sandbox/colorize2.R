@@ -9,7 +9,7 @@ show_col(colorize(x))
 
 
 
-show_col(hc_theme_smpl()$colors)
+show_col(hc_theme("smpl")$colors)
 
 pal <- col_bin("Greens", domain = 0:100)
 show_col(pal(sort(stats::runif(10, 60, 100))))

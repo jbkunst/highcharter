@@ -114,13 +114,13 @@
   )
 
   options(
-    highcharter.theme = hc_theme(
+    highcharter.theme = getOption("highcharter.theme", hc_theme(
       chart = list(backgroundColor = "transparent"),
       colors = c(
         "#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9",
         "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"
       )
-    ),
+    )),
     highcharter.verbose = FALSE,
     highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,

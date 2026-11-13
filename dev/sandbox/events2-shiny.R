@@ -3,7 +3,7 @@ library(shiny)
 library(highcharter)
 library(tidyverse)
 
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 hc <- highcharts_demo() 
 

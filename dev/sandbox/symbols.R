@@ -4,7 +4,7 @@ library(purrr)
 library(dplyr)
 
 #+include=TRUE
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 dss <- map(c("cross", "plus"), function(s){
   

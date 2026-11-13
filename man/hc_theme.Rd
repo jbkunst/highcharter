@@ -2,54 +2,42 @@
 % Please edit documentation in R/theme.R
 \name{hc_theme}
 \alias{hc_theme}
-\title{Creating highcharter themes}
+\alias{hc_themes}
+\alias{hc_set_theme}
+\title{Create, list and select chart themes}
 \usage{
-hc_theme(...)
+hc_theme(preset = NULL, ...)
+
+hc_themes()
+
+hc_set_theme(theme, ...)
 }
 \arguments{
-\item{...}{A list of named parameters.}
+\item{preset}{A name returned by \code{hc_themes()}, or \code{NULL} to start from
+an empty theme.}
+
+\item{...}{Named Highcharts options. Nested options override individual
+fields. Arrays such as \code{colors} and gradient stops are replaced in full.}
+
+\item{theme}{A preset name or an object created with \code{hc_theme()}.}
+}
+\value{
+\code{hc_theme()} returns an \code{hc_theme} object. \code{hc_themes()} lists the
+available preset names. \code{hc_set_theme()} sets \code{highcharter.theme} for
+subsequent charts in the R process and invisibly returns the previous option.
 }
 \description{
-Highcharts is very flexible so you can modify every element of the chart.
-There are some exiting themes so you can apply style to charts with few
-lines of code.
-}
-\details{
-More examples and details in \url{https://www.highcharts.com/docs/chart-design-and-style/themes}.
+A theme contains Highcharts options shared by one or more charts. Start
+from a packaged preset or supply your own named Highcharts options.
 }
 \examples{
-
-hc <- highcharts_demo()
-
-hc
-
-thm <- hc_theme(
-  colors = c("red", "green", "blue"),
-  chart = list(
-    backgroundColor = "#15C0DE"
-  ),
-  title = list(
-    style = list(
-      color = "#333333",
-      fontFamily = "Erica One"
-    )
-  ),
-  subtitle = list(
-    style = list(
-      color = "#666666",
-      fontFamily = "Shadows Into Light"
-    )
-  ),
-  legend = list(
-    itemStyle = list(
-      fontFamily = "Tangerine",
-      color = "black"
-    ),
-    itemHoverStyle = list(
-      color = "gray"
-    )
-  )
-)
-
-hc_add_theme(hc, thm)
+hc_themes()
+highchart(theme = hc_theme("ft")) |> hc_add_series(data = c(3, 1, 4))
+team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"))
+old <- hc_set_theme(team)
+highchart() |> hc_add_series(data = c(3, 1, 4))
+options(old)
+}
+\seealso{
+\code{\link[=hc_add_theme]{hc_add_theme()}}, \code{\link[=hc_theme_merge]{hc_theme_merge()}}, \code{vignette("themes", package = "highcharter")}
 }

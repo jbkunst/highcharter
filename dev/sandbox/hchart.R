@@ -8,7 +8,7 @@
 #+ message=FALSE, warning=FALSE, echo=FALSE, results=FALSE
 library(highcharter)
 library(dplyr)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 #' ### data.frame
 data(mpg, package = "ggplot2")

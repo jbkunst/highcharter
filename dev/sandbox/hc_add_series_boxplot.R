@@ -3,7 +3,7 @@ suppressPackageStartupMessages(library(highcharter))
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(purrr))
 
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 hc <- highchart()
 ... <- NULL

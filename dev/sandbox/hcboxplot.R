@@ -1,5 +1,5 @@
 library(tidyverse)
-options(highcharter.theme = hc_theme_smpl())
+hc_set_theme("smpl")
 
 data("diamonds", package = "ggplot2")
 diamonds2 <- diamonds %>% 

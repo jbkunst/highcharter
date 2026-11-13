@@ -28,7 +28,7 @@ $(document).ready(function(){
 
 ```{r, include=FALSE}
 library(highcharter)
-options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
 The highcharter package include [highstocks](https://www.highcharts.com/demo/stock) 
@@ -56,7 +56,7 @@ y <- getSymbols("AMZN", auto.assign = FALSE)
 
 hchart(y, type = "ohlc") |> 
   hc_title(text = "This is a Open-high-low-close chart with a custom theme") |> 
-  hc_add_theme(hc_theme_db())
+  hc_add_theme(hc_theme("flatdark"))
 ```
 
 ## Candlestick and OHLC charts

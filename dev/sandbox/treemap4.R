@@ -85,5 +85,5 @@ highchart() %>%
     data= list3
   ) %>% 
   hc_colorAxis() %>% 
-  hc_add_theme(hc_theme_smpl())
+  hc_add_theme(hc_theme("smpl"))
 

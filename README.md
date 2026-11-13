@@ -30,7 +30,7 @@ of code. Support `xts` class from the {quantmod} package.
 * Support Highmaps Create choropleth charts or add 
 information in `geojson` format.
 * Themes: you configure your chart in multiples ways. There are
- implemented themes like economist, financial times, google, 538 among 
+ implemented themes like economist, financial times, carbon, 538 among
  others.
 * A lot of features and plugins: motion, draggable points, font-awesome,
 tooltips, annotations.
