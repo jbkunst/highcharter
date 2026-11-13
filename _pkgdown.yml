@@ -48,31 +48,41 @@ reference:
   contents:
   - highchart
   - hchart
+  - hc_accessibility
   - hc_annotations
   - hc_boost
   - hc_caption
   - hc_chart
   - hc_colorAxis
   - hc_colors
+  - hc_connectors
   - hc_credits
+  - hc_data
+  - hc_defs
   - hc_drilldown
   - hc_exporting
   - hc_legend
   - hc_loading
+  - hc_mapNavigation
+  - hc_mapView
+  - hc_navigation
+  - hc_navigator
+  - hc_noData
   - hc_pane
   - hc_plotOptions
+  - hc_rangeSelector
   - hc_responsive
+  - hc_scrollbar
   - hc_series
+  - hc_sonification
+  - hc_stockTools
   - hc_subtitle
+  - hc_time
   - hc_title
   - hc_tooltip
   - hc_xAxis
   - hc_yAxis
   - hc_zAxis
-  - hc_navigator
-  - hc_rangeSelector
-  - hc_scrollbar
-  - hc_mapNavigation
   - highchartzero
 - title: Additional function to use Highcharts API
   desc: Helpers function to add or modify elements, like plugins (as {htmltools} dependencies),

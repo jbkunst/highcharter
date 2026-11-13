@@ -9,20 +9,23 @@ hc_scrollbar(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highstock/scrollbar}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highstock/scrollbar}.}
 }
 \description{
-The scrollbar is a means of panning over the X axis of a stock chart.
-Scrollbars can also be applied to other types of axes.
-Another approach to scrollable charts is the chart.scrollablePlotArea option that
-is especially suitable for simpler cartesian charts on mobile.
-In styled mode, all the presentational options for the
-scrollbar are replaced by the classes .highcharts-scrollbar-thumb,
-.highcharts-scrollbar-arrow, .highcharts-scrollbar-button,
-.highcharts-scrollbar-rifles and .highcharts-scrollbar-track.
+The scrollbar is a means of panning over the X axis of
+a stock chart. Scrollbars can also be applied to other types of axes.
+}
+\details{
+Another approach to scrollable charts is the chart.scrollablePlotArea
+option that is especially suitable for simpler cartesian charts on
+mobile.
+
+In styled mode, all the presentational options for the scrollbar are
+replaced by the classes \code{.highcharts-scrollbar-thumb},
+\code{.highcharts-scrollbar-arrow}, \code{.highcharts-scrollbar-button},
+\code{.highcharts-scrollbar-rifles} and \code{.highcharts-scrollbar-track}.
 }
 \examples{
-
 highchart(type = "stock") |> 
   hc_add_series(AirPassengers) |> 
   hc_rangeSelector(selected = 4) |> 
@@ -40,5 +43,4 @@ highchart(type = "stock") |>
     trackBorderColor = "silver",
     trackBorderRadius = 7
   )
-
 }

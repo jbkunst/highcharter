@@ -9,13 +9,12 @@ hc_chart(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/chart}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 General options for the chart.
 }
 \examples{
-
 hc <- highchart() |> 
   hc_xAxis(categories = month.abb) |> 
   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
@@ -43,6 +42,5 @@ hc |>
              )
       )
     )
-
 
 }

@@ -2,22 +2,22 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_zAxis}
 \alias{hc_zAxis}
-\title{Zaxis options for highcharter objects}
+\title{zAxis options for highcharter objects}
 \usage{
 hc_zAxis(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/zAxis}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/zAxis}.}
 }
 \description{
 The Z axis or depth axis for 3D plots.
-See the Axis class for programmatic
-access to the axis.
+}
+\details{
+See the Axis class for programmatic access to the axis.
 }
 \examples{
-
 df <- data.frame(
   x = sample(1:5),
   y = sample(1:5),
@@ -51,5 +51,4 @@ highchart() |>
     gridLineColor = "red",
     gridLineDashStyle = "dot"
   )
-
 }

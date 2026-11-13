@@ -107,21 +107,26 @@ It checks two Stock charts after a range change. On a bundle upgrade, recheck
 the five global language reads and the shared Stock button defaults handled
 in `highcharter-widget.js`.
 
-## Autogenerate `highcharts-api.R`
+## Generate the Highcharts R API
 
-To regenerate only `hc_title()`, run these commands from the repository root
-with highcharter installed:
+From the repository root, run:
 
 ```sh
-npm ci --prefix dev/highcharts-bundle
-Rscript dev/generate-highcharts-title.R
+Rscript dev/generate-highcharts-api.R
 ```
 
-The script reads the title documentation from `Highcharts.Options` in the
-pinned npm package's `highcharts.d.ts`. It runs `dev/examples-api/title.R`
-against the new wrapper before writing `R/hc-title.R`. Run roxygen2 to
-refresh the help page if the example or description changes.
+The command uses the Highcharts version pinned in `dev/highcharts-bundle`
+and runs `npm ci` there if that version is missing. It requires the package's
+R imports, roxygen2 and pkgload. It reads the top-level options from
+`highcharts.d.ts`, builds the candidate package documentation, and runs
+every `dev/examples-api/<option>.R` against the candidate. Each example must
+return a widget that sets that option. Successful runs update
+`R/highcharts-api.R`, the API help pages and `NAMESPACE`.
 
-The full `dev/generate-highcharts-api.R` script runs this title step and
-uses the existing HTML generator for the remaining wrappers. Each wrapper
-has an example in `dev/examples-api/`.
+To cover a new upstream option, add a small offline example under its exact
+Highcharts name. The command reports missing and obsolete example names on a
+version change. Review those names against the upstream changelog for renames.
+Most wrappers call `.hc_opt()`. Colors and tooltips also preserve their R
+arguments. Use `hc_set_language()` for the session language and
+`options(highcharter.global = list(buttonTheme = list(...)))` for global
+button defaults. `hc_time()` sets the time zone on an individual chart.

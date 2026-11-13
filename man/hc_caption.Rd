@@ -9,15 +9,15 @@ hc_caption(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/caption}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/caption}.}
 }
 \description{
-The chart's caption, which will render below the chart and will be part
-of exported charts. The caption can be updated after chart initialization
-through the Chart.update or Chart.caption.update methods.
+The chart's caption, which will
+render below the chart and will be part of exported charts. The caption
+can be updated after chart initialization through the \code{Chart.update} or
+\code{Chart.caption.update} methods.
 }
 \examples{
-
 highchart() |> 
   hc_title(text= "Chart with a caption") |> 
   hc_subtitle(text= "This is the subtitle") |> 
@@ -37,5 +37,4 @@ highchart() |>
     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
     laborum.</em>'"
   )
-
 }

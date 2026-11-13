@@ -16,7 +16,7 @@ HTMLWidgets.widget({
     if (x.hc_opts.stockTools.gui.enabled === undefined) {
       x.hc_opts.stockTools.gui.enabled = true;
     }
-    HighcharterWidget.renderValue(el, x, instance);
+    HighcharterWidget.renderValue(el, x, instance, window.HCStockToolsDefaults);
   },
 
   resize: HighcharterWidget.resize

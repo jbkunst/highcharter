@@ -76,7 +76,7 @@
     }
   }
 
-  function renderValue(el, x) {
+  function renderValue(el, x, instance, defaults) {
     if (x.debug) {
       global.xclone = JSON.parse(JSON.stringify(x));
       global.elclone = el;
@@ -87,7 +87,7 @@
     }
 
     loadFonts(x.fonts);
-    ResetHighchartsOptions();
+    ResetHighchartsOptions(defaults);
     if (x.theme) Highcharts.setOptions(x.theme);
     setBackground(el, x);
     if (x.conf_opts) Highcharts.setOptions(x.conf_opts);

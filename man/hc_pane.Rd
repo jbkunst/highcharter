@@ -9,16 +9,17 @@ hc_pane(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/pane}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/pane}.}
 }
 \description{
-The pane serves as a container for axes and backgrounds for circular
-gauges and polar charts.
-When used in Highcharts.setOptions for theming, the pane must be a single
-object, otherwise arrays are supported.
+The pane serves as a container for axes and backgrounds for
+circular gauges and polar charts.
+}
+\details{
+When used in \code{Highcharts.setOptions} for theming, the pane must be a
+single object, otherwise arrays are supported.
 }
 \examples{
-
 highchart() |> 
   hc_chart(
   type = "gauge",
@@ -98,6 +99,5 @@ highchart() |>
     )
     
   )
-
 
 }

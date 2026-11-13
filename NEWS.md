@@ -1,5 +1,9 @@
 # highcharter (development version)
 
+* Ten new option wrappers cover accessibility, map views, time zones, data
+  imports, empty charts, SVG definitions, sonification, navigation, Stock Tools
+  and Gantt connectors. Each has a runnable example in its help page.
+
 * The classic Highcharts themes use the 12.6.0 palettes and legend backgrounds.
   Dark presets have more legible axis labels. Monokai now uses four distinct
   series colors. The Bloom preset places its value axis on the right, and

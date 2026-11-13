@@ -23,3 +23,10 @@ To exercise the installed R package, run `Rscript ../R/test-highcharts-bundle.R`
 this directory and open `preview/index.html`. The gallery covers the shared data shapes,
 specialized series, Stock Tools and mixed widgets. Use Tab and the arrow keys on the first
 chart to check keyboard navigation.
+
+The Stock Tools bundle captures its own Highcharts defaults after its modules
+load. The Stock Tools widget restores those defaults before applying the theme
+and chart options. The base widgets continue to use the base bundle defaults
+when both widget types appear on the same page.
+Run `Rscript tests/browser/stock-tools.R /tmp/stock-tools.html` with the
+package installed to check the toolbar alongside an ordinary Stock chart.

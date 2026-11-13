@@ -9,14 +9,14 @@ hc_responsive(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/responsive}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/responsive}.}
 }
 \description{
-Allows setting a set of rules to apply for different screen or chart
-sizes. Each rule specifies additional chart options.
+Allows setting a set of rules to
+apply for different screen or chart sizes. Each rule specifies additional
+chart options.
 }
 \examples{
-
 leg_500_opts <- list(enabled = FALSE)
 leg_900_opts <- list(align = "right", verticalAlign = "middle",  layout = "vertical")
 
@@ -38,5 +38,4 @@ highchart() |>
       )
     )
   )
-
 }

@@ -9,14 +9,14 @@ hc_drilldown(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/drilldown}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/drilldown}.}
 }
 \description{
-Options for drill down, the concept of inspecting increasingly high
-resolution data through clicking on chart items like columns or pie slices.
+Options for drill down, the concept of inspecting
+increasingly high resolution data through clicking on chart items like
+columns or pie slices.
 }
 \examples{
-
 library(highcharter)
 library(dplyr)
 library(purrr)
@@ -35,7 +35,7 @@ hc <- highchart() |>
   hc_legend(enabled = FALSE) |>
   hc_plotOptions(
     series = list(
-      boderWidth = 0,
+      borderWidth = 0,
       dataLabels = list(enabled = TRUE)
     )
   ) |>
@@ -53,7 +53,7 @@ dfan <- data.frame(
 )
 
 dffru <- data.frame(
-  name = c("Apple", "Organes"),
+  name = c("Apple", "Oranges"),
   value = c(4, 2)
 )
 
@@ -78,7 +78,6 @@ hc <- hc |>
   )
 
 hc
-
 
 
 }

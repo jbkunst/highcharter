@@ -2,23 +2,22 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_rangeSelector}
 \alias{hc_rangeSelector}
-\title{Rangeselector options for highcharter objects}
+\title{rangeSelector options for highcharter objects}
 \usage{
 hc_rangeSelector(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highstock/rangeSelector}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highstock/rangeSelector}.}
 }
 \description{
-The range selector is a tool for selecting ranges to display within
-the chart. It provides buttons to select preconfigured ranges in
-the chart, like 1 day, 1 week, 1 month etc. It also provides input
-boxes where min and max dates can be manually input.
+The range selector is a tool for selecting ranges to
+display within the chart. It provides buttons to select preconfigured
+ranges in the chart, like 1 day, 1 week, 1 month etc. It also provides
+input boxes where min and max dates can be manually input.
 }
 \examples{
-
 hc <- highchart(type = "stock") |> 
   hc_add_series(AirPassengers)
 
@@ -32,5 +31,4 @@ hc |>
     verticalAlign = "bottom",
     selected = 4
     )
-
 }

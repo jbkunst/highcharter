@@ -2,26 +2,24 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_mapNavigation}
 \alias{hc_mapNavigation}
-\title{Mapnavigation options for highcharter objects}
+\title{mapNavigation options for highcharter objects}
 \usage{
 hc_mapNavigation(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highmaps/mapNavigation}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highmaps/mapNavigation}.}
 }
 \description{
-The mapNavigation option handles buttons for navigation in addition to
-mousewheel and doubleclick handlers for map zooming.
+The \code{mapNavigation} option handles buttons for navigation in
+addition to \code{mousewheel} and \code{doubleclick} handlers for map zooming.
 }
 \examples{
-
-hcmap(download_map_data = FALSE) |> 
-  hc_mapNavigation(
-    enabled = TRUE,
-    enableMouseWheelZoom = TRUE,
-    enableDoubleClickZoom = TRUE
-  )
-
+highchart(type = "map") |>
+  hc_add_series(type = "mappoint", data = list(
+    list(name = "Tokyo", lon = 139.7, lat = 35.7),
+    list(name = "Osaka", lon = 135.5, lat = 34.7)
+  )) |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 }

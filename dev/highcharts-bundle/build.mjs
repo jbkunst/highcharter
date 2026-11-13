@@ -53,7 +53,8 @@ const stockContents = await Promise.all(
 );
 const stockPrelude = [
   `/*! Highcharter Stock Tools for Highcharts JS v${pkg.version} */`,
-  'window.HighcharterStockToolsBaseUrl = new URL(".", document.currentScript.src).href;'
+  'window.HighcharterStockToolsBaseUrl = new URL(".", document.currentScript.src).href;',
+  'ResetHighchartsOptions();'
 ].join('\n');
 
 await rm(stockToolsDir, { recursive: true, force: true });
@@ -61,7 +62,7 @@ await mkdir(join(stockToolsDir, 'css', 'stocktools'), { recursive: true });
 await mkdir(join(stockToolsDir, 'css', 'annotations'), { recursive: true });
 await writeFile(
   join(stockToolsDir, 'highcharter-stock-tools.js'),
-  `${stockPrelude}\n${stockContents.join('\n')}\n`
+  `${stockPrelude}\n${stockContents.join('\n')}\nwindow.HCStockToolsDefaults = $.extend(true, {}, Highcharts.getOptions());\n`
 );
 await copyFile(
   join(highchartsDir, 'css', 'stocktools', 'gui.css'),

@@ -2,93 +2,45 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_colorAxis}
 \alias{hc_colorAxis}
-\title{Coloraxis options for highcharter objects}
+\title{colorAxis options for highcharter objects}
 \usage{
 hc_colorAxis(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/colorAxis}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/colorAxis}.}
 }
 \description{
-A color axis for series. Visually, the color
-axis will appear as a gradient or as separate items inside the
-legend, depending on whether the axis is scalar or based on data
-classes.
-For supported color formats, see the
-docs article about colors.
-A scalar color axis is represented by a gradient. The colors either
-range between the minColor and the
-maxColor, or for more fine grained control the
-colors can be defined in stops. Often times, the
-color axis needs to be adjusted to get the right color spread for the
-data. In addition to stops, consider using a logarithmic
-axis type, or setting min and
-max to avoid the colors being determined by
-outliers.
-When dataClasses are used, the ranges are
-subdivided into separate classes like categories based on their
-values. This can be used for ranges between two values, but also for
-a true category. However, when your data is categorized, it may be as
-convenient to add each category to a separate series.
-Color axis does not work with: sankey, sunburst, dependencywheel,
-networkgraph, venn, gauge and solidgauge series
-types.
-Since v7.2.0 colorAxis can also be an array of options objects.
-See the Axis object for
-programmatic access to the axis.
+A color axis for series. Visually, the
+color axis will appear as a gradient or as separate items inside the
+legend, depending on whether the axis is scalar or based on data classes.
+}
+\details{
+For supported color formats, see the docs article about colors.
+
+A scalar color axis is represented by a gradient. The colors either range
+between the minColor and the maxColor, or for more fine grained control
+the colors can be defined in stops. Often times, the color axis needs to
+be adjusted to get the right color spread for the data. In addition to
+stops, consider using a logarithmic axis type, or setting min and max to
+avoid the colors being determined by outliers.
+
+When dataClasses are used, the ranges are subdivided into separate
+classes like categories based on their values. This can be used for
+ranges between two values, but also for a true category. However, when
+your data is categorized, it may be as convenient to add each category to
+a separate series.
+
+Color axis does not work with: \code{sankey}, \code{sunburst}, \code{dependencywheel},
+\code{networkgraph}, \code{venn}, \code{gauge} and \code{solidgauge} series types.
+
+Since v7.2.0 \code{colorAxis} can also be an array of options objects.
+
+See the Axis object for programmatic access to the axis.
 }
 \examples{
-
-library(dplyr)
-
-data(mpg, package = "ggplot2")
-
-mpgman2 <- mpg |> 
-  group_by(manufacturer, year) |> 
-  dplyr::summarise(
-    n = dplyr::n(),
-    displ = mean(displ),
-    .groups = "drop"
-    )
-
-mpgman2
-
-hchart(
-  mpgman2, "column", hcaes(x = manufacturer, y = n, group = year),
-  colorKey = "displ",
-  # color = c("#FCA50A", "#FCFFA4"),
-  name = c("Year 1999", "Year 2008")
-  ) |> 
-  hc_colorAxis(min = 0, max = 5)
-
-
-# defaults to yAxis
-hchart(iris, "point", hcaes(Sepal.Length, Sepal.Width)) |> 
-  hc_colorAxis(
-    minColor = "red",
-    maxColor = "blue"
-  )
-
-# Ex2
-n <- 5
-
-stops <- data.frame(
-  q = 0:n/n,
-  c = c("#440154", "#414487", "#2A788E", "#22A884", "#7AD151", "#FDE725"),
-  stringsAsFactors = FALSE
-  )
-
-stops <- list_parse2(stops)
-
-M <- round(matrix(rnorm(50*50), ncol = 50), 2)
-
-hchart(M) |> 
-  hc_colorAxis(stops = stops)
-
-# Ex3
+# Map elevation to a continuous color scale for the built-in volcano matrix.
 hchart(volcano) |>
-  hc_colorAxis(stops = stops, max = 200)
-
+  hc_colorAxis(min = 90, max = 200, minColor = "#FFF3CA", maxColor = "#843B20")
 }

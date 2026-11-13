@@ -9,17 +9,19 @@ hc_legend(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/legend}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/legend}.}
 }
 \description{
-The legend is a box containing a symbol and name for each series
-item or point item in the chart. Each series (or points in case
-of pie charts) is represented by a symbol and its name in the legend.
-It is possible to override the symbol creator function and create
-custom legend symbols.
+The legend is a box containing a
+symbol and name for each series item or point item in the chart. Each
+series (or points in case of pie charts) is represented by a symbol and
+its name in the legend.
+}
+\details{
+It is possible to override the symbol creator function and create custom
+legend symbols.
 }
 \examples{
-
 highchart() |> 
   hc_xAxis(categories = month.abb) |> 
   hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
@@ -32,5 +34,4 @@ highchart() |>
     x = 0,
     y = 100
     ) 
-
 }

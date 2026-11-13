@@ -112,26 +112,16 @@ test the column-wise scaling in `hchart.prcomp()` and `hchart.princomp()`.
 Definition of done: before/after export counts, lifecycle annotations, migration
 examples, and no silent removal of public behavior.
 
-### 4. Highcharts API generation and compatibility
+### 4. Highcharts API generation and compatibility — done
 
-The current `dev/generate-highcharts-api.R` scrapes the live Highcharts website,
-skips several option groups manually, writes R code, documents, builds and
-installs the package in one run. Split those responsibilities.
-
-- Pin the Highcharts version used to inspect the API.
-- First compare one option group against the pinned version and render its
-  existing R example. Expand the generator after this round trip works.
-- Generate a machine-readable diff: added, removed and renamed top-level options.
-- Keep hand-written helpers separate from generated wrappers.
-- Do not overwrite working files until the generated result validates.
-- Give each retained generated wrapper one small local example.
-- Review new APIs such as `mapView`, navigation, accessibility, sonification and
-  Stock Tools instead of excluding them automatically.
-- Compare generated wrappers with the Highcharts 12.6 API before deciding which
-  new functions deserve exports.
-
-Definition of done: a reproducible generator, an API diff artifact and no manual
-copy step from `dev/highcharts-api.R` to `R/highcharts-api.R`.
+The title pilot and the [full R generator](readme.md#generate-the-highcharts-r-api)
+use the pinned Highcharts 12.6.0 declarations. The 37 top-level options map to
+35 chart wrappers and two session settings, `lang` and `global`. The generator
+reports missing or obsolete example names as JSON when the upstream interface
+changes. Check the upstream changelog before treating a removed/added pair as
+a rename. The 35 examples run against the candidate package before publication
+of its R source, exports and help. The browser review covered Core, Maps, Gantt
+and Stock, including the optional Stock Tools toolbar.
 
 ### 5. Official chart coverage and vignette structure
 

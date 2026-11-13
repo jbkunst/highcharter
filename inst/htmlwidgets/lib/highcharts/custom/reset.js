@@ -1,6 +1,6 @@
 var HCDefaults = $.extend(true, {}, Highcharts.getOptions(), {});
 
-function ResetHighchartsOptions() {
+function ResetHighchartsOptions(defaults = HCDefaults) {
     // Fortunately, Highcharts returns the reference to defaultOptions itself
     // We can manipulate this and delete all the properties
     var defaultOptions = Highcharts.getOptions();
@@ -8,5 +8,5 @@ function ResetHighchartsOptions() {
         if (typeof defaultOptions[prop] !== 'function') delete defaultOptions[prop];
     }
     // Fall back to the defaults that we captured initially, this resets the theme
-    Highcharts.setOptions(HCDefaults);
+    Highcharts.setOptions(defaults);
 }

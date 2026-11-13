@@ -16,7 +16,7 @@ hc <- highchart() |>
   hc_legend(enabled = FALSE) |>
   hc_plotOptions(
     series = list(
-      boderWidth = 0,
+      borderWidth = 0,
       dataLabels = list(enabled = TRUE)
     )
   ) |>
@@ -34,7 +34,7 @@ dfan <- data.frame(
 )
 
 dffru <- data.frame(
-  name = c("Apple", "Organes"),
+  name = c("Apple", "Oranges"),
   value = c(4, 2)
 )
 

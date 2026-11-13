@@ -9,18 +9,17 @@ hc_tooltip(hc, ..., sort = FALSE, table = FALSE)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/tooltip}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/tooltip}.}
 
-\item{sort}{Logical value to implement sort according \code{this.point}.}
+\item{sort}{Sort shared tooltip points by descending value.}
 
-\item{table}{Logical value to implement table in tooltip.}
+\item{table}{Display the shared tooltip as an HTML table.}
 }
 \description{
-Options for the tooltip that appears when the user hovers over a
-series or point.
+Options for the tooltip that
+appears when the user hovers over a series or point.
 }
 \examples{
-
 highchart() |>
   hc_add_series(data = sample(1:12)) |> 
   hc_add_series(data = sample(1:12) + 10) |> 
@@ -30,6 +29,5 @@ highchart() |>
     sort = TRUE,
     table = TRUE
     ) 
-
 
 }

@@ -9,13 +9,15 @@ hc_series(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/series}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/series}.}
 }
 \description{
-Series options for specific data and the data itself.
+Series options for specific data
+and the data itself. In TypeScript you have to cast the series options to
+specific series types, to get all possible options for a series. (see
+online documentation for example)
 }
 \examples{
-
 highchart() |>  
   hc_series(
     list(
@@ -27,5 +29,4 @@ highchart() |>
       data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)
     )
   )
-
 }

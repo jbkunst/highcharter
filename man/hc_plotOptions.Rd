@@ -2,27 +2,29 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_plotOptions}
 \alias{hc_plotOptions}
-\title{Plotoptions options for highcharter objects}
+\title{plotOptions options for highcharter objects}
 \usage{
 hc_plotOptions(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/plotOptions}.}
 }
 \description{
-The plotOptions is a wrapper object for config objects for each series
-type. The config objects for each series can also be overridden for
-each series item as given in the series array.
+The plotOptions is a wrapper
+object for config objects for each series type. The config objects for
+each series can also be overridden for each series item as given in the
+series array.
+}
+\details{
 Configuration options for the series are given in three levels. Options
-for all series in a chart are given in the plotOptions.series object. Then options for all series of a specific
-type are given in the plotOptions of that type, for example
-plotOptions.line. Next, options for one single series are given in
-the series array.
+for all series in a chart are given in the plotOptions.series object.
+Then options for all series of a specific type are given in the
+plotOptions of that type, for example \code{plotOptions.line}. Next, options
+for one single series are given in the series array.
 }
 \examples{
-
 highchart() |> 
   hc_add_series(
     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4)
@@ -37,5 +39,4 @@ highchart() |>
         )
       )
     )
-
 }
