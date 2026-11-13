@@ -8,17 +8,18 @@ Make highcharter smaller and easier to maintain without losing the behavior that
 people actually use. Prefer one clear public path for each task, one canonical
 example for each concept, and evidence before making a breaking change.
 
-Current baseline on this branch:
+Baseline at `d003b990` (five commits after `pre-highcharts-bundle`):
 
-- 121 exported functions.
-- 27 exported theme functions.
+- 121 `export()` entries in NAMESPACE.
+- 26 theme presets. The 27 names starting with `hc_theme_` include the
+  composition helper `hc_theme_merge()`.
 - 18 packages in `Imports` and 30 in `Suggests`.
-- 19 vignettes.
+- 16 tracked `vignettes/*.Rmd` articles. They are excluded from the R package
+  build and rendered by pkgdown.
 - Two overlapping pkgdown workflows: the root `README.md`/`_pkgdown.yml` and the
   older sources and scripts under `pkgdown/`.
 
-Record these counts again after each simplification stage. A change is not a
-simplification if it only moves complexity somewhere less visible.
+Update the affected counts when a stage changes them.
 
 ## Working principles
 
@@ -47,30 +48,43 @@ simplification if it only moves complexity somewhere less visible.
 
 ### 2. Required R dependencies — next
 
-Start with `xts` and `quantmod`, using three minimal examples:
+| Slice | Current use | Next change to verify |
+| --- | --- | --- |
+| 2a. `xts` / `quantmod` | `xts` is imported via an unused `is.xts`. `quantmod` is already suggested, but `hc_add_series.xts()` calls it on every input. | Keep both S3 entry points. Propose `xts` in Suggests with an explicit namespace load for restored objects. Use `quantmod` only for financial inputs. |
+| 2b. `lubridate` | Four runtime `is.Date()` calls. | Verify a base class check on Date, POSIXct and numeric input. Audit article usage separately. |
+| 2c. `rjson` | Alternative widget serializer behind an opt-in setting. | Verify default and opt-in output, including missing values, before changing its dependency status. |
+| 2d. `broom` | The model methods expect `.se.fit` from `augment()`. | Reproduce the problem for `lm` and `loess`, validate fitted values and bounds, then decide dependency status. |
+| 2e. `rlist` | Data conversion and option merging share this dependency. | Capture row shapes and nested merge results before evaluating replacement. |
 
-1. One-column `xts`: one time series, no `quantmod` requirement.
-2. Multi-column `xts`: one Highcharts series per column, without repeated dates.
-3. OHLC: retain the financial behavior and require `quantmod` only here if it is
-   genuinely needed.
+**2a acceptance cases.** Use three local dates. A one-column input produces
+three date/value pairs in a Stock chart. Two ordinary columns produce two
+named series of three points each, preserving timestamp order and missing
+values. A single instrument with open, high, low, close and optional volume
+produces three five-value points in financial order. Cover both public entry
+points, a custom name, explicit `type = "ohlc"` and a restored object in a
+fresh R session. Run ordinary inputs with `quantmod` absent. Verify that
+highcharter can load and draw a non-xts chart with both packages absent.
+Replace the live `getFX()` test with these deterministic checks.
 
-Then review the other candidates:
+**Decision before changing financial dispatch.** At the baseline, three dates
+and two ordinary columns produce one series with six points. More importantly,
+`A.Open, A.High, B.Low, B.Close` is classified as one candle named A.
+Two complete OHLC instruments can yield a single nine-value point per date.
+Proposed rule: recognize one unambiguous instrument, preserve OHLCV handling,
+and report ambiguous OHLC layouts with a message to select one instrument.
+Confirm this treatment of mixed tickers before implementation. When ordinary
+columns expand into several series, a scalar series ID must remain unambiguous
+for Shiny proxies.
 
-- Replace `lubridate` when it is only used for base date-class checks.
-- Move `rjson` to `Suggests` or remove the disabled alternative serializer.
-- Move `broom` to `Suggests` after repairing or retiring the `lm` and `loess`
-  methods.
-- Review `rlist` last because it participates in data and option conversion.
-- Identify packages used only in examples or vignettes and keep them out of
-  `Imports`.
-
-Definition of done: a dependency-use table, passing examples for retained
-behavior, package checks with optional packages absent, and a lower `Imports`
-count.
+One commit per dependency slice. Run its examples and tests from the source
+tree as `.Rbuildignore` excludes `tests`. Record the behavior with each newly
+optional dependency absent. Record a retained Import and its reason when the
+compatibility evidence supports keeping it.
 
 ### 3. Public R API and helpers
 
-Build an inventory of every export and classify it as:
+Review one candidate at a time. Record its references in R, help/examples,
+articles, tests, Shiny and knitr before proposing removal. Classify each as:
 
 - core public API;
 - useful convenience helper;
@@ -82,7 +96,8 @@ Review these concrete candidates first:
 
 - `hc_add_yAxis()`, `hc_yAxis_multiples()`, `create_axis()` and the generated
   `hc_yAxis()` API: keep one clear way to define one or several axes.
-- `get_hc_series_from_df()`.
+- `get_hc_series_from_df()` is documented and internal. Audit its callers
+  separately from the public export count.
 - `hcaes_()` after migrating internal calls to `hcaes_string()`.
 - `highchartzero()` only after checking its Shiny and knitr use cases.
 - Specialized `hc_add_series.*` and `hchart.*` methods: keep methods backed by a
@@ -104,6 +119,8 @@ skips several option groups manually, writes R code, documents, builds and
 installs the package in one run. Split those responsibilities.
 
 - Pin the Highcharts version used to inspect the API.
+- First compare one option group against the pinned version and render its
+  existing R example. Expand the generator after this round trip works.
 - Generate a machine-readable diff: added, removed and renamed top-level options.
 - Keep hand-written helpers separate from generated wrappers.
 - Do not overwrite working files until the generated result validates.
@@ -118,7 +135,10 @@ copy step from `dev/highcharts-api.R` to `R/highcharts-api.R`.
 
 ### 5. Official chart coverage and vignette structure
 
-Create a small manifest, for example `dev/highcharts-examples.yml`, with:
+Start with the shipped bundle's registered series and the existing gallery,
+article sources and `dev/examples-charts/`. Map one family first. Reuse its
+examples across the gallery and articles. Record missing series once in a
+small coverage table with:
 
 - chart or feature name;
 - family;
@@ -151,6 +171,13 @@ Suggested article families:
 
 Avoid repeating the same chart in several articles. Link to its canonical
 example instead.
+
+Deliver in small slices: the first family, the accessibility article, the
+Maps article, the Stock/Stock Tools article, then each remaining family's
+coverage gaps. The upstream [Highcharts documentation skills](https://github.com/highcharts/highcharts-skills/tree/main/skills)
+provide focused references for Stock, Maps and accessibility. Their main
+branch tracks upstream master. Verify options and demos against the pinned
+bundle version.
 
 #### Accessibility article
 
@@ -224,7 +251,7 @@ overrides, and no additional package dependency.
 
 ### 7. Themes — proposal required before implementation
 
-There are currently 27 exported theme functions. Do not add more until they are
+There are currently 26 theme presets. Do not add more until they are
 reviewed as a set.
 
 - Render the same representative charts with every theme.
@@ -284,29 +311,14 @@ not a list of current maintainers.
 Definition of done: documented criteria, a reviewed mapping from names to
 contributions and no loss of legitimate attribution.
 
-### 10. Release and migration pass
+### 10. Final validation and migration notes
 
 - Run package checks with optional dependencies both installed and absent.
+  Run the source-tree tests explicitly in addition to checking the tarball.
 - Run the canonical gallery in a real browser, including keyboard navigation,
   resize and mixed widgets.
 - Add a small Shiny proxy browser test.
 - Run reverse-dependency checks before removals.
-- Publish a breaking-change and deprecation table in NEWS.
+- Prepare a breaking-change and deprecation table in NEWS for maintainer review.
 - Record final metrics: exports, Imports, installed size, bundle size, article
   count and page weight.
-
-## Recommended order
-
-1. Dependencies (`xts`/`quantmod` first).
-2. R helpers and public API.
-3. API generator and Highcharts compatibility.
-4. Official-example manifest and article taxonomy.
-5. Maps and Stock article rewrites.
-6. Languages.
-7. Themes proposal and decision.
-8. pkgdown/home page.
-9. Contributors and attribution.
-10. Final migration and release pass.
-
-The next concrete task is stage 2: implement and test the three `xts`/OHLC
-examples, then decide exactly which dependency moves out of `Imports`.

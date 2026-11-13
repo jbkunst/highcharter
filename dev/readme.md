@@ -3,6 +3,18 @@
 The staged cleanup of dependencies, the R API, articles, themes and pkgdown is
 tracked in the [simplification plan](simplification-plan.md).
 
+## Test R changes
+
+Run the affected tests from the repository root, for example:
+
+```r
+testthat::test_local(filter = "hchart")
+```
+
+`.Rbuildignore` excludes `tests/` from the source tarball. Run the source-tree
+tests alongside package checks. For a change to optional dependencies, repeat
+the affected examples in a fresh R session with those packages absent.
+
 ## Update Highcharts
 
 Run this from the repository root with Node.js and npm installed:
