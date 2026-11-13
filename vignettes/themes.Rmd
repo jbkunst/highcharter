@@ -138,9 +138,16 @@ change_theme <- hc_theme("carbon", colorAxis = list(
 ))
 ```
 
-Carbon draws gridlines in both directions and uses a circle wherever a series
-displays a point marker. Tufte uses a gray palette, the Cardo font and small
-y-axis ticks, leaving the plotting area open.
+Use `hc_set_theme("cloudscape")` for the light AWS Cloudscape chart palette.
+The ten series colors follow the order in its Highcharts components. The
+preset also uses Open Sans, a transparent background and rounded columns.
+Like the Carbon preset, this adaptation draws gridlines on both axes and
+uses circles wherever a series displays point markers.
+[Cloudscape chart colors](https://cloudscape.design/foundation/visual-foundation/data-vis-colors/) ·
+[Cloudscape chart styles](https://github.com/cloudscape-design/chart-components/blob/31ed24741b10928d1638245c725c1a0d155b29a4/src/internal/chart-styles.ts).
+
+Tufte uses a gray palette, the Cardo font and small y-axis ticks, leaving
+the plotting area open.
 
 The remaining presets use the same sales data, except for the compact
 single-series sparkline examples. The chalkboard, paper and sand textures
@@ -162,7 +169,7 @@ htmltools::tagList(lapply(other, function(name) {
 
 Replace `hc_theme_ft()` with `hc_theme("ft")`. A previous call to
 `options(highcharter.theme = hc_theme_ft())` becomes `hc_set_theme("ft")`.
-The collection contains 27 presets, including `db` (Dotabuff), `ffx`
+The collection contains 28 presets, including `db` (Dotabuff), `ffx`
 (Firefox), `elementary` (elementary OS) and `google` (Google Books Ngram
 Viewer). To reproduce the former `tufte2` style on a column chart, add an
 x-axis baseline and draw white gridlines over the columns.

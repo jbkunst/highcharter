@@ -1,0 +1,66 @@
+# Cloudscape chart components, light palette and Open Sans typography.
+# https://github.com/cloudscape-design/chart-components/blob/31ed24741b10928d1638245c725c1a0d155b29a4/src/internal/chart-styles.ts
+# https://github.com/cloudscape-design/components/blob/2be3e9163cb212e5b4c9b195a13e871479097695/style-dictionary/visual-refresh/color-charts.ts
+colors: ['#688AE8', '#C33D69', '#2EA597', '#8456CE', '#E07941',
+  '#3759CE', '#962249', '#096F64', '#6237A7', '#A84401']
+chart:
+  backgroundColor: transparent
+  style:
+    fontFamily: Open Sans, Helvetica, Arial, sans-serif
+    fontSize: 14px
+    color: '#0F141A'
+title:
+  align: left
+  style:
+    color: '#0F141A'
+    fontWeight: bold
+subtitle:
+  align: left
+  style:
+    color: '#424650'
+xAxis:
+  gridLineWidth: 1
+  gridLineColor: '#DEDEE3'
+  lineWidth: 1
+  lineColor: '#DEDEE3'
+  tickColor: '#DEDEE3'
+  labels:
+    style: &axisLabels
+      color: '#424650'
+      fontSize: 12px
+  title:
+    style: &axisTitle
+      color: '#0F141A'
+      fontSize: 14px
+      fontWeight: bold
+yAxis:
+  gridLineWidth: 1
+  gridLineColor: '#DEDEE3'
+  lineWidth: 0
+  tickColor: '#DEDEE3'
+  labels:
+    style: *axisLabels
+  title:
+    style: *axisTitle
+legend:
+  align: left
+  itemStyle:
+    color: '#0F141A'
+plotOptions:
+  series:
+    marker:
+      symbol: circle
+      radius: 3
+  area:
+    fillOpacity: 0.4
+  areaspline:
+    fillOpacity: 0.4
+  column: &columns
+    groupPadding: 0.075
+    borderRadius: 4
+    borderWidth: 2
+    borderColor: '#FFFFFF'
+  bar: *columns
+  pie:
+    borderWidth: 2
+    borderColor: '#FFFFFF'

@@ -246,8 +246,8 @@ without accidental network access.
 ### 7. Themes
 
 The approved collection uses one YAML file per preset, a common constructor
-and a session setter. The 27 presets include 25 historical names plus
-Carbon and bslib. The gallery documents the former `tufte2` style as a
+and a session setter. The 28 presets include 25 historical names plus
+Carbon, Cloudscape and bslib. The gallery documents the former `tufte2` style as a
 customization of `tufte`. FT and Economist were refreshed. The historical constructors
 were replaced by `hc_theme(preset)`. The [themes vignette](../vignettes/themes.Rmd) documents
 the migration and compares the presets using the same data.

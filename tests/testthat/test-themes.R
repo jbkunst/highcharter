@@ -1,7 +1,7 @@
 test_that("the packaged presets produce themes for widgets", {
   presets <- hc_themes()
   expect_setequal(presets, c(
-    "538", "alone", "bloom", "bslib", "carbon", "chalk", "darkunica", "db",
+    "538", "alone", "bloom", "bslib", "carbon", "chalk", "cloudscape", "darkunica", "db",
     "economist", "elementary", "ffx", "flat", "flatdark", "ft", "ggplot2",
     "google", "gridlight", "handdrawn", "hcrt", "monokai", "null", "sandsignika",
     "smpl", "sparkline", "sparkline_vb", "superheroes", "tufte"
@@ -14,7 +14,14 @@ test_that("the packaged presets produce themes for widgets", {
   expect_identical(hc_theme("ft")$chart$backgroundColor, "#FFF1E5")
   expect_equal(length(unique(hc_theme("economist")$colors)), 6)
   expect_identical(hc_theme("carbon")$colors[1], "#6929C4")
-  expect_identical(hc_theme("carbon")$plotOptions$series$marker$symbol, "circle")
+  cloudscape <- hc_theme("cloudscape")
+  expect_length(cloudscape$colors, 10)
+  expect_identical(cloudscape$colors[1:2], c("#688AE8", "#C33D69"))
+  for (theme in list(hc_theme("carbon"), cloudscape)) {
+    expect_identical(theme$plotOptions$series$marker$symbol, "circle")
+    expect_equal(theme$xAxis$gridLineWidth, 1)
+    expect_equal(theme$yAxis$gridLineWidth, 1)
+  }
   expect_identical(hc_theme("superheroes")$xAxis$gridLineDashStyle, hc_theme("flat")$xAxis$gridLineDashStyle)
   expect_s3_class(hc_theme("sparkline")$tooltip$positioner, "JS_EVAL")
 })
@@ -28,9 +35,6 @@ test_that("textured presets embed the original files in the widget", {
     file <- system.file("themes", "backgrounds", files[[name]], package = "highcharter")
     expect_identical(jsonlite::base64_dec(sub("^[^,]*,", "", image)), readBin(file, "raw", file.size(file)))
   }
-  carbon <- hc_theme("carbon")
-  expect_equal(carbon$xAxis$gridLineWidth, 1)
-  expect_equal(carbon$yAxis$gridLineWidth, 1)
 })
 
 test_that("themes merge nested options, preserving null fields and replacing arrays", {

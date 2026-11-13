@@ -8,8 +8,10 @@
   a custom theme for subsequent charts. See `vignette("themes", package = "highcharter")`.
 * This release replaces the per-preset constructors with one public constructor.
   The collection keeps `tufte` as its single Tufte preset. The theme vignette
-  shows how to recreate the former `tufte2` bar style. This release refreshes `ft` and `economist` and adds
-  `carbon` and `bslib`. The latter inherits Bootstrap colors and the base font.
+  shows how to recreate the former `tufte2` bar style. This release refreshes
+  `ft` and `economist` and adds `carbon`, `cloudscape` and `bslib`.
+  Cloudscape uses the AWS chart palette and Open Sans, with circular markers
+  and gridlines on both axes. The bslib preset inherits Bootstrap colors and the base font.
 * `hc_set_language("es")` sets the language for new charts in the current R
   process. Use `hc_set_language("en")` to switch to English.
   `hc_language()` returns the corresponding options list.
