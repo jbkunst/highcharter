@@ -15,16 +15,33 @@ testthat::test_local(filter = "hchart")
 tests alongside package checks. For a change to optional dependencies, repeat
 the affected examples in a fresh R session with those packages absent.
 
-## Update Highcharts
+## Package versioning
 
-For highcharter releases, use `0.MAJOR.MINOR.REVISION` in `DESCRIPTION`.
-`MAJOR.MINOR` follows the bundled Highcharts release line. Start `REVISION` at
-zero for each new line and increment it for each highcharter release on that
-line, including releases that update only the Highcharts patch. For example,
-highcharter `0.12.6.1` bundles Highcharts `12.6.0`. The next highcharter
-release on the `12.6` line would be `0.12.6.2`, and the first on `12.7`
-would be `0.12.7.0`. The exact Highcharts version is pinned in
-[`package.json`](highcharts-bundle/package.json).
+Starting with the next release, use `MAJOR.MINOR.REVISION` in `DESCRIPTION`.
+Take `MAJOR.MINOR` from the Highcharts JS version bundled in the package.
+The first highcharter release on a line uses revision zero. Increment the
+revision for each subsequent highcharter release on that line. For example,
+the first release under this convention on the `12.6` line is `12.6.0`.
+When the bundle moves to `12.7.x` or `13.1.x`, start at `12.7.0` or `13.1.0`,
+respectively.
+
+Adopting a Highcharts JS patch is optional. If Highcharts publishes `12.6.1`,
+we can keep bundling `12.6.0`. If we adopt the patch, the next highcharter
+release still uses the next R revision on the `12.6` line.
+
+For every release in `NEWS.md`, put the highcharter version in the heading
+and the exact bundled Highcharts JS version in the next paragraph. Read the
+JS version from `devDependencies.highcharts` in
+[`package.json`](highcharts-bundle/package.json). Include both even when the
+numbers match or the bundle is unchanged.
+
+```markdown
+# highcharter 12.6.1
+
+Bundled Highcharts JS: 12.6.0.
+```
+
+## Update Highcharts
 
 Run this from the repository root with Node.js and npm installed:
 
