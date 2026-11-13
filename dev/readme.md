@@ -109,5 +109,19 @@ in `highcharter-widget.js`.
 
 ## Autogenerate `highcharts-api.R`
 
-Run `dev/generate-highcharts-api.R`. Make sure you have an example in
-the `dev/examples-api/` folder for each function.
+To regenerate only `hc_title()`, run these commands from the repository root
+with highcharter installed:
+
+```sh
+npm ci --prefix dev/highcharts-bundle
+Rscript dev/generate-highcharts-title.R
+```
+
+The script reads the title documentation from `Highcharts.Options` in the
+pinned npm package's `highcharts.d.ts`. It runs `dev/examples-api/title.R`
+against the new wrapper before writing `R/hc-title.R`. Run roxygen2 to
+refresh the help page if the example or description changes.
+
+The full `dev/generate-highcharts-api.R` script runs this title step and
+uses the existing HTML generator for the remaining wrappers. Each wrapper
+has an example in `dev/examples-api/`.

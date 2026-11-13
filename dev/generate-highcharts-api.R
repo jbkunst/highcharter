@@ -2,6 +2,9 @@ library(tidyverse)
 library(rvest)
 library(highcharter)
 
+# Title is generated from the pinned TypeScript declarations.
+source("dev/generate-highcharts-title.R", local = TRUE)
+
 fout <- "dev/highcharts-api.R"
 
 get_options <- function(url) {
@@ -42,7 +45,7 @@ opts_to_remove <- c(
   "global", "lang", "noData",
   "defs", "data", "accessibility",
   "stockTools", "navigation", "time",
-  "sonification", "mapView"
+  "sonification", "mapView", "title"
   )
 
 dfopts <- dfopts |> 
@@ -55,7 +58,7 @@ str_glue("dev/examples-api/{dfopts$option}.R") |>
   walk(function(script){
     
     cli::cli_progress_step("Running {script}")
-    try({source(script, echo = FALSE)})        
+    source(script, echo = FALSE)
   })
 
 # write doc & examples ----------------------------------------------------
