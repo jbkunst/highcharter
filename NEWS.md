@@ -1,6 +1,6 @@
 # highcharter (development version)
 
-* `hc_language("es-CL")` supplies a language list for `options(highcharter.lang = ...)`.
+* `hc_language("es")` supplies a language list for `options(highcharter.lang = ...)`.
   `hc_add_language()` applies a preset or a hand-written list to one widget.
   Spanish, Portuguese and French include translated controls. Regional tags select
   the browser's date and number formats. The default English short weekdays now

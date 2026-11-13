@@ -10,10 +10,10 @@ hc_language(locale = "en", ...)
 hc_add_language(hc, language, ...)
 }
 \arguments{
-\item{locale}{A language code, optionally with a script and region, such as
-\code{"es-CL"}, \code{"pt-BR"} or \code{"fr-CA"}. Spanish, Portuguese and French have
-translated controls. Other languages use Highcharts' English interface.
-The browser formats dates and numbers for the requested locale.}
+\item{locale}{Use a language code: \code{"en"} (English), \code{"es"} (Spanish),
+\code{"pt"} (Portuguese) or \code{"fr"} (French). A region is optional: \code{"es-MX"}
+uses the same Spanish labels as \code{"es"} with Mexican date and number
+formatting. Other languages use English labels and their own formatting.}
 
 \item{...}{Named Highcharts \code{lang} options to override, including nested
 lists such as \code{exportData = list(categoryHeader = "Product")}.}
@@ -41,11 +41,11 @@ Stock range selection and basic accessibility labels. Highcharts supplies
 the English defaults for untranslated text and the French language pack.
 }
 \examples{
-old <- options(highcharter.lang = hc_language("es-CL"))
+old <- options(highcharter.lang = hc_language("es"))
 highchart() |> hc_add_series(data = c(3, 1, 4))
 options(old)
 
 highchart() |>
   hc_add_series(data = c(3, 1, 4)) |>
-  hc_add_language("pt-BR", loading = "Aguarde...")
+  hc_add_language("pt", loading = "Aguarde...")
 }

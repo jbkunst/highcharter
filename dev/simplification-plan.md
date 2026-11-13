@@ -231,6 +231,8 @@ without accidental network access.
 - `hc_language()` returns a plain list for `options(highcharter.lang = ...)`.
   `hc_add_language()` applies a preset or a hand-written list to one widget.
   Current public export count: 123 (121 at the baseline).
+- The public examples use one code per language: `en`, `es`, `pt`, `fr`.
+  Regional tags share the same dictionary.
 - Spanish and Portuguese cover the common Shiny controls, exporting, basic
   accessibility and Stock ranges. French uses the upstream 12.6.0 pack.
   Untranslated labels use Highcharts' English defaults. Regional variants

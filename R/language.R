@@ -1,9 +1,9 @@
 #' Language presets for Highcharts widgets
 #'
-#' @param locale A language code, optionally with a script and region, such as
-#'   `"es-CL"`, `"pt-BR"` or `"fr-CA"`. Spanish, Portuguese and French have
-#'   translated controls. Other languages use Highcharts' English interface.
-#'   The browser formats dates and numbers for the requested locale.
+#' @param locale Use a language code: `"en"` (English), `"es"` (Spanish),
+#'   `"pt"` (Portuguese) or `"fr"` (French). A region is optional: `"es-MX"`
+#'   uses the same Spanish labels as `"es"` with Mexican date and number
+#'   formatting. Other languages use English labels and their own formatting.
 #' @param ... Named Highcharts `lang` options to override, including nested
 #'   lists such as `exportData = list(categoryHeader = "Product")`.
 #' @param hc A highchart widget.
@@ -20,18 +20,18 @@
 #'   Stock range selection and basic accessibility labels. Highcharts supplies
 #'   the English defaults for untranslated text and the French language pack.
 #' @examples
-#' old <- options(highcharter.lang = hc_language("es-CL"))
+#' old <- options(highcharter.lang = hc_language("es"))
 #' highchart() |> hc_add_series(data = c(3, 1, 4))
 #' options(old)
 #'
 #' highchart() |>
 #'   hc_add_series(data = c(3, 1, 4)) |>
-#'   hc_add_language("pt-BR", loading = "Aguarde...")
+#'   hc_add_language("pt", loading = "Aguarde...")
 #' @export
 hc_language <- function(locale = "en", ...) {
   if (!is.character(locale) || length(locale) != 1L || is.na(locale) ||
       !grepl("^[A-Za-z]{2,3}(-[A-Za-z]{4})?(-([A-Za-z]{2}|[0-9]{3}))?$", locale)) {
-    stop("Use a language code such as 'en', 'es-CL', 'pt-BR' or 'fr-CA'.", call. = FALSE)
+    stop("Use a language code such as 'en', 'es', 'pt' or 'fr', optionally with a region.", call. = FALSE)
   }
   code <- tolower(sub("-.*", "", locale))
   lang <- list()

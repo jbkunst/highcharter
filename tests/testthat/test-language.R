@@ -2,7 +2,11 @@ test_that("presets keep regional formatting and fall back to English text", {
   expect_identical(hc_language(), list(locale = "en"))
   expect_identical(hc_language("de-DE"), list(locale = "de-DE"))
   expect_identical(hc_language("es-CL")$locale, "es-CL")
-  expect_identical(hc_language("es-MX")$loading, hc_language("es")$loading)
+  for (locale in c("es-CL", "es-MX", "es-CO", "es-ES")) {
+    spanish <- hc_language("es")
+    spanish$locale <- locale
+    expect_identical(hc_language(locale), spanish)
+  }
   expect_identical(hc_language("pt-BR")$downloadCSV, "Baixar CSV")
   expect_identical(hc_language("fr-CA")$accessibility$defaultChartTitle, "Graphique")
   expect_null(hc_language("es-CL")$months)
