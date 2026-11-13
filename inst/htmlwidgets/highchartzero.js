@@ -14,7 +14,14 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, instance) {
     
-    $("#" + el.id).highcharts(x.hc_opts);
+    var defaults = Highcharts.getOptions();
+    var previous = defaults.lang;
+    if (x.hc_opts.lang) defaults.lang = HCDefaults.lang;
+    try {
+      $("#" + el.id).highcharts(x.hc_opts);
+    } finally {
+      defaults.lang = previous;
+    }
     
   },
 

@@ -37,6 +37,23 @@ Their copies in `inst/htmlwidgets/lib/highcharts/plugins/` are maintained indepe
 of Highcharts and are loaded only when requested. The CSS and highcharter's custom scripts
 are also maintained in the repository.
 
+## Maintain language presets
+
+The hand-written helpers in `R/language.R` use ordinary Highcharts `lang` lists.
+The generator already excludes `lang`. Spanish and Portuguese strings live in
+`inst/lang/`. The French pack is the upstream
+[`fr-FR.json` for 12.6.0](https://github.com/highcharts/highcharts/blob/v12.6.0/i18n/highcharts/fr-FR.json).
+Keep its format placeholders intact when refreshing it for a bundle upgrade.
+English text comes from the bundle. Regional dates and number separators use
+`lang.locale` unless the caller provides explicit overrides.
+
+Run `testthat::test_local(filter = "language")`. With the current package
+installed, run `Rscript tests/browser/language.R /tmp/language.html` and open
+the file. A passing page sets `document.body.dataset.languageTest` to `"passed"`.
+It checks two Stock charts after a range change. On a bundle upgrade, recheck
+the five global language reads and the shared Stock button defaults handled
+in `highcharter-widget.js`.
+
 ## Autogenerate `highcharts-api.R`
 
 Run `dev/generate-highcharts-api.R`. Make sure you have an example in

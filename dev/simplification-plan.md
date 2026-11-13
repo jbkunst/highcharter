@@ -226,28 +226,19 @@ Definition of done: the manifest has no duplicate canonical examples, every
 registered series is covered or explicitly excluded, and every article renders
 without accidental network access.
 
-### 6. Languages and locale options
+### 6. Languages and locale options — done
 
-Propose one public entry point rather than one exported function per language.
-The preferred direction to evaluate is a language registry such as:
-
-```r
-hc_language("es")
-hc_language("pt-BR", thousandsSep = ".")
-```
-
-Decide whether it returns a `lang` list for
-`options(highcharter.lang = ...)`, modifies one chart, or supports both without
-hidden global side effects. English remains the default. Start with Spanish,
-Portuguese and French; add another language only with a maintainer or reliable
-translation source.
-
-Audit the existing English defaults at the same time, including month/day order,
-export strings, accessibility strings, numeric separators and locale-aware date
-formatting.
-
-Definition of done: one small API, tested fallback to English, chart-local
-overrides, and no additional package dependency.
+- `hc_language()` returns a plain list for `options(highcharter.lang = ...)`.
+  `hc_add_language()` applies a preset or a hand-written list to one widget.
+  Current public export count: 123 (121 at the baseline).
+- Spanish and Portuguese cover the common Shiny controls, exporting, basic
+  accessibility and Stock ranges. French uses the upstream 12.6.0 pack.
+  Untranslated labels use Highcharts' English defaults. Regional variants
+  retain their own date and number formatting through the browser.
+- Source-tree tests cover presets, fallback, nested overrides and scope.
+  Browser checks cover mixed languages, export menus, dates, numbers and Stock.
+  The [maintenance guide](readme.md#maintain-language-presets) records the
+  upstream pack and the global language reads to recheck on a bundle upgrade.
 
 ### 7. Themes — proposal required before implementation
 

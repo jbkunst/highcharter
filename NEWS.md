@@ -1,5 +1,10 @@
 # highcharter (development version)
 
+* `hc_language("es-CL")` supplies a language list for `options(highcharter.lang = ...)`.
+  `hc_add_language()` applies a preset or a hand-written list to one widget.
+  Spanish, Portuguese and French include translated controls. Regional tags select
+  the browser's date and number formats. The default English short weekdays now
+  start on Sunday, matching Highcharts' weekday index.
 * Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included
   by default, including keyboard navigation (#755).
 * The bundle now includes the official chart types and common feature modules. A new

@@ -81,6 +81,7 @@ reference:
   - hc_add_annotation
   - hc_add_dependency
   - hc_add_event_point
+  - hc_language
   - hc_yAxis_multiples
   - hc_elementId
   - hc_motion

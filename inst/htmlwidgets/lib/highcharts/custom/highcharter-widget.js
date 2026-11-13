@@ -1,4 +1,31 @@
 (function(global) {
+  // Highcharts 12.6 still reads these labels from its global defaults during
+  // render and redraw. Use the owning chart's language for each synchronous call.
+  function useChartLanguage(proceed) {
+    var defaults = Highcharts.getOptions();
+    var previous = defaults.lang;
+    defaults.lang = (this.chart || this).options.lang;
+    try {
+      return proceed();
+    } finally {
+      defaults.lang = previous;
+    }
+  }
+
+  // Stock fills button text and titles in place during init. The default
+  // buttons are shared by Stock charts, so each chart needs its own copies.
+  Highcharts.wrap(Highcharts.RangeSelector.prototype, 'init', function(proceed, chart) {
+    var range = chart.options.rangeSelector;
+    range.buttons = range.buttons.map(function(button) { return Highcharts.merge(button); });
+    return proceed();
+  });
+
+  Highcharts.wrap(Highcharts.Axis.prototype, 'defaultLabelFormatter', useChartLanguage);
+  Highcharts.wrap(Highcharts.Chart.prototype, 'showResetZoom', useChartLanguage);
+  ['drawInput', 'renderButtons', 'updateButtonStates'].forEach(function(method) {
+    Highcharts.wrap(Highcharts.RangeSelector.prototype, method, useChartLanguage);
+  });
+
   function getChart(elOrId) {
     var id = typeof elOrId === 'string' ? elOrId : elOrId.id;
     return Highcharts.charts.find(function(chart) {

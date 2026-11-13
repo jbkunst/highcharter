@@ -32,7 +32,7 @@
   )
 
   options(
-    highcharter.lang = list(
+    highcharter.lang = getOption("highcharter.lang", list(
       contextButtonTitle = "Chart context menu",
       decimalPoint = ".",
       downloadCSV = "Download CSV",
@@ -67,7 +67,7 @@
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
       ),
-      shortWeekdays = c("Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"),
+      shortWeekdays = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
       thousandsSep = " ",
       viewData = "View data table",
       viewFullscreen = "View in full screen",
@@ -75,7 +75,7 @@
         "Sunday", "Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday"
       )
-    )
+    ))
   )
 
   options(
