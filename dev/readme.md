@@ -3,6 +3,20 @@
 The staged cleanup of dependencies, the R API, articles, themes and pkgdown is
 tracked in the [simplification plan](simplification-plan.md).
 
+## Build the website
+
+Run `Rscript dev/build-site.R` from the repository root with the website
+dependencies installed. The script builds the home gallery and the series
+gallery locally, then renders the site with pkgdown. The README supplies the
+home text. Generated gallery files belong in the site output.
+The series gallery checks the types registered in the bundled JavaScript. Its
+canonical examples live in `dev/R/test-highcharts-bundle.R`.
+The four home charts share one engine. Keep the initial gallery assets below
+650 kB gzip and use the standalone Stock Tools widget only on its own pages.
+For the stock proxy browser test, install the current highcharter package, Shiny
+and Python Playwright with Chromium, then run `python tests/browser/stock-proxy.py`.
+The test also accepts a Chrome executable in `CHROMOTE_CHROME`.
+
 ## Test R changes
 
 Run the affected tests from the repository root, for example:

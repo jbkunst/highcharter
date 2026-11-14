@@ -155,7 +155,8 @@ quantmod package.
 ```{r}
 library(quantmod)
 
-x <- getSymbols("GOOG", auto.assign = FALSE)
+data(sample_matrix, package = "xts")
+x <- xts::as.xts(sample_matrix)
 
 hchart(x)
 ```
@@ -167,6 +168,16 @@ x <- cbind(mdeaths, fdeaths)
 hchart(x)
 ```
 
+## Seasonal decomposition
+
+The four panels share a time axis and show the observed series, seasonality,
+trend and remainder. Gaps at the ends of the trend are part of the fitted
+decomposition.
+
+```{r hchart-decompose}
+hchart(stats::decompose(AirPassengers, type = "multiplicative"))
+```
+
 ## Autocovariance & Autocorrelation
 
 ```{r}
@@ -176,8 +187,19 @@ hchart(x)
 
 ## Principal Components
 
-```{r}
-hchart(princomp(USArrests, cor = TRUE))
+Each point represents one state. Axis titles give the share of variance
+explained by each component. Hover over a point to see the state's name.
+
+```{r hchart-pca}
+fit <- prcomp(USArrests, scale. = TRUE)
+hchart(fit)
+```
+
+Use `loadings = TRUE` to show how the variables relate to the chosen
+components. Use `scale = 0` for the raw observation scores.
+
+```{r hchart-pca-loadings}
+hchart(fit, choices = c(1, 3), loadings = TRUE)
 ```
 
 ## Matrix

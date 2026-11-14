@@ -1,7 +1,7 @@
 library(highcharter)
 
 highchart() %>%
-  hc_yAxis_multiples(create_yaxis(naxis = 4, title = list(text = NULL))) %>%
+  hc_yAxis(create_axis(naxis = 4, title = list(text = NULL))) %>%
   hc_add_series(data = c(1,3,2)) %>%
   hc_add_series(data = c(20, 40, 10), yAxis = 1) %>%
   hc_add_series(data = c(200, 400, 500), type = "column", yAxis = 2) %>%
@@ -17,7 +17,7 @@ R <- edhec[, 1:3]
 
 hc <- highchart(type = "stock")
 
-hc <- hc_yAxis_multiples(hc, create_yaxis(naxis = 3, heights = c(2,1,1)))
+hc <- hc_yAxis(hc, create_axis(naxis = 3, heights = c(2,1,1)))
 
 for(i in 1:ncol(R)) {
   hc <- hc_add_series(hc, R[, i], yAxis = i - 1, name = names(R)[i])

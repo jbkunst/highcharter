@@ -28,7 +28,7 @@ highchart(type = "stock") %>%
                         }')
         
         ))) %>%
-  hc_yAxis_multiples(
+  hc_yAxis(
     list(top = "0%" , height = "100%", title = list(text = "test"))
   ) %>%  
   hc_add_series(cc$Data, type = "spline", yAxis = 0)

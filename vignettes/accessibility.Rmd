@@ -1,0 +1,50 @@
+---
+title: "Accessible charts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Accessible charts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+library(highcharter)
+options(highcharter.google_fonts = FALSE)
+```
+
+Highcharter includes the Highcharts accessibility module in the shared bundle.
+Give the chart a title and identify the units on its axes. Use the caption
+for the takeaway and the point description for details when navigating the
+series. Keep a distinct marker or dash style when several series use color.
+
+```{r accessible-chart}
+highchart() |>
+  hc_title(text = "Daily bicycle trips") |>
+  hc_xAxis(categories = c("Mon", "Tue", "Wed"), title = list(text = "Day")) |>
+  hc_yAxis(title = list(text = "Trips")) |>
+  hc_add_series(data = c(24, 35, 30), name = "North route") |>
+  hc_add_series(data = c(18, 28, 26), name = "South route", dashStyle = "Dash",
+                marker = list(symbol = "diamond")) |>
+  hc_caption(text = "Both routes had the most trips on Tuesday.") |>
+  hc_chart(animation = FALSE) |>
+  hc_plotOptions(series = list(animation = FALSE)) |>
+  hc_accessibility(enabled = TRUE, landmarkVerbosity = "one",
+    point = list(valueDescriptionFormat = "{xDescription}, {value} trips."),
+    keyboardNavigation = list(enabled = TRUE)) |>
+  hc_exporting(enabled = TRUE, showTable = TRUE)
+```
+
+Use Tab to reach the chart, the arrow keys to explore points, and Tab again
+to reach the legend and export controls. The HTML data table offers the values
+in reading order. Give every interactive chart a visible focus indicator.
+For a longer explanation, reference an adjacent paragraph by its unique CSS
+selector in `hc_accessibility(linkedDescription = "#route-summary")`.
+Use `screenReaderSection` to customize the text before or after the chart.
+
+For Maps, name each region or point and include the unit in its value
+description. For Stock, identify the financial instrument and date. See the
+[Maps](maps.html) and [Stock](stock.html) examples. The home gallery and the
+example above disable introductory animations. Sonification is available
+through `hc_sonification()` for readers who choose to play the chart.
+
+[Highcharts accessibility guide](https://www.highcharts.com/docs/accessibility/accessibility-module)

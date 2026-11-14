@@ -1,0 +1,32 @@
+---
+title: "Series gallery"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Series gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+library(highcharter)
+options(highcharter.google_fonts = FALSE)
+```
+
+The [interactive gallery](../series-gallery.html) renders a small example for
+each series type registered by the shared bundle. The examples use local
+data, including an embedded sample tile for the map. Open a chart title to
+read the Highcharts API for that series. The contour plot requires a browser
+with WebGPU support.
+
+| Family | Examples |
+| --- | --- |
+| Basic series | [area](../series-gallery.html#area), [areaspline](../series-gallery.html#areaspline), [bar](../series-gallery.html#bar), [column](../series-gallery.html#column), [dotplot](../series-gallery.html#dotplot), [line](../series-gallery.html#line), [pie](../series-gallery.html#pie), [polygon](../series-gallery.html#polygon), [scatter](../series-gallery.html#scatter), [spline](../series-gallery.html#spline), [streamgraph](../series-gallery.html#streamgraph) |
+| Maps | [flowmap](../series-gallery.html#flowmap), [geoheatmap](../series-gallery.html#geoheatmap), [map](../series-gallery.html#map), [mapbubble](../series-gallery.html#mapbubble), [mapline](../series-gallery.html#mapline), [mappoint](../series-gallery.html#mappoint), [tiledwebmap](../series-gallery.html#tiledwebmap) |
+| Stock | [candlestick](../series-gallery.html#candlestick), [flags](../series-gallery.html#flags), [heikinashi](../series-gallery.html#heikinashi), [hlc](../series-gallery.html#hlc), [hollowcandlestick](../series-gallery.html#hollowcandlestick), [ohlc](../series-gallery.html#ohlc), [pointandfigure](../series-gallery.html#pointandfigure), [renko](../series-gallery.html#renko) |
+| Networks and hierarchies | [arcdiagram](../series-gallery.html#arcdiagram), [dependencywheel](../series-gallery.html#dependencywheel), [networkgraph](../series-gallery.html#networkgraph), [organization](../series-gallery.html#organization), [sankey](../series-gallery.html#sankey), [sunburst](../series-gallery.html#sunburst), [treegraph](../series-gallery.html#treegraph), [treemap](../series-gallery.html#treemap), [venn](../series-gallery.html#venn) |
+| Statistical charts | [bellcurve](../series-gallery.html#bellcurve), [boxplot](../series-gallery.html#boxplot), [errorbar](../series-gallery.html#errorbar), [histogram](../series-gallery.html#histogram), [pareto](../series-gallery.html#pareto) |
+| Scientific and fields | [bubble](../series-gallery.html#bubble), [contour](../series-gallery.html#contour), [heatmap](../series-gallery.html#heatmap), [scatter3d](../series-gallery.html#scatter3d), [tilemap](../series-gallery.html#tilemap), [vector](../series-gallery.html#vector), [windbarb](../series-gallery.html#windbarb) |
+| Ranges and schedules | [arearange](../series-gallery.html#arearange), [areasplinerange](../series-gallery.html#areasplinerange), [columnrange](../series-gallery.html#columnrange), [dumbbell](../series-gallery.html#dumbbell), [gantt](../series-gallery.html#gantt), [xrange](../series-gallery.html#xrange) |
+| Other forms | [bullet](../series-gallery.html#bullet), [columnpyramid](../series-gallery.html#columnpyramid), [cylinder](../series-gallery.html#cylinder), [funnel](../series-gallery.html#funnel), [funnel3d](../series-gallery.html#funnel3d), [gauge](../series-gallery.html#gauge), [item](../series-gallery.html#item), [lollipop](../series-gallery.html#lollipop), [packedbubble](../series-gallery.html#packedbubble), [pictorial](../series-gallery.html#pictorial), [pyramid](../series-gallery.html#pyramid), [pyramid3d](../series-gallery.html#pyramid3d), [solidgauge](../series-gallery.html#solidgauge), [timeline](../series-gallery.html#timeline), [variablepie](../series-gallery.html#variablepie), [variwide](../series-gallery.html#variwide), [waterfall](../series-gallery.html#waterfall), [wordcloud](../series-gallery.html#wordcloud) |
+
+The [R examples](https://github.com/jbkunst/highcharter/blob/HEAD/dev/R/test-highcharts-bundle.R) construct the widgets with `hchart()` or `hc_add_series()`.

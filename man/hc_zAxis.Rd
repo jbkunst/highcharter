@@ -16,6 +16,9 @@ The Z axis or depth axis for 3D plots.
 }
 \details{
 See the Axis class for programmatic access to the axis.
+
+Named options update the first axis. Supply unnamed axis lists,
+individually or in one list, to replace the collection. Series can select an axis by ID.
 }
 \examples{
 df <- data.frame(

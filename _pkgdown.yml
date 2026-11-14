@@ -47,6 +47,7 @@ reference:
   desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).
   contents:
   - highchart
+  - highchartstock
   - hchart
   - hc_accessibility
   - hc_annotations
@@ -83,7 +84,6 @@ reference:
   - hc_xAxis
   - hc_yAxis
   - hc_zAxis
-  - highchartzero
 - title: Additional function to use Highcharts API
   desc: Helpers function to add or modify elements, like plugins (as {htmltools} dependencies),
     events or annotations.
@@ -92,7 +92,7 @@ reference:
   - hc_add_dependency
   - hc_add_event_point
   - hc_language
-  - hc_yAxis_multiples
+  - create_axis
   - hc_elementId
   - hc_motion
   - hc_rm_series
@@ -144,6 +144,7 @@ reference:
   - hcpxy_remove_point
   - hcpxy_remove_series
   - hcpxy_set_data
+  - hcpxy_set_extremes
   - hcpxy_update
   - hcpxy_update_point
   - hcpxy_update_series
@@ -177,7 +178,6 @@ reference:
   - download_map_data
   - export_hc
   - get_data_from_map
-  - get_hc_series_from_df
   - hcaes
   - hcaes_string
   - hchart.igraph
@@ -192,17 +192,16 @@ reference:
   - mutate_mapping
   - random_id
   - str_to_id
-- title: Deprecated functions
-  desc: Functions that will be removed in the next version of the package.
-  contents:
   - hcparcords
-  - create_axis
+- title: Deprecated functions
+  contents: hc_yAxis_multiples
 articles:
 - title: Get Started
   navbar: Get Started
   contents:
   - highcharter
   - first-steps
+  - accessibility
   - showcase
   - hchart
   - highcharts-api
@@ -211,6 +210,7 @@ articles:
   navbar: The highchartsJS bundle
   contents:
   - highcharts
+  - series-gallery
   - maps
   - stock
 - title: Shiny Integration

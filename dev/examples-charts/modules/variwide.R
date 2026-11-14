@@ -2,7 +2,7 @@
 # 
 library(highcharter)
 
-highchartzero() %>% 
+highchart() %>%
   hc_add_series(
     name = 'Labor Costs',
     data = list(
@@ -37,5 +37,4 @@ highchartzero() %>%
       )
   ) %>% 
   hc_title(text = 'Labor Costs in Europe, 2016') %>% 
-  hc_xAxis(type = "category") %>% 
-  hc_add_dependency("modules/variwide.js")
+  hc_xAxis(type = "category")

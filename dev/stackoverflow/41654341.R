@@ -44,7 +44,7 @@ myseries
 
 highchart() %>% 
   hc_add_series_list(myseries) %>% 
-  hc_yAxis_multiples(list(
+  hc_yAxis(list(
     title=list(text="MM $"),
     align= "right",
     top = "0%",

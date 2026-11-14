@@ -78,7 +78,7 @@ in R to see how we could go about that.
 ?hc_legend
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.alt="R help for hc_legend shows the ellipsis argument and links to the Highcharts options."}
 knitr::include_graphics("help-hc-legend.png")
 ```
 
@@ -91,7 +91,7 @@ provided is a link to the legend section of the `highcharts` API documentation
 which can be found [here](http://api.highcharts.com/highcharts#legend) a
 screenshot of which is below.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.alt="The Highcharts legend API lists properties and the allowed values for each."}
 knitr::include_graphics("hc-api-legend.png")
 ```
 
@@ -110,7 +110,7 @@ Below we can see the `layout` does indeed reorient the legend items and in
 this example we also see handily that `verticalAlign` moves the legend up and 
 down the chart area and `align` performs the same operation horizontally.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.alt="A chart with a vertical legend positioned inside the plot at the top left."}
 knitr::include_graphics("hc-api-legend-jsfiddle.png")
 ```
 
@@ -140,7 +140,7 @@ Halfway there, now we just need to add the legend title. There are some argument
 in the API documentation that look like sets of nested properties. Importantly
 for this exercise, the `title` argument look exactly like one of these properties.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.alt="The legend title option expands to the text and style properties."}
 knitr::include_graphics("hc-api-legend-title.png")
 ```
 

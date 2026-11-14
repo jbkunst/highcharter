@@ -1,132 +1,79 @@
 ---
-title: Stocks with highstocks
-author: Joshua Kunst
-date: "`r Sys.Date()`"
+title: "Stock charts and Stock Tools"
 output: rmarkdown::html_vignette
-description: >
-  libraries from highchartsJS to create stock or general timeline charts.
-  Features sophisticated navigation for high-volume data, user annotations and
-  range selectors.
-  The highcharter package include [highstocks](https://www.highcharts.com/demo/stock)
-editor_options: 
-  chunk_output_type: console
 vignette: >
-  %\VignetteIndexEntry{Stocks with highstocks}
+  %\VignetteIndexEntry{Stock charts and Stock Tools}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}   
+  %\VignetteEncoding{UTF-8}
 ---
-
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "line-chart"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
 
 ```{r, include=FALSE}
 library(highcharter)
-hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+options(highcharter.google_fonts = FALSE)
 ```
 
-The highcharter package include [highstocks](https://www.highcharts.com/demo/stock) 
-libraries from highchartsJS to create stock or general timeline charts.
-Features sophisticated navigation for high-volume data, user annotations and
-range selectors.
-
-## Basics
-
-Highstock work well with the quantmod package. It's  easy chart symbols using
-`hchart()`. Then you can add more series using `hc_add_series()`.
+`highchart(type = "stock")` adds the Stock navigator and range selector.
+Use `highchartstock()` when readers also need drawing tools and technical
+indicators. All prices in these examples come from the xts package's sample
+OHLC matrix.
 
 ```{r}
-library(quantmod)
-
-x <- getSymbols("GOOG", auto.assign = FALSE)
-
-hchart(x)
+data(sample_matrix, package = "xts")
+prices <- xts::as.xts(sample_matrix)
+hchart(prices, id = "price", name = "Sample instrument")
 ```
 
-Obviously you can use the implemented API functions to edit the chart:
+## Lines and price bars
+
+One ordinary column produces a line. Several columns such as the two below
+produce one named line each. All four price fields together produce candles.
+Use `type = "ohlc"` for open–high–low–close bars.
 
 ```{r}
-y <- getSymbols("AMZN", auto.assign = FALSE)
-
-hchart(y, type = "ohlc") |> 
-  hc_title(text = "This is a Open-high-low-close chart with a custom theme") |> 
-  hc_add_theme(hc_theme("db"))
+hchart(prices[, "Close"], name = "Close")
+hchart(prices[, c("Open", "Close")])
+hchart(prices, type = "ohlc", name = "Sample instrument")
 ```
 
-## Candlestick and OHLC charts
+## Flags, navigator and indicators
 
-If you want to chart more symbols in you can
-use the `hc_add_series()` function. Don't forget to specify `type = "stock"` to
-activate the navigator, range selector and other features of highstock.   
+The flag and moving average select the price series by ID. The range selector
+and navigator act on the same time axis. Open the Stock Tools toolbar to add
+an indicator interactively.
 
 ```{r}
-hc <- highchart(type = "stock") |> 
-  hc_add_series(x, id = 1) |> 
-  hc_add_series(y, type = "ohlc", id = 2)
+price_chart <- highchartstock() |>
+  hc_add_series(prices, name = "Price", id = "price") |>
+  hc_add_series(type = "sma", linkedTo = "price", name = "10-day mean",
+                params = list(period = 10)) |>
+  hc_add_series(type = "flags", onSeries = "price", data = list(
+    list(x = datetime_to_timestamp(time(prices)[30]), title = "A", text = "Day 30")
+  )) |>
+  hc_stockTools(gui = list(enabled = TRUE, buttons = c("indicators", "zoomChange", "fullScreen"))) |>
+  hc_rangeSelector(selected = 0) |>
+  hc_navigator(enabled = TRUE)
 
-hc
+price_chart
 ```
-## Flags
 
-Previously we used the `id` parameter. This is necessary 
-to add flags to relate series and flags:
+## Two stacked panels
+
+The price and the daily trading range have separate scales. Their heights are
+in the ratio 3 to 1. The panels share the time axis.
 
 ```{r}
-library(dplyr)
-
-set.seed(123)
-
-data_flags <- tibble(
-  date = sample(time(x), size = 5),
-  title = sprintf("E #%s", seq_along(date)),
-  text = sprintf("An interesting event #%s in %s", seq_along(date), date)
-)
-
-glimpse(data_flags)
-
-hc |> 
-  hc_add_series(
-    data_flags, 
-    hcaes(x = date),
-    type = "flags", 
-    onSeries = 2
-    )
+daily_range <- prices[, "High"] - prices[, "Low"]
+highchart(type = "stock") |>
+  hc_yAxis(create_axis(2, heights = c(3, 1))) |>
+  hc_add_series(prices, name = "Price", yAxis = 0) |>
+  hc_add_series(daily_range, name = "High minus low", type = "column", yAxis = 1)
 ```
 
-## Advanced Example
+## Update a series and its visible range in Shiny
 
-You can do what you want. Use all the highchartsJS API to add axis, series, 
-bands, etc.
+Run the app below, then press **Update**. The stock widget stays mounted while
+the proxy changes the selected series and the x-axis range. Redraw the updated
+series before setting the range so the Stock navigator has its new data limits.
 
-```{r}
-SPY <- getSymbols("SPY", from = Sys.Date() - lubridate::years(1), auto.assign = FALSE)
-SPY <- adjustOHLC(SPY)
-
-SPY.SMA.10 <- SMA(Cl(SPY), n = 5)
-SPY.SMA.200 <- SMA(Cl(SPY), n = 100)
-SPY.RSI.14 <- RSI(Cl(SPY))
-SPY.RSI.SellLevel <- xts(rep(70, NROW(SPY)), index(SPY))
-SPY.RSI.BuyLevel <- xts(rep(30, NROW(SPY)), index(SPY))
-
-
-highchart(type = "stock") |> 
-  # create axis :)
-  hc_yAxis_multiples(create_axis(3, height = c(2, 1, 1), turnopposite = TRUE)) |> 
-  # series :D
-  hc_add_series(SPY, yAxis = 0, name = "SPY") |> 
-  hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") |> 
-  hc_add_series(SPY.SMA.200, yAxis = 0, name = "Slow MA") |> 
-  hc_add_series(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") |> 
-  hc_add_series(SPY.RSI.14, yAxis = 2, name = "Osciallator", color = hex_to_rgba("green", 0.7)) |>
-  hc_add_series(SPY.RSI.SellLevel, color = hex_to_rgba("red", 0.7), yAxis = 2, name = "Sell level") |> 
-  hc_add_series(SPY.RSI.BuyLevel, color = hex_to_rgba("blue", 0.7), yAxis = 2, name = "Buy level") |> 
-  hc_tooltip(valueDecimals = 2) |> 
-  hc_size(height = 800)
+```{r stock-proxy, eval=FALSE, code=readLines(system.file("examples", "stock-proxy.R", package="highcharter"))}
 ```
-

@@ -27,8 +27,7 @@ inside of \code{hc_tooltip} function an \code{useHTML = TRUE} option.
 
 require(dplyr)
 require(purrr)
-require(tidyr)
-require(gapminder)
+if (requireNamespace("gapminder", quietly = TRUE)) {
 data(gapminder, package = "gapminder")
 
 gp <- gapminder |>
@@ -36,7 +35,7 @@ gp <- gapminder |>
   distinct(country, .keep_all = TRUE)
 
 gp2 <- gapminder |>
-  nest(-country) |>
+  group_nest(country) |>
   mutate(
     data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
     data = map(data, list_parse)
@@ -94,4 +93,5 @@ hc |>
   )
 
 
+}
 }

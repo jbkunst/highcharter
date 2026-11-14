@@ -1,11 +1,10 @@
 # Build a local gallery for the Highcharts bundle in a clean R session.
-args <- commandArgs(trailingOnly = FALSE)
-script_arg <- grep("^--file=", args, value = TRUE)
-if (!length(script_arg)) stop("Run this file with Rscript.")
-script <- normalizePath(sub("^--file=", "", script_arg[[1]]))
-root <- normalizePath(file.path(dirname(script), "..", ".."))
-
-pkgload::load_all(root, quiet = TRUE)
+root <- normalizePath(".")
+if (!file.exists(file.path(root, "DESCRIPTION"))) stop("Run from the package root.")
+if (!exists("site_dir", inherits = FALSE)) {
+  site_dir <- file.path(root, "dev", "highcharts-bundle", "preview")
+}
+options(highcharter.google_fonts = FALSE)
 library(highcharter)
 library(htmltools)
 
@@ -60,6 +59,7 @@ add_chart("bubble", chart("bubble", bubbles))
 add_chart("boxplot", chart("boxplot", lapply(seq_len(nrow(common)), function(i) {
   list(common$x[i], common$low[i] - 1, common$low[i], common$y[i], common$high[i], common$high[i] + 1)
 })))
+add_chart("scatter3d", chart("scatter3d", bubbles, options3d = list(enabled = TRUE, alpha = 15, beta = 20)))
 add_chart("columnpyramid", chart("columnpyramid"))
 add_chart("packedbubble", chart("packedbubble", lapply(common$y, function(value) list(value = value))))
 add_chart("pie", chart("pie", lapply(seq_len(nrow(common)), function(i) list(name = common$name[i], y = common$y[i]))))
@@ -111,7 +111,7 @@ matrix_data <- unlist(lapply(0:4, function(x) {
 }), recursive = FALSE)
 add_chart("heatmap", chart("heatmap", matrix_data))
 add_chart("tilemap", chart("tilemap", matrix_data))
-add_chart("contour", chart("contour", matrix_data))
+add_chart("contour", chart("contour", matrix_data) |> hc_colorAxis(min = -2, max = 2))
 
 hierarchy <- list(
   list(id = "root", name = "Root"),
@@ -154,7 +154,7 @@ add_chart("bellcurve", highchart() |>
   hc_add_series(type = "bellcurve", baseSeries = "samples"))
 add_chart("pareto", highchart() |>
   hc_title(text = "pareto") |>
-  hc_yAxis_multiples(list(title = list(text = "Count")), list(max = 100, opposite = TRUE)) |>
+  hc_yAxis(list(title = list(text = "Count")), list(max = 100, opposite = TRUE)) |>
   hc_add_series(type = "column", id = "counts", data = common$y) |>
   hc_add_series(type = "pareto", baseSeries = "counts", yAxis = 1))
 
@@ -192,13 +192,13 @@ add_chart("geoheatmap", highchart(type = "map") |>
   )))
 add_chart("tiledwebmap", highchart(
   type = "map",
-  hc_opts = list(mapView = list(center = list(lon = -70.67, lat = -33.45), zoom = 4))
+  hc_opts = list(mapView = list(projection = list(name = "WebMercator"), center = c(-70.67, -33.45), zoom = 4))
   ) |>
   hc_title(text = "tiledwebmap") |>
   hc_add_series(
     type = "tiledwebmap",
-    provider = list(type = "OpenStreetMap"),
-    name = "OpenStreetMap"
+    provider = list(url = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' fill='%23d7e7ee'/%3E%3Cpath d='M0 0L256 256M0 256L256 0' stroke='%2397b3bf'/%3E%3C/svg%3E"),
+    name = "Local sample tile"
   ))
 add_chart("flowmap", highchart(type = "map") |>
   hc_title(text = "flowmap") |>
@@ -211,10 +211,16 @@ ohlc <- lapply(seq_along(dates), function(i) {
   open <- 10 + i
   list(dates[i], open, open + 3, open - 2, open + 1)
 })
-for (type in c("ohlc", "candlestick", "heikinashi", "hollowcandlestick", "renko", "pointandfigure")) {
+for (type in c("ohlc", "candlestick", "heikinashi", "hollowcandlestick")) {
   add_chart(type, highchart(type = "stock") |>
     hc_title(text = type) |>
     hc_add_series(type = type, data = ohlc, name = type))
+}
+for (type in c("renko", "pointandfigure")) {
+  close <- Map(list, dates, c(20, 24, 29, 21, 16, 25, 31, 22))
+  add_chart(type, highchart(type = "stock") |>
+    hc_title(text = type) |>
+    hc_add_series(type = type, data = close, boxSize = 2, name = type))
 }
 hlc <- lapply(seq_along(dates), function(i) {
   open <- 10 + i
@@ -236,32 +242,22 @@ add_chart("gantt", highchart(type = "gantt") |>
     list(name = "Task A", start = dates[1], end = dates[4], y = 0),
     list(name = "Task B", start = dates[3], end = dates[7], y = 1)
   )))
-add_chart("Stock Tools", highchartstock() |>
-  hc_title(text = "Stock Tools") |>
-  hc_add_series(type = "candlestick", id = "price", data = ohlc, name = "Price"))
 
-expected_types <- c(
-  "line", "spline", "area", "areaspline", "column", "bar", "scatter", "pie",
-  "arearange", "areasplinerange", "boxplot", "bubble", "columnrange",
-  "columnpyramid", "errorbar", "gauge", "packedbubble", "polygon", "waterfall",
-  "hlc", "ohlc", "candlestick", "flags", "map", "mapline", "mappoint", "mapbubble",
-  "item", "funnel", "pyramid", "heatmap", "treemap", "sankey", "dependencywheel",
-  "organization", "solidgauge", "streamgraph", "sunburst", "vector", "wordcloud",
-  "xrange", "tilemap", "venn", "gantt", "timeline", "bullet", "dumbbell",
-  "lollipop", "arcdiagram", "treegraph", "variwide", "pareto", "histogram",
-  "bellcurve", "contour", "cylinder", "dotplot", "flowmap", "funnel3d",
-  "geoheatmap", "heikinashi", "hollowcandlestick", "networkgraph", "pictorial",
-  "pointandfigure", "pyramid3d", "renko", "tiledwebmap", "variablepie", "windbarb"
-)
+
+expected_types <- names(charts)
 
 cards <- Map(function(value, name) {
-  div(class = "chart-card", tags$h3(name), value)
+  div(id = name, class = "chart-card", tags$h3(tags$a(href = paste0("https://api.highcharts.com/highcharts/series.", name), name)), value)
 }, charts, names(charts))
 
 registry_check <- sprintf(
   "window.addEventListener('load', function () {
     var expected = %s;
-    var missing = expected.filter(function (type) { return !Highcharts.seriesTypes[type]; });
+    var missing = Object.keys(Highcharts.seriesTypes).filter(type => !expected.includes(type));
+    expected.forEach(type => {
+      const chart = Highcharts.charts.find(c => c && c.renderTo.closest('.chart-card')?.id === type);
+      if (!chart?.series.some(s => s.type === type && !s.options.isInternal)) missing.push(type);
+    });
     var node = document.getElementById('registry-status');
     node.textContent = missing.length ? 'Missing series: ' + missing.join(', ') :
       'All ' + expected.length + ' expected series types are registered.';
@@ -272,7 +268,7 @@ registry_check <- sprintf(
 
 page <- tagList(
   tags$head(
-    tags$meta(charset = "utf-8"),
+    tags$meta(charset = "utf-8"), tags$meta(name = "viewport", content = "width=device-width,initial-scale=1"),
     tags$title("Highcharter bundle gallery"),
     tags$style(HTML("body{font-family:sans-serif;margin:24px}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}.chart-card{min-width:0;border:1px solid #ddd;border-radius:8px;padding:8px}.chart-card h3{font-size:14px;margin:4px 8px}.passed{color:#087f23}.failed{color:#b00020}"))
   ),
@@ -283,7 +279,5 @@ page <- tagList(
   tags$script(HTML(registry_check))
 )
 
-output_dir <- file.path(root, "dev", "highcharts-bundle", "preview")
-dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-save_html(page, file.path(output_dir, "index.html"), libdir = "libs")
-message("Wrote ", file.path(output_dir, "index.html"))
+dir.create(site_dir, recursive = TRUE, showWarnings = FALSE)
+save_html(page, file.path(site_dir, "series-gallery.html"), libdir = "gallery-libs")

@@ -17,11 +17,9 @@ hcparcords(df, ...)
 Shortcut to create parallel coordinates
 }
 \examples{
-require(viridisLite)
-
 n <- 15
 
-hcparcords(head(mtcars, n), color = hex_to_rgba(magma(n), 0.5))
+hcparcords(head(mtcars, n), color = hex_to_rgba(grDevices::hcl.colors(n, "Inferno"), 0.5))
 
 require(dplyr)
 data(iris)

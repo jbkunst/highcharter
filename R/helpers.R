@@ -38,8 +38,7 @@ get_outliers_values <- function(x) {
 #'
 #' }
 #'
-#' @importFrom dplyr transmute group_nest rename group_by bind_rows summarise
-#' @importFrom tidyr unnest
+#' @importFrom dplyr transmute group_nest rename group_by bind_cols bind_rows summarise
 #' @importFrom purrr map_if
 #' @importFrom grDevices boxplot.stats
 #' @export
@@ -73,8 +72,7 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 
   dat1 <- dat |>
     group_by(series, name) |>
-    summarise(data = list(get_box_values(x)), .groups = "drop") |>
-    unnest(cols = data) |>
+    summarise(get_box_values(x), .groups = "drop") |>
     group_nest(series) |>
     mutate(data = map(data, list_parse)) |>
     rename(name = series) |>
@@ -86,8 +84,8 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
     dat2 <- dat |>
       mutate(name = as.numeric(factor(name)) - 1) |>
       group_by(series, name) |>
-      summarise(y = list(get_outliers_values(x)), .groups = "drop") |>
-      unnest(cols = y) |>
+      dplyr::group_modify(~ data.frame(y = get_outliers_values(.x$x))) |>
+      ungroup() |>
       rename(x = name) |>
       group_nest(series) |>
       mutate(data = map(data, list_parse)) |>
@@ -128,7 +126,6 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 #' }
 #'
 #' @importFrom dplyr group_by_at arrange desc distinct rename_all everything
-#' @importFrom tidyr unite
 #' @importFrom purrr reduce
 #' @export
 data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption("highcharter.color_palette")) {
@@ -154,23 +151,13 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption(
       select(1:depth) |>
       distinct()
 
-    datg_name <- datg |>
-      select(depth) |>
-      rename_all(~"name")
+    ids <- do.call(paste, c(as.list(datg), sep = "_"))
+    dd <- list(tibble(name = datg[[depth]], id = str_to_id_vec(ids)))
 
-    datg_id <- datg |>
-      unite("id", everything(), sep = "_") |>
-      mutate(id = str_to_id_vec(id))
-
-    datg_parent <- datg |>
-      select(1:(depth - 1)) |>
-      unite("parent", everything(), sep = "_") |>
-      mutate(parent = str_to_id(parent))
-
-    dd <- list(datg_name, datg_id)
-
-    # depth != 1 add parents
-    if (depth != 1) dd <- dd |> append(list(datg_parent))
+    if (depth > 1L) {
+      parents <- do.call(paste, c(as.list(datg[-depth]), sep = "_"))
+      dd <- append(dd, list(tibble(parent = str_to_id(parents))))
+    }
 
     # depth == 1 add colors
     if (depth == 1 & !is.null(colors)) {
@@ -250,11 +237,9 @@ data_to_sankey <- function(data = NULL) {
 #'   (\url{https://api.highcharts.com/highcharts/series}) for the
 #'   \code{hchar.data.frame} function.
 #' @examples
-#' require(viridisLite)
-#'
 #' n <- 15
 #'
-#' hcparcords(head(mtcars, n), color = hex_to_rgba(magma(n), 0.5))
+#' hcparcords(head(mtcars, n), color = hex_to_rgba(grDevices::hcl.colors(n, "Inferno"), 0.5))
 #'
 #' require(dplyr)
 #' data(iris)
@@ -273,16 +258,14 @@ hcparcords <- function(df, ...) {
     (x - rng[1]) / (rng[2] - rng[1])
   }
 
-  df <- df[map_lgl(df, is.numeric)]
+  columns <- lapply(df[map_lgl(df, is.numeric)], rescale01)
+  df <- data.frame(
+    .row = rep(rownames(df), times = length(columns)),
+    var = rep(names(columns), each = nrow(df)),
+    val = as.numeric(unlist(columns, use.names = FALSE))
+  )
 
-  # Add row identifier
-  df <- rownames_to_column(df, ".row")
-
-  df <- dplyr::mutate_if(df, is.numeric, rescale01)
-
-  df <- tidyr::gather(df, "var", "val", setdiff(names(df), ".row"))
-
-  hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row")) |>
+  hchart(df, "line", hcaes_string(x = "var", y = "val", group = ".row")) |>
     hc_plotOptions(series = list(showInLegend = FALSE)) |>
     hc_yAxis(min = 0, max = 1) |>
     hc_tooltip(sort = TRUE, table = TRUE, valueDecimals = 2)
@@ -290,35 +273,33 @@ hcparcords <- function(df, ...) {
 
 #' Convert an object to list with identical structure
 #'
-#' This functions are similar to \code{rlist::list.parse} but this removes
-#' names. \code{NA}s are removed for compatibility with rjson::toJSON.
+#' Each row becomes one list of values. `list_parse()` keeps column names and
+#' `list_parse2()` drops them. With `highcharter.rjson = TRUE`, rows with
+#' missing values are omitted.
 #'
+#' @importFrom tibble as_tibble
 #' @param df A data frame to parse to list
 #' @examples
 #'
 #' x <- data.frame(a = 1:3, type = c("A", "C", "B"), stringsAsFactors = FALSE)
 #' list_parse(x)
 #' list_parse2(x)
-#' @importFrom purrr transpose
 #' @export
 list_parse <- function(df) {
   assertthat::assert_that(is.data.frame(df))
 
   if (getOption("highcharter.rjson")) {
     rows <- nrow(df)
-    df <- tidyr::drop_na(df)
+    df <- df[vctrs::vec_detect_complete(df), , drop = FALSE]
     if (getOption("highcharter.verbose") && (rows > nrow(df))) {
       warning("Removed ", (rows - nrow(df)), " rows with NA's.")
     }
   }
 
-  purrr::map_if(df, is.factor, as.character) |>
-    as_tibble() |>
-    list.parse() |>
-    setNames(NULL)
+  columns <- as_tibble(purrr::map_if(df, is.factor, as.character))
+  .mapply(list, columns, NULL)
 }
 
-#' @importFrom rlist list.parse
 #' @rdname list_parse
 #' @export
 list_parse2 <- function(df) {
@@ -405,7 +386,6 @@ datetime_to_timestamp <- function(dt) {
 #'
 #' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725", "red"))
 #' @importFrom grDevices col2rgb
-#' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
   rgb <- x |>
@@ -457,7 +437,7 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   palcols <- grDevices::colorRampPalette(colors)(nuniques)
 
   if (!is.numeric(x) | nuniques < 10) {
-    y <- as.numeric(as.factor(x))
+    y <- as.numeric(factor(x))
     xcols <- palcols[y]
   } else {
     ecum <- ecdf(x)
@@ -510,96 +490,6 @@ color_classes <- function(breaks = NULL,
       stringsAsFactors = FALSE
     )
   )
-}
-
-#' Auxiliar function to get series and options from tidy frame for hchart.data.frame
-#'
-#' This function is used in \code{hchart.data.frame}.
-#'
-#' @param data A `data.frame` object.
-#' @param type The type of chart. Possible values are line, scatter, point, column.
-#' @param ... Aesthetic mappings as \code{x y group color low high}.
-#'
-#' @examples
-#'
-#' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
-#' 
-#' @importFrom tibble has_name
-#' @importFrom dplyr ungroup
-#' @importFrom rlang .data
-get_hc_series_from_df <- function(data, type = NULL, ...) {
-  assertthat::assert_that(is.data.frame(data))
-  stopifnot(!is.null(type))
-
-  pars <- eval(substitute(alist(...)))
-  parsc <- map(pars, as.character)
-
-  data <- mutate(data, ...)
-  data <- ungroup(data)
-
-  # check type
-  type <- ifelse(type == "point", "scatter", type)
-  type <- ifelse("size" %in% names(data) & type == "scatter", "bubble", type)
-
-  # heatmap
-  if (type == "heatmap") {
-    if (!is.numeric(data[["x"]])) {
-      data[["xf"]] <- as.factor(data[["x"]])
-      data[["x"]] <- as.numeric(as.factor(data[["x"]])) - 1
-    }
-    if (!is.numeric(data[["y"]])) {
-      data[["yf"]] <- as.factor(data[["y"]])
-      data[["y"]] <- as.numeric(as.factor(data[["y"]])) - 1
-    }
-  }
-
-  # x
-  if (has_name(parsc, "x")) {
-    if (is.Date(data[["x"]])) {
-      data[["x"]] <- datetime_to_timestamp(data[["x"]])
-    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-      data[["name"]] <- data[["x"]]
-      data[["x"]] <- NULL
-    }
-  }
-
-  # color
-  if (has_name(parsc, "color")) {
-    if (type == "treemap") {
-      data <- rename(data, colorValue = .data$color)
-    } else {
-      data <- mutate(data,
-        colorv = .data$color,
-        color = highcharter::colorize(.data$color)
-      )
-    }
-  }
-
-  # size
-  if (has_name(parsc, "size") & type %in% c("bubble", "scatter")) {
-    data <- mutate(data, z = .data$size)
-  }
-
-  # group
-  if (!has_name(parsc, "group")) {
-    data[["group"]] <- "Series"
-  }
-
-  data[["charttpye"]] <- type
-
-  dfs <- data |>
-    group_by(.data$group, .data$charttpye) |>
-    do(data = list_parse(select(., -.data$group, -.data$charttpye))) |>
-    ungroup() |>
-    rename(name = .data$group, type = .data$charttpye)
-
-  if (!has_name(parsc, "group")) {
-    dfs[["name"]] <- NULL
-  }
-
-  series <- list_parse(dfs)
-
-  series
 }
 
 #' Check if a string vector is in hexadecimal color format

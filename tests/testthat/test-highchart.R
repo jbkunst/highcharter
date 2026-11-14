@@ -16,9 +16,9 @@ test_that("highchartOutput returns a function", {
 
 test_that("mixed widgets resolve one Highcharts bundle in either order", {
   stock <- highchart(type = "stock")
-  zero <- highchartzero()
+  chart <- highchart()
 
-  for (widgets in list(list(stock, zero), list(zero, stock))) {
+  for (widgets in list(list(stock, chart), list(chart, stock))) {
     deps <- htmltools::renderTags(htmltools::tagList(widgets))$dependencies
     engine <- Filter(function(dep) dep$name == "highcharts", deps)
     expect_length(engine, 1)

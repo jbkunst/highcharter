@@ -564,6 +564,8 @@ hc_tooltip <- function (hc, ..., sort = FALSE, table = FALSE)
 #'
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param ... Options defined in <https://api.highcharts.com/highcharts/xAxis>.
+#' @details Named options update the first axis. Supply unnamed axis lists,
+#'   individually or in one list, to replace the collection. Series can select an axis by ID.
 #' @example dev/examples-api/xAxis.R
 #' @export
 hc_xAxis <- function(hc, ...) {
@@ -581,6 +583,8 @@ hc_xAxis <- function(hc, ...) {
 #'
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param ... Options defined in <https://api.highcharts.com/highcharts/yAxis>.
+#' @details Named options update the first axis. Supply unnamed axis lists,
+#'   individually or in one list, to replace the collection. Series can select an axis by ID.
 #' @example dev/examples-api/yAxis.R
 #' @export
 hc_yAxis <- function(hc, ...) {
@@ -595,6 +599,8 @@ hc_yAxis <- function(hc, ...) {
 #'
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param ... Options defined in <https://api.highcharts.com/highcharts/zAxis>.
+#' @details Named options update the first axis. Supply unnamed axis lists,
+#'   individually or in one list, to replace the collection. Series can select an axis by ID.
 #' @example dev/examples-api/zAxis.R
 #' @export
 hc_zAxis <- function(hc, ...) {

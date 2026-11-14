@@ -24,7 +24,7 @@ variwide <- highchart() |>
   hc_xAxis(type = "category") |>
   hc_add_series(type = "variwide", data = list(list("A", 2, 5), list("B", 3, 2)))
 pareto <- highchart() |>
-  hc_yAxis_multiples(list(title = list(text = "Count")), list(max = 100, opposite = TRUE)) |>
+  hc_yAxis(list(title = list(text = "Count")), list(max = 100, opposite = TRUE)) |>
   hc_add_series(type = "column", id = "counts", data = values) |>
   hc_add_series(type = "pareto", baseSeries = "counts", yAxis = 1)
 bellcurve <- highchart() |>

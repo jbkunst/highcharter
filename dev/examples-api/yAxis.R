@@ -19,4 +19,11 @@ highchart() |>
         label = list(text = "This is a plotBand")
         )
       )
-    ) 
+    )
+
+# Independent scales for two series in the same plotting area.
+highchart() |>
+  hc_yAxis(list(id = "sales", title = list(text = "Sales ($)")),
+           list(id = "margin", title = list(text = "Margin (%)"), opposite = TRUE)) |>
+  hc_add_series(data = c(100, 125, 120), name = "Sales", yAxis = "sales") |>
+  hc_add_series(data = c(15, 18, 16), name = "Margin", yAxis = "margin")

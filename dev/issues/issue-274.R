@@ -59,7 +59,7 @@ series2 <- impact$series %>%
   as_data_frame() %>% 
   mutate(id = seq(1, nrow(.)))
 
-yaxis <- create_yaxis(naxis = 3)
+yaxis <- create_axis(naxis = 3)
 yaxis <- map2(yaxis, c("original", "pointwise", "cumulative"), function(x, y) {
   # x$title <- list(text = y)
   str(x)
@@ -71,7 +71,7 @@ glimpse(series2)
 series2
 
 highchart() %>% 
-  hc_yAxis_multiples(yaxis) %>% 
+  hc_yAxis(yaxis) %>%
   hc_add_series(series2, "line", hcaes(id, response), yAxis = 0, name = "response") %>% 
   hc_add_series(series2, "line", hcaes(id, point.pred), yAxis = 0, name = "response") %>% 
   hc_add_series(series2, "arearange", hcaes(id, low = point.pred.lower, high = point.pred.upper),

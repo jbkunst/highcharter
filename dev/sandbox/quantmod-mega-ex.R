@@ -29,7 +29,7 @@ cumsum(spaces)
 
 hc <- highchart() %>% 
   # create axis :)
-  hc_yAxis_multiples(
+  hc_yAxis(
     list(title = list(text = NULL), height = "45%", top = "0%"),
     list(title = list(text = NULL), height = "25%", top = "47.5%", opposite = TRUE),
     list(title = list(text = NULL), height = "25%", top = "75%")

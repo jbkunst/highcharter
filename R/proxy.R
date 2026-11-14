@@ -295,7 +295,7 @@ hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
     stopifnot(is.character(id), length(id) == length(series))
   }
 
-  for (i in 1:length(series)) {
+  for (i in seq_along(series)) {
     proxy$session$sendCustomMessage(
       type = "setData",
       message = list(

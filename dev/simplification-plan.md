@@ -1,6 +1,6 @@
 # Highcharter simplification plan
 
-Last updated: 2026-11-13. Working branch: `feat/highcharts-bundle`.
+Last updated: 2026-11-14. Working branch: `feat/highcharts-bundle`.
 
 ## Goal
 
@@ -46,15 +46,24 @@ Update the affected counts when a stage changes them.
 - [x] Review proxies, add `hcpxy_set_extremes()` and make
   `hcpxy_set_data()` safe by series ID.
 
-### 2. Required R dependencies — next
+### 2. Required R dependencies — done
 
-| Slice | Current use | Next change to verify |
-| --- | --- | --- |
-| 2a. `xts` / `quantmod` | `xts` is imported via an unused `is.xts`. `quantmod` is already suggested, but `hc_add_series.xts()` calls it on every input. | Keep both S3 entry points. Propose `xts` in Suggests with an explicit namespace load for restored objects. Use `quantmod` only for financial inputs. |
-| 2b. `lubridate` | Four runtime `is.Date()` calls. | Verify a base class check on Date, POSIXct and numeric input. Audit article usage separately. |
-| 2c. `rjson` | Alternative widget serializer behind an opt-in setting. | Verify default and opt-in output, including missing values, before changing its dependency status. |
-| 2d. `broom` | The model methods expect `.se.fit` from `augment()`. | Reproduce the problem for `lm` and `loess`, validate fitted values and bounds, then decide dependency status. |
-| 2e. `rlist` | Data conversion and option merging share this dependency. | Capture row shapes and nested merge results before evaluating replacement. |
+Direct Imports fell from 18 to 12. The final axis cleanup removed the last use of methods. The row filter uses vctrs directly, which
+already ships as a dependency of dplyr. With the package versions in the R 4.5.0
+validation library, the recursive required set fell from 54 to 43 external
+packages (Depends, Imports and LinkingTo, excluding base and recommended
+packages). Neither the R package `curl` nor `RCurl` is required for the base
+installation. The optional `quantmod` imports `curl`. Map downloads use R's
+configured download method.
+
+| Slice | Current status |
+| --- | --- |
+| 2a. `xts` / `quantmod` | Both optional. A saved ordinary xts series loads in a fresh session with only xts installed. OHLC inputs request quantmod. Each ordinary column produces one series. |
+| 2b. `lubridate` | Removed. The four class checks and the Stock, Gantt and X-range examples use base R. Historical data-preparation scripts can still use lubridate. |
+| 2c. `rjson` | Optional. Default JSON preserves missing values. The opt-in path keeps the original serializer and row filtering. |
+| 2d. `broom` | Removed. The lm and loess methods use model predictions and standard errors, sorted together with the first predictor. |
+| 2e. `rlist` | Removed. Base R handles row lists and option merging, including nested and NULL overrides. This also removes XML and data.table from the required set. |
+| 2f. `tidyr` | Removed. Matrix heatmaps use their positions directly. Boxplots, hierarchies, parallel coordinates and optional JSON filtering run without tidyr or cpp11. |
 
 **2a acceptance cases.** Use three local dates. A one-column input produces
 three date/value pairs in a Stock chart. Two ordinary columns produce two
@@ -66,51 +75,33 @@ fresh R session. Run ordinary inputs with `quantmod` absent. Verify that
 highcharter can load and draw a non-xts chart with both packages absent.
 Replace the live `getFX()` test with these deterministic checks.
 
-**Decision before changing financial dispatch.** At the baseline, three dates
-and two ordinary columns produce one series with six points. More importantly,
-`A.Open, A.High, B.Low, B.Close` is classified as one candle named A.
-Two complete OHLC instruments can yield a single nine-value point per date.
-Proposed rule: recognize one unambiguous instrument, preserve OHLCV handling,
-and report ambiguous OHLC layouts with a message to select one instrument.
-Confirm this treatment of mixed tickers before implementation. When ordinary
-columns expand into several series, a scalar series ID must remain unambiguous
-for Shiny proxies.
+**Financial dispatch.** A single instrument with all four OHLC fields produces
+candles. Mixed or repeated instruments report an error asking the caller to
+select one. Multiple ordinary columns use their column names and accept one
+distinct series ID per column for Shiny proxies.
 
 One commit per dependency slice. Run its examples and tests from the source
 tree as `.Rbuildignore` excludes `tests`. Record the behavior with each newly
 optional dependency absent. Record a retained Import and its reason when the
 compatibility evidence supports keeping it.
 
-### 3. Public R API and helpers
+### 3. Public R API and helpers — implemented
 
-Review one candidate at a time. Record its references in R, help/examples,
-articles, tests, Shiny and knitr before proposing removal. Classify each as:
+The baseline had 121 exports, the branch tip before this working-tree pass
+had 109, and the candidate has 102. See the [migration table](../NEWS.md#migration-guide).
 
-- core public API;
-- useful convenience helper;
-- compatibility alias to deprecate;
-- internal implementation detail;
-- unused or broken function to remove.
-
-Review these concrete candidates first:
-
-- `hc_add_yAxis()`, `hc_yAxis_multiples()`, `create_axis()` and the generated
-  `hc_yAxis()` API: keep one clear way to define one or several axes.
-- `get_hc_series_from_df()` is documented and internal. Audit its callers
-  separately from the public export count.
-- `hcaes_()` after migrating internal calls to `hcaes_string()`.
-- `highchartzero()` only after checking its Shiny and knitr use cases.
-- Specialized `hc_add_series.*` and `hchart.*` methods: keep methods backed by a
-  real class/use case and tests; retire duplicate or broken conversions.
-- Deprecated functions still exported or listed by pkgdown.
-- Helpers that only wrap a single list assignment without improving validation
-  or readability.
-
-Fix correctness independently of removal decisions. In particular, correct and
-test the column-wise scaling in `hchart.prcomp()` and `hchart.princomp()`.
-
-Definition of done: before/after export counts, lifecycle annotations, migration
-examples, and no silent removal of public behavior.
+- `hc_xAxis()`, `hc_yAxis()` and `hc_zAxis()` accept an ordered collection.
+  Named options update the first axis and preserve the others. `create_axis()`
+  builds stacked panels from relative heights. The API article demonstrates
+  independent X and Y axes in a four-panel scatter plot.
+- Removed the additive Y helper and the X/Z multiple-axis wrappers. The
+  remaining Y alias warns and delegates to `hc_yAxis()` because AovBay uses it.
+  Parallel coordinates remain a public convenience function.
+- Removed `hcaes_()`, the zero widget and its Shiny bindings. Data-frame
+  charts, added series and proxies share the same point conversion.
+- PCA scales each component separately, with optional loading arrows.
+  Decomposed time series use the existing panel layout. The igraph method
+  keeps its fixed layout and separate edge, node and label series.
 
 ### 4. Highcharts API generation and compatibility — done
 
@@ -123,98 +114,28 @@ a rename. The 35 examples run against the candidate package before publication
 of its R source, exports and help. The browser review covered Core, Maps, Gantt
 and Stock, including the optional Stock Tools toolbar.
 
-### 5. Official chart coverage and vignette structure
+### 5. Official chart coverage and articles — implemented
 
-Start with the shipped bundle's registered series and the existing gallery,
-article sources and `dev/examples-charts/`. Map one family first. Reuse its
-examples across the gallery and articles. Record missing series once in a
-small coverage table with:
+The [family index](../vignettes/series-gallery.Rmd) covers all 71 series types
+registered by the shared 12.6.0 bundle. Each card links to the Highcharts API.
+The gallery checks the browser registry and the series actually constructed.
+Examples use local data. Contour requires WebGPU. The tiled map includes a
+local sample tile. Stock Tools adds indicators outside the shared registry.
 
-- chart or feature name;
-- family;
-- official Highcharts demo/API link;
-- canonical R example;
-- vignette location;
-- bundle requirement;
-- network requirement;
-- validation status.
-
-The target is one R example for every official series type supported by the
-bundle, not a copy of every cosmetic variation on the Highcharts demo site.
-Feature examples should be added only when they teach a distinct behavior.
-
-Suggested article families:
-
-1. Fundamentals: line, area, column, bar, scatter, pie and ranges.
-2. Statistical and distribution charts: histogram, bell curve, pareto,
-   boxplot and error bars.
-3. Hierarchies, networks and flows: treemap, sunburst, treegraph, sankey,
-   dependency wheel, organization and network graph.
-4. Scientific and field charts: heatmap, contour, vector, wind barb, surfaces
-   and dense/boosted data.
-5. Maps and geographic data.
-6. Stock and financial charts.
-7. Specialized visual forms: gauges, funnels, pictorial, word cloud, timeline,
-   X-range and Gantt.
-8. Interaction: drilldown, annotations, responsive behavior and Shiny proxies.
-9. Accessibility.
-
-Avoid repeating the same chart in several articles. Link to its canonical
-example instead.
-
-Deliver in small slices: the first family, the accessibility article, the
-Maps article, the Stock/Stock Tools article, then each remaining family's
-coverage gaps. The upstream [Highcharts documentation skills](https://github.com/highcharts/highcharts-skills/tree/main/skills)
-provide focused references for Stock, Maps and accessibility. Their main
-branch tracks upstream master. Verify options and demos against the pinned
-bundle version.
-
-#### Accessibility article
-
-Create a dedicated accessibility vignette instead of distributing this subject
-across unrelated examples.
-
-- Explain that the accessibility module is included in the base bundle.
-- Start with a minimal chart that works with keyboard navigation.
-- Cover chart title, subtitle, caption, axis titles, series names and meaningful
-  point descriptions.
-- Show `accessibility`, `description`, `linkedDescription`, landmark verbosity
-  and custom screen-reader text.
-- Document keyboard order, focus indicators, sonification where appropriate and
-  the exporting/data-table alternatives.
-- Include contrast, color-independent encodings and readable tooltip/data-label
-  guidance.
-- Respect `prefers-reduced-motion` and show how to disable non-essential
-  animation.
-- Include examples for Chart, Maps and Stock without repeating their main
-  articles.
-- Test the examples with keyboard-only navigation, a browser accessibility tree,
-  responsive resize and at least one screen reader before publication.
-
-Definition of done: the vignette has a keyboard-verifiable minimal example, no
-critical automated accessibility findings and explicit manual test notes.
-
-#### Maps article
-
-- Separate local GeoJSON, map collection downloads and tiled web maps.
-- Cover `mapView`, projections, joins, map navigation and responsive layout.
-- Add one example each for map, mapline, mappoint/mapbubble, flowmap,
-  geoheatmap and tiled web map.
-- Mark examples that need remote tiles or data and provide an offline default.
-- Reproduce and test the example for issue #838 before closing it.
-
-#### Stock article
-
-- Explain `highchart(type = "stock")` versus `highchartstock()`.
-- Cover one-column and multi-column `xts`, OHLC/candlestick, flags, navigator,
-  range selector, indicators and Stock Tools.
-- Include `hcpxy_set_data(id = ...)` and `hcpxy_set_extremes()` in a minimal
-  Shiny example.
-- Avoid live market-data downloads in the canonical examples.
-
-Definition of done: the manifest has no duplicate canonical examples, every
-registered series is covered or explicitly excluded, and every article renders
-without accidental network access.
+- [Maps](../vignettes/maps.Rmd) covers local boundaries and joins, categorized
+  values, projected points, zoom and navigation. Remote tiles and map collection
+  downloads are explicitly identified. For #838, the official CDN returned HTTP
+  403 in this environment. The browser-side `hcmap()` example with the map
+  supplied locally and the local map series both rendered 212 features, zoom
+  10 and two navigation buttons.
+- [Stock](../vignettes/stock.Rmd) uses the xts sample OHLC data for lines,
+  candles, OHLC, flags, a moving average, the navigator and Stock Tools. The
+  standalone Shiny example updates the data by ID, then adjusts the time range.
+- [Accessibility](../vignettes/accessibility.Rmd) covers keyboard navigation,
+  descriptions, the table and animation. Chromium exposed the point names and
+  values in its accessibility tree. Arrow keys moved between points. axe-core
+  found no WCAG A/AA violations in the example widget. A manual screen-reader
+  listening review remains a release check.
 
 ### 6. Languages and locale options — done
 
@@ -253,28 +174,15 @@ The visual review covered all 28 presets with the bundled Highcharts 12.6.0.
 | `chalk`, `handdrawn` | Checked series and labels over their embedded board and paper textures. |
 | `null`, `sparkline`, `sparkline_vb` | Checked hidden axes, compact layouts and the white value-box sparkline on a colored surface. |
 
-### 8. pkgdown and the home page
+### 8. pkgdown and the home page — implemented
 
-This is pkgdown, not pagedown. Consolidate the current root configuration with
-the legacy `pkgdown/` scripts and generated files so there is one build path.
-
-- Remove the badge wall from the home page.
-- Restore the useful idea from commits `06155574` and `315bd8d5`: a compact grid
-  of representative charts generated from `pkgdown/index-examples.R`.
-- Replace the old heavy examples (including very large random samples) with
-  small deterministic datasets.
-- Prefer native Highcharts transitions or the existing optional Motion plugin
-  over adding D3 solely for the landing-page animation.
-- Consider one animated hero chart and a smaller map further down the page.
-- Respect `prefers-reduced-motion`, keyboard navigation and mobile layout.
-- Set a page-weight budget and avoid downloading every optional dependency on
-  the home page.
-- Remove obsolete duplicated pkgdown scripts/assets only after the new build is
-  reproducible.
-
-Definition of done: one documented pkgdown command, no duplicated source for the
-index, a responsive home page and browser checks for animation, keyboard and
-reduced-motion behavior.
+Run `Rscript dev/build-site.R` to build the home grid, series gallery and site.
+The homepage uses four deterministic charts and one shared engine. They display
+in one or two columns and have animation disabled. The embedded gallery HTML
+and its JavaScript dependencies total about 491 kB gzip; its budget is 650 kB.
+Widths of 320, 390, 768 and 1180 px were checked in Chromium. The old generated
+asset copies, home page and separate build scripts were removed. The maintenance
+guide at the repository root is excluded from the published site and its indexes.
 
 ### 9. Contributors and project attribution — done
 
@@ -289,14 +197,58 @@ Hadley and Marc Kupietz. The release notes preserve the credits for all 15
 contributors in the review, including Kamil Slowikowski's ORCID and a
 personal thank you to the early highcharter community.
 
-### 10. Final validation and migration notes
+### 10. Final validation and migration notes — checked, release follow-up recorded
 
-- Run package checks with optional dependencies both installed and absent.
-  Run the source-tree tests explicitly in addition to checking the tarball.
-- Run the canonical gallery in a real browser, including keyboard navigation,
-  resize and mixed widgets.
-- Add a small Shiny proxy browser test.
-- Run reverse-dependency checks before removals.
-- Prepare a breaking-change and deprecation table in NEWS for maintainer review.
-- Record final metrics: exports, Imports, installed size, bundle size, article
-  count and page weight.
+Validation on Linux with R 4.5.0 and Highcharts 12.6.0 on 2026-11-14.
+
+| Check | Result |
+| --- | --- |
+| Source-tree tests | 350 passing expectations, no failures, warnings or skips. |
+| Generated API | All 35 examples ran against the candidate. |
+| Source tarball | `R CMD check --no-manual` completed with status OK and all 33 Suggests installed. |
+| Optional dependencies | A second `R CMD check --no-manual --ignore-vignettes` in the minimal library completed with status OK. Two fresh sessions also checked base charts, axes and the xts path with quantmod absent. |
+| Website | All 18 articles and reference pages built through `dev/build-site.R`. |
+| Browser | Chromium checked 71 registered types, rendered contour through WebGPU, local tiles, Maps, Stock and the home grid. The four mtcars panels show all eight numbered axes at 320, 390 and 1100 px. |
+| Shiny proxy | `tests/browser/stock-proxy.py` checks changed values, exact time extremes and unchanged chart identity. The example redraws the series before setting the Stock range. |
+| Accessibility | Keyboard, accessibility tree, reduced motion and axe-core WCAG A/AA checks passed for the dedicated example. Orca could not start because the environment disallowed its D-Bus socket. A manual listening review remains pending. |
+
+The packaged and documented example for each covered series is indexed by
+[vignettes/series-gallery.Rmd](../vignettes/series-gallery.Rmd). The
+[mtcars API example](../vignettes/highcharts-api.Rmd) sets a width for the small
+axis labels so Highcharts does not truncate them inside the pkgdown layout.
+
+#### Reverse dependencies
+
+Inspected the seven CRAN packages with a direct dependency on highcharter and
+ran their package checks. Keep the upstream packages' existing failures distinct
+from migration issues. The theme constructor removals were explicitly approved
+during the theme review.
+
+| Package | Result |
+| --- | --- |
+| AovBay 0.1.0 | No errors or warnings, three notes. The Y-axis call works through the retained deprecated alias. Its separate call to the previously removed `hcboxplot()` is reported as an unresolved symbol. |
+| T2Qv 0.2.0 | Check status OK. |
+| ggfootball 0.3.0 | Check status OK. |
+| highdir 0.6.0 | Calls removed theme constructors, including `hc_theme_smpl()`. Migrate to `hc_theme("smpl")`. Its accessibility vignette also fails with CRAN highcharter 0.9.5. |
+| RKorAPClient 1.5.0 | Calls `hc_theme_google()`. The candidate produced 28 test failures versus one with CRAN highcharter 0.9.5 in the comparison environment. The extra failures include the removed constructor. |
+| UnalR 1.0.2 | Examples and tests call removed theme constructors, including `hc_theme_flat()`. Migration is required. |
+| shinymrp 0.10.0 | Its example/workflow vignette checks fail on both the candidate and CRAN highcharter 0.9.5. |
+
+#### Candidate metrics
+
+| Measure | Value |
+| --- | --- |
+| Public exports | 102, compared with 109 before this pass and 121 at the plan baseline |
+| Required Imports | 12 |
+| Suggested packages | 33 |
+| Articles | 18 on the website; the theme vignette ships in the source package |
+| Installed package from the built tarball | 5.78 MB, including the rendered theme vignette |
+| Shared JavaScript engine | 1,235,368 bytes; 419,649 bytes gzip |
+| Optional Stock Tools JavaScript | 228,053 bytes |
+| Four-chart home gallery with its initial dependencies | About 491 kB gzip |
+| Official series in the gallery | 71 |
+
+The [NEWS migration table](../NEWS.md#migration-guide) lists replacements for
+the old axes, themes, zero widget, string mappings and `fast` argument. Complete
+the screen-reader review and resolve the recorded reverse-dependency migration
+cases before describing the release as fully validated.

@@ -4,14 +4,13 @@ UKvisits <- data.frame(
   visit = c(rep("UK", 11), "Scotland", "Wales", "Northern Ireland",  "England", "London"),
   weights = c(c(12,10,9,8,6,6,5,4,4,3,33)/100*31.8,  c(2.2,0.9,0.4,12.8,15.5)))
 
-highchartzero() %>% 
+highchart() %>%
   hc_add_series(
     UKvisits, 
     "networkgraph",
     hcaes(from = origin, to = visit, weight = weights),
     layoutAlgorithm = list(enableSimulation = TRUE)
-    ) %>% 
-  hc_add_dependency("modules/networkgraph.js")
+    )
 
 
 # example 2 ---------------------------------------------------------------
@@ -24,19 +23,17 @@ df <- igraph::as_data_frame(karate, what = "edges")
 
 str(df)
 
-highchartzero() %>% 
+highchart() %>%
   hc_add_series(
     df, 
     "networkgraph",
     hcaes(from = from, to = to, weight = weight),
     layoutAlgorithm = list(enableSimulation = TRUE)
-  ) %>% 
-  hc_add_dependency("modules/networkgraph.js")
+  )
 
 
 # example 3 ---------------------------------------------------------------
-highchartzero() %>%
-  hc_add_dependency(name = 'modules/networkgraph.js') %>%
+highchart() %>%
   hc_chart(type = 'networkgraph') %>%
   hc_title(text = 'The Indo-European Language Tree') %>%
   hc_subtitle(text = 'A Force-Directed Network Graph in Highcharts') %>%

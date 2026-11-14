@@ -17,18 +17,46 @@ validate_args <- function(name, lstargs) {
   }
 }
 
-#' @importFrom rlist list.merge
-.hc_opt <- function(hc, name, ...) {
-  assertthat::assert_that(is.highchart(hc))
-  
-  if(!name %in% c("yAxis")) {
-    validate_args(name, eval(substitute(alist(...))))  
+# Merge named option objects in order, including NULL deletions.
+.merge_hc_options <- function(...) {
+  options <- list(...)
+  if (any(vapply(options, function(x) is.null(names(x)), logical(1)))) {
+    stop("All arguments must be named lists.", call. = FALSE)
+  }
+  Reduce(utils::modifyList, options, init = list())
+}
+
+# Named options update the primary axis. Unnamed axis objects replace the collection.
+.hc_axis_options <- function(current, options) {
+  if (!length(options)) return(current)
+  if (!is.null(names(options))) {
+    if (!all(nzchar(names(options)))) stop("Supply named axis options or a list of axes.", call. = FALSE)
+    if (length(current) && is.null(names(current))) {
+      current[[1L]] <- utils::modifyList(current[[1L]], options)
+      return(current)
+    }
+    return(utils::modifyList(if (is.null(current)) list() else current, options))
   }
 
-  if (is.null(hc$x$hc_opts[[name]])) {
-    hc$x$hc_opts[[name]] <- list(...)
+  if (length(options) == 1L && is.list(options[[1L]]) && is.null(names(options[[1L]]))) {
+    options <- options[[1L]]
+  }
+  valid_axis <- function(x) is.list(x) && (!length(x) || rlang::is_named(x))
+  if (!all(vapply(options, valid_axis, logical(1)))) {
+    stop("Each axis must be a list of named Highcharts options.", call. = FALSE)
+  }
+  unclass(options)
+}
+
+.hc_opt <- function(hc, name, ...) {
+  assertthat::assert_that(is.highchart(hc))
+  options <- list(...)
+  current <- hc$x$hc_opts[[name]]
+  if (name %in% c("xAxis", "yAxis", "zAxis")) {
+    hc$x$hc_opts[[name]] <- .hc_axis_options(current, options)
   } else {
-    hc$x$hc_opts[[name]] <- list.merge(hc$x$hc_opts[[name]], list(...))
+    validate_args(name, eval(substitute(alist(...))))
+    hc$x$hc_opts[[name]] <- if (is.null(current)) options else .merge_hc_options(current, options)
   }
 
   # Setting fonts
@@ -95,8 +123,7 @@ validate_args <- function(name, lstargs) {
 #' 
 #' require(dplyr)
 #' require(purrr)
-#' require(tidyr)
-#' require(gapminder)
+#' if (requireNamespace("gapminder", quietly = TRUE)) {
 #' data(gapminder, package = "gapminder")
 #'
 #' gp <- gapminder |>
@@ -104,7 +131,7 @@ validate_args <- function(name, lstargs) {
 #'   distinct(country, .keep_all = TRUE)
 #'
 #' gp2 <- gapminder |>
-#'   nest(-country) |>
+#'   group_nest(country) |>
 #'   mutate(
 #'     data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
 #'     data = map(data, list_parse)
@@ -162,6 +189,7 @@ validate_args <- function(name, lstargs) {
 #'   )
 #' 
 #'
+#' }
 #' @export
 tooltip_chart <- function(accesor = NULL,
                           hc_opts = NULL,
@@ -178,7 +206,7 @@ tooltip_chart <- function(accesor = NULL,
     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
   }
 
-  hc_opts <- rlist::list.merge(
+  hc_opts <- .merge_hc_options(
     getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
     list(chart = list(backgroundColor = "transparent")),
     list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
@@ -357,43 +385,7 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   hc
 }
 
-#' @importFrom methods is
-#' @rdname hc_add_yAxis
-#' @export
-hc_yAxis_multiples <- function(hc, ...) {
-  if (length(list(...)) == 1 & is(list(...)[[1]])[[1]] == "hc_axis_list") {
-    hc$x$hc_opts$yAxis <- list(...)[[1]]
-  } else {
-    hc$x$hc_opts$yAxis <- list(...)
-  }
-  hc
-}
-
-#' @rdname hc_add_yAxis
-#' @export
-hc_xAxis_multiples <- function(hc, ...) {
-  if (length(list(...)) == 1 & is(list(...)[[1]])[[1]] == "hc_axis_list") {
-    hc$x$hc_opts$xAxis <- list(...)[[1]]
-  } else {
-    hc$x$hc_opts$xAxis <- list(...)
-  }
-  hc
-}
-
-#' @rdname hc_add_yAxis
-#' @export
-hc_zAxis_multiples <- function(hc, ...) {
-  if (length(list(...)) == 1 & is(list(...)[[1]])[[1]] == "hc_axis_list") {
-    hc$x$hc_opts$zAxis <- list(...)[[1]]
-  } else {
-    hc$x$hc_opts$zAxis <- list(...)
-  }
-  hc
-}
-
-
-
-#' Creating multiples yAxis t use with highcharts
+#' Arrange vertical axes in stacked panels
 #'
 #' @param naxis Number of axis an integer.
 #' @param heights A numeric vector. This values will be normalized.
@@ -405,123 +397,46 @@ hc_zAxis_multiples <- function(hc, ...) {
 #' @examples
 #'
 #' highchart() |>
-#'   hc_yAxis_multiples(create_axis(naxis = 2, heights = c(2, 1))) |>
+#'   hc_yAxis(create_axis(naxis = 2, heights = c(2, 1))) |>
 #'   hc_add_series(data = c(1, 3, 2), yAxis = 0) |>
 #'   hc_add_series(data = c(20, 40, 10), yAxis = 1)
-#'  
+#'
 #' highchart() |>
-#'   hc_yAxis_multiples(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) |>
+#'   hc_yAxis(create_axis(naxis = 3, lineWidth = 2, title = list(text = NULL))) |>
 #'   hc_add_series(data = c(1, 3, 2)) |>
 #'   hc_add_series(data = c(20, 40, 10), type = "area", yAxis = 1) |>
 #'   hc_add_series(data = c(200, 400, 500), yAxis = 2) |>
 #'   hc_add_series(data = c(500, 300, 400), type = "areaspline", yAxis = 2)
-#'    
-#' @importFrom dplyr bind_cols
-#' @rdname hc_add_yAxis
+#'
 #' @export
 create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
                          offset = 0, turnopposite = TRUE, ...) {
-  pcnt <- function(x) paste0(x * 100, "%")
-
-  heights <- rep(heights, length = naxis)
-
-  heights <- (heights / sum(heights)) |>
-    map(function(x) c(x, sep)) |>
-    unlist() |>
-    head(-1) 
-  
-  heights <- round(heights/sum(heights), 5)
-  
-  tops <- cumsum(c(0, head(heights, -1)))
-
-  tops <- pcnt(tops)
-  heights <- pcnt(heights)
-
-  dfaxis <- tibble(height = heights, top = tops, offset = offset)
-
-  dfaxis <- dfaxis |> dplyr::filter(seq_len(nrow(dfaxis)) %% 2 != 0)
-
-  if (turnopposite) {
-    ops <- rep_len(c(FALSE, TRUE), length.out = nrow(dfaxis))
-    dfaxis <- dfaxis |>
-      mutate(opposite = ops)
-  }
-
-  dfaxis <- bind_cols(dfaxis, tibble(nid = seq(naxis), ...))
-
-  axles <- list_parse(dfaxis)
-
-  class(axles) <- "hc_axis_list"
-
-  axles
+  stopifnot(length(naxis) == 1L, is.finite(naxis), naxis >= 1, naxis == as.integer(naxis),
+            length(heights) > 0L, all(is.finite(heights)), all(heights > 0),
+            length(sep) == 1L, is.finite(sep), sep >= 0)
+  heights <- rep_len(heights, naxis)
+  total <- 1 + sep * (naxis - 1)
+  heights <- heights / sum(heights) / total
+  tops <- c(0, head(cumsum(heights + sep / total), -1L))
+  options <- list(...)
+  lapply(seq_len(naxis), function(i) {
+    axis <- list(height = paste0(round(100 * heights[i], 4), "%"),
+                 top = paste0(round(100 * tops[i], 4), "%"), offset = rep_len(offset, naxis)[i])
+    if (turnopposite) axis$opposite <- i %% 2L == 0L
+    for (key in names(options)) {
+      value <- options[[key]]
+      if (is.atomic(value) && length(value) == naxis) value <- value[i]
+      axis[key] <- list(value)
+    }
+    axis
+  })
 }
 
-#' yAxis add highcharter objects
+#' Compatibility alias for multiple y axes
 #'
-#' The Y axis or value axis. Normally this is the vertical axis,
-#' though if the chart is inverted this is the horizontal axis.
-#' Add yAxis allows to add multiple axis with a relative height between Y axis.
-#' Based upon the `relative` parameter the height of each Y axis is recalculated.
-#' Otherwise the parameters are as supported by Y axis.
-#'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/yAxis}.
-#'
-#' @examples
-#'
-#' # Retrieve stock data to plot.
-#' aapl <- quantmod::getSymbols("AAPL",
-#'   src = "yahoo",
-#'   from = "2020-01-01",
-#'   auto.assign = FALSE
-#' )
-#'
-#' # Plot prices and volume with relative height.
-#' highchart(type = "stock") |>
-#'   hc_title(text = "AAPLE") |>
-#'   hc_add_series(aapl, yAxis = 0, showInLegend = FALSE) |>
-#'   hc_add_yAxis(nid = 1L, title = list(text = "Prices"), relative = 2) |>
-#'   hc_add_series(aapl[, "AAPL.Volume"], yAxis = 1, type = "column", showInLegend = FALSE) |>
-#'   hc_add_yAxis(nid = 2L, title = list(text = "Volume"), relative = 1)
+#' @inheritParams hc_yAxis
 #' @export
-hc_add_yAxis <- function(hc, ...) {
-
-  # author @nordicgit70
-  assertthat::assert_that(is.highchart(hc))
-
-  # Check for single yAxis, by title attribute.
-  if (assertthat::has_name(hc$x$hc_opts$yAxis, "title")) {
-    # When yAxis only has empty title we can overwrite,
-    # otherwise we move yAxis to become first in the list.
-    if ((length(hc$x$hc_opts$yAxis) == 1) &&
-      is.null(hc$x$hc_opts$yAxis$title$text)) {
-      hc <- .hc_opt(hc, "yAxis", ...)
-      return(hc)
-    } else { # move the existing yAxis
-      hc$x$hc_opts$yAxis <- list(hc$x$hc_opts$yAxis)
-    }
-  }
-
-  # Add new yAxis to the list.
-  validate_args("yAxis", eval(substitute(alist(...))))
-  hc$x$hc_opts$yAxis <- append(hc$x$hc_opts$yAxis, list(list(...)))
-
-  # Optional layout with relative heights.
-  relative <- list(...)["relative"]
-  if (!is.null(relative)) {
-    # Calculate the total relative(s) and initiate offset.
-    layout <- Reduce("+", lapply(hc$x$hc_opts$yAxis, function(y) {
-      y$relative
-    }))
-    tops <- 0
-    for (i in 1:length(hc$x$hc_opts$yAxis)) {
-      part <- as.numeric(hc$x$hc_opts$yAxis[[i]]["relative"])
-      height <- round((part * 100) / layout, 3)
-      hc$x$hc_opts$yAxis[[i]]["top"] <- paste0(tops, "%")
-      hc$x$hc_opts$yAxis[[i]]["height"] <- paste0(height, "%")
-      hc$x$hc_opts$yAxis[[i]]["offset"] <- 0
-      tops <- tops + height
-    }
-  }
-  return(hc)
+hc_yAxis_multiples <- function(hc, ...) {
+  .Deprecated("hc_yAxis")
+  hc_yAxis(hc, ...)
 }

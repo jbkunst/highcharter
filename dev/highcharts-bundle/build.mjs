@@ -102,7 +102,6 @@ async function updateDependencyVersion(yamlName, dependencyNames) {
 }
 
 await updateDependencyVersion('highchart.yaml', ['highcharts']);
-await updateDependencyVersion('highchartzero.yaml', ['highcharts']);
 await updateDependencyVersion(
   'highchartstock.yaml',
   ['highcharts', 'highcharts-stock-tools']

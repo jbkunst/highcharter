@@ -18,7 +18,7 @@ if (this.y != null) {
 ## create the highchart
 hc <- highchart() %>%
   hc_chart( style =  list( fontFamily = "Calibri" ), zoomType = 'xy') %>%
-  hc_yAxis_multiples( list( opposite = T, title = list(text='Annual change'), labels = list( format = '{value}%'), min = 0, max = 50),
+  hc_yAxis( list( opposite = T, title = list(text='Annual change'), labels = list( format = '{value}%'), min = 0, max = 50),
                       list( title =list(text='Value'),  min = 0, labels = list( format =  '{value}M' ) ))  %>%
   hc_add_series(data = tmp_value, ## different rounding rule for different variables 
                 dataLabels = list(enabled = T),

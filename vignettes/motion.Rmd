@@ -90,7 +90,7 @@ highchart() |>
     max = maxpop) |> 
   hc_xAxis(
     xaxis,
-    rlist::list.merge(xaxis, list(opposite = TRUE, linkedTo = 0))
+    utils::modifyList(xaxis, list(opposite = TRUE, linkedTo = 0))
   )
 ```
 

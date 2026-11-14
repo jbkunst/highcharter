@@ -89,3 +89,18 @@ test_that("hcpxy_set_extremes can reset the first x axis", {
   expect_null(message$max)
   expect_error(hcpxy_set_extremes(proxy, axis = -1))
 })
+
+test_that("mapped proxy updates follow chart series and handle empty data", {
+  capture <- local_proxy_session()
+  proxy <- highchartProxy("chart", capture$session)
+  df <- data.frame(x = 1:3, v = c(2, NA, 5), team = c("B", "A", "B"))
+  mapping <- (function(k) hcaes(x, v * k, group = team))(10)
+  series <- hchart(df, "line", mapping)$x$hc_opts$series
+
+  hcpxy_set_data(proxy, "line", df, mapping, id = c("a", "b"))
+  messages <- lapply(capture$messages(), "[[", "message")
+  expect_identical(lapply(messages, "[[", "data"), lapply(series, "[[", "data"))
+  expect_identical(vapply(messages, "[[", "", "idSeries"), c("a", "b"))
+  hcpxy_set_data(proxy, "line", df[0, ], mapping)
+  expect_length(capture$messages(), 2)
+})

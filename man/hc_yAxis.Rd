@@ -19,6 +19,9 @@ array of configuration objects.
 }
 \details{
 See the Axis object for programmatic access to the axis.
+
+Named options update the first axis. Supply unnamed axis lists,
+individually or in one list, to replace the collection. Series can select an axis by ID.
 }
 \examples{
 highchart() |>
@@ -42,5 +45,12 @@ highchart() |>
         label = list(text = "This is a plotBand")
         )
       )
-    ) 
+    )
+
+# Independent scales for two series in the same plotting area.
+highchart() |>
+  hc_yAxis(list(id = "sales", title = list(text = "Sales ($)")),
+           list(id = "margin", title = list(text = "Margin (\%)"), opposite = TRUE)) |>
+  hc_add_series(data = c(100, 125, 120), name = "Sales", yAxis = "sales") |>
+  hc_add_series(data = c(15, 18, 16), name = "Margin", yAxis = "margin")
 }

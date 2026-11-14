@@ -62,7 +62,7 @@ test_that("the setter snapshots names and custom themes for each widget", {
   hc_set_theme(theme)
   expect_identical(first$x$theme, hc_theme("ft"))
   expect_identical(highchartstock()$x$theme, theme)
-  expect_identical(highchartzero()$x$theme, theme)
+  expect_identical(highchart()$x$theme, theme)
   expect_identical(highchart(theme = first$x$theme)$x$theme, first$x$theme)
   expect_error(hc_set_theme("../ft"), "Choose a theme")
   expect_identical(getOption("highcharter.theme"), theme)

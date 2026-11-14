@@ -19,6 +19,9 @@ array of configuration objects.
 }
 \details{
 See the Axis class for programmatic access to the axis.
+
+Named options update the first axis. Supply unnamed axis lists,
+individually or in one list, to replace the collection. Series can select an axis by ID.
 }
 \examples{
 highchart() |>
@@ -39,4 +42,11 @@ highchart() |>
         )
       )
     )
+
+# Give each series its own horizontal scale.
+highchart() |>
+  hc_xAxis(list(id = "month", title = list(text = "Month")),
+           list(id = "week", title = list(text = "Week"), opposite = TRUE)) |>
+  hc_add_series(data = c(7, 5, 8), pointStart = 1, name = "Monthly", xAxis = "month") |>
+  hc_add_series(data = c(3, 6, 4, 5), pointStart = 1, name = "Weekly", xAxis = "week")
 }

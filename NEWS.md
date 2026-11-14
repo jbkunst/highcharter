@@ -1,5 +1,59 @@
 # highcharter (development version)
 
+* `hc_xAxis()`, `hc_yAxis()` and `hc_zAxis()` now accept one or several
+  axis definitions. Replace `hc_xAxis_multiples()` and `hc_zAxis_multiples()`
+  with the corresponding axis function. `hc_yAxis_multiples()` remains a
+  deprecated alias. Replace successive `hc_add_yAxis()` calls with a single
+  `hc_yAxis()` call. Use `create_axis()` to calculate relative panel heights.
+
+
+* PCA charts now scale each component separately and label axes with the
+  percentage of variance explained. Points are shown by default. Use
+  `loadings = TRUE` for variable arrows and `label = TRUE` for observation names.
+* `hchart(stats::decompose(x))` displays the observed series, seasonality, trend
+  and remainder in four panels. Series with frequencies outside the annual,
+  quarterly and monthly calendars use their numeric time index.
+
+* Use `highchart()` in place of `highchartzero()`. In Shiny, replace
+  `highchartOutputZ()` and `renderHighchartZ()` with `highchartOutput()`
+  and `renderHighchart()` together. The regular widget applies the package
+  options and uses the knitr figure dimensions. Set `width = "100%"` to
+  fill the available width in R Markdown.
+* Use `hcaes_string()` in place of the removed alias `hcaes_()`.
+* `hchart()` and `hc_add_series()` now draw a separate line for each
+  ordinary `xts` column. One instrument with Open, High, Low and Close
+  produces candlesticks by default. For mixed OHLC instruments, select
+  the columns for one instrument per call.
+
+* X-range series accept `Date` and `POSIXt` columns for both interval ends
+  (`x` and `x2`).
+
+* `hcaes()` and `hcaes_string()` evaluate expressions in the environment
+  where the mapping was created. Computed axes show the expression as their
+  title. Date and date-time mappings use millisecond timestamps. Grouped
+  data-frame charts build point lists using row indices.
+* Data-frame charts can inherit the chart type or receive empty data.
+  Point colors retain supplied hex values alongside missing values, and
+  factor colors handle unused levels.
+
+* The `fast` argument for data-frame series has been removed. Omit it in
+  `hchart()` and `hc_add_series()`. Their point data stay editable as R lists
+  until the widget is serialized.
+
+* Heatmaps of `dist` objects now respect the matrix display options
+  `label` and `showInLegend`.
+
+* Matrix heatmaps now use matrix positions directly, including when labels
+  repeat or cells contain missing values. highcharter no longer requires tidyr.
+
+* highcharter uses base R for date checks, model predictions, row conversion
+  and option merging. Charts of `lm` and `loess` fits now include the fitted
+  curve and its two-standard-error band.
+* `xts` and `rjson` are optional. Charting a regular `xts` series only needs
+  `xts`; OHLC prices also use `quantmod`. The optional JSON serializer is
+  requested only when `options(highcharter.rjson = TRUE)` is set.
+* `download_map_data()` uses R's configured download method by default.
+
 * Ten new option wrappers cover accessibility, map views, time zones, data
   imports, empty charts, SVG definitions, sonification, navigation, Stock Tools
   and Gantt connectors. Each has a runnable example in its help page.
@@ -38,6 +92,22 @@
   can now target a series by ID, which is safer when Stock indicators change series order.
 * Widgets with reflow enabled now follow changes in their container dimensions.
 * The chart gallery includes a weighted arc diagram example (#829).
+
+## Migration guide
+
+| Previous call | Current call |
+| --- | --- |
+| `hc_xAxis_multiples()`, `hc_yAxis_multiples()`, `hc_zAxis_multiples()` | Pass the same list of axes to `hc_xAxis()`, `hc_yAxis()` or `hc_zAxis()`. The Y alias emits a deprecation warning. |
+| Repeated `hc_add_yAxis()` | Collect the axes in order, then call `hc_yAxis(axes)`. |
+| `hc_theme_google()` and other preset constructors | Use `hc_theme("google")`, or `hc_set_theme("google")` for a session default. |
+| `hcaes_()` | Use `hcaes_string()`. |
+| `highchartzero()` and its Shiny bindings | Use `highchart()`, `highchartOutput()` and `renderHighchart()`. |
+| `fast = TRUE` in a data-frame chart | Omit the argument. Point data are R lists. |
+
+The reverse-dependency review found calls to the removed theme constructors in
+highdir, RKorAPClient and UnalR. Their integrations need the replacements above.
+AovBay also references the previously removed `hcboxplot()` helper. Its
+`hc_yAxis_multiples()` call is covered by the deprecated alias.
 
 ## Contributor acknowledgements
 

@@ -182,7 +182,7 @@ hchart(
   hcaes(id, heigth, group = place),
   xAxis = 0:2
   ) %>% 
-  hc_xAxis_multiples(axles) %>% 
+  hc_xAxis(axles) %>%
   hc_chart(
     options3d = list(
       enabled = TRUE,

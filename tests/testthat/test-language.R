@@ -43,12 +43,10 @@ test_that("the setter snapshots the language for new widgets and restores the op
 
   chart <- highchart()
   stock <- highchartstock()
-  zero <- highchartzero()
-  custom <- highchartzero(hc_opts = list(lang = manual))
+  custom <- highchart(hc_opts = list(lang = manual))
   hc_set_language("pt")
   expect_identical(chart$x$conf_opts$lang, spanish)
   expect_identical(stock$x$conf_opts$lang, spanish)
-  expect_identical(zero$x$hc_opts$lang, spanish)
   expect_identical(custom$x$hc_opts$lang, manual)
   expect_identical(highchart()$x$conf_opts$lang, hc_language("pt"))
 

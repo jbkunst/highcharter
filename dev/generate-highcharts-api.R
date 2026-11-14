@@ -69,6 +69,10 @@ generate_api <- function() {
     } else {
       sprintf("@param ... Options defined in <%s>.", url)
     }
+    if (group %in% c("xAxis", "yAxis", "zAxis")) {
+      parameters <- c(parameters, "@details Named options update the first axis. Supply unnamed axis lists,",
+                      "  individually or in one list, to replace the collection. Series can select an axis by ID.")
+    }
     if (group == "tooltip") {
       parameters <- c(parameters, "@param sort Sort shared tooltip points by descending value.",
                       "@param table Display the shared tooltip as an HTML table.")

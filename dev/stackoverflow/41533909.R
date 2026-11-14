@@ -12,6 +12,6 @@ d <- data_frame(week = rep(1:5, 2),
 hchart(d, "column", hcaes(x = week, y = value, group = key))
 
 hchart(d, "column", hcaes(x = week, y = value, group = key), yAxis = c(0, 1)) %>% 
-  hc_yAxis_multiples(create_yaxis(2)) %>% 
+  hc_yAxis(create_axis(2)) %>%
   hc_tooltip(shared = TRUE)
 

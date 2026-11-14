@@ -24,29 +24,25 @@ Depends:
 Imports:
     htmlwidgets,
     purrr,
-    rlist,
     assertthat,
     zoo,
     dplyr (>= 1.0.0),
     tibble (>= 1.1),
     stringr (>= 1.3.0),
-    broom,
-    xts,
-    tidyr,
+    vctrs (>= 0.3.7),
     htmltools,
     jsonlite,
-    lubridate,
     yaml,
-    rlang (>= 0.1.1),
-    rjson,
-    methods
+    rlang (>= 0.4.10)
 VignetteBuilder: knitr
 Suggests:
+    rjson,
     bslib,
     knitr,
     rmarkdown,
     survival,
     quantmod,
+    xts,
     igraph,
     ggplot2,
     httr,

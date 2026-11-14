@@ -3,29 +3,39 @@
 \name{hc_add_series.xts}
 \alias{hc_add_series.xts}
 \alias{hc_add_series.ohlc}
-\title{hc_add_series for xts objects}
+\title{Add xts series to a chart}
 \usage{
-\method{hc_add_series}{xts}(hc, data, ...)
+\method{hc_add_series}{xts}(hc, data, ..., name = NULL)
 
-\method{hc_add_series}{ohlc}(hc, data, type = "candlestick", ...)
+\method{hc_add_series}{ohlc}(hc, data, type = "candlestick", ..., name = NULL)
 }
 \arguments{
-\item{hc}{A \code{highchart} \code{htmlwidget} object.}
+\item{hc}{A \code{highchart} widget.}
 
-\item{data}{A \code{xts} object.}
+\item{data}{An \code{xts} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}
+\item{...}{Highcharts series options. To set \code{id} for multiple lines, supply
+a different ID for each column. Other options apply to every line.}
 
-\item{type}{The way to show the \code{xts} object. Can be 'candlestick' or 'ohlc'.}
+\item{name}{Optional series name, or one name per column for multiple lines.}
+
+\item{type}{Financial series type, usually \code{"candlestick"} or \code{"ohlc"}.}
 }
 \description{
-hc_add_series for xts objects
+A single instrument with Open, High, Low and Close columns produces a
+candlestick series. Additional columns such as Volume are ignored. With
+incomplete or ordinary data, each column produces its own line. Select one
+instrument before passing a data set with ambiguous OHLC columns.
 }
 \examples{
+if (requireNamespace("xts", quietly = TRUE)) {
+  dates <- as.Date("2025-01-01") + 0:2
+  quotes <- xts::xts(cbind(A = c(42, 45, 44), B = c(30, NA, 32)), dates)
+  hchart(quotes, id = c("a", "b"))
 
-if(require("quantmod")){
-  x <- getSymbols("GOOG", auto.assign = FALSE)
-  hchart(x) 
+  if (requireNamespace("quantmod", quietly = TRUE)) {
+    prices <- xts::xts(cbind(Open = 4:6, High = 6:8, Low = 3:5, Close = 5:7), dates)
+    highchart(type = "stock") |> hc_add_series(prices, name = "Price")
+  }
 }
-
 }

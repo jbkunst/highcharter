@@ -6,7 +6,7 @@ hc_set_theme("bloom")
 series <- list(list(data = c(1, 3, 2)))
 charts <- tagList(
   highchart(elementId = "bloom") |> hc_add_series(data = c(1, 3, 2)),
-  highchartzero(elementId = "axes", hc_opts = list(
+  highchart(elementId = "axes", hc_opts = list(
     series = series, yAxis = list(list(), list(opposite = FALSE))
   )),
   highchart(elementId = "other", theme = hc_theme("ft")) |>
