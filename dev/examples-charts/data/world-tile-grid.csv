@@ -1,0 +1,193 @@
+x,y,name,region,alpha_2
+13,-11,Algeria,Africa,DZ
+13,-17,Angola,Africa,AO
+15,-14,Benin,Africa,BJ
+15,-18,Botswana,Africa,BW
+13,-13,Burkina Faso,Africa,BF
+15,-16,Burundi,Africa,BI
+14,-15,Cameroon,Africa,CM
+10,-15,Cabo Verde,Africa,CV
+16,-14,Central African Republic,Africa,CF
+14,-13,Chad,Africa,TD
+18,-18,Comoros,Africa,KM
+14,-16,Congo,Africa,CG
+15,-15,Congo (Democratic Republic of the),Africa,CD
+12,-15,Côte d'Ivoire,Africa,CI
+17,-13,Djibouti,Africa,DJ
+16,-11,Egypt,Africa,EG
+13,-16,Equatorial Guinea,Africa,GQ
+16,-13,Eritrea,Africa,ER
+17,-14,Ethiopia,Africa,ET
+14,-17,Gabon,Africa,GA
+12,-12,Gambia,Africa,GM
+13,-14,Ghana,Africa,GH
+11,-14,Guinea,Africa,GN
+11,-13,Guinea-Bissau,Africa,GW
+17,-15,Kenya,Africa,KE
+17,-19,Lesotho,Africa,LS
+12,-14,Liberia,Africa,LR
+15,-11,Libya,Africa,LY
+19,-19,Madagascar,Africa,MG
+15,-17,Malawi,Africa,MW
+14,-12,Mali,Africa,ML
+11,-12,Mauritania,Africa,MR
+19,-20,Mauritius,Africa,MU
+12,-11,Morocco,Africa,MA
+16,-17,Mozambique,Africa,MZ
+15,-19,Namibia,Africa,
+15,-12,Niger,Africa,NE
+13,-15,Nigeria,Africa,NG
+16,-16,Rwanda,Africa,RW
+11,-16,Sao Tome and Principe,Africa,ST
+13,-12,Senegal,Africa,SN
+18,-17,Seychelles,Africa,SC
+12,-13,Sierra Leone,Africa,SL
+18,-14,Somalia,Africa,SO
+16,-20,South Africa,Africa,ZA
+15,-13,South Sudan,Africa,SS
+16,-12,Sudan,Africa,SD
+16,-19,Swaziland,Africa,SZ
+17,-16,Tanzania,Africa,TZ
+14,-14,Togo,Africa,TG
+14,-11,Tunisia,Africa,TN
+16,-15,Uganda,Africa,UG
+14,-18,Zambia,Africa,ZM
+16,-18,Zimbabwe,Africa,ZW
+7,-4,Antigua & Barbuda,Americas,AG
+6,-14,Argentina,Americas,AR
+4,-2,Bahamas,Americas,BS
+8,-6,Barbados,Americas,BB
+2,-3,Belize,Americas,BZ
+6,-11,Bolivia,Americas,BO
+8,-11,Brazil,Americas,BR
+1,-1,Canada,Americas,CA
+6,-13,Chile,Americas,CL
+5,-9,Colombia,Americas,CO
+3,-7,Costa Rica,Americas,CR
+4,-3,Cuba,Americas,CU
+7,-7,Dominica,Americas,DM
+6,-4,Dominican Republic,Americas,DO
+5,-10,Ecuador,Americas,EC
+1,-5,El Salvador,Americas,SV
+8,-1,Greenland,Americas,GL
+7,-8,Grenada,Americas,GD
+1,-4,Guatemala,Americas,GT
+6,-10,Guyana,Americas,GY
+5,-4,Haiti,Americas,HT
+2,-5,Honduras,Americas,HN
+4,-4,Jamaica,Americas,JM
+1,-3,Mexico,Americas,MX
+2,-6,Nicaragua,Americas,NI
+4,-8,Panama,Americas,PA
+6,-12,Paraguay,Americas,PY
+5,-11,Peru,Americas,PE
+6,-5,St. Kitts & Nevis,Americas,KN
+7,-5,St. Lucia,Americas,LC
+7,-6,St. Vincent & the Grenadines,Americas,VC
+7,-11,Suriname,Americas,SR
+7,-9,Trinidad & Tobago,Americas,TT
+1,-2,United States of America,Americas,US
+7,-12,Uruguay,Americas,UY
+6,-9,Venezuela,Americas,VE
+15,-23,Antarctica,Antarctica,AQ
+22,-8,Afghanistan,Asia,AF
+20,-6,Armenia,Asia,AM
+21,-7,Azerbaijan,Asia,AZ
+20,-9,Bahrain,Asia,BH
+23,-8,Bangladesh,Asia,BD
+24,-7,Bhutan,Asia,BT
+25,-12,Brunei Darussalam,Asia,BN
+25,-10,Cambodia,Asia,KH
+24,-6,China,Asia,CN
+17,-10,Cyprus,Asia,CY
+21,-6,Georgia,Asia,GE
+22,-9,India,Asia,IN
+25,-13,Indonesia,Asia,ID
+20,-8,Iran (Islamic Republic of),Asia,IR
+20,-7,Iraq,Asia,IQ
+18,-10,Israel,Asia,IL
+27,-6,Japan,Asia,JP
+18,-8,Jordan,Asia,JO
+24,-5,Kazakhstan,Asia,KZ
+25,-6,North Korea,Asia,KP
+25,-7,South Korea,Asia,KR
+19,-8,Kuwait,Asia,KW
+23,-6,Kyrgyzstan,Asia,KG
+25,-9,Lao People's Democratic Republic,Asia,LA
+18,-9,Lebanon,Asia,LB
+24,-11,Malaysia,Asia,MY
+21,-12,Maldives,Asia,MV
+25,-5,Mongolia,Asia,MN
+24,-8,Myanmar,Asia,MM
+23,-9,Nepal,Asia,NP
+19,-11,Oman,Asia,OM
+21,-8,Pakistan,Asia,PK
+26,-11,Philippines,Asia,PH
+19,-10,Qatar,Asia,QA
+19,-9,Saudi Arabia,Asia,SA
+24,-13,Singapore,Asia,SG
+22,-11,Sri Lanka,Asia,LK
+19,-7,Syria,Asia,SY
+23,-7,Tajikistan,Asia,TJ
+24,-10,Thailand,Asia,TH
+25,-14,Timor-Leste,Asia,TL
+18,-7,Turkey,Asia,TR
+22,-7,Turkmenistan,Asia,TM
+20,-10,United Arab Emirates,Asia,AE
+22,-6,Uzbekistan,Asia,UZ
+26,-9,Viet Nam,Asia,VN
+18,-11,Yemen,Asia,YE
+15,-9,Albania,Europe,AL
+15,-6,Austria,Europe,AT
+17,-4,Belarus,Europe,BY
+13,-5,Belgium,Europe,BE
+15,-7,Bosnia & Herzegovina,Europe,BA
+17,-7,Bulgaria,Europe,BG
+14,-7,Croatia,Europe,HR
+15,-5,Czech Republic,Europe,CZ
+14,-3,Denmark,Europe,DK
+17,-2,Estonia,Europe,EE
+17,-1,Finland,Europe,FI
+12,-5,France,Europe,FR
+14,-4,Germany,Europe,DE
+16,-9,Greece,Europe,GR
+16,-6,Hungary,Europe,HU
+10,-1,Iceland,Europe,IS
+10,-4,Ireland,Europe,IE
+13,-7,Italy,Europe,IT
+16,-8,Kosovo,Europe,XK
+17,-3,Latvia,Europe,LV
+16,-4,Lithuania,Europe,LT
+13,-6,Luxembourg,Europe,LU
+17,-8,Macedonia,Europe,MK
+11,-8,Malta,Europe,MT
+18,-5,Moldova (Republic of),Europe,MD
+15,-8,Montenegro,Europe,ME
+13,-4,Netherlands,Europe,NL
+15,-1,Norway,Europe,NO
+15,-4,Poland,Europe,PL
+11,-6,Portugal,Europe,PT
+17,-6,Romania,Europe,RO
+25,-4,Russian Federation,Europe,RU
+16,-7,Serbia,Europe,RS
+16,-5,Slovakia,Europe,SK
+14,-6,Slovenia,Europe,SI
+12,-6,Spain,Europe,ES
+16,-1,Sweden,Europe,SE
+14,-5,Switzerland,Europe,CH
+17,-5,Ukraine,Europe,UA
+11,-4,Great Britain and Northern Ireland,Europe,GB
+24,-19,Australia,Oceania,AU
+27,-19,Fiji,Oceania,FJ
+27,-17,Kiribati,Oceania,KI
+26,-15,Marshall Islands,Oceania,MH
+26,-16,Micronesia (Federated States of),Oceania,FM
+26,-17,Nauru,Oceania,NR
+26,-21,New Zealand,Oceania,NZ
+25,-16,Palau,Oceania,PW
+25,-17,Papua New Guinea,Oceania,PG
+28,-18,Samoa,Oceania,WS
+26,-18,Solomon Islands,Oceania,SB
+28,-19,Tonga,Oceania,TO
+27,-18,Tuvalu,Oceania,TV
+26,-19,Vanuatu,Oceania,VU

@@ -1,19 +1,12 @@
-#' ## wordcloud
-#' 
-library(rvest)
-library(tidytext)
+#' ## Word cloud
+#'
+#' Count words in the installed descriptions of three R packages. Each word's
+#' weight is the number of times it appears across the descriptions.
+packages <- c("highcharter", "htmlwidgets", "knitr")
+descriptions <- vapply(packages, utils::packageDescription, character(1),
+                       fields = "Description")
+words <- unlist(strsplit(tolower(descriptions), "[^a-z]+"))
+counts <- sort(table(words[nchar(words) > 3]), decreasing = TRUE)
+terms <- data.frame(word = names(counts), count = as.integer(counts))
 
-data <- read_html("http://www.htmlwidgets.org/develop_intro.html") |> 
-  html_nodes("p") |> 
-  html_text() |> 
-  map(str_to_lower) |> 
-  reduce(str_c) |> 
-  str_split("\\s+") |> 
-  unlist() |> 
-  tibble() |> 
-  setNames("word") |> 
-  count(word, sort = TRUE) |> 
-  anti_join(tidytext::stop_words, by = "word") |> 
-  head(60)
-
-hchart(data, "wordcloud", hcaes(name = word, weight = log(n)))
+hchart(terms, "wordcloud", hcaes(name = word, weight = count))

@@ -3,6 +3,9 @@ title: Highcharts API
 author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+resource_files:
+  - icons/r-project.svg
+  - icons/python.svg
 description: >
   Highcharts have a rich API which allows you to have control of the entire chart, 
   from title, subtitle to axis ticks, labels, annotations. We'll review the
@@ -30,18 +33,10 @@ library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
-Highcharts have a rich API which allows you to have control of the entire chart, 
-from title, subtitle to axis ticks, labels, annotations. We'll review the
-main functions with simple examples.
+## Translate Highcharts options to R
 
-## Before to start
-
-- Supply option names such as `text` and `enabled`. The axis functions also accept a list of axis definitions.
-- You can see more examples for arguments in https://api.highcharts.com/highcharts/.
-
-If this is clear, we can continue.
-
-Now, let's create a simple chart:
+Tom Bishop's legend example shows how to read the Highcharts API from R.
+Start with the monthly temperatures of three cities.
 
 ```{r}
 library(highcharter)
@@ -62,6 +57,28 @@ hc <- highchart() |>
     )
 
 hc
+```
+
+The JavaScript legend below places the entries inside the chart and underlines
+the title. In R, the top-level option becomes `hc_legend()` and each nested
+object becomes a named list. Keep the option names in camel case.
+[Highcharts legend options](https://api.highcharts.com/highcharts/legend).
+
+```js
+legend: {
+  layout: 'vertical', align: 'left', verticalAlign: 'top', floating: true,
+  x: 70, y: 30,
+  title: { text: 'Cities', style: { textDecoration: 'underline' } }
+}
+```
+
+```{r translate-legend}
+hc |>
+  hc_legend(
+    layout = "vertical", align = "left", verticalAlign = "top", floating = TRUE,
+    x = 70, y = 30,
+    title = list(text = "Cities", style = list(textDecoration = "underline"))
+  )
 ```
 
 ## Chart
@@ -180,6 +197,21 @@ hc |>
     ) 
 ```
 
+### Category order
+
+Order the counts first, then pass their names and values in the same order.
+Here the categories run from the most to the least common cylinder count.
+
+```{r category-order}
+counts <- sort(table(mtcars$cyl), decreasing = TRUE)
+
+highchart() |>
+  hc_xAxis(categories = names(counts), title = list(text = "Cylinders")) |>
+  hc_add_series(type = "column", name = "Cars", data = as.numeric(counts))
+```
+
+For another common adjustment, see [Keep other series visible on hover](#keep-other-series-visible-on-hover).
+
 ### Four panels with their own axes
 
 Plot vehicle weight against fuel economy in `mtcars`. Each column is a
@@ -235,7 +267,46 @@ hc |>
     )
 ```
 
+### Keep other series visible on hover
 
-       
+Move the pointer over a city to inspect it. An inactive opacity of one keeps
+the other cities visible at full strength for comparison.
 
+```{r inactive-series}
+hc |> hc_plotOptions(series = list(states = list(inactive = list(opacity = 1))))
+```
 
+### Markers and tooltips
+
+A scatter series can use the same SVG for its markers and its tooltip. Save
+the [R icon](icons/r-project.svg) and [Python icon](icons/python.svg) in an
+`icons/` directory alongside the HTML page. These brand icons come from
+[Font Awesome Free 6.7.2](https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands)
+and are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+```{r svg-markers}
+r_icon <- "./icons/r-project.svg"
+python_icon <- "./icons/python.svg"
+
+highchart() |>
+  hc_title(text = "Simulated task times") |>
+  hc_xAxis(categories = c("Read", "Transform", "Plot")) |>
+  hc_yAxis(title = list(text = "Seconds")) |>
+  hc_chart(type = "scatter") |>
+  hc_add_series(
+    name = "R", data = c(2, 4, 3), custom = list(icon = r_icon),
+    marker = list(symbol = paste0("url(", r_icon, ")"), width = 20, height = 20)
+  ) |>
+  hc_add_series(
+    name = "Python", data = c(3, 2, 4), custom = list(icon = python_icon),
+    marker = list(symbol = paste0("url(", python_icon, ")"), width = 20, height = 20)
+  ) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = paste0("<img src='{series.options.custom.icon}' width='16' height='16' alt=''/> ",
+                         "{series.name}: <b>{point.y} s</b>")
+  )
+```
+
+To count units with symbols or fill a silhouette, see
+[Seats and occupancy in the series gallery](series-gallery.html#seats-and-occupancy).

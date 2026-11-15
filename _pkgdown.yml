@@ -43,188 +43,160 @@ figures:
   warning: no
   out.width: 100%
 reference:
-- title: Highcharts API
-  desc: Functions to create charts and access the highcharts API (https://api.highcharts.com/highcharts/).
-  contents:
-  - highchart
-  - highchartstock
+- title: Create a chart
+- contents:
   - hchart
-  - hc_accessibility
-  - hc_annotations
-  - hc_boost
-  - hc_caption
-  - hc_chart
-  - hc_colorAxis
-  - hc_colors
-  - hc_connectors
-  - hc_credits
+  - highchart
+  - highcharts_demo
+  - highcharter
+- subtitle: Specialized charts
+- contents:
+  - hchart.igraph
+  - hchart.survfit
+  - hcparcords
+- title: Map data and add series
+- contents:
+  - hcaes
+  - hcaes_string
+  - hc_add_series
+  - hc_add_series_list
+  - hc_rm_series
   - hc_data
-  - hc_defs
-  - hc_drilldown
-  - hc_exporting
-  - hc_legend
-  - hc_loading
-  - hc_mapNavigation
-  - hc_mapView
-  - hc_navigation
-  - hc_navigator
-  - hc_noData
-  - hc_pane
-  - hc_plotOptions
-  - hc_rangeSelector
-  - hc_responsive
-  - hc_scrollbar
   - hc_series
-  - hc_sonification
-  - hc_stockTools
-  - hc_subtitle
-  - hc_time
+- subtitle: Series methods for R objects
+- contents:
+  - starts_with("hc_add_series.")
+  - '-hc_add_series.geo_json'
+- subtitle: Prepare series data
+- contents:
+  - starts_with("data_to_")
+  - mutate_mapping
+- title: Configure a chart
+- subtitle: Titles and labels
+- contents:
   - hc_title
-  - hc_tooltip
+  - hc_subtitle
+  - hc_caption
+  - hc_credits
+  - hc_legend
+  - hc_annotations
+  - hc_add_annotation
+  - df_to_annotations_labels
+- subtitle: Axes and layout
+- contents:
+  - hc_chart
   - hc_xAxis
   - hc_yAxis
   - hc_zAxis
-- title: Additional function to use Highcharts API
-  desc: Helpers function to add or modify elements, like plugins (as {htmltools} dependencies),
-    events or annotations.
-  contents:
-  - hc_add_annotation
-  - hc_add_dependency
-  - hc_add_event_point
-  - hc_language
   - create_axis
-  - hc_elementId
-  - hc_motion
-  - hc_rm_series
+  - hc_pane
   - hc_size
-- title: Add data
-  desc: Functions to add data from R objects to a highcharts charts.
-  contents:
-  - hc_add_series
-  - hc_add_series.character
-  - hc_add_series.data.frame
-  - hc_add_series.density
-  - hc_add_series.forecast
-  - hc_add_series.geo_json
-  - hc_add_series.lm
-  - hc_add_series.numeric
-  - hc_add_series.ts
-  - hc_add_series.xts
-  - hc_add_series_list
-  - hc_add_series_map
-- title: Data helpers
-  desc: |-
-    Function to help manipulate data to use in specific arguments or
-        some types of series. For example create valid arguments in `dataClasses`,
-        `stops` or `pointFormatter` parameters and create the rigth type of format
-        to create treemaps, sunburst or sankey charts.
-  contents:
+  - hc_responsive
+  - hc_time
+- subtitle: Series appearance and colors
+- contents:
+  - hc_plotOptions
+  - hc_colors
+  - hc_colorAxis
   - color_classes
   - color_stops
   - colorize
-  - data_to_boxplot
-  - data_to_hierarchical
-  - data_to_sankey
+  - hc_defs
+  - hc_connectors
+- subtitle: Interaction and exporting
+- contents:
+  - hc_tooltip
   - tooltip_chart
   - tooltip_table
-  - hex_to_rgba
-  - datetime_to_timestamp
-  - df_to_annotations_labels
-- title: Shiny and proxy functions
-  desc: |-
-    Functions to create highcharts in shinyapps or rmarkdown documents.
-        Proxy functions allow you maniupulate a highchart widget from server side in a
-        shiny app.
-  contents:
-  - highchartProxy
-  - hcpxy_add_point
-  - hcpxy_add_series
-  - hcpxy_loading
-  - hcpxy_redraw
-  - hcpxy_remove_point
-  - hcpxy_remove_series
-  - hcpxy_set_data
-  - hcpxy_set_extremes
-  - hcpxy_update
-  - hcpxy_update_point
-  - hcpxy_update_series
-  - highchartOutput
-  - renderHighchart
-- title: Themes
-  desc: Functions to customize the look of your chart.
-  contents:
+  - hc_drilldown
+  - hc_add_event_point
+  - hc_navigation
+  - hc_exporting
+  - export_hc
+  - hc_accessibility
+  - hc_sonification
+- subtitle: Loading, performance and plugins
+- contents:
+  - hc_loading
+  - hc_noData
+  - hc_boost
+  - hc_add_dependency
+  - hc_motion
+- title: Maps and Stock
+- subtitle: Maps
+- contents:
+  - hcmap
+  - download_map_data
+  - get_data_from_map
+  - hc_add_series_map
+  - hc_add_series.geo_json
+  - hc_mapView
+  - hc_mapNavigation
+- subtitle: Stock
+- contents:
+  - highchartstock
+  - hc_navigator
+  - hc_rangeSelector
+  - hc_scrollbar
+  - hc_stockTools
+- title: Themes and language
+- contents:
   - hc_theme
   - hc_add_theme
   - hc_theme_merge
-- title: Data
-  desc: Data for examples
-  contents:
-  - mountains_panorama
-  - citytemp
-  - citytemp_long
-  - favorite_bars
-  - favorite_pies
-  - globaltemp
-  - pokemon
-  - stars
-  - unemployment
-  - uscountygeojson
-  - usgeojson
-  - vaccines
-  - weather
-  - worldgeojson
-- title: Extra functions
-  contents:
-  - download_map_data
-  - export_hc
-  - get_data_from_map
-  - hcaes
-  - hcaes_string
-  - hchart.igraph
-  - hchart.survfit
-  - hcmap
-  - highcharter-exports
-  - highcharter
-  - highcharts_demo
+  - hc_language
+- title: Shiny and proxies
+- contents:
+  - highchartOutput
+  - renderHighchart
+  - highchartProxy
+  - starts_with("hcpxy_")
+- title: Utilities
+- contents:
+  - datetime_to_timestamp
+  - hex_to_rgba
   - is.hexcolor
   - is.highchart
   - list_parse
-  - mutate_mapping
+  - hc_elementId
   - random_id
   - str_to_id
-  - hcparcords
-- title: Deprecated functions
-  contents: hc_yAxis_multiples
+  - highcharter-exports
+- title: Example data
+- contents:
+  - has_keyword("datasets")
+- title: Deprecated
+- contents:
+  - hc_yAxis_multiples
 articles:
-- title: Get Started
-  navbar: Get Started
+- title: Get started
+  navbar: Get started
   contents:
   - highcharter
   - first-steps
-  - accessibility
-  - showcase
   - hchart
-  - highcharts-api
-  - highchartsjs-api-basics
-- title: The highchartsJS bundle
-  navbar: The highchartsJS bundle
+- title: Explore charts
+  navbar: Explore charts
   contents:
-  - highcharts
   - series-gallery
   - maps
   - stock
-- title: Shiny Integration
-  navbar: Shiny Integration
-  contents: shiny
-- title: Experiments & Examples
-  navbar: Experiments & Examples
+  - showcase
+- title: Configure and interact
+  navbar: Configure and interact
   contents:
-  - fontawesome
-  - drilldown
-- title: More of highcharter
-  navbar: More of highcharter
-  contents:
+  - highcharts-api
   - themes
-  - howtos
+  - accessibility
+  - drilldown
+- title: Integrate and extend
+  navbar: Integrate and extend
+  contents:
+  - shiny
   - modules
-  - motion
+redirects:
+- ["articles/fontawesome.html", "articles/highcharts-api.html#markers-and-tooltips"]
+- ["articles/highcharts.html", "articles/series-gallery.html"]
+- ["articles/howtos.html", "articles/highcharts-api.html#category-order"]
+- ["articles/highchartsjs-api-basics.html", "articles/highcharts-api.html#translate-highcharts-options-to-r"]
+- ["articles/motion.html", "articles/modules.html#motion"]

@@ -6,12 +6,21 @@ tracked in the [simplification plan](simplification-plan.md).
 ## Build the website
 
 Run `Rscript dev/build-site.R` from the repository root with the website
-dependencies installed. The script builds the home gallery and the series
+dependencies installed. The script builds the home example and the series
 gallery locally, then renders the site with pkgdown. The README supplies the
 home text. Generated gallery files belong in the site output.
+Organize website articles in the root `_pkgdown.yml`. When merging an
+article, move its examples to the destination and add a pkgdown redirect
+from the original HTML path to the new page or section.
 The series gallery checks the types registered in the bundled JavaScript. Its
-canonical examples live in `dev/R/test-highcharts-bundle.R`.
-The four home charts share one engine. Keep the initial gallery assets below
+canonical examples live in `dev/R/test-highcharts-bundle.R`. The item and
+pictorial cards share the labelled R chunks in `dev/examples-charts/bus-occupancy.R`
+with the series gallery article.
+The home iframe displays one scatter plot of `datasets::iris`, built in
+`pkgdown/index-examples.R`. The points move once from sepal to petal measurements
+when the chart enters view. The two controls switch between measurements on
+the same axes. Reduced-motion users switch instantly and manually.
+Keep the initial home assets below
 650 kB gzip and use the standalone Stock Tools widget only on its own pages.
 For the stock proxy browser test, install the current highcharter package, Shiny
 and Python Playwright with Chromium, then run `python tests/browser/stock-proxy.py`.

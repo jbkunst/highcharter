@@ -43,8 +43,9 @@ Use `screenReaderSection` to customize the text before or after the chart.
 
 For Maps, name each region or point and include the unit in its value
 description. For Stock, identify the financial instrument and date. See the
-[Maps](maps.html) and [Stock](stock.html) examples. The home gallery and the
-example above disable introductory animations. Sonification is available
+[Maps](maps.html) and [Stock](stock.html) examples. The example above disables
+introductory animations. The home example respects reduced motion and lets
+readers select either measurement. Sonification is available
 through `hc_sonification()` for readers who choose to play the chart.
 
 [Highcharts accessibility guide](https://www.highcharts.com/docs/accessibility/accessibility-module)

@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   const link = document.querySelector('main a[href$="series-gallery.html"]');
-  if (!link || !document.querySelector('main h2#installation, main #installation')) return;
+  if (!link || !document.querySelector('main #installation')) return;
   const frame = document.createElement('iframe');
   frame.src = 'home-gallery.html';
-  frame.title = 'Four interactive highcharter examples';
+  frame.title = 'Compare sepal and petal measurements in 150 iris flowers';
   frame.className = 'home-gallery';
   frame.addEventListener('load', function () {
-    const grid = frame.contentDocument.querySelector('main');
-    if (grid) new ResizeObserver(() => { frame.style.height = grid.offsetHeight + 'px'; }).observe(grid);
+    const panel = frame.contentDocument.querySelector('main');
+    if (panel) new ResizeObserver(() => { frame.style.height = panel.offsetHeight + 'px'; }).observe(panel);
   });
-  link.closest('p').after(frame);
+  link.closest('p').before(frame);
 });

@@ -83,9 +83,9 @@ add_chart("windbarb", chart("windbarb", lapply(seq_len(nrow(common)), function(i
 add_chart("wordcloud", chart("wordcloud", lapply(seq_len(nrow(common)), function(i) {
   list(name = common$name[i], weight = common$value[i])
 })))
-add_chart("item", chart("item", lapply(seq_len(nrow(common)), function(i) {
-  list(name = common$name[i], y = common$value[i])
-})))
+source(file.path(root, "dev", "examples-charts", "bus-occupancy.R"), local = TRUE)
+add_chart("item", seat_chart)
+add_chart("pictorial", bus_chart)
 add_chart("gauge", highchart() |>
   hc_chart(type = "gauge") |>
   hc_title(text = "gauge") |>
@@ -96,16 +96,6 @@ add_chart("solidgauge", highchart() |>
   hc_title(text = "solidgauge") |>
   hc_yAxis(min = 0, max = 10) |>
   hc_add_series(type = "solidgauge", data = list(7), name = "Value"))
-add_chart("pictorial", highchart() |>
-  hc_chart(type = "pictorial") |>
-  hc_title(text = "pictorial") |>
-  hc_yAxis(max = 10) |>
-  hc_add_series(
-    type = "pictorial",
-    data = list(7, 5),
-    paths = list(list(definition = "M 0 0 L 10 0 L 10 10 L 0 10 Z"))
-  ))
-
 matrix_data <- unlist(lapply(0:4, function(x) {
   lapply(0:4, function(y) list(x, y, round(sin(x) + cos(y), 2)))
 }), recursive = FALSE)

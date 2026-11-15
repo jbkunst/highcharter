@@ -176,11 +176,13 @@ The visual review covered all 28 presets with the bundled Highcharts 12.6.0.
 
 ### 8. pkgdown and the home page — implemented
 
-Run `Rscript dev/build-site.R` to build the home grid, series gallery and site.
-The homepage uses four deterministic charts and one shared engine. They display
-in one or two columns and have animation disabled. The embedded gallery HTML
-and its JavaScript dependencies total about 491 kB gzip; its budget is 650 kB.
-Widths of 320, 390, 768 and 1180 px were checked in Chromium. The old generated
+Run `Rscript dev/build-site.R` to build the home example, series gallery and site.
+The homepage embeds one iris scatter plot. The same 150 points move between
+sepal and petal measurements on fixed axes. A single introductory transition
+runs when visible, and the controls support keyboard input and reduced motion.
+The widget preview and its JavaScript dependencies total about 491 kB gzip,
+within the 650 kB budget. The preview was checked in Chromium at viewport
+widths of 320, 390, 768 and 1180 px. The old generated
 asset copies, home page and separate build scripts were removed. The maintenance
 guide at the repository root is excluded from the published site and its indexes.
 
@@ -207,7 +209,7 @@ Validation on Linux with R 4.5.0 and Highcharts 12.6.0 on 2026-11-14.
 | Generated API | All 35 examples ran against the candidate. |
 | Source tarball | `R CMD check --no-manual` completed with status OK and all 33 Suggests installed. |
 | Optional dependencies | A second `R CMD check --no-manual --ignore-vignettes` in the minimal library completed with status OK. Two fresh sessions also checked base charts, axes and the xts path with quantmod absent. |
-| Website | All 18 articles and reference pages built through `dev/build-site.R`. |
+| Website | All 18 articles and reference pages built before the subsequent consolidation to 13 articles. |
 | Browser | Chromium checked 71 registered types, rendered contour through WebGPU, local tiles, Maps, Stock and the home grid. The four mtcars panels show all eight numbered axes at 320, 390 and 1100 px. |
 | Shiny proxy | `tests/browser/stock-proxy.py` checks changed values, exact time extremes and unchanged chart identity. The example redraws the series before setting the Stock range. |
 | Accessibility | Keyboard, accessibility tree, reduced motion and axe-core WCAG A/AA checks passed for the dedicated example. Orca could not start because the environment disallowed its D-Bus socket. A manual listening review remains pending. |
@@ -240,12 +242,12 @@ during the theme review.
 | --- | --- |
 | Public exports | 102, compared with 109 before this pass and 121 at the plan baseline |
 | Required Imports | 12 |
-| Suggested packages | 33 |
-| Articles | 18 on the website; the theme vignette ships in the source package |
+| Suggested packages | 29 |
+| Articles | 13 on the website; the theme vignette ships in the source package |
 | Installed package from the built tarball | 5.78 MB, including the rendered theme vignette |
 | Shared JavaScript engine | 1,235,368 bytes; 419,649 bytes gzip |
 | Optional Stock Tools JavaScript | 228,053 bytes |
-| Four-chart home gallery with its initial dependencies | About 491 kB gzip |
+| Home example with its initial dependencies | About 491 kB gzip in the iris preview |
 | Official series in the gallery | 71 |
 
 The [NEWS migration table](../NEWS.md#migration-guide) lists replacements for

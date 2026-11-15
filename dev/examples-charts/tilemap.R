@@ -1,20 +1,11 @@
-#' ## tilemap
-#' 
+#' ## Tile map
+#'
+#' This local copy of [Maarten Lambrechts' world tile grid](https://gist.github.com/maartenzam/787498bbc07ae06b637447dbd430ea0a)
+#' uses chart coordinates, with north at the top.
+grid_file <- here::here("dev", "examples-charts", "data", "world-tile-grid.csv")
+data <- utils::read.csv(grid_file, na.strings = character())
 
-# http://www.maartenlambrechts.com/2017/10/22/tutorial-a-worldtilegrid-with-ggplot2.html
-library(dplyr)
-library(readr)
-library(stringr)
-
-url <- "https://gist.githubusercontent.com/maartenzam/787498bbc07ae06b637447dbd430ea0a/raw/9a9dafafb44d8990f85243a9c7ca349acd3a0d07/worldtilegrid.csv"
-
-data <- suppressMessages(read_csv(url))
-
-data <- data %>% 
-  rename_all(str_replace_all, "\\.", "_") %>% 
-  select(x, y, name, region, alpha_2)
-
-hchart(data, "tilemap", hcaes(x = x, y = -y, name = name, group = region)) %>% 
+hchart(data, "tilemap", hcaes(x = x, y = y, name = name, group = region)) %>%
   hc_chart(type = "tilemap") %>% 
   hc_plotOptions(
     series = list(

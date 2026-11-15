@@ -1,5 +1,12 @@
 # highcharter (development version)
 
+* The website now groups 13 articles by task. The series gallery includes
+  polar charts and pictograms. The Highcharts API guide includes Tom Bishop's
+  legend walkthrough, custom markers and tooltips. The Motion example now
+  runs with local data in the modules and plugins guide. The five former
+  article URLs redirect to their new locations.
+* The Motion plugin uses native array iteration with the bundled Highcharts.
+
 * `hc_xAxis()`, `hc_yAxis()` and `hc_zAxis()` now accept one or several
   axis definitions. Replace `hc_xAxis_multiples()` and `hc_zAxis_multiples()`
   with the corresponding axis function. `hc_yAxis_multiples()` remains a

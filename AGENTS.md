@@ -6,6 +6,7 @@ Follow the [mAI principles](https://github.com/jbkunst/mai-principles).
 - For questions and reviews, inspect the relevant code and recommend one concrete approach with its main trade-off. Implement when requested. Keep commits, pushes and releases within the scope the maintainer has authorized.
 - Keep code readable. Explain changes to the maintenance workflow in the developer README and user-visible behavior in NEWS.
 - Match validation to the change. Run an R example for an R helper. For rendering, keyboard navigation or resize, also exercise the output in a browser. For an issue, try its reproducible example and report what was observed.
+- Place each new public help topic in the `_pkgdown.yml` section where a user would look for it. Reuse an existing selector when it fits and run `pkgdown::check_pkgdown()` after updating the documentation.
 
 ## Highcharts updates
 

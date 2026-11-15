@@ -10,6 +10,7 @@ vignette: >
 ```{r, include=FALSE}
 library(highcharter)
 options(highcharter.google_fonts = FALSE)
+knitr::read_chunk(here::here("dev", "examples-charts", "bus-occupancy.R"))
 ```
 
 The [interactive gallery](../series-gallery.html) renders a small example for
@@ -30,3 +31,54 @@ with WebGPU support.
 | Other forms | [bullet](../series-gallery.html#bullet), [columnpyramid](../series-gallery.html#columnpyramid), [cylinder](../series-gallery.html#cylinder), [funnel](../series-gallery.html#funnel), [funnel3d](../series-gallery.html#funnel3d), [gauge](../series-gallery.html#gauge), [item](../series-gallery.html#item), [lollipop](../series-gallery.html#lollipop), [packedbubble](../series-gallery.html#packedbubble), [pictorial](../series-gallery.html#pictorial), [pyramid](../series-gallery.html#pyramid), [pyramid3d](../series-gallery.html#pyramid3d), [solidgauge](../series-gallery.html#solidgauge), [timeline](../series-gallery.html#timeline), [variablepie](../series-gallery.html#variablepie), [variwide](../series-gallery.html#variwide), [waterfall](../series-gallery.html#waterfall), [wordcloud](../series-gallery.html#wordcloud) |
 
 The [R examples](https://github.com/jbkunst/highcharter/blob/HEAD/dev/R/test-highcharts-bundle.R) construct the widgets with `hchart()` or `hc_add_series()`.
+
+## Seats and occupancy
+
+Seven of the ten bus seats are occupied. An `item` series draws one symbol
+per seat, so you can count both groups. A stacked `pictorial` series fills
+the bus silhouette up to the same proportion.
+
+```{r bus-capacity}
+```
+
+```{r count-seats}
+```
+
+```{r fill-bus}
+```
+
+To put a different image on each scatter series, see [Markers and tooltips](highcharts-api.html#markers-and-tooltips).
+
+## Polar coordinates
+
+The same monthly measurements can be drawn as a polar line or as columns.
+For a polar range, supply the low and high value of each month.
+
+```{r polar-charts}
+polar_chart <- highchart() |>
+  hc_chart(polar = TRUE) |>
+  hc_xAxis(categories = as.character(citytemp$month), tickmarkPlacement = "on") |>
+  hc_yAxis(title = list(text = "Temperature (°C)"))
+
+polar_chart |> hc_add_series(type = "line", name = "Tokyo", data = citytemp$tokyo)
+polar_chart |> hc_add_series(type = "column", name = "London", data = citytemp$london)
+
+temperatures <- with(citytemp, Map(list, pmin(tokyo, london), pmax(tokyo, london)))
+polar_chart |> hc_add_series(type = "columnrange", name = "Tokyo–London range",
+                             data = temperatures)
+```
+
+## Worked examples in R
+
+These recipes illustrate layouts, point fields and options for individual
+series. Each example renders below its R code.
+
+```{r series-recipes, echo=FALSE, results='asis'}
+library(dplyr)
+recipes <- c("arcdiagram", "errorbar", "item", "packedbubble", "solidgauge",
+             "tilemap", "vector", "venn", "wordcloud", "xrange")
+for (name in recipes) {
+  path <- here::here("dev", "examples-charts", paste0(name, ".R"))
+  cat(knitr::spin_child(path), sep = "\n")
+}
+```
