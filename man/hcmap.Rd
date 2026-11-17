@@ -2,8 +2,7 @@
 % Please edit documentation in R/highmaps.R
 \name{hcmap}
 \alias{hcmap}
-\title{Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
-collection.}
+\title{Create a map chart}
 \usage{
 hcmap(
   map = "custom/world",
@@ -15,8 +14,8 @@ hcmap(
 )
 }
 \arguments{
-\item{map}{String indicating what map to chart, a list from
-\url{https://code.highcharts.com/mapdata/}. See examples.}
+\item{map}{A map name, such as \code{"custom/world"}, from the Highcharts map
+collection, or an already loaded GeoJSON list. See examples.}
 
 \item{download_map_data}{A logical value whether to download
 (add as a dependency) the map. Default \code{TRUE} via
@@ -34,8 +33,9 @@ the joinBy and value are needed.}
 (\url{https://api.highcharts.com/highcharts/series}).}
 }
 \description{
-Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
-collection.
+Create a Highcharts map using a map name from the
+\href{https://code.highcharts.com/mapdata/}{Highcharts map collection}
+or an already loaded GeoJSON list.
 }
 \examples{
 

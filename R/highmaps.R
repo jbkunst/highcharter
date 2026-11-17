@@ -75,10 +75,14 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
     hc_colorAxis(min = 0)
 }
 
-#' Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
-#' collection.
-#' @param map String indicating what map to chart, a list from
-#'   \url{https://code.highcharts.com/mapdata/}. See examples.
+#' Create a map chart
+#'
+#' Create a Highcharts map using a map name from the
+#' [Highcharts map collection](https://code.highcharts.com/mapdata/)
+#' or an already loaded GeoJSON list.
+#'
+#' @param map A map name, such as `"custom/world"`, from the Highcharts map
+#'   collection, or an already loaded GeoJSON list. See examples.
 #' @param download_map_data A logical value whether to download
 #'   (add as a dependency) the map. Default \code{TRUE} via
 #'   \code{getOption("highcharter.download_map_data")}. Ignored when `map`

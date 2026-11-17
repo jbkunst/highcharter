@@ -11,6 +11,8 @@
 #'    (\url{https://api.highcharts.com/highcharts/series}).
 #'
 #' @examples
+#' methods(hchart)
+#'
 #' fit <- prcomp(USArrests, scale. = TRUE)
 #' hchart(fit)
 #' hchart(fit, choices = c(1, 3), loadings = TRUE)

@@ -38,6 +38,8 @@ generic that other classes and packages can extend.
 Run \code{methods(hchart)} to see what objects are supported.
 }
 \examples{
+methods(hchart)
+
 fit <- prcomp(USArrests, scale. = TRUE)
 hchart(fit)
 hchart(fit, choices = c(1, 3), loadings = TRUE)

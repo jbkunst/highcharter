@@ -1,5 +1,7 @@
 # highcharter (development version)
 
+* The `hchart()` examples list supported methods with `methods(hchart)`.
+  The `hcmap()` help uses a concise title and a descriptive map-collection link.
 * The homepage introduces the shared Highcharts bundle, installation and a first
   chart, with standard CRAN/GitHub installation commands and direct links to
   examples and reference pages. Datalegreya returns
