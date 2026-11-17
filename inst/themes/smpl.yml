@@ -10,12 +10,14 @@ title:
   align: left
   style:
     fontFamily: Roboto Condensed
-    fontWeight: bold
+    fontWeight: normal
 subtitle:
   align: left
   style:
     fontFamily: Roboto Condensed
 legend:
+  itemStyle:
+    fontWeight: normal
   align: right
   verticalAlign: bottom
 xAxis:
@@ -32,6 +34,10 @@ yAxis:
   tickColor: '#F3F3F3'
   tickWidth: 1
 plotOptions:
+  series:
+    dataLabels:
+      style:
+        fontWeight: normal
   line:
     marker:
       enabled: false
@@ -49,3 +55,5 @@ plotOptions:
       enabled: false
   bubble:
     maxSize: 10%
+tooltip:
+  className: highcharter-regular-tooltip

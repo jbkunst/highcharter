@@ -47,6 +47,10 @@ yAxis:
   tickColor: '#F3F3F3'
   tickWidth: 1
 plotOptions:
+  series:
+    dataLabels:
+      style:
+        fontWeight: normal
   line:
     marker:
       enabled: false
@@ -64,3 +68,5 @@ plotOptions:
       enabled: false
   bubble:
     maxSize: 10%
+tooltip:
+  className: highcharter-regular-tooltip

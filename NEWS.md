@@ -12,6 +12,7 @@
   IBM Plex Sans for credits. French, Norwegian Bokmål and Simplified Chinese
   use official Highcharts language packs. Japanese and Korean use AI-generated
   translations.
+* The hcrt, carbon and smpl themes use regular-weight titles, labels and tooltip values.
 * The hcrt theme uses the built-in three-dot export menu icon.
 * Forecast charts distinguish observations, forecasts and prediction intervals
   in the legend and shared tooltip. The tooltip shows both interval limits.

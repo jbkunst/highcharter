@@ -10,6 +10,7 @@ dependencies:
       - highcharter-bundle.js
       - highcharts/custom/reset.js
       - highcharts/custom/highcharter-widget.js
+    stylesheet: highcharts/custom/tooltip.css
     all_files: false
   - name: highcharts-stock-tools
     version: 12.6.0

@@ -12,7 +12,7 @@ title:
   align: left
   style:
     color: '#161616'
-    fontWeight: bold
+    fontWeight: normal
 subtitle:
   align: left
   style:
@@ -34,7 +34,15 @@ yAxis:
 legend:
   align: left
   itemStyle:
+    fontWeight: normal
     color: '#161616'
 colorAxis:
   minColor: '#EDF5FF'
   maxColor: '#002D9C'
+plotOptions:
+  series:
+    dataLabels:
+      style:
+        fontWeight: normal
+tooltip:
+  className: highcharter-regular-tooltip
