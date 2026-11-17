@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Datalegreya-Gradient";
+  src: url("fonts/Datalegreya-Gradient.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   font-weight: 300;
   line-height: 1.75;
@@ -15,6 +23,19 @@ main h1, main h2 {
 }
 main h2 { margin-top: 2.8rem; margin-bottom: 1.2rem; }
 main h3, main h4, main h5 { font-weight: 400; }
+.navbar-brand,
+.template-home #highcharter {
+  font-family: "Datalegreya-Gradient", "Alegreya Sans SC", sans-serif;
+  font-weight: 400;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+}
+.navbar-brand { font-size: 1.7rem; }
+.template-home #highcharter { font-size: clamp(2.8rem, 7vw, 5rem); }
+.template-home .page-header { border-bottom: 0; }
+@media (max-width: 575.98px) {
+  .template-home #highcharter { font-size: clamp(2rem, 8.5vw, 2.8rem); }
+  .template-home .page-header .logo { width: 76px; margin-left: 1rem; }
+}
 .template-article-index h3,
 .template-article-index .h3,
 .template-article-index a { font-weight: 400; }

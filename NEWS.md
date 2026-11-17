@@ -1,5 +1,8 @@
 # highcharter (development version)
 
+* The homepage introduces the shared Highcharts bundle, installation and a first
+  chart, with direct links to examples and reference pages. Datalegreya returns
+  to the navbar brand and homepage title; the homepage header rule is removed.
 * The homepage uses a full-width 2-by-2 chart grid with four synchronized states,
   ordered as scatter, exports, map and pie. Its South America focus connects the same
   countries and indicators across panels, with quantitative income, longevity
@@ -27,6 +30,7 @@
   tooltips. The line view labels the highest series at the 2008 crisis and
   COVID-19 points, separated from the curves by a 24-pixel offset.
   Export series retain every region's color in all four states.
+  A series label identifies South America in the third export view.
 * The hcrt theme uses the built-in three-dot export menu icon.
 * Language examples compare dates and export-data menus across eight locales.
   They use a shared chart factory, compact layouts and horizontal date labels.

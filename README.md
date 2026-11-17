@@ -1,61 +1,77 @@
 # highcharter
 
-Highcharter brings interactive Highcharts charts, maps and financial time series to R.
+Bring your data to life with interactive charts, maps and financial dashboards
+in R. Highcharter combines the power of Highcharts with a familiar R workflow:
+start with your data, choose a chart and make it your own.
 
 <iframe class="home-gallery" src="home-gallery.html" title="Explore international development through animated charts" loading="lazy"></iframe>
-
 
 <div class="home-copy">
 
 ## Installation
 
-CRAN version:
+Install the released version from CRAN:
 
 ```r
 install.packages("highcharter")
 ```
 
-Development version:
+Try the development version with the unified Highcharts bundle:
 
 ```r
-remotes::install_github("jbkunst/highcharter")
+remotes::install_github("jbkunst/highcharter", ref = "feat/highcharts-bundle")
 ```
 
-## Highcharts bundle
+## One bundle, a world of charts
 
-`highchart()` and `highchartstock()` share one bundled Highcharts
-engine per page. Charts, Stock, Maps, Gantt, official series, accessibility and common
-feature modules are included. `highchartstock()` adds the Stock Tools GUI and technical
-indicators. Third-party plugins remain optional through `hc_add_dependency()`.
-Each widget keeps its own chart and resizes to its container when reflow is enabled.
+Go from a scatter plot to an interactive world map or a market dashboard.
+One shared Highcharts bundle brings together Charts, Stock, Maps and Gantt,
+with dozens of chart types ready to explore.
 
-See the [maintainer guide](https://github.com/jbkunst/highcharter/blob/feat/highcharts-bundle/dev/readme.md#update-highcharts) to update Highcharts
-and the [bundle guide](https://github.com/jbkunst/highcharter/blob/feat/highcharts-bundle/dev/highcharts-bundle/README.md) to change the module selection
-or run the example grid.
+- **Explore your data:** zoom, drill down and discover details in rich tooltips.
+- **Tell your story:** combine series, add annotations and customize colors,
+  themes and languages.
+- **Follow the markets:** use `highchartstock()` for financial time series,
+  technical indicators and the Stock Tools interface.
+- **Share the result:** embed charts in Shiny and R Markdown, export images and
+  data, and use built-in accessibility features.
 
-The [development guide](https://github.com/jbkunst/highcharter/blob/feat/highcharts-bundle/dev/readme.md)
-describes the `dev/` directories, website build, tests and maintenance commands.
+## Your first chart
 
-## How to start
+Pass a data frame to `hchart()` and map columns to visual properties with
+`hcaes()`. Add titles and options with the R pipe:
 
-Start with [charting a data frame](https://jkunst.com/highcharter/articles/first-steps.html),
-then explore [Maps](https://jkunst.com/highcharter/articles/maps.html),
-[Stock](https://jkunst.com/highcharter/articles/stock.html) and
-[accessible charts](https://jkunst.com/highcharter/articles/accessibility.html).
+```r
+library(highcharter)
 
-## Project links
+hchart(mtcars, "scatter", hcaes(x = wt, y = mpg, group = cyl)) |>
+  hc_title(text = "Fuel economy by car weight") |>
+  hc_xAxis(title = list(text = "Weight (1,000 lbs)")) |>
+  hc_yAxis(title = list(text = "Miles per gallon"))
+```
+
+The [first steps guide](https://jkunst.com/highcharter/articles/first-steps.html)
+walks through data frames, chart types and the options that make a chart yours.
+
+## Keep exploring
+
+- [Chart gallery](https://jkunst.com/highcharter/articles/series-gallery.html):
+  find a chart type and its R example.
+- [Maps](https://jkunst.com/highcharter/articles/maps.html) and
+  [Stock charts](https://jkunst.com/highcharter/articles/stock.html):
+  explore places and financial time series.
+- [Shiny](https://jkunst.com/highcharter/articles/shiny.html) and
+  [accessibility](https://jkunst.com/highcharter/articles/accessibility.html):
+  build interactive experiences for your audience.
+- [Function reference](https://jkunst.com/highcharter/reference/index.html):
+  look up helpers and chart options.
 
 [Source code](https://github.com/jbkunst/highcharter) ·
 [Report an issue](https://github.com/jbkunst/highcharter/issues) ·
-[Contributing](CONTRIBUTING.md) ·
-[Code of conduct](CODE_OF_CONDUCT.md) ·
-[Authors and citation](https://jkunst.com/highcharter/authors.html) ·
-[Maintainer's website](https://jkunst.com)
+[Contribute](CONTRIBUTING.md) ·
+[Authors and citation](https://jkunst.com/highcharter/authors.html)
 
-## Licence
-
-Highcharter has a dependency on Highcharts, a commercial JavaScript charting library. Highcharts offers both a commercial license as well as a free non-commercial license. Please review the licensing options and terms before using this software, as the `highcharter` license neither provides nor implies a license for Highcharts.
-
-Highcharts (https://highcharts.com) is a Highsoft product which is not free for commercial and Governmental use.
+Highcharter is licensed under MIT. Highcharts has its own
+[licensing terms](https://www.highcharts.com/license).
 
 </div>

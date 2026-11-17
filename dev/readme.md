@@ -71,6 +71,14 @@ dependencies installed. The script builds the home example and the series
 gallery locally, then renders the site with pkgdown. The README supplies the
 home text. Generated gallery files belong in the site output.
 
+The public homepage focuses on installation, bundle features and getting started.
+Keep maintenance instructions in this guide. The navbar brand and homepage title
+use the original Datalegreya-Gradient font, restored from the repository history
+and served locally from `pkgdown/assets/fonts/`. Its upstream source is
+[figs-lab/datalegreya](https://github.com/figs-lab/datalegreya); retain `OFL.txt`
+beside the font. Other headings keep Alegreya Sans SC. Run `pkgdown::init_site()`
+when previewing changes to these assets without rebuilding the entire website.
+
 In an R session at the repository root:
 
 ```r
@@ -142,6 +150,7 @@ Fonts loader. The current common year is 2024: 179 economies, including Russia,
 with complete merchandise-export histories from 2005. The panel order is
 scatter, exports, map and pie. Only the third state focuses on South America in
 the scatter, map and pie; exports keep every region's color in all states.
+The third export view identifies South America with a native series label.
 The fourth returns to a global view. Income/longevity and
 then trade positions share indicators between scatter and map. The last
 scatter uses exports and imports per person on two logarithmic axes, with an

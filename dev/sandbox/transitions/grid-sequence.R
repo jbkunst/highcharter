@@ -392,6 +392,12 @@ trade_chart <- function(stage) {
         },
         fillOpacity = c(0, 0.65, 0.65, 1)[stage],
         opacity = 1,
+        label = list(
+          enabled = stage == 3L && region == "South America",
+          onArea = FALSE,
+          connectorAllowed = TRUE,
+          style = list(fontSize = "10px", fontWeight = "normal")
+        ),
         lineWidth = c(2.2, 1.5, 1, 0)[stage],
         marker = list(enabled = FALSE),
         data = points
@@ -697,6 +703,10 @@ body { margin: 0; background: white; }
 .grid-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .grid-controls button,.grid-controls select { padding: 7px 18px; font: inherit; cursor: pointer;
   border: 1px solid #ddd; border-radius: 22px; background: #fff; color: #47475c; }
+.grid-controls select { appearance: none; padding-right: 38px;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M3 6l5 5 5-5%27 fill=%27none%27 stroke=%27%2347475c%27 stroke-width=%271.8%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E');
+  background-repeat: no-repeat; background-position: right 12px center;
+  background-size: 12px 12px; }
 .grid-controls .grid-play { background: #47475c; color: #fff; }
 @media(max-width:720px) { .transition-grid { grid-template-columns:1fr; } }
 @media(prefers-reduced-motion:reduce) { .grid-legend li { transition:none; } }
