@@ -19,7 +19,7 @@ highchartstock(
 
 \item{theme}{A \code{hc_theme} class object-}
 
-\item{width}{A numeric input in pixels.}
+\item{width}{A numeric width in pixels, or a CSS width such as \code{"100\%"}.}
 
 \item{height}{A numeric input in pixels.}
 
@@ -35,4 +35,21 @@ controlled by \code{"highcharter.google_fonts"} option.}
 \code{highchartstock()} creates a Stock chart with the official Stock Tools GUI,
 advanced annotations and technical indicators. Use \code{highchart(type = "stock")}
 for a Stock chart without these additional interface assets.
+}
+\examples{
+prices <- data.frame(
+  day = base::as.Date("2025-01-01") + 0:19,
+  close = 100 + seq_len(20) + 3 * sin(seq_len(20))
+)
+highchartstock(width = "100\%") |>
+  hc_add_series(prices, "line", hcaes(x = day, y = close),
+                name = "Close", id = "price") |>
+  hc_add_series(type = "sma", linkedTo = "price", name = "5-day mean",
+                params = list(period = 5)) |>
+  hc_stockTools(gui = list(enabled = TRUE,
+                          buttons = c("indicators", "zoomChange", "fullScreen"))) |>
+  hc_title(text = "Explore prices with Stock Tools")
+}
+\seealso{
+\code{\link[=highchart]{highchart()}}
 }

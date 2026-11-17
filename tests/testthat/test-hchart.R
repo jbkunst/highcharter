@@ -42,6 +42,8 @@ test_that("hchart returns a valid time series decomposition plot after valid dat
 })
 
 test_that("hchart returns a valid graph after valid data input", {
+  old_theme <- hc_set_theme("hcrt")
+  on.exit(options(old_theme))
   require(igraph)
   N <- 40
 
@@ -59,6 +61,8 @@ test_that("hchart returns a valid graph after valid data input", {
 
   h <- hchart(net, layout = layout_with_fr)
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+  expect_identical(h$x$theme$chart$style$fontFamily, "IBM Plex Sans")
+  expect_false(h$x$theme$xAxis$visible)
 })
 
 test_that("hchart returns a valid model plot after valid data input", {

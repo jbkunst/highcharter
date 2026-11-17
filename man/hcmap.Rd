@@ -20,7 +20,8 @@ hcmap(
 
 \item{download_map_data}{A logical value whether to download
 (add as a dependency) the map. Default \code{TRUE} via
-\code{getOption("highcharter.download_map_data")}.}
+\code{getOption("highcharter.download_map_data")}. Ignored when \code{map}
+is an already loaded GeoJSON list.}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
@@ -39,6 +40,9 @@ collection.
 \examples{
 
 options(highcharter.download_map_data = TRUE)
+
+# An already loaded map works without a network request.
+hcmap(worldgeojson, showInLegend = FALSE)
 
 # hcmap(nullColor = "#DADADA")
 # hcmap(nullColor = "#DADADA", download_map_data = FALSE)

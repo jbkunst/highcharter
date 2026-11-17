@@ -1,6 +1,6 @@
 library(highcharter)
 library(shiny)
-dates <- as.Date("2025-01-01") + 0:9
+dates <- base::as.Date("2025-01-01") + 0:9
 prices <- data.frame(day = dates, price = 20:29)
 
 ui <- fluidPage(actionButton("update", "Update"), highchartOutput("prices"))

@@ -1,0 +1,64 @@
+{
+  "numericSymbols": ["万", "億", "兆", "京", "垓", "秭"],
+  "numericSymbolMagnitude": 10000,
+  "chartTitle": "グラフ",
+  "seriesName": "系列 {add index 1}",
+  "yAxisTitle": "値",
+  "pieSliceName": "項目",
+  "loading": "読み込み中...",
+  "noData": "表示するデータがありません",
+  "contextButtonTitle": "グラフのメニュー",
+  "printChart": "グラフを印刷",
+  "viewFullscreen": "全画面表示",
+  "exitFullscreen": "全画面表示を終了",
+  "viewData": "データ表を表示",
+  "hideData": "データ表を非表示",
+  "exportInProgress": "エクスポート中...",
+  "exportData": {
+    "annotationHeader": "注釈",
+    "categoryHeader": "カテゴリ",
+    "categoryDatetimeHeader": "日時"
+  },
+  "resetZoom": "ズームをリセット",
+  "resetZoomTitle": "ズーム倍率をリセット",
+  "zoomIn": "拡大",
+  "zoomOut": "縮小",
+  "mainBreadcrumb": "ホーム",
+  "drillUpText": "{series.name} に戻る",
+  "rangeSelectorZoom": "期間",
+  "rangeSelectorFrom": "開始",
+  "rangeSelectorTo": "終了",
+  "rangeSelector": {
+    "allText": "すべて",
+    "allTitle": "全期間を表示",
+    "monthText": "{count}か月",
+    "monthTitle": "{count}か月を表示",
+    "yearText": "{count}年",
+    "yearTitle": "{count}年を表示",
+    "ytdText": "年初来",
+    "ytdTitle": "年初から表示"
+  },
+  "stockOpen": "始値",
+  "stockHigh": "高値",
+  "stockLow": "安値",
+  "stockClose": "終値",
+  "downloadCSV": "CSVをダウンロード",
+  "downloadXLS": "XLSをダウンロード",
+  "downloadPNG": "PNG画像をダウンロード",
+  "downloadJPEG": "JPEG画像をダウンロード",
+  "downloadPDF": "PDFをダウンロード",
+  "downloadSVG": "SVG画像をダウンロード",
+  "accessibility": {
+    "defaultChartTitle": "グラフ",
+    "chartContainerLabel": "{title}。操作可能なグラフ。",
+    "svgContainerLabel": "操作可能なグラフ",
+    "exporting": {
+      "chartMenuLabel": "グラフのメニュー",
+      "menuButtonLabel": "{chartTitle} のメニューを開く"
+    },
+    "table": {
+      "viewAsDataTableButtonText": "{chartTitle} をデータ表で表示",
+      "tableSummary": "グラフのデータ表。"
+    }
+  }
+}

@@ -35,7 +35,12 @@ highchart() |>
   hc_xAxis(type = "category") |>
   hc_yAxis(title = list(text = "Count")) |>
   hc_legend(enabled = FALSE) |>
-  hc_add_series(totals, "column", hcaes(name = category, y = y, drilldown = category),
-                name = "Items", colorByPoint = TRUE) |>
+  hc_add_series(
+    totals,
+    "column",
+    hcaes(name = category, y = y, drilldown = category),
+    name = "Items",
+    colorByPoint = TRUE
+  ) |>
   hc_drilldown(series = detail)
 }

@@ -17,9 +17,9 @@ displaying a view of the entire data set. It provides tools to zoom in
 and out on parts of the data as well as panning across the dataset.
 }
 \examples{
-highchart(type = "stock") |> 
-  hc_add_series(AirPassengers) |> 
-  hc_rangeSelector(selected = 4) |> 
+highchart(type = "stock") |>
+  hc_add_series(AirPassengers) |>
+  hc_rangeSelector(selected = 4) |>
   hc_navigator(
     outlineColor = "gray",
     outlineWidth = 2,

@@ -12,7 +12,23 @@ test_that("presets keep regional formatting and fall back to English text", {
     hc_language("fr-CA")$accessibility$defaultChartTitle,
     "Graphique"
   )
+  expect_identical(hc_language("fr-FR")$downloadCSV, "Télécharger CSV")
+  expect_identical(hc_language("nb-NO")$downloadCSV, "Last ned CSV")
+  expect_identical(hc_language("nb")$viewData, "Vis datatabell")
+  expect_identical(hc_language("nb-no")$locale, "nb-no")
   expect_null(hc_language("es-CL")$months)
+  expect_identical(hc_language("ja-JP")$downloadCSV, "CSVをダウンロード")
+  expect_equal(hc_language("ja-JP")$numericSymbolMagnitude, 10000)
+  expect_identical(hc_language("ja-JP")$numericSymbols[1], "万")
+  expect_identical(hc_language("ko-KR")$downloadCSV, "CSV 다운로드")
+  expect_equal(hc_language("ko-KR")$numericSymbolMagnitude, 10000)
+  expect_identical(hc_language("ko-KR")$numericSymbols[2], "억")
+  expect_identical(hc_language("zh-CN")$downloadCSV, "下载 CSV")
+  expect_identical(
+    hc_language("zh-Hans")$viewData,
+    hc_language("zh-CN")$viewData
+  )
+  expect_identical(hc_language("zh-TW"), list(locale = "zh-TW"))
   expect_error(hc_language("es_CL"), "language code")
   expect_error(hc_language(c("en", "es")), "language code")
   expect_error(hc_language("es", "CSV"), "Name each")

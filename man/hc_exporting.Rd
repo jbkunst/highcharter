@@ -22,6 +22,8 @@ highcharts_demo() |>
   hc_exporting(
     enabled = TRUE,
     filename = "monthly-city-temperatures",
-    buttons = list(contextButton = list(menuItems = c("downloadPNG", "downloadCSV")))
+    buttons = list(
+      contextButton = list(menuItems = c("downloadPNG", "downloadCSV"))
+    )
   )
 }

@@ -81,7 +81,8 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'   \url{https://code.highcharts.com/mapdata/}. See examples.
 #' @param download_map_data A logical value whether to download
 #'   (add as a dependency) the map. Default \code{TRUE} via
-#'   \code{getOption("highcharter.download_map_data")}.
+#'   \code{getOption("highcharter.download_map_data")}. Ignored when `map`
+#'   is an already loaded GeoJSON list.
 #' @param data Optional data to make a choropleth, in case of use
 #'   the joinBy and value are needed.
 #' @param value A string value with the name of the variable to chart.
@@ -92,6 +93,9 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @examples
 #'
 #' options(highcharter.download_map_data = TRUE)
+#'
+#' # An already loaded map works without a network request.
+#' hcmap(worldgeojson, showInLegend = FALSE)
 #'
 #' # hcmap(nullColor = "#DADADA")
 #' # hcmap(nullColor = "#DADADA", download_map_data = FALSE)
@@ -122,25 +126,28 @@ hcmap <- function(
   joinBy = NULL,
   ...
 ) {
-  map <- fix_map_name(map)
-
   hc <- highchart(type = "map")
 
-  if (download_map_data) {
-    mapdata <- download_map_data(map)
+  if (is.list(map)) {
+    mapdata <- map
   } else {
-    dep <- htmlDependency(
-      name = basename(map),
-      version = "0.1.0",
-      src = c(href = "https://code.highcharts.com/mapdata"),
-      script = map
-    )
+    map <- fix_map_name(map)
+    if (download_map_data) {
+      mapdata <- download_map_data(map)
+    } else {
+      dep <- htmlDependency(
+        name = basename(map),
+        version = "0.1.0",
+        src = c(href = "https://code.highcharts.com/mapdata"),
+        script = map
+      )
 
-    hc$dependencies <- c(hc$dependencies, list(dep))
-    mapdata <- JS(sprintf(
-      "Highcharts.maps['%s']",
-      str_replace(map, "\\.js$", "")
-    ))
+      hc$dependencies <- c(hc$dependencies, list(dep))
+      mapdata <- JS(sprintf(
+        "Highcharts.maps['%s']",
+        str_replace(map, "\\.js$", "")
+      ))
+    }
   }
 
   if (is.null(data)) {
@@ -150,7 +157,7 @@ hcmap <- function(
         ...
       )
   } else {
-    data <- rename(data, value := value)
+    data <- rename(data, value := all_of(value))
 
     hc <- hc |>
       hc_add_series.default(

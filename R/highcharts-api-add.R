@@ -216,21 +216,21 @@ hc_add_series.forecast <- function(
 
   rid <- random_id()
   method <- data$method
+  forecast_name <- if (is.null(name)) {
+    paste("Forecast:", method)
+  } else {
+    paste(name, "forecast")
+  }
 
   if (addOriginal) {
-    hc <- hc_add_series(
-      hc,
-      data$x,
-      name = ifelse(is.null(name), method, name),
-      zIndex = 3,
-      ...
-    )
+    observed_name <- if (is.null(name)) "Observed" else paste(name, "observed")
+    hc <- hc_add_series(hc, data$x, name = observed_name, zIndex = 3, ...)
   }
 
   hc <- hc_add_series(
     hc,
     data$mean,
-    name = ifelse(is.null(name), method, name),
+    name = forecast_name,
     zIndex = 2,
     id = rid,
     ...
@@ -238,7 +238,7 @@ hc_add_series.forecast <- function(
 
   if (addLevels) {
     tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
-    nmf <- paste(ifelse(is.null(name), method, name), "level", data$level)
+    nmf <- paste(forecast_name, paste0(data$level, "% interval"))
 
     for (m in seq(ncol(data$upper))) {
       dfbands <- tibble(

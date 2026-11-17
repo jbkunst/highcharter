@@ -16,7 +16,6 @@ Authors@R: c(
 URL: https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 License: MIT + file LICENSE
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Depends:
@@ -67,3 +66,5 @@ Suggests:
     spelling,
 LazyData: true
 Language: en-US
+Config/Needs/website: pkgdown, shinylive, nanonext
+Config/roxygen2/version: 8.1.1

@@ -120,6 +120,17 @@
     if (x.hc_opts.motion !== undefined) {
       el.style.position = 'relative';
     }
+
+    // htmlwidgets can fill a Viewer or browser with height: 100%. Highcharts
+    // falls back to 400px for that layout when the parent has no inline height.
+    // Measure the widget for both htmlwidgets resize and Highcharts' own reflow.
+    Highcharts.wrap(chart, 'setSize', function(proceed, width, height, animation) {
+      return proceed(
+        width == null ? el.clientWidth || undefined : width,
+        height == null ? el.clientHeight || undefined : height,
+        animation
+      );
+    });
     chart.setSize(null, null, false);
   }
 

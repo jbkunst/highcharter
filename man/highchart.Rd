@@ -23,7 +23,7 @@ highchart(
 \item{type}{A character value to set if use Highchart, Highstock or
 Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 
-\item{width}{A numeric input in pixels.}
+\item{width}{A numeric width in pixels, or a CSS width such as \code{"100\%"}.}
 
 \item{height}{A numeric input in pixels.}
 
@@ -39,4 +39,22 @@ controlled by \code{"highcharter.google_fonts"} option.}
 This function creates a Highchart chart using \pkg{htmlwidgets}. The
 widget can be rendered on HTML pages generated from R Markdown, Shiny, or
 other applications.
+}
+\examples{
+highchart(width = "100\%") |>
+  hc_xAxis(categories = citytemp$month) |>
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) |>
+  hc_add_series(name = "London", data = citytemp$london) |>
+  hc_title(text = "Monthly temperatures")
+
+# Stock navigation is available in the shared bundle.
+prices <- data.frame(
+  day = base::as.Date("2025-01-01") + 0:9,
+  close = c(100, 102, 101, 104, 103, 106, 108, 107, 109, 112)
+)
+highchart(type = "stock", width = "100\%") |>
+  hc_add_series(prices, "line", hcaes(x = day, y = close), name = "Close")
+}
+\seealso{
+\code{\link[=hchart]{hchart()}}, \code{\link[=hcmap]{hcmap()}}, \code{\link[=highchartstock]{highchartstock()}}
 }

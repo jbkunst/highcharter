@@ -22,9 +22,9 @@ It is possible to override the symbol creator function and create custom
 legend symbols.
 }
 \examples{
-highchart() |> 
-  hc_xAxis(categories = month.abb) |> 
-  hc_add_series(name = "Tokyo", data = sample(1:12)) |> 
+highchart() |>
+  hc_xAxis(categories = month.abb) |>
+  hc_add_series(name = "Tokyo", data = sample(1:12)) |>
   hc_add_series(name = "London", data = sample(1:12) + 10) |>
   hc_add_series(name = "Other City", data = sample(1:12) + 20) |>
   hc_legend(
@@ -33,5 +33,5 @@ highchart() |>
     layout = "vertical",
     x = 0,
     y = 100
-    ) 
+  )
 }

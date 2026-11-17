@@ -26,9 +26,9 @@ replaced by the classes \code{.highcharts-scrollbar-thumb},
 \code{.highcharts-scrollbar-rifles} and \code{.highcharts-scrollbar-track}.
 }
 \examples{
-highchart(type = "stock") |> 
-  hc_add_series(AirPassengers) |> 
-  hc_rangeSelector(selected = 4) |> 
+highchart(type = "stock") |>
+  hc_add_series(AirPassengers) |>
+  hc_rangeSelector(selected = 4) |>
   hc_scrollbar(
     barBackgroundColor = "gray",
     barBorderRadius = 7,

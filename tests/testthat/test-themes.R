@@ -41,11 +41,14 @@ test_that("the packaged presets produce themes for widgets", {
   expect_identical(hc_theme("ft")$chart$backgroundColor, "#FFF1E5")
   expect_equal(length(unique(hc_theme("economist")$colors)), 6)
   expect_identical(hc_theme("carbon")$colors[1], "#6929C4")
+  for (name in c("hcrt", "smpl")) {
+    expect_identical(hc_theme(name)$symbols, rep("circle", 5))
+  }
   cloudscape <- hc_theme("cloudscape")
   expect_length(cloudscape$colors, 10)
   expect_identical(cloudscape$colors[1:2], c("#688AE8", "#C33D69"))
   for (theme in list(hc_theme("carbon"), cloudscape)) {
-    expect_identical(theme$plotOptions$series$marker$symbol, "circle")
+    expect_identical(theme$symbols, rep("circle", 5))
     expect_equal(theme$xAxis$gridLineWidth, 1)
     expect_equal(theme$yAxis$gridLineWidth, 1)
   }

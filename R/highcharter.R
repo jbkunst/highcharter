@@ -9,7 +9,7 @@
 #' @param theme A \code{hc_theme} class object-
 #' @param type A character value to set if use Highchart, Highstock or
 #'   Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.
-#' @param width A numeric input in pixels.
+#' @param width A numeric width in pixels, or a CSS width such as `"100%"`.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
 #' @param google_fonts A boolean value. If TRUE (default), adds a reference to the
@@ -18,6 +18,21 @@
 #'   FALSE if you load your own fonts using CSS. This option as default is
 #'   controlled by \code{"highcharter.google_fonts"} option.
 #' @importFrom htmlwidgets createWidget sizingPolicy
+#' @examples
+#' highchart(width = "100%") |>
+#'   hc_xAxis(categories = citytemp$month) |>
+#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) |>
+#'   hc_add_series(name = "London", data = citytemp$london) |>
+#'   hc_title(text = "Monthly temperatures")
+#'
+#' # Stock navigation is available in the shared bundle.
+#' prices <- data.frame(
+#'   day = base::as.Date("2025-01-01") + 0:9,
+#'   close = c(100, 102, 101, 104, 103, 106, 108, 107, 109, 112)
+#' )
+#' highchart(type = "stock", width = "100%") |>
+#'   hc_add_series(prices, "line", hcaes(x = day, y = close), name = "Close")
+#' @seealso [hchart()], [hcmap()], [highchartstock()]
 #' @export
 highchart <- function(
   hc_opts = list(),
@@ -117,6 +132,20 @@ highchart <- function(
 #' for a Stock chart without these additional interface assets.
 #'
 #' @inheritParams highchart
+#' @examples
+#' prices <- data.frame(
+#'   day = base::as.Date("2025-01-01") + 0:19,
+#'   close = 100 + seq_len(20) + 3 * sin(seq_len(20))
+#' )
+#' highchartstock(width = "100%") |>
+#'   hc_add_series(prices, "line", hcaes(x = day, y = close),
+#'                 name = "Close", id = "price") |>
+#'   hc_add_series(type = "sma", linkedTo = "price", name = "5-day mean",
+#'                 params = list(period = 5)) |>
+#'   hc_stockTools(gui = list(enabled = TRUE,
+#'                           buttons = c("indicators", "zoomChange", "fullScreen"))) |>
+#'   hc_title(text = "Explore prices with Stock Tools")
+#' @seealso [highchart()]
 #' @export
 highchartstock <- function(
   hc_opts = list(),

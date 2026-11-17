@@ -1,3 +1,4 @@
+symbols: [circle, circle, circle, circle, circle]
 # Cloudscape chart components, light palette and Open Sans typography.
 # https://github.com/cloudscape-design/chart-components/blob/31ed24741b10928d1638245c725c1a0d155b29a4/src/internal/chart-styles.ts
 # https://github.com/cloudscape-design/components/blob/2be3e9163cb212e5b4c9b195a13e871479097695/style-dictionary/visual-refresh/color-charts.ts
@@ -49,7 +50,6 @@ legend:
 plotOptions:
   series:
     marker:
-      symbol: circle
       radius: 3
   area:
     fillOpacity: 0.4
