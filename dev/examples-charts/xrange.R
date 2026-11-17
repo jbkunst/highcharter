@@ -20,12 +20,18 @@ hchart(
   "xrange",
   hcaes(x = start, x2 = end, y = cat, partialFill = progress),
   dataLabels = list(enabled = TRUE)
-  ) |>
+) |>
   hc_xAxis(
     title = FALSE,
     type = "datetime"
-    ) |>
+  ) |>
   hc_yAxis(
     title = FALSE,
-    categories = c("Prototyping", "Development", "Testing", "Validation", "Modelling")
+    categories = c(
+      "Prototyping",
+      "Development",
+      "Testing",
+      "Validation",
+      "Modelling"
     )
+  )

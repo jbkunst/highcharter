@@ -2,12 +2,12 @@
 #'  title: "Technology Clusters"
 #'  author: Joshua
 #'  date: "Today"
-#'  output: 
+#'  output:
 #'    flexdashboard::flex_dashboard:
 #'      orientation: columns
 #'      source_code: embed
 #' ---
-  
+
 #+ include=FALSE
 library(highcharter)
 library(readr)
@@ -27,8 +27,7 @@ relationships <- tag_pair_data %>%
 v <- tag_pair_data %>%
   select(Tag1, Tag1Total) %>%
   distinct(Tag1) %>%
-  filter(Tag1 %in% relationships$Tag1 |
-           Tag1 %in% relationships$Tag2) %>%
+  filter(Tag1 %in% relationships$Tag1 | Tag1 %in% relationships$Tag2) %>%
   arrange(desc(Tag1Total))
 
 g <- graph.data.frame(relationships, directed = FALSE, vertices = v)
@@ -47,5 +46,5 @@ V(g)$comm <- as.vector(membership(wc))
 V(g)$color <- colorize(membership(wc))
 
 #+
-hchart(g, minSize = 5, maxSize = 40) %>% 
+hchart(g, minSize = 5, maxSize = 40) %>%
   hc_chart(zoomType = "xy")

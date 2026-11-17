@@ -67,7 +67,8 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 
   hc |>
     hc_add_series(
-      mapData = map, data = ddta,
+      mapData = map,
+      data = ddta,
       joinBy = joinBy,
       ...
     ) |>
@@ -113,10 +114,14 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @importFrom htmltools htmlDependency
 #' @importFrom rlang .data
 #' @export
-hcmap <- function(map = "custom/world",
-                  download_map_data = getOption("highcharter.download_map_data"),
-                  data = NULL, value = NULL, joinBy = NULL,
-                  ...) {
+hcmap <- function(
+  map = "custom/world",
+  download_map_data = getOption("highcharter.download_map_data"),
+  data = NULL,
+  value = NULL,
+  joinBy = NULL,
+  ...
+) {
   map <- fix_map_name(map)
 
   hc <- highchart(type = "map")
@@ -132,13 +137,17 @@ hcmap <- function(map = "custom/world",
     )
 
     hc$dependencies <- c(hc$dependencies, list(dep))
-    mapdata <- JS(sprintf("Highcharts.maps['%s']", str_replace(map, "\\.js$", "")))
+    mapdata <- JS(sprintf(
+      "Highcharts.maps['%s']",
+      str_replace(map, "\\.js$", "")
+    ))
   }
 
   if (is.null(data)) {
     hc <- hc |>
       hc_add_series.default(
-        mapData = mapdata, ...
+        mapData = mapdata,
+        ...
       )
   } else {
     data <- rename(data, value := value)
@@ -146,7 +155,9 @@ hcmap <- function(map = "custom/world",
     hc <- hc |>
       hc_add_series.default(
         mapData = mapdata,
-        data = list_parse(data), joinBy = joinBy, ...
+        data = list_parse(data),
+        joinBy = joinBy,
+        ...
       ) |>
       hc_colorAxis(auxpar = NULL)
   }
@@ -177,8 +188,12 @@ hcmap <- function(map = "custom/world",
 #' @importFrom utils download.file
 #' @importFrom stringr str_remove
 #' @export
-download_map_data <- function(url = "custom/world.js", showinfo = FALSE,
-                              quiet = FALSE, method = getOption("download.file.method", "auto")) {
+download_map_data <- function(
+  url = "custom/world.js",
+  showinfo = FALSE,
+  quiet = FALSE,
+  method = getOption("download.file.method", "auto")
+) {
   url <- sprintf(
     "https://code.highcharts.com/mapdata/%s",
     fix_map_name(url)

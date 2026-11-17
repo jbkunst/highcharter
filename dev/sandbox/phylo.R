@@ -10,13 +10,11 @@ hchart(object)
 
 
 hchart.phylo <- function(object, ...) {
-
   object <- as.igraph(object)
-  
+
   V(object)$size <- ifelse(str_detect(V(object)$name, "Node\\d+"), 0, 1)
-  
+
   hchart(object, minSize = 0)
-    
 }
 
 tr <- rcoal(5)

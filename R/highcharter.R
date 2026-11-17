@@ -19,13 +19,15 @@
 #'   controlled by \code{"highcharter.google_fonts"} option.
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #' @export
-highchart <- function(hc_opts = list(),
-                      theme = getOption("highcharter.theme"),
-                      type = "chart",
-                      width = NULL,
-                      height = NULL,
-                      elementId = NULL,
-                      google_fonts = getOption("highcharter.google_fonts")) {
+highchart <- function(
+  hc_opts = list(),
+  theme = getOption("highcharter.theme"),
+  type = "chart",
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  google_fonts = getOption("highcharter.google_fonts")
+) {
   .highchart_widget(
     name = "highchart",
     hc_opts = hc_opts,
@@ -38,14 +40,16 @@ highchart <- function(hc_opts = list(),
   )
 }
 
-.highchart_widget <- function(name,
-                              hc_opts,
-                              theme,
-                              type,
-                              width,
-                              height,
-                              elementId,
-                              google_fonts) {
+.highchart_widget <- function(
+  name,
+  hc_opts,
+  theme,
+  type,
+  width,
+  height,
+  elementId,
+  google_fonts
+) {
   assertthat::assert_that(type %in% c("chart", "stock", "map", "gantt"))
 
   opts <- .join_hc_opts()
@@ -77,7 +81,10 @@ highchart <- function(hc_opts = list(),
   }
 
   if (getOption("highcharter.rjson")) {
-    rlang::check_installed("rjson", reason = "to use `options(highcharter.rjson = TRUE)`.")
+    rlang::check_installed(
+      "rjson",
+      reason = "to use `options(highcharter.rjson = TRUE)`."
+    )
     attr(x, "TOJSON_FUNC") <- rjson::toJSON
   }
 
@@ -111,12 +118,14 @@ highchart <- function(hc_opts = list(),
 #'
 #' @inheritParams highchart
 #' @export
-highchartstock <- function(hc_opts = list(),
-                           theme = getOption("highcharter.theme"),
-                           width = NULL,
-                           height = NULL,
-                           elementId = NULL,
-                           google_fonts = getOption("highcharter.google_fonts")) {
+highchartstock <- function(
+  hc_opts = list(),
+  theme = getOption("highcharter.theme"),
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  google_fonts = getOption("highcharter.google_fonts")
+) {
   .highchart_widget(
     name = "highchartstock",
     hc_opts = hc_opts,
@@ -134,7 +143,8 @@ highchartstock <- function(hc_opts = list(),
 #' @param x An object to test
 #' @export
 is.highchart <- function(x) {
-  inherits(x, "highchart") || inherits(x, "highchart2") ||
+  inherits(x, "highchart") ||
+    inherits(x, "highchart2") ||
     inherits(x, "highchartstock")
 }
 
@@ -147,7 +157,13 @@ is.highchart <- function(x) {
 #' @importFrom htmlwidgets shinyWidgetOutput
 #' @export
 highchartOutput <- function(outputId, width = "100%", height = "400px") {
-  shinyWidgetOutput(outputId, "highchart", width, height, package = "highcharter")
+  shinyWidgetOutput(
+    outputId,
+    "highchart",
+    width,
+    height,
+    package = "highcharter"
+  )
 }
 
 #' Widget render function for use in Shiny
@@ -168,7 +184,13 @@ renderHighchart <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @rdname highchartOutput
 #' @export
 highchartStockOutput <- function(outputId, width = "100%", height = "400px") {
-  shinyWidgetOutput(outputId, "highchartstock", width, height, package = "highcharter")
+  shinyWidgetOutput(
+    outputId,
+    "highchartstock",
+    width,
+    height,
+    package = "highcharter"
+  )
 }
 
 #' @rdname renderHighchart

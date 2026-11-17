@@ -11,7 +11,12 @@ validate_args <- function(name, lstargs) {
 
     txt <- ifelse(lenlst == 1, " is ", "s are ")
 
-    stop(chrargs, " argument", txt, "not named in ", paste0("hc_", name),
+    stop(
+      chrargs,
+      " argument",
+      txt,
+      "not named in ",
+      paste0("hc_", name),
       call. = FALSE
     )
   }
@@ -28,17 +33,28 @@ validate_args <- function(name, lstargs) {
 
 # Named options update the primary axis. Unnamed axis objects replace the collection.
 .hc_axis_options <- function(current, options) {
-  if (!length(options)) return(current)
+  if (!length(options)) {
+    return(current)
+  }
   if (!is.null(names(options))) {
-    if (!all(nzchar(names(options)))) stop("Supply named axis options or a list of axes.", call. = FALSE)
+    if (!all(nzchar(names(options)))) {
+      stop("Supply named axis options or a list of axes.", call. = FALSE)
+    }
     if (length(current) && is.null(names(current))) {
       current[[1L]] <- utils::modifyList(current[[1L]], options)
       return(current)
     }
-    return(utils::modifyList(if (is.null(current)) list() else current, options))
+    return(utils::modifyList(
+      if (is.null(current)) list() else current,
+      options
+    ))
   }
 
-  if (length(options) == 1L && is.list(options[[1L]]) && is.null(names(options[[1L]]))) {
+  if (
+    length(options) == 1L &&
+      is.list(options[[1L]]) &&
+      is.null(names(options[[1L]]))
+  ) {
     options <- options[[1L]]
   }
   valid_axis <- function(x) is.list(x) && (!length(x) || rlang::is_named(x))
@@ -56,7 +72,11 @@ validate_args <- function(name, lstargs) {
     hc$x$hc_opts[[name]] <- .hc_axis_options(current, options)
   } else {
     validate_args(name, eval(substitute(alist(...))))
-    hc$x$hc_opts[[name]] <- if (is.null(current)) options else .merge_hc_options(current, options)
+    hc$x$hc_opts[[name]] <- if (is.null(current)) {
+      options
+    } else {
+      .merge_hc_options(current, options)
+    }
   }
 
   # Setting fonts
@@ -120,7 +140,7 @@ validate_args <- function(name, lstargs) {
 #' @importFrom stringr str_glue
 #' @importFrom htmlwidgets JS
 #' @examples
-#' 
+#'
 #' require(dplyr)
 #' require(purrr)
 #' if (requireNamespace("gapminder", quietly = TRUE)) {
@@ -187,14 +207,16 @@ validate_args <- function(name, lstargs) {
 #'       )
 #'     )
 #'   )
-#' 
+#'
 #'
 #' }
 #' @export
-tooltip_chart <- function(accesor = NULL,
-                          hc_opts = NULL,
-                          width = 250,
-                          height = 150) {
+tooltip_chart <- function(
+  accesor = NULL,
+  hc_opts = NULL,
+  width = 250,
+  height = 150
+) {
   assertthat::assert_that(assertthat::is.string(accesor))
 
   if (is.null(hc_opts)) {
@@ -207,17 +229,33 @@ tooltip_chart <- function(accesor = NULL,
   }
 
   hc_opts <- .merge_hc_options(
-    getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
+    getOption("highcharter.chart")[c(
+      "title",
+      "yAxis",
+      "xAxis",
+      "credits",
+      "exporting"
+    )],
     list(chart = list(backgroundColor = "transparent")),
-    list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
+    list(
+      legend = list(enabled = FALSE),
+      plotOptions = list(series = list(animation = FALSE))
+    ),
     hc_opts
   )
 
-  if (!has_name(hc_opts[["series"]][[1]], "color")) hc_opts[["series"]][[1]][["color"]] <- "point.color"
+  if (!has_name(hc_opts[["series"]][[1]], "color")) {
+    hc_opts[["series"]][[1]][["color"]] <- "point.color"
+  }
 
   hcopts <- toJSON(
-    x = hc_opts, pretty = TRUE, auto_unbox = TRUE, json_verbatim = TRUE,
-    force = TRUE, null = "null", na = "null"
+    x = hc_opts,
+    pretty = TRUE,
+    auto_unbox = TRUE,
+    json_verbatim = TRUE,
+    force = TRUE,
+    null = "null",
+    na = "null"
   )
   hcopts <- as.character(hcopts)
 
@@ -226,7 +264,9 @@ tooltip_chart <- function(accesor = NULL,
 
   # remove "\"" to have access to the point object
   ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") |> unlist()
-  for (t in ts) hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
+  for (t in ts) {
+    hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
+  }
 
   # remove "\"" in the options
   ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") |> unlist()
@@ -249,7 +289,13 @@ tooltip_chart <- function(accesor = NULL,
 
   }}"
 
-  jsss <- stringr::str_glue(jss, id = random_id(), w = width, h = height, accesor = accesor)
+  jsss <- stringr::str_glue(
+    jss,
+    id = random_id(),
+    w = width,
+    h = height,
+    accesor = accesor
+  )
 
   jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
 
@@ -280,9 +326,7 @@ tooltip_chart <- function(accesor = NULL,
 #' @importFrom purrr map2
 #' @importFrom htmltools tags tagList
 #' @export
-tooltip_table <- function(x, y,
-                          title = NULL,
-                          img = NULL, ...) {
+tooltip_table <- function(x, y, title = NULL, img = NULL, ...) {
   assertthat::assert_that(length(x) == length(y))
 
   tbl <- map2(x, y, function(x, y) {
@@ -375,7 +419,12 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
     dep <- htmltools::htmlDependency(
       name = "highcharts-motion",
       version = "1.0.0",
-      src = c(file = system.file("htmlwidgets/lib/highcharts", package = "highcharter")),
+      src = c(
+        file = system.file(
+          "htmlwidgets/lib/highcharts",
+          package = "highcharter"
+        )
+      ),
       script = "plugins/motion.js",
       stylesheet = "css/motion.css"
     )
@@ -409,23 +458,45 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
 #'   hc_add_series(data = c(500, 300, 400), type = "areaspline", yAxis = 2)
 #'
 #' @export
-create_axis <- function(naxis = 2, heights = 1, sep = 0.01,
-                         offset = 0, turnopposite = TRUE, ...) {
-  stopifnot(length(naxis) == 1L, is.finite(naxis), naxis >= 1, naxis == as.integer(naxis),
-            length(heights) > 0L, all(is.finite(heights)), all(heights > 0),
-            length(sep) == 1L, is.finite(sep), sep >= 0)
+create_axis <- function(
+  naxis = 2,
+  heights = 1,
+  sep = 0.01,
+  offset = 0,
+  turnopposite = TRUE,
+  ...
+) {
+  stopifnot(
+    length(naxis) == 1L,
+    is.finite(naxis),
+    naxis >= 1,
+    naxis == as.integer(naxis),
+    length(heights) > 0L,
+    all(is.finite(heights)),
+    all(heights > 0),
+    length(sep) == 1L,
+    is.finite(sep),
+    sep >= 0
+  )
   heights <- rep_len(heights, naxis)
   total <- 1 + sep * (naxis - 1)
   heights <- heights / sum(heights) / total
   tops <- c(0, head(cumsum(heights + sep / total), -1L))
   options <- list(...)
   lapply(seq_len(naxis), function(i) {
-    axis <- list(height = paste0(round(100 * heights[i], 4), "%"),
-                 top = paste0(round(100 * tops[i], 4), "%"), offset = rep_len(offset, naxis)[i])
-    if (turnopposite) axis$opposite <- i %% 2L == 0L
+    axis <- list(
+      height = paste0(round(100 * heights[i], 4), "%"),
+      top = paste0(round(100 * tops[i], 4), "%"),
+      offset = rep_len(offset, naxis)[i]
+    )
+    if (turnopposite) {
+      axis$opposite <- i %% 2L == 0L
+    }
     for (key in names(options)) {
       value <- options[[key]]
-      if (is.atomic(value) && length(value) == naxis) value <- value[i]
+      if (is.atomic(value) && length(value) == naxis) {
+        value <- value[i]
+      }
       axis[key] <- list(value)
     }
     axis

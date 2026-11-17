@@ -11,7 +11,10 @@ checkProxy <- function(proxy) {
 #' @param session The Shiny session object to which the map belongs; usually
 #' the default value will suffice.
 #' @export
-highchartProxy <- function(shinyId, session = shiny::getDefaultReactiveDomain()) {
+highchartProxy <- function(
+  shinyId,
+  session = shiny::getDefaultReactiveDomain()
+) {
   proxy <- list(id = shinyId, session = session)
   class(proxy) <- c("higchartProxy")
 
@@ -77,7 +80,6 @@ hcpxy_remove_series <- function(proxy, id = NULL, all = FALSE) {
 
     return(proxy)
   }
-
 
   for (i in 1:length(id)) {
     if (getOption("highcharter.verbose")) {
@@ -222,7 +224,14 @@ hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...) {
 #'   one is appended to the end.
 #' @param animation Whether to apply animation, and optionally animation configuration.
 #' @export
-hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALSE, animation = TRUE) {
+hcpxy_add_point <- function(
+  proxy,
+  id = NULL,
+  point,
+  redraw = TRUE,
+  shift = FALSE,
+  animation = TRUE
+) {
   checkProxy(proxy)
 
   proxy$session$sendCustomMessage(
@@ -284,8 +293,16 @@ hcpxy_remove_point <- function(proxy, id = NULL, i = NULL, redraw = TRUE) {
 #'   than a numeric position when indicators or other dynamic series are present.
 #'
 #' @export
-hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
-                           animation = NULL, updatePoints = TRUE, id = NULL) {
+hcpxy_set_data <- function(
+  proxy,
+  type,
+  data,
+  mapping = hcaes(),
+  redraw = FALSE,
+  animation = NULL,
+  updatePoints = TRUE,
+  id = NULL
+) {
   checkProxy(proxy)
 
   data <- mutate_mapping(data, mapping)
@@ -327,17 +344,28 @@ hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
 #'   list.
 #'
 #' @export
-hcpxy_set_extremes <- function(proxy, min = NULL, max = NULL, axis = 0,
-                               redraw = TRUE, animation = TRUE) {
+hcpxy_set_extremes <- function(
+  proxy,
+  min = NULL,
+  max = NULL,
+  axis = 0,
+  redraw = TRUE,
+  animation = TRUE
+) {
   checkProxy(proxy)
 
-  valid_axis <- (is.numeric(axis) && length(axis) == 1 &&
-    is.finite(axis) && axis >= 0 && axis == floor(axis)) ||
+  valid_axis <- (is.numeric(axis) &&
+    length(axis) == 1 &&
+    is.finite(axis) &&
+    axis >= 0 &&
+    axis == floor(axis)) ||
     (is.character(axis) && length(axis) == 1 && nzchar(axis))
   stopifnot(valid_axis)
 
   normalize_extreme <- function(value) {
-    if (is.null(value)) return(NULL)
+    if (is.null(value)) {
+      return(NULL)
+    }
     if (inherits(value, "Date") || inherits(value, "POSIXt")) {
       value <- datetime_to_timestamp(value)
     }

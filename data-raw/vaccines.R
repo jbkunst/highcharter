@@ -5,7 +5,8 @@ library("stringr")
 library("highcharter")
 
 # DATA --------------------------------------------------------------------
-df <- read_csv("https://raw.githubusercontent.com/jbkunst/r-posts/master/042-infectious-diseases-and-vaccines/data/MEASLES_Incidence_1928-2003_20160314103501.csv",
+df <- read_csv(
+  "https://raw.githubusercontent.com/jbkunst/r-posts/master/042-infectious-diseases-and-vaccines/data/MEASLES_Incidence_1928-2003_20160314103501.csv",
   skip = 2
 )
 names(df) <- tolower(names(df))
@@ -26,23 +27,32 @@ devtools::use_data(vaccines)
 # EXAMPLE -----------------------------------------------------------------
 library(viridis)
 
-fntltp <- JS("function(){
+fntltp <- JS(
+  "function(){
   return this.point.x + ' ' +  this.series.yAxis.categories[this.point.y] + ':<br>' +
   Highcharts.numberFormat(this.point.value, 2);
-}")
+}"
+)
 
 stpscol <- color_stops(10, rev(viridis(10)))
 
 plotline <- list(
-  color = "#fde725", value = 1963, width = 2, zIndex = 5,
+  color = "#fde725",
+  value = 1963,
+  width = 2,
+  zIndex = 5,
   label = list(
-    text = "Vaccine Intoduced", verticalAlign = "top",
-    style = list(color = "#606060"), textAlign = "left",
-    rotation = 0, y = -5
+    text = "Vaccine Intoduced",
+    verticalAlign = "top",
+    style = list(color = "#606060"),
+    textAlign = "left",
+    rotation = 0,
+    y = -5
   )
 )
 
-thm <- hc_theme("smpl",
+thm <- hc_theme(
+  "smpl",
   yAxis = list(
     offset = -20,
     tickLength = 0,

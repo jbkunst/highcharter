@@ -2,7 +2,7 @@ df <- data.frame(
   y = sample(5:10),
   target = sample(5:10),
   x = LETTERS[1:6]
-  )
+)
 
 dplyr::glimpse(df)
 
@@ -21,13 +21,13 @@ hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
   hc_xAxis(
     gridLineWidth = 15,
     gridLineColor = "white"
-  ) %>% 
+  ) %>%
   hc_plotOptions(
     series = list(
       pointPadding = 0.25,
       pointWidth = 15,
       borderWidth = 0,
       targetOptions = list(width = '200%')
-      )
-    ) %>% 
+    )
+  ) %>%
   hc_size(height = 300)

@@ -6,33 +6,33 @@ library(dplyr)
 #+include=TRUE
 hc_set_theme("smpl")
 
-dss <- map(c("cross", "plus"), function(s){
-  
-  x <- rnorm(20, stats::runif(1)*2)
-  y <- (rnorm(1) + 1)*x + stats::runif(20)
-  
-  list(name = s,
-       type = "scatter",
-       data = list_parse(data_frame(x, y)),
-       marker = list(symbol = s, enabled = TRUE))
-  
+dss <- map(c("cross", "plus"), function(s) {
+  x <- rnorm(20, stats::runif(1) * 2)
+  y <- (rnorm(1) + 1) * x + stats::runif(20)
+
+  list(
+    name = s,
+    type = "scatter",
+    data = list_parse(data_frame(x, y)),
+    marker = list(symbol = s, enabled = TRUE)
+  )
 })
 
 
-highchart() %>% 
+highchart() %>%
   hc_add_series_list(dss)
 
 library(survival)
 
-leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml) 
+leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 hchart(leukemia.surv)
 
 
 # Plot the cumulative hazard function
-lsurv2 <- survfit(Surv(time, status) ~ x, aml, type='fleming') 
-hchart(lsurv2, fun="cumhaz")
+lsurv2 <- survfit(Surv(time, status) ~ x, aml, type = 'fleming')
+hchart(lsurv2, fun = "cumhaz")
 
 # Plot the fit of a Cox proportional hazards regression model
 fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
-ovarian.surv <- survfit(fit, newdata=data.frame(age=60))
+ovarian.surv <- survfit(fit, newdata = data.frame(age = 60))
 hchart(ovarian.surv, ranges = TRUE)

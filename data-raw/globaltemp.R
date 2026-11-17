@@ -3,7 +3,9 @@ library("readr")
 library("lubridate")
 library("stringr")
 
-df <- read_csv("https://raw.githubusercontent.com/hrbrmstr/hadcrut/master/data/temps.csv")
+df <- read_csv(
+  "https://raw.githubusercontent.com/hrbrmstr/hadcrut/master/data/temps.csv"
+)
 
 df <- select(df, -year, -decade, -month) %>%
   mutate(year_mon = as.Date(year_mon)) %>%
@@ -18,7 +20,8 @@ data("globaltemp")
 hchart(globaltemp, type = "spline", x = date, y = median)
 
 # setting theme
-thm <- hc_theme("darkunica",
+thm <- hc_theme(
+  "darkunica",
   chart = list(
     style = list(fontFamily = "Roboto Condensed"),
     backgroundColor = "#323331"
@@ -35,8 +38,12 @@ y <- sprintf("{point.%s}", c("lower", "median", "upper"))
 tltip <- tooltip_table(x, y)
 
 
-hchart(globaltemp,
-  type = "columnrange", x = date, low = lower, high = upper,
+hchart(
+  globaltemp,
+  type = "columnrange",
+  x = date,
+  low = lower,
+  high = upper,
   color = median
 ) %>%
   hc_yAxis(tickPositions = c(-2, 0, 1.5, 2)) %>%

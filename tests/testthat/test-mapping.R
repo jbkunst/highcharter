@@ -8,17 +8,28 @@ test_that("mappings evaluate in their original environment and label computed ax
     expect_identical(opts$yAxis$title$text, "rate * scale")
     expect_identical(opts$series[[1]]$data[[1]]$y, 3)
     expect_identical(opts$series[[1]]$data[[2]]$note, "gap")
-    expect_identical(mutate_mapping(df, mapping, drop = TRUE),
-                     data.frame(x = 1:2, y = c(3, NA)))
+    expect_identical(
+      mutate_mapping(df, mapping, drop = TRUE),
+      data.frame(x = 1:2, y = c(3, NA))
+    )
   }
 
   df[["net rate"]] <- df$rate
   from_column <- function(column) hcaes(y = {{ column }})
   expect_identical(mutate_mapping(df, from_column(`net rate`))$y, df$rate)
-  expect_identical(mutate_mapping(df, hcaes_string(y = "`net rate`"))$y, df$rate)
+  expect_identical(
+    mutate_mapping(df, hcaes_string(y = "`net rate`"))$y,
+    df$rate
+  )
   expect_identical(mutate_mapping(df, hcaes(y = "rate"))$y, df$rate)
-  legacy <- structure(list(x = "tick", y = quote(rate * 100)), class = c("hcaes", "uneval"))
-  expect_identical(mutate_mapping(df, legacy, TRUE), data.frame(x = 1:2, y = c(3, NA)))
+  legacy <- structure(
+    list(x = "tick", y = quote(rate * 100)),
+    class = c("hcaes", "uneval")
+  )
+  expect_identical(
+    mutate_mapping(df, legacy, TRUE),
+    data.frame(x = 1:2, y = c(3, NA))
+  )
   expect_identical(mutate_mapping(df, hcaes()), df)
   reserved <- mutate_mapping(df, hcaes(series = note), drop = TRUE)
   expect_identical(names(reserved), "seriess")
@@ -28,9 +39,11 @@ test_that("mappings evaluate in their original environment and label computed ax
 })
 
 test_that("group indices preserve group and point order, extras and missing values", {
-  df <- data.frame(tick = 1:5, rate = c(1, 2, 3, NA, 5),
-                   team = factor(c("A", NA, "B", "A", "B"),
-                                 levels = c("B", "unused", "A")))
+  df <- data.frame(
+    tick = 1:5,
+    rate = c(1, 2, 3, NA, 5),
+    team = factor(c("A", NA, "B", "A", "B"), levels = c("B", "unused", "A"))
+  )
   df$custom <- lapply(df$tick, function(i) list(id = i))
   mapping <- hcaes(tick, rate, group = team)
   hc <- hchart(df, "line", mapping, lineWidth = 3)
@@ -54,28 +67,48 @@ test_that("group indices preserve group and point order, extras and missing valu
 })
 
 test_that("point colors, bubble sizes and date-time axes preserve their values", {
-  df <- data.frame(tick = as.POSIXct("2025-01-01", tz = "UTC") + 0:2,
-                   rate = 1:3, volume = c(10, 20, 5), hex = c("#0072B2", NA, "#D55E00"))
-  opts <- hchart(df, "point", hcaes(tick, rate, size = volume, color = hex))$x$hc_opts
+  df <- data.frame(
+    tick = as.POSIXct("2025-01-01", tz = "UTC") + 0:2,
+    rate = 1:3,
+    volume = c(10, 20, 5),
+    hex = c("#0072B2", NA, "#D55E00")
+  )
+  opts <- hchart(
+    df,
+    "point",
+    hcaes(tick, rate, size = volume, color = hex)
+  )$x$hc_opts
   series <- opts$series[[1]]
   expect_identical(opts$xAxis$type, "datetime")
   expect_identical(series$type, "bubble")
-  expect_identical(vapply(series$data, "[[", 1, "x"), datetime_to_timestamp(df$tick))
+  expect_identical(
+    vapply(series$data, "[[", 1, "x"),
+    datetime_to_timestamp(df$tick)
+  )
   expect_identical(vapply(series$data, "[[", 1, "z"), df$volume)
   expect_identical(vapply(series$data, "[[", "", "color"), df$hex)
   opts <- hchart(df, "line", hcaes(y = tick))$x$hc_opts
   expect_identical(opts$yAxis$type, "datetime")
-  expect_identical(vapply(opts$series[[1]]$data, "[[", 1, "y"), datetime_to_timestamp(df$tick))
+  expect_identical(
+    vapply(opts$series[[1]]$data, "[[", 1, "y"),
+    datetime_to_timestamp(df$tick)
+  )
 
   df$level <- factor(c("A", "C", NA), levels = c("A", "B", "C"))
-  points <- hchart(df, "scatter", hcaes(tick, rate, color = level))$x$hc_opts$series[[1]]$data
+  points <- hchart(
+    df,
+    "scatter",
+    hcaes(tick, rate, color = level)
+  )$x$hc_opts$series[[1]]$data
   expect_identical(vapply(points, "[[", "", "color"), colorize(c("A", "C", NA)))
 })
 
 test_that("xrange converts both date endpoints and preserves numeric coordinates", {
-  for (start in list(as.Date("2025-01-06") + 0:1,
-                     as.POSIXct("2025-01-06 08:45:00", tz = "America/Santiago") + 0:1,
-                     c(0.5, 1.5))) {
+  for (start in list(
+    as.Date("2025-01-06") + 0:1,
+    as.POSIXct("2025-01-06 08:45:00", tz = "America/Santiago") + 0:1,
+    c(0.5, 1.5)
+  )) {
     end <- start + 2
     end[2] <- NA
     rows <- data.frame(x = start, x2 = end, y = 0:1)

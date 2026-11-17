@@ -121,39 +121,42 @@ json <- '{
 # install.packages("RJSONIO")
 
 datas <- json %>%
-  str_split("data", simplify = FALSE) %>% 
-  unlist() %>% 
-  map(str_split, "\n")  %>% 
-  map(unlist) %>% 
-  map(str_trim) %>% 
-  map(str_subset, "^\\[") %>% 
-  map(function(s){
-    
-    s1 <- s %>% 
-      str_extract("\".*\"") %>% 
+  str_split("data", simplify = FALSE) %>%
+  unlist() %>%
+  map(str_split, "\n") %>%
+  map(unlist) %>%
+  map(str_trim) %>%
+  map(str_subset, "^\\[") %>%
+  map(function(s) {
+    s1 <- s %>%
+      str_extract("\".*\"") %>%
       str_remove_all("\"")
-    
-    s2 <- s %>% 
-      str_extract("[0-9]+") %>% 
+
+    s2 <- s %>%
+      str_extract("[0-9]+") %>%
       as.numeric()
-    
+
     tibble(name = s1, heigth = s2)
-  }) %>% 
+  }) %>%
   tail(-1)
 
 datas
 
-place <- json %>% 
-  str_split("\n") %>% 
-  unlist() %>% 
-  str_subset("name") %>% 
-  str_extract("\".*\"") %>% 
-  str_remove_all("\"") %>% 
-  str_extract("from.*") %>% 
+place <- json %>%
+  str_split("\n") %>%
+  unlist() %>%
+  str_subset("name") %>%
+  str_extract("\".*\"") %>%
+  str_remove_all("\"") %>%
+  str_extract("from.*") %>%
   str_remove("from ")
 
 
-mountains_panorama <- map2_df(place, datas, ~ mutate(.y, place = .x, .before = 1))
+mountains_panorama <- map2_df(
+  place,
+  datas,
+  ~ mutate(.y, place = .x, .before = 1)
+)
 
 mountains_panorama
 
@@ -163,11 +166,11 @@ usethis::use_data(mountains_panorama, overwrite = TRUE)
 # example -----------------------------------------------------------------
 library(highcharter)
 
-mountains_panorama2 <- mountains_panorama %>% 
-  group_by(place) %>% 
+mountains_panorama2 <- mountains_panorama %>%
+  group_by(place) %>%
   mutate(
     id = scales::rescale(row_number(), to = c(0, 1))
-    )
+  )
 
 options(highcharter.debug = TRUE)
 
@@ -175,13 +178,13 @@ axles <- replicate(3, list(list(visible = FALSE)))
 class(axles) <- "hc_axis_list"
 
 hchart(
-  mountains_panorama2, 
+  mountains_panorama2,
   "area",
   # this is important
   depth = 100,
   hcaes(id, heigth, group = place),
   xAxis = 0:2
-  ) %>% 
+) %>%
   hc_xAxis(axles) %>%
   hc_chart(
     options3d = list(
@@ -189,34 +192,5 @@ hchart(
       alpha = 15,
       beta = 30,
       depth = 200
-      )
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  )

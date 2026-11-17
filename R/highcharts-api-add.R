@@ -10,7 +10,6 @@
 #'   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "orange")
 #' @export
 hc_add_series <- function(hc, data = NULL, ...) {
-
   # assertthat::assert_that(is.highchart(hc))
 
   UseMethod("hc_add_series", data)
@@ -19,7 +18,6 @@ hc_add_series <- function(hc, data = NULL, ...) {
 
 #' @export
 hc_add_series.default <- function(hc, ...) {
-
   # assertthat::assert_that(is.highchart(hc))
 
   if (getOption("highcharter.verbose")) {
@@ -110,7 +108,11 @@ hc_add_series.xts <- function(hc, data, ..., name = NULL) {
   fields <- c(Op = "Open", Hi = "High", Lo = "Low", Cl = "Close")
   has_field <- function(tag) {
     !is.null(attr(data, tag, exact = TRUE)) ||
-      any(grepl(paste0("\\b", fields[[tag]], "\\b"), colnames(data), ignore.case = TRUE))
+      any(grepl(
+        paste0("\\b", fields[[tag]], "\\b"),
+        colnames(data),
+        ignore.case = TRUE
+      ))
   }
   if (all(vapply(names(fields), has_field, logical(1)))) {
     return(hc_add_series.ohlc(hc, data, ..., name = name))
@@ -120,7 +122,9 @@ hc_add_series.xts <- function(hc, data, ..., name = NULL) {
   n <- NCOL(data)
   opts <- list(...)
   validate_args("add_series", c(list(data = NULL), opts))
-  if (is.null(name)) name <- colnames(data)
+  if (is.null(name)) {
+    name <- colnames(data)
+  }
   if (!is.null(name) && length(name) != n) {
     stop("Supply one name per xts column.", call. = FALSE)
   }
@@ -128,12 +132,17 @@ hc_add_series.xts <- function(hc, data, ..., name = NULL) {
   if (!is.null(id) && (length(id) != n || anyNA(id) || anyDuplicated(id))) {
     stop("Supply one distinct series ID per xts column.", call. = FALSE)
   }
-  if (is.null(opts$type)) opts$type <- "line"
+  if (is.null(opts$type)) {
+    opts$type <- "line"
+  }
 
   series <- lapply(seq_len(n), function(i) {
     opts$name <- name[i]
     opts$id <- id[i]
-    opts$data <- list_parse2(data.frame(timestamps, value = as.vector(data[, i])))
+    opts$data <- list_parse2(data.frame(
+      timestamps,
+      value = as.vector(data[, i])
+    ))
     opts
   })
   hc_add_series_list(hc, series)
@@ -143,12 +152,22 @@ hc_add_series.xts <- function(hc, data, ..., name = NULL) {
 #' @rdname hc_add_series.xts
 #' @param type Financial series type, usually `"candlestick"` or `"ohlc"`.
 #' @export
-hc_add_series.ohlc <- function(hc, data, type = "candlestick", ..., name = NULL) {
+hc_add_series.ohlc <- function(
+  hc,
+  data,
+  type = "candlestick",
+  ...,
+  name = NULL
+) {
   rlang::check_installed("quantmod", reason = "to chart OHLC prices.")
   columns <- quantmod::has.OHLC(data, which = TRUE)
   select_one <- "Select the OHLC columns for one instrument before adding the series."
-  if (length(columns) != 4L || anyNA(columns) || anyDuplicated(columns) ||
-      !all(columns %in% seq_len(NCOL(data)))) {
+  if (
+    length(columns) != 4L ||
+      anyNA(columns) ||
+      anyDuplicated(columns) ||
+      !all(columns %in% seq_len(NCOL(data)))
+  ) {
     stop(select_one, call. = FALSE)
   }
   price_names <- colnames(data)[columns]
@@ -156,11 +175,18 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ..., name = NULL)
   labeled <- grep(field, price_names, ignore.case = TRUE, value = TRUE)
   symbols <- sub(field, "\\1\\3", labeled, ignore.case = TRUE)
   symbols <- unique(gsub("^[. -]+|[. -]+$", "", symbols))
-  if (length(symbols) > 1L) stop(select_one, call. = FALSE)
-  if (is.null(name)) name <- if (length(symbols) && nzchar(symbols)) symbols else "OHLC"
+  if (length(symbols) > 1L) {
+    stop(select_one, call. = FALSE)
+  }
+  if (is.null(name)) {
+    name <- if (length(symbols) && nzchar(symbols)) symbols else "OHLC"
+  }
 
   timestamps <- datetime_to_timestamp(time(data))
-  points <- list_parse2(data.frame(timestamps, as.matrix(data[, columns, drop = FALSE])))
+  points <- list_parse2(data.frame(
+    timestamps,
+    as.matrix(data[, columns, drop = FALSE])
+  ))
   hc_add_series(hc, data = points, name = name, type = type, ...)
 }
 
@@ -175,8 +201,15 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ..., name = NULL)
 #' @param ... Arguments defined in
 #'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @export
-hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
-                                   addLevels = TRUE, fillOpacity = 0.1, name = NULL, ...) {
+hc_add_series.forecast <- function(
+  hc,
+  data,
+  addOriginal = FALSE,
+  addLevels = TRUE,
+  fillOpacity = 0.1,
+  name = NULL,
+  ...
+) {
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.forecast")
   }
@@ -185,11 +218,23 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
   method <- data$method
 
   if (addOriginal) {
-    hc <- hc_add_series(hc, data$x, name = ifelse(is.null(name), method, name), zIndex = 3, ...)
+    hc <- hc_add_series(
+      hc,
+      data$x,
+      name = ifelse(is.null(name), method, name),
+      zIndex = 3,
+      ...
+    )
   }
 
-
-  hc <- hc_add_series(hc, data$mean, name = ifelse(is.null(name), method, name), zIndex = 2, id = rid, ...)
+  hc <- hc_add_series(
+    hc,
+    data$mean,
+    name = ifelse(is.null(name), method, name),
+    zIndex = 2,
+    id = rid,
+    ...
+  )
 
   if (addLevels) {
     tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
@@ -215,7 +260,6 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
         )
     }
   }
-
 
   hc
 }
@@ -299,7 +343,14 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
 #'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @importFrom rlang .data
 #' @export
-hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpacity = 0.1, ...) {
+hc_add_series.lm <- function(
+  hc,
+  data,
+  type = "line",
+  color = "#5F83EE",
+  fillOpacity = 0.1,
+  ...
+) {
   if (getOption("highcharter.verbose")) {
     message(sprintf("hc_add_series.%s", class(data)))
   }
@@ -315,31 +366,49 @@ hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpa
     x <- frame[[2L]]
     prediction <- stats::predict(data, se.fit = TRUE)
     # predict.lm restores excluded rows, while the model frame omits them.
-    if (inherits(data$na.action, "exclude") && NROW(prediction$fit) != NROW(x)) {
+    if (
+      inherits(data$na.action, "exclude") && NROW(prediction$fit) != NROW(x)
+    ) {
       prediction$fit <- prediction$fit[-data$na.action]
       prediction$se.fit <- prediction$se.fit[-data$na.action]
     }
   }
   if (NCOL(x) > 1L || NCOL(prediction$fit) > 1L) {
-    stop("The fitted series requires one response and a one-dimensional x axis.",
-         call. = FALSE)
+    stop(
+      "The fitted series requires one response and a one-dimensional x axis.",
+      call. = FALSE
+    )
   }
-  points <- data.frame(x = drop(x), fit = as.vector(prediction$fit),
-                       se = as.vector(prediction$se.fit))
+  points <- data.frame(
+    x = drop(x),
+    fit = as.vector(prediction$fit),
+    se = as.vector(prediction$se.fit)
+  )
   points <- points[order(points$x), , drop = FALSE]
 
   rid <- random_id()
 
   hc |>
-    hc_add_series(points,
-      type = type, hcaes(x = x, y = .data$fit),
-      id = rid, color = color, ...
+    hc_add_series(
+      points,
+      type = type,
+      hcaes(x = x, y = .data$fit),
+      id = rid,
+      color = color,
+      ...
     ) |>
-    hc_add_series(points,
+    hc_add_series(
+      points,
       type = "arearange",
-      hcaes(x = x, low = .data$fit - 2 * .data$se, high = .data$fit + 2 * .data$se),
+      hcaes(
+        x = x,
+        low = .data$fit - 2 * .data$se,
+        high = .data$fit + 2 * .data$se
+      ),
       color = hex_to_rgba(color, fillOpacity),
-      linkedTo = rid, zIndex = -2, ...
+      linkedTo = rid,
+      zIndex = -2,
+      ...
     )
 }
 
@@ -364,7 +433,13 @@ hc_add_series.loess <- hc_add_series.lm
 #'   hc_add_series(intervals, "line", hcaes(day, estimate), name = "Estimate")
 #' @importFrom rlang .data
 #' @export
-hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), ...) {
+hc_add_series.data.frame <- function(
+  hc,
+  data,
+  type = NULL,
+  mapping = hcaes(),
+  ...
+) {
   check_removed_fast(...)
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.data.frame")
@@ -392,7 +467,10 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), .
 # Series options pass through `...` to Highcharts, where `fast` would be ignored.
 check_removed_fast <- function(...) {
   if ("fast" %in% ...names()) {
-    stop("The `fast` argument was removed. Omit it when charting a data frame.", call. = FALSE)
+    stop(
+      "The `fast` argument was removed. Omit it when charting a data frame.",
+      call. = FALSE
+    )
   }
 }
 
@@ -478,18 +556,29 @@ hcaes <- function(x, y, ...) {
 #' @export
 hcaes_string <- function(x, y, ...) {
   mapping <- list(...)
-  if (!missing(x)) mapping["x"] <- list(x)
-  if (!missing(y)) mapping["y"] <- list(y)
+  if (!missing(x)) {
+    mapping["x"] <- list(x)
+  }
+  if (!missing(y)) {
+    mapping["y"] <- list(y)
+  }
   as_hcaes(mapping, rlang::caller_env())
 }
 
 as_hcaes <- function(mapping, env) {
   if (length(mapping) && !rlang::is_named(mapping)) {
-    stop("Name each mapping after x and y, for example `group = Species`.", call. = FALSE)
+    stop(
+      "Name each mapping after x and y, for example `group = Species`.",
+      call. = FALSE
+    )
   }
   mapping <- lapply(mapping, function(value) {
     expr <- rlang::get_expr(value)
-    if (is.character(expr)) rlang::parse_quo(expr, env) else rlang::as_quosure(value, env)
+    if (is.character(expr)) {
+      rlang::parse_quo(expr, env)
+    } else {
+      rlang::as_quosure(value, env)
+    }
   })
   structure(mapping, class = c("hcaes", "uneval"))
 }
@@ -545,8 +634,9 @@ convert_date_coordinates <- function(data, keys) {
 #' @importFrom dplyr mutate do ungroup
 #' @importFrom tibble tibble has_name
 data_to_series <- function(data, mapping, type, ...) {
-
-  if (identical(type, "point")) type <- "scatter"
+  if (identical(type, "point")) {
+    type <- "scatter"
+  }
   if (identical(type, "scatter") && any(c("size", "z") %in% names(mapping))) {
     type <- "bubble"
   }
@@ -564,9 +654,14 @@ data_to_series <- function(data, mapping, type, ...) {
   }
 
   coordinates <- intersect(names(mapping), c("x", "x2"))
-  if (identical(type, "xrange")) coordinates <- c("x", "x2")
+  if (identical(type, "xrange")) {
+    coordinates <- c("x", "x2")
+  }
   data <- convert_date_coordinates(data, c(coordinates, "y"))
-  if (has_name(mapping, "x") && (is.character(data[["x"]]) || is.factor(data[["x"]]))) {
+  if (
+    has_name(mapping, "x") &&
+      (is.character(data[["x"]]) || is.factor(data[["x"]]))
+  ) {
     data[["name"]] <- data[["x"]]
     data[["x"]] <- NULL
   }
@@ -576,7 +671,11 @@ data_to_series <- function(data, mapping, type, ...) {
     if (identical(type, "treemap")) {
       data <- rename(data, colorValue = "color")
     } else if (!all(is.hexcolor(data[["color"]]), na.rm = TRUE)) {
-      data <- mutate(data, colorv = .data$color, color = highcharter::colorize(.data$color))
+      data <- mutate(
+        data,
+        colorv = .data$color,
+        color = highcharter::colorize(.data$color)
+      )
     }
   } else if (has_name(data, "color")) {
     data <- rename(data, colorv = "color")
@@ -592,11 +691,15 @@ data_to_series <- function(data, mapping, type, ...) {
   groups <- dplyr::group_data(group_by(data, .data$group))
   data <- dplyr::ungroup(data)
   data[["group"]] <- NULL
-  points <- lapply(groups$.rows, function(i) list_parse(data[i, , drop = FALSE]))
+  points <- lapply(groups$.rows, function(i) {
+    list_parse(data[i, , drop = FALSE])
+  })
   series <- tibble(group = groups$group, data = points)
   series$type <- type
 
-  if (...length()) series <- add_arg_to_df(series, ...)
+  if (...length()) {
+    series <- add_arg_to_df(series, ...)
+  }
   if (has_name(mapping, "group") && !("name" %in% ...names())) {
     series <- rename(series, name = "group")
   }
@@ -633,7 +736,8 @@ data_to_options <- function(data, type, mapping) {
 
   # colorAxis
   opts$add_colorAxis <-
-    (identical(type, "treemap") && "color" %in% names(data)) || identical(type, "heatmap")
+    (identical(type, "treemap") && "color" %in% names(data)) ||
+    identical(type, "heatmap")
 
   # heatmap
   if (identical(type, "heatmap")) {
@@ -715,14 +819,18 @@ hc_add_series_list <- function(hc, x) {
 #'
 #' @export
 hc_add_event_point <- function(hc, series = "series", event = "click") {
-  fun <- paste0("function(){
+  fun <- paste0(
+    "function(){
   var pointinfo = {series: this.series.name, seriesid: this.series.id,
   name: this.name, x: this.x, y: this.y, category: this.category.name}
   window.x = this;
   console.log(pointinfo);
 
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
-}")
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '",
+    event,
+    "', pointinfo); }
+}"
+  )
 
   fun <- JS(fun)
 
@@ -751,13 +859,17 @@ hc_add_event_point <- function(hc, series = "series", event = "click") {
 #' @rdname hc_add_event_point
 #' @export
 hc_add_event_series <- function(hc, series = "series", event = "click") {
-  fun <- paste0("function(){
+  fun <- paste0(
+    "function(){
   var seriesinfo = {name: this.name }
   console.log(seriesinfo);
   window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
+  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '",
+    event,
+    "', seriesinfo); }
 
-}")
+}"
+  )
   fun <- JS(fun)
 
   eventobj <- structure(
@@ -852,10 +964,12 @@ hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
   dep <- htmlDependency(
     name = basename(name),
     version = hc_ver,
-    src = c(file = system.file(
-      sprintf("htmlwidgets/lib/highcharts/%s", dirname(name)),
-      package = "highcharter"
-    )),
+    src = c(
+      file = system.file(
+        sprintf("htmlwidgets/lib/highcharts/%s", dirname(name)),
+        package = "highcharter"
+      )
+    ),
     script = basename(name)
   )
 

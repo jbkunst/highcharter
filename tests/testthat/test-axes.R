@@ -10,7 +10,12 @@ test_that("axis wrappers accept collections and preserve other axes on named upd
   expect_identical(chart$x$hc_opts$xAxis[[2]], x[[2]])
   expect_identical(chart$x$hc_opts$xAxis[[1]]$id, "lower")
   expect_identical(chart$x$hc_opts$xAxis[[1]]$title$text, "Months")
-  opts <- create_axis(2, heights = c(3, 1), sep = 0, title = list(text = "Value"))
+  opts <- create_axis(
+    2,
+    heights = c(3, 1),
+    sep = 0,
+    title = list(text = "Value")
+  )
   expect_identical(opts[[1]]$height, "75%")
   expect_identical(opts[[2]]$top, "75%")
   expect_identical(opts[[2]]$title, list(text = "Value"))

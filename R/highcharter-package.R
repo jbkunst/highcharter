@@ -35,4 +35,6 @@ NULL
 #' @rdname highcharter-exports
 NULL
 
-if (getRversion() >= "2.15.1") utils::globalVariables(c(".", "colorValue", "level", "name", "parent"))
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(c(".", "colorValue", "level", "name", "parent"))
+}

@@ -3,7 +3,9 @@ library("readr")
 library("lubridate")
 library("stringr")
 
-weather <- read_csv("http://bl.ocks.org/bricedev/raw/458a01917183d98dff3c/sf.csv")
+weather <- read_csv(
+  "http://bl.ocks.org/bricedev/raw/458a01917183d98dff3c/sf.csv"
+)
 
 names(weather) <- names(weather) %>%
   str_to_lower() %>%
@@ -25,7 +27,8 @@ y <- sprintf(
 )
 tltip <- tooltip_table(x, y)
 
-hchart(weather,
+hchart(
+  weather,
   type = "columnrange",
   x = date,
   low = min_temperaturec,

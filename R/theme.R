@@ -23,7 +23,9 @@
 hc_theme <- function(preset = NULL, ...) {
   base <- if (is.null(preset)) list() else .read_theme_preset(preset)
   options <- list(...)
-  if (length(options) && (is.null(names(options)) || any(!nzchar(names(options))))) {
+  if (
+    length(options) && (is.null(names(options)) || any(!nzchar(names(options))))
+  ) {
     stop("Name each Highcharts theme option.", call. = FALSE)
   }
   # htmlwidgets unboxes a one-element vector; Highcharts expects a color array.
@@ -36,41 +38,81 @@ hc_theme <- function(preset = NULL, ...) {
 #' @rdname hc_theme
 #' @export
 hc_themes <- function() {
-  files <- list.files(system.file("themes", package = "highcharter", mustWork = TRUE),
-                      pattern = "\\.yml$")
+  files <- list.files(
+    system.file("themes", package = "highcharter", mustWork = TRUE),
+    pattern = "\\.yml$"
+  )
   sub("\\.yml$", "", files)
 }
 
 .read_theme_preset <- function(name, parents = character()) {
   presets <- hc_themes()
   if (!is.character(name) || length(name) != 1L || !name %in% presets) {
-    stop("Choose a theme from: ", paste(presets, collapse = ", "), ".", call. = FALSE)
+    stop(
+      "Choose a theme from: ",
+      paste(presets, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
   }
   if (name %in% parents) {
-    stop("Circular theme inheritance: ", paste(c(parents, name), collapse = " -> "), call. = FALSE)
+    stop(
+      "Circular theme inheritance: ",
+      paste(c(parents, name), collapse = " -> "),
+      call. = FALSE
+    )
   }
-  path <- system.file("themes", paste0(name, ".yml"), package = "highcharter", mustWork = TRUE)
-  theme <- yaml::read_yaml(path, handlers = list(js = htmlwidgets::JS, image = .theme_image),
-                           eval.expr = FALSE)
-  if (is.null(theme$extends)) return(theme)
+  path <- system.file(
+    "themes",
+    paste0(name, ".yml"),
+    package = "highcharter",
+    mustWork = TRUE
+  )
+  theme <- yaml::read_yaml(
+    path,
+    handlers = list(js = htmlwidgets::JS, image = .theme_image),
+    eval.expr = FALSE
+  )
+  if (is.null(theme$extends)) {
+    return(theme)
+  }
   base <- .read_theme_preset(theme$extends, c(parents, name))
   theme$extends <- NULL
   .merge_theme_options(base, theme)
 }
 
 .theme_image <- function(filename) {
-  path <- system.file("themes", "backgrounds", filename, package = "highcharter", mustWork = TRUE)
-  mime <- switch(tools::file_ext(filename), jpg = "image/jpeg", png = "image/png",
-                 stop("Unknown theme image format: ", filename, call. = FALSE))
+  path <- system.file(
+    "themes",
+    "backgrounds",
+    filename,
+    package = "highcharter",
+    mustWork = TRUE
+  )
+  mime <- switch(
+    tools::file_ext(filename),
+    jpg = "image/jpeg",
+    png = "image/png",
+    stop("Unknown theme image format: ", filename, call. = FALSE)
+  )
   bytes <- readBin(path, "raw", file.size(path))
-  paste0("data:", mime, ";base64,", gsub("\n", "", jsonlite::base64_enc(bytes), fixed = TRUE))
+  paste0(
+    "data:",
+    mime,
+    ";base64,",
+    gsub("\n", "", jsonlite::base64_enc(bytes), fixed = TRUE)
+  )
 }
 
 .merge_theme_options <- function(base, overrides) {
   for (key in names(overrides)) {
     value <- overrides[[key]]
-    if (is.list(base[[key]]) && !is.null(names(base[[key]])) &&
-        is.list(value) && !is.null(names(value))) {
+    if (
+      is.list(base[[key]]) &&
+        !is.null(names(base[[key]])) &&
+        is.list(value) &&
+        !is.null(names(value))
+    ) {
       base[[key]] <- .merge_theme_options(base[[key]], value)
     } else {
       base[key] <- overrides[key]
@@ -119,7 +161,10 @@ hc_add_theme <- function(hc, hc_thm) {
 hc_theme_merge <- function(...) {
   themes <- list(...)
   assert_that(all(vapply(themes, .is_hc_theme, logical(1))))
-  structure(Reduce(.merge_theme_options, themes, init = list()), class = "hc_theme")
+  structure(
+    Reduce(.merge_theme_options, themes, init = list()),
+    class = "hc_theme"
+  )
 }
 
 .hc_get_fonts <- function(lst) {
@@ -128,7 +173,21 @@ hc_theme_merge <- function(...) {
   # CSS variables and generic/system fonts are provided by the surrounding page.
   families <- families[!grepl("^var\\(", trimws(families))]
   families <- trimws(sub(",.*", "", families))
-  families <- families[!tolower(families) %in% c("arial", "helvetica", "georgia", "verdana",
-    "times new roman", "courier new", "system-ui", "sans-serif", "serif", "monospace", "inherit")]
+  families <- families[
+    !tolower(families) %in%
+      c(
+        "arial",
+        "helvetica",
+        "georgia",
+        "verdana",
+        "times new roman",
+        "courier new",
+        "system-ui",
+        "sans-serif",
+        "serif",
+        "monospace",
+        "inherit"
+      )
+  ]
   unname(gsub("\\s+", "+", families))
 }

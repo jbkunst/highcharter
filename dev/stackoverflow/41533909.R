@@ -4,14 +4,20 @@ library(dplyr)
 hc_set_theme("smpl")
 
 
-d <- data_frame(week = rep(1:5, 2),
-                value = sample(1:10),
-                key = rep(c("days", "proc"), each = 5))
+d <- data_frame(
+  week = rep(1:5, 2),
+  value = sample(1:10),
+  key = rep(c("days", "proc"), each = 5)
+)
 
 
 hchart(d, "column", hcaes(x = week, y = value, group = key))
 
-hchart(d, "column", hcaes(x = week, y = value, group = key), yAxis = c(0, 1)) %>% 
+hchart(
+  d,
+  "column",
+  hcaes(x = week, y = value, group = key),
+  yAxis = c(0, 1)
+) %>%
   hc_yAxis(create_axis(2)) %>%
   hc_tooltip(shared = TRUE)
-

@@ -66,7 +66,13 @@ test_that("hcpxy_set_extremes sends numeric and date ranges", {
   from <- as.Date("2026-01-01")
   to <- as.Date("2026-02-01")
 
-  result <- hcpxy_set_extremes(proxy, from, to, axis = "dates", animation = FALSE)
+  result <- hcpxy_set_extremes(
+    proxy,
+    from,
+    to,
+    axis = "dates",
+    animation = FALSE
+  )
 
   expect_identical(result, proxy)
   message <- capture$messages()[[1]]

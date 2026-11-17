@@ -64,7 +64,10 @@ test_that("hchart returns a valid graph after valid data input", {
 test_that("hchart returns a valid model plot after valid data input", {
   library(survival)
 
-  lung <- dplyr::mutate(survival::lung, sex = ifelse(sex == 1, "Male", "Female"))
+  lung <- dplyr::mutate(
+    survival::lung,
+    sex = ifelse(sex == 1, "Male", "Female")
+  )
   fit <- survfit(Surv(time, status) ~ sex, data = lung)
 
   h <- hchart(fit, ranges = TRUE)
@@ -79,7 +82,10 @@ test_that("hchart returns a valid stocks plot after valid data input", {
   series <- h$x$hc_opts$series[[1L]]
   expect_identical(h$x$type, "stock")
   expect_identical(series$name, "Price")
-  expect_equal(series$data, Map(list, datetime_to_timestamp(dates), c(42, NA, 44)))
+  expect_equal(
+    series$data,
+    Map(list, datetime_to_timestamp(dates), c(42, NA, 44))
+  )
 })
 
 test_that("hchart returns a valid multivariate time series plot after valid data input", {
@@ -108,7 +114,10 @@ test_that("hchart returns a valid matrix plot after valid data input", {
 test_that("distance heatmaps accept matrix display options", {
   d <- stats::dist(head(mtcars, 3))
   opts <- hchart(d, label = TRUE, showInLegend = TRUE)$x$hc_opts
-  expect_identical(opts, hchart(as.matrix(d), label = TRUE, showInLegend = TRUE)$x$hc_opts)
+  expect_identical(
+    opts,
+    hchart(as.matrix(d), label = TRUE, showInLegend = TRUE)$x$hc_opts
+  )
   expect_true(opts$plotOptions$series$dataLabels$enabled)
   expect_true(opts$plotOptions$series$showInLegend)
 })
@@ -152,17 +161,29 @@ test_that("model series keep fitted values and standard errors aligned with x", 
     order_x <- order(observations$speed[-2])
     fit <- unname(prediction$fit[order_x])
     se <- unname(prediction$se.fit[order_x])
-    expect_equal(vapply(series[[1]]$data, "[[", numeric(1), "x"), sort(observations$speed[-2]))
+    expect_equal(
+      vapply(series[[1]]$data, "[[", numeric(1), "x"),
+      sort(observations$speed[-2])
+    )
     expect_equal(vapply(series[[1]]$data, "[[", numeric(1), "y"), fit)
-    expect_equal(vapply(series[[2]]$data, "[[", numeric(1), "low"), fit - 2 * se)
-    expect_equal(vapply(series[[2]]$data, "[[", numeric(1), "high"), fit + 2 * se)
+    expect_equal(
+      vapply(series[[2]]$data, "[[", numeric(1), "low"),
+      fit - 2 * se
+    )
+    expect_equal(
+      vapply(series[[2]]$data, "[[", numeric(1), "high"),
+      fit + 2 * se
+    )
     expect_identical(series[[2]]$linkedTo, series[[1]]$id)
   }
 })
 
 test_that("matrix heatmaps use positions even when labels repeat", {
-  m <- matrix(c(-0.5, NA_real_, 0, 0.5, 1, 0.25), nrow = 2,
-              dimnames = list(c("north", "north"), c("V", "V", "x")))
+  m <- matrix(
+    c(-0.5, NA_real_, 0, 0.5, 1, 0.25),
+    nrow = 2,
+    dimnames = list(c("north", "north"), c("V", "V", "x"))
+  )
   opts <- hchart(m, label = TRUE)$x$hc_opts
   points <- opts$series[[1]]$data
   expect_identical(vapply(points, "[[", integer(1), "x"), rep(0:2, each = 2))
@@ -187,10 +208,19 @@ test_that("data-frame charts reject the removed fast option", {
   points <- data.frame(x = 1:2, y = c(3, NA_real_))
   mapping <- hcaes(x, y)
   expect_error(hchart(points, "line", mapping, fast = TRUE), "fast.*removed")
-  expect_error(hc_add_series(highchart(), points, "line", mapping, fast = FALSE), "fast.*removed")
+  expect_error(
+    hc_add_series(highchart(), points, "line", mapping, fast = FALSE),
+    "fast.*removed"
+  )
   expect_error(hc_add_series(highchart(), points, fast = TRUE), "fast.*removed")
 
   expected <- list(list(x = 1L, y = 3), list(x = 2L, y = NA_real_))
-  expect_identical(hchart(points, "line", mapping)$x$hc_opts$series[[1]]$data, expected)
-  expect_identical(hc_add_series(highchart(), points)$x$hc_opts$series[[1]]$data, expected)
+  expect_identical(
+    hchart(points, "line", mapping)$x$hc_opts$series[[1]]$data,
+    expected
+  )
+  expect_identical(
+    hc_add_series(highchart(), points)$x$hc_opts$series[[1]]$data,
+    expected
+  )
 })

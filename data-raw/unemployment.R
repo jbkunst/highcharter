@@ -4,7 +4,9 @@ download.file(url, tmpfile)
 unemployment <- readLines(tmpfile)
 unemployment <- gsub("callback\\(|\\);$", "", unemployment)
 unemployment <- jsonlite::fromJSON(unemployment, simplifyVector = FALSE)
-unemployment <- map_df(unemployment, function(x) as.data.frame(x, stringsAsFactors = FALSE))
+unemployment <- map_df(unemployment, function(x) {
+  as.data.frame(x, stringsAsFactors = FALSE)
+})
 unemployment$name <- iconv(unemployment$name)
 unemployment <- tibble::as_tibble(unemployment)
 

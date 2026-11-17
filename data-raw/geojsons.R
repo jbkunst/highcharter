@@ -41,7 +41,11 @@ usgeojson$features <- map(usgeojson$features, function(x) {
   x$properties <- x$properties[!grepl("hc", names(x$properties))]
   names(x$properties) <- gsub("-", "", names(x$properties))
   names(x$properties) <- gsub("isoa", "iso", names(x$properties))
-  x$properties$name <- ifelse(x$properties$code == "us-nm-013", "Dona Ana", x$properties$name)
+  x$properties$name <- ifelse(
+    x$properties$code == "us-nm-013",
+    "Dona Ana",
+    x$properties$name
+  )
   x
 })
 
@@ -67,7 +71,11 @@ uscountygeojson$features <- map(uscountygeojson$features, function(x) {
   x$properties <- x$properties[!grepl("hc", names(x$properties))]
   names(x$properties) <- gsub("-", "", names(x$properties))
   names(x$properties) <- gsub("isoa", "iso", names(x$properties))
-  x$properties$name <- ifelse(x$properties$code == "us-nm-013", "Dona Ana", x$properties$name)
+  x$properties$name <- ifelse(
+    x$properties$code == "us-nm-013",
+    "Dona Ana",
+    x$properties$name
+  )
   x
 })
 

@@ -41,7 +41,6 @@ fit <- auto.arima(mdeaths, D = 1)
 autoplot(fit)
 # not yet
 
-
 # acf and pacf
 ggAcf(mdeaths, main = "")
 hchart(acf(mdeaths, plot = FALSE, lag.max = 24))
@@ -49,7 +48,6 @@ hchart(acf(mdeaths, plot = FALSE, lag.max = 24))
 
 ggPacf(mdeaths, main = "")
 hchart(pacf(mdeaths, plot = FALSE, lag.max = 24))
-
 
 # object <- cbind(mdeaths, fdeaths)
 # hchart(object)

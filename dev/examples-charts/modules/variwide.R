@@ -1,5 +1,5 @@
 # from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/variwide
-# 
+#
 library(highcharter)
 
 highchart() %>%
@@ -32,9 +32,11 @@ highchart() %>%
       format = '€{point.y:.0f}'
     ),
     tooltip = list(
-      pointFormat = paste('Labor Costs: <b>€ {point.y}/h</b><br>',
-                          'GDP: <b>€ {point.z} million</b><br>')
+      pointFormat = paste(
+        'Labor Costs: <b>€ {point.y}/h</b><br>',
+        'GDP: <b>€ {point.z} million</b><br>'
       )
-  ) %>% 
-  hc_title(text = 'Labor Costs in Europe, 2016') %>% 
+    )
+  ) %>%
+  hc_title(text = 'Labor Costs in Europe, 2016') %>%
   hc_xAxis(type = "category")

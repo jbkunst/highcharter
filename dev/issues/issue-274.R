@@ -8,7 +8,12 @@ library(AnomalyDetection)
 
 
 data(raw_data)
-res = AnomalyDetectionTs(raw_data, max_anoms=0.02, direction='both', plot=TRUE)
+res <- AnomalyDetectionTs(
+  raw_data,
+  max_anoms = 0.02,
+  direction = 'both',
+  plot = TRUE
+)
 res$plot
 
 length(res)
@@ -48,15 +53,15 @@ names(impact$model)
 plot(impact)
 
 library(tidyr)
-impact$series %>% 
-  as_data_frame() %>% 
-  gather(name, value) %>% 
-  group_by(name) %>% 
-  summarise(data = list(value)) %>% 
+impact$series %>%
+  as_data_frame() %>%
+  gather(name, value) %>%
+  group_by(name) %>%
+  summarise(data = list(value)) %>%
   hc_add_series_list(highchart(), .)
 
-series2 <- impact$series %>% 
-  as_data_frame() %>% 
+series2 <- impact$series %>%
+  as_data_frame() %>%
   mutate(id = seq(1, nrow(.)))
 
 yaxis <- create_axis(naxis = 3)
@@ -70,16 +75,55 @@ plot(impact)
 glimpse(series2)
 series2
 
-highchart() %>% 
+highchart() %>%
   hc_yAxis(yaxis) %>%
-  hc_add_series(series2, "line", hcaes(id, response), yAxis = 0, name = "response") %>% 
-  hc_add_series(series2, "line", hcaes(id, point.pred), yAxis = 0, name = "response") %>% 
-  hc_add_series(series2, "arearange", hcaes(id, low = point.pred.lower, high = point.pred.upper),
-                yAxis = 0, name = "response") %>% 
-  hc_add_series(series2, "line", hcaes(id, point.effect), yAxis = 1, name = "response") %>% 
-  hc_add_series(series2, "arearange", hcaes(id, low = point.effect.lower, high = point.effect.upper),
-                yAxis = 1, name = "response") %>% 
-  hc_add_series(series2, "line", hcaes(id, cum.effect), yAxis = 2, name = "response") %>% 
-  hc_add_series(series2, "arearange", hcaes(id, low = cum.effect.lower, high = cum.effect.upper),
-                yAxis = 2, name = "response") %>% 
-  hc_tooltip(shared = TRUE) 
+  hc_add_series(
+    series2,
+    "line",
+    hcaes(id, response),
+    yAxis = 0,
+    name = "response"
+  ) %>%
+  hc_add_series(
+    series2,
+    "line",
+    hcaes(id, point.pred),
+    yAxis = 0,
+    name = "response"
+  ) %>%
+  hc_add_series(
+    series2,
+    "arearange",
+    hcaes(id, low = point.pred.lower, high = point.pred.upper),
+    yAxis = 0,
+    name = "response"
+  ) %>%
+  hc_add_series(
+    series2,
+    "line",
+    hcaes(id, point.effect),
+    yAxis = 1,
+    name = "response"
+  ) %>%
+  hc_add_series(
+    series2,
+    "arearange",
+    hcaes(id, low = point.effect.lower, high = point.effect.upper),
+    yAxis = 1,
+    name = "response"
+  ) %>%
+  hc_add_series(
+    series2,
+    "line",
+    hcaes(id, cum.effect),
+    yAxis = 2,
+    name = "response"
+  ) %>%
+  hc_add_series(
+    series2,
+    "arearange",
+    hcaes(id, low = cum.effect.lower, high = cum.effect.upper),
+    yAxis = 2,
+    name = "response"
+  ) %>%
+  hc_tooltip(shared = TRUE)

@@ -7,7 +7,8 @@ utils::globalVariables(
     "id",
     "value",
     "un",
-    "x", "y",
+    "x",
+    "y",
     "series"
   )
 )

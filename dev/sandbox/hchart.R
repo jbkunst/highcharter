@@ -54,7 +54,7 @@ hchart(forecast(auto.arima(AirPassengers), level = c(95, 80)))
 
 hchart(forecast(ets(USAccDeaths), h = 48, level = 90))
 
-hchart(forecast(Arima(WWWusage, c(3,1,0))))
+hchart(forecast(Arima(WWWusage, c(3, 1, 0))))
 
 #' ### mforecast
 # hchart(forecast(ets(cbind(M = mdeaths, F = fdeaths))))
@@ -103,7 +103,7 @@ hchart(net, layout = layout_with_fr)
 library("survival")
 data(lung)
 
-hchart(survfit(Surv(time, status) ~ sex, data = lung) , ranges = TRUE)
+hchart(survfit(Surv(time, status) ~ sex, data = lung), ranges = TRUE)
 
 #' ### density
 hchart(density(rnorm(100)), area = TRUE)
@@ -112,4 +112,4 @@ hchart(density(rnorm(100)), area = TRUE)
 hchart(princomp(USArrests))
 
 #' ###
-hchart(glm(hwy ~ year + class + fl , data = mpg))
+hchart(glm(hwy ~ year + class + fl, data = mpg))

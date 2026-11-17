@@ -42,7 +42,14 @@ get_outliers_values <- function(x) {
 #' @importFrom purrr map_if
 #' @importFrom grDevices boxplot.stats
 #' @export
-data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL, add_outliers = FALSE, ...) {
+data_to_boxplot <- function(
+  data,
+  variable,
+  group_var = NULL,
+  group_var2 = NULL,
+  add_outliers = FALSE,
+  ...
+) {
   stopifnot(
     is.data.frame(data),
     !missing(variable)
@@ -128,7 +135,12 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 #' @importFrom dplyr group_by_at arrange desc distinct rename_all everything
 #' @importFrom purrr reduce
 #' @export
-data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption("highcharter.color_palette")) {
+data_to_hierarchical <- function(
+  data,
+  group_vars,
+  size_var,
+  colors = getOption("highcharter.color_palette")
+) {
   dat <- data |>
     select({{ group_vars }}, {{ size_var }})
 
@@ -161,11 +173,14 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption(
 
     # depth == 1 add colors
     if (depth == 1 & !is.null(colors)) {
-      dd <- dd |> append(list(tibble(color = rep(colors, length.out = nrow(datg)))))
+      dd <- dd |>
+        append(list(tibble(color = rep(colors, length.out = nrow(datg)))))
     }
 
     # depth == lastdepth add value
-    if (depth == ngvars) dd <- dd |> append(list(dat |> select(value)))
+    if (depth == ngvars) {
+      dd <- dd |> append(list(dat |> select(value)))
+    }
 
     dd <- dd |>
       bind_cols() |>
@@ -201,11 +216,14 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption(
 #' @importFrom stats complete.cases
 #' @export
 data_to_sankey <- function(data = NULL) {
-
   # numeric to categories
   if (any(unlist(purrr::map(data, class)) %in% c("integer", "numeric"))) {
     warning("numeric variables were treated with cut() function")
-    data <- dplyr::mutate_if(data, function(x) is.numeric(x) && length(unique(x)) > 10, ~ cut(.x, breaks = c(-Inf, quantile(.x, c(2, 4, 6, 8) / 10), Inf)))
+    data <- dplyr::mutate_if(
+      data,
+      function(x) is.numeric(x) && length(unique(x)) > 10,
+      ~ cut(.x, breaks = c(-Inf, quantile(.x, c(2, 4, 6, 8) / 10), Inf))
+    )
   }
 
   # combintaion data
@@ -336,7 +354,6 @@ str_to_id <- function(x) {
 #' @rdname str_to_id
 #' @importFrom dplyr pull
 str_to_id_vec <- function(x) {
-
   # x <- c("A_ aa", "A_  Aa", "a_   aa"
 
   tibble(
@@ -366,7 +383,6 @@ str_to_id_vec <- function(x) {
 #' )
 #' @export
 datetime_to_timestamp <- function(dt) {
-
   # http://stackoverflow.com/questions/10160822/
   assertthat::assert_that(assertthat::is.date(dt) | assertthat::is.time(dt))
 
@@ -393,7 +409,7 @@ hex_to_rgba <- function(x, alpha = 1) {
     # t() |>
     as.data.frame() |>
     map_chr(str_c, collapse = ",")
-  
+
   rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
   rgba
 }
@@ -410,10 +426,19 @@ highcharts_demo <- function() {
   highchart() |>
     hc_title(text = "Monthly Average Temperature") |>
     hc_subtitle(text = "Source: WorldClimate.com") |>
-    hc_caption(text = "Tokyo peaks in August, while London and Berlin peak in July.") |>
-    hc_credits(text = "Made with highcharter", href = "https://jkunst.com/highcharter/", enabled = TRUE) |>
+    hc_caption(
+      text = "Tokyo peaks in August, while London and Berlin peak in July."
+    ) |>
+    hc_credits(
+      text = "Made with highcharter",
+      href = "https://jkunst.com/highcharter/",
+      enabled = TRUE
+    ) |>
     hc_yAxis(title = list(text = "Temperature (\u00b0C)")) |>
-    hc_xAxis(title = list(text = "Months"), categories = as.character(temperatures$month)) |>
+    hc_xAxis(
+      title = list(text = "Months"),
+      categories = as.character(temperatures$month)
+    ) |>
     hc_add_series(name = "Tokyo", data = temperatures$tokyo) |>
     hc_add_series(name = "London", data = temperatures$london) |>
     hc_add_series(name = "Berlin", data = temperatures$berlin)
@@ -455,7 +480,7 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 #' @examples
 #'
 #' color_stops(5)
-#' 
+#'
 #' @importFrom purrr map
 #' @export
 color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
@@ -478,8 +503,10 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
 #'
 #' color_classes(c(0, 10, 20, 50))
 #' @export
-color_classes <- function(breaks = NULL,
-                          colors = c("#440154", "#21908C", "#FDE725")) {
+color_classes <- function(
+  breaks = NULL,
+  colors = c("#440154", "#21908C", "#FDE725")
+) {
   lbrks <- length(breaks)
 
   list_parse(
@@ -514,7 +541,10 @@ is.hexcolor <- function(x) {
 random_id <- function(n = 1, length = 10) {
   source <- c(seq(0, 9), letters)
 
-  replicate(n, paste0(sample(x = source, size = length, replace = TRUE), collapse = ""))
+  replicate(
+    n,
+    paste0(sample(x = source, size = length, replace = TRUE), collapse = "")
+  )
 }
 
 #' Function to avoid the jsonlite::auto_unbox default

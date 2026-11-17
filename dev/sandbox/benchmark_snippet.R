@@ -6,7 +6,8 @@ options(highcharter.verbose = TRUE)
 options(highcharter.debug = FALSE)
 options(highcharter.rjson = TRUE)
 
-aapl <- quantmod::getSymbols("AAPL",
+aapl <- quantmod::getSymbols(
+  "AAPL",
   src = "yahoo",
   from = "2020-01-01",
   auto.assign = FALSE
@@ -33,7 +34,7 @@ hc_df <- function() {
 }
 
 hc <- to_benchmark()
- 
+
 res <- microbenchmark(
   rjson::toJSON(hc),
   shiny:::toJSON(hc),
@@ -56,20 +57,15 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-  
   # Application title
   titlePanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins 
+
+  # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
     ),
-    
+
     # Show a plot of the generated distribution
     mainPanel(
       highcharter::highchartOutput("distPlot", height = "auto")
@@ -84,5 +80,5 @@ server <- function(input, output) {
   })
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)

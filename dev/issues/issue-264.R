@@ -2,7 +2,7 @@ library(reshape2)
 library(highcharter)
 
 n <- 120
-a <- matrix(rnorm(n*n), nrow = n, ncol = n)
+a <- matrix(rnorm(n * n), nrow = n, ncol = n)
 b <- melt(a)
 head(b)
 
@@ -16,9 +16,6 @@ t0 <- Sys.time()
 hchart(b, "heatmap", hcaes(x, y, value = value))
 message(Sys.time() - t0)
 
-
-
 # t0 <- Sys.time()
 # hchart(a)
 # print(Sys.time() - t0)
-

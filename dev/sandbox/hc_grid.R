@@ -15,36 +15,45 @@ library("purrr")
 library("htmltools")
 
 #' <style>.main-container { max-width: none}</style>
-#' 
+#'
 #' # {.tabset .tabset-fade .tabset-pills}
-#' 
+#'
 #' ## Leaflet
 library("leaflet")
 library("rvest")
 library("stringr")
 
-maps <- read_html("http://www.geonames.org/AU/largest-cities-in-australia.html") %>% 
-  html_table(fill = TRUE) %>% 
-  .[[2]] %>% 
-  head(9) %>% 
-  by_row(function(x){
-    coords <- str_split(x[[4]], "/") %>% 
-      unlist() %>% 
-      str_trim() %>% 
+maps <- read_html(
+  "http://www.geonames.org/AU/largest-cities-in-australia.html"
+) %>%
+  html_table(fill = TRUE) %>%
+  .[[2]] %>%
+  head(9) %>%
+  by_row(function(x) {
+    coords <- str_split(x[[4]], "/") %>%
+      unlist() %>%
+      str_trim() %>%
       as.numeric()
     leaflet() %>%
-      addTiles() %>% 
-      addMarkers(lng=coords[2], lat=coords[1], popup=x[[2]])
-  }) %>% 
+      addTiles() %>%
+      addMarkers(lng = coords[2], lat = coords[1], popup = x[[2]])
+  }) %>%
   .[[".out"]]
-  
-hw_grid(maps, rowheight = 200, ncol = 3)  
+
+hw_grid(maps, rowheight = 200, ncol = 3)
 
 
 #' ## dygraphs
 library("dygraphs")
-tss <- list(AirPassengers, co2, USAccDeaths, LakeHuron,
-            mdeaths, ldeaths, cbind(mdeaths, ldeaths))
+tss <- list(
+  AirPassengers,
+  co2,
+  USAccDeaths,
+  LakeHuron,
+  mdeaths,
+  ldeaths,
+  cbind(mdeaths, ldeaths)
+)
 
 dycharts <- map(tss, dygraph)
 
@@ -66,51 +75,58 @@ hw_grid(mgcharts, rowheight = 200)
 data(diamonds, package = "ggplot2")
 diamonds <- diamonds[-6]
 
-map(names(diamonds), function(x){
-  diamonds[[x]] %>% 
-    hchart(showInLegend = FALSE) %>% 
+map(names(diamonds), function(x) {
+  diamonds[[x]] %>%
+    hchart(showInLegend = FALSE) %>%
     hc_add_theme(hc_theme("smpl")) %>%
-    hc_title(text = x) %>% 
+    hc_title(text = x) %>%
     hc_yAxis(title = list(text = ""))
-  }) %>% 
-  hw_grid(rowheight = 225, ncol = 3)  %>% browsable()
+}) %>%
+  hw_grid(rowheight = 225, ncol = 3) %>%
+  browsable()
 
 
 #' ## highcharter map
-#' 
+#'
 
 data(worldgeojson, package = "highcharter")
 
 set.seed(1203)
 ids <- sample(seq(123), size = 16)
-map(ids, function(x){
+map(ids, function(x) {
   wrld <- worldgeojson
   wrld$features <- wrld$features[x]
-  
-  highchart(type = "map") %>% 
-    hc_add_serie(data = wrld, type = "map", color = "red", showInLegend = FALSE) %>% 
-    hc_title(text = wrld$features[[1]]$properties$name) %>% 
+
+  highchart(type = "map") %>%
+    hc_add_serie(
+      data = wrld,
+      type = "map",
+      color = "red",
+      showInLegend = FALSE
+    ) %>%
+    hc_title(text = wrld$features[[1]]$properties$name) %>%
     hc_add_theme(hc_theme("smpl"))
-  }) %>% 
-  hw_grid(rowheight = 155, ncol = 4)  %>% browsable()
+}) %>%
+  hw_grid(rowheight = 155, ncol = 4) %>%
+  browsable()
 
 #' ## Multiples htmlwidgets
-#' 
+#'
 
 pal <- colorQuantile("YlOrRd", NULL, n = 8)
 data(orstationc)
 
-c1 <- dygraph(nhtemp, main = "New Haven Temperatures") %>% 
+c1 <- dygraph(nhtemp, main = "New Haven Temperatures") %>%
   dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
 
 c2 <- highcharts_demo()
 
-c5 <- mjs_plot(mtcars, x=wt, y=mpg) %>%
-  mjs_point(color_accessor=carb, size_accessor=carb) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+c5 <- mjs_plot(mtcars, x = wt, y = mpg) %>%
+  mjs_point(color_accessor = carb, size_accessor = carb) %>%
+  mjs_labs(x = "Weight of Car", y = "Miles per Gallon")
 
 library(d3heatmap)
-c6 <- d3heatmap(mtcars, scale="column", colors="Blues")
+c6 <- d3heatmap(mtcars, scale = "column", colors = "Blues")
 
 lst <- list(
   c1,
@@ -119,4 +135,4 @@ lst <- list(
   c6
 )
 
-hw_grid(lst, rowheight = 300)  %>% browsable()
+hw_grid(lst, rowheight = 300) %>% browsable()

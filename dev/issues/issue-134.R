@@ -1,14 +1,14 @@
 library(highcharter)
 
-hc <- highchart() %>% 
+hc <- highchart() %>%
   hc_plotOptions(
     series = list(
       boderWidth = 0,
       dataLabels = list(enabled = TRUE)
     )
-  ) %>% 
-  hc_chart(type = "column") %>% 
-  hc_xAxis(type = "category") %>% 
+  ) %>%
+  hc_chart(type = "column") %>%
+  hc_xAxis(type = "category") %>%
   hc_add_series(
     name = "Things",
     data = list(
@@ -16,13 +16,13 @@ hc <- highchart() %>%
     )
   )
 
-hc 
+hc
 
-hc <- hc %>% 
+hc <- hc %>%
   hc_drilldown(
     series = list(
       list(
-        id  = "animals",
+        id = "animals",
         name = "Animals",
         data = list(
           list(name = "Cats", y = 4, drilldown = "cats"),
@@ -43,4 +43,3 @@ hc
 
 jsonlite::toJSON(hc$x$hc_opts$series, pretty = TRUE, auto_unbox = TRUE)
 jsonlite::toJSON(hc$x$hc_opts$drilldown, pretty = TRUE, auto_unbox = TRUE)
-

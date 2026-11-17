@@ -12,8 +12,13 @@ server <- function(input, output, session) {
   )
   observeEvent(input$update, {
     highchartProxy("prices", session) |>
-      hcpxy_set_data("line", transform(prices, price = price + 5),
-                     hcaes(day, price), id = "closing", redraw = TRUE) |>
+      hcpxy_set_data(
+        "line",
+        transform(prices, price = price + 5),
+        hcaes(day, price),
+        id = "closing",
+        redraw = TRUE
+      ) |>
       hcpxy_set_extremes(dates[3], dates[8], axis = "days")
   })
 }

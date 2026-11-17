@@ -1,14 +1,22 @@
 library(tidyverse)
 library(highcharter)
 
-highchartProxy("hola") %>% 
+highchartProxy("hola") %>%
   hcpxy_add_series(data = 1:10, name = "name", type = "area")
 
-highchartProxy("hola") %>% 
+highchartProxy("hola") %>%
   hcpxy_add_series(data = ts(1:3))
 
-highchartProxy("hola") %>% 
-  hcpxy_add_series(data = iris, "scatter", hcaes(x =  Sepal.Length, y = Sepal.Width))
+highchartProxy("hola") %>%
+  hcpxy_add_series(
+    data = iris,
+    "scatter",
+    hcaes(x = Sepal.Length, y = Sepal.Width)
+  )
 
-highchartProxy("hola") %>% 
-  hcpxy_add_series(data = iris, "scatter", hcaes(x =  Sepal.Length, y = Sepal.Width, group = Species))
+highchartProxy("hola") %>%
+  hcpxy_add_series(
+    data = iris,
+    "scatter",
+    hcaes(x = Sepal.Length, y = Sepal.Width, group = Species)
+  )

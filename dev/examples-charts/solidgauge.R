@@ -16,7 +16,7 @@ highchart() %>%
       shape = "arc"
     )
   ) %>%
-  hc_tooltip(enabled = FALSE) %>% 
+  hc_tooltip(enabled = FALSE) %>%
   hc_yAxis(
     stops = list_parse2(col_stops),
     lineWidth = 0,
@@ -34,5 +34,5 @@ highchart() %>%
       useHTML = TRUE,
       style = list(fontSize = "40px")
     )
-  ) %>% 
+  ) %>%
   hc_size(height = 300)

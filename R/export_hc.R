@@ -56,8 +56,13 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
   )
 
   js <- toJSON(
-    x = hc$x$hc_opts, pretty = TRUE, auto_unbox = TRUE, json_verbatim = TRUE,
-    force = TRUE, null = "null", na = "null"
+    x = hc$x$hc_opts,
+    pretty = TRUE,
+    auto_unbox = TRUE,
+    json_verbatim = TRUE,
+    force = TRUE,
+    null = "null",
+    na = "null"
   )
 
   if (as == "container") {

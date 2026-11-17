@@ -18,6 +18,5 @@ highcharter:::hchart.density
 inherits(density(x), "density")
 inherits(x, "numeric")
 
-hchart(hist(x, probability = TRUE)) %>% 
+hchart(hist(x, probability = TRUE)) %>%
   hc_add_series_density(y)
-  

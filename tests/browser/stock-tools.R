@@ -8,7 +8,8 @@ tools <- highchartstock(elementId = "tools") |>
   hc_add_series(AirPassengers) |>
   hc_stockTools(gui = list(buttons = c("zoomChange", "fullScreen")))
 
-checks <- tags$script(HTML("
+checks <- tags$script(HTML(
+  "
 window.addEventListener('load', function () {
   const plain = Highcharts.charts.find(c => c && c.renderTo.id === 'plain');
   const tools = Highcharts.charts.find(c => c && c.renderTo.id === 'tools');
@@ -20,5 +21,6 @@ window.addEventListener('load', function () {
   }
   document.body.dataset.stockToolsTest = 'passed';
 });
-"))
+"
+))
 save_html(tagList(plain, tools, checks), commandArgs(trailingOnly = TRUE)[[1L]])

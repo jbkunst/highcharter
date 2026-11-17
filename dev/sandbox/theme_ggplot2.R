@@ -17,29 +17,35 @@ qplot(displ, cty, color = class, data = mpg, geom = "point")
 # }
 # dput(gg_color_hue(5))
 
-hchart(mpg, "point", hcaes(displ, cty)) %>% 
+hchart(mpg, "point", hcaes(displ, cty)) %>%
   hc_add_theme(hc_theme("ggplot2")) %>%
   hc_title(text = "asd")
 
 
-hchart(mpg, "point", hcaes(displ, cty, group = class)) %>% 
+hchart(mpg, "point", hcaes(displ, cty, group = class)) %>%
   hc_add_theme(hc_theme("ggplot2"))
 
 
 data(mpg)
 mpg
 
-dens <- mpg %>% 
-  group_by(cyl) %>% 
-  do(den = density(.$cty)) %>% 
-  { .$den }
+dens <- mpg %>%
+  group_by(cyl) %>%
+  do(den = density(.$cty)) %>%
+  {
+    .$den
+  }
 
 library(purrr)
 
-reduce(dens, hc_add_series, .init = highchart(), type = "area", fillOpacity = 0.25) %>% 
+reduce(
+  dens,
+  hc_add_series,
+  .init = highchart(),
+  type = "area",
+  fillOpacity = 0.25
+) %>%
   hc_add_theme(hc_theme("ggplot2"))
 
-ggplot(mpg) + 
+ggplot(mpg) +
   geom_density(aes(cty, fill = as.factor(cyl)), alpha = 0.25)
-
-

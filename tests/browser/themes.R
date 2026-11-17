@@ -6,13 +6,18 @@ hc_set_theme("bloom")
 series <- list(list(data = c(1, 3, 2)))
 charts <- tagList(
   highchart(elementId = "bloom") |> hc_add_series(data = c(1, 3, 2)),
-  highchart(elementId = "axes", hc_opts = list(
-    series = series, yAxis = list(list(), list(opposite = FALSE))
-  )),
+  highchart(
+    elementId = "axes",
+    hc_opts = list(
+      series = series,
+      yAxis = list(list(), list(opposite = FALSE))
+    )
+  ),
   highchart(elementId = "other", theme = hc_theme("ft")) |>
     hc_add_series(data = c(1, 3, 2))
 )
-checks <- tags$script(HTML("
+checks <- tags$script(HTML(
+  "
 window.addEventListener('load', function() {
   function sides(id) {
     return HighcharterWidget.getChart(id).yAxis.map(axis => axis.side).join(',');
@@ -22,5 +27,6 @@ window.addEventListener('load', function() {
   }
   document.body.dataset.status = 'passed';
 });
-"))
+"
+))
 save_html(tagList(charts, checks), commandArgs(trailingOnly = TRUE)[[1]])

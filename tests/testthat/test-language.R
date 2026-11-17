@@ -8,7 +8,10 @@ test_that("presets keep regional formatting and fall back to English text", {
     expect_identical(hc_language(locale), spanish)
   }
   expect_identical(hc_language("pt-BR")$downloadCSV, "Baixar CSV")
-  expect_identical(hc_language("fr-CA")$accessibility$defaultChartTitle, "Graphique")
+  expect_identical(
+    hc_language("fr-CA")$accessibility$defaultChartTitle,
+    "Graphique"
+  )
   expect_null(hc_language("es-CL")$months)
   expect_error(hc_language("es_CL"), "language code")
   expect_error(hc_language(c("en", "es")), "language code")
@@ -16,18 +19,26 @@ test_that("presets keep regional formatting and fall back to English text", {
 })
 
 test_that("language overrides merge nested keys and replace arrays", {
-  lang <- hc_language("es-CL", exportData = list(categoryHeader = "Producto"),
-                      numericSymbols = c("K", "M"))
+  lang <- hc_language(
+    "es-CL",
+    exportData = list(categoryHeader = "Producto"),
+    numericSymbols = c("K", "M")
+  )
   expect_identical(lang$exportData$categoryHeader, "Producto")
   expect_identical(lang$exportData$annotationHeader, "Anotaciones")
   expect_identical(lang$numericSymbols, c("K", "M"))
-  expect_named(hc_language("es", numericSymbols = NULL)["numericSymbols"], "numericSymbols")
+  expect_named(
+    hc_language("es", numericSymbols = NULL)["numericSymbols"],
+    "numericSymbols"
+  )
   expect_identical(hc_language("es")$exportData$categoryHeader, "Categoría")
 })
 
 test_that("the default abbreviated weekdays have the Highcharts Sunday-first order", {
-  expect_identical(getOption("highcharter.lang")$shortWeekdays,
-                   c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
+  expect_identical(
+    getOption("highcharter.lang")$shortWeekdays,
+    c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+  )
 })
 
 test_that("the setter snapshots the language for new widgets and restores the option", {

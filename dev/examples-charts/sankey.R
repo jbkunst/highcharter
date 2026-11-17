@@ -27,9 +27,7 @@ UKvisits <- data.frame(
   )
 )
 
-hchart(UKvisits,
-       "sankey",
-       hcaes(from = origin, to = visit, weight = weights))
+hchart(UKvisits, "sankey", hcaes(from = origin, to = visit, weight = weights))
 
 data(diamonds, package = "ggplot2")
 

@@ -18,7 +18,8 @@ charts <- tagList(spanish, portuguese)
 
 # Run after htmlwidgets has rendered both charts. Exercise the Spanish chart
 # again after the Portuguese one has initialized its own Stock controls.
-checks <- tags$script(HTML("
+checks <- tags$script(HTML(
+  "
 window.addEventListener('load', function() {
   function check(id, expected) {
     var chart = HighcharterWidget.getChart(id);
@@ -41,5 +42,6 @@ window.addEventListener('load', function() {
   check('es', ['enero', '12.345,67', 'Desde', 'Hasta', 'Todo', 'Restablecer zoom', 'Menú del gráfico']);
   check('pt', ['janeiro', '12.345,67', 'De', 'Até', 'Tudo', 'Redefinir zoom', 'Menu do gráfico']);
   document.body.dataset.languageTest = 'passed';
-});"))
+});"
+))
 save_html(tagList(charts, checks), path)

@@ -1,6 +1,8 @@
 # Build a local gallery for the Highcharts bundle in a clean R session.
 root <- normalizePath(".")
-if (!file.exists(file.path(root, "DESCRIPTION"))) stop("Run from the package root.")
+if (!file.exists(file.path(root, "DESCRIPTION"))) {
+  stop("Run from the package root.")
+}
 if (!exists("site_dir", inherits = FALSE)) {
   site_dir <- file.path(root, "dev", "highcharts-bundle", "preview")
 }
@@ -28,7 +30,12 @@ common <- data.frame(
 
 points <- list_parse(common)
 ranges <- lapply(seq_len(nrow(common)), function(i) {
-  list(x = common$x[i], low = common$low[i], high = common$high[i], name = common$name[i])
+  list(
+    x = common$x[i],
+    low = common$low[i],
+    high = common$high[i],
+    name = common$name[i]
+  )
 })
 bubbles <- lapply(seq_len(nrow(common)), function(i) {
   list(x = common$x[i], y = common$y[i], z = common$z[i], name = common$name[i])
@@ -44,64 +51,189 @@ chart <- function(type, data = points, title = type, ...) {
 }
 
 charts <- list()
-add_chart <- function(name, value) charts[[name]] <<- hc_size(value, height = 300)
+add_chart <- function(name, value) {
+  charts[[name]] <<- hc_size(value, height = 300)
+}
 
 for (type in c(
-  "line", "spline", "area", "areaspline", "column", "bar", "scatter",
-  "waterfall", "polygon", "dotplot", "streamgraph", "timeline", "lollipop"
+  "line",
+  "spline",
+  "area",
+  "areaspline",
+  "column",
+  "bar",
+  "scatter",
+  "waterfall",
+  "polygon",
+  "dotplot",
+  "streamgraph",
+  "timeline",
+  "lollipop"
 )) {
   add_chart(type, chart(type))
 }
-for (type in c("arearange", "areasplinerange", "columnrange", "errorbar", "dumbbell")) {
+for (type in c(
+  "arearange",
+  "areasplinerange",
+  "columnrange",
+  "errorbar",
+  "dumbbell"
+)) {
   add_chart(type, chart(type, ranges))
 }
 add_chart("bubble", chart("bubble", bubbles))
-add_chart("boxplot", chart("boxplot", lapply(seq_len(nrow(common)), function(i) {
-  list(common$x[i], common$low[i] - 1, common$low[i], common$y[i], common$high[i], common$high[i] + 1)
-})))
-add_chart("scatter3d", chart("scatter3d", bubbles, options3d = list(enabled = TRUE, alpha = 15, beta = 20)))
+add_chart(
+  "boxplot",
+  chart(
+    "boxplot",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(
+        common$x[i],
+        common$low[i] - 1,
+        common$low[i],
+        common$y[i],
+        common$high[i],
+        common$high[i] + 1
+      )
+    })
+  )
+)
+add_chart(
+  "scatter3d",
+  chart(
+    "scatter3d",
+    bubbles,
+    options3d = list(enabled = TRUE, alpha = 15, beta = 20)
+  )
+)
 add_chart("columnpyramid", chart("columnpyramid"))
-add_chart("packedbubble", chart("packedbubble", lapply(common$y, function(value) list(value = value))))
-add_chart("pie", chart("pie", lapply(seq_len(nrow(common)), function(i) list(name = common$name[i], y = common$y[i]))))
-add_chart("variablepie", chart("variablepie", lapply(seq_len(nrow(common)), function(i) {
-  list(name = common$name[i], y = common$y[i], z = common$z[i])
-})))
+add_chart(
+  "packedbubble",
+  chart("packedbubble", lapply(common$y, function(value) list(value = value)))
+)
+add_chart(
+  "pie",
+  chart(
+    "pie",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(name = common$name[i], y = common$y[i])
+    })
+  )
+)
+add_chart(
+  "variablepie",
+  chart(
+    "variablepie",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(name = common$name[i], y = common$y[i], z = common$z[i])
+    })
+  )
+)
 add_chart("funnel", chart("funnel"))
 add_chart("pyramid", chart("pyramid"))
-add_chart("funnel3d", chart("funnel3d", title = "funnel3d", options3d = list(enabled = TRUE, alpha = 10)))
-add_chart("pyramid3d", chart("pyramid3d", title = "pyramid3d", options3d = list(enabled = TRUE, alpha = 10)))
-add_chart("cylinder", chart("cylinder", title = "cylinder", options3d = list(enabled = TRUE, alpha = 15, beta = 15)))
-add_chart("variwide", chart("variwide", lapply(seq_len(nrow(common)), function(i) {
-  list(x = common$x[i], y = common$y[i], z = common$z[i], name = common$name[i])
-})))
-add_chart("bullet", chart("bullet", lapply(seq_len(nrow(common)), function(i) {
-  list(y = common$y[i], target = common$target[i])
-})))
-add_chart("windbarb", chart("windbarb", lapply(seq_len(nrow(common)), function(i) {
-  list(x = common$x[i], value = common$value[i], direction = common$direction[i])
-})))
-add_chart("wordcloud", chart("wordcloud", lapply(seq_len(nrow(common)), function(i) {
-  list(name = common$name[i], weight = common$value[i])
-})))
-source(file.path(root, "dev", "examples-charts", "bus-occupancy.R"), local = TRUE)
+add_chart(
+  "funnel3d",
+  chart(
+    "funnel3d",
+    title = "funnel3d",
+    options3d = list(enabled = TRUE, alpha = 10)
+  )
+)
+add_chart(
+  "pyramid3d",
+  chart(
+    "pyramid3d",
+    title = "pyramid3d",
+    options3d = list(enabled = TRUE, alpha = 10)
+  )
+)
+add_chart(
+  "cylinder",
+  chart(
+    "cylinder",
+    title = "cylinder",
+    options3d = list(enabled = TRUE, alpha = 15, beta = 15)
+  )
+)
+add_chart(
+  "variwide",
+  chart(
+    "variwide",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(
+        x = common$x[i],
+        y = common$y[i],
+        z = common$z[i],
+        name = common$name[i]
+      )
+    })
+  )
+)
+add_chart(
+  "bullet",
+  chart(
+    "bullet",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(y = common$y[i], target = common$target[i])
+    })
+  )
+)
+add_chart(
+  "windbarb",
+  chart(
+    "windbarb",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(
+        x = common$x[i],
+        value = common$value[i],
+        direction = common$direction[i]
+      )
+    })
+  )
+)
+add_chart(
+  "wordcloud",
+  chart(
+    "wordcloud",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(name = common$name[i], weight = common$value[i])
+    })
+  )
+)
+source(
+  file.path(root, "dev", "examples-charts", "bus-occupancy.R"),
+  local = TRUE
+)
 add_chart("item", seat_chart)
 add_chart("pictorial", bus_chart)
-add_chart("gauge", highchart() |>
-  hc_chart(type = "gauge") |>
-  hc_title(text = "gauge") |>
-  hc_yAxis(min = 0, max = 10) |>
-  hc_add_series(type = "gauge", data = list(7), name = "Value"))
-add_chart("solidgauge", highchart() |>
-  hc_chart(type = "solidgauge") |>
-  hc_title(text = "solidgauge") |>
-  hc_yAxis(min = 0, max = 10) |>
-  hc_add_series(type = "solidgauge", data = list(7), name = "Value"))
-matrix_data <- unlist(lapply(0:4, function(x) {
-  lapply(0:4, function(y) list(x, y, round(sin(x) + cos(y), 2)))
-}), recursive = FALSE)
+add_chart(
+  "gauge",
+  highchart() |>
+    hc_chart(type = "gauge") |>
+    hc_title(text = "gauge") |>
+    hc_yAxis(min = 0, max = 10) |>
+    hc_add_series(type = "gauge", data = list(7), name = "Value")
+)
+add_chart(
+  "solidgauge",
+  highchart() |>
+    hc_chart(type = "solidgauge") |>
+    hc_title(text = "solidgauge") |>
+    hc_yAxis(min = 0, max = 10) |>
+    hc_add_series(type = "solidgauge", data = list(7), name = "Value")
+)
+matrix_data <- unlist(
+  lapply(0:4, function(x) {
+    lapply(0:4, function(y) list(x, y, round(sin(x) + cos(y), 2)))
+  }),
+  recursive = FALSE
+)
 add_chart("heatmap", chart("heatmap", matrix_data))
 add_chart("tilemap", chart("tilemap", matrix_data))
-add_chart("contour", chart("contour", matrix_data) |> hc_colorAxis(min = -2, max = 2))
+add_chart(
+  "contour",
+  chart("contour", matrix_data) |> hc_colorAxis(min = -2, max = 2)
+)
 
 hierarchy <- list(
   list(id = "root", name = "Root"),
@@ -115,130 +247,268 @@ for (type in c("treemap", "sunburst", "treegraph")) {
 }
 
 links <- list(
-  list("A", "B", 5), list("A", "C", 3), list("B", "D", 4),
-  list("C", "D", 2), list("D", "A", 1)
+  list("A", "B", 5),
+  list("A", "C", 3),
+  list("B", "D", 4),
+  list("C", "D", 2),
+  list("D", "A", 1)
 )
-for (type in c("sankey", "dependencywheel", "organization", "arcdiagram", "networkgraph")) {
+for (type in c(
+  "sankey",
+  "dependencywheel",
+  "organization",
+  "arcdiagram",
+  "networkgraph"
+)) {
   add_chart(type, chart(type, links))
 }
-add_chart("venn", chart("venn", list(
-  list(sets = list("A"), value = 4),
-  list(sets = list("B"), value = 3),
-  list(sets = list("A", "B"), value = 1)
-)))
-add_chart("vector", chart("vector", lapply(seq_len(nrow(common)), function(i) {
-  list(common$x[i], common$y[i], common$value[i], common$direction[i])
-})))
-add_chart("xrange", chart("xrange", lapply(0:5, function(i) {
-  list(x = dates[i + 1], x2 = dates[i + 2], y = i %% 3, name = LETTERS[i + 1])
-})))
+add_chart(
+  "venn",
+  chart(
+    "venn",
+    list(
+      list(sets = list("A"), value = 4),
+      list(sets = list("B"), value = 3),
+      list(sets = list("A", "B"), value = 1)
+    )
+  )
+)
+add_chart(
+  "vector",
+  chart(
+    "vector",
+    lapply(seq_len(nrow(common)), function(i) {
+      list(common$x[i], common$y[i], common$value[i], common$direction[i])
+    })
+  )
+)
+add_chart(
+  "xrange",
+  chart(
+    "xrange",
+    lapply(0:5, function(i) {
+      list(
+        x = dates[i + 1],
+        x2 = dates[i + 2],
+        y = i %% 3,
+        name = LETTERS[i + 1]
+      )
+    })
+  )
+)
 
 scores <- c(52, 58, 61, 63, 64, 65, 67, 68, 70, 74, 79)
-add_chart("histogram", highchart() |>
-  hc_title(text = "histogram") |>
-  hc_add_series(type = "scatter", id = "samples", data = scores, visible = FALSE) |>
-  hc_add_series(type = "histogram", baseSeries = "samples"))
-add_chart("bellcurve", highchart() |>
-  hc_title(text = "bellcurve") |>
-  hc_add_series(type = "scatter", id = "samples", data = scores, visible = FALSE) |>
-  hc_add_series(type = "bellcurve", baseSeries = "samples"))
-add_chart("pareto", highchart() |>
-  hc_title(text = "pareto") |>
-  hc_yAxis(list(title = list(text = "Count")), list(max = 100, opposite = TRUE)) |>
-  hc_add_series(type = "column", id = "counts", data = common$y) |>
-  hc_add_series(type = "pareto", baseSeries = "counts", yAxis = 1))
+add_chart(
+  "histogram",
+  highchart() |>
+    hc_title(text = "histogram") |>
+    hc_add_series(
+      type = "scatter",
+      id = "samples",
+      data = scores,
+      visible = FALSE
+    ) |>
+    hc_add_series(type = "histogram", baseSeries = "samples")
+)
+add_chart(
+  "bellcurve",
+  highchart() |>
+    hc_title(text = "bellcurve") |>
+    hc_add_series(
+      type = "scatter",
+      id = "samples",
+      data = scores,
+      visible = FALSE
+    ) |>
+    hc_add_series(type = "bellcurve", baseSeries = "samples")
+)
+add_chart(
+  "pareto",
+  highchart() |>
+    hc_title(text = "pareto") |>
+    hc_yAxis(
+      list(title = list(text = "Count")),
+      list(max = 100, opposite = TRUE)
+    ) |>
+    hc_add_series(type = "column", id = "counts", data = common$y) |>
+    hc_add_series(type = "pareto", baseSeries = "counts", yAxis = 1)
+)
 
 map_regions <- list(
   list(name = "West", path = "M 0 0 L 0 10 L 10 10 L 10 0 Z", value = 2),
   list(name = "East", path = "M 10 0 L 10 10 L 20 10 L 20 0 Z", value = 4)
 )
-add_chart("map", highchart(type = "map") |>
-  hc_title(text = "map") |>
-  hc_add_series(type = "map", data = map_regions))
-add_chart("mapline", highchart(type = "map") |>
-  hc_title(text = "mapline") |>
-  hc_add_series(type = "mapline", data = map_regions))
-add_chart("mappoint", highchart(type = "map") |>
-  hc_title(text = "mappoint + clustering") |>
-  hc_add_series(
-    type = "mappoint",
-    data = list(
-      list(name = "Santiago", lon = -70.67, lat = -33.45),
-      list(name = "Valparaiso", lon = -71.62, lat = -33.05)
-    ),
-    cluster = list(enabled = TRUE)
-  ))
-add_chart("mapbubble", highchart(type = "map") |>
-  hc_title(text = "mapbubble") |>
-  hc_add_series(type = "mapbubble", data = list(
-    list(name = "Santiago", lon = -70.67, lat = -33.45, z = 7),
-    list(name = "Valparaiso", lon = -71.62, lat = -33.05, z = 4)
-  )))
-add_chart("geoheatmap", highchart(type = "map") |>
-  hc_title(text = "geoheatmap") |>
-  hc_add_series(type = "geoheatmap", data = list(
-    list(lon = -70, lat = -33, value = 7),
-    list(lon = -71, lat = -32, value = 4)
-  )))
-add_chart("tiledwebmap", highchart(
-  type = "map",
-  hc_opts = list(mapView = list(projection = list(name = "WebMercator"), center = c(-70.67, -33.45), zoom = 4))
+add_chart(
+  "map",
+  highchart(type = "map") |>
+    hc_title(text = "map") |>
+    hc_add_series(type = "map", data = map_regions)
+)
+add_chart(
+  "mapline",
+  highchart(type = "map") |>
+    hc_title(text = "mapline") |>
+    hc_add_series(type = "mapline", data = map_regions)
+)
+add_chart(
+  "mappoint",
+  highchart(type = "map") |>
+    hc_title(text = "mappoint + clustering") |>
+    hc_add_series(
+      type = "mappoint",
+      data = list(
+        list(name = "Santiago", lon = -70.67, lat = -33.45),
+        list(name = "Valparaiso", lon = -71.62, lat = -33.05)
+      ),
+      cluster = list(enabled = TRUE)
+    )
+)
+add_chart(
+  "mapbubble",
+  highchart(type = "map") |>
+    hc_title(text = "mapbubble") |>
+    hc_add_series(
+      type = "mapbubble",
+      data = list(
+        list(name = "Santiago", lon = -70.67, lat = -33.45, z = 7),
+        list(name = "Valparaiso", lon = -71.62, lat = -33.05, z = 4)
+      )
+    )
+)
+add_chart(
+  "geoheatmap",
+  highchart(type = "map") |>
+    hc_title(text = "geoheatmap") |>
+    hc_add_series(
+      type = "geoheatmap",
+      data = list(
+        list(lon = -70, lat = -33, value = 7),
+        list(lon = -71, lat = -32, value = 4)
+      )
+    )
+)
+add_chart(
+  "tiledwebmap",
+  highchart(
+    type = "map",
+    hc_opts = list(
+      mapView = list(
+        projection = list(name = "WebMercator"),
+        center = c(-70.67, -33.45),
+        zoom = 4
+      )
+    )
   ) |>
-  hc_title(text = "tiledwebmap") |>
-  hc_add_series(
-    type = "tiledwebmap",
-    provider = list(url = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' fill='%23d7e7ee'/%3E%3Cpath d='M0 0L256 256M0 256L256 0' stroke='%2397b3bf'/%3E%3C/svg%3E"),
-    name = "Local sample tile"
-  ))
-add_chart("flowmap", highchart(type = "map") |>
-  hc_title(text = "flowmap") |>
-  hc_add_series(type = "flowmap", data = list(
-    list(from = list(lon = -70, lat = -30), to = list(lon = -60, lat = -20), weight = 3),
-    list(from = list(lon = -70, lat = -30), to = list(lon = -75, lat = -15), weight = 2)
-  )))
+    hc_title(text = "tiledwebmap") |>
+    hc_add_series(
+      type = "tiledwebmap",
+      provider = list(
+        url = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Crect width='256' height='256' fill='%23d7e7ee'/%3E%3Cpath d='M0 0L256 256M0 256L256 0' stroke='%2397b3bf'/%3E%3C/svg%3E"
+      ),
+      name = "Local sample tile"
+    )
+)
+add_chart(
+  "flowmap",
+  highchart(type = "map") |>
+    hc_title(text = "flowmap") |>
+    hc_add_series(
+      type = "flowmap",
+      data = list(
+        list(
+          from = list(lon = -70, lat = -30),
+          to = list(lon = -60, lat = -20),
+          weight = 3
+        ),
+        list(
+          from = list(lon = -70, lat = -30),
+          to = list(lon = -75, lat = -15),
+          weight = 2
+        )
+      )
+    )
+)
 
 ohlc <- lapply(seq_along(dates), function(i) {
   open <- 10 + i
   list(dates[i], open, open + 3, open - 2, open + 1)
 })
 for (type in c("ohlc", "candlestick", "heikinashi", "hollowcandlestick")) {
-  add_chart(type, highchart(type = "stock") |>
-    hc_title(text = type) |>
-    hc_add_series(type = type, data = ohlc, name = type))
+  add_chart(
+    type,
+    highchart(type = "stock") |>
+      hc_title(text = type) |>
+      hc_add_series(type = type, data = ohlc, name = type)
+  )
 }
 for (type in c("renko", "pointandfigure")) {
   close <- Map(list, dates, c(20, 24, 29, 21, 16, 25, 31, 22))
-  add_chart(type, highchart(type = "stock") |>
-    hc_title(text = type) |>
-    hc_add_series(type = type, data = close, boxSize = 2, name = type))
+  add_chart(
+    type,
+    highchart(type = "stock") |>
+      hc_title(text = type) |>
+      hc_add_series(type = type, data = close, boxSize = 2, name = type)
+  )
 }
 hlc <- lapply(seq_along(dates), function(i) {
   open <- 10 + i
   list(dates[i], open + 3, open - 2, open + 1)
 })
-add_chart("hlc", highchart(type = "stock") |>
-  hc_title(text = "hlc") |>
-  hc_add_series(type = "hlc", data = hlc, name = "HLC"))
-add_chart("flags", highchart(type = "stock") |>
-  hc_title(text = "flags") |>
-  hc_add_series(type = "line", id = "price", data = Map(list, dates, common$y)) |>
-  hc_add_series(type = "flags", onSeries = "price", data = list(
-    list(x = dates[3], title = "A", text = "Event A"),
-    list(x = dates[6], title = "B", text = "Event B")
-  )))
-add_chart("gantt", highchart(type = "gantt") |>
-  hc_title(text = "gantt") |>
-  hc_add_series(type = "gantt", data = list(
-    list(name = "Task A", start = dates[1], end = dates[4], y = 0),
-    list(name = "Task B", start = dates[3], end = dates[7], y = 1)
-  )))
+add_chart(
+  "hlc",
+  highchart(type = "stock") |>
+    hc_title(text = "hlc") |>
+    hc_add_series(type = "hlc", data = hlc, name = "HLC")
+)
+add_chart(
+  "flags",
+  highchart(type = "stock") |>
+    hc_title(text = "flags") |>
+    hc_add_series(
+      type = "line",
+      id = "price",
+      data = Map(list, dates, common$y)
+    ) |>
+    hc_add_series(
+      type = "flags",
+      onSeries = "price",
+      data = list(
+        list(x = dates[3], title = "A", text = "Event A"),
+        list(x = dates[6], title = "B", text = "Event B")
+      )
+    )
+)
+add_chart(
+  "gantt",
+  highchart(type = "gantt") |>
+    hc_title(text = "gantt") |>
+    hc_add_series(
+      type = "gantt",
+      data = list(
+        list(name = "Task A", start = dates[1], end = dates[4], y = 0),
+        list(name = "Task B", start = dates[3], end = dates[7], y = 1)
+      )
+    )
+)
 
 
 expected_types <- names(charts)
 
-cards <- Map(function(value, name) {
-  div(id = name, class = "chart-card", tags$h3(tags$a(href = paste0("https://api.highcharts.com/highcharts/series.", name), name)), value)
-}, charts, names(charts))
+cards <- Map(
+  function(value, name) {
+    div(
+      id = name,
+      class = "chart-card",
+      tags$h3(tags$a(
+        href = paste0("https://api.highcharts.com/highcharts/series.", name),
+        name
+      )),
+      value
+    )
+  },
+  charts,
+  names(charts)
+)
 
 registry_check <- sprintf(
   "window.addEventListener('load', function () {
@@ -258,16 +528,28 @@ registry_check <- sprintf(
 
 page <- tagList(
   tags$head(
-    tags$meta(charset = "utf-8"), tags$meta(name = "viewport", content = "width=device-width,initial-scale=1"),
+    tags$meta(charset = "utf-8"),
+    tags$meta(
+      name = "viewport",
+      content = "width=device-width,initial-scale=1"
+    ),
     tags$title("Highcharter bundle gallery"),
-    tags$style(HTML("body{font-family:sans-serif;margin:24px}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}.chart-card{min-width:0;border:1px solid #ddd;border-radius:8px;padding:8px}.chart-card h3{font-size:14px;margin:4px 8px}.passed{color:#087f23}.failed{color:#b00020}"))
+    tags$style(HTML(
+      "body{font-family:sans-serif;margin:24px}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}.chart-card{min-width:0;border:1px solid #ddd;border-radius:8px;padding:8px}.chart-card h3{font-size:14px;margin:4px 8px}.passed{color:#087f23}.failed{color:#b00020}"
+    ))
   ),
   tags$h1("Highcharter bundle gallery"),
-  tags$p("Common x, y, z, low, high, value, color and label shapes plus specialized series."),
+  tags$p(
+    "Common x, y, z, low, high, value, color and label shapes plus specialized series."
+  ),
   tags$p(id = "registry-status", "Checking registered series types..."),
   div(class = "gallery", unname(cards)),
   tags$script(HTML(registry_check))
 )
 
 dir.create(site_dir, recursive = TRUE, showWarnings = FALSE)
-save_html(page, file.path(site_dir, "series-gallery.html"), libdir = "gallery-libs")
+save_html(
+  page,
+  file.path(site_dir, "series-gallery.html"),
+  libdir = "gallery-libs"
+)

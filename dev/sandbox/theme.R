@@ -1,5 +1,5 @@
-json <- 
-'{
+json <-
+  '{
 "colors": [
 "#058DC7",
 "#50B432",
@@ -53,6 +53,6 @@ json <-
 }
 }
 }'
-  
-  
+
+
 dput(jsonlite::fromJSON(json))

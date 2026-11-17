@@ -43,7 +43,10 @@ test_that("highchartstock adds Stock Tools to the shared Highcharts engine", {
   for (widgets in list(list(regular, tools), list(tools, regular))) {
     deps <- htmltools::renderTags(htmltools::tagList(widgets))$dependencies
     expect_length(Filter(function(dep) dep$name == "highcharts", deps), 1)
-    expect_length(Filter(function(dep) dep$name == "highcharts-stock-tools", deps), 1)
+    expect_length(
+      Filter(function(dep) dep$name == "highcharts-stock-tools", deps),
+      1
+    )
   }
 })
 
@@ -51,12 +54,20 @@ test_that("third-party plugins stay optional", {
   plain <- highchart()
   motion <- hc_motion(highchart())
 
-  expect_false(any(vapply(plain$dependencies, function(dep) {
-    identical(dep$name, "highcharts-motion")
-  }, logical(1))))
-  expect_true(any(vapply(motion$dependencies, function(dep) {
-    identical(dep$name, "highcharts-motion")
-  }, logical(1))))
+  expect_false(any(vapply(
+    plain$dependencies,
+    function(dep) {
+      identical(dep$name, "highcharts-motion")
+    },
+    logical(1)
+  )))
+  expect_true(any(vapply(
+    motion$dependencies,
+    function(dep) {
+      identical(dep$name, "highcharts-motion")
+    },
+    logical(1)
+  )))
 })
 
 test_that("legacy official module dependencies are harmless", {

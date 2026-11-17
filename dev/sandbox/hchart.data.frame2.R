@@ -16,11 +16,11 @@ library(dplyr)
 hc_set_theme("smpl")
 
 #### DATA ####
-df <- data.frame(xval = 1:10) %>% 
+df <- data.frame(xval = 1:10) %>%
   mutate(
     yval = 10 + xval + 10 * sin(xval),
     yval = round(yval, 1),
-    zval = (xval*yval) - median(xval*yval),
+    zval = (xval * yval) - median(xval * yval),
     er = 10 * abs(rnorm(length(xval))) + 2,
     er = round(er, 1),
     l = yval - er,
@@ -31,7 +31,7 @@ df <- data.frame(xval = 1:10) %>%
 
 head(df)
 
-##### x, y, name, color #### 
+##### x, y, name, color ####
 # x: 1,
 # y: 9,
 # name: "Point2",
@@ -64,9 +64,21 @@ hchart(df, "waterfall", hcaes(x = xval, y = yval, color = col, name = nm))
 # z: 1,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "bubble", hcaes(x = xval, y = yval, size = zval, name = nm, color = col))
-hchart(df, "point", hcaes(x = xval, y = yval, size = zval, name = nm, color = col))
-hchart(df, "scatter", hcaes(x = xval, y = yval, size = zval, name = nm, color = col))
+hchart(
+  df,
+  "bubble",
+  hcaes(x = xval, y = yval, size = zval, name = nm, color = col)
+)
+hchart(
+  df,
+  "point",
+  hcaes(x = xval, y = yval, size = zval, name = nm, color = col)
+)
+hchart(
+  df,
+  "scatter",
+  hcaes(x = xval, y = yval, size = zval, name = nm, color = col)
+)
 
 #### y, name, color ####
 # y: 3,
@@ -85,13 +97,29 @@ hchart(df, "scatter", hcaes(x = xval, y = yval, size = zval, name = nm, color = 
 # high: 0,
 # name: "Point2",
 # color: "#00FF00"
-hchart(df, "arearange", hcaes(x = xval, low = l, high = h, name = nm, color = col))
-hchart(df, "areasplinerange", hcaes(x = xval, low = l, high = h, name = nm, color = col))
-hchart(df, "columnrange", hcaes(x = xval, low = l, high = h, name = nm, color = col))
-hchart(df, "errorbar", hcaes(x = xval, low = l, high = h, name = nm, color = col))
+hchart(
+  df,
+  "arearange",
+  hcaes(x = xval, low = l, high = h, name = nm, color = col)
+)
+hchart(
+  df,
+  "areasplinerange",
+  hcaes(x = xval, low = l, high = h, name = nm, color = col)
+)
+hchart(
+  df,
+  "columnrange",
+  hcaes(x = xval, low = l, high = h, name = nm, color = col)
+)
+hchart(
+  df,
+  "errorbar",
+  hcaes(x = xval, low = l, high = h, name = nm, color = col)
+)
 hchart(df, "errorbar", hcaes(x = nm, low = l, high = h, name = nm, color = col))
 
-#### x, low, q1, median, q3, high, name, color #### 
+#### x, low, q1, median, q3, high, name, color ####
 # x: 1,
 # low: 4,
 # q1: 9,
@@ -100,12 +128,36 @@ hchart(df, "errorbar", hcaes(x = nm, low = l, high = h, name = nm, color = col))
 # high: 10,
 # name: "Point2",
 # color: "#00FF00"
-df <- mutate(df, qq1 = yval - er/2, qq3 = yval + er/2)
-hchart(df, "boxplot",
-       hcaes(x = xval, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval))
+df <- mutate(df, qq1 = yval - er / 2, qq3 = yval + er / 2)
+hchart(
+  df,
+  "boxplot",
+  hcaes(
+    x = xval,
+    low = l,
+    median = yval,
+    high = h,
+    name = nm,
+    q1 = qq1,
+    q3 = qq3,
+    color = yval
+  )
+)
 
-hchart(df, "boxplot",
-       hcaes(x = nm, low = l, median = yval, high = h, name = nm, q1 = qq1, q3 = qq3, color = yval))
+hchart(
+  df,
+  "boxplot",
+  hcaes(
+    x = nm,
+    low = l,
+    median = yval,
+    high = h,
+    name = nm,
+    q1 = qq1,
+    q3 = qq3,
+    color = yval
+  )
+)
 
 #### x, y, value, name, color ####
 # x: 1,
@@ -114,7 +166,9 @@ hchart(df, "boxplot",
 # name: "Point2",
 # color: "#00FF00"
 data(diamonds, package = "ggplot2")
-df2 <- group_by(diamonds, cut, color) %>% summarize(price = median(price)) %>% ungroup()
+df2 <- group_by(diamonds, cut, color) %>%
+  summarize(price = median(price)) %>%
+  ungroup()
 hchart(df2, "heatmap", hcaes(x = cut, y = color, value = price))
 
 data(mpg, package = "ggplot2")

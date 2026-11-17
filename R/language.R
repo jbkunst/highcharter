@@ -20,19 +20,34 @@
 #' highchart() |> hc_add_series(data = c(3, 1, 4))
 #' @export
 hc_language <- function(locale = "en", ...) {
-  if (!is.character(locale) || length(locale) != 1L || is.na(locale) ||
-      !grepl("^[A-Za-z]{2,3}(-[A-Za-z]{4})?(-([A-Za-z]{2}|[0-9]{3}))?$", locale)) {
-    stop("Use a language code such as 'en', 'es', 'pt' or 'fr', optionally with a region.", call. = FALSE)
+  if (
+    !is.character(locale) ||
+      length(locale) != 1L ||
+      is.na(locale) ||
+      !grepl("^[A-Za-z]{2,3}(-[A-Za-z]{4})?(-([A-Za-z]{2}|[0-9]{3}))?$", locale)
+  ) {
+    stop(
+      "Use a language code such as 'en', 'es', 'pt' or 'fr', optionally with a region.",
+      call. = FALSE
+    )
   }
   code <- tolower(sub("-.*", "", locale))
   lang <- list()
   if (code %in% c("es", "pt", "fr")) {
-    path <- system.file("lang", paste0(code, ".json"), package = "highcharter", mustWork = TRUE)
+    path <- system.file(
+      "lang",
+      paste0(code, ".json"),
+      package = "highcharter",
+      mustWork = TRUE
+    )
     lang <- jsonlite::fromJSON(path)
   }
   lang$locale <- locale
   overrides <- list(...)
-  if (length(overrides) && (is.null(names(overrides)) || any(!nzchar(names(overrides))))) {
+  if (
+    length(overrides) &&
+      (is.null(names(overrides)) || any(!nzchar(names(overrides))))
+  ) {
     stop("Name each Highcharts lang override.", call. = FALSE)
   }
   utils::modifyList(lang, overrides, keep.null = TRUE)

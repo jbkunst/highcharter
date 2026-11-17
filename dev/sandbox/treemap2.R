@@ -1,4 +1,4 @@
-highchart() %>% 
+highchart() %>%
   hc_add_series(
     type = "treemap",
     layoutAlgorithm = "squarified",

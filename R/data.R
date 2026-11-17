@@ -1,6 +1,6 @@
 #' Visual comparison of Mountains Panorama
 #'
-#' This data comes from the \url{https://www.highcharts.com/} examples:  
+#' This data comes from the \url{https://www.highcharts.com/} examples:
 #' https://www.highcharts.com/demo/3d-area-multiple
 #'
 #' @section Variables:

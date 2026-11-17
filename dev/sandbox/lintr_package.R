@@ -4,5 +4,5 @@ lintr::lint_package(
     camel_case_linter = NULL,
     commented_code_linter = NULL,
     line_length_linter = NULL
-    )
+  )
 )

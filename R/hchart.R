@@ -22,7 +22,9 @@ hchart <- function(object, ...) {
 
 #' @export
 hchart.default <- function(object, ...) {
-  stop("Objects of class/type ", paste(class(object), collapse = "/"),
+  stop(
+    "Objects of class/type ",
+    paste(class(object), collapse = "/"),
     " are not supported by hchart (yet).",
     call. = FALSE
   )
@@ -63,12 +65,16 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
     hc_add_series_list(series) |>
     hc_xAxis(
       type = opts$xAxis_type,
-      title = list(text = if (has_name(mapping, "x")) rlang::as_label(mapping$x)),
+      title = list(
+        text = if (has_name(mapping, "x")) rlang::as_label(mapping$x)
+      ),
       categories = opts$xAxis_categories
     ) |>
     hc_yAxis(
       type = opts$yAxis_type,
-      title = list(text = if (has_name(mapping, "y")) rlang::as_label(mapping$y)),
+      title = list(
+        text = if (has_name(mapping, "y")) rlang::as_label(mapping$y)
+      ),
       categories = opts$yAxis_categories
     ) |>
     hc_plotOptions(
@@ -104,7 +110,11 @@ hchart.histogram <- function(object, ...) {
 
   highchart() |>
     hc_chart(zoomType = "x") |>
-    hc_tooltip(formatter = JS("function() { return  this.point.name + '<br/>' + this.y; }")) |>
+    hc_tooltip(
+      formatter = JS(
+        "function() { return  this.point.name + '<br/>' + this.y; }"
+      )
+    ) |>
     hc_add_series(
       data = list_parse(df),
       type = "column",
@@ -144,8 +154,10 @@ hchart.forecast <- function(object, addOriginal = TRUE, addLevels = TRUE, ...) {
   highchart() |>
     hc_xAxis(type = "datetime") |>
     hc_add_series(
-      data = object, addOriginal = addOriginal,
-      addLevels = addLevels, ...
+      data = object,
+      addOriginal = addOriginal,
+      addLevels = addLevels,
+      ...
     )
 }
 
@@ -169,12 +181,14 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
   for (i in seq(ntss)) {
     nm <- nms[i]
     hc <- hc |>
-      hc_add_series(object$mean[[nm]],
+      hc_add_series(
+        object$mean[[nm]],
         name = paste("forecast", nm),
-        yAxis = i - 1, linkedTo = "forecasts", ...
+        yAxis = i - 1,
+        linkedTo = "forecasts",
+        ...
       )
   }
-
 
   # levels
   for (lvl in seq_along(lvls)) {
@@ -198,8 +212,11 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
           name = paste(nmlvl, nm),
           linkedTo = idlvl,
           yAxis = i - 1,
-          type = "arearange", fillOpacity = fillOpacity,
-          zIndex = 1, lineWidth = 0, ...
+          type = "arearange",
+          fillOpacity = fillOpacity,
+          zIndex = 1,
+          lineWidth = 0,
+          ...
         )
     }
   }
@@ -218,7 +235,8 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
 #' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...) {
-  ytitle <- switch(object$type,
+  ytitle <- switch(
+    object$type,
     partial = "Partial ACF",
     covariance = "ACF (cov)",
     correlation = "ACF"
@@ -227,8 +245,8 @@ hchart.acf <- function(object, ...) {
   sv <- qnorm(1 - 0.05 / 2) / sqrt(object$n.used)
 
   ds <- tibble(
-    x = seq(object$lag[, , ]),
-    y = object$acf[, , ]
+    x = seq(object$lag[,,]),
+    y = object$acf[,,]
   )
 
   hc <- highchart() |>
@@ -253,8 +271,12 @@ hchart.acf <- function(object, ...) {
 }
 
 #' @export
-hchart.mts <- function(object, ..., separate = TRUE,
-                       heights = rep(1, ncol(object))) {
+hchart.mts <- function(
+  object,
+  ...,
+  separate = TRUE,
+  heights = rep(1, ncol(object))
+) {
   if (separate) {
     hc <- hchart_mts2(object, heights = heights, ...)
   } else {
@@ -280,7 +302,12 @@ hchart_mts1 <- function(object, ...) {
   hc
 }
 
-hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01) {
+hchart_mts2 <- function(
+  object,
+  ...,
+  heights = rep(1, ncol(object)),
+  sep = 0.01
+) {
   ntss <- ncol(object)
 
   hc <- highchart() |>
@@ -289,10 +316,16 @@ hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01)
 
   hc <- hc |>
     hc_yAxis(
-      create_axis(ntss,
-        heights = heights, sep = sep, turnopposite = TRUE,
-        title = list(text = NULL), offset = 0, lineWidth = 2,
-        showFirstLabel = FALSE, showLastLabel = FALSE
+      create_axis(
+        ntss,
+        heights = heights,
+        sep = sep,
+        turnopposite = TRUE,
+        title = list(text = NULL),
+        offset = 0,
+        lineWidth = 2,
+        showFirstLabel = FALSE,
+        showLastLabel = FALSE
       )
     )
 
@@ -300,11 +333,11 @@ hchart_mts2 <- function(object, ..., heights = rep(1, ncol(object)), sep = 0.01)
 
   for (col in seq(ntss)) {
     nm <- namestss[col]
-    hc <- hc |> hc_add_series(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
+    hc <- hc |>
+      hc_add_series(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
   }
 
   hc
-
 }
 
 #' @export
@@ -323,10 +356,17 @@ hchart.stl <- function(object, ..., heights = c(2, 1, 1, 1), sep = 0.01) {
 #' @export
 hchart.decomposed.ts <- function(object, ...) {
   if (NCOL(object$x) != 1L) {
-    stop("Decompose each time series separately before plotting.", call. = FALSE)
+    stop(
+      "Decompose each time series separately before plotting.",
+      call. = FALSE
+    )
   }
-  components <- cbind(observed = drop(object$x), seasonal = drop(object$seasonal),
-                      trend = drop(object$trend), remainder = drop(object$random))
+  components <- cbind(
+    observed = drop(object$x),
+    seasonal = drop(object$seasonal),
+    trend = drop(object$trend),
+    remainder = drop(object$random)
+  )
   hchart_mts2(components, ...)
 }
 
@@ -334,7 +374,10 @@ hchart.decomposed.ts <- function(object, ...) {
 hchart.ets <- function(object, ...) {
   names <- c(y = "observed", l = "level", b = "slope", s1 = "season")
 
-  data <- cbind(object$x, object$states[, colnames(object$states) %in% names(names)])
+  data <- cbind(
+    object$x,
+    object$states[, colnames(object$states) %in% names(names)]
+  )
 
   cn <- c("y", c(colnames(object$states)))
 
@@ -362,8 +405,12 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   has_labels <- !is.null(row_labels) || !is.null(col_labels)
   rows <- seq_len(nrow(object))
   cols <- seq_len(ncol(object))
-  if (is.null(row_labels)) row_labels <- as.character(rows)
-  if (is.null(col_labels)) col_labels <- as.character(cols)
+  if (is.null(row_labels)) {
+    row_labels <- as.character(rows)
+  }
+  if (is.null(col_labels)) {
+    col_labels <- as.character(cols)
+  }
 
   # Matrices are stored column by column. Category axes start at zero.
   row_index <- rep(rows, times = ncol(object))
@@ -375,10 +422,12 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
     name = paste(col_labels[col_index], row_labels[row_index], sep = " ~ ")
   )
 
-  fntltp <- JS("function(){
+  fntltp <- JS(
+    "function(){
                  return this.point.name + ': ' +
                    Highcharts.numberFormat(this.point.value, 2)
-               }")
+               }"
+  )
 
   hc <- highchart() |>
     hc_add_series(data = list_parse(points), type = "heatmap") |>
@@ -399,15 +448,25 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
       hc_yAxis(visible = FALSE, reversed = TRUE)
   } else {
     hc <- hc |>
-      hc_xAxis(categories = col_labels, title = list(text = ""), opposite = TRUE) |>
-      hc_yAxis(categories = row_labels, title = list(text = ""), reversed = TRUE)
+      hc_xAxis(
+        categories = col_labels,
+        title = list(text = ""),
+        opposite = TRUE
+      ) |>
+      hc_yAxis(
+        categories = row_labels,
+        title = list(text = ""),
+        reversed = TRUE
+      )
   }
 
   # correlogram
   if (any(object < 0, na.rm = TRUE) && all(abs(object) <= 1, na.rm = TRUE)) {
-    hc <- hc_colorAxis(hc,
+    hc <- hc_colorAxis(
+      hc,
       stops = color_stops(3, c("#FF5733", "#F8F5F5", "#2E86C1")),
-      min = -1, max = 1
+      min = -1,
+      max = 1
     )
   } else {
     hc <- hc_colorAxis(hc, nullpar = NULL)
@@ -423,17 +482,17 @@ hchart.dist <- function(object, ...) {
 }
 
 #' Plot igraph objects using Highcharts
-#' 
+#'
 #' @param object An igraph object.
 #' @param layout A layout from igraph package.
 #' @param ... Additional arguments for the data series
-#'    (\url{https://api.highcharts.com/highcharts/series}). 
+#'    (\url{https://api.highcharts.com/highcharts/series}).
 #' @importFrom stats setNames
 #' @importFrom rlang .data
 #' @examples
-#' 
+#'
 #' if(require("igraph")) {
-#' 
+#'
 #' N <- 40
 #' net <- sample_gnp(N, p = 2 / N)
 #' wc <- cluster_walktrap(net)
@@ -446,15 +505,17 @@ hchart.dist <- function(object, ...) {
 #' V(net)$comm <- as.vector(membership(wc))
 #' V(net)$color <- colorize(membership(wc))
 #' hchart(net, layout = layout_with_fr)
-#' 
+#'
 #' }
-#' 
-#' 
+#'
+#'
 #' @export
 hchart.igraph <- function(object, ..., layout = NULL) {
   rlang::check_installed("igraph", reason = "to chart an igraph object.")
   # data
-  if (is.null(layout)) layout <- igraph::layout_nicely
+  if (is.null(layout)) {
+    layout <- igraph::layout_nicely
+  }
   dfv <- layout(object) |>
     round(5) |>
     data.frame() |>
@@ -481,12 +542,18 @@ hchart.igraph <- function(object, ..., layout = NULL) {
     data.frame(stringsAsFactors = FALSE) |>
     tibble::as_tibble() |>
     setNames(c("from", "to")) |>
-    left_join(dfv |>
-      select("name", "x", "y") |>
-      setNames(c("from", "xf", "yf")), by = "from") |>
-    left_join(dfv |>
-      select("name", "x", "y") |>
-      setNames(c("to", "xt", "yt")), by = "to") |>
+    left_join(
+      dfv |>
+        select("name", "x", "y") |>
+        setNames(c("from", "xf", "yf")),
+      by = "from"
+    ) |>
+    left_join(
+      dfv |>
+        select("name", "x", "y") |>
+        setNames(c("to", "xt", "yt")),
+      by = "to"
+    ) |>
     mutate(linkedTo = "e")
 
   dfex <- object |>
@@ -544,7 +611,8 @@ hchart.igraph <- function(object, ..., layout = NULL) {
       line = list(enableMouseTracking = FALSE),
       bubble = list(
         marker = list(fillOpacity = 0.65),
-        minSize = 5, maxSize = 20
+        minSize = 5,
+        maxSize = 20
       )
     ) |>
     hc_add_theme(
@@ -554,19 +622,25 @@ hchart.igraph <- function(object, ..., layout = NULL) {
   hc <- hc |>
     hc_add_series(
       data = list_parse(dfv),
-      type = type, name = "nodes", zIndex = 3,
+      type = type,
+      name = "nodes",
+      zIndex = 3,
       tooltip = list(
         headerFormat = as.character(tags$small("{point.key}")),
         pointFormat = tltip_fmt
-      ), ...
+      ),
+      ...
     )
 
   if ("label" %in% names(dfv)) {
     hc <- hc |>
       hc_add_series(
         data = list_parse(dfv |> select("x", "y", "label")),
-        type = "scatter", name = "labels", zIndex = 4,
-        marker = list(radius = 0), enableMouseTracking = FALSE,
+        type = "scatter",
+        name = "labels",
+        zIndex = 4,
+        marker = list(radius = 0),
+        enableMouseTracking = FALSE,
         dataLabels = list(enabled = TRUE, format = "{point.label}")
       )
   }
@@ -612,9 +686,16 @@ hchart.igraph <- function(object, ..., layout = NULL) {
 #' ovarian.surv <- survfit(fit, newdata = data.frame(age = 60))
 #' hchart(ovarian.surv, ranges = TRUE)
 #' @export
-hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
-                           symbol = "plus", markerColor = "black",
-                           ranges = FALSE, rangesOpacity = 0.3) {
+hchart.survfit <- function(
+  object,
+  ...,
+  fun = NULL,
+  markTimes = TRUE,
+  symbol = "plus",
+  markerColor = "black",
+  ranges = FALSE,
+  rangesOpacity = 0.3
+) {
   group <- NULL
 
   # Check if there are groups
@@ -626,7 +707,8 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 
   # Modify data according to functions (adapted from survival:::plot.survfit)
   if (is.character(fun)) {
-    tfun <- switch(fun,
+    tfun <- switch(
+      fun,
       log = function(x) x,
       event = function(x) 1 - x,
       cumhaz = function(x) -log(x),
@@ -653,8 +735,10 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 
   # Prepare data
   data <- data.frame(
-    x = object$time, y = object$surv,
-    up = object$upper, low = object$lower,
+    x = object$time,
+    y = object$surv,
+    up = object$upper,
+    low = object$lower,
     group = rep(names(strata), strata),
     stringsAsFactors = FALSE
   )
@@ -710,10 +794,12 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
       ls[submark] <- lapply(ls[submark], c, marker = marker)
     }
 
-
     hc <- hc |>
       hc_add_series(
-        data = c(first, ls), step = "left", name = name, zIndex = 1,
+        data = c(first, ls),
+        step = "left",
+        name = name,
+        zIndex = 1,
         color = JS(sprintf("Highcharts.getOptions().colors[%s]", count)),
         ...
       )
@@ -726,9 +812,14 @@ hchart.survfit <- function(object, ..., fun = NULL, markTimes = TRUE,
 
       hc <- hc |>
         hc_add_series(
-          data = range, step = "left", name = "Ranges",
-          type = "arearange", zIndex = 0, linkedTo = ":previous",
-          fillOpacity = rangesOpacity, lineWidth = 0,
+          data = range,
+          step = "left",
+          name = "Ranges",
+          type = "arearange",
+          zIndex = 0,
+          linkedTo = ":previous",
+          fillOpacity = rangesOpacity,
+          lineWidth = 0,
           color = JS(sprintf("Highcharts.getOptions().colors[%s]", count)),
           ...
         )
@@ -753,13 +844,37 @@ hchart.density <- function(object, type = "area", ...) {
   hc_add_series(highchart(), data = object, type = type, ...)
 }
 
-hchart_pca <- function(scores, vectors, sdev, choices, scale, loadings, label, ...) {
-  if (is.null(scores)) stop("Fit the PCA with observation scores to plot it.", call. = FALSE)
-  if (!is.numeric(choices) || length(choices) != 2L || anyDuplicated(choices) ||
-      !all(choices %in% seq_len(ncol(scores)))) {
-    stop("Select two distinct component numbers present in the PCA.", call. = FALSE)
+hchart_pca <- function(
+  scores,
+  vectors,
+  sdev,
+  choices,
+  scale,
+  loadings,
+  label,
+  ...
+) {
+  if (is.null(scores)) {
+    stop("Fit the PCA with observation scores to plot it.", call. = FALSE)
   }
-  if (!is.numeric(scale) || length(scale) != 1L || !is.finite(scale) || scale < 0 || scale > 1) {
+  if (
+    !is.numeric(choices) ||
+      length(choices) != 2L ||
+      anyDuplicated(choices) ||
+      !all(choices %in% seq_len(ncol(scores)))
+  ) {
+    stop(
+      "Select two distinct component numbers present in the PCA.",
+      call. = FALSE
+    )
+  }
+  if (
+    !is.numeric(scale) ||
+      length(scale) != 1L ||
+      !is.finite(scale) ||
+      scale < 0 ||
+      scale > 1
+  ) {
     stop("Use a scale between 0 and 1.", call. = FALSE)
   }
 
@@ -773,32 +888,59 @@ hchart_pca <- function(scores, vectors, sdev, choices, scale, loadings, label, .
     axes <- paste0(axes, " (", percent, "%)")
   }
   observations <- rownames(xy)
-  if (is.null(observations)) observations <- as.character(seq_len(nrow(xy)))
-  points <- data.frame(name = observations, x = xy[, 1L], y = xy[, 2L], row.names = NULL)
+  if (is.null(observations)) {
+    observations <- as.character(seq_len(nrow(xy)))
+  }
+  points <- data.frame(
+    name = observations,
+    x = xy[, 1L],
+    y = xy[, 2L],
+    row.names = NULL
+  )
 
   hc <- highchart() |>
     hc_xAxis(title = list(text = axes[1L])) |>
     hc_yAxis(title = list(text = axes[2L])) |>
-    hc_plotOptions(scatter = list(tooltip = list(headerFormat = "<b>{point.name}</b><br/>"))) |>
-    hc_add_series(data = list_parse(points), type = "scatter", name = "Observations",
-                  dataLabels = list(enabled = label, format = "{point.name}"), ...)
-  if (!loadings) return(hc)
+    hc_plotOptions(
+      scatter = list(tooltip = list(headerFormat = "<b>{point.name}</b><br/>"))
+    ) |>
+    hc_add_series(
+      data = list_parse(points),
+      type = "scatter",
+      name = "Observations",
+      dataLabels = list(enabled = label, format = "{point.name}"),
+      ...
+    )
+  if (!loadings) {
+    return(hc)
+  }
 
   # One common multiplier keeps the directions of the loading vectors.
   ends <- vectors[, choices, drop = FALSE]
   max_loading <- apply(abs(ends), 2L, max)
   used <- max_loading > 0
-  if (!any(used)) return(hc)
+  if (!any(used)) {
+    return(hc)
+  }
   extent <- apply(abs(xy), 2L, max)
   ends <- ends * (0.8 * min(extent[used] / max_loading[used]))
   origin <- list(xAxis = 0L, yAxis = 0L, x = 0, y = 0)
   tips <- lapply(seq_len(nrow(ends)), function(i) {
-    list(xAxis = 0L, yAxis = 0L, x = unname(ends[i, 1L]), y = unname(ends[i, 2L]))
+    list(
+      xAxis = 0L,
+      yAxis = 0L,
+      x = unname(ends[i, 1L]),
+      y = unname(ends[i, 2L])
+    )
   })
   shapes <- lapply(tips, function(tip) {
     list(type = "path", markerEnd = "arrow", points = list(origin, tip))
   })
-  labels <- Map(function(tip, text) list(point = tip, text = text), tips, rownames(ends))
+  labels <- Map(
+    function(tip, text) list(point = tip, text = text),
+    tips,
+    rownames(ends)
+  )
   hc_add_annotation(hc, draggable = "", shapes = shapes, labels = labels)
 }
 
@@ -808,12 +950,44 @@ hchart_pca <- function(scores, vectors, sdev, choices, scale, loadings, label, .
 #' @param loadings Draw and name the variable loading vectors on the PCA plot.
 #' @param label Display observation names on PCA points.
 #' @export
-hchart.prcomp <- function(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE) {
-  hchart_pca(object$x, object$rotation, object$sdev, choices, scale, loadings, label, ...)
+hchart.prcomp <- function(
+  object,
+  ...,
+  choices = 1:2,
+  scale = 1,
+  loadings = FALSE,
+  label = FALSE
+) {
+  hchart_pca(
+    object$x,
+    object$rotation,
+    object$sdev,
+    choices,
+    scale,
+    loadings,
+    label,
+    ...
+  )
 }
 
 #' @rdname hchart
 #' @export
-hchart.princomp <- function(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE) {
-  hchart_pca(object$scores, object$loadings, object$sdev, choices, scale, loadings, label, ...)
+hchart.princomp <- function(
+  object,
+  ...,
+  choices = 1:2,
+  scale = 1,
+  loadings = FALSE,
+  label = FALSE
+) {
+  hchart_pca(
+    object$scores,
+    object$loadings,
+    object$sdev,
+    choices,
+    scale,
+    loadings,
+    label,
+    ...
+  )
 }

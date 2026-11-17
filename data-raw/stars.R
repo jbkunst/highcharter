@@ -2,7 +2,9 @@ library("readr")
 library("jsonlite")
 library("dplyr")
 
-lines <- read_lines("http://bl.ocks.org/nbremer/raw/eb0d1fd4118b731d069e2ff98dfadc47/starsSample.js")
+lines <- read_lines(
+  "http://bl.ocks.org/nbremer/raw/eb0d1fd4118b731d069e2ff98dfadc47/starsSample.js"
+)
 lines <- gsub("var stars = ", "", lines)
 
 stars <- fromJSON(lines)
@@ -26,8 +28,15 @@ thm <- hc_theme(
 )
 
 colors <- c(
-  "#FB1108", "#FD150B", "#FA7806", "#FBE426", "#FCFB8F",
-  "#F3F5E7", "#C7E4EA", "#ABD6E6", "#9AD2E1"
+  "#FB1108",
+  "#FD150B",
+  "#FA7806",
+  "#FBE426",
+  "#FCFB8F",
+  "#F3F5E7",
+  "#C7E4EA",
+  "#ABD6E6",
+  "#9AD2E1"
 )
 
 stars$color <- colorize(log(stars$temp), colors)

@@ -16,36 +16,52 @@ data(GNI2014, package = "treemap")
 # sizevar <- "population"
 # colovar <- "GNI"
 
-
-hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum, ...) {
-  
-  data <- data %>% 
-    mutate_if(is.factor, as.character) %>% 
-    unite_("pathString", vars, sep = "/", remove = FALSE) %>% 
+hctreemap2 <- function(
+  data,
+  vars,
+  sizevar = NULL,
+  colorvar = NULL,
+  aggfun = sum,
+  ...
+) {
+  data <- data %>%
+    mutate_if(is.factor, as.character) %>%
+    unite_("pathString", vars, sep = "/", remove = FALSE) %>%
     mutate_("pathString" = "paste0(\"Root/\", pathString)")
-  
-  s <- as.Node(data, mode="table")
-  s$Do(function(node) node$value <- Aggregate(node, attribute = sizevar, aggFun = aggfun), traversal = "post-order")
+
+  s <- as.Node(data, mode = "table")
+  s$Do(
+    function(node) {
+      node$value <- Aggregate(node, attribute = sizevar, aggFun = aggfun)
+    },
+    traversal = "post-order"
+  )
   s$Set(id = 1:s$totalCount)
-  s$Set(parent1 = c(function(self) GetAttribute(self$parent, "id", format = identity)))
-  
+  s$Set(
+    parent1 = c(function(self) {
+      GetAttribute(self$parent, "id", format = identity)
+    })
+  )
+
   vars2 <- c(vars, sizevar, "levelName", "id", "level", "value", "parent1")
-  
-  if(!is.null(colorvar)) vars2 <- c(vars2, colorvar)
-  
-  # datalist <- map(vars2, function(f){ s$Get(f) }) %>% 
-  #   map(setNames, NULL) %>% 
+
+  if (!is.null(colorvar)) {
+    vars2 <- c(vars2, colorvar)
+  }
+
+  # datalist <- map(vars2, function(f){ s$Get(f) }) %>%
+  #   map(setNames, NULL) %>%
   #   setNames(vars2) %>%
-  #   map(as.vector) %>% 
-  #   as_data_frame() %>% 
-  #   tbl_df() 
-  # 
-  # datalist <-  datalist %>% 
+  #   map(as.vector) %>%
+  #   as_data_frame() %>%
+  #   tbl_df()
+  #
+  # datalist <-  datalist %>%
   #   arrange_("level") %>%
-  #   filter_("level != 1") %>% 
+  #   filter_("level != 1") %>%
   #   rename_(.dots = c("parent" = "parent1", "name" = "levelName"))
-  # 
-  # datalist <- datalist %>% 
+  #
+  # datalist <- datalist %>%
   #   mutate_(
   #     .dots = list(
   #       name = "gsub(\"[^[:alnum:]]\", \" \", name)",
@@ -57,74 +73,107 @@ hctreemap2 <- function(data, vars, sizevar = NULL, colorvar = NULL, aggfun = sum
   #       level = "level - 1"
   #     )
   #   )
-  
-  datavalues <- data %>% 
-    select_(.dots = c(vars, sizevar)) %>% 
-    group_by_(.dots = vars) %>% 
-    summarise_all(.funs = aggfun) %>% 
+
+  datavalues <- data %>%
+    select_(.dots = c(vars, sizevar)) %>%
+    group_by_(.dots = vars) %>%
+    summarise_all(.funs = aggfun) %>%
     rename_(.dots = list(value = sizevar))
-  
-  datalist <- map(vars2, function(f){ s$Get(f) }) %>% 
-    map(setNames, NULL) %>% 
-    map(as.vector) %>% 
-    setNames(vars2) %>% 
-    map_df(identity) %>% 
-    tbl_df() 
-  
-  datalist <- datalist %>% 
-    mutate(name = gsub("[^[:alnum:]]", " ", levelName),
-           name = trimws(name),
-           parent = as.character(parent1),
-           id = as.character(id),
-           value = as.numeric(trimws(value))) %>% 
-    filter(level != 1) %>% 
-    mutate(level = level - 1) %>% 
-    arrange(level) %>% 
-    mutate(parent = ifelse(level == 1, NA, parent)) %>% 
-    select(-levelName) %>% 
-    select(-value) %>% 
+
+  datalist <- map(vars2, function(f) {
+    s$Get(f)
+  }) %>%
+    map(setNames, NULL) %>%
+    map(as.vector) %>%
+    setNames(vars2) %>%
+    map_df(identity) %>%
+    tbl_df()
+
+  datalist <- datalist %>%
+    mutate(
+      name = gsub("[^[:alnum:]]", " ", levelName),
+      name = trimws(name),
+      parent = as.character(parent1),
+      id = as.character(id),
+      value = as.numeric(trimws(value))
+    ) %>%
+    filter(level != 1) %>%
+    mutate(level = level - 1) %>%
+    arrange(level) %>%
+    mutate(parent = ifelse(level == 1, NA, parent)) %>%
+    select(-levelName) %>%
+    select(-value) %>%
     left_join(datavalues)
-  
-  # datalist %>% 
-  #   group_by(type_1) %>% 
+
+  # datalist %>%
+  #   group_by(type_1) %>%
   #   summarise(
   #     n = n(),
   #     m = sum(value)
   #   )
-  #   
-  
-  if(!is.null(colorvar)) datalist <- mutate_(datalist, .dots = list(colorValue = colorvar))
-  
-  hc <- highchart() %>% 
+  #
+
+  if (!is.null(colorvar)) {
+    datalist <- mutate_(datalist, .dots = list(colorValue = colorvar))
+  }
+
+  hc <- highchart() %>%
     hc_add_series(
       type = "treemap",
       allowDrillToNode = TRUE,
       data = list_parse(datalist),
       ...
     )
-  
-  if(!is.null(colorvar)) hc <- hc_colorAxis(hc, enabled = TRUE)
-  
+
+  if (!is.null(colorvar)) {
+    hc <- hc_colorAxis(hc, enabled = TRUE)
+  }
+
   hc
-  
 }
 
 hctreemap2(GNI2014, c("continent"), "population")
 hctreemap2(GNI2014, c("continent"), "population", "GNI")
 
 hctreemap2(GNI2014, c("country"), "population")
-hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "squarified")
-hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "sliceAndDice")
-hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "stripes")
-hctreemap2(GNI2014, c("country"), "population", "GNI", layoutAlgorithm = "strip")
+hctreemap2(
+  GNI2014,
+  c("country"),
+  "population",
+  "GNI",
+  layoutAlgorithm = "squarified"
+)
+hctreemap2(
+  GNI2014,
+  c("country"),
+  "population",
+  "GNI",
+  layoutAlgorithm = "sliceAndDice"
+)
+hctreemap2(
+  GNI2014,
+  c("country"),
+  "population",
+  "GNI",
+  layoutAlgorithm = "stripes"
+)
+hctreemap2(
+  GNI2014,
+  c("country"),
+  "population",
+  "GNI",
+  layoutAlgorithm = "strip"
+)
 
 hctreemap2(GNI2014, c("continent", "country"), "population")
 hctreemap2(GNI2014, c("continent", "country"), "population", "GNI")
 
 data("pokemon")
-pokemon <- pokemon %>% 
-  mutate(type_2 = ifelse(is.na(type_2), paste("only", type_1), type_2),
-         count = 1)
+pokemon <- pokemon %>%
+  mutate(
+    type_2 = ifelse(is.na(type_2), paste("only", type_1), type_2),
+    count = 1
+  )
 
 # ... <- NULL
 # data <- pokemon
@@ -133,17 +182,15 @@ pokemon <- pokemon %>%
 # sizevar <- "count"
 # colovar <- "count"
 
-
 hctreemap2(pokemon, c("type_1"), "count")
 hctreemap2(pokemon, c("type_1", "type_2"), "count")
 hctreemap2(pokemon, c("type_1", "type_2", "pokemon"), "count")
 
-pokemon %>% 
-  mutate(color = color_f) %>% 
+pokemon %>%
+  mutate(color = color_f) %>%
   hctreemap2(c("type_1", "type_2", "pokemon"), "count")
 
 
 hc <- hctreemap2(GNI2014, c("continent", "country"), "population", "GNI")
 hc$x$hc_opts$series[[1]]$type <- "sunburst"
 hc
-

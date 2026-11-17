@@ -1,16 +1,39 @@
 UKvisits <- data.frame(
-  origin = c("France", "Germany", "USA", "Irish Republic", "Netherlands", "Spain", "Italy",
-             "Poland", "Belgium", "Australia",  "Other countries", rep("UK", 5)),
-  visit = c(rep("UK", 11), "Scotland", "Wales", "Northern Ireland",  "England", "London"),
-  weights = c(c(12,10,9,8,6,6,5,4,4,3,33)/100*31.8,  c(2.2,0.9,0.4,12.8,15.5)))
+  origin = c(
+    "France",
+    "Germany",
+    "USA",
+    "Irish Republic",
+    "Netherlands",
+    "Spain",
+    "Italy",
+    "Poland",
+    "Belgium",
+    "Australia",
+    "Other countries",
+    rep("UK", 5)
+  ),
+  visit = c(
+    rep("UK", 11),
+    "Scotland",
+    "Wales",
+    "Northern Ireland",
+    "England",
+    "London"
+  ),
+  weights = c(
+    c(12, 10, 9, 8, 6, 6, 5, 4, 4, 3, 33) / 100 * 31.8,
+    c(2.2, 0.9, 0.4, 12.8, 15.5)
+  )
+)
 
 highchart() %>%
   hc_add_series(
-    UKvisits, 
+    UKvisits,
     "networkgraph",
     hcaes(from = origin, to = visit, weight = weights),
     layoutAlgorithm = list(enableSimulation = TRUE)
-    )
+  )
 
 
 # example 2 ---------------------------------------------------------------
@@ -25,7 +48,7 @@ str(df)
 
 highchart() %>%
   hc_add_series(
-    df, 
+    df,
     "networkgraph",
     hcaes(from = from, to = to, weight = weight),
     layoutAlgorithm = list(enableSimulation = TRUE)
@@ -37,10 +60,12 @@ highchart() %>%
   hc_chart(type = 'networkgraph') %>%
   hc_title(text = 'The Indo-European Language Tree') %>%
   hc_subtitle(text = 'A Force-Directed Network Graph in Highcharts') %>%
-  hc_plotOptions(networkgraph = list(
-    keys = c('from', 'to'),
-    layoutAlgorithm = list(enableSimulation =  TRUE, friction = -0.9)
-  )) %>%
+  hc_plotOptions(
+    networkgraph = list(
+      keys = c('from', 'to'),
+      layoutAlgorithm = list(enableSimulation = TRUE, friction = -0.9)
+    )
+  ) %>%
   hc_add_series(
     dataLabels = list(enabled = TRUE, linkFormat = ''),
     id = 'lang-tree',
@@ -172,5 +197,3 @@ highchart() %>%
     )
   ) %>%
   hc_exporting(enabled = TRUE)
-
-
