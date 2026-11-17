@@ -43,6 +43,9 @@ The configuration uses two spaces, an 80-column limit and persistent line
 breaks. Keep an explicit line break after `|>` when laying out chart pipelines.
 Use the base R pipe `|>` throughout website examples, including the canonical
 chart and helper scripts that supply code to articles and reference pages.
+Prefer `hchart()` for data-frame examples. The Gantt recipe uses
+`hchart(df, type = "gantt")`, which selects the native Gantt constructor and
+retains its task rows and date axes.
 Air does not format the code inside roxygen comments; keep those examples
 readable manually and regenerate their Rd files with `devtools::document()`.
 The vignette formatter sends each R chunk to Air through its documented

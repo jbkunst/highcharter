@@ -1,5 +1,7 @@
 # highcharter (development version)
 
+* `hchart(data, type = "gantt")` selects the native Gantt constructor for data
+  frames, preserving task rows, date axes and dependency links.
 * The homepage, package description and `?highcharter` clarify the licensing
   of the R wrapper and the bundled Highcharts JavaScript library. Attaching
   the package in an interactive session now points to the help topic once.

@@ -57,7 +57,7 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
 
   opts <- data_to_options(data, type, mapping)
 
-  hc <- highchart()
+  hc <- highchart(type = if (identical(type, "gantt")) "gantt" else "chart")
 
   if (opts$add_colorAxis) {
     hc <- hc_colorAxis(hc, auxpar = NULL)

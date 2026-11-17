@@ -16,6 +16,27 @@ test_that("hchart returns a valid scatter plot after valid data input", {
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
+test_that("Gantt data frames preserve tasks and use the Gantt constructor", {
+  tasks <- data.frame(
+    start = c(1000, 3000),
+    end = c(3000, 7000),
+    name = c("Design", "Build"),
+    id = c("design", "build")
+  )
+  tasks$dependency <- list(NA, "design")
+  for (data in list(tasks, tibble::as_tibble(tasks))) {
+    chart <- hchart(data, type = "gantt", name = "Program")
+    series <- chart$x$hc_opts$series[[1]]
+    expect_identical(chart$x$type, "gantt")
+    expect_identical(series$type, "gantt")
+    expect_identical(series$name, "Program")
+    expect_equal(vapply(series$data, `[[`, numeric(1), "start"), tasks$start)
+    expect_equal(vapply(series$data, `[[`, numeric(1), "end"), tasks$end)
+    expect_identical(series$data[[2]]$id, "build")
+    expect_identical(series$data[[2]]$dependency, "design")
+  }
+})
+
 test_that("hchart returns a valid area plot after valid data input", {
   data(mpg, package = "ggplot2")
   x <- mpg$hwy

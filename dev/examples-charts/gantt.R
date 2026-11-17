@@ -24,11 +24,7 @@ df <- tibble::tibble(
   completed = c(1, 1, 0.5, 0.6, 0.9, 0)
 )
 
-highchart(type = "gantt") |>
-  hc_add_series(
-    name = "Program",
-    data = df
-  ) |>
+hchart(df, type = "gantt", name = "Program") |>
   hc_rangeSelector(enabled = TRUE) |>
   hc_navigator(
     enabled = TRUE,
