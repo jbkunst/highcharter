@@ -48,9 +48,11 @@
   Shared export tooltips use the package's HTML table helper.
   The second export view stacks areas to 100% with percentage labels and
   tooltips. The line view labels the highest series at the 2008 crisis and
-  COVID-19 points, separated from the curves by a 24-pixel offset.
+  COVID-19 points, separated from the curves by a 24-pixel offset, without
+  vertical reference lines in any export view.
   Export series retain every region's color in all four states.
   A series label identifies South America in the third export view.
+  Panel descriptions use native Highcharts captions and update with each state.
 * The hcrt theme uses the built-in three-dot export menu icon.
 * Language examples compare dates and export-data menus across eight locales.
   They use a shared chart factory, compact layouts and horizontal date labels.

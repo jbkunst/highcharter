@@ -102,7 +102,9 @@ sizes and the final pie. A shared table tooltip compares regional exports;
 the second state shows percentages using native `stacking = "percent"` and
 `point.percentage`. The other states retain absolute trade values. The line
 view labels the uppermost series at 2008 and 2020, with a 24-pixel offset.
-Light year guides locate the events in the other views.
+There are no vertical year guides in any view.
+Panel descriptions use native `hc_caption()` options and change through
+Highcharts' `chart.update()` with each stage, rather than separate HTML paragraphs.
 Plain country names label
 Chile and Uruguay during the regional view.
 

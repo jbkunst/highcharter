@@ -1,7 +1,6 @@
 function(el, x, sequence) {
   const chart = HighcharterWidget.getChart(el);
   const root = el.closest('.transition-grid-page');
-  const caption = el.closest('.transition-panel').querySelector('.panel-caption');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const snapshots = sequence.steps.map(step => JSON.stringify(step.options));
 
@@ -47,6 +46,9 @@ function(el, x, sequence) {
         // Series cache their tooltip formats from chart.userOptions. Updating
         // Tooltip alone leaves stale row formats/units in shared tooltips.
         chart.update({tooltip: options.tooltip}, false);
+      }
+      if (!same(previous.caption, options.caption)) {
+        chart.update({caption: options.caption}, false);
       }
       options.series.forEach(target => {
         const series = chart.get(target.id);
@@ -134,7 +136,6 @@ function(el, x, sequence) {
       });
     }
     previous = options;
-    caption.textContent = step.caption;
     el.dataset.family = sequence.family;
     el.dataset.scene = step.id;
     el.dataset.phase = index;

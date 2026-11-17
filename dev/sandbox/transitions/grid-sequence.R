@@ -73,10 +73,11 @@ stage_names <- c(
   "South America",
   "Trade positions"
 )
+chart_height <- 350
 base <- highchart(
   theme = hc_theme("hcrt"),
   width = "100%",
-  height = 300,
+  height = chart_height,
   google_fonts = TRUE
 ) |>
   hc_chart(animation = list(duration = 1200), inverted = FALSE) |>
@@ -123,7 +124,7 @@ country_chart <- function(stage) {
     life_limits
   }
   hc <- base |>
-    hc_chart(type = "bubble", margin = list(18, 16, 58, 68)) |>
+    hc_chart(type = "bubble", margin = list(18, 16, 108, 68)) |>
     hc_xAxis(
       type = "logarithmic",
       min = x_limits[1],
@@ -284,9 +285,6 @@ event_leaders <- vapply(
   },
   character(1)
 )
-events <- lapply(as.integer(names(event_labels)), function(year) {
-  list(value = year, width = 1, color = "#B8BECA", dashStyle = "ShortDash")
-})
 trade_chart <- function(stage) {
   percent <- stage == 2L
   stream <- stage == 4L
@@ -297,7 +295,6 @@ trade_chart <- function(stage) {
       max = year,
       tickInterval = 5,
       title = list(text = NULL),
-      plotLines = events,
       gridLineWidth = if (stream) 0 else 0.75,
       gridLineColor = soft_grid,
       crosshair = list(color = "#B8BECA", width = 1),
@@ -616,6 +613,22 @@ captions <- list(
   map = map_captions,
   pie = share_captions
 )
+for (family in names(widget_families)) {
+  for (stage in 1:4) {
+    widget_families[[family]][[stage]] <- widget_families[[family]][[stage]] |>
+      hc_caption(
+        text = captions[[family]][stage],
+        align = "center",
+        margin = 12,
+        style = list(
+          fontSize = "14px",
+          fontWeight = "300",
+          lineHeight = "22px",
+          color = "#666666"
+        )
+      )
+  }
+}
 families <- lapply(names(widget_families), function(family) {
   lapply(1:4, function(stage) {
     options <- widget_families[[family]][[stage]]$x$hc_opts
@@ -638,14 +651,13 @@ families <- lapply(names(widget_families), function(family) {
         )
       }
     }
-    options$chart$height <- 300
+    options$chart$height <- chart_height
     options$series <- lapply(options$series, function(series) {
       utils::modifyList(list(stacking = NULL), series, keep.null = TRUE)
     })
     list(
       id = paste0(family, "-", stage),
       label = stage_names[stage],
-      caption = captions[[family]][stage],
       story = stories[stage],
       focus = stage == 3L,
       focusRegions = as.list(focus_regions),
@@ -671,7 +683,7 @@ executor <- paste(
 )
 panels <- lapply(names(families), function(family) {
   widget <- widget_families[[family]][[1]] |>
-    hc_size(width = "100%", height = 300)
+    hc_size(width = "100%", height = chart_height)
   # Initial series must be drawn immediately; only later updates animate.
   widget$x$hc_opts$plotOptions$series$animation <- FALSE
   widget <- htmlwidgets::onRender(
@@ -681,8 +693,7 @@ panels <- lapply(names(families), function(family) {
   )
   htmltools::tags$section(
     class = "transition-panel",
-    widget,
-    htmltools::tags$p(class = "panel-caption")
+    widget
   )
 })
 
@@ -694,7 +705,6 @@ body { margin: 0; background: white; }
   font: 300 14px/1.6 'IBM Plex Sans', sans-serif; color: #666; }
 .transition-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 24px; }
 .transition-panel { min-width: 0; }
-.panel-caption { margin: 4px 12px 0; min-height: 3.2em; text-align: center; }
 .grid-story { max-width: 60rem; margin: 20px auto 10px; text-align: center; font-size: 16px; }
 .grid-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px;
   padding: 0; margin: 12px 0; list-style: none; }

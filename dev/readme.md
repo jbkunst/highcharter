@@ -179,6 +179,8 @@ with complete merchandise-export histories from 2005. The panel order is
 scatter, exports, map and pie. Only the third state focuses on South America in
 the scatter, map and pie; exports keep every region's color in all states.
 The third export view identifies South America with a native series label.
+Each panel's description is a native `hc_caption()`, included in the R chart
+and updated through `chart.update()` as the shared state changes.
 The fourth returns to a global view. Income/longevity and
 then trade positions share indicators between scatter and map. The last
 scatter uses exports and imports per person on two logarithmic axes, with an
@@ -189,8 +191,8 @@ with two decimal places and units in aligned table cells.
 The second export view uses native percent stacking, a 0–100% axis and
 `point.percentage` in the table; raw data remain in nominal US dollars.
 The line view labels the highest series point in 2008 and 2020, 24 pixels
-above the point. Dashed year guides remain in the other views without duplicate
-labels. Export event markers identify the 2008 crisis
+above the point, without vertical year guides in any view.
+Export event labels identify the 2008 crisis
 and COVID-19; plain country names label Chile and Uruguay in the regional
 scatter. Map color bars occupy 76% of their panel width, with explicit numeric
 formats. The regional camera fits the bounds of South American economies instead
