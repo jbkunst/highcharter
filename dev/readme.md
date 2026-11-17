@@ -87,6 +87,10 @@ and served locally from `pkgdown/assets/fonts/`. Its upstream source is
 [figs-lab/datalegreya](https://github.com/figs-lab/datalegreya); retain `OFL.txt`
 beside the font. Other headings keep Alegreya Sans SC. Run `pkgdown::init_site()`
 when previewing changes to these assets without rebuilding the entire website.
+The shared initializer restores the original Datalegreya graph-encoded lettering
+after the font loads. The navbar keeps plain Datalegreya lettering for legibility
+at its smaller size. Accessible labels and the plain-text fallback remain the
+package name.
 
 In an R session at the repository root:
 
@@ -153,8 +157,9 @@ Stock Tools, and Showcase. The chart-types article lives in
 The Extensions and examples section includes `vignettes/multiple-axes.Rmd`,
 which holds the four-panel example formerly embedded in the Highcharts API guide.
 `vignettes/icons-and-pictograms.Rmd` groups image markers, tooltip icons and item
-symbols as examples alongside Drilldown. It reuses the local SVGs in
-`vignettes/icons/`; the former Fontawesome article URL redirects to it.
+symbols as examples alongside Drilldown. It keeps the original Fontawesome
+examples and embeds colored SVGs from the suggested fontawesome package directly
+as data URIs. The former Fontawesome article URL redirects to it.
 
 pkgdown redirects use the canonical website URL. To review old URLs on a local
 server, regenerate redirects with `pkgdown::build_redirects(override =

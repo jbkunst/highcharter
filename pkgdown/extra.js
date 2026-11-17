@@ -7,6 +7,25 @@ gtag('config', 'G-ECZ9XLT78C');
 // Use Bootstrap TOC's documented scope option: only article sections belong
 // in the sidebar, not Highcharts' hidden screen-reader headings.
 jQuery(function () {
+  // Restore the original Datalegreya graph lettering after the font has loaded.
+  // Keep plain package names for assistive technology and font-load failures.
+  const wordmark = 'h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2';
+  document.fonts.load('1em "Datalegreya-Gradient"').then(fonts => {
+    if (!fonts.length) return;
+    function decorate(node, text) {
+      if (!node) return;
+      const label = document.createElement('span');
+      label.className = 'visually-hidden';
+      label.textContent = 'highcharter';
+      const graphic = document.createElement('span');
+      graphic.className = 'highcharter-wordmark';
+      graphic.setAttribute('aria-hidden', 'true');
+      graphic.textContent = text;
+      node.replaceChildren(label, graphic);
+    }
+    decorate(document.querySelector('.template-home #highcharter'), wordmark + '{rpackage}');
+  }).catch(() => {});
+
   // htmlwidgets initially measures hidden tab panes at zero width.
   document.addEventListener('shown.bs.tab', function () {
     window.dispatchEvent(new Event('resize'));

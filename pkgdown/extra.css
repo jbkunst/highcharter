@@ -28,7 +28,10 @@ main h3, main h4, main h5 { font-weight: 400; }
   font-family: "Datalegreya-Gradient", "Alegreya Sans SC", sans-serif;
   font-weight: 400;
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "dlig" 1;
+  letter-spacing: normal;
 }
+.highcharter-wordmark { white-space: nowrap; }
 .navbar-brand { font-size: 1.7rem; }
 .template-home #highcharter { font-size: clamp(2.8rem, 7vw, 5rem); }
 .template-home .page-header { border-bottom: 0; }

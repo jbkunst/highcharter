@@ -1,5 +1,9 @@
 # highcharter (development version)
 
+* Icons and pictograms restores the original R/Python scatter and food counts,
+  colors and symbols, using embedded SVGs instead of PNG conversion. The original
+  Datalegreya graph lettering returns to the homepage; the navbar retains plain
+  Datalegreya lettering for legibility.
 * Explore charts uses the titles Chart types, Maps, Stock charts and Stock Tools,
   and Showcase. The chart-types vignette replaces series-gallery, with redirects
   preserving the previous URLs.

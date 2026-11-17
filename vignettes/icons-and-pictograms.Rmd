@@ -2,10 +2,7 @@
 title: Icons and pictograms
 output: rmarkdown::html_vignette
 description: >
-  Use images as scatter markers, in tooltips and as symbols in an item chart.
-resource_files:
-  - icons/r-project.svg
-  - icons/python.svg
+  Use Font Awesome icons as scatter markers, in tooltips and as pictograms.
 vignette: >
   %\VignetteIndexEntry{Icons and pictograms}
   %\VignetteEngine{knitr::rmarkdown}
@@ -19,72 +16,128 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 
 ## Icons as markers
 
-A scatter series can use the same SVG for its markers and its tooltip. Save
-the [R icon](icons/r-project.svg) and [Python icon](icons/python.svg) in an
-`icons/` directory alongside the HTML page. These brand icons come from
-[Font Awesome Free 6.7.2](https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands)
-and are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-The example uses simulated task times; the same approach works with other images.
+The [fontawesome package](https://rstudio.github.io/fontawesome/) provides SVG
+icons that can be used in markers and tooltips. These are the original R and
+Python examples, with the same data and colors. Embedding the SVG directly keeps
+the icons sharp and avoids an intermediate PNG file.
 
 ```{r svg-markers}
-r_icon <- "./icons/r-project.svg"
-python_icon <- "./icons/python.svg"
+library(fontawesome)
+
+set.seed(123)
+df <- data.frame(
+  a = round(rnorm(10), 2),
+  b = round(rnorm(10), 2)
+)
+
+fa_to_data_uri <- function(name, fill, width = 22) {
+  size <- paste0(width, "px")
+  icon <- fontawesome::fa(name, fill = fill, width = size, height = size)
+  svg <- as.character(icon)
+  # Standalone images need an XML namespace and intrinsic pixel dimensions.
+  svg <- sub(
+    "<svg",
+    sprintf(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="%s" height="%s"',
+      width,
+      width
+    ),
+    svg,
+    fixed = TRUE
+  )
+  svg <- sub(
+    'preserveAspectRatio="none"',
+    'preserveAspectRatio="xMidYMid meet"',
+    svg,
+    fixed = TRUE
+  )
+  paste0(
+    "data:image/svg+xml,",
+    utils::URLencode(svg, reserved = TRUE)
+  )
+}
+
+# Reuse the same colors in markers, series and tooltips.
+rcol <- "#4C83B6"
+pcol <- "#3CAB48"
+rproj <- fa_to_data_uri("r-project", fill = rcol)
+pthon <- fa_to_data_uri("python", fill = pcol)
 
 highchart() |>
-  hc_title(text = "Simulated task times") |>
-  hc_xAxis(categories = c("Read", "Transform", "Plot")) |>
-  hc_yAxis(title = list(text = "Seconds")) |>
-  hc_chart(type = "scatter") |>
+  hc_title(text = "Font Awesome icons") |>
   hc_add_series(
-    name = "R",
-    data = c(2, 4, 3),
-    custom = list(icon = r_icon),
-    marker = list(symbol = paste0("url(", r_icon, ")"), width = 20, height = 20)
+    df,
+    "scatter",
+    hcaes(a, b),
+    name = "R icons",
+    color = rcol,
+    marker = list(symbol = paste0("url(", rproj, ")")),
+    icon = as.character(fontawesome::fa(
+      "r-project",
+      fill = rcol,
+      height = "15px",
+      vertical_align = "middle"
+    ))
   ) |>
   hc_add_series(
-    name = "Python",
-    data = c(3, 2, 4),
-    custom = list(icon = python_icon),
-    marker = list(
-      symbol = paste0("url(", python_icon, ")"),
-      width = 20,
-      height = 20
-    )
+    df,
+    "scatter",
+    hcaes(b, a),
+    name = "Python icons",
+    color = pcol,
+    marker = list(symbol = paste0("url(", pthon, ")")),
+    icon = as.character(fontawesome::fa(
+      "python",
+      fill = pcol,
+      height = "15px",
+      vertical_align = "middle"
+    ))
   ) |>
   hc_tooltip(
     useHTML = TRUE,
     pointFormat = paste0(
-      "<img src='{series.options.custom.icon}' width='16' height='16' alt=''/> ",
-      "{series.name}: <b>{point.y} s</b>"
+      "<b>",
+      "{series.options.icon} ",
+      "[{point.x}, {point.y}]",
+      "</b>"
     )
   )
 ```
 
 ## Count with pictograms
 
-An item chart draws one symbol per unit. Here one icon represents one simulated
-workshop registration. Set the marker on each point to distinguish the two groups.
-The data and counts are illustrative.
+This example, inspired by [waffle](https://github.com/hrbrmstr/waffle), uses the
+original food categories, counts and colors. Each symbol represents one unit.
 
 ```{r item-icons}
-registrations <- list(
-  list(name = "R", y = 24, marker = list(symbol = paste0("url(", r_icon, ")"))),
-  list(
-    name = "Python",
-    y = 16,
-    marker = list(symbol = paste0("url(", python_icon, ")"))
-  )
+library(dplyr)
+library(purrr)
+
+df2 <- tibble(
+  type = c("fruit", "samminch", "pizza"),
+  amount = c(46, 54, 80),
+  faico = c("apple", "bread-slice", "pizza-slice"),
+  col = c("#d35400", "#907E4D", "#F89101")
 )
-highchart() |>
-  hc_chart(type = "item") |>
-  hc_title(text = "Simulated workshop registrations") |>
-  hc_subtitle(text = "One icon = one registration") |>
-  hc_add_series(
-    data = registrations,
-    name = "Registrations",
-    showInLegend = TRUE,
-    dataLabels = list(enabled = FALSE)
-  ) |>
-  hc_tooltip(pointFormat = "<b>{point.name}</b>: {point.y} registrations") |>
-  hc_legend(labelFormat = "{name}: {y}")
+
+df2
+
+df2 <- df2 |>
+  mutate(
+    uri = map2_chr(faico, col, ~ fa_to_data_uri(.x, fill = .y)),
+    marker = map(uri, ~ list(symbol = paste0("url(", .x, ")")))
+  )
+
+hchart(
+  df2,
+  "item",
+  hcaes(name = type, y = amount),
+  name = "What I eat",
+  showInLegend = TRUE
+) |>
+  hc_legend(labelFormat = "{name} <span style='opacity: 0.4'>{y}</span>") |>
+  hc_colors(pull(df2, col))
 ```
+
+See the [Highcharts item chart guide](https://www.highcharts.com/docs/chart-and-series-types/item-chart)
+for other layouts and symbol options.

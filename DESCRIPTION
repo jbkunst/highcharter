@@ -39,6 +39,7 @@ Suggests:
     bslib,
     knitr,
     rmarkdown,
+    fontawesome,
     survival,
     quantmod,
     xts,
