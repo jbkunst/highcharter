@@ -38,24 +38,24 @@ annotations, exporting and accessibility features.
 
 ## Where to start
 
-- [First steps](https://jkunst.com/highcharter/articles/first-steps.html):
+- [First steps](articles/first-steps.html):
   create your first chart from a data frame.
-- [`hchart()` guide](https://jkunst.com/highcharter/articles/hchart.html):
+- [`hchart()` guide](articles/hchart.html):
   chart time series, forecasts and other R objects.
-- [Showcase](https://jkunst.com/highcharter/articles/showcase.html):
+- [Showcase](articles/showcase.html):
   discover ideas for customization and chart design.
-- [Chart gallery](https://jkunst.com/highcharter/articles/series-gallery.html):
+- [Chart gallery](articles/series-gallery.html):
   find a chart type and its R example.
-- [Maps](https://jkunst.com/highcharter/articles/maps.html) and
-  [Stock charts](https://jkunst.com/highcharter/articles/stock.html):
+- [Maps](articles/maps.html) and
+  [Stock charts](articles/stock.html):
   explore places and financial time series.
-- [Shiny](https://jkunst.com/highcharter/articles/shiny.html) and
-  [accessibility](https://jkunst.com/highcharter/articles/accessibility.html):
+- [Shiny](articles/shiny.html) and
+  [accessibility](articles/accessibility.html):
   build interactive experiences for your audience.
-- [Function reference](https://jkunst.com/highcharter/reference/index.html):
+- [Function reference](reference/index.html):
   look up helpers and chart options.
-- [Highcharts API in R](https://jkunst.com/highcharter/articles/highcharts-api.html)
-  and [JavaScript-to-R guide](https://jkunst.com/highcharter/articles/highchartsjs-api-basics.html):
+- [Highcharts API in R](articles/highcharts-api.html)
+  and [JavaScript-to-R guide](articles/highchartsjs-api-basics.html):
   learn how Highcharts options translate to R code.
 
 Try a first chart: pass a data frame to `hchart()`, map columns with `hcaes()`
@@ -73,7 +73,7 @@ hchart(mtcars, "scatter", hcaes(x = wt, y = mpg, group = cyl)) |>
 [Source code](https://github.com/jbkunst/highcharter) ·
 [Report an issue](https://github.com/jbkunst/highcharter/issues) ·
 [Contribute](CONTRIBUTING.md) ·
-[Authors and citation](https://jkunst.com/highcharter/authors.html)
+[Authors and citation](authors.html)
 
 Highcharter is licensed under MIT. Highcharts has its own
 [licensing terms](https://www.highcharts.com/license).
