@@ -8,208 +8,367 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
+source_hook <- knitr::knit_hooks$get("source")
+knitr::knit_hooks$set(source = function(x, options) {
+  paste0(
+    "\n\n<details>\n<summary>",
+    options$summary,
+    "</summary>\n\n",
+    source_hook(x, options),
+    "\n\n</details>\n\n"
+  )
+})
+knitr::opts_chunk$set(summary = "Show R code", message = FALSE)
+```
+
+## Example data
+
+Highcharts reads each row as a point. The series type determines which
+fields it uses. A line reads a position (`x`) and a measurement (`y`).
+A range reads `low` and `high`. A bubble adds `z` for size, and a
+Sankey link takes `from`, `to` and `weight`. The `name` field labels a point.
+
+With these column names you can call `hchart(temperatures, "columnrange")`
+directly. If your columns are called `minimum` and `maximum`, map them
+with `hcaes(low = minimum, high = maximum)`. The four small tables below
+are reused throughout the gallery.
+
+```{r common-data, summary="Show the four example datasets"}
 library(highcharter)
 library(dplyr)
-hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+hc_set_theme(
+  "hcrt",
+  colors = c("#508CC8", "#61BC7B", "#F49952", "#9C9EDB", "#6699A1")
+)
+
+# Daily mean, minimum and maximum temperature (°C).
+# fmt: skip
+temperatures <- tibble::tribble(
+  ~name, ~y, ~low, ~high,
+  "Mon", 15,   12,    18,
+  "Tue", 17,   13,    21,
+  "Wed", 14,   11,    17,
+  "Thu", 16,   12,    20,
+  "Fri", 18,   14,    22
+)
+
+# Visitors by last stage reached (y) and typical time at that stage in minutes (z).
+stages <- tibble(
+  name = c("Visit", "Start", "Review", "Submit"),
+  y = c(35, 12, 8, 25),
+  z = c(1, 4, 3, 2)
+)
+
+# People assigned to each team and subteam.
+# fmt: skip
+teams <- tibble::tribble(
+  ~from,     ~to,       ~weight,
+  "Studio",  "Design",       12,
+  "Studio",  "Build",        18,
+  "Design",  "Web",           7,
+  "Design",  "Print",         5,
+  "Build",   "Apps",         18
+)
+
+# Coordinates (degrees), approximate elevation (m) and illustrative wind (m/s, degrees).
+# fmt: skip
+capitals <- tibble::tribble(
+  ~name,           ~lon,   ~lat, ~z, ~speed, ~direction,
+  "Santiago",    -70.67, -33.45, 520,     5,        210,
+  "Lima",        -77.04, -12.05, 150,     8,        180,
+  "Brasília",    -47.88, -15.79, 1170,    3,         90,
+  "Buenos Aires",-58.38, -34.60,  25,    11,        135
+)
 ```
 
-## Basic charts
-
-The original gallery starts from one colorful table and changes the series type.
-Polar charts stay in the same list. The additional types below are available in
-the shared bundle; no separate module download is needed. The [Maps](maps.html)
-and [Stock](stock.html) articles cover geographic and financial series.
-
-```{r common-data}
-library(dplyr)
-library(stringr)
-library(purrr)
-
-set.seed(123)
-n <- 6
-colors <- c("#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d")
-colors2 <- c("#000004", "#3B0F70", "#8C2981", "#DE4968", "#FE9F6D", "#FCFDBF")
-
-df <- tibble(x = seq_len(n) - 1) |>
-  mutate(
-    y = 10 + x + 10 * sin(x - 1),
-    z = 5 + x * y - median(x * y),
-    e = round(10 * abs(rnorm(n)) + 2, 1),
-    low = y - e,
-    high = y + e,
-    value = round(y - 1),
-    name = sample(fruit[str_length(fruit) <= 5], n),
-    color = colors,
-    label = name,
-    xlow = x - 0.3,
-    xhigh = x + 0.3
-  ) |>
-  mutate(across(where(is.numeric), ~ round(.x, 1))) |>
-  select(-e) |>
-  mutate(
-    from = name[c(1, 1, 1, 2, 3, 4)],
-    to = name[c(3, 4, 5, 3, 6, 6)],
-    weight = c(1, 1, 1, 1, 2, 2)
-  )
-knitr::kable(df)
+```{r gallery-layout, summary="Show the gallery layout code"}
+gallery <- function(types, draw) {
+  charts <- lapply(types, function(type) {
+    draw(type) |>
+      hc_title(text = type, style = list(fontSize = "16px")) |>
+      hc_legend(enabled = FALSE) |>
+      hc_tooltip(outside = TRUE) |>
+      hc_size(height = 235)
+  })
+  htmltools::div(class = "chart-grid", charts)
+}
 ```
 
-```{r chart-helper}
-create_hc <- function(t) {
-  polar <- startsWith(t, "polar")
-  type <- sub("^polar", "", t)
-  ranges <- c(
+## Measurements and ranges
+
+Line and column charts read the daily mean from `y`. Range charts use
+`low` and `high`. The same five rows work on a polar axis.
+
+```{r temperature-example, eval=FALSE}
+hchart(temperatures, "columnrange", colorByPoint = TRUE) |>
+  hc_xAxis(type = "category")
+```
+
+```{r temperature-gallery, summary="Show all temperature charts in R"}
+gallery(
+  c(
+    "line",
+    "spline",
+    "area",
+    "areaspline",
+    "column",
     "arearange",
     "areasplinerange",
     "columnrange",
     "errorbar",
-    "dumbbell"
-  )
-  links <- c(
+    "dumbbell",
+    "polar line",
+    "polar column",
+    "polar columnrange"
+  ),
+  function(label) {
+    type <- sub("^polar ", "", label)
+    hchart(
+      temperatures,
+      type,
+      name = "Temperature",
+      colorByPoint = TRUE,
+      lineColor = "#508CC8",
+      fillColor = "#508CC866",
+      tooltip = list(valueSuffix = " °C")
+    ) |>
+      hc_chart(type = type, polar = startsWith(label, "polar")) |>
+      hc_xAxis(categories = temperatures$name)
+  }
+)
+```
+
+## Quantities by category
+
+The four counts add up to 80 visitors. A pie shows the stage at which each
+visitor stopped. For a funnel, sum from the last stage backwards to count
+everyone who reached each stage. Variable-width columns and variable-radius
+pie slices also show the typical time spent at each stage (`z`).
+
+```{r stages-example, eval=FALSE}
+hchart(stages, "pie", colorByPoint = TRUE)
+```
+
+```{r stages-gallery, summary="Show all stage charts in R"}
+gallery(
+  c(
+    "bar",
+    "column",
+    "columnpyramid",
+    "pie",
+    "lollipop",
+    "dotplot",
+    "item",
+    "waterfall",
+    "variwide",
+    "variablepie",
+    "timeline",
+    "packedbubble",
+    "treemap",
+    "wordcloud",
+    "funnel",
+    "pyramid",
+    "cylinder",
+    "funnel3d",
+    "pyramid3d"
+  ),
+  function(type) {
+    points <- stages
+    if (type %in% c("funnel", "pyramid", "funnel3d", "pyramid3d")) {
+      points$y <- rev(cumsum(rev(points$y)))
+    }
+    if (type %in% c("packedbubble", "treemap")) {
+      points$value <- points$y
+    }
+    if (type == "timeline") {
+      points$x <- seq_len(nrow(points)) - 1L
+      points$label <- points$name
+    }
+    if (type == "wordcloud") {
+      points$weight <- points$y
+    }
+    hchart(points, type, name = "Visitors", colorByPoint = TRUE) |>
+      hc_xAxis(categories = stages$name) |>
+      hc_chart(
+        type = type,
+        options3d = list(
+          enabled = type %in% c("cylinder", "funnel3d", "pyramid3d"),
+          alpha = 12,
+          beta = 15
+        )
+      )
+  }
+)
+```
+
+## Relationships and hierarchies
+
+Each link runs from a parent team to a subteam. Its weight is the number
+of people in the subteam. Compare how the same organization looks when
+the chart emphasizes the flow, the connections or the hierarchy.
+
+```{r teams-example, eval=FALSE}
+hchart(teams, "sankey")
+```
+
+```{r teams-gallery, summary="Show all team charts in R"}
+gallery(
+  c(
     "sankey",
     "dependencywheel",
     "arcdiagram",
+    "networkgraph",
     "organization",
-    "networkgraph"
-  )
-  points <- df |> select(x, y, name, color)
-  if (type %in% ranges) {
-    points <- df |> select(x, low, high, name, color)
-  }
-  if (type %in% c("bubble", "scatter3d", "variwide", "variablepie")) {
-    points <- df |> transmute(x, y, z = abs(z) + 1, name, color)
-  }
-  if (type %in% c("treemap", "packedbubble")) {
-    points <- df |> select(name, value, color)
-  }
-  if (type %in% links) {
-    points <- df |> select(from, to, weight)
-  }
-  if (type == "wordcloud") {
-    points <- df |> transmute(name, weight = value, color)
-  }
-  if (type == "item") {
-    points <- df |> transmute(name, y = round(y), color)
-  }
-  if (type == "timeline") {
-    points <- df |> transmute(x, name, label, description = name, color)
-  }
-  if (type == "bullet") {
-    points <- df |> transmute(x, y, target = y + 5, color)
-  }
-  if (type == "vector") {
-    points <- df |> transmute(x, y, length = value, direction = x * 60, color)
-  }
-  if (type == "windbarb") {
-    points <- df |> transmute(x, value, direction = x * 60, color)
-  }
-  if (type == "boxplot") {
-    points <- df |>
-      transmute(x, low, q1 = y - 1, median = y, q3 = y + 1, high, color)
-  }
-  if (type %in% c("heatmap", "tilemap", "contour")) {
-    points <- expand.grid(x = 0:5, y = 0:5) |>
-      mutate(value = round(sin(x) + cos(y), 2))
-  }
-  if (type %in% c("sunburst", "treegraph")) {
-    points <- bind_rows(
-      tibble(id = "fruit", name = "Fruit", color = colors[1]),
-      df |> transmute(id = name, parent = "fruit", name, value, color)
-    )
-  }
-  single_color <- type %in%
-    c("line", "spline", "area", "areaspline", "streamgraph")
-  if (single_color) {
-    points$color <- NULL
-  }
-  hc <- highchart() |>
-    hc_chart(
-      type = type,
-      polar = polar,
-      inverted = type %in% c("dumbbell", "organization")
-    ) |>
-    hc_title(text = t, style = list(fontSize = "16px")) |>
-    hc_colors(colors) |>
-    hc_xAxis(categories = df$name) |>
-    hc_yAxis(visible = !type %in% c("streamgraph", "timeline")) |>
-    hc_add_series(
-      data = list_parse(points),
-      type = type,
-      name = "Fruit consumption",
-      color = if (single_color) "#7CB5EC",
-      colorByPoint = !single_color,
-      showInLegend = FALSE
-    ) |>
-    hc_tooltip(outside = TRUE) |>
-    hc_size(height = 300)
-  if (type %in% c("scatter3d", "cylinder", "funnel3d", "pyramid3d")) {
-    hc <- hc |>
-      hc_chart(
-        options3d = list(enabled = TRUE, alpha = 15, beta = 15, depth = 50)
+    "treegraph",
+    "sunburst"
+  ),
+  function(type) {
+    if (type %in% c("treegraph", "sunburst")) {
+      nodes <- bind_rows(
+        tibble(id = "Studio", name = "Studio"),
+        transmute(teams, id = to, parent = from, name = to, value = weight)
       )
+      return(hchart(nodes, type))
+    }
+    hchart(teams, type) |> hc_chart(inverted = type == "organization")
   }
-  if (type %in% c("heatmap", "tilemap", "contour")) {
-    hc <- hc |>
-      hc_colorAxis(stops = color_stops(colors = colors2), min = -2, max = 2)
-  }
-  hc
-}
+)
 ```
 
-```{r all-basic-types, echo=FALSE}
-types <- c(
-  "line",
-  "spline",
-  "area",
-  "areaspline",
-  "column",
-  "columnpyramid",
-  "bar",
-  "scatter",
-  "bubble",
-  "lollipop",
-  "waterfall",
-  "funnel",
-  "pyramid",
-  "pie",
-  "treemap",
-  "packedbubble",
-  "arearange",
-  "areasplinerange",
-  "columnrange",
-  "errorbar",
-  "dumbbell",
-  "polygon",
-  "polarline",
-  "polarcolumn",
-  "polarcolumnrange",
-  "streamgraph",
-  "item",
-  "wordcloud",
-  "timeline",
-  "sankey",
-  "dependencywheel",
-  "arcdiagram",
-  "networkgraph",
-  "organization",
-  "variablepie",
-  "variwide",
-  "bullet",
-  "vector",
-  "windbarb",
-  "dotplot",
-  "boxplot",
-  "heatmap",
-  "tilemap",
-  "contour",
-  "sunburst",
-  "treegraph",
-  "scatter3d",
-  "cylinder",
-  "funnel3d",
-  "pyramid3d"
+### Style network nodes and tooltips
+
+The same links can carry node-level labels. Use each subteam’s headcount
+to size its marker and show the count on hover.
+
+```{r mapping-networkgraph}
+headcounts <- c(
+  Studio = sum(teams$weight[teams$from == "Studio"]),
+  setNames(teams$weight, teams$to)
 )
-htmltools::div(class = "chart-grid", map(types, create_hc))
+nodes <- lapply(names(headcounts), function(id) {
+  n <- headcounts[[id]]
+  list(id = id, marker = list(radius = 3 * sqrt(n)), custom = list(people = n))
+})
+hchart(
+  teams,
+  "networkgraph",
+  nodes = nodes,
+  dataLabels = list(enabled = TRUE, format = "{point.name}", linkFormat = ""),
+  tooltip = list(
+    headerFormat = "",
+    nodeFormat = "{point.name}: {point.custom.people} people"
+  )
+)
+```
+
+## Positions, bubbles and wind
+
+Longitude and latitude locate each capital. Bubble size and the third
+scatter axis represent elevation. Vector length shows wind speed and its
+angle shows direction. Wind barbs compare the same winds by city.
+
+```{r capitals-example}
+positions <- capitals |> rename(x = lon, y = lat)
+```
+
+```{r capitals-gallery, summary="Show all capital charts in R"}
+gallery(
+  c("scatter", "bubble", "scatter3d", "vector", "windbarb", "polygon"),
+  function(type) {
+    if (type == "windbarb") {
+      return(
+        hchart(capitals, type, hcaes(value = speed), color = "#508CC8") |>
+          hc_xAxis(categories = capitals$name)
+      )
+    }
+    points <- positions
+    if (type == "polygon") {
+      points <- points[chull(points$x, points$y), ]
+    }
+    if (type == "vector") {
+      points$length <- points$speed
+    }
+    hchart(points, type, name = "Capitals") |>
+      hc_chart(
+        type = type,
+        options3d = list(
+          enabled = type == "scatter3d",
+          alpha = 15,
+          beta = 20
+        )
+      ) |>
+      hc_xAxis(title = list(text = "Longitude")) |>
+      hc_yAxis(title = list(text = "Latitude"))
+  }
+)
+```
+
+The polygon outlines the four locations. To place the bubbles on a map,
+reuse their longitude, latitude and elevation with a South America basemap.
+
+```{r capitals-map}
+map_file <- here::here(
+  "dev",
+  "examples-charts",
+  "data",
+  "maps",
+  "custom-south-america.geo.json"
+)
+hcmap(
+  jsonlite::read_json(map_file),
+  nullColor = "#D9E3E8",
+  showInLegend = FALSE
+) |>
+  hc_add_series(
+    type = "mapbubble",
+    data = list_parse(capitals),
+    name = "Elevation",
+    minSize = 6,
+    maxSize = "10%",
+    tooltip = list(pointFormat = "{point.name}: {point.z} m")
+  )
+```
+
+## Other point formats
+
+A two-dimensional grid supplies one value per cell for heatmaps, tilemaps
+and contours. The detailed tile map and vector field follow below.
+
+```{r grid-data}
+cells <- expand.grid(x = 0:5, y = 0:5) |> mutate(value = sin(x) + cos(y))
+```
+
+```{r grid-types}
+gallery(c("heatmap", "tilemap", "contour"), function(type) {
+  hchart(cells, type) |> hc_colorAxis(min = -2, max = 2)
+})
+```
+
+### Comparing a measurement with a target
+
+The bullet marks an illustrative target of 18 °C against each daily mean.
+
+```{r temperature-target}
+hchart(temperatures, "bullet", hcaes(target = 18), colorByPoint = TRUE) |>
+  hc_xAxis(categories = temperatures$name)
+```
+
+### A streamgraph with multiple series
+
+Each band is a spending category in the built-in US personal expenditure
+table. Band thickness shows expenditure in billions of dollars.
+
+```{r spending-streamgraph}
+spending <- as.data.frame(
+  as.table(USPersonalExpenditure),
+  responseName = "amount"
+)
+hchart(
+  spending,
+  "streamgraph",
+  hcaes(x = as.integer(as.character(Var2)), y = amount, group = Var1)
+) |>
+  hc_yAxis(visible = FALSE)
 ```
 
 ## Task intervals
@@ -226,104 +385,10 @@ hchart(tasks, "xrange", hcaes(x = start, x2 = finish, y = lane)) |>
   hc_yAxis(categories = c("Design", "Review"))
 ```
 
-## Five-number summaries
-
-Each row supplies the two whisker ends, the lower and upper quartiles, and the median for one box.
-
-```{r mapping-boxplot}
-waits <- data.frame(
-  clinic = c("North", "South"),
-  lower = c(4, 6),
-  p25 = c(6, 8),
-  p50 = c(10, 12),
-  p75 = c(14, 15),
-  upper = c(19, 22)
-)
-hchart(
-  waits,
-  "boxplot",
-  hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper)
-)
-```
-
-## Map links between nodes
-
-Each row describes a link. Map its two node IDs to `from` and `to`. The
-series type determines what you can read from those links.
-
-| What you want to show | Series | Point fields |
-|---|---|---|
-| Which nodes are connected | `networkgraph` | `from`, `to` |
-| How much flows between them | `sankey`, `dependencywheel`, `arcdiagram` | `from`, `to`, `weight` |
-| Who reports to whom | `organization` | `from` (parent), `to` (child) |
-
-These trips connect two districts to two transport modes. In the Sankey
-diagram, the width of each link shows how many passengers took that route.
-
-```{r mapping-sankey}
-trips <- data.frame(
-  origin = c("North", "North", "South"),
-  destination = c("Bus", "Rail", "Rail"),
-  passengers = c(30, 20, 15)
-)
-hchart(
-  trips,
-  "sankey",
-  hcaes(from = origin, to = destination, weight = passengers)
-)
-```
-
-## Style network nodes and tooltips
-
-Rail serves both districts. To show those connections, reuse the trip table
-as the links of a `networkgraph`. Style the endpoints separately in `nodes`,
-matching each `id` to a value in `from` or `to`. Here blue identifies districts
-and orange identifies transport modes. Circle area is proportional to the
-passenger total at each node.
-
-```{r mapping-networkgraph}
-passengers <- tapply(
-  rep(trips$passengers, 2),
-  c(trips$origin, trips$destination),
-  sum
-)
-nodes <- lapply(names(passengers), function(id) {
-  n <- passengers[[id]]
-  district <- id %in% trips$origin
-  list(
-    id = id,
-    name = if (district) paste(id, "district") else id,
-    color = if (district) "#386B9E" else "#BD6333",
-    marker = list(radius = 2 * sqrt(n)),
-    custom = list(passengers = n)
-  )
-})
-
-hchart(
-  trips,
-  "networkgraph",
-  hcaes(from = origin, to = destination),
-  nodes = nodes,
-  dataLabels = list(enabled = TRUE, format = "{point.name}", linkFormat = ""),
-  tooltip = list(
-    headerFormat = "",
-    nodeFormat = "<b>{point.name}</b><br>Passengers: {point.custom.passengers}"
-  )
-)
-```
-
-`dataLabels.format` shows the node name on the chart. `tooltip.nodeFormat`
-adds detail on hover. Hover over Rail to see 35 passengers, 20 from North
-and 15 from South.
-
-If you already have an `igraph` object, `hchart(graph, layout = igraph::layout_with_fr)`
-uses the layout calculated in R and carries node attributes into the chart.
-
-
 ## Specialized chart recipes
 
 Some charts need their own data shape. These examples include weighted arcs,
-unit symbols, fields and timelines, with the R code beside each result.
+unit symbols, tile maps and vector fields, with the R code beside each result.
 
 ```{r specialized-recipes, echo=FALSE, results='asis'}
 recipes <- c(
@@ -345,3 +410,53 @@ for (name in recipes) {
 
 See [Icons and pictograms](icons-and-pictograms.html) for image markers,
 icons in tooltips and symbols that represent individual items.
+
+The [Maps](maps.html) and [Stock](stock.html) articles cover geographic
+and financial series. The [bundle gallery](../bundle-gallery.html) has an
+example for every registered series type.
+
+## Distributions
+
+For a histogram in R, pass the result of `hist(..., plot = FALSE)` to
+`hchart()`. See the [precomputed histogram example](hchart.html#precomputed-histograms).
+
+### Box plot
+
+Each row supplies the two whisker ends, the lower and upper quartiles, and the median for one box.
+
+```{r mapping-boxplot}
+waits <- data.frame(
+  clinic = c("North", "South"),
+  lower = c(4, 6),
+  p25 = c(6, 8),
+  p50 = c(10, 12),
+  p75 = c(14, 15),
+  upper = c(19, 22)
+)
+hchart(
+  waits,
+  "boxplot",
+  hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper)
+)
+```
+
+### Normal curve
+
+The `bellcurve` series fits a normal curve using the sample mean and standard
+deviation. For a kernel density estimate, see [Densities](hchart.html#densities).
+
+```{r bellcurve}
+highchart() |>
+  hc_add_series(
+    type = "scatter",
+    id = "scores",
+    data = c(52, 58, 61, 63, 65, 67, 74),
+    visible = FALSE,
+    showInLegend = FALSE
+  ) |>
+  hc_add_series(
+    type = "bellcurve",
+    baseSeries = "scores",
+    name = "Normal curve"
+  )
+```

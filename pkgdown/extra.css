@@ -72,12 +72,13 @@ main h3, main h4, main h5 { font-weight: 400; }
 }
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.4rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
   margin: 1.6rem 0 2.4rem;
 }
 .chart-grid > div { min-width: 0; }
-@media (max-width: 700px) { .chart-grid { grid-template-columns: 1fr; } }
+@media (max-width: 991.98px) { .chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 575.98px) { .chart-grid { grid-template-columns: 1fr; } }
 
 /* Size the mobile sidebar to its row, accounting for a visible scrollbar. */
 @media (max-width: 767.98px) {
