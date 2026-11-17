@@ -1,10 +1,10 @@
 # highcharter (development version)
 
 * The homepage uses a full-width 2-by-2 chart grid with four synchronized states,
-  ordered as scatter, exports, map and pie. Its Americas focus connects the same
+  ordered as scatter, exports, map and pie. Its South America focus connects the same
   countries and indicators across panels, with quantitative income, longevity
-  and trade-balance maps, shared export tooltips and crisis markers. The Americas
-  are emphasized for one state before returning to the world. The final scatter
+  and trade-balance maps, shared export tooltips and crisis markers. South America
+  is emphasized for one state before returning to the world. The final scatter
   compares exports and imports per person on logarithmic axes, changing both
   variables. A versioned World Bank snapshot covers 179 economies in 2024,
   including Russia; R can refresh the data. Pies compare export and population shares
@@ -19,6 +19,10 @@
   geometry when returning to its initial variables.
   Island economies classified as open ocean in the map are assigned to their
   continents so all four panels include the same cohort.
+  The initial scene renders without entrance animation or reinitialization,
+  and settles its native chart sizing before playback. Source and coverage
+  details remain in the developer documentation instead of the grid footer.
+  Shared export tooltips use the package's HTML table helper.
 * The hcrt theme uses the built-in three-dot export menu icon.
 * Language examples compare dates and export-data menus across eight locales.
   They use a shared chart factory, compact layouts and horizontal date labels.

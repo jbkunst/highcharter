@@ -76,12 +76,13 @@ flows can be negative, so the map uses a signed, linear balance-to-total-trade
 ratio with a diverging color scale, rather than taking their logarithm.
 Population determines bubble area; the pie switches from merchandise-export
 shares to population shares. Export histories and pie totals use the same trade
-indicator. The Americas are in focus only in the third state across all four panels;
+indicator. South America is in focus only in the third state across all four panels;
 the fourth restores the global context. Adding imports reduces the previous
 180-economy cohort to 179: Tuvalu lacks comparable import data in this extraction.
 
-The focus includes both North America (including Central America and the
-Caribbean in the map's classification) and South America. The scatter labels
-Chile and Costa Rica with their names only. There are no fitted-model callouts.
+The regional focus includes South America only. The scatter labels
+Chile and Uruguay with their names only. There are no fitted-model callouts.
+Source, coverage and refresh details are documented here; the visible grid
+omits the source-and-download footer.
 The export chart marks the 2008 financial crisis (whose trade contraction is
 most visible in 2009) and the 2020 COVID-19 shock.

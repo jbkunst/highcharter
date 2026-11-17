@@ -30,10 +30,9 @@ function(el, x, sequence) {
       if (series.group) groupOpacity.set(series.options.id, series.group.attr('opacity'));
     });
 
-    if (!previous) {
-      options.plotOptions.series.animation = false;
-      chart.update(options, false, true, false);
-    } else {
+    // R already supplies the first scene. Reinitializing it during widget
+    // startup can interrupt the initial bubble layout or entrance animation.
+    if (previous) {
       // Update only changed axes/options. Replacing the complete configuration
       // also reinitializes series and loses the SVG elements we want to move.
       ['xAxis', 'yAxis'].forEach(key => {
@@ -85,9 +84,7 @@ function(el, x, sequence) {
         function collect(value) {
           if (!Array.isArray(value)) return;
           if (typeof value[0] === 'number') {
-            // The Aleutian islands cross the date line. Their positive
-            // longitudes would otherwise expand America's bounds worldwide.
-            if (value[0] <= 0) coordinates.push(value);
+            coordinates.push(value);
           } else value.forEach(collect);
         }
         chart.series.flatMap(series => series.points)
@@ -140,8 +137,18 @@ function(el, x, sequence) {
   }
 
   const onStep = event => show(event.detail.index, event.detail.animate);
+  const onReady = () => {
+    // Wait for the grid and fonts to settle, then use Highcharts' sizing API.
+    // Initial drawing must not depend on a later viewport resize.
+    chart.setSize(null, null, false);
+    show(Number(root.dataset.phase), false);
+  };
   root.addEventListener('grid-step', onStep);
-  Highcharts.addEvent(chart, 'destroy', () => root.removeEventListener('grid-step', onStep));
+  root.addEventListener('grid-ready', onReady);
+  Highcharts.addEvent(chart, 'destroy', () => {
+    root.removeEventListener('grid-step', onStep);
+    root.removeEventListener('grid-ready', onReady);
+  });
 
   if (!root.dataset.bound) {
     root.dataset.bound = 'true';
@@ -206,11 +213,15 @@ function(el, x, sequence) {
       link.addEventListener('load', resolve, {once: true});
       link.addEventListener('error', resolve, {once: true});
       setTimeout(resolve, 5000);
-    }))).then(() => document.fonts.ready).then(() => {
-      root.dataset.ready = 'true';
-      picker.disabled = false;
-      if (root.dataset.playing === 'true') schedule();
-    });
+    }))).then(() => document.fonts.ready)
+      .then(() => new Promise(resolve => requestAnimationFrame(resolve)))
+      .then(() => {
+        root.dispatchEvent(new CustomEvent('grid-ready'));
+        root.dataset.ready = 'true';
+        picker.disabled = false;
+        if (root.dataset.playing === 'true') schedule();
+      });
   }
   show(Number(root.dataset.phase), false);
+  if (root.dataset.ready === 'true') requestAnimationFrame(onReady);
 }

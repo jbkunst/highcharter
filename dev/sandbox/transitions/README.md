@@ -77,12 +77,12 @@ Visual review is still open. The maintainer has not approved the overall
 animation or the scatter's return to its initial view. Passing geometry,
 resize and synchronization checks is technical validation, not visual sign-off.
 
-| Panel | Stage 1: Global patterns | Stage 2: People and scale | Stage 3: The Americas | Stage 4: Trade positions |
+| Panel | Stage 1: Global patterns | Stage 2: People and scale | Stage 3: South America | Stage 4: Trade positions |
 | --- | --- | --- | --- | --- |
-| Top left | Income and longevity, equal-sized points | Bubble area represents population | Americas emphasized, global axes retained | Exports and imports per person, both logarithmic |
-| Top right | Regional exports, lines | Areas | Stacked areas, Americas emphasized | Global streamgraph |
-| Bottom left | GDP per person, logarithmic colors | Life expectancy | Life expectancy, zoomed to the Americas | Global goods balance / total trade |
-| Bottom right | Merchandise-export shares | The same shares as a donut | Population shares, Americas emphasized | The same population shares as a 180-degree arc |
+| Top left | Income and longevity, equal-sized points | Bubble area represents population | South America emphasized, global axes retained | Exports and imports per person, both logarithmic |
+| Top right | Regional exports, lines | Areas | Stacked areas, South America emphasized | Global streamgraph |
+| Bottom left | GDP per person, logarithmic colors | Life expectancy | Life expectancy, zoomed to South America | Global goods balance / total trade |
+| Bottom right | Merchandise-export shares | The same shares as a donut | Population shares, South America emphasized | The same population shares as a 180-degree arc |
 
 All panels use the same 179-economy cohort and common snapshot year, 2024;
 exports cover 2005–2024. Russia is included. The R preparation script fetches WDI
@@ -92,15 +92,15 @@ builds use them without API calls. See the
 [data guide](data/README.md) for provenance, units, selection and refresh steps.
 
 [grid-sequence.js](grid-sequence.js) maintains one clock and shared analytical
-state. When the map focuses on the Americas, the scatter emphasizes American
+state. When the map focuses on South America, the scatter emphasizes South American
 economies and smoothly fades other regions into the background; the export
-chart emphasizes the Americas and the pie highlights its population
+chart emphasizes South America and the pie highlights its population
 share. This focus lasts only one state; all panels return to the world in
 the fourth state. Income/longevity and trade positions connect scatter and map;
 trade connects history and the first pie, while population connects bubble
 sizes and the final pie. A shared tooltip compares regional exports. Light
 event markers locate the 2008 crisis and COVID-19. Plain country names label
-Chile and Costa Rica during the regional view.
+Chile and Uruguay during the regional view.
 
 Each chart retains its Highcharts instance. Bubble series render the scatter
 initially with equal sizes. Persistent streamgraph series supply lines, areas,
@@ -113,11 +113,9 @@ also interpolates colors, fill opacity and region emphasis.
 The map reuses local TopoJSON, `hcmap()`, a continuous color axis and the Equal
 Earth projection. Native MapView methods animate the camera; MapView's redraw
 also marks map geometry dirty when a camera change does not change any data.
-The camera fits all selected American countries. The color axis occupies 76%
-of the chart width and uses explicit numeric labels. The geographic fit ignores
-positive-longitude Aleutian islands, whose date-line crossing would otherwise
-expand the US bounds around the world. Native MapView geometry fitting also
-allows centering on the Americas without the world's panning constraints.
+The camera fits all selected South American countries. The color axis occupies
+76% of the chart width and uses explicit numeric labels. Native MapView geometry
+fitting allows centering on South America without world panning constraints.
 Fixed scatter margins
 and captured marker rectangles prevent plot-box shifts or geometry resets
 when changing variables, including the return to the first state.
@@ -133,13 +131,17 @@ utils::browseURL(normalizePath(grid_file, winslash = "/"), browser = NULL)
 The generated file is `dev/highcharts-bundle/preview/grid-sequence.html`.
 The four sets of R chart objects are in `widget_families`; timed states,
 captions and camera positions are in `families`. The R script also writes
-`home-data.csv` for downloading from the site. To fetch fresh data before
+`home-data.csv` beside the site iframe. Source and coverage details remain in
+the [data guide](data/README.md); the grid has no source footer. To fetch fresh data before
 building, set `options(highcharter.website.refresh_data = TRUE)`; reset that
 option after the refresh.
 
 On small screens the grid becomes one column. It uses the hcrt theme, IBM Plex
 Sans, one shared regional legend, Play/Pause, Restart and a stage picker.
-Playback waits for fonts to load. Transitions last 1.4 seconds, with a gentler
+Initial widgets render without entrance animation. The executor reuses the R
+first scene, then performs one native sizing pass after fonts and layout settle.
+Playback starts only after that pass; the initial scatter must be visible without
+any control interaction or viewport resize. Transitions last 1.4 seconds, with a gentler
 2-second return to the initial variables, followed
 by a 2.5-second hold. Manual selection also animates. Reduced-motion preferences
 disable autoplay and interpolation. Both automatic looping from the fourth

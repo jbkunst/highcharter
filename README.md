@@ -4,7 +4,6 @@ Highcharter brings interactive Highcharts charts, maps and financial time series
 
 <iframe class="home-gallery" src="home-gallery.html" title="Explore international development through animated charts" loading="lazy"></iframe>
 
-[Explore chart types and their R examples](https://jkunst.com/highcharter/articles/series-gallery.html).
 
 <div class="home-copy">
 

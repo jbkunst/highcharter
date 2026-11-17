@@ -38,8 +38,8 @@ countries <- countries[
   order(match(countries$continent, regions), countries$iso3),
 ]
 countries$color <- unname(colors[countries$continent])
-focus_regions <- c("North America", "South America")
-americas <- countries[countries$continent %in% focus_regions, ]
+focus_regions <- "South America"
+south_america <- countries[countries$continent %in% focus_regions, ]
 history <- merge(
   home_data$history,
   countries[c("iso3", "continent")],
@@ -48,12 +48,12 @@ history <- merge(
 trade <- aggregate(exports ~ continent + year, history, sum)
 totals <- aggregate(cbind(population, exports) ~ continent, countries, sum)
 totals <- totals[match(regions, totals$continent), ]
-population_share <- sum(americas$population) / sum(countries$population)
-export_share <- sum(americas$exports) / sum(countries$exports)
+population_share <- sum(south_america$population) / sum(countries$population)
+export_share <- sum(south_america$exports) / sum(countries$exports)
 pct <- function(x) formatC(100 * x, format = "f", digits = 1)
 
 # Plain country labels keep the regional view readable without a callout box.
-label_countries <- c("CHL", "CRI")
+label_countries <- c("CHL", "URY")
 
 
 # 1. Shared appearance and four synchronized analytical stages -------------
@@ -61,7 +61,7 @@ stories <- c(
   "Trade and longevity do not have identical geographies.",
   "Large populations do not always sit at the income frontier.",
   sprintf(
-    "The Americas: %s%% of people, %s%% of goods exports across these economies.",
+    "South America: %s%% of people, %s%% of goods exports across these economies.",
     pct(population_share),
     pct(export_share)
   ),
@@ -70,7 +70,7 @@ stories <- c(
 stage_names <- c(
   "Global patterns",
   "People and scale",
-  "The Americas",
+  "South America",
   "Trade positions"
 )
 base <- highchart(
@@ -110,7 +110,7 @@ trade_limits <- range(c(countries$exports_pc, countries$imports_pc)) *
   c(0.8, 1.2)
 
 
-# 2. Points: equal sizes, population, the Americas, then two trade variables ------
+# 2. Points: equal sizes, population, South America, then two trade variables ------
 country_chart <- function(stage) {
   focus <- stage == 3L
   trading <- stage == 4L
@@ -266,7 +266,7 @@ country_widgets <- lapply(1:4, country_chart)
 country_captions <- c(
   "Longevity varies even among economies with similar incomes.",
   "Population weight shifts attention away from the richest economies.",
-  "Within the Americas, similar incomes can coexist with different longevity.",
+  "Within South America, similar incomes can coexist with different longevity.",
   "Above the dashed line: net goods importers; below it: net exporters."
 )
 
@@ -327,9 +327,10 @@ trade_chart <- function(stage) {
     ) |>
     hc_tooltip(
       shared = TRUE,
+      table = TRUE,
       split = FALSE,
-      headerFormat = "<b>{point.key}</b><br/>",
-      pointFormat = '<span style="color:{series.color}">●</span> {series.name}: <b>{point.y:.2f}</b> trillion<br/>'
+      valueDecimals = 2,
+      valueSuffix = " trillion"
     )
   for (region in regions) {
     rows <- trade[trade$continent == region, ]
@@ -360,12 +361,12 @@ trade_widgets <- lapply(1:4, trade_chart)
 trade_captions <- c(
   "Goods trade is concentrated and sensitive to global shocks.",
   "The contractions of 2009 and 2020 are visible in nominal export values.",
-  "The Americas' trade footprint is weighted toward the northern economies.",
+  "South America's trade footprint is small beside its population weight.",
   "The global trade cycle links economies with very different trade positions."
 )
 
 
-# 4. Map: income, longevity, one Americas view, then global trade balances -----
+# 4. Map: income, longevity, one South America view, then global trade balances -----
 world <- jsonlite::read_json(file.path(
   "dev",
   "examples-charts",
@@ -476,15 +477,15 @@ map_captions <- c(
   "GDP per person, PPP-adjusted, on a logarithmic color scale.",
   "Longevity follows a related—but not identical—geography.",
   sprintf(
-    "The Americas' middle 80%% spans %.0f–%.0f years of life expectancy.",
-    stats::quantile(americas$life, 0.1),
-    stats::quantile(americas$life, 0.9)
+    "South America's middle 80%% spans %.0f–%.0f years of life expectancy.",
+    stats::quantile(south_america$life, 0.1),
+    stats::quantile(south_america$life, 0.9)
   ),
   "Goods balance / total trade: orange deficits, blue surpluses."
 )
 
 
-# 5. Shares: trade, donut, population, then an Americas population arc --------
+# 5. Shares: trade, donut, population, then a South American population arc --------
 share_chart <- function(stage) {
   people <- stage >= 3L
   points <- lapply(seq_along(regions), function(i) {
@@ -543,7 +544,7 @@ share_captions <- c(
   "Shares of merchandise exports, rather than shares of people.",
   "Trade remains concentrated when viewed as a donut.",
   sprintf(
-    "The Americas are home to %s%% of the population represented here.",
+    "South America is home to %s%% of the population represented here.",
     pct(population_share)
   ),
   sprintf(
@@ -599,7 +600,7 @@ families <- lapply(names(widget_families), function(family) {
       caption = captions[[family]][stage],
       story = stories[stage],
       focus = stage == 3L,
-      focusRegions = focus_regions,
+      focusRegions = as.list(focus_regions),
       wait = 2500,
       duration = if (stage == 1L) 2000 else 1400,
       options = options,
@@ -607,7 +608,7 @@ families <- lapply(names(widget_families), function(family) {
         if (stage != 3L) {
           list(fit = TRUE)
         } else {
-          list(countries = americas$iso3)
+          list(countries = south_america$iso3)
         }
       } else {
         NULL
@@ -623,6 +624,8 @@ executor <- paste(
 panels <- lapply(names(families), function(family) {
   widget <- widget_families[[family]][[1]] |>
     hc_size(width = "100%", height = 300)
+  # Initial series must be drawn immediately; only later updates animate.
+  widget$x$hc_opts$plotOptions$series$animation <- FALSE
   widget <- htmlwidgets::onRender(
     widget,
     executor,
@@ -636,7 +639,7 @@ panels <- lapply(names(families), function(family) {
 })
 
 
-# 7. A wide grid, analytical caption, coverage and downloadable data ---------
+# 7. A wide grid, analytical caption and common playback controls ----------
 css <- "
 body { margin: 0; background: white; }
 .transition-grid-page { max-width: 1200px; margin: auto; padding: 12px;
@@ -653,8 +656,6 @@ body { margin: 0; background: white; }
 .grid-controls button,.grid-controls select { padding: 7px 18px; font: inherit; cursor: pointer;
   border: 1px solid #ddd; border-radius: 22px; background: #fff; color: #47475c; }
 .grid-controls .grid-play { background: #47475c; color: #fff; }
-.grid-source { text-align: center; font-size: 11px; color: #777; margin: 12px 0 0; }
-.grid-source a { color: #47475c; }
 @media(max-width:720px) { .transition-grid { grid-template-columns:1fr; } }
 @media(prefers-reduced-motion:reduce) { .grid-legend li { transition:none; } }
 "
@@ -685,22 +686,6 @@ grid <- htmltools::browsable(htmltools::tagList(
         lapply(0:3, function(i) {
           htmltools::tags$option(value = i, stage_names[i + 1L])
         })
-      )
-    ),
-    htmltools::tags$p(
-      class = "grid-source",
-      sprintf(
-        "World Bank WDI · %d · %d economies · %.1f%% of world population. ",
-        year,
-        nrow(countries),
-        100 * metadata$world_population_coverage
-      ),
-      htmltools::tags$a(href = "https://data.worldbank.org/", "Source"),
-      " · ",
-      htmltools::tags$a(
-        href = "home-data.csv",
-        download = paste0("highcharter-wdi-", year, ".csv"),
-        "Download data"
       )
     )
   )

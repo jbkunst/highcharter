@@ -140,22 +140,30 @@ uses a versioned World Bank WDI snapshot prepared by
 `dev/sandbox/transitions/prepare-data.R`, the hcrt theme and highcharter's Google
 Fonts loader. The current common year is 2024: 179 economies, including Russia,
 with complete merchandise-export histories from 2005. The panel order is
-scatter, exports, map and pie. Only the third state focuses on the Americas across
+scatter, exports, map and pie. Only the third state focuses on South America across
 all four panels; the fourth returns to a global view. Income/longevity and
 then trade positions share indicators between scatter and map. The last
 scatter uses exports and imports per person on two logarithmic axes, with an
 equality line. The map shows the signed goods balance divided by total goods
 trade. Export shares and population shares connect the pie
-to the history and bubble sizes. Export event markers identify the 2008 crisis
-and COVID-19; plain country names label Chile and Costa Rica in the regional
+to the history and bubble sizes. Shared export tooltips use `hc_tooltip(table = TRUE)`
+with two decimal places and units in aligned table cells.
+Export event markers identify the 2008 crisis
+and COVID-19; plain country names label Chile and Uruguay in the regional
 scatter. Map color bars occupy 76% of their panel width, with explicit numeric
-formats. The regional camera fits the bounds of the American economies instead
+formats. The regional camera fits the bounds of South American economies instead
 of relying on a fixed zoom that can crop the north or south.
 Sources, units, coverage and refresh instructions live in the
 [data README](sandbox/transitions/data/README.md). Builds use local prepared
 data without API calls; refresh explicitly with
 `options(highcharter.website.refresh_data = TRUE)` before sourcing the grid.
 The build also copies the downloadable `home-data.csv` into the site output.
+Sources and coverage stay in the data README; the grid has no source footer.
+After serving the generated site, run
+`Rscript dev/highcharts-bundle/test-home-grid.R http://127.0.0.1:8765`
+to check cold initial scatter rendering, the South America focus and shared
+HTML-table tooltips in both the homepage iframe and standalone gallery, at
+desktop and mobile widths. This optional development check uses chromote.
 The older standalone HTML prototypes
 remain visual references in `dev/sandbox/transitions/`.
 Grid transitions retain their series, point IDs and SVG paths. The executor
@@ -163,7 +171,11 @@ updates changed options/data rather than replacing each complete chart.
 Equal-sized bubble points form the first scatter view; a persistent streamgraph
 series supplies line, area and stacked views by changing fill and stacking.
 Native SVG animation interpolates fill colors and opacity, and playback waits
-for fonts before starting. Fixed scatter margins keep its plot box stable;
+for fonts before starting. Initial series render without entrance animation;
+the first scene is not reinitialized by the executor. Once fonts and grid
+layout are ready, all four charts run their native sizing pass before the
+clock starts. Check initial scatter visibility without clicking a control or
+resizing the viewport. Fixed scatter margins keep its plot box stable;
 marker geometry is captured before redraw and animated to the target geometry
 with Highcharts when either variable changes. This also applies at the loop
 boundary and after interrupted manual transitions. Browser checks should inspect
