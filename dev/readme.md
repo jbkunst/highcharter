@@ -140,8 +140,9 @@ uses a versioned World Bank WDI snapshot prepared by
 `dev/sandbox/transitions/prepare-data.R`, the hcrt theme and highcharter's Google
 Fonts loader. The current common year is 2024: 179 economies, including Russia,
 with complete merchandise-export histories from 2005. The panel order is
-scatter, exports, map and pie. Only the third state focuses on South America across
-all four panels; the fourth returns to a global view. Income/longevity and
+scatter, exports, map and pie. Only the third state focuses on South America in
+the scatter, map and pie; exports keep every region's color in all states.
+The fourth returns to a global view. Income/longevity and
 then trade positions share indicators between scatter and map. The last
 scatter uses exports and imports per person on two logarithmic axes, with an
 equality line. The map shows the signed goods balance divided by total goods

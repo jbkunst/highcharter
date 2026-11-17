@@ -80,7 +80,7 @@ resize and synchronization checks is technical validation, not visual sign-off.
 | Panel | Stage 1: Global patterns | Stage 2: People and scale | Stage 3: South America | Stage 4: Trade positions |
 | --- | --- | --- | --- | --- |
 | Top left | Income and longevity, equal-sized points | Bubble area represents population | South America emphasized, global axes retained | Exports and imports per person, both logarithmic |
-| Top right | Regional exports, lines | Areas stacked to 100% | Stacked values, South America emphasized | Global streamgraph |
+| Top right | Regional exports, lines | Areas stacked to 100% | Stacked values, all regional colors | Global streamgraph |
 | Bottom left | GDP per person, logarithmic colors | Life expectancy | Life expectancy, zoomed to South America | Global goods balance / total trade |
 | Bottom right | Merchandise-export shares | The same shares as a donut | Population shares, South America emphasized | The same population shares as a 180-degree arc |
 
@@ -94,7 +94,7 @@ builds use them without API calls. See the
 [grid-sequence.js](grid-sequence.js) maintains one clock and shared analytical
 state. When the map focuses on South America, the scatter emphasizes South American
 economies and smoothly fades other regions into the background; the export
-chart emphasizes South America and the pie highlights its population
+chart keeps all regional colors and the pie highlights South America's population
 share. This focus lasts only one state; all panels return to the world in
 the fourth state. Income/longevity and trade positions connect scatter and map;
 trade connects history and the first pie, while population connects bubble

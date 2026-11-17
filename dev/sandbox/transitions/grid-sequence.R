@@ -391,7 +391,7 @@ trade_chart <- function(stage) {
           "normal"
         },
         fillOpacity = c(0, 0.65, 0.65, 1)[stage],
-        opacity = if (stage == 3L && !region %in% focus_regions) 0.2 else 1,
+        opacity = 1,
         lineWidth = c(2.2, 1.5, 1, 0)[stage],
         marker = list(enabled = FALSE),
         data = points
