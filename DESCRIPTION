@@ -37,6 +37,7 @@ Imports:
     rlang (>= 0.4.10)
 VignetteBuilder: knitr
 Suggests:
+    seasonal,
     rjson,
     bslib,
     knitr,

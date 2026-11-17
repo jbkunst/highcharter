@@ -30,7 +30,7 @@ new_zealand <- jsonlite::read_json(file.path(
   map_dir,
   "countries-nz-nz-all.geo.json"
 ))
-hcmap(new_zealand, showInLegend = FALSE) |>
+hcmap(new_zealand, nullColor = "#D9E3E8", showInLegend = FALSE) |>
   hc_title(text = "New Zealand") |>
   hc_mapNavigation(enabled = TRUE)
 ```
@@ -104,28 +104,9 @@ These are standard-time groups, without seasonal daylight-saving adjustments.
 
 ```{r europe-zones}
 zones <- data.frame(
-  country = c(
-    "PT",
-    "IE",
-    "GB",
-    "IS",
-    "FR",
-    "DE",
-    "ES",
-    "IT",
-    "NO",
-    "SE",
-    "PL",
-    "AT",
-    "CH",
-    "FI",
-    "EE",
-    "LV",
-    "LT",
-    "GR",
-    "RO",
-    "BG"
-  ),
+  # fmt: skip
+  country = c("PT", "IE", "GB", "IS", "FR", "DE", "ES", "IT", "NO", "SE",
+              "PL", "AT", "CH", "FI", "EE", "LV", "LT", "GR", "RO", "BG"),
   value = c(rep(0, 4), rep(1, 9), rep(2, 7))
 )
 europe <- jsonlite::read_json(file.path(map_dir, "custom-europe.geo.json"))
@@ -148,44 +129,24 @@ hcmap(
   hc_title(text = "Standard time in Europe")
 ```
 
-## Points and bubbles
+## Airport locations
 
-Longitude and latitude place points on the basemap. Add a magnitude with `z`
-to turn those locations into bubbles. These are selected international airports
-in South America; the values below are illustrative connection counts.
+Longitude and latitude place these international airports on the basemap.
 
 ```{r airports}
-airports <- data.frame(
-  name = c(
-    "Santiago",
-    "Buenos Aires",
-    "São Paulo",
-    "Lima",
-    "Bogotá",
-    "Quito",
-    "Montevideo",
-    "Asunción",
-    "La Paz"
-  ),
-  lat = c(-33.39, -34.82, -23.44, -12.02, 4.70, -0.13, -34.84, -25.24, -16.51),
-  lon = c(
-    -70.79,
-    -58.54,
-    -46.47,
-    -77.11,
-    -74.15,
-    -78.36,
-    -56.03,
-    -57.52,
-    -68.19
-  ),
-  z = c(35, 40, 65, 42, 50, 24, 16, 14, 12)
+# fmt: skip
+airports <- tibble::tribble(
+  ~name,          ~lat,   ~lon,
+  "Santiago",   -33.39, -70.79,
+  "São Paulo",  -23.44, -46.47,
+  "Bogotá",       4.70, -74.15,
+  "Asunción",   -25.24, -57.52
 )
 boundaries <- jsonlite::read_json(file.path(
   map_dir,
   "custom-south-america.geo.json"
 ))
-south_america <- hcmap(boundaries, showInLegend = FALSE)
+south_america <- hcmap(boundaries, nullColor = "#D9E3E8", showInLegend = FALSE)
 south_america |>
   hc_add_series(
     airports,
@@ -194,16 +155,6 @@ south_america |>
     hcaes(lon = lon, lat = lat, name = name)
   ) |>
   hc_title(text = "Airports in South America")
-
-south_america |>
-  hc_add_series(
-    airports,
-    type = "mapbubble",
-    name = "Illustrative connections",
-    hcaes(lon = lon, lat = lat, z = z, name = name),
-    maxSize = "12%"
-  ) |>
-  hc_title(text = "Locations with a magnitude")
 ```
 
 ## Projection and initial view
@@ -212,12 +163,10 @@ Set a projection, center and zoom through `hc_mapView()`. Coordinates are always
 longitude first and latitude second.
 
 ```{r map-view}
-globe <- jsonlite::read_json(file.path(map_dir, "custom-world.geo.json"))
-hcmap(globe, showInLegend = FALSE) |>
+globe <- jsonlite::read_json(file.path(map_dir, "custom-world.topo.json"))
+hcmap(globe, nullColor = "#D9E3E8", showInLegend = FALSE) |>
   hc_mapView(
-    projection = list(name = "Orthographic"),
-    center = c(-65, -20),
-    zoom = 1
+    projection = list(name = "Orthographic", rotation = c(65, 20))
   ) |>
   hc_title(text = "A view centered on South America") |>
   hc_mapNavigation(enabled = TRUE)

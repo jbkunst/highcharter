@@ -92,16 +92,23 @@ test_that("hchart returns a valid stocks plot after valid data input", {
   )
 })
 
-test_that("hchart returns a valid multivariate time series plot after valid data input", {
+test_that("multivariate time series use shared HTML tooltips", {
   x <- cbind(mdeaths, fdeaths)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+  for (separate in c(TRUE, FALSE)) {
+    tooltip <- hchart(x, separate = separate)$x$hc_opts$tooltip
+    expect_true(tooltip$shared)
+    expect_true(tooltip$useHTML)
+  }
 })
 
-test_that("hchart returns a valid autocovariance plot after valid data input", {
-  x <- acf(diff(AirPassengers), plot = FALSE)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+test_that("ACF and PACF lollipops use the reported lags and correlations", {
+  changes <- diff(AirPassengers)
+  for (x in list(acf(changes, plot = FALSE), pacf(changes, plot = FALSE))) {
+    series <- hchart(x)$x$hc_opts$series[[1]]
+    expect_identical(series$type, "lollipop")
+    expect_equal(vapply(series$data, `[[`, numeric(1), "x"), as.vector(x$lag))
+    expect_equal(vapply(series$data, `[[`, numeric(1), "low"), as.vector(x$acf))
+  }
 })
 
 test_that("hchart returns a valid pca plot after valid data input", {

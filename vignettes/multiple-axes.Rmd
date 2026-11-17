@@ -2,7 +2,7 @@
 title: Multiple axes
 output: rmarkdown::html_vignette
 description: >
-  Arrange four scatter plots in one chart using separate pairs of axes.
+  Arrange six scatter plots in one chart using separate pairs of axes.
 vignette: >
   %\VignetteIndexEntry{Multiple axes}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,66 +14,81 @@ library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
-## Four panels with their own axes
+## Price and carat across six panels
 
-Plot vehicle weight against fuel economy in `mtcars`. Each column is a
-transmission (`am`), each row an engine shape (`vs`). Give the matching X and
-Y axes the same panel bounds and bind each series to the pair. All four panels
-use the same scales so their points can be compared directly.
+Compare price (US dollars) against weight (carats) for two cuts and three
+colors in `ggplot2::diamonds`. Each panel shows a reproducible sample of 100
+diamonds. All panels share the same axis limits.
 
-```{r four-panels}
-groups <- expand.grid(am = 0:1, vs = 0:1)
-panels <- lapply(seq_len(nrow(groups)), function(i) {
+```{r diamonds-panels}
+library(dplyr)
+library(purrr)
+
+set.seed(42)
+groups <- ggplot2::diamonds |>
+  filter(cut %in% c("Very Good", "Ideal"), color %in% c("D", "E", "F")) |>
+  group_by(color, cut) |>
+  slice_sample(n = 100)
+
+keys <- group_keys(groups)
+panels <- map(seq_len(nrow(keys)), function(i) {
   list(
-    left = if (groups$am[i] == 0) "0%" else "58%",
-    top = if (groups$vs[i] == 0) "0%" else "58%",
-    width = "42%",
-    height = "36%",
+    left = if (i %% 2 == 1) "0%" else "55%",
+    top = paste0(35 * ((i - 1) %/% 2), "%"),
+    width = "43%",
+    height = "22%",
     offset = 0,
-    lineWidth = 1,
-    tickWidth = 1,
-    tickLength = 4,
-    tickColor = "#45545d",
-    lineColor = "#45545d",
-    labels = list(
-      enabled = TRUE,
-      step = 1,
-      style = list(width = "30px", textOverflow = "clip")
-    ),
     startOnTick = FALSE,
-    endOnTick = FALSE,
-    showFirstLabel = TRUE,
-    showLastLabel = TRUE,
-    title = list(text = NULL)
+    endOnTick = FALSE
   )
 })
-x_axes <- lapply(panels, function(p) {
-  c(p, list(min = 1, max = 6, tickPositions = 2:5))
+x_axes <- map2(panels, seq_along(panels), function(panel, i) {
+  c(
+    panel,
+    list(
+      min = 0,
+      max = ceiling(max(groups$carat)),
+      title = list(text = paste(keys$cut[i], "·", keys$color[i]))
+    )
+  )
 })
-y_axes <- lapply(panels, function(p) {
-  c(p, list(min = 8, max = 36, tickPositions = c(10, 20, 30)))
+y_axes <- map(panels, function(panel) {
+  c(
+    panel,
+    list(
+      min = 0,
+      max = 20000,
+      tickPositions = c(0, 10000, 20000),
+      title = list(text = NULL)
+    )
+  )
 })
-grid <- highchart() |>
-  hc_chart(alignTicks = FALSE, animation = FALSE, margin = c(60, 22, 60, 38)) |>
-  hc_title(text = "Weight and fuel economy") |>
+
+chart <- highchart(height = 780) |>
+  hc_title(text = "Diamond price by carat") |>
   hc_subtitle(
-    text = "Columns: automatic / manual. Rows: V-shaped / straight."
+    text = "Columns show cut. Rows show color. Prices in US dollars."
   ) |>
-  hc_legend(enabled = FALSE) |>
+  hc_chart(alignTicks = FALSE) |>
   hc_xAxis(x_axes) |>
-  hc_yAxis(y_axes)
-for (i in seq_len(nrow(groups))) {
-  cars <- mtcars[mtcars$am == groups$am[i] & mtcars$vs == groups$vs[i], ]
-  grid <- hc_add_series(
-    grid,
-    cars,
-    "scatter",
-    hcaes(wt, mpg),
-    name = paste("am", groups$am[i], "vs", groups$vs[i]),
-    xAxis = i - 1L,
-    yAxis = i - 1L,
-    marker = list(symbol = "circle")
-  )
-}
-grid
+  hc_yAxis(y_axes) |>
+  hc_legend(enabled = FALSE)
+
+reduce2(
+  group_split(groups),
+  seq_along(panels),
+  function(hc, rows, i) {
+    hc_add_series(
+      hc,
+      rows,
+      "scatter",
+      hcaes(x = carat, y = price),
+      name = paste(keys$cut[i], keys$color[i]),
+      xAxis = i - 1L,
+      yAxis = i - 1L,
+      marker = list(radius = 2)
+    )
+  },
+  .init = chart
+)
 ```

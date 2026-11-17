@@ -3,109 +3,25 @@
 * The homepage, package description and `?highcharter` clarify the licensing
   of the R wrapper and the bundled Highcharts JavaScript library. Attaching
   the package in an interactive session now points to the help topic once.
-* From data to charts recreates the homepage's World Bank data directly from
-  JSON responses and shows its four charts independently, with foldable code.
-  The homepage extracts the article's R definitions with knitr so data, styling
-  and synchronized states have one source. Prepared CSV inputs are no longer
-  used to generate the charts.
-  Downloads run on every execution; there is no data cache or website refresh
-  option. The original common-year selection is retained.
-* Icons and pictograms restores the original R/Python scatter and food counts,
-  colors and symbols, using embedded SVGs instead of PNG conversion. The original
-  Datalegreya graph lettering returns to the homepage and navbar. The navbar
-  uses the Thin variant for a line without shaded area, omits the rpackage suffix
-  and keeps the accessible package-name label.
-* Explore charts uses the titles Chart types, Maps, Stock charts and Stock Tools,
-  and Showcase. The chart-types vignette replaces series-gallery, with redirects
-  preserving the previous URLs.
-  The Extensions and examples section includes a new Multiple axes vignette,
-  moving the four-panel example out of the Highcharts API guide.
-  Vignette R chunks follow the shared Air formatting. The navbar links to the
-  package repository on GitHub and removes the Twitter icon.
-  Website examples consistently use the base R pipe.
-  Icons and pictograms has its own article alongside Drilldown, with image
-  markers, tooltip icons and item symbols; the old Fontawesome URL redirects to it.
-* Histograms created by `hchart()` use square corners by default. A series-level
-  `borderRadius` can still customize them. The hchart article removes the point-list
-  and companion fitted-model examples to focus on its supported R objects.
-* The `hchart()` examples list supported methods with `methods(hchart)`.
-  The `hcmap()` help uses a concise title and a descriptive map-collection link.
-* The homepage introduces the shared Highcharts bundle and installation,
-  with standard CRAN/GitHub installation commands and direct links to
-  examples and reference pages through relative links. Datalegreya returns
-  to the navbar brand and homepage title; the homepage header rule is removed.
-* The homepage uses a full-width 2-by-2 chart grid with four synchronized states,
-  ordered as scatter, exports, map and pie. Its South America focus connects the same
-  countries and indicators across panels, with quantitative income, longevity
-  and trade-balance maps, shared export tooltips and crisis markers. South America
-  is emphasized for one state before returning to the world. The final scatter
-  compares exports and imports per person on logarithmic axes, changing both
-  variables. A versioned World Bank snapshot covers 179 economies in 2024,
-  including Russia; R can refresh the data. Pies compare export and population shares
-  before opening into a semicircular donut. The R source uses the hcrt theme
-  and native Highcharts updates; project links and single-column prose follow
-  the grid.
-  Transitions retain points and paths for continuous changes of size, position,
-  fill and stacking, and wait for fonts before starting playback. The loop
-  and Restart animate back to the first state.
-  Longer map color bars display explicit numeric labels. The scatter uses
-  plain regional country labels and a stable plot box with continuous marker
-  geometry when returning to its initial variables.
-  Island economies classified as open ocean in the map are assigned to their
-  continents so all four panels include the same cohort.
-  The initial scene renders without entrance animation or reinitialization,
-  and settles its native chart sizing before playback. Source and coverage
-  details remain in the developer documentation instead of the grid footer.
-  Shared export tooltips use the package's HTML table helper.
-  The second export view stacks areas to 100% with percentage labels and
-  tooltips. The line view labels the highest series at the 2008 crisis and
-  COVID-19 points, separated from the curves by a 24-pixel offset, without
-  vertical reference lines in any export view.
-  Export series retain every region's color in all four states.
-  A series label identifies South America in the third export view.
-  Panel descriptions use native Highcharts captions and update with each state.
-  Captions use smaller italic text aligned to the bottom right, and the grid omits
-  the shared narrative below the charts.
-  The scatter supplies a native regional legend at the top left; the external
-  legend is removed. Scatter and export plots keep matching margins, and the
-  export time axis is labeled Years.
-  Playback controls leave space below the charts and map credits.
-  The homepage omits the introductory chart recipe beneath Where to start.
+* `hchart()` shows ACF and PACF as lollipops at their reported lags.
+  Multivariate time series, decompositions and forecasts use shared table tooltips. Forecast
+  intervals show both limits.
+* Histograms created by `hchart()` use square corners by default.
+* Circle-only presets preserve rectangular heatmap cells. The hcrt theme uses
+  IBM Plex Sans for credits. French, Norwegian Bokmål and Simplified Chinese
+  use official Highcharts language packs. Japanese and Korean use AI-generated
+  translations.
 * The hcrt theme uses the built-in three-dot export menu icon.
-* Language examples compare dates and export-data menus across eight locales.
-  They use a shared chart factory, compact layouts and horizontal date labels.
-  Simulated Stock candles start at the current date and compare translated OHLC
-  tooltips and compact numeric labels on a logarithmic axis.
-  French, Norwegian Bokmål and Simplified Chinese use official Highcharts packs;
-  Japanese and Korean controls use explicitly identified AI-generated translations.
-* Circle-only presets preserve rectangular heatmap cells. The website restores
-  the colorful shared-data gallery, the JavaScript-to-R walkthrough and Pokémon
-  treemap drilldown, adds constructor examples and a tabbed theme collection,
-  and gives the article menu more vertical space.
-  Credits in the hcrt theme use the same IBM Plex Sans font as the chart body.
-* Website pages have descriptive titles, working source and documentation links,
-  and complete favicon assets, including when hosted under `/highcharter/`.
 * Forecast charts distinguish observed values, forecasts and their prediction
   intervals in legends and tooltips, including when a custom series name is supplied.
 * The hcrt and smpl presets use circular markers consistently across series.
-* The website restores an inline chart-types gallery and international map
-  examples, adds a Shinylive app, and aligns chart and article typography.
 * `hcmap()` accepts an already loaded GeoJSON list without downloading map data.
   Network charts preserve the current theme while hiding their coordinate axes.
-
-* The series gallery article builds correctly when knitr extracts its shared
-  examples for the website.
 
 * Charts fill the available widget width and height in the Viewer and standalone
   browser, including after resizing. Percentage-height containers no longer leave
   the chart at Highcharts' 400-pixel fallback height.
 
-* The website groups articles by task. The chart-types gallery includes
-  polar charts and pictograms. The Highcharts API guide includes Tom Bishop's
-  legend walkthrough; marker and tooltip recipes live in the chart-types article.
-  The Motion example now
-  runs with local data in the modules and plugins guide. The five former
-  article URLs redirect to their new locations.
 * The Motion plugin uses native array iteration with the bundled Highcharts.
 
 * `hc_xAxis()`, `hc_yAxis()` and `hc_zAxis()` now accept one or several
@@ -199,7 +115,6 @@
 * `hcpxy_set_extremes()` controls an x-axis range from Shiny. `hcpxy_set_data()`
   can now target a series by ID, which is safer when Stock indicators change series order.
 * Widgets with reflow enabled now follow changes in their container dimensions.
-* The chart gallery includes a weighted arc diagram example (#829).
 
 ## Migration guide
 

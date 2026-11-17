@@ -117,6 +117,11 @@ create_hc <- function(t) {
       df |> transmute(id = name, parent = "fruit", name, value, color)
     )
   }
+  single_color <- type %in%
+    c("line", "spline", "area", "areaspline", "streamgraph")
+  if (single_color) {
+    points$color <- NULL
+  }
   hc <- highchart() |>
     hc_chart(
       type = type,
@@ -131,7 +136,8 @@ create_hc <- function(t) {
       data = list_parse(points),
       type = type,
       name = "Fruit consumption",
-      colorByPoint = TRUE,
+      color = if (single_color) "#7CB5EC",
+      colorByPoint = !single_color,
       showInLegend = FALSE
     ) |>
     hc_tooltip(outside = TRUE) |>

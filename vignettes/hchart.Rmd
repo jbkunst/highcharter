@@ -97,14 +97,14 @@ hchart(LakeHuron, name = "Level") |>
   hc_title(text = "Level of Lake Huron 1875–1972")
 ```
 
-## Seasonal Decomposition of Time Series by Loess
+### Seasonal Decomposition of Time Series by Loess
 
 ```{r}
 x <- stl(log(AirPassengers), "per")
 hchart(x)
 ```
 
-## Forecast package
+### Forecast package
 
 The legend distinguishes the observed series from the forecast. Prediction
 intervals are linked to the forecast series. Supply `name` to label the subject;
@@ -117,7 +117,7 @@ x <- forecast(ets(USAccDeaths), h = 48, level = 95)
 hchart(x)
 ```
 
-## Exponential-smoothing components
+### Exponential-smoothing components
 
 An `ets` model shows its observed values and fitted level, slope or seasonal
 states in aligned panels. To show future values instead, pass the model to
@@ -125,6 +125,44 @@ states in aligned panels. To show future values instead, pass the model to
 
 ```{r ets-components}
 hchart(forecast::ets(AirPassengers))
+```
+
+### Multivariate Time series
+
+```{r}
+x <- cbind(mdeaths, fdeaths)
+hchart(x)
+```
+
+### Seasonal decomposition
+
+The four panels share a time axis and show the observed series, seasonality,
+trend and remainder. Gaps at the ends of the trend are part of the fitted
+decomposition.
+
+```{r hchart-decompose}
+hchart(stats::decompose(AirPassengers, type = "multiplicative"))
+```
+
+### Seasonal adjustment with X-13
+
+With the optional `seasonal` package installed, compare the original monthly
+series with the X-13-adjusted series on the same scale.
+
+```{r x13, eval=requireNamespace("seasonal", quietly=TRUE)}
+fit <- seasonal::seas(AirPassengers)
+hchart(
+  cbind(observed = AirPassengers, adjusted = seasonal::final(fit)),
+  separate = FALSE
+)
+```
+
+### Autocovariance & Autocorrelation
+
+```{r}
+changes <- diff(AirPassengers)
+hchart(acf(changes, plot = FALSE))
+hchart(pacf(changes, plot = FALSE))
 ```
 
 ## Igraph package
@@ -178,44 +216,16 @@ x <- xts::as.xts(sample_matrix)
 hchart(x)
 ```
 
-## Multivariate Time series
-
-```{r}
-x <- cbind(mdeaths, fdeaths)
-hchart(x)
-```
-
-## Seasonal decomposition
-
-The four panels share a time axis and show the observed series, seasonality,
-trend and remainder. Gaps at the ends of the trend are part of the fitted
-decomposition.
-
-```{r hchart-decompose}
-hchart(stats::decompose(AirPassengers, type = "multiplicative"))
-```
-
-## Autocovariance & Autocorrelation
-
-```{r}
-x <- acf(diff(AirPassengers), plot = FALSE)
-hchart(x)
-```
-
 ## Principal Components
 
 Each point represents one state. Axis titles give the share of variance
 explained by each component. Hover over a point to see the state's name.
 
-```{r hchart-pca}
-fit <- prcomp(USArrests, scale. = TRUE)
-hchart(fit)
-```
-
 Use `loadings = TRUE` to show how the variables relate to the chosen
 components. Use `scale = 0` for the raw observation scores.
 
 ```{r hchart-pca-loadings}
+fit <- prcomp(USArrests, scale. = TRUE)
 hchart(fit, choices = c(1, 3), loadings = TRUE)
 ```
 

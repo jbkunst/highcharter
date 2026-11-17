@@ -156,7 +156,7 @@ The Explore charts section uses the titles Chart types, Maps, Stock charts and
 Stock Tools, and Showcase. The chart-types article lives in
 `vignettes/chart-types.Rmd`; the former `series-gallery.html` URLs redirect to it.
 The Extensions and examples section includes `vignettes/multiple-axes.Rmd`,
-which holds the four-panel example formerly embedded in the Highcharts API guide.
+which plots a sample of diamonds across six panels with paired axes.
 `vignettes/icons-and-pictograms.Rmd` groups image markers, tooltip icons and item
 symbols as examples alongside Drilldown. It keeps the original Fontawesome
 examples and embeds colored SVGs from the suggested fontawesome package directly

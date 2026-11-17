@@ -66,7 +66,7 @@ be: line, spline, area, heatmap, treemap, etc.
 So, a basic example would be:
 
 ```{r}
-hchart(mpg, "point", hcaes(x = displ, y = cty, group = year))
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, group = year))
 ```
 
 ## Map positions and values
@@ -105,13 +105,7 @@ hchart(
 ) |>
   hc_colorAxis(
     stops = color_stops(
-      colors = c(
-        "#000004",
-        "#56106E",
-        "#BB3754",
-        "#F98C0A",
-        "#FCFFA4"
-      )
+      colors = c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
     )
   )
 
@@ -121,28 +115,6 @@ mpgman <- mpg |>
   arrange(-n, -unique)
 
 hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n, color = unique))
-```
-
-## Map a vector field
-
-Each row is a measurement at a grid position. `x` and `y` locate the arrow,
-`length` gives its relative magnitude, and `direction` sets its angle in degrees.
-
-```{r mapping-vector}
-coordinates <- seq(5, 95, by = 5)
-field <- expand.grid(x = coordinates, y = coordinates)
-field$length <- 200 - (field$x + field$y)
-field$direction <- (field$x + field$y) / 200 * 360
-
-hchart(
-  field,
-  "vector",
-  hcaes(x, y, length = length, direction = direction),
-  name = "Sample vector field"
-) |>
-  hc_xAxis(min = 0, max = 100) |>
-  hc_yAxis(min = 0, max = 100) |>
-  hc_size(height = 550)
 ```
 
 ## Extra parameters

@@ -101,72 +101,7 @@ highchart() |>
 
 ## Pokemon
 
-```{r pokemon, echo=FALSE}
-library(dplyr)
-data(pokemon)
-
-lvl_opts <- list(
-  list(
-    level = 1,
-    borderWidth = 0,
-    borderColor = "transparent",
-    dataLabels = list(
-      enabled = TRUE,
-      align = "left",
-      verticalAlign = "top",
-      style = list(
-        fontSize = "12px",
-        textOutline = FALSE,
-        color = "white",
-        fontWeight = "normal"
-      )
-    )
-  ),
-  list(
-    level = 2,
-    borderWidth = 0,
-    borderColor = "transparent",
-    colorVariation = list(key = "brightness", to = 0.250),
-    dataLabels = list(enabled = FALSE),
-    style = list(
-      fontSize = "8px",
-      textOutline = FALSE,
-      color = "white",
-      fontWeight = "normal"
-    )
-  )
-)
-
-pkmn_min <- pokemon |>
-  select(type_1, type_2, type_1_color) |>
-  mutate(type_1 = stringr::str_to_title(type_1)) |>
-  mutate(type_2 = ifelse(is.na(type_2), type_1, paste(type_1, "-", type_2))) |>
-  mutate(val = 1)
-
-cols <- pkmn_min |>
-  count(type_1, type_2, type_1_color, sort = TRUE) |>
-  pull(type_1_color) |>
-  unique()
-
-hchart(
-  data_to_hierarchical(pkmn_min, c(type_1, type_2), val, colors = cols),
-  type = "treemap",
-  # levelIsConstant = FALSE,
-  allowDrillToNode = TRUE,
-  levels = lvl_opts,
-  tooltip = list(valueDecimals = FALSE)
-) |>
-  hc_chart(
-    style = list(fontFamily = "IBM Plex Sans")
-  ) |>
-  hc_title(
-    text = "Gotta Catch 'Em All!",
-    style = list(fontFamily = "Alegreya Sans SC")
-  ) |>
-  hc_size(height = 700)
-```
-
-```{r pokemon, eval=FALSE}
+```{r pokemon, echo=FALSE, code=readLines(here::here("dev", "examples-charts", "pokemon.R"), encoding="UTF-8")}
 ```
 
 ## Weathers Radials

@@ -115,8 +115,8 @@ The setter changes an R process option shared by its sessions.
 
 ## The collection
 
-Choose a preset below; every tab uses the same sales data. The chart is
-resized when its tab becomes visible.
+Choose a preset below; every theme uses the same sales data. The chart is
+resized when its panel becomes visible.
 
 ```{r gallery, echo=FALSE}
 panels <- lapply(hc_themes(), function(name) {
@@ -136,7 +136,7 @@ panels <- lapply(hc_themes(), function(name) {
   }
   bslib::nav_panel(name, chart)
 })
-do.call(bslib::navset_card_tab, panels)
+do.call(bslib::navset_pill, panels)
 ```
 
 Use `hc_themes()` to list the available preset names.

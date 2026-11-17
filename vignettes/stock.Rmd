@@ -123,6 +123,7 @@ sell_level <- xts::xts(rep(70, NROW(SPY)), order.by = time(SPY))
 buy_level <- xts::xts(rep(30, NROW(SPY)), order.by = time(SPY))
 
 highchart(type = "stock") |>
+  hc_rangeSelector(selected = 1) |>
   hc_title(text = "SPY: price, volume and momentum in 2025") |>
   hc_yAxis(create_axis(3, heights = c(3, 1, 1), turnopposite = TRUE)) |>
   hc_add_series(SPY, yAxis = 0, name = "SPY", id = "instrument") |>

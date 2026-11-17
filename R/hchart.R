@@ -155,6 +155,14 @@ hchart.xts <- function(object, ...) {
 #' @export
 hchart.forecast <- function(object, addOriginal = TRUE, addLevels = TRUE, ...) {
   highchart() |>
+    hc_tooltip(table = TRUE) |>
+    hc_plotOptions(
+      arearange = list(
+        tooltip = list(
+          pointFormat = "<tr><td>{series.name}</td><td><b>{point.low} – {point.high}</b></td></tr>"
+        )
+      )
+    ) |>
     hc_xAxis(type = "datetime") |>
     hc_add_series(
       data = object,
@@ -248,15 +256,14 @@ hchart.acf <- function(object, ...) {
   sv <- qnorm(1 - 0.05 / 2) / sqrt(object$n.used)
 
   ds <- tibble(
-    x = seq(object$lag[,,]),
-    y = object$acf[,,]
+    x = as.vector(object$lag),
+    low = as.vector(object$acf)
   )
 
   hc <- highchart() |>
     hc_add_series(
       data = list_parse(ds),
-      type = "column",
-      groupPadding = 1,
+      type = "lollipop",
       name = ytitle
     )
 
@@ -291,6 +298,7 @@ hchart.mts <- function(
 
 hchart_mts1 <- function(object, ...) {
   hc <- highchart() |>
+    hc_tooltip(table = TRUE) |>
     hc_xAxis(type = ts_axis_type(object))
 
   for (i in seq(dim(object)[2])) {
@@ -315,7 +323,7 @@ hchart_mts2 <- function(
 
   hc <- highchart() |>
     hc_xAxis(type = ts_axis_type(object)) |>
-    hc_tooltip(shared = TRUE)
+    hc_tooltip(table = TRUE)
 
   hc <- hc |>
     hc_yAxis(
