@@ -53,8 +53,8 @@
   Export series retain every region's color in all four states.
   A series label identifies South America in the third export view.
   Panel descriptions use native Highcharts captions and update with each state.
-  Captions use smaller italic text, and the grid omits the shared narrative below
-  the charts.
+  Captions use smaller italic text aligned to the bottom right, and the grid omits
+  the shared narrative below the charts.
   The scatter supplies a native regional legend at the top left; the external
   legend is removed. Scatter and export plots keep matching margins, and the
   export time axis is labeled Years.

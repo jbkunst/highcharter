@@ -181,7 +181,8 @@ the scatter, map and pie; exports keep every region's color in all states.
 The third export view identifies South America with a native series label.
 Each panel's description is a native `hc_caption()`, included in the R chart
 and updated through `chart.update()` as the shared state changes. Captions use
-small italic text; there is no separate explanatory text shared by the grid.
+small italic text aligned to the bottom right; there is no separate explanatory
+text shared by the grid.
 The scatter's native legend identifies regions at the top left. The scatter and
 export chart share fixed margins to align their plotting areas; the export time
 axis is labeled Years. No separate HTML legend is generated.

@@ -105,7 +105,8 @@ view labels the uppermost series at 2008 and 2020, with a 24-pixel offset.
 There are no vertical year guides in any view.
 Panel descriptions use native `hc_caption()` options and change through
 Highcharts' `chart.update()` with each stage, rather than separate HTML paragraphs.
-Captions use 12-pixel italic text. The grid has no separate shared narrative.
+Captions use 12-pixel italic text aligned to the bottom right. The grid has no
+separate shared narrative.
 Plain country names label
 Chile and Uruguay during the regional view.
 

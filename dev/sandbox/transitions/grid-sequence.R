@@ -621,7 +621,8 @@ for (family in names(widget_families)) {
     widget_families[[family]][[stage]] <- widget_families[[family]][[stage]] |>
       hc_caption(
         text = captions[[family]][stage],
-        align = "center",
+        align = "right",
+        verticalAlign = "bottom",
         margin = 12,
         style = list(
           fontSize = "12px",
