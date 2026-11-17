@@ -242,6 +242,9 @@ country_chart <- function(stage) {
         name = region,
         color = unname(colors[[region]]),
         data = points,
+        # Highcharts 12.6 compares user marker options with resolved defaults
+        # during updates. Pin the symbol to preserve the existing SVG glyphs.
+        marker = list(symbol = "circle"),
         zIndex = 1,
         enableMouseTracking = !focus || region %in% focus_regions
       )
@@ -272,37 +275,20 @@ country_captions <- c(
 
 
 # 3. Exports: native shared tooltips, soft grids and crisis markers ----------
-events <- list(
-  list(
-    value = 2008,
-    width = 1,
-    color = "#B8BECA",
-    dashStyle = "ShortDash",
-    label = list(
-      text = "2008–09 crisis",
-      rotation = 0,
-      align = "left",
-      x = 4,
-      y = 14,
-      style = list(fontSize = "10px", color = "#697386", fontWeight = "normal")
-    )
-  ),
-  list(
-    value = 2020,
-    width = 1,
-    color = "#B8BECA",
-    dashStyle = "ShortDash",
-    label = list(
-      text = "COVID-19",
-      rotation = 0,
-      align = "right",
-      x = -4,
-      y = 14,
-      style = list(fontSize = "10px", color = "#697386", fontWeight = "normal")
-    )
-  )
+event_labels <- c("2008" = "2008–09 crisis", "2020" = "2020 · COVID-19")
+event_leaders <- vapply(
+  names(event_labels),
+  function(year) {
+    rows <- trade[trade$year == as.integer(year), ]
+    rows$continent[which.max(rows$exports)]
+  },
+  character(1)
 )
+events <- lapply(as.integer(names(event_labels)), function(year) {
+  list(value = year, width = 1, color = "#B8BECA", dashStyle = "ShortDash")
+})
 trade_chart <- function(stage) {
+  percent <- stage == 2L
   stream <- stage == 4L
   hc <- base |>
     hc_chart(type = "streamgraph") |>
@@ -320,29 +306,85 @@ trade_chart <- function(stage) {
     hc_yAxis(
       min = if (stream) NULL else 0,
       visible = !stream,
-      title = list(text = "Goods exports (US$ trillion)"),
+      max = if (percent) 100 else NULL,
+      tickInterval = if (percent) 25 else NULL,
+      title = list(
+        text = if (percent) {
+          "Share of goods exports (%)"
+        } else {
+          "Goods exports (US$ trillion)"
+        }
+      ),
       gridLineWidth = if (stream) 0 else 0.75,
       gridLineColor = soft_grid,
-      labels = list(style = list(fontSize = "10px"))
+      labels = list(
+        format = if (percent) "{value}%" else "{value}",
+        style = list(fontSize = "10px")
+      )
     ) |>
     hc_tooltip(
       shared = TRUE,
       table = TRUE,
       split = FALSE,
       valueDecimals = 2,
-      valueSuffix = " trillion"
+      valueSuffix = if (percent) "%" else " trillion"
     )
+  if (percent) {
+    hc <- hc |>
+      hc_tooltip(
+        pointFormat = paste0(
+          '<tr><td style="color:{series.color}">{series.name}: </td>',
+          '<td style="text-align:right"><b>{point.percentage:.2f}%</b></td></tr>'
+        )
+      )
+  }
   for (region in regions) {
     rows <- trade[trade$continent == region, ]
     rows <- rows[order(rows$year), ]
+    points <- lapply(seq_len(nrow(rows)), function(i) {
+      year_key <- as.character(rows$year[i])
+      event <- year_key %in%
+        names(event_labels) &&
+        region == event_leaders[[year_key]]
+      point <- list(
+        id = paste(region_id[[region]], year_key, sep = "-"),
+        x = rows$year[i],
+        y = rows$exports[i] / 1e12,
+        dataLabels = list(enabled = FALSE)
+      )
+      if (event) {
+        point$dataLabels <- list(
+          enabled = stage == 1L,
+          format = event_labels[[year_key]],
+          distance = 24,
+          y = -24,
+          x = if (year_key == "2008") 6 else -6,
+          align = if (year_key == "2008") "left" else "right",
+          verticalAlign = "bottom",
+          crop = FALSE,
+          overflow = "allow",
+          defer = FALSE,
+          padding = 0,
+          style = list(
+            fontSize = "10px",
+            fontWeight = "normal",
+            color = "#697386",
+            textOutline = "none"
+          )
+        )
+      }
+      point
+    })
     hc <- hc |>
       hc_add_series(
         type = "streamgraph",
         id = paste0("trade-", region_id[[region]]),
         name = region,
         color = unname(colors[[region]]),
-        stacking = if (stage <= 2L) {
+        stacking = if (stage == 1L) {
           NULL
+        } else if (percent) {
+          "percent"
         } else if (stream) {
           "stream"
         } else {
@@ -352,7 +394,7 @@ trade_chart <- function(stage) {
         opacity = if (stage == 3L && !region %in% focus_regions) 0.2 else 1,
         lineWidth = c(2.2, 1.5, 1, 0)[stage],
         marker = list(enabled = FALSE),
-        data = list_parse2(data.frame(x = rows$year, y = rows$exports / 1e12))
+        data = points
       )
   }
   hc
@@ -360,7 +402,7 @@ trade_chart <- function(stage) {
 trade_widgets <- lapply(1:4, trade_chart)
 trade_captions <- c(
   "Goods trade is concentrated and sensitive to global shocks.",
-  "The contractions of 2009 and 2020 are visible in nominal export values.",
+  "Regional shares separate trade composition from the size of the global cycle.",
   "South America's trade footprint is small beside its population weight.",
   "The global trade cycle links economies with very different trade positions."
 )

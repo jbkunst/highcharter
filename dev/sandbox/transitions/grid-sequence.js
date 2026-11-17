@@ -43,7 +43,11 @@ function(el, x, sequence) {
       if (options.colorAxis && !same(previous.colorAxis, options.colorAxis)) {
         chart.colorAxis[0].update(options.colorAxis, false);
       }
-      if (!same(previous.tooltip, options.tooltip)) chart.tooltip.update(options.tooltip);
+      if (!same(previous.tooltip, options.tooltip)) {
+        // Series cache their tooltip formats from chart.userOptions. Updating
+        // Tooltip alone leaves stale row formats/units in shared tooltips.
+        chart.update({tooltip: options.tooltip}, false);
+      }
       options.series.forEach(target => {
         const series = chart.get(target.id);
         const before = previous.series.find(item => item.id === target.id);

@@ -148,7 +148,11 @@ equality line. The map shows the signed goods balance divided by total goods
 trade. Export shares and population shares connect the pie
 to the history and bubble sizes. Shared export tooltips use `hc_tooltip(table = TRUE)`
 with two decimal places and units in aligned table cells.
-Export event markers identify the 2008 crisis
+The second export view uses native percent stacking, a 0–100% axis and
+`point.percentage` in the table; raw data remain in nominal US dollars.
+The line view labels the highest series point in 2008 and 2020, 24 pixels
+above the point. Dashed year guides remain in the other views without duplicate
+labels. Export event markers identify the 2008 crisis
 and COVID-19; plain country names label Chile and Uruguay in the regional
 scatter. Map color bars occupy 76% of their panel width, with explicit numeric
 formats. The regional camera fits the bounds of South American economies instead
@@ -178,7 +182,10 @@ clock starts. Check initial scatter visibility without clicking a control or
 resizing the viewport. Fixed scatter margins keep its plot box stable;
 marker geometry is captured before redraw and animated to the target geometry
 with Highcharts when either variable changes. This also applies at the loop
-boundary and after interrupted manual transitions. Browser checks should inspect
+boundary. Bubble series explicitly set their circle symbol: Highcharts 12.6
+compares user marker options with resolved defaults during updates and would
+otherwise recreate markers when refreshing cached tooltip formats.
+The same handling applies after interrupted manual transitions. Browser checks should inspect
 intermediate geometry, not just the final series type or point count. Also check the fourth-to-first
 transition through automatic playback: both scatter axes return to their
 initial variables, and the pie, map and export history animate back together.

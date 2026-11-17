@@ -43,7 +43,7 @@ tryCatch(
         url <- paste0(site, page, "?initial-grid=", width)
         browser$Page$navigate(url)
         expected <- jsonlite::toJSON(url, auto_unbox = TRUE)
-        for (attempt in seq_len(150L)) {
+        for (attempt in seq_len(300L)) {
           ready <- js(paste0(
             "(()=>{try{if(location.href!==",
             expected,
@@ -57,13 +57,23 @@ tryCatch(
           }
           Sys.sleep(0.1)
         }
-        stopifnot(isTRUE(ready))
+        if (!isTRUE(ready)) {
+          stop(
+            "Grid did not become ready: ",
+            js(paste0(
+              "(()=>{const w=document.querySelector('iframe.home-gallery')?.contentWindow||window;",
+              "return JSON.stringify({url:location.href,document:document.readyState,",
+              "grid:w.document.querySelector('.transition-grid-page')?.dataset})})()"
+            ))
+          )
+        }
         js(paste0(
           "window.w=document.querySelector('iframe.home-gallery')?.contentWindow||window;",
           "window.g=w.document;window.root=g.querySelector('.transition-grid-page');",
           "window.charts=w.Highcharts.charts.filter(c=>c&&root.contains(c.renderTo));",
           "window.scatter=charts.find(c=>c.renderTo.dataset.family==='countries');",
-          "window.map=charts.find(c=>c.renderTo.dataset.family==='map');void 0;"
+          "window.map=charts.find(c=>c.renderTo.dataset.family==='map');",
+          "window.tradeAreas=charts.find(c=>c.renderTo.dataset.family==='history').series.map(s=>s.area.element);void 0;"
         ))
         initial <- js(paste0(
           "(()=>{const series=scatter.series.filter(s=>s.type==='bubble');",
@@ -96,6 +106,57 @@ tryCatch(
           initial$visible,
           " initial scatter points; no viewport resize or footer"
         )
+
+        events <- js(paste0(
+          "(()=>{const h=charts.find(c=>c.renderTo.dataset.family==='history');",
+          "const box=h.container.getBoundingClientRect();return h.series.flatMap(s=>",
+          "s.points.filter(p=>p.options.dataLabels?.enabled).map(p=>{",
+          "const label=p.dataLabel.element.getBoundingClientRect();return {",
+          "year:p.x,leader:p.y===Math.max(...h.series.map(s=>s.points.find(q=>q.x===p.x).y)),",
+          "gap:box.top+h.plotTop+p.plotY-label.bottom,",
+          "inside:label.left>=box.left&&label.right<=box.right&&label.top>=box.top,",
+          "text:p.dataLabel.element.textContent}}))})()"
+        ))
+        stopifnot(
+          length(events) == 2L,
+          setequal(vapply(events, `[[`, numeric(1), "year"), c(2008, 2020)),
+          all(vapply(
+            events,
+            function(e) {
+              isTRUE(e$leader) && isTRUE(e$inside) && e$gap >= 16
+            },
+            logical(1)
+          ))
+        )
+        js(paste0(
+          "const percentPicker=root.querySelector('.grid-step');percentPicker.value=1;",
+          "percentPicker.dispatchEvent(new w.Event('change'));"
+        ))
+        percent <- js(paste0(
+          "(()=>{const h=charts.find(c=>c.renderTo.dataset.family==='history');",
+          "const years=h.series[0].points.map(p=>p.x);",
+          "const valid=years.every(year=>{const points=h.series.map(s=>s.points.find(p=>p.x===year));",
+          "const total=points.reduce((sum,p)=>sum+p.percentage,0);",
+          "const bands=points.map(p=>[Math.min(p.plotY,p.yBottom),Math.max(p.plotY,p.yBottom)]).sort((a,b)=>a[0]-b[0]);",
+          "return Math.abs(total-100)<0.001&&bands.every((b,i)=>i===0||bands[i-1][1]<=b[0]+0.1)});",
+          "h.tooltip.refresh(h.series.map(s=>s.points.find(p=>p.x===2020)));",
+          "const table=g.querySelector('.highcharts-tooltip table');return {valid,",
+          "sameAreas:h.series.every((s,i)=>s.area.element===tradeAreas[i]),",
+          "stacking:h.series.every(s=>s.options.stacking==='percent'),",
+          "min:h.yAxis[0].min,max:h.yAxis[0].max,",
+          "rows:table?.rows.length,units:table?.textContent.includes('%')&&",
+          "!table?.textContent.includes('trillion')}})()"
+        ))
+        stopifnot(
+          isTRUE(percent$valid),
+          isTRUE(percent$sameAreas),
+          isTRUE(percent$stacking),
+          percent$min == 0,
+          percent$max == 100,
+          percent$rows == 6L,
+          isTRUE(percent$units)
+        )
+        message("  Crisis point labels and non-overlapping 100% stacks passed")
 
         js(paste0(
           "const picker=root.querySelector('.grid-step');picker.value=2;",
