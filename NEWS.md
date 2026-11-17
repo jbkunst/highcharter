@@ -1,7 +1,8 @@
 # highcharter (development version)
 
 * The homepage introduces the shared Highcharts bundle, installation and a first
-  chart, with direct links to examples and reference pages. Datalegreya returns
+  chart, with standard CRAN/GitHub installation commands and direct links to
+  examples and reference pages. Datalegreya returns
   to the navbar brand and homepage title; the homepage header rule is removed.
 * The homepage uses a full-width 2-by-2 chart grid with four synchronized states,
   ordered as scatter, exports, map and pie. Its South America focus connects the same

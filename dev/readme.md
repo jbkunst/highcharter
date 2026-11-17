@@ -113,9 +113,10 @@ before deployment. A build that fails before cleanup must not be deployed.
 The script rebuilds generated output; it does not deploy it. Review the local
 site with `pkgdown::preview_site()` so search also runs through a local server.
 
-Source links currently point to `feat/highcharts-bundle` in `_pkgdown.yml` and
-the root README, because these articles and bundle files are not in the default
-branch yet. Switch them to `HEAD` when that branch contains the published sources.
+Source links currently point to `feat/highcharts-bundle` in `_pkgdown.yml`,
+because these articles and bundle files are not in the default branch yet.
+Switch them to `HEAD` when that branch contains the published sources. Public
+installation examples use the standard CRAN and GitHub commands without a branch.
 
 Extra root Markdown pages need a level-one heading for pkgdown to extract their
 page title. Generate favicon assets with `pkgdown::build_favicons(overwrite = TRUE)`;

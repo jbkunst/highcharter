@@ -1,8 +1,8 @@
 # highcharter
 
-Bring your data to life with interactive charts, maps and financial dashboards
-in R. Highcharter combines the power of Highcharts with a familiar R workflow:
-start with your data, choose a chart and make it your own.
+Highcharter brings Highcharts to R. Turn data frames, time series and statistical
+results into interactive visualizations, explore geographic data and create
+financial charts with a flexible R interface.
 
 <iframe class="home-gallery" src="home-gallery.html" title="Explore international development through animated charts" loading="lazy"></iframe>
 
@@ -10,33 +10,33 @@ start with your data, choose a chart and make it your own.
 
 ## Installation
 
-Install the released version from CRAN:
+Install from CRAN:
 
 ```r
 install.packages("highcharter")
 ```
 
-Try the development version with the unified Highcharts bundle:
+Or install the development version from GitHub:
 
 ```r
-remotes::install_github("jbkunst/highcharter", ref = "feat/highcharts-bundle")
+remotes::install_github("jbkunst/highcharter")
 ```
 
-## One bundle, a world of charts
+## What's included
 
-Go from a scatter plot to an interactive world map or a market dashboard.
-One shared Highcharts bundle brings together Charts, Stock, Maps and Gantt,
-with dozens of chart types ready to explore.
+One Highcharts bundle brings together Charts, Stock, Maps and Gantt. Choose from
+dozens of chart types and combine them with tooltips, zoom, drilldown,
+annotations, exporting and accessibility features.
 
-- **Explore your data:** zoom, drill down and discover details in rich tooltips.
-- **Tell your story:** combine series, add annotations and customize colors,
-  themes and languages.
-- **Follow the markets:** use `highchartstock()` for financial time series,
-  technical indicators and the Stock Tools interface.
-- **Share the result:** embed charts in Shiny and R Markdown, export images and
-  data, and use built-in accessibility features.
+- Chart R objects with `hchart()`: data frames, vectors, time series, forecasts
+  and survival models all have a starting point.
+- Create choropleths with `hcmap()` and bring your own geographic data.
+- Explore financial time series and candlesticks with `highchartstock()`,
+  technical indicators and Stock Tools.
+- Make charts your own with themes, colors, labels and languages.
+- Add interactive charts to Shiny applications and R Markdown documents.
 
-## Your first chart
+## How to start
 
 Pass a data frame to `hchart()` and map columns to visual properties with
 `hcaes()`. Add titles and options with the R pipe:
@@ -51,7 +51,10 @@ hchart(mtcars, "scatter", hcaes(x = wt, y = mpg, group = cyl)) |>
 ```
 
 The [first steps guide](https://jkunst.com/highcharter/articles/first-steps.html)
-walks through data frames, chart types and the options that make a chart yours.
+walks through charting a data frame. See the
+[`hchart()` guide](https://jkunst.com/highcharter/articles/hchart.html) for other
+R objects, or visit the [showcase](https://jkunst.com/highcharter/articles/showcase.html)
+for ideas on chart design.
 
 ## Keep exploring
 
@@ -65,6 +68,9 @@ walks through data frames, chart types and the options that make a chart yours.
   build interactive experiences for your audience.
 - [Function reference](https://jkunst.com/highcharter/reference/index.html):
   look up helpers and chart options.
+- [Highcharts API in R](https://jkunst.com/highcharter/articles/highcharts-api.html)
+  and [JavaScript-to-R guide](https://jkunst.com/highcharter/articles/highchartsjs-api-basics.html):
+  learn how Highcharts options translate to R code.
 
 [Source code](https://github.com/jbkunst/highcharter) ·
 [Report an issue](https://github.com/jbkunst/highcharter/issues) ·
