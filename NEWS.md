@@ -1,5 +1,8 @@
 # highcharter (development version)
 
+* Histograms created by `hchart()` use square corners by default. A series-level
+  `borderRadius` can still customize them. The hchart article removes the point-list
+  and companion fitted-model examples to focus on its supported R objects.
 * The `hchart()` examples list supported methods with `methods(hchart)`.
   The `hcmap()` help uses a concise title and a descriptive map-collection link.
 * The homepage introduces the shared Highcharts bundle, installation and a first

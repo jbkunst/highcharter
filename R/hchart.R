@@ -112,6 +112,7 @@ hchart.histogram <- function(object, ...) {
 
   highchart() |>
     hc_chart(zoomType = "x") |>
+    hc_plotOptions(column = list(borderRadius = 0)) |>
     hc_tooltip(
       formatter = JS(
         "function() { return  this.point.name + '<br/>' + this.y; }"
