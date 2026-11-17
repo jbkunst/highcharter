@@ -204,7 +204,7 @@ tryCatch(
       browser$Page$navigate(paste0(site, "/articles/from-data-to-charts.html"))
       for (attempt in seq_len(200L)) {
         article_ready <- js(
-          "window.Highcharts?.charts.filter(Boolean).length===4"
+          "document.querySelectorAll('.transition-grid-page[data-ready=true]').length===4"
         )
         if (isTRUE(article_ready)) {
           break
@@ -231,6 +231,16 @@ tryCatch(
         isTRUE(article$visible),
         !article$overflow
       )
+      phases <- js(paste0(
+        "(()=>{const players=[...document.querySelectorAll('.transition-grid-page')];",
+        "return players.every(player=>{const picker=player.querySelector('.grid-step');",
+        "const widget=player.querySelector('.html-widget');",
+        "for(const stage of ['1','2','3']){picker.value=stage;",
+        "picker.dispatchEvent(new Event('change'));if(widget.dataset.phase!==stage)return false;}",
+        "player.querySelector('.grid-reset').click();",
+        "return players.every(p=>p.querySelector('.html-widget').dataset.phase==='0');});})()"
+      ))
+      stopifnot(isTRUE(phases))
       js("document.querySelector('main details summary').focus();void 0")
       for (type in c("keyDown", "keyUp")) {
         browser$Input$dispatchKeyEvent(

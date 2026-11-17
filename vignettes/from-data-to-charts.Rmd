@@ -12,12 +12,24 @@ vignette: >
 
 ```{r setup, include=FALSE, purl=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+executor <- paste(
+  readLines(
+    file.path(
+      dirname(knitr::current_input(dir = TRUE)),
+      "..",
+      "pkgdown",
+      "grid-sequence.js"
+    ),
+    encoding = "UTF-8"
+  ),
+  collapse = "\n"
+)
 ```
 
 The homepage connects four views of the same economies: income and longevity,
 regional exports, a world map and regional shares. This article contains the
-original R code for their data, colors, captions and four states. Each chart
-also works on its own, without the homepage's JavaScript animation.
+original R code for their data, colors, captions and four states. Each chart below plays all four stages. Pause playback to inspect a stage,
+choose a stage directly, or restart at the beginning.
 
 ```{r home-libraries}
 library(highcharter)
@@ -389,6 +401,103 @@ add_home_caption <- function(hc, text) {
 
 </details>
 
+The article and homepage use the same player. In the article, each chart has its
+own controls. On the homepage, one set of controls advances all four charts.
+
+<details>
+<summary>Show the R code for playback and controls</summary>
+
+```{r home-player}
+chart_player <- function(...) {
+  charts <- list(...)
+  panels <- lapply(names(charts), function(family) {
+    widgets <- charts[[family]]
+    steps <- lapply(seq_along(widgets), function(stage) {
+      options <- widgets[[stage]]$x$hc_opts
+      axis_defaults <- list(
+        min = NULL,
+        max = NULL,
+        tickInterval = NULL,
+        categories = NULL,
+        title = list(text = NULL),
+        labels = list(format = NULL),
+        startOnTick = FALSE,
+        endOnTick = FALSE
+      )
+      for (axis in c("xAxis", "yAxis")) {
+        if (!is.null(options[[axis]])) {
+          options[[axis]] <- utils::modifyList(
+            axis_defaults,
+            options[[axis]],
+            keep.null = TRUE
+          )
+        }
+      }
+      options$chart$height <- chart_height
+      options$series <- lapply(options$series, function(series) {
+        utils::modifyList(list(stacking = NULL), series, keep.null = TRUE)
+      })
+      list(
+        id = paste0(family, "-", stage),
+        label = stage_names[stage],
+        wait = 2500,
+        duration = if (stage == 1L) 2000 else 1400,
+        options = options,
+        view = if (family == "map") {
+          if (stage != 3L) {
+            list(fit = TRUE)
+          } else {
+            list(countries = south_america$iso3)
+          }
+        } else {
+          NULL
+        }
+      )
+    })
+    first <- widgets[[1]] |> hc_size(width = "100%", height = chart_height)
+    first$x$hc_opts$plotOptions$series$animation <- FALSE
+    htmltools::tags$section(
+      class = "transition-panel",
+      htmlwidgets::onRender(
+        first,
+        executor,
+        data = list(family = family, steps = steps)
+      )
+    )
+  })
+  htmltools::tags$div(
+    class = "transition-grid-page",
+    htmltools::tags$div(class = "transition-grid", panels),
+    htmltools::tags$div(
+      class = "grid-controls",
+      htmltools::tags$button(class = "grid-play", type = "button", "Pause"),
+      htmltools::tags$button(
+        class = "grid-reset",
+        type = "button",
+        "Restart"
+      ),
+      htmltools::tags$select(
+        class = "grid-step",
+        "aria-label" = "Story stage",
+        lapply(seq_along(stage_names), function(i) {
+          htmltools::tags$option(value = i - 1L, stage_names[i])
+        })
+      )
+    )
+  )
+}
+```
+
+</details>
+
+<details>
+<summary>Show the JavaScript that animates the transitions</summary>
+
+```{js home-playback-js, code=executor, eval=FALSE, purl=FALSE}
+```
+
+</details>
+
 ## Income and longevity
 
 Start with equal-sized country points. State 2 changes their area to population;
@@ -580,7 +689,7 @@ country_widgets <- Map(add_home_caption, country_widgets, country_captions)
 </details>
 
 ```{r home-scatter-example, purl=FALSE}
-country_widgets[[1]]
+chart_player(countries = country_widgets)
 ```
 
 ## Regional exports
@@ -737,7 +846,7 @@ trade_widgets <- Map(add_home_caption, trade_widgets, trade_captions)
 </details>
 
 ```{r home-exports-example, purl=FALSE}
-trade_widgets[[1]]
+chart_player(history = trade_widgets)
 ```
 
 ## A world map
@@ -867,7 +976,7 @@ map_widgets <- Map(add_home_caption, map_widgets, map_captions)
 </details>
 
 ```{r home-map-example, purl=FALSE}
-map_widgets[[1]]
+chart_player(map = map_widgets)
 ```
 
 ## Regional shares
@@ -954,7 +1063,7 @@ share_widgets <- Map(add_home_caption, share_widgets, share_captions)
 </details>
 
 ```{r home-shares-example, purl=FALSE}
-share_widgets[[1]]
+chart_player(pie = share_widgets)
 ```
 
 ## Reuse the charts
@@ -962,66 +1071,3 @@ share_widgets[[1]]
 Each list above contains four ordinary highcharter widgets. For example,
 `country_widgets[[2]]` is the population-bubble view and `trade_widgets[[2]]`
 is the 100% stacked export view. They can be displayed or customized in R.
-
-The following objects supply the homepage's synchronized states. Its small
-JavaScript executor updates the same chart instances and coordinates the map
-camera; the data and R chart definitions are those above.
-
-<details>
-<summary>Show the state definitions used by the homepage</summary>
-
-```{r home-states}
-widget_families <- list(
-  countries = country_widgets,
-  history = trade_widgets,
-  map = map_widgets,
-  pie = share_widgets
-)
-families <- lapply(names(widget_families), function(family) {
-  lapply(1:4, function(stage) {
-    options <- widget_families[[family]][[stage]]$x$hc_opts
-    axis_defaults <- list(
-      min = NULL,
-      max = NULL,
-      tickInterval = NULL,
-      categories = NULL,
-      title = list(text = NULL),
-      labels = list(format = NULL),
-      startOnTick = FALSE,
-      endOnTick = FALSE
-    )
-    for (axis in c("xAxis", "yAxis")) {
-      if (!is.null(options[[axis]])) {
-        options[[axis]] <- utils::modifyList(
-          axis_defaults,
-          options[[axis]],
-          keep.null = TRUE
-        )
-      }
-    }
-    options$chart$height <- chart_height
-    options$series <- lapply(options$series, function(series) {
-      utils::modifyList(list(stacking = NULL), series, keep.null = TRUE)
-    })
-    list(
-      id = paste0(family, "-", stage),
-      label = stage_names[stage],
-      wait = 2500,
-      duration = if (stage == 1L) 2000 else 1400,
-      options = options,
-      view = if (family == "map") {
-        if (stage != 3L) {
-          list(fit = TRUE)
-        } else {
-          list(countries = south_america$iso3)
-        }
-      } else {
-        NULL
-      }
-    )
-  })
-})
-names(families) <- names(widget_families)
-```
-
-</details>

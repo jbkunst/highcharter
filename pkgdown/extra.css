@@ -95,3 +95,12 @@ main h3, main h4, main h5 { font-weight: 400; }
 .template-home #main + aside { display: none; }
 .template-home .home-copy { max-width: 52rem; margin-inline: auto; }
 @media (max-width: 520px) { .home-gallery { height: 720px; } }
+
+/* Each chart in From data to charts has independent playback controls. */
+.transition-grid-page .grid-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin: .5rem 0 1.5rem;
+}

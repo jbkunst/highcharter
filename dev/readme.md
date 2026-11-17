@@ -182,8 +182,9 @@ the complete runnable R code, including World Bank downloads; it never reads
 prepared CSVs or sources scripts from `dev/`.
 
 `pkgdown/index-examples.R` defines `build_home_gallery(output_dir)`. It uses
-`knitr::purl()` to extract the article's R code, then supplies the grid layout
-and JavaScript runtime. Do not add an independent data or chart recipe to the
+`knitr::purl()` to extract the article's R code. The article renders each sequence with its own
+controls and the homepage calls the same player with all four sequences. Both
+use `pkgdown/grid-sequence.js` for playback. Do not add an independent data or chart recipe to the
 adapter. Four persistent charts share four times, a common playback control
 and native Highcharts updates. They use the hcrt theme and highcharter's Google
 Fonts loader. The current common year is 2024: 179 economies, including Russia,

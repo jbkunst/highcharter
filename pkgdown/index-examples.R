@@ -15,22 +15,6 @@ build_home_gallery <- function(output_dir) {
     readLines("pkgdown/grid-sequence.js", encoding = "UTF-8"),
     collapse = "\n"
   )
-  panels <- lapply(names(families), function(family) {
-    widget <- widget_families[[family]][[1]] |>
-      hc_size(width = "100%", height = chart_height)
-    # Initial series must be drawn immediately; only later updates animate.
-    widget$x$hc_opts$plotOptions$series$animation <- FALSE
-    widget <- htmlwidgets::onRender(
-      widget,
-      executor,
-      data = list(family = family, steps = families[[family]])
-    )
-    htmltools::tags$section(
-      class = "transition-panel",
-      widget
-    )
-  })
-
   # A wide grid and common playback controls
   css <- "
 body { margin: 0; background: white; }
@@ -54,25 +38,11 @@ body { margin: 0; background: white; }
       "Highcharter: a world of contrasts"
     )),
     htmltools::tags$style(htmltools::HTML(css)),
-    htmltools::tags$main(
-      class = "transition-grid-page",
-      htmltools::tags$div(class = "transition-grid", panels),
-      htmltools::tags$div(
-        class = "grid-controls",
-        htmltools::tags$button(class = "grid-play", type = "button", "Pause"),
-        htmltools::tags$button(
-          class = "grid-reset",
-          type = "button",
-          "Restart"
-        ),
-        htmltools::tags$select(
-          class = "grid-step",
-          "aria-label" = "Story stage",
-          lapply(0:3, function(i) {
-            htmltools::tags$option(value = i, stage_names[i + 1L])
-          })
-        )
-      )
+    chart_player(
+      countries = country_widgets,
+      history = trade_widgets,
+      map = map_widgets,
+      pie = share_widgets
     )
   ))
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
