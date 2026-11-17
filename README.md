@@ -36,28 +36,14 @@ annotations, exporting and accessibility features.
 - Make charts your own with themes, colors, labels and languages.
 - Add interactive charts to Shiny applications and R Markdown documents.
 
-## How to start
+## Where to start
 
-Pass a data frame to `hchart()` and map columns to visual properties with
-`hcaes()`. Add titles and options with the R pipe:
-
-```r
-library(highcharter)
-
-hchart(mtcars, "scatter", hcaes(x = wt, y = mpg, group = cyl)) |>
-  hc_title(text = "Fuel economy by car weight") |>
-  hc_xAxis(title = list(text = "Weight (1,000 lbs)")) |>
-  hc_yAxis(title = list(text = "Miles per gallon"))
-```
-
-The [first steps guide](https://jkunst.com/highcharter/articles/first-steps.html)
-walks through charting a data frame. See the
-[`hchart()` guide](https://jkunst.com/highcharter/articles/hchart.html) for other
-R objects, or visit the [showcase](https://jkunst.com/highcharter/articles/showcase.html)
-for ideas on chart design.
-
-## Keep exploring
-
+- [First steps](https://jkunst.com/highcharter/articles/first-steps.html):
+  create your first chart from a data frame.
+- [`hchart()` guide](https://jkunst.com/highcharter/articles/hchart.html):
+  chart time series, forecasts and other R objects.
+- [Showcase](https://jkunst.com/highcharter/articles/showcase.html):
+  discover ideas for customization and chart design.
 - [Chart gallery](https://jkunst.com/highcharter/articles/series-gallery.html):
   find a chart type and its R example.
 - [Maps](https://jkunst.com/highcharter/articles/maps.html) and
@@ -71,6 +57,18 @@ for ideas on chart design.
 - [Highcharts API in R](https://jkunst.com/highcharter/articles/highcharts-api.html)
   and [JavaScript-to-R guide](https://jkunst.com/highcharter/articles/highchartsjs-api-basics.html):
   learn how Highcharts options translate to R code.
+
+Try a first chart: pass a data frame to `hchart()`, map columns with `hcaes()`
+and add titles and options with the R pipe.
+
+```r
+library(highcharter)
+
+hchart(mtcars, "scatter", hcaes(x = wt, y = mpg, group = cyl)) |>
+  hc_title(text = "Fuel economy by car weight") |>
+  hc_xAxis(title = list(text = "Weight (1,000 lbs)")) |>
+  hc_yAxis(title = list(text = "Miles per gallon"))
+```
 
 [Source code](https://github.com/jbkunst/highcharter) ·
 [Report an issue](https://github.com/jbkunst/highcharter/issues) ·
