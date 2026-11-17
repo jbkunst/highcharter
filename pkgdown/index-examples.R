@@ -1,5 +1,5 @@
-# Build the homepage grid from the same R source as the review example.
-# Four charts share four times; no embedded chart definitions are edited here.
+# Build the homepage grid from vignettes/from-data-to-charts.Rmd through the
+# runtime adapter. Edit the article first; no data/chart recipes belong here.
 home_grid <- new.env(parent = globalenv())
 source(
   "dev/sandbox/transitions/grid-sequence.R",

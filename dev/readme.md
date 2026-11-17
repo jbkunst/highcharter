@@ -170,11 +170,20 @@ The bundle validation gallery checks the types registered in the bundled
 JavaScript. Its examples live in `dev/R/test-highcharts-bundle.R` and render to
 `bundle-gallery.html`, separate from the public chart-types article. The public
 chart-types article renders its common-data charts and specialized recipes
-inline. `pkgdown/index-examples.R` builds the home iframe from
-`dev/sandbox/transitions/grid-sequence.R`: four persistent charts, four shared
-times, a common playback control and native Highcharts updates. The source
-uses a versioned World Bank WDI snapshot prepared by
-`dev/sandbox/transitions/prepare-data.R`, the hcrt theme and highcharter's Google
+inline. [From data to charts](../vignettes/from-data-to-charts.Rmd) is the
+canonical source for the homepage's data preparation, R chart definitions,
+theme, captions and four states. Start every homepage chart change there, then
+regenerate and review both the article and homepage. Keep its explanation in
+sync with changes to playback or layout. The article's folded sections contain
+the complete runnable R code, including World Bank downloads; it never reads
+prepared CSVs or sources scripts from `dev/`.
+
+`pkgdown/index-examples.R` builds the home iframe through
+`dev/sandbox/transitions/grid-sequence.R`. That small adapter uses
+`knitr::purl()` to extract the article's R code, then supplies the grid layout
+and JavaScript runtime. Do not add an independent data or chart recipe to the
+adapter. Four persistent charts share four times, a common playback control
+and native Highcharts updates. They use the hcrt theme and highcharter's Google
 Fonts loader. The current common year is 2024: 179 economies, including Russia,
 with complete merchandise-export histories from 2005. The panel order is
 scatter, exports, map and pie. Only the third state focuses on South America in
@@ -204,16 +213,27 @@ scatter. Map color bars occupy 76% of their panel width, with explicit numeric
 formats. The regional camera fits the bounds of South American economies instead
 of relying on a fixed zoom that can crop the north or south.
 Sources, units, coverage and refresh instructions live in the
-[data README](sandbox/transitions/data/README.md). Builds use local prepared
-data without API calls; refresh explicitly with
+[data README](sandbox/transitions/data/README.md) and public article. Every build
+recomputes the tables from the original World Bank JSON responses. The adapter
+sets `HIGHCHARTER_HOME_DATA_CACHE` to the absolute ignored
+`dev/highcharts-bundle/preview/wdi-cache/` directory, so pkgdown's article
+subprocesses reuse the same raw responses. A standalone article uses a temporary
+cache unless that environment variable names another directory. Missing responses
+are downloaded; refresh explicitly with
 `options(highcharter.website.refresh_data = TRUE)` before sourcing the grid.
+The article downloads Highcharts mapdata 2.3.3 into the same raw-response cache.
+Review data and coverage before publishing a refresh. The former
+prepared CSV inputs and standalone preparation script are superseded by the
+article; the raw JSON cache is an output, never a second source recipe.
 The build also copies the downloadable `home-data.csv` into the site output.
 Sources and coverage stay in the data README; the grid has no source footer.
 After serving the generated site, run
 `Rscript dev/highcharts-bundle/test-home-grid.R http://127.0.0.1:8765`
 to check cold initial scatter rendering, the South America focus and shared
 HTML-table tooltips in both the homepage iframe and standalone gallery, at
-desktop and mobile widths. This optional development check uses chromote.
+desktop and mobile widths. It also compares the article's initial chart data
+with the homepage and exercises the native data-code folding with the keyboard.
+This optional development check uses chromote.
 The older standalone HTML prototypes
 remain visual references in `dev/sandbox/transitions/`.
 Grid transitions retain their series, point IDs and SVG paths. The executor

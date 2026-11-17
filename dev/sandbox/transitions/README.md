@@ -69,7 +69,12 @@ de la portada, que ahora usa el grid sincronizado descrito abajo.
 
 ## Synchronized 2-by-2 grid
 
-[grid-sequence.R](grid-sequence.R) builds the homepage independently of the
+[From data to charts](../../../vignettes/from-data-to-charts.Rmd) is the source
+of truth for the homepage data and R charts. Make every homepage chart change
+there first, then regenerate and review both the article and homepage. The
+article's code rebuilds the tables directly from World Bank JSON responses.
+[grid-sequence.R](grid-sequence.R) extracts it with `knitr::purl()` and adds
+the grid layout and animation runtime. It remains independent of the
 single-chart prototype above. All comments and visible analytical captions in
 the grid are in English.
 

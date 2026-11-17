@@ -11,6 +11,14 @@ examples or the website. It describes each `dev/` directory and the build steps.
 - Format R code with Air using the root `air.toml`. Run `air format .` and `air format --check .`; preserve the exclusions for generated files and local artifacts. See the [formatting guide](dev/readme.md#format-r-code).
 - Format R code in vignettes with `Rscript dev/format-vignettes.R` and verify it with `Rscript dev/format-vignettes.R --check`.
 - Use the base R pipe `|>` in website examples, including the canonical scripts in `dev/examples-charts/` and `dev/examples-helpers/`.
+- Treat `vignettes/from-data-to-charts.Rmd` as the source of truth for the
+  homepage grid's data, R chart definitions, captions, themes and states. Start
+  every change to the homepage charts in that article, then regenerate and
+  review both the article and homepage. Keep its explanation in sync when
+  changing playback or layout. The grid adapter extracts the article with
+  `knitr::purl()`; do not introduce a second data or chart recipe in `dev/`.
+- Before pushing, fetch the remote and inspect incoming commits, outgoing
+  commits and local changes so the working branch stays synchronized.
 - Match validation to the change. Run an R example for an R helper. For rendering, keyboard navigation or resize, also exercise the output in a browser. For an issue, try its reproducible example and report what was observed.
 - Place each new public help topic in the `_pkgdown.yml` section where a user would look for it. Reuse an existing selector when it fits and run `pkgdown::check_pkgdown()` after updating the documentation.
 

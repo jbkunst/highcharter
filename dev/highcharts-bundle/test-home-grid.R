@@ -98,6 +98,11 @@ tryCatch(
           isTRUE(initial$clips),
           !initial$footer
         )
+        home_signature <- js(paste0(
+          "JSON.stringify(charts.map(c=>({caption:c.options.caption.text,",
+          "series:c.series.map(s=>({id:s.options.id,",
+          "data:s.options.data.map(p=>[p.id,p.x,p.y,p.value,p.z,p.name,p.dataLabels?.format])}))})))"
+        ))
         message(
           page,
           " at ",
@@ -194,6 +199,53 @@ tryCatch(
           isTRUE(table$units)
         )
       }
+      # The canonical article must display the same initial chart data while
+      # keeping its full recipe available through native keyboard disclosures.
+      browser$Page$navigate(paste0(site, "/articles/from-data-to-charts.html"))
+      for (attempt in seq_len(200L)) {
+        article_ready <- js(
+          "window.Highcharts?.charts.filter(Boolean).length===4"
+        )
+        if (isTRUE(article_ready)) {
+          break
+        }
+        Sys.sleep(0.1)
+      }
+      stopifnot(isTRUE(article_ready))
+      article <- js(paste0(
+        "(()=>{const charts=Highcharts.charts.filter(Boolean);",
+        "const folds=[...document.querySelectorAll('main details')];return {",
+        "signature:JSON.stringify(charts.map(c=>({caption:c.options.caption.text,",
+        "series:c.series.map(s=>({id:s.options.id,",
+        "data:s.options.data.map(p=>[p.id,p.x,p.y,p.value,p.z,p.name,p.dataLabels?.format])}))}))),",
+        "folded:folds.length>=6&&folds.every(d=>!d.open),",
+        "code:folds[0].textContent.includes('api.worldbank.org'),",
+        "visible:charts.every(c=>!c.container.closest('details')&&",
+        "c.container.getBoundingClientRect().width>0),",
+        "overflow:document.documentElement.scrollWidth>innerWidth}})()"
+      ))
+      stopifnot(
+        identical(article$signature, home_signature),
+        isTRUE(article$folded),
+        isTRUE(article$code),
+        isTRUE(article$visible),
+        !article$overflow
+      )
+      js("document.querySelector('main details summary').focus();void 0")
+      for (type in c("keyDown", "keyUp")) {
+        browser$Input$dispatchKeyEvent(
+          type = type,
+          key = "Enter",
+          code = "Enter",
+          text = if (type == "keyDown") "\r" else "",
+          windowsVirtualKeyCode = 13,
+          nativeVirtualKeyCode = 13
+        )
+      }
+      stopifnot(isTRUE(js("document.querySelector('main details').open")))
+      message(
+        "  Canonical article data, visible charts and keyboard folding passed"
+      )
     }
     message(
       "HOME_GRID_PASSED: cold initial drawing, standalone/iframe, desktop/mobile, South America"

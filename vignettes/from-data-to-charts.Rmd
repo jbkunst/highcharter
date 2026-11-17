@@ -1,0 +1,1070 @@
+---
+title: From data to charts
+output: rmarkdown::html_vignette
+description: >
+  Recreate the homepage's international data and four charts in R,
+  from World Bank indicators to scatter plots, exports, maps and shares.
+vignette: >
+  %\VignetteIndexEntry{From data to charts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+The homepage connects four views of the same economies: income and longevity,
+regional exports, a world map and regional shares. This article contains the
+original R code for their data, colors, captions and four states. Each chart
+also works on its own, without the homepage's JavaScript animation.
+
+```{r home-libraries}
+library(highcharter)
+```
+
+## Prepare the data
+
+The data come from the [World Bank's World Development Indicators](https://databank.worldbank.org/source/world-development-indicators).
+Run the following code to fetch the original JSON responses, join economy and
+map identifiers, choose a common year and calculate trade measures. No prepared
+CSV files are needed. The first run requires internet; subsequent runs reuse
+the cached responses. Set `options(highcharter.website.refresh_data = TRUE)` to
+fetch them again.
+
+The six indicators measure population, life expectancy, GDP per person at
+purchasing-power parity (constant 2021 international dollars), urban population,
+and merchandise exports and imports (current US dollars). Export histories start
+in 2005. Economies must have complete indicators for the common year, positive
+income, population and trade flows, a map match and a complete export history.
+The latest recent year with at least 150 complete economies is selected before
+checking history. Missing values are not imputed and years are not mixed.
+
+<details>
+<summary>Show data download and preparation</summary>
+
+```{r home-data}
+fetch_wdi <- function(path, cache_file, refresh = FALSE) {
+  if (!file.exists(cache_file) || refresh) {
+    dir.create(dirname(cache_file), recursive = TRUE, showWarnings = FALSE)
+    url <- paste0("https://api.worldbank.org/v2/", path)
+    message("Downloading World Bank data: ", url)
+    temp <- tempfile(tmpdir = dirname(cache_file), fileext = ".json")
+    on.exit(unlink(temp), add = TRUE)
+    old_timeout <- getOption("timeout")
+    options(timeout = max(90, old_timeout))
+    on.exit(options(timeout = old_timeout), add = TRUE)
+    utils::download.file(
+      url,
+      temp,
+      method = "libcurl",
+      mode = "wb",
+      quiet = TRUE,
+      headers = c("User-Agent" = "highcharter website data preparation")
+    )
+    response <- jsonlite::read_json(temp)
+    if (
+      length(response) != 2L ||
+        is.null(response[[1]]$pages) ||
+        response[[1]]$pages != 1L
+    ) {
+      stop("Unexpected or paginated World Bank response: ", url)
+    }
+    file.copy(temp, cache_file, overwrite = TRUE)
+  }
+  jsonlite::read_json(cache_file)
+}
+
+prepare_home_data <- function(
+  world,
+  cache_dir,
+  refresh = FALSE,
+  start_year = 2005L
+) {
+  current_year <- as.integer(format(Sys.Date(), "%Y"))
+  indicators <- c(
+    population = "SP.POP.TOTL",
+    life = "SP.DYN.LE00.IN",
+    income = "NY.GDP.PCAP.PP.KD",
+    urban = "SP.URB.TOTL.IN.ZS",
+    exports = "TX.VAL.MRCH.CD.WT",
+    imports = "TM.VAL.MRCH.CD.WT"
+  )
+  geography <- fetch_wdi(
+    "country/all?format=json&per_page=400",
+    file.path(cache_dir, "economies.json"),
+    refresh
+  )
+  economy_rows <- Filter(
+    function(x) x$region$value != "Aggregates",
+    geography[[2]]
+  )
+  economies <- data.frame(
+    iso3 = vapply(economy_rows, function(x) x$id, character(1)),
+    name = vapply(economy_rows, function(x) x$name, character(1))
+  )
+  features <- world$objects$default$geometries
+  continents <- data.frame(
+    iso3 = vapply(features, function(x) x$properties[["iso-a3"]], character(1)),
+    continent = vapply(
+      features,
+      function(x) x$properties$continent,
+      character(1)
+    )
+  )
+  continents <- continents[!duplicated(continents$iso3), ]
+  # Natural Earth's "Seven seas" group is not a continent. Keep these island
+  # economies in the same six-region cohort used by every homepage panel.
+  island_regions <- c(MDV = "Asia", MUS = "Africa", SYC = "Africa")
+  for (iso3 in names(island_regions)) {
+    continents$continent[continents$iso3 == iso3] <- island_regions[[iso3]]
+  }
+  economies <- merge(economies, continents, by = "iso3")
+
+  panels <- list()
+  source_dates <- list()
+  for (variable in names(indicators)) {
+    indicator <- indicators[[variable]]
+    years <- if (variable == "exports") {
+      seq.int(start_year, current_year)
+    } else {
+      seq.int(current_year - 3L, current_year)
+    }
+    # Short ranges avoid slow, very large indicator responses from the API.
+    ranges <- split(years, ceiling(seq_along(years) / 5L))
+    responses <- lapply(ranges, function(range) {
+      period <- paste0(min(range), ":", max(range))
+      path <- paste0(
+        "country/all/indicator/",
+        indicator,
+        "?source=2&format=json&date=",
+        period,
+        "&per_page=20000"
+      )
+      fetch_wdi(
+        path,
+        file.path(
+          cache_dir,
+          paste0(
+            variable,
+            "-",
+            min(range),
+            "-",
+            max(range),
+            ".json"
+          )
+        ),
+        refresh
+      )
+    })
+    rows <- unlist(lapply(responses, `[[`, 2L), recursive = FALSE)
+    panel <- data.frame(
+      iso3 = vapply(rows, function(x) x$countryiso3code, character(1)),
+      year = as.integer(vapply(rows, function(x) x$date, character(1))),
+      value = vapply(
+        rows,
+        function(x) if (is.null(x$value)) NA_real_ else x$value,
+        numeric(1)
+      )
+    )
+    names(panel)[3] <- variable
+    panels[[variable]] <- panel
+    source_dates[[variable]] <- responses[[1]][[1]]$lastupdated
+  }
+  wide <- Reduce(
+    function(x, y) merge(x, y, by = c("iso3", "year"), all = TRUE),
+    panels
+  )
+  country_panel <- merge(wide, economies, by = "iso3")
+  coverage <- lapply(
+    sort(
+      unique(country_panel$year[country_panel$year >= current_year - 3L]),
+      decreasing = TRUE
+    ),
+    function(year) {
+      rows <- country_panel[country_panel$year == year, ]
+      valid <- stats::complete.cases(rows[names(indicators)]) &
+        rows$income > 0 &
+        rows$population > 0 &
+        rows$exports > 0 &
+        rows$imports > 0
+      data.frame(
+        year = year,
+        economies = sum(valid),
+        population = sum(rows$population[valid])
+      )
+    }
+  )
+  coverage <- do.call(rbind, coverage)
+  message("Comparable-country coverage by year:")
+  print(utils::head(coverage, 5))
+  candidates <- coverage[coverage$economies >= 150L, ]
+  if (!nrow(candidates)) {
+    stop("No recent year has adequate comparable coverage.")
+  }
+  year <- max(candidates$year)
+  snapshot <- country_panel[country_panel$year == year, ]
+  snapshot <- snapshot[stats::complete.cases(snapshot[names(indicators)]), ]
+  snapshot <- snapshot[
+    snapshot$income > 0 &
+      snapshot$population > 0 &
+      snapshot$exports > 0 &
+      snapshot$imports > 0,
+  ]
+  history <- country_panel[
+    country_panel$year <= year,
+    c("iso3", "year", "exports")
+  ]
+  complete_history <- vapply(
+    split(history, history$iso3),
+    function(x) {
+      nrow(x) == year - start_year + 1L && all(is.finite(x$exports))
+    },
+    logical(1)
+  )
+  snapshot <- snapshot[
+    snapshot$iso3 %in% names(complete_history)[complete_history],
+  ]
+  history <- history[history$iso3 %in% snapshot$iso3, ]
+  snapshot$gdp <- snapshot$income * snapshot$population
+  snapshot$exports_pc <- snapshot$exports / snapshot$population
+  snapshot$imports_pc <- snapshot$imports / snapshot$population
+  snapshot$trade_balance <- 100 *
+    (snapshot$exports - snapshot$imports) /
+    (snapshot$exports + snapshot$imports)
+  rownames(snapshot) <- NULL
+  message(
+    "Selected ",
+    year,
+    ": ",
+    nrow(snapshot),
+    " economies; Russia included: ",
+    "RUS" %in% snapshot$iso3
+  )
+  world_population <- panels$population$population[
+    panels$population$iso3 == "WLD" & panels$population$year == year
+  ]
+  metadata <- list(
+    schema_version = 3L,
+    year = year,
+    start_year = start_year,
+    economies = nrow(snapshot),
+    prepared = as.character(Sys.Date()),
+    source = "World Bank WDI, source 2",
+    indicators = as.list(indicators),
+    source_updated = source_dates,
+    coverage = coverage,
+    world_population_coverage = sum(snapshot$population) / world_population,
+    excluded = setdiff(economies$iso3, snapshot$iso3),
+    units = list(
+      income = "PPP, constant 2021 international dollars per person",
+      exports = "Current US dollars",
+      imports = "Current US dollars",
+      exports_pc = "Current US dollars per person",
+      imports_pc = "Current US dollars per person",
+      trade_balance = "100 * (exports - imports) / (exports + imports)",
+      urban = "Percent of population"
+    )
+  )
+  list(countries = snapshot, history = history, metadata = metadata)
+}
+
+# Cache original JSON responses, not prepared tables. A fresh session can rebuild
+# everything from the API; refresh explicitly when reviewing new observations.
+cache_dir <- Sys.getenv(
+  "HIGHCHARTER_HOME_DATA_CACHE",
+  file.path(tempdir(), "highcharter-homepage-wdi")
+)
+dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
+refresh <- isTRUE(getOption("highcharter.website.refresh_data", FALSE))
+world_file <- file.path(cache_dir, "world-2.3.3.topo.json")
+if (!file.exists(world_file) || refresh) {
+  map_temp <- tempfile(tmpdir = cache_dir, fileext = ".json")
+  tryCatch(
+    {
+      utils::download.file(
+        "https://code.highcharts.com/mapdata/2.3.3/custom/world.topo.json",
+        map_temp,
+        method = "libcurl",
+        mode = "wb",
+        quiet = TRUE,
+        headers = c("User-Agent" = "highcharter website data preparation")
+      )
+      stopifnot(jsonlite::read_json(map_temp)$version == "2.3.3")
+      file.copy(map_temp, world_file, overwrite = TRUE)
+    },
+    finally = unlink(map_temp)
+  )
+}
+world <- jsonlite::read_json(world_file)
+home_data <- prepare_home_data(world, cache_dir, refresh = refresh)
+countries <- home_data$countries
+metadata <- home_data$metadata
+```
+
+</details>
+
+The selected year is **`r metadata$year`**, with **`r nrow(countries)` economies**
+covering **`r round(100 * metadata$world_population_coverage, 1)`%** of world
+population. Each observation represents an economy, rather than a regional
+aggregate. A fresh API download may revise historical observations or the
+available common year; `metadata$indicators` and `metadata$source_updated` record
+the indicator codes and source update dates.
+
+Trade per person divides each flow by population. The signed balance is
+`100 * (exports - imports) / (exports + imports)`; it can be negative, so its map
+uses a linear, diverging color scale. Export changes include price and
+exchange-rate effects because the flows are nominal.
+
+## Shared colors and appearance
+
+Give each region the same color in every chart. All panels use the hcrt theme,
+soft grids and small italic captions aligned to the bottom right. The scatter
+and export history share margins so their plot areas remain aligned in the grid.
+
+<details>
+<summary>Show shared theme, colors and helpers</summary>
+
+```{r home-appearance}
+year <- metadata$year
+regions <- c(
+  "Africa",
+  "Asia",
+  "Europe",
+  "North America",
+  "South America",
+  "Oceania"
+)
+colors <- c("#47475c", "#508CC8", "#F49952", "#61BC7B", "#6699a1", "#9C9EDB")
+names(colors) <- regions
+stopifnot(all(countries$continent %in% regions))
+region_id <- c(
+  "africa",
+  "asia",
+  "europe",
+  "north-america",
+  "south-america",
+  "oceania"
+)
+names(region_id) <- regions
+countries <- countries[
+  order(match(countries$continent, regions), countries$iso3),
+]
+countries$color <- unname(colors[countries$continent])
+focus_regions <- "South America"
+south_america <- countries[countries$continent %in% focus_regions, ]
+history <- merge(
+  home_data$history,
+  countries[c("iso3", "continent")],
+  by = "iso3"
+)
+trade <- aggregate(exports ~ continent + year, history, sum)
+totals <- aggregate(cbind(population, exports) ~ continent, countries, sum)
+totals <- totals[match(regions, totals$continent), ]
+population_share <- sum(south_america$population) / sum(countries$population)
+export_share <- sum(south_america$exports) / sum(countries$exports)
+pct <- function(x) formatC(100 * x, format = "f", digits = 1)
+
+# Plain country labels keep the regional view readable without a callout box.
+label_countries <- c("CHL", "URY")
+
+
+stage_names <- c(
+  "Global patterns",
+  "People and scale",
+  "South America",
+  "Trade positions"
+)
+chart_height <- 350
+base <- highchart(
+  theme = hc_theme("hcrt"),
+  width = "100%",
+  height = chart_height,
+  google_fonts = TRUE
+) |>
+  hc_chart(animation = list(duration = 1200), inverted = FALSE) |>
+  hc_title(text = NULL) |>
+  hc_subtitle(text = NULL) |>
+  hc_credits(enabled = FALSE) |>
+  hc_exporting(enabled = FALSE) |>
+  hc_legend(enabled = FALSE) |>
+  hc_xAxis(id = "x", type = "linear", title = list(text = NULL)) |>
+  hc_yAxis(
+    id = "y",
+    type = "linear",
+    opposite = FALSE,
+    title = list(text = NULL)
+  ) |>
+  hc_plotOptions(
+    series = list(
+      animation = TRUE,
+      dataLabels = list(enabled = FALSE),
+      label = list(enabled = FALSE),
+      states = list(inactive = list(opacity = 1))
+    )
+  )
+soft_grid <- "#EEF0F5"
+income_limits <- range(countries$income) * c(0.9, 1.1)
+life_limits <- c(
+  floor(min(countries$life) / 5) * 5,
+  ceiling(max(countries$life) / 5) * 5
+)
+trade_limits <- range(c(countries$exports_pc, countries$imports_pc)) *
+  c(0.8, 1.2)
+
+add_home_caption <- function(hc, text) {
+  hc |>
+    hc_caption(
+      text = text,
+      align = "right",
+      verticalAlign = "bottom",
+      margin = 12,
+      style = list(
+        fontSize = "12px",
+        fontStyle = "italic",
+        fontWeight = "300",
+        lineHeight = "18px",
+        color = "#666666"
+      )
+    )
+}
+```
+
+</details>
+
+## Income and longevity
+
+Start with equal-sized country points. State 2 changes their area to population;
+state 3 emphasizes South America; state 4 changes both axes to exports and
+imports per person. Stable point IDs and the bubble series let the homepage
+animate position and size without replacing the points.
+
+<details>
+<summary>Show chart code and its four states</summary>
+
+```{r home-scatter}
+country_chart <- function(stage) {
+  focus <- stage == 3L
+  trading <- stage == 4L
+  # Keep the global frame: fading preserves context and avoids clipping points
+  # abruptly while axes zoom to a smaller subset.
+  x_limits <- if (trading) trade_limits else income_limits
+  y_limits <- if (trading) {
+    trade_limits
+  } else {
+    life_limits
+  }
+  hc <- base |>
+    hc_chart(type = "bubble", margin = list(54, 16, 82, 68)) |>
+    hc_legend(
+      enabled = TRUE,
+      align = "left",
+      verticalAlign = "top",
+      layout = "horizontal",
+      padding = 0,
+      margin = 8,
+      itemDistance = 10,
+      symbolWidth = 8,
+      symbolHeight = 8,
+      itemStyle = list(fontSize = "10px", fontWeight = "normal")
+    ) |>
+    hc_xAxis(
+      type = "logarithmic",
+      min = x_limits[1],
+      max = x_limits[2],
+      title = list(
+        text = if (trading) {
+          "Merchandise exports per person (US$)"
+        } else {
+          "GDP per capita (PPP, 2021 $)"
+        }
+      ),
+      tickInterval = 1,
+      gridLineWidth = 0.75,
+      gridLineColor = soft_grid,
+      endOnTick = FALSE,
+      startOnTick = FALSE,
+      labels = list(style = list(fontSize = "10px"))
+    ) |>
+    hc_yAxis(
+      min = y_limits[1],
+      max = y_limits[2],
+      type = if (trading) "logarithmic" else "linear",
+      title = list(
+        text = if (trading) {
+          "Merchandise imports per person (US$)"
+        } else {
+          "Life expectancy (years)"
+        }
+      ),
+      tickInterval = if (trading) 1 else 10,
+      gridLineWidth = 0.75,
+      gridLineColor = soft_grid,
+      startOnTick = FALSE,
+      endOnTick = FALSE,
+      labels = list(
+        format = NULL,
+        style = list(fontSize = "10px")
+      )
+    ) |>
+    hc_plotOptions(
+      bubble = list(
+        minSize = 4,
+        maxSize = 30,
+        zMin = 0,
+        zMax = max(countries$population),
+        marker = list(fillOpacity = 1, lineColor = "#ffffff", lineWidth = 0.7)
+      )
+    ) |>
+    hc_tooltip(
+      headerFormat = "",
+      pointFormat = if (trading) {
+        paste0(
+          "<b>{point.name}</b><br/>Exports per person: US$ {point.custom.exports_pc:,.0f}",
+          "<br/>Imports per person: US$ {point.custom.imports_pc:,.0f}",
+          "<br/>Balance / total goods trade: {point.custom.trade_balance:.1f}%"
+        )
+      } else {
+        paste0(
+          "<b>{point.name}</b><br/>GDP per capita: PPP $ {point.custom.income:,.0f}",
+          "<br/>Life expectancy: {point.custom.life:.1f} years",
+          "<br/>Urban population: {point.custom.urban:.1f}%",
+          "<br/>Population: {point.custom.population:,.0f}"
+        )
+      }
+    )
+  for (region in regions) {
+    rows <- countries[countries$continent == region, ]
+    points <- lapply(seq_len(nrow(rows)), function(i) {
+      r <- rows[i, ]
+      list(
+        id = r$iso3,
+        name = r$name,
+        x = if (trading) r$exports_pc else r$income,
+        y = if (trading) r$imports_pc else r$life,
+        z = if (stage == 1L) {
+          max(countries$population) * 0.006
+        } else {
+          r$population
+        },
+        color = if (focus && !region %in% focus_regions) {
+          grDevices::adjustcolor(r$color, alpha.f = 0.08)
+        } else {
+          r$color
+        },
+        custom = list(
+          income = r$income,
+          life = r$life,
+          urban = r$urban,
+          population = r$population,
+          exports_pc = r$exports_pc,
+          imports_pc = r$imports_pc,
+          trade_balance = r$trade_balance
+        ),
+        dataLabels = list(
+          enabled = focus && r$iso3 %in% label_countries,
+          format = "{point.name}",
+          crop = FALSE,
+          overflow = "justify",
+          align = if (r$iso3 == "CHL") "left" else "right",
+          x = if (r$iso3 == "CHL") 8 else -8,
+          y = if (r$iso3 == "CHL") 12 else -12,
+          defer = FALSE,
+          padding = 1,
+          style = list(
+            fontSize = "10px",
+            fontWeight = "normal",
+            textOutline = "none"
+          )
+        )
+      )
+    })
+    hc <- hc |>
+      hc_add_series(
+        type = "bubble",
+        id = paste0("countries-", region_id[[region]]),
+        name = region,
+        color = unname(colors[[region]]),
+        data = points,
+        # Highcharts 12.6 compares user marker options with resolved defaults
+        # during updates. Pin the symbol to preserve the existing SVG glyphs.
+        marker = list(symbol = "circle"),
+        zIndex = 1,
+        enableMouseTracking = !focus || region %in% focus_regions
+      )
+  }
+  # Equal numeric ranges make this a trade-balance reference in the last view.
+  hc |>
+    hc_add_series(
+      type = "line",
+      id = "trade-parity",
+      name = "Exports equal imports",
+      showInLegend = FALSE,
+      data = list_parse2(data.frame(x = trade_limits, y = trade_limits)),
+      color = "#A6ADBA",
+      opacity = if (trading) 1 else 0,
+      lineWidth = 1,
+      dashStyle = "ShortDash",
+      marker = list(enabled = FALSE),
+      enableMouseTracking = FALSE,
+      zIndex = 0
+    )
+}
+country_widgets <- lapply(1:4, country_chart)
+country_captions <- c(
+  "Longevity varies even among economies with similar incomes.",
+  "Population weight shifts attention away from the richest economies.",
+  "Within South America, similar incomes can coexist with different longevity.",
+  "Above the dashed line: net goods importers; below it: net exporters."
+)
+country_widgets <- Map(add_home_caption, country_widgets, country_captions)
+```
+
+</details>
+
+```{r home-scatter-example, purl=FALSE}
+country_widgets[[1]]
+```
+
+## Regional exports
+
+Aggregate the same countries by region and year. The initial view is lines,
+followed by 100% stacked areas, stacked values and a streamgraph. The
+persistent streamgraph series changes fill and stacking to retain its paths.
+Shared HTML-table tooltips show every region; point labels locate the 2008
+financial crisis and the 2020 COVID-19 shock.
+
+<details>
+<summary>Show chart code and its four states</summary>
+
+```{r home-exports}
+event_labels <- c(
+  "2008" = "2008\u201309 crisis",
+  "2020" = "2020 \u00b7 COVID-19"
+)
+event_leaders <- vapply(
+  names(event_labels),
+  function(year) {
+    rows <- trade[trade$year == as.integer(year), ]
+    rows$continent[which.max(rows$exports)]
+  },
+  character(1)
+)
+trade_chart <- function(stage) {
+  percent <- stage == 2L
+  stream <- stage == 4L
+  hc <- base |>
+    hc_chart(type = "streamgraph", margin = list(54, 16, 82, 68)) |>
+    hc_xAxis(
+      min = metadata$start_year,
+      max = year,
+      tickInterval = 5,
+      title = list(text = "Years"),
+      gridLineWidth = if (stream) 0 else 0.75,
+      gridLineColor = soft_grid,
+      crosshair = list(color = "#B8BECA", width = 1),
+      labels = list(style = list(fontSize = "10px"))
+    ) |>
+    hc_yAxis(
+      min = if (stream) NULL else 0,
+      visible = !stream,
+      max = if (percent) 100 else NULL,
+      tickInterval = if (percent) 25 else NULL,
+      title = list(
+        text = if (percent) {
+          "Share of goods exports (%)"
+        } else {
+          "Goods exports (US$ trillion)"
+        }
+      ),
+      gridLineWidth = if (stream) 0 else 0.75,
+      gridLineColor = soft_grid,
+      labels = list(
+        format = if (percent) "{value}%" else "{value}",
+        style = list(fontSize = "10px")
+      )
+    ) |>
+    hc_tooltip(
+      shared = TRUE,
+      table = TRUE,
+      split = FALSE,
+      valueDecimals = 2,
+      valueSuffix = if (percent) "%" else " trillion"
+    )
+  if (percent) {
+    hc <- hc |>
+      hc_tooltip(
+        pointFormat = paste0(
+          '<tr><td style="color:{series.color}">{series.name}: </td>',
+          '<td style="text-align:right"><b>{point.percentage:.2f}%</b></td></tr>'
+        )
+      )
+  }
+  for (region in regions) {
+    rows <- trade[trade$continent == region, ]
+    rows <- rows[order(rows$year), ]
+    points <- lapply(seq_len(nrow(rows)), function(i) {
+      year_key <- as.character(rows$year[i])
+      event <- year_key %in%
+        names(event_labels) &&
+        region == event_leaders[[year_key]]
+      point <- list(
+        id = paste(region_id[[region]], year_key, sep = "-"),
+        x = rows$year[i],
+        y = rows$exports[i] / 1e12,
+        dataLabels = list(enabled = FALSE)
+      )
+      if (event) {
+        point$dataLabels <- list(
+          enabled = stage == 1L,
+          format = event_labels[[year_key]],
+          distance = 24,
+          y = -24,
+          x = if (year_key == "2008") 6 else -6,
+          align = if (year_key == "2008") "left" else "right",
+          verticalAlign = "bottom",
+          crop = FALSE,
+          overflow = "allow",
+          defer = FALSE,
+          padding = 0,
+          style = list(
+            fontSize = "10px",
+            fontWeight = "normal",
+            color = "#697386",
+            textOutline = "none"
+          )
+        )
+      }
+      point
+    })
+    hc <- hc |>
+      hc_add_series(
+        type = "streamgraph",
+        id = paste0("trade-", region_id[[region]]),
+        name = region,
+        color = unname(colors[[region]]),
+        stacking = if (stage == 1L) {
+          NULL
+        } else if (percent) {
+          "percent"
+        } else if (stream) {
+          "stream"
+        } else {
+          "normal"
+        },
+        fillOpacity = c(0, 0.65, 0.65, 1)[stage],
+        opacity = 1,
+        label = list(
+          enabled = stage == 3L && region == "South America",
+          onArea = FALSE,
+          connectorAllowed = TRUE,
+          style = list(fontSize = "10px", fontWeight = "normal")
+        ),
+        lineWidth = c(2.2, 1.5, 1, 0)[stage],
+        marker = list(enabled = FALSE),
+        data = points
+      )
+  }
+  hc
+}
+trade_widgets <- lapply(1:4, trade_chart)
+trade_captions <- c(
+  "Goods trade is concentrated and sensitive to global shocks.",
+  "Regional shares separate trade composition from the size of the global cycle.",
+  "South America's trade footprint is small beside its population weight.",
+  "The global trade cycle links economies with very different trade positions."
+)
+trade_widgets <- Map(add_home_caption, trade_widgets, trade_captions)
+```
+
+</details>
+
+```{r home-exports-example, purl=FALSE}
+trade_widgets[[1]]
+```
+
+## A world map
+
+Join the same observations to the versioned Highcharts/Natural Earth world
+map with `hcmap()`. Its states show income, longevity, a South American
+longevity focus and the signed trade balance. Grey shapes fall outside the
+complete-data cohort. Country selection keeps the map and other charts
+comparable.
+
+<details>
+<summary>Show chart code and its four states</summary>
+
+```{r home-map}
+purple_scale <- list(
+  list(0, "#F1EFF7"),
+  list(0.5, "#9C9EDB"),
+  list(1, "#47475c")
+)
+map_chart <- function(variable) {
+  values <- countries[c("iso3", variable)]
+  values$id <- values$iso3
+  values$name <- countries$name
+  hc <- hcmap(
+    world,
+    data = values,
+    value = variable,
+    joinBy = c("iso-a3", "iso3"),
+    type = "map",
+    id = "world",
+    name = variable,
+    borderColor = "#ffffff",
+    borderWidth = 0.4,
+    nullColor = "#D5D8DF"
+  ) |>
+    hc_add_theme(hc_theme("hcrt")) |>
+    hc_title(text = NULL) |>
+    hc_subtitle(text = NULL) |>
+    hc_mapView(projection = list(name = "EqualEarth")) |>
+    hc_mapNavigation(enabled = FALSE) |>
+    hc_legend(
+      enabled = TRUE,
+      align = "center",
+      verticalAlign = "bottom",
+      padding = 6,
+      margin = 8,
+      symbolHeight = 10
+    ) |>
+    hc_plotOptions(
+      series = list(animation = TRUE, dataLabels = list(enabled = FALSE))
+    )
+  if (variable == "income") {
+    hc <- hc |>
+      hc_colorAxis(
+        type = "logarithmic",
+        min = income_limits[1],
+        max = income_limits[2],
+        # Highcharts expects logarithmic tick positions in log10 units.
+        tickPositions = c(3, 4, 5),
+        stops = purple_scale,
+        labels = list(format = "{value:,.0f}")
+      ) |>
+      hc_tooltip(
+        pointFormat = "<b>{point.name}</b><br/>GDP per capita: PPP $ {point.value:,.0f}"
+      )
+  } else if (variable == "life") {
+    hc <- hc |>
+      hc_colorAxis(
+        type = "linear",
+        min = life_limits[1],
+        max = life_limits[2],
+        tickPositions = seq(life_limits[1], life_limits[2], by = 10),
+        stops = purple_scale,
+        labels = list(format = "{value:.0f}")
+      ) |>
+      hc_tooltip(
+        pointFormat = "<b>{point.name}</b><br/>Life expectancy: {point.value:.1f} years"
+      )
+  } else {
+    hc <- hc |>
+      hc_colorAxis(
+        type = "linear",
+        min = -100,
+        max = 100,
+        tickPositions = c(-100, -50, 0, 50, 100),
+        stops = list(
+          list(0, "#F49952"),
+          list(0.5, "#F5F4F8"),
+          list(1, "#508CC8")
+        ),
+        labels = list(format = "{value:.0f}%")
+      ) |>
+      hc_tooltip(
+        pointFormat = "<b>{point.name}</b><br/>Goods balance / total goods trade: {point.value:.1f}%"
+      )
+  }
+  hc |>
+    hc_colorAxis(
+      width = "76%",
+      height = 10,
+      tickLength = 4,
+      showFirstLabel = TRUE,
+      showLastLabel = TRUE,
+      labels = list(
+        enabled = TRUE,
+        style = list(fontSize = "11px", color = "#47475c")
+      )
+    )
+}
+map_income <- map_chart("income")
+map_life <- map_chart("life")
+map_balance <- map_chart("trade_balance")
+map_widgets <- list(map_income, map_life, map_life, map_balance)
+map_captions <- c(
+  "GDP per person, PPP-adjusted, on a logarithmic color scale.",
+  "Longevity follows a related\u2014but not identical\u2014geography.",
+  sprintf(
+    "South America's middle 80%% spans %.0f\u2013%.0f years of life expectancy.",
+    stats::quantile(south_america$life, 0.1),
+    stats::quantile(south_america$life, 0.9)
+  ),
+  "Goods balance / total trade: orange deficits, blue surpluses."
+)
+map_widgets <- Map(add_home_caption, map_widgets, map_captions)
+```
+
+</details>
+
+```{r home-map-example, purl=FALSE}
+map_widgets[[1]]
+```
+
+## Regional shares
+
+The first pie compares merchandise-export shares. The next states form a
+donut, switch to population while emphasizing South America, then open into
+a semicircular donut. Shares refer to the selected economies, not all
+economies worldwide.
+
+<details>
+<summary>Show chart code and its four states</summary>
+
+```{r home-shares}
+share_chart <- function(stage) {
+  people <- stage >= 3L
+  points <- lapply(seq_along(regions), function(i) {
+    region <- regions[i]
+    list(
+      id = region_id[[region]],
+      name = region,
+      y = if (people) totals$population[i] else totals$exports[i],
+      color = if (stage == 3L && !region %in% focus_regions) {
+        grDevices::adjustcolor(colors[[region]], alpha.f = 0.25)
+      } else {
+        colors[[region]]
+      },
+      dataLabels = list(
+        enabled = stage == 3L && region %in% focus_regions,
+        format = "{point.name}<br/>{point.percentage:.1f}%",
+        distance = 8,
+        style = list(
+          fontSize = "11px",
+          fontWeight = "normal",
+          textOutline = "none"
+        )
+      )
+    )
+  })
+  base |>
+    hc_chart(type = "pie") |>
+    hc_xAxis(visible = FALSE) |>
+    hc_yAxis(visible = FALSE) |>
+    hc_tooltip(
+      headerFormat = "",
+      pointFormat = paste0(
+        "<b>{point.name}: {point.percentage:.1f}%</b><br/>",
+        if (people) {
+          "Population: {point.y:,.0f}"
+        } else {
+          "Goods exports: US$ {point.y:,.0f}"
+        }
+      )
+    ) |>
+    hc_add_series(
+      type = "pie",
+      id = "shares",
+      data = points,
+      innerSize = if (stage == 1L) "0%" else "55%",
+      startAngle = if (stage == 4L) -90 else 0,
+      endAngle = if (stage == 4L) 90 else 360,
+      center = if (stage == 4L) list("50%", "65%") else list("50%", "50%"),
+      size = "90%",
+      borderColor = "#ffffff",
+      borderWidth = 2
+    )
+}
+share_widgets <- lapply(1:4, share_chart)
+share_captions <- c(
+  "Shares of merchandise exports, rather than shares of people.",
+  "Trade remains concentrated when viewed as a donut.",
+  sprintf(
+    "South America is home to %s%% of the population represented here.",
+    pct(population_share)
+  ),
+  sprintf(
+    "%s%% of people, compared with %s%% of goods exports.",
+    pct(population_share),
+    pct(export_share)
+  )
+)
+share_widgets <- Map(add_home_caption, share_widgets, share_captions)
+```
+
+</details>
+
+```{r home-shares-example, purl=FALSE}
+share_widgets[[1]]
+```
+
+## Reuse the charts
+
+Each list above contains four ordinary highcharter widgets. For example,
+`country_widgets[[2]]` is the population-bubble view and `trade_widgets[[2]]`
+is the 100% stacked export view. They can be displayed or customized in R.
+
+The following objects supply the homepage's synchronized states. Its small
+JavaScript executor updates the same chart instances and coordinates the map
+camera; the data and R chart definitions are those above.
+
+<details>
+<summary>Show the state definitions used by the homepage</summary>
+
+```{r home-states}
+widget_families <- list(
+  countries = country_widgets,
+  history = trade_widgets,
+  map = map_widgets,
+  pie = share_widgets
+)
+families <- lapply(names(widget_families), function(family) {
+  lapply(1:4, function(stage) {
+    options <- widget_families[[family]][[stage]]$x$hc_opts
+    axis_defaults <- list(
+      min = NULL,
+      max = NULL,
+      tickInterval = NULL,
+      categories = NULL,
+      title = list(text = NULL),
+      labels = list(format = NULL),
+      startOnTick = FALSE,
+      endOnTick = FALSE
+    )
+    for (axis in c("xAxis", "yAxis")) {
+      if (!is.null(options[[axis]])) {
+        options[[axis]] <- utils::modifyList(
+          axis_defaults,
+          options[[axis]],
+          keep.null = TRUE
+        )
+      }
+    }
+    options$chart$height <- chart_height
+    options$series <- lapply(options$series, function(series) {
+      utils::modifyList(list(stacking = NULL), series, keep.null = TRUE)
+    })
+    list(
+      id = paste0(family, "-", stage),
+      label = stage_names[stage],
+      wait = 2500,
+      duration = if (stage == 1L) 2000 else 1400,
+      options = options,
+      view = if (family == "map") {
+        if (stage != 3L) {
+          list(fit = TRUE)
+        } else {
+          list(countries = south_america$iso3)
+        }
+      } else {
+        NULL
+      }
+    )
+  })
+})
+names(families) <- names(widget_families)
+```
+
+</details>

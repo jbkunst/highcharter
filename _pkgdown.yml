@@ -186,6 +186,7 @@ articles:
 - title: Extensions and examples
   navbar: Extensions and examples
   contents:
+  - from-data-to-charts
   - multiple-axes
   - drilldown
   - icons-and-pictograms

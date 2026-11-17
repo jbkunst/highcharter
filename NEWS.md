@@ -3,6 +3,11 @@
 * The homepage, package description and `?highcharter` clarify the licensing
   of the R wrapper and the bundled Highcharts JavaScript library. Attaching
   the package in an interactive session now points to the help topic once.
+* From data to charts recreates the homepage's World Bank data directly from
+  JSON responses and shows its four charts independently, with foldable code.
+  The homepage extracts the article's R definitions with knitr so data, styling
+  and synchronized states have one source. Prepared CSV inputs are no longer
+  used to generate the charts.
 * Icons and pictograms restores the original R/Python scatter and food counts,
   colors and symbols, using embedded SVGs instead of PNG conversion. The original
   Datalegreya graph lettering returns to the homepage and navbar. The navbar

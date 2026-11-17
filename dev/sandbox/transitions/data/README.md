@@ -1,16 +1,16 @@
 # Homepage data
 
-The four-chart grid uses these prepared World Bank World Development Indicators
-(WDI) files. They are separate from the older 132-country sample packaged in
-`../datos-animacion.zip`, which is retained for the single-chart experiment.
+The [From data to charts article](../../../../vignettes/from-data-to-charts.Rmd)
+is the canonical data recipe. Edit it first for every change to the homepage
+data or charts. Its folded preparation code downloads original World Bank WDI
+JSON responses and rebuilds `home_data$countries`, `home_data$history` and
+`home_data$metadata`. There are no prepared CSV inputs. This guide documents
+provenance; it does not provide another preparation script.
 
-| File | Contents |
-| --- | --- |
-| `countries.csv` | One row per economy for the latest common year: identifiers, continent, population, life expectancy, income, urbanization, merchandise exports and imports, and derived trade measures. |
-| `exports.csv` | Annual merchandise exports for the same fixed cohort from 2005 through the common year. |
-| `metadata.json` | Selected year, source update dates, indicator codes, selection coverage, excluded economy codes and units. |
+The older 132-country sample in `../datos-animacion.zip` is retained only for
+the separate single-chart experiment.
 
-The snapshot prepared on 16 November 2026 selects **2024**, with **179 economies**
+The current cached responses select **2024**, with **179 economies**
 covering about **97.6%** of world population. Russia is included. Although some
 2025 observations are available, life expectancy does not yet have comparable
 2025 coverage in this extraction. No missing values are imputed and no years are
@@ -20,7 +20,8 @@ Grey map shapes represent places outside this complete-data cohort.
 ## Sources and units
 
 The API source is [World Bank WDI, source 2](https://databank.worldbank.org/source/world-development-indicators).
-The source's own update date is recorded per indicator in `metadata.json`.
+The source's own update date is recorded per indicator in
+`home_data$metadata$source_updated`.
 
 | Field | Indicator | Unit |
 | --- | --- | --- |
@@ -34,8 +35,10 @@ The source's own update date is recorded per indicator in `metadata.json`.
 | `trade_balance` | `100 * (exports - imports) / (exports + imports)` | Signed goods balance as percent of total goods trade |
 | `gdp` | Derived as `income * population` | GDP, PPP, constant 2021 international dollars |
 
-Continents and map joins use the local Highcharts/Natural Earth
-[`custom-world.topo.json`](../../../examples-charts/data/maps/custom-world.topo.json).
+Continents and map joins use Highcharts/Natural Earth mapdata 2.3.3, downloaded
+by the article. The gallery's local
+[`custom-world.topo.json`](../../../examples-charts/data/maps/custom-world.topo.json)
+uses the same version.
 Maldives is assigned to Asia, and Mauritius and Seychelles to Africa: the map's
 "Seven seas (open ocean)" category would otherwise omit them from regional
 charts. All six regions together therefore contain the complete 179-economy
@@ -52,20 +55,25 @@ nominal: their changes include price and exchange-rate effects.
 Run from the repository root:
 
 ```r
-source("dev/sandbox/transitions/prepare-data.R", encoding = "UTF-8")
+# Recompute tables and charts from cached original JSON responses.
+pkgload::load_all(".")
+source("dev/sandbox/transitions/grid-sequence.R", encoding = "UTF-8")
 
-# Fetch current API responses and regenerate the versioned files.
-data <- prepare_home_data(refresh = TRUE)
-
-# Reprocess previously downloaded responses without fetching them again.
-data <- prepare_home_data(rebuild = TRUE)
+# Fetch current API responses before recomputing.
+options(highcharter.website.refresh_data = TRUE)
+source("dev/sandbox/transitions/grid-sequence.R", encoding = "UTF-8")
+options(highcharter.website.refresh_data = FALSE)
 ```
 
-The default `prepare_home_data()` reads the prepared files. Raw API responses
-are cached under ignored `dev/highcharts-bundle/preview/wdi-cache/`. Review CSV
-and metadata changes when refreshing. The map file is maintained separately.
+The adapter extracts the article with `knitr::purl()`. Raw API responses are
+cached under ignored `dev/highcharts-bundle/preview/wdi-cache/`, shared with
+article subprocesses through `HIGHCHARTER_HOME_DATA_CACHE`. The standalone
+article can run outside the checkout and uses a temporary cache by default.
+Each run recomputes the tables. Review the selected year, economies, coverage
+and source dates when refreshing. The world map is pinned to mapdata 2.3.3.
 Sourcing `grid-sequence.R` prepares the charts and generates `home-data.csv`,
-which the website build copies beside its homepage iframe.
+which the website build copies beside its homepage iframe as an optional
+download, never as a chart input.
 
 ## Shared analytical story
 
