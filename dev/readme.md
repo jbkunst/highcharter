@@ -82,13 +82,14 @@ home text. Generated gallery files belong in the site output.
 
 The public homepage focuses on installation, bundle features and getting started.
 Keep maintenance instructions in this guide. The navbar brand and homepage title
-use the original Datalegreya-Gradient font, restored from the repository history
-and served locally from `pkgdown/assets/fonts/`. Its upstream source is
+use Datalegreya fonts served locally from `pkgdown/assets/fonts/`. The homepage
+uses Gradient, restored from the repository history; the navbar uses Thin for
+a line without area shading, from the upstream `lib/fonts/` directory. The source is
 [figs-lab/datalegreya](https://github.com/figs-lab/datalegreya); retain `OFL.txt`
-beside the font. Other headings keep Alegreya Sans SC. Run `pkgdown::init_site()`
+beside the fonts. Other headings keep Alegreya Sans SC. Run `pkgdown::init_site()`
 when previewing changes to these assets without rebuilding the entire website.
 The shared initializer restores the original Datalegreya graph-encoded lettering
-after the font loads. The navbar uses the same graph sequence without the
+after each font loads. The navbar uses the same graph sequence without the
 `{rpackage}` suffix. Accessible labels and the plain-text fallback remain the
 package name.
 

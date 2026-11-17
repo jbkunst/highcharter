@@ -10,22 +10,26 @@ jQuery(function () {
   // Restore the original Datalegreya graph lettering after the font has loaded.
   // Keep plain package names for assistive technology and font-load failures.
   const wordmark = 'h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2';
-  document.fonts.load('1em "Datalegreya-Gradient"').then(fonts => {
-    if (!fonts.length) return;
-    function decorate(node, text) {
-      if (!node) return;
-      const label = document.createElement('span');
-      label.className = 'visually-hidden';
-      label.textContent = 'highcharter';
-      const graphic = document.createElement('span');
-      graphic.className = 'highcharter-wordmark';
-      graphic.setAttribute('aria-hidden', 'true');
-      graphic.textContent = text;
-      node.replaceChildren(label, graphic);
-    }
-    decorate(document.querySelector('.template-home #highcharter'), wordmark + '{rpackage}');
-    decorate(document.querySelector('.navbar-brand'), wordmark);
-  }).catch(() => {});
+  function decorate(node, text) {
+    const label = document.createElement('span');
+    label.className = 'visually-hidden';
+    label.textContent = 'highcharter';
+    const graphic = document.createElement('span');
+    graphic.className = 'highcharter-wordmark';
+    graphic.setAttribute('aria-hidden', 'true');
+    graphic.textContent = text;
+    node.replaceChildren(label, graphic);
+  }
+  [
+    ['.template-home #highcharter', 'Datalegreya-Gradient', wordmark + '{rpackage}'],
+    ['.navbar-brand', 'Datalegreya-Thin', wordmark]
+  ].forEach(([selector, font, text]) => {
+    const node = document.querySelector(selector);
+    if (!node) return;
+    document.fonts.load(`1em "${font}"`).then(fonts => {
+      if (fonts.length) decorate(node, text);
+    }).catch(() => {});
+  });
 
   // htmlwidgets initially measures hidden tab panes at zero width.
   document.addEventListener('shown.bs.tab', function () {

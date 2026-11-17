@@ -3,7 +3,8 @@
 * Icons and pictograms restores the original R/Python scatter and food counts,
   colors and symbols, using embedded SVGs instead of PNG conversion. The original
   Datalegreya graph lettering returns to the homepage and navbar. The navbar
-  omits the rpackage suffix and keeps the accessible package-name label.
+  uses the Thin variant for a line without shaded area, omits the rpackage suffix
+  and keeps the accessible package-name label.
 * Explore charts uses the titles Chart types, Maps, Stock charts and Stock Tools,
   and Showcase. The chart-types vignette replaces series-gallery, with redirects
   preserving the previous URLs.
