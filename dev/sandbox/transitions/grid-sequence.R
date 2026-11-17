@@ -707,7 +707,8 @@ body { margin: 0; background: white; }
   font: 300 14px/1.6 'IBM Plex Sans', sans-serif; color: #666; }
 .transition-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 24px; }
 .transition-panel { min-width: 0; }
-.grid-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.grid-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-top: 24px; }
 .grid-controls button,.grid-controls select { padding: 7px 18px; font: inherit; cursor: pointer;
   border: 1px solid #ddd; border-radius: 22px; background: #fff; color: #47475c; }
 .grid-controls select { appearance: none; padding-right: 38px;

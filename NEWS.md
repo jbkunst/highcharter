@@ -58,6 +58,7 @@
   The scatter supplies a native regional legend at the top left; the external
   legend is removed. Scatter and export plots keep matching margins, and the
   export time axis is labeled Years.
+  Playback controls leave space below the charts and map credits.
   The homepage omits the introductory chart recipe beneath Where to start.
 * The hcrt theme uses the built-in three-dot export menu icon.
 * Language examples compare dates and export-data menus across eight locales.
