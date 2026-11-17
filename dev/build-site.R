@@ -91,9 +91,9 @@ cli::cli_alert_success("Website ready in {.path {site_dir}}.")
 
 
 # Review the result in an interactive R session -----------------------------
-# pkgdown reuses one local server for articles, indexes and general pages.
-# Skip individual function-reference pages and redirect aliases. Leave the R
-# session running while reviewing. Rscript and GitHub Actions skip this block.
+# pkgdown reuses one local server for the homepage, articles, indexes and NEWS.
+# Skip repository administration pages, individual function-reference pages and
+# redirect aliases. Keep R running while reviewing; Rscript and CI skip this.
 if (interactive()) {
   cli::cli_h1("Review the highcharter website")
 
@@ -103,12 +103,7 @@ if (interactive()) {
     "articles/index.html",
     file.path("articles", articles),
     "reference/index.html",
-    "news/index.html",
-    "authors.html",
-    "LICENSE-text.html",
-    "CODE_OF_CONDUCT.html",
-    "CONTRIBUTING.html",
-    "PULL_REQUEST_TEMPLATE.html"
+    "news/index.html"
   ))
   pages <- pages[file.exists(file.path(site_dir, pages))]
   redirects <- vapply(
@@ -133,6 +128,6 @@ if (interactive()) {
     }
   })
   cli::cli_alert_success(
-    "Opened {length(pages)} review tabs; individual function pages were excluded."
+    "Opened {length(pages)} documentation review tabs."
   )
 }

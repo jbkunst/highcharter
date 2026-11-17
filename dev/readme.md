@@ -279,11 +279,12 @@ behind this branch. Let webR resolve that release's dependencies at launch;
 bundling dependencies from the local checkout would miss older imports.
 
 At the end of `source("dev/build-site.R")`, an interactive R session starts
-pkgdown's local server and opens the homepage, articles and indexes, NEWS,
-authors, license and general documentation pages in the system's external
-browser. The block temporarily overrides the IDE's URL handler and restores it
-after opening the tabs. It skips individual function
-reference pages and redirect aliases. Keep R running while reviewing the tabs.
+pkgdown's local server and opens only the homepage, articles, reference index
+and NEWS in the system's external browser. The block temporarily overrides the
+IDE's URL handler and restores it after opening the tabs. It skips repository
+administration pages (conduct, contribution guidelines and issue/PR templates),
+authors, license, individual function reference pages and redirect aliases.
+Keep R running while reviewing the tabs.
 Non-interactive builds through Rscript or GitHub Actions skip this preview block.
 Keep the initial home assets below
 650 kB gzip and use the standalone Stock Tools widget only on its own pages.
