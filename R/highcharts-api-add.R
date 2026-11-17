@@ -52,6 +52,13 @@ ts_axis_type <- function(x) {
   if (stats::frequency(x) %in% c(1, 4, 12)) "datetime" else "linear"
 }
 
+ts_x_values <- function(data) {
+  if (ts_axis_type(data) == "datetime") {
+    return(datetime_to_timestamp(zoo::as.Date(data)))
+  }
+  as.numeric(time(data))
+}
+
 #' hc_add_series for time series objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A time series `ts` object.
@@ -64,11 +71,7 @@ hc_add_series.ts <- function(hc, data, ...) {
     message("hc_add_series.ts")
   }
 
-  index <- as.numeric(time(data))
-  if (ts_axis_type(data) == "datetime") {
-    index <- datetime_to_timestamp(zoo::as.Date(data))
-  }
-  series <- list_parse2(data.frame(index, as.vector(data)))
+  series <- list_parse2(data.frame(ts_x_values(data), as.vector(data)))
 
   hc_add_series(hc, data = series, ...)
 }

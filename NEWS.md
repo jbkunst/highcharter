@@ -5,6 +5,7 @@
 * Attaching highcharter in an interactive session points to `?highcharter`
   for the licensing terms of the R package and the bundled Highcharts library.
 * Supplying a new `rules` list to `hc_responsive()` replaces the previous rules.
+* `hchart()` plots the original and adjusted series from a seasonal X-13 fit and labels its outliers.
 * `hchart()` shows ACF and PACF as lollipops at their reported lags.
   Multivariate time series and decompositions use shared table tooltips.
 * Histograms created by `hchart()` use square corners by default.

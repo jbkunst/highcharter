@@ -103,20 +103,24 @@ gallery(
 
 ## Quantities by category
 
-Each row counts the visitors (`y`) whose last registration stage was
-`name`. A pie uses those counts directly. A funnel adds them from the last
-stage backwards to count everyone who reached each stage. Variable-width
-columns and variable-radius slices also use the typical time in minutes (`z`).
+Each visit appears once, at the last shopping step it reached (`name`).
+Bars and slices show how the 100 visits ended (`y`). A funnel counts everyone
+who reached each step: 100 viewed products, 42 added to cart, 30 started checkout
+and 24 purchased. For variable-width columns and variable-radius slices, `z`
+is the average cart value in Chilean pesos. Only visits with a cart have a value.
 
-```{r stage-data, summary="Show registration data"}
-stages <- tibble(
-  name = c("Visit", "Start", "Review", "Submit"),
-  y = c(35, 12, 8, 25),
-  z = c(1, 4, 3, 2)
+```{r shopping-data, summary="Show shopping data"}
+# fmt: skip
+shopping <- tibble::tribble(
+  ~name,         ~y, ~z,
+  "Viewed",      58, NA_real_,
+  "Added",       12, 35000,
+  "Checkout",     6, 50000,
+  "Purchased",   24, 45000
 )
 ```
 
-```{r stages-gallery, summary="Show all stage charts in R"}
+```{r shopping-gallery, summary="Show all shopping charts in R"}
 gallery(
   c(
     "bar",
@@ -138,7 +142,10 @@ gallery(
     "pyramid3d"
   ),
   function(type) {
-    points <- stages
+    points <- shopping
+    if (type %in% c("variwide", "variablepie")) {
+      points <- filter(points, !is.na(z))
+    }
     if (type %in% c("funnel", "pyramid", "funnel3d", "pyramid3d")) {
       points$y <- rev(cumsum(rev(points$y)))
     }
@@ -148,8 +155,8 @@ gallery(
     if (type == "wordcloud") {
       points$weight <- points$y
     }
-    hchart(points, type, name = "Visitors", colorByPoint = TRUE) |>
-      hc_xAxis(categories = stages$name) |>
+    hchart(points, type, name = "Visits", colorByPoint = TRUE) |>
+      hc_xAxis(categories = points$name) |>
       hc_chart(
         type = type,
         options3d = list(
@@ -287,14 +294,14 @@ gallery(
 ## Gridded measurements
 
 Each cell has a column (`x`), a row (`y`) and a measurement (`value`).
-A heatmap colors each cell. A contour joins locations with the same value.
+A heatmap colors rectangular cells, a tilemap uses hexagons, and a contour joins locations with the same value.
 
 ```{r grid-data}
 cells <- expand.grid(x = 0:5, y = 0:5) |> mutate(value = sin(x) + cos(y))
 ```
 
 ```{r grid-types}
-gallery(c("heatmap", "contour"), function(type) {
+gallery(c("heatmap", "tilemap", "contour"), function(type) {
   hchart(cells, type) |>
     hc_colorAxis(
       min = -2,
@@ -306,8 +313,8 @@ gallery(c("heatmap", "contour"), function(type) {
 
 ## Other examples
 
-Intervals use start and end positions. A tile map places shapes on a grid,
-a Venn diagram sizes intersections by `sets` and `value`, and a solid
+Intervals use start and end positions. A Venn diagram sizes intersections by
+`sets` and `value`, and a solid
 gauge displays a single measurement (`y`).
 
 ### Comparing a measurement with a target
@@ -319,14 +326,14 @@ hchart(temperatures, "bullet", hcaes(target = 18), colorByPoint = TRUE) |>
   hc_xAxis(categories = temperatures$name)
 ```
 
-### Timeline of a registration
+### Shopping timeline
 
 A timeline places each event at its position (`x`) and labels it by `name`.
-These four stages are equally spaced to show the order of registration.
+The four labels show the order of the shopping steps.
 
-```{r registration-timeline}
-events <- stages |> transmute(x = row_number() - 1L, name, label = name)
-hchart(events, "timeline", name = "Registration stages") |>
+```{r shopping-timeline}
+events <- shopping |> transmute(x = row_number() - 1L, name, label = name)
+hchart(events, "timeline", name = "Shopping steps") |>
   hc_chart(type = "timeline")
 ```
 
@@ -345,7 +352,7 @@ hchart(tasks, "xrange", hcaes(x = start, x2 = finish, y = lane)) |>
 ```
 
 ```{r specialized-recipes, echo=FALSE, results='asis'}
-recipes <- c("tilemap", "venn", "solidgauge")
+recipes <- c("venn", "solidgauge")
 for (name in recipes) {
   path <- here::here("dev", "examples-charts", paste0(name, ".R"))
   cat(sub("(?m)^## ", "### ", knitr::spin_child(path), perl = TRUE), sep = "\n")
@@ -353,6 +360,8 @@ for (name in recipes) {
 ```
 
 ### Related articles
+
+[Showcase](showcase.html#tile-map) builds a world tile map and a word cloud from package descriptions.
 
 See [Icons and pictograms](icons-and-pictograms.html) for image markers,
 icons in tooltips and symbols that represent individual items.

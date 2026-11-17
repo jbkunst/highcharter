@@ -147,14 +147,13 @@ hchart(stats::decompose(AirPassengers, type = "multiplicative"))
 ### Seasonal adjustment with X-13
 
 With the optional `seasonal` package installed, compare the original monthly
-series with the X-13-adjusted series on the same scale.
+series with the X-13-adjusted series on the same scale. Labels mark the outliers
+reported by the model at the adjusted value, as in `plot(fit)` (e.g., AO for
+an additive outlier or LS for a level shift).
 
 ```{r x13, eval=requireNamespace("seasonal", quietly=TRUE)}
 fit <- seasonal::seas(AirPassengers)
-hchart(
-  cbind(observed = AirPassengers, adjusted = seasonal::final(fit)),
-  separate = FALSE
-)
+hchart(fit)
 ```
 
 ### Autocovariance & Autocorrelation

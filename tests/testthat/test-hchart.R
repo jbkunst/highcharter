@@ -128,8 +128,41 @@ test_that("ACF and PACF lollipops use the reported lags and correlations", {
     series <- hchart(x)$x$hc_opts$series[[1]]
     expect_identical(series$type, "lollipop")
     expect_equal(vapply(series$data, `[[`, numeric(1), "x"), as.vector(x$lag))
-    expect_equal(vapply(series$data, `[[`, numeric(1), "low"), as.vector(x$acf))
+    expect_equal(vapply(series$data, `[[`, numeric(1), "y"), as.vector(x$acf))
   }
+})
+
+test_that("seasonal charts label the fitted outliers at adjusted values", {
+  skip_if_not_installed("seasonal")
+  skip_if_not_installed("x13binary")
+  fit <- seasonal::seas(AirPassengers, regression.variables = "ls1956.Jan")
+  opts <- hchart(fit)$x$hc_opts
+  adjusted <- seasonal::final(fit)
+  outliers <- seasonal::outlier(fit)
+  i <- which(!is.na(outliers))
+  expect_equal(
+    opts$series[[1]]$data,
+    hchart(seasonal::original(fit))$x$hc_opts$series[[1]]$data
+  )
+  expect_equal(
+    opts$series[[2]]$data,
+    hchart(adjusted)$x$hc_opts$series[[1]]$data
+  )
+  labels <- opts$annotations[[1]]$labels
+  expect_equal(
+    vapply(labels, `[[`, character(1), "text"),
+    as.character(outliers[i])
+  )
+  expect_equal(
+    vapply(labels, function(l) l$point$x, numeric(1)),
+    ts_x_values(adjusted)[i]
+  )
+  expect_equal(
+    vapply(labels, function(l) l$point$y, numeric(1)),
+    as.numeric(adjusted[i])
+  )
+  fit <- seasonal::seas(AirPassengers, outlier = NULL)
+  expect_null(hchart(fit)$x$hc_opts$annotations)
 })
 
 test_that("hchart returns a valid pca plot after valid data input", {

@@ -316,3 +316,10 @@ hchart(
 
 ```{r vaccines, eval=FALSE}
 ```
+
+```{r tile-and-word-examples, echo=FALSE, results='asis'}
+for (type in c("tilemap", "wordcloud")) {
+  path <- here::here("dev", "examples-charts", paste0(type, ".R"))
+  cat(knitr::spin_child(path), sep = "\n")
+}
+```

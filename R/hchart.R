@@ -147,6 +147,30 @@ hchart.ts <- function(object, ...) {
 }
 
 #' @export
+hchart.seas <- function(object, ...) {
+  observed <- seasonal::original(object)
+  adjusted <- seasonal::final(object)
+  hc <- hchart(observed, name = "Original", ...) |>
+    hc_tooltip(table = TRUE)
+  if (is.null(adjusted)) {
+    return(hc)
+  }
+  hc <- hc |> hc_add_series(adjusted, name = "Seasonally adjusted", ...)
+  outliers <- seasonal::outlier(object)
+  dates <- ts_x_values(adjusted)
+  labels <- lapply(which(!is.na(outliers)), function(i) {
+    list(
+      point = list(xAxis = 0, yAxis = 0, x = dates[i], y = adjusted[[i]]),
+      text = as.character(outliers[[i]])
+    )
+  })
+  if (length(labels)) {
+    hc <- hc |> hc_annotations(list(labels = labels))
+  }
+  hc
+}
+
+#' @export
 hchart.xts <- function(object, ...) {
   highchart(type = "stock") |>
     hc_add_series(data = object, ...)
@@ -257,13 +281,15 @@ hchart.acf <- function(object, ...) {
 
   ds <- tibble(
     x = as.vector(object$lag),
-    low = as.vector(object$acf)
+    y = as.vector(object$acf)
   )
 
   hc <- highchart() |>
     hc_add_series(
       data = list_parse(ds),
       type = "lollipop",
+      marker = list(enabled = TRUE),
+      pointRange = 0,
       name = ytitle
     )
 

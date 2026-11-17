@@ -5,7 +5,7 @@ mtcars$name <- rownames(mtcars)
 hchart(
   mtcars,
   "lollipop",
-  hcaes(name = name, low = hp),
+  hcaes(name = name, y = hp),
   name = "Horse Power"
 ) |>
   hc_xAxis(type = "category") |>
