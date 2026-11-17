@@ -57,8 +57,8 @@ Run from the repository root:
 ```r
 # Download the original JSON responses and rebuild tables and charts.
 pkgload::load_all(".")
-source("dev/sandbox/transitions/grid-sequence.R", encoding = "UTF-8")
-
+source("pkgdown/index-examples.R")
+build_home_gallery("dev/highcharts-bundle/preview")
 ```
 
 The adapter extracts the article with `knitr::purl()`. Every run downloads the
@@ -67,9 +67,7 @@ There is no data cache or refresh option. The article also runs outside the
 checkout. The original common-year selection, export histories from 2005
 and mapdata 2.3.3 are retained. Review economies, coverage and source update dates when
 regenerating: the World Bank can revise historical observations.
-Sourcing `grid-sequence.R` prepares the charts and generates `home-data.csv`,
-which the website build copies beside its homepage iframe as an optional
-download, never as a chart input.
+The adapter writes the downloadable `home-data.csv` alongside `home-gallery.html`.
 
 ## Shared analytical story
 

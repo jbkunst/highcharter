@@ -73,7 +73,7 @@ de la portada, que ahora usa el grid sincronizado descrito abajo.
 of truth for the homepage data and R charts. Make every homepage chart change
 there first, then regenerate and review both the article and homepage. The
 article's code rebuilds the tables directly from World Bank JSON responses.
-[grid-sequence.R](grid-sequence.R) extracts it with `knitr::purl()` and adds
+[The homepage adapter](../../../pkgdown/index-examples.R) extracts it with `knitr::purl()` and adds
 the grid layout and animation runtime. It remains independent of the
 single-chart prototype above. All comments and visible analytical captions in
 the grid are in English.
@@ -92,11 +92,10 @@ resize and synchronization checks is technical validation, not visual sign-off.
 All panels use the same 179-economy cohort and common snapshot year, 2024;
 exports cover 2005–2024. Russia is included. The R preparation script fetches WDI
 data and determines the latest comparable year, rather than mixing current
-observations from different years. Prepared CSVs are versioned and website
-builds use them without API calls. See the
+observations from different years. Each build downloads the source data and produces a CSV for readers. See the
 [data guide](data/README.md) for provenance, units, selection and refresh steps.
 
-[grid-sequence.js](grid-sequence.js) maintains one clock and shared analytical
+[The playback script](../../../pkgdown/grid-sequence.js) maintains one clock and shared analytical
 state. When the map focuses on South America, the scatter emphasizes South American
 economies and smoothly fades other regions into the background; the export
 chart keeps all regional colors and the pie highlights South America's population
@@ -137,14 +136,12 @@ From the repository root:
 
 ```r
 pkgload::load_all(".")
-source("dev/sandbox/transitions/grid-sequence.R", encoding = "UTF-8")
-utils::browseURL(normalizePath(grid_file, winslash = "/"), browser = NULL)
+source("pkgdown/index-examples.R")
+build_home_gallery("dev/highcharts-bundle/preview")
+utils::browseURL("dev/highcharts-bundle/preview/home-gallery.html")
 ```
 
-The generated file is `dev/highcharts-bundle/preview/grid-sequence.html`.
-The four sets of R chart objects are in `widget_families`; timed states,
-captions and camera positions are in `families`. The R script also writes
-`home-data.csv` beside the site iframe. Source and coverage details remain in
+The adapter writes `home-gallery.html` and `home-data.csv` together. Source and coverage details remain in
 the [data guide](data/README.md); the grid has no source footer. Every run
 downloads the JSON responses again and rebuilds the same common-year cohort.
 

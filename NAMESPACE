@@ -198,7 +198,6 @@ importFrom(jsonlite,toJSON)
 importFrom(purrr,
   map,
   map2,
-  map_chr,
   map_if,
   map_lgl,
   reduce
@@ -239,5 +238,4 @@ importFrom(utils,
   head,
   tail
 )
-importFrom(yaml,yaml.load_file)
 importFrom(zoo,as.Date)

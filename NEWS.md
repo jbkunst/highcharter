@@ -2,26 +2,26 @@
 
 * `hchart(data, type = "gantt")` selects the native Gantt constructor for data
   frames, preserving task rows, date axes and dependency links.
-* The homepage, package description and `?highcharter` clarify the licensing
-  of the R wrapper and the bundled Highcharts JavaScript library. Attaching
-  the package in an interactive session now points to the help topic once.
+* Attaching highcharter in an interactive session points to `?highcharter`
+  for the licensing terms of the R package and the bundled Highcharts library.
+* Supplying a new `rules` list to `hc_responsive()` replaces the previous rules.
 * `hchart()` shows ACF and PACF as lollipops at their reported lags.
-  Multivariate time series, decompositions and forecasts use shared table tooltips. Forecast
-  intervals show both limits.
+  Multivariate time series and decompositions use shared table tooltips.
 * Histograms created by `hchart()` use square corners by default.
 * Circle-only presets preserve rectangular heatmap cells. The hcrt theme uses
   IBM Plex Sans for credits. French, Norwegian Bokmål and Simplified Chinese
   use official Highcharts language packs. Japanese and Korean use AI-generated
   translations.
 * The hcrt theme uses the built-in three-dot export menu icon.
-* Forecast charts distinguish observed values, forecasts and their prediction
-  intervals in legends and tooltips, including when a custom series name is supplied.
+* Forecast charts distinguish observations, forecasts and prediction intervals
+  in the legend and shared tooltip. The tooltip shows both interval limits.
+  Custom series names are supported.
 * The hcrt and smpl presets use circular markers consistently across series.
 * `hcmap()` accepts an already loaded GeoJSON list without downloading map data.
   Network charts preserve the current theme while hiding their coordinate axes.
 
-* Charts fill the available widget width and height in the Viewer and standalone
-  browser, including after resizing. Percentage-height containers no longer leave
+* With reflow enabled, charts fill the available widget width and height in
+  the Viewer and standalone browser, including after resizing. Percentage-height containers no longer leave
   the chart at Highcharts' 400-pixel fallback height.
 
 * The Motion plugin uses native array iteration with the bundled Highcharts.
@@ -112,17 +112,15 @@
 * The bundle now includes the official chart types and common feature modules. A new
   `highchartstock()` widget adds Stock Tools, advanced annotations and technical indicators.
   Third-party Motion, Regression, Grouped Categories and Draggable Legend plugins remain optional.
-* Highcharts updates now run entirely from `dev/highcharts-bundle`; the build generates
-  both bundles and synchronizes widget YAML versions.
 * `hcpxy_set_extremes()` controls an x-axis range from Shiny. `hcpxy_set_data()`
   can now target a series by ID, which is safer when Stock indicators change series order.
-* Widgets with reflow enabled now follow changes in their container dimensions.
 
 ## Migration guide
 
 | Previous call | Current call |
 | --- | --- |
 | `hc_xAxis_multiples()`, `hc_yAxis_multiples()`, `hc_zAxis_multiples()` | Pass the same list of axes to `hc_xAxis()`, `hc_yAxis()` or `hc_zAxis()`. The Y alias emits a deprecation warning. |
+| `hc_add_dependency("modules/...")` | Omit the call for built-in modules. Use `highchartstock()` for Stock Tools and technical indicators. Pass an explicit `"plugins/..."` path for packaged community plugins. |
 | Repeated `hc_add_yAxis()` | Collect the axes in order, then call `hc_yAxis(axes)`. |
 | `hc_theme_google()` and other preset constructors | Use `hc_theme("google")`, or `hc_set_theme("google")` for a session default. |
 | `hcaes_()` | Use `hcaes_string()`. |

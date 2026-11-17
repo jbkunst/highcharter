@@ -408,7 +408,7 @@ hex_to_rgba <- function(x, alpha = 1) {
     col2rgb() |>
     # t() |>
     as.data.frame() |>
-    map_chr(str_c, collapse = ",")
+    purrr::map_chr(str_c, collapse = ",")
 
   rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
   rgba

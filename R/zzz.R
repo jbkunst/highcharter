@@ -6,13 +6,9 @@
   )
 }
 
-.onAttach <- function(
-  libname = find.package("highcharter"),
-  pkgname = "highcharter"
-) {
-  if (interactive() && !isTRUE(getOption("highcharter.license_notice_shown"))) {
+.onAttach <- function(libname, pkgname) {
+  if (interactive()) {
     packageStartupMessage("Highcharts JS licensing: see ?highcharter.")
-    options(highcharter.license_notice_shown = TRUE)
   }
 }
 

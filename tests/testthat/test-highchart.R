@@ -70,7 +70,34 @@ test_that("third-party plugins stay optional", {
   )))
 })
 
-test_that("legacy official module dependencies are harmless", {
+test_that("community plugins resolve to files and legacy modules explain migration", {
   chart <- highchart()
-  expect_identical(hc_add_dependency(chart, "modules/pattern-fill.js"), chart)
+  plugin <- hc_add_dependency(chart, "plugins/highcharts-regression.js")
+  dep <- tail(plugin$dependencies, 1)[[1]]
+  expect_true(file.exists(file.path(dep$src$file, dep$script)))
+  expect_error(
+    hc_add_dependency(chart, "modules/pattern-fill.js"),
+    "built-in modules"
+  )
+  expect_error(
+    hc_add_dependency(chart, "modules/stock-tools.js"),
+    "highchartstock"
+  )
+  expect_error(
+    hc_add_dependency(chart, "plugins/missing.js"),
+    "Choose a packaged plugin"
+  )
+})
+
+test_that("repeated responsive rules replace the array and keep sibling options", {
+  rule <- function(width) list(condition = list(maxWidth = width))
+  chart <- highchart() |>
+    hc_responsive(rules = list(rule(300), rule(500))) |>
+    hc_responsive(rules = list(rule(900))) |>
+    hc_xAxis(labels = list(rotation = 30), plotLines = list(list(value = 1))) |>
+    hc_xAxis(labels = list(rotation = NULL), plotLines = list(list(value = 2)))
+  expect_identical(chart$x$hc_opts$responsive$rules, list(rule(900)))
+  axis <- chart$x$hc_opts$xAxis
+  expect_identical(axis$plotLines, list(list(value = 2)))
+  expect_false("rotation" %in% names(axis$labels))
 })

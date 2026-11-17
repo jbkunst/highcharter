@@ -282,6 +282,22 @@ highchart() |>
   hc_size(height = 460)
 ```
 
+## Chart language
+
+Open the export menu on each chart to compare the same controls in Chilean
+Spanish and French. Each widget captures the language in effect when it is
+created. Restore the previous setting with `options(old)` after creating them.
+
+```{r chart-language}
+old <- hc_set_language("es-CL")
+spanish <- hchart(AirPassengers) |> hc_exporting(enabled = TRUE)
+hc_set_language("fr-FR")
+french <- hchart(AirPassengers) |> hc_exporting(enabled = TRUE)
+options(old)
+
+htmltools::tagList(spanish, french)
+```
+
 ## Optional community plugins
 
 The official modules are already part of the generated bundle. These community

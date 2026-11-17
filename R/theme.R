@@ -32,7 +32,7 @@ hc_theme <- function(preset = NULL, ...) {
   if (is.character(options$colors) && length(options$colors) == 1L) {
     options$colors <- as.list(options$colors)
   }
-  structure(.merge_theme_options(base, options), class = "hc_theme")
+  structure(.merge_options(base, options, keep_null = TRUE), class = "hc_theme")
 }
 
 #' @rdname hc_theme
@@ -78,7 +78,7 @@ hc_themes <- function() {
   }
   base <- .read_theme_preset(theme$extends, c(parents, name))
   theme$extends <- NULL
-  .merge_theme_options(base, theme)
+  .merge_options(base, theme, keep_null = TRUE)
 }
 
 .theme_image <- function(filename) {
@@ -102,23 +102,6 @@ hc_themes <- function() {
     ";base64,",
     gsub("\n", "", jsonlite::base64_enc(bytes), fixed = TRUE)
   )
-}
-
-.merge_theme_options <- function(base, overrides) {
-  for (key in names(overrides)) {
-    value <- overrides[[key]]
-    if (
-      is.list(base[[key]]) &&
-        !is.null(names(base[[key]])) &&
-        is.list(value) &&
-        !is.null(names(value))
-    ) {
-      base[[key]] <- .merge_theme_options(base[[key]], value)
-    } else {
-      base[key] <- overrides[key]
-    }
-  }
-  base
 }
 
 #' @rdname hc_theme
@@ -162,7 +145,11 @@ hc_theme_merge <- function(...) {
   themes <- list(...)
   assert_that(all(vapply(themes, .is_hc_theme, logical(1))))
   structure(
-    Reduce(.merge_theme_options, themes, init = list()),
+    Reduce(
+      function(x, y) .merge_options(x, y, keep_null = TRUE),
+      themes,
+      init = list()
+    ),
     class = "hc_theme"
   )
 }

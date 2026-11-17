@@ -22,13 +22,33 @@ validate_args <- function(name, lstargs) {
   }
 }
 
+# Merge named objects recursively and replace arrays as a whole.
+.merge_options <- function(base, overrides, keep_null = FALSE) {
+  for (key in names(overrides)) {
+    value <- overrides[[key]]
+    if (
+      is.list(base[[key]]) &&
+        !is.null(names(base[[key]])) &&
+        is.list(value) &&
+        !is.null(names(value))
+    ) {
+      base[[key]] <- .merge_options(base[[key]], value, keep_null)
+    } else if (is.null(value) && !keep_null) {
+      base[[key]] <- NULL
+    } else {
+      base[key] <- overrides[key]
+    }
+  }
+  base
+}
+
 # Merge named option objects in order, including NULL deletions.
 .merge_hc_options <- function(...) {
   options <- list(...)
   if (any(vapply(options, function(x) is.null(names(x)), logical(1)))) {
     stop("All arguments must be named lists.", call. = FALSE)
   }
-  Reduce(utils::modifyList, options, init = list())
+  Reduce(.merge_options, options, init = list())
 }
 
 # Named options update the primary axis. Unnamed axis objects replace the collection.
@@ -41,10 +61,10 @@ validate_args <- function(name, lstargs) {
       stop("Supply named axis options or a list of axes.", call. = FALSE)
     }
     if (length(current) && is.null(names(current))) {
-      current[[1L]] <- utils::modifyList(current[[1L]], options)
+      current[[1L]] <- .merge_options(current[[1L]], options)
       return(current)
     }
-    return(utils::modifyList(
+    return(.merge_options(
       if (is.null(current)) list() else current,
       options
     ))
@@ -228,14 +248,10 @@ tooltip_chart <- function(
     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
   }
 
+  defaults <- getOption("highcharter.chart")
+  fields <- c("title", "yAxis", "xAxis", "credits", "exporting")
   hc_opts <- .merge_hc_options(
-    getOption("highcharter.chart")[c(
-      "title",
-      "yAxis",
-      "xAxis",
-      "credits",
-      "exporting"
-    )],
+    defaults[intersect(names(defaults), fields)],
     list(chart = list(backgroundColor = "transparent")),
     list(
       legend = list(enabled = FALSE),

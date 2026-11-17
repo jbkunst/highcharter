@@ -925,11 +925,11 @@ hc_add_annotations <- function(hc, x) {
   hc
 }
 
-#' Add modules or plugin dependencies to highcharts objects
+#' Add a bundled community plugin to a chart
 #'
 #' @param hc A `highchart` `htmlwidget` object.
-#' @param name The partial path to the plugin or module,
-#'   example: `"plugins/annotations.js"`
+#' @param name The path to a packaged plugin, such as
+#'   `"plugins/highcharts-regression.js"`
 #' @examples
 #'
 #' hchart(mtcars, "scatter", hcaes(wt, mpg),
@@ -941,38 +941,42 @@ hc_add_annotations <- function(hc, x) {
 #' hchart(mtcars, "scatter", hcaes(wt, mpg, group = factor(cyl)), regression = TRUE) |>
 #'   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
 #'   hc_add_dependency("plugins/highcharts-regression.js")
-#' @details See `vignette("modules")`
-#' @importFrom purrr map_chr
+#' @details Use [highchart()] for built-in modules and [highchartstock()]
+#'   for Stock Tools and technical indicators.
 #' @importFrom htmltools htmlDependency
-#' @importFrom yaml yaml.load_file
 #' @export
-hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
-  stopifnot(!is.null(name))
-
+hc_add_dependency <- function(hc, name) {
+  if (!is.character(name) || length(name) != 1L || is.na(name)) {
+    stop("Supply one plugin path.", call. = FALSE)
+  }
   if (startsWith(name, "modules/")) {
-    if (getOption("highcharter.verbose")) {
-      message("Official Highcharts modules are included in the main bundle.")
-    }
-    return(hc)
+    stop(
+      "Remove hc_add_dependency() for built-in modules. ",
+      "Use highchartstock() for Stock Tools and technical indicators. ",
+      "This function accepts packaged community plugins only.",
+      call. = FALSE
+    )
   }
 
-  yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
-  yml <- yaml.load_file(yml)[[1]]
-
-  hc_ver <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts"]
-
+  directory <- system.file(
+    "htmlwidgets/lib/highcharts/plugins",
+    package = "highcharter"
+  )
+  plugins <- file.path("plugins", list.files(directory, pattern = "\\.js$"))
+  if (!name %in% plugins) {
+    stop(
+      "Choose a packaged plugin: ",
+      paste(plugins, collapse = ", "),
+      call. = FALSE
+    )
+  }
   dep <- htmlDependency(
     name = basename(name),
-    version = hc_ver,
-    src = c(
-      file = system.file(
-        sprintf("htmlwidgets/lib/highcharts/%s", dirname(name)),
-        package = "highcharter"
-      )
-    ),
-    script = basename(name)
+    version = as.character(utils::packageVersion("highcharter")),
+    src = c(file = directory),
+    script = basename(name),
+    all_files = FALSE
   )
-
   hc$dependencies <- c(hc$dependencies, list(dep))
 
   hc

@@ -26,107 +26,10 @@
 #'   Traditional Chinese locales currently use English interface labels.
 #'   See \url{https://www.highcharts.com/docs/advanced-chart-features/internationalization}.
 #' @examples
-#' # Simulated daily OHLC data, not market quotes.
-#' previous <- options("highcharter.lang")
-#' dates <- seq(Sys.Date(), by = "day", length.out = 80)
-#' day <- seq_along(dates)
-#' level <- 10^seq(3.3, 8.5, length.out = length(dates))
-#' prices <- data.frame(
-#'   date = dates,
-#'   open = level * (1 + 0.25 * sin(day / 4)),
-#'   close = level * (1 + 0.3 * cos(day / 5))
-#' )
-#' prices$high <- pmax(prices$open, prices$close) * 1.3
-#' prices$low <- pmin(prices$open, prices$close) * 0.7
-#'
-#' create_chart <- function() {
-#'   highchart(type = "stock", width = "100%", height = 300) |>
-#'     hc_add_series(
-#'       prices, "candlestick",
-#'       hcaes(x = date, open = open, high = high, low = low, close = close),
-#'       name = "Simulated index"
-#'     ) |>
-#'     hc_xAxis(
-#'       type = "datetime",
-#'       tickPositions = datetime_to_timestamp(dates[c(1, 21, 41, 61, 80)]),
-#'       labels = list(format = "{value:%[aeb]}", rotation = 0,
-#'                     style = list(fontSize = "11px"))
-#'     ) |>
-#'     hc_yAxis(type = "logarithmic", min = 1e3, max = 1e9, tickInterval = 1,
-#'              showLastLabel = TRUE,
-#'              opposite = FALSE, title = list(text = NULL),
-#'              labels = list(align = "right", x = -5)) |>
-#'     hc_tooltip(split = FALSE, xDateFormat = "%[AebY]", valueDecimals = 2) |>
-#'     hc_rangeSelector(inputEnabled = FALSE, buttons = list(
-#'       list(type = "month", count = 1), list(type = "all")
-#'     )) |>
-#'     hc_navigator(height = 25, yAxis = list(title = list(text = NULL))) |>
-#'     hc_scrollbar(enabled = FALSE) |>
-#'     hc_legend(enabled = FALSE) |>
-#'     hc_plotOptions(
-#'       series = list(label = list(enabled = FALSE)),
-#'       candlestick = list(color = "#47475c", lineColor = "#47475c",
-#'                          upColor = "#61BC7B", upLineColor = "#61BC7B")
-#'     ) |>
-#'     hc_exporting(enabled = TRUE, buttons = list(contextButton = list(
-#'       menuItems = list("downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG",
-#'                        "separator", "downloadCSV", "downloadXLS", "viewData")
-#'     )))
-#' }
-#'
-#' # Axis labels use numericSymbols automatically. The logarithmic scale needs
-#' # positive values spanning several orders of magnitude; multiplying one
-#' # narrow range by a constant would only change its units.
-#' # Each new widget captures the current default language.
-#' hc_set_language("en-GB")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "English") |>
-#'   hc_caption(text = "Highcharts English defaults.")
-#'
-#' hc_set_language("nb-NO")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "Norwegian (nb-NO)") |>
-#'   hc_caption(text = "Official Highcharts Norwegian pack.")
-#'
-#' hc_set_language("es-CL")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "Spanish") |>
-#'   hc_caption(text = "Labels maintained by highcharter.")
-#'
-#' hc_set_language("pt-BR")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "Portuguese") |>
-#'   hc_caption(text = "Labels maintained by highcharter.")
-#'
-#' hc_set_language("fr-FR")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "French") |>
-#'   hc_caption(text = "Official Highcharts French pack.")
-#'
-#' hc_set_language("ja-JP")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "Japanese") |>
-#'   hc_caption(text = "AI-generated interface translation; not an official Highcharts pack.")
-#'
-#' hc_set_language("zh-CN")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "Simplified Chinese") |>
-#'   hc_caption(text = "Official Highcharts Simplified Chinese pack.")
-#'
-#' hc_set_language("ko-KR")
-#' hc <- create_chart()
-#' hc |>
-#'   hc_title(text = "Korean") |>
-#'   hc_caption(text = "AI-generated interface translation; not an official Highcharts pack.")
-#'
-#' options(previous)
+#' hc_language("es-CL")$locale
+#' old <- hc_set_language("es-CL")
+#' hchart(AirPassengers) |> hc_exporting(enabled = TRUE)
+#' options(old)
 #' @export
 hc_language <- function(locale = "en", ...) {
   if (
@@ -161,7 +64,7 @@ hc_language <- function(locale = "en", ...) {
   ) {
     stop("Name each Highcharts lang override.", call. = FALSE)
   }
-  utils::modifyList(lang, overrides, keep.null = TRUE)
+  .merge_options(lang, overrides, keep_null = TRUE)
 }
 
 #' @rdname hc_language
