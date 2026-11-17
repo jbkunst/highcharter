@@ -40,8 +40,8 @@ gallery <- function(types, draw) {
 ## Measurements and ranges
 
 Each row is one day. Its position supplies `x`, `name` labels the day and
-`y` is the mean temperature in °C. Range charts use the day's `low` and
-`high`. With these names, `hchart(temperatures, "columnrange")` reads the
+`y` is the mean temperature in °C. Columns rise from zero to the mean. A range column
+extends from the day's `low` to its `high`. With these names, `hchart(temperatures, "columnrange")` reads the
 columns directly. Use `hcaes(low = minimum, high = maximum)` if your
 columns have different names.
 
@@ -66,6 +66,7 @@ gallery(
     "streamgraph",
     "areaspline",
     "column",
+    "cylinder",
     "arearange",
     "areasplinerange",
     "columnrange",
@@ -86,19 +87,18 @@ gallery(
       fillColor = "#2980b966",
       tooltip = list(valueSuffix = " °C")
     ) |>
-      hc_chart(type = type, polar = startsWith(label, "polar")) |>
-      hc_xAxis(categories = temperatures$name)
+      hc_chart(
+        type = type,
+        polar = startsWith(label, "polar"),
+        options3d = list(enabled = type == "cylinder", alpha = 12, beta = 15)
+      ) |>
+      hc_xAxis(categories = temperatures$name) |>
+      hc_yAxis(
+        title = list(text = ""),
+        min = if (type %in% c("column", "cylinder")) 0
+      )
   }
 )
-```
-
-### Comparing a measurement with a target
-
-The bullet compares each daily mean (`y`) with a `target` of 18 °C.
-
-```{r temperature-target}
-hchart(temperatures, "bullet", hcaes(target = 18), colorByPoint = TRUE) |>
-  hc_xAxis(categories = temperatures$name)
 ```
 
 ## Quantities by category
@@ -129,13 +129,11 @@ gallery(
     "waterfall",
     "variwide",
     "variablepie",
-    "timeline",
     "packedbubble",
     "treemap",
     "wordcloud",
     "funnel",
     "pyramid",
-    "cylinder",
     "funnel3d",
     "pyramid3d"
   ),
@@ -147,10 +145,6 @@ gallery(
     if (type %in% c("packedbubble", "treemap")) {
       points$value <- points$y
     }
-    if (type == "timeline") {
-      points$x <- seq_len(nrow(points)) - 1L
-      points$label <- points$name
-    }
     if (type == "wordcloud") {
       points$weight <- points$y
     }
@@ -159,7 +153,7 @@ gallery(
       hc_chart(
         type = type,
         options3d = list(
-          enabled = type %in% c("cylinder", "funnel3d", "pyramid3d"),
+          enabled = type %in% c("funnel3d", "pyramid3d"),
           alpha = 12,
           beta = 15
         )
@@ -182,7 +176,9 @@ teams <- tibble::tribble(
   "Studio",  "Build",        18,
   "Design",  "Web",           7,
   "Design",  "Print",         5,
-  "Build",   "Apps",         18
+  "Build",   "Apps",         10,
+  "Build",   "Data",          5,
+  "Build",   "Tools",         3
 )
 ```
 
@@ -217,31 +213,7 @@ gallery(
 )
 ```
 
-### Style network nodes and tooltips
-
-The same links can carry node-level labels. Use each subteam’s headcount
-to size its marker and show the count on hover.
-
-```{r mapping-networkgraph}
-headcounts <- c(
-  Studio = sum(teams$weight[teams$from == "Studio"]),
-  setNames(teams$weight, teams$to)
-)
-nodes <- lapply(names(headcounts), function(id) {
-  n <- headcounts[[id]]
-  list(id = id, marker = list(radius = 3 * sqrt(n)), custom = list(people = n))
-})
-hchart(
-  teams,
-  "networkgraph",
-  nodes = nodes,
-  dataLabels = list(enabled = TRUE, format = "{point.name}", linkFormat = ""),
-  tooltip = list(
-    headerFormat = "",
-    nodeFormat = "{point.name}: {point.custom.people} people"
-  )
-)
-```
+For a network with an `igraph` layout, see the [igraph example](hchart.html#igraph-package).
 
 ## Positions, bubbles and wind
 
@@ -337,6 +309,26 @@ gallery(c("heatmap", "contour"), function(type) {
 Intervals use start and end positions. A tile map places shapes on a grid,
 a Venn diagram sizes intersections by `sets` and `value`, and a solid
 gauge displays a single measurement (`y`).
+
+### Comparing a measurement with a target
+
+The bullet compares each daily mean (`y`) with a `target` of 18 °C.
+
+```{r temperature-target}
+hchart(temperatures, "bullet", hcaes(target = 18), colorByPoint = TRUE) |>
+  hc_xAxis(categories = temperatures$name)
+```
+
+### Timeline of a registration
+
+A timeline places each event at its position (`x`) and labels it by `name`.
+These four stages are equally spaced to show the order of registration.
+
+```{r registration-timeline}
+events <- stages |> transmute(x = row_number() - 1L, name, label = name)
+hchart(events, "timeline", name = "Registration stages") |>
+  hc_chart(type = "timeline")
+```
 
 ### Task intervals
 

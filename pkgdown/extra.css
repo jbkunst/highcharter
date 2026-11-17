@@ -77,6 +77,9 @@ main h3, main h4, main h5 { font-weight: 400; }
   margin: 1.6rem 0 2.4rem;
 }
 .chart-grid > div { min-width: 0; }
+@media (min-width: 992px) {
+  #gridded-measurements .chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 991.98px) { .chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 575.98px) { .chart-grid { grid-template-columns: 1fr; } }
 
