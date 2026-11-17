@@ -3,15 +3,6 @@
 transition_dir <- file.path("dev", "sandbox", "transitions")
 preview_dir <- file.path("dev", "highcharts-bundle", "preview")
 dir.create(preview_dir, recursive = TRUE, showWarnings = FALSE)
-if (!nzchar(Sys.getenv("HIGHCHARTER_HOME_DATA_CACHE"))) {
-  Sys.setenv(
-    HIGHCHARTER_HOME_DATA_CACHE = normalizePath(
-      file.path(preview_dir, "wdi-cache"),
-      winslash = "/",
-      mustWork = FALSE
-    )
-  )
-}
 article_code <- tempfile("home-vignette-", fileext = ".R")
 knitr::purl(
   "vignettes/from-data-to-charts.Rmd",

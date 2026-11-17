@@ -145,9 +145,8 @@ The generated file is `dev/highcharts-bundle/preview/grid-sequence.html`.
 The four sets of R chart objects are in `widget_families`; timed states,
 captions and camera positions are in `families`. The R script also writes
 `home-data.csv` beside the site iframe. Source and coverage details remain in
-the [data guide](data/README.md); the grid has no source footer. To fetch fresh data before
-building, set `options(highcharter.website.refresh_data = TRUE)`; reset that
-option after the refresh.
+the [data guide](data/README.md); the grid has no source footer. Every run
+downloads the JSON responses again and rebuilds the same common-year cohort.
 
 On small screens the grid becomes one column. It uses the hcrt theme, IBM Plex
 Sans, a native regional legend at the scatter's top left, Play/Pause, Restart

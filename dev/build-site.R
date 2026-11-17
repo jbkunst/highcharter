@@ -39,8 +39,8 @@ highcharter::hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 # 4. Generate the homepage's interactive example ----------------------------
 # This standalone iframe contains the international-data animation and its playback
 # controls. Its adapter extracts the canonical From data to charts article, then
-# reads site_dir to save HTML and dependencies. Its raw JSON cache is shared with
-# the article subprocesses, which recompute the data rather than reading CSVs.
+# reads site_dir to save HTML and dependencies. Both the homepage and article
+# download the original JSON responses and recompute the tables on every run.
 cli::cli_h2("4/7 Build the synchronized chart grid for the homepage")
 
 source("pkgdown/index-examples.R", local = TRUE)

@@ -8,6 +8,8 @@
   The homepage extracts the article's R definitions with knitr so data, styling
   and synchronized states have one source. Prepared CSV inputs are no longer
   used to generate the charts.
+  Downloads run on every execution; there is no data cache or website refresh
+  option. The original common-year selection is retained.
 * Icons and pictograms restores the original R/Python scatter and food counts,
   colors and symbols, using embedded SVGs instead of PNG conversion. The original
   Datalegreya graph lettering returns to the homepage and navbar. The navbar

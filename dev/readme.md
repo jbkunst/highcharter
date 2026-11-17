@@ -212,19 +212,15 @@ and COVID-19; plain country names label Chile and Uruguay in the regional
 scatter. Map color bars occupy 76% of their panel width, with explicit numeric
 formats. The regional camera fits the bounds of South American economies instead
 of relying on a fixed zoom that can crop the north or south.
-Sources, units, coverage and refresh instructions live in the
-[data README](sandbox/transitions/data/README.md) and public article. Every build
-recomputes the tables from the original World Bank JSON responses. The adapter
-sets `HIGHCHARTER_HOME_DATA_CACHE` to the absolute ignored
-`dev/highcharts-bundle/preview/wdi-cache/` directory, so pkgdown's article
-subprocesses reuse the same raw responses. A standalone article uses a temporary
-cache unless that environment variable names another directory. Missing responses
-are downloaded; refresh explicitly with
-`options(highcharter.website.refresh_data = TRUE)` before sourcing the grid.
-The article downloads Highcharts mapdata 2.3.3 into the same raw-response cache.
-Review data and coverage before publishing a refresh. The former
-prepared CSV inputs and standalone preparation script are superseded by the
-article; the raw JSON cache is an output, never a second source recipe.
+Sources, units and coverage are documented in the
+[data README](sandbox/transitions/data/README.md) and public article. Every run
+downloads the original JSON responses again and recomputes the tables. The
+original common-year selection and Highcharts mapdata 2.3.3 are retained.
+There is no persistent data cache, website refresh option or cache
+environment variable. Temporary download files are deleted after parsing.
+The World Bank can revise historical observations; review source dates and
+coverage when regenerating the site. The former prepared CSV inputs and
+standalone preparation script are superseded by the article.
 The build also copies the downloadable `home-data.csv` into the site output.
 Sources and coverage stay in the data README; the grid has no source footer.
 After serving the generated site, run

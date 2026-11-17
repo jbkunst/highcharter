@@ -10,7 +10,7 @@ provenance; it does not provide another preparation script.
 The older 132-country sample in `../datos-animacion.zip` is retained only for
 the separate single-chart experiment.
 
-The current cached responses select **2024**, with **179 economies**
+The article currently selects **2024**, with **179 economies**
 covering about **97.6%** of world population. Russia is included. Although some
 2025 observations are available, life expectancy does not yet have comparable
 2025 coverage in this extraction. No missing values are imputed and no years are
@@ -50,27 +50,23 @@ economies is selected before applying the history requirement. Shares refer to
 the resulting cohort, rather than all economies worldwide. Export values are
 nominal: their changes include price and exchange-rate effects.
 
-## Rebuild or refresh
+## Rebuild
 
 Run from the repository root:
 
 ```r
-# Recompute tables and charts from cached original JSON responses.
+# Download the original JSON responses and rebuild tables and charts.
 pkgload::load_all(".")
 source("dev/sandbox/transitions/grid-sequence.R", encoding = "UTF-8")
 
-# Fetch current API responses before recomputing.
-options(highcharter.website.refresh_data = TRUE)
-source("dev/sandbox/transitions/grid-sequence.R", encoding = "UTF-8")
-options(highcharter.website.refresh_data = FALSE)
 ```
 
-The adapter extracts the article with `knitr::purl()`. Raw API responses are
-cached under ignored `dev/highcharts-bundle/preview/wdi-cache/`, shared with
-article subprocesses through `HIGHCHARTER_HOME_DATA_CACHE`. The standalone
-article can run outside the checkout and uses a temporary cache by default.
-Each run recomputes the tables. Review the selected year, economies, coverage
-and source dates when refreshing. The world map is pinned to mapdata 2.3.3.
+The adapter extracts the article with `knitr::purl()`. Every run downloads the
+JSON responses again; temporary download files are deleted after parsing.
+There is no data cache or refresh option. The article also runs outside the
+checkout. The original common-year selection, export histories from 2005
+and mapdata 2.3.3 are retained. Review economies, coverage and source update dates when
+regenerating: the World Bank can revise historical observations.
 Sourcing `grid-sequence.R` prepares the charts and generates `home-data.csv`,
 which the website build copies beside its homepage iframe as an optional
 download, never as a chart input.

@@ -27,10 +27,8 @@ library(highcharter)
 
 The data come from the [World Bank's World Development Indicators](https://databank.worldbank.org/source/world-development-indicators).
 Run the following code to fetch the original JSON responses, join economy and
-map identifiers, choose a common year and calculate trade measures. No prepared
-CSV files are needed. The first run requires internet; subsequent runs reuse
-the cached responses. Set `options(highcharter.website.refresh_data = TRUE)` to
-fetch them again.
+map identifiers, choose a common year and calculate trade measures.
+Every run downloads the data again and requires internet.
 
 The six indicators measure population, life expectancy, GDP per person at
 purchasing-power parity (constant 2021 international dollars), urban population,
@@ -44,41 +42,31 @@ checking history. Missing values are not imputed and years are not mixed.
 <summary>Show data download and preparation</summary>
 
 ```{r home-data}
-fetch_wdi <- function(path, cache_file, refresh = FALSE) {
-  if (!file.exists(cache_file) || refresh) {
-    dir.create(dirname(cache_file), recursive = TRUE, showWarnings = FALSE)
-    url <- paste0("https://api.worldbank.org/v2/", path)
-    message("Downloading World Bank data: ", url)
-    temp <- tempfile(tmpdir = dirname(cache_file), fileext = ".json")
-    on.exit(unlink(temp), add = TRUE)
-    old_timeout <- getOption("timeout")
-    options(timeout = max(90, old_timeout))
-    on.exit(options(timeout = old_timeout), add = TRUE)
-    utils::download.file(
-      url,
-      temp,
-      method = "libcurl",
-      mode = "wb",
-      quiet = TRUE,
-      headers = c("User-Agent" = "highcharter website data preparation")
-    )
-    response <- jsonlite::read_json(temp)
-    if (
-      length(response) != 2L ||
-        is.null(response[[1]]$pages) ||
-        response[[1]]$pages != 1L
-    ) {
-      stop("Unexpected or paginated World Bank response: ", url)
-    }
-    file.copy(temp, cache_file, overwrite = TRUE)
+fetch_wdi <- function(path) {
+  url <- paste0("https://api.worldbank.org/v2/", path)
+  temp <- tempfile(fileext = ".json")
+  on.exit(unlink(temp), add = TRUE)
+  utils::download.file(
+    url,
+    temp,
+    method = "libcurl",
+    mode = "wb",
+    quiet = TRUE,
+    headers = c("User-Agent" = "highcharter website data preparation")
+  )
+  response <- jsonlite::read_json(temp)
+  if (
+    length(response) != 2L ||
+      is.null(response[[1]]$pages) ||
+      response[[1]]$pages != 1L
+  ) {
+    stop("Unexpected or paginated World Bank response: ", url)
   }
-  jsonlite::read_json(cache_file)
+  response
 }
 
 prepare_home_data <- function(
   world,
-  cache_dir,
-  refresh = FALSE,
   start_year = 2005L
 ) {
   current_year <- as.integer(format(Sys.Date(), "%Y"))
@@ -90,11 +78,7 @@ prepare_home_data <- function(
     exports = "TX.VAL.MRCH.CD.WT",
     imports = "TM.VAL.MRCH.CD.WT"
   )
-  geography <- fetch_wdi(
-    "country/all?format=json&per_page=400",
-    file.path(cache_dir, "economies.json"),
-    refresh
-  )
+  geography <- fetch_wdi("country/all?format=json&per_page=400")
   economy_rows <- Filter(
     function(x) x$region$value != "Aggregates",
     geography[[2]]
@@ -141,21 +125,7 @@ prepare_home_data <- function(
         period,
         "&per_page=20000"
       )
-      fetch_wdi(
-        path,
-        file.path(
-          cache_dir,
-          paste0(
-            variable,
-            "-",
-            min(range),
-            "-",
-            max(range),
-            ".json"
-          )
-        ),
-        refresh
-      )
+      fetch_wdi(path)
     })
     rows <- unlist(lapply(responses, `[[`, 2L), recursive = FALSE)
     panel <- data.frame(
@@ -196,8 +166,6 @@ prepare_home_data <- function(
     }
   )
   coverage <- do.call(rbind, coverage)
-  message("Comparable-country coverage by year:")
-  print(utils::head(coverage, 5))
   candidates <- coverage[coverage$economies >= 150L, ]
   if (!nrow(candidates)) {
     stop("No recent year has adequate comparable coverage.")
@@ -269,35 +237,24 @@ prepare_home_data <- function(
   list(countries = snapshot, history = history, metadata = metadata)
 }
 
-# Cache original JSON responses, not prepared tables. A fresh session can rebuild
-# everything from the API; refresh explicitly when reviewing new observations.
-cache_dir <- Sys.getenv(
-  "HIGHCHARTER_HOME_DATA_CACHE",
-  file.path(tempdir(), "highcharter-homepage-wdi")
+map_temp <- tempfile(fileext = ".json")
+world <- tryCatch(
+  {
+    utils::download.file(
+      "https://code.highcharts.com/mapdata/2.3.3/custom/world.topo.json",
+      map_temp,
+      method = "libcurl",
+      mode = "wb",
+      quiet = TRUE,
+      headers = c("User-Agent" = "highcharter website data preparation")
+    )
+    map <- jsonlite::read_json(map_temp)
+    stopifnot(map$version == "2.3.3")
+    map
+  },
+  finally = unlink(map_temp)
 )
-dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
-refresh <- isTRUE(getOption("highcharter.website.refresh_data", FALSE))
-world_file <- file.path(cache_dir, "world-2.3.3.topo.json")
-if (!file.exists(world_file) || refresh) {
-  map_temp <- tempfile(tmpdir = cache_dir, fileext = ".json")
-  tryCatch(
-    {
-      utils::download.file(
-        "https://code.highcharts.com/mapdata/2.3.3/custom/world.topo.json",
-        map_temp,
-        method = "libcurl",
-        mode = "wb",
-        quiet = TRUE,
-        headers = c("User-Agent" = "highcharter website data preparation")
-      )
-      stopifnot(jsonlite::read_json(map_temp)$version == "2.3.3")
-      file.copy(map_temp, world_file, overwrite = TRUE)
-    },
-    finally = unlink(map_temp)
-  )
-}
-world <- jsonlite::read_json(world_file)
-home_data <- prepare_home_data(world, cache_dir, refresh = refresh)
+home_data <- prepare_home_data(world)
 countries <- home_data$countries
 metadata <- home_data$metadata
 ```
@@ -307,8 +264,8 @@ metadata <- home_data$metadata
 The selected year is **`r metadata$year`**, with **`r nrow(countries)` economies**
 covering **`r round(100 * metadata$world_population_coverage, 1)`%** of world
 population. Each observation represents an economy, rather than a regional
-aggregate. A fresh API download may revise historical observations or the
-available common year; `metadata$indicators` and `metadata$source_updated` record
+aggregate. The World Bank can revise historical observations;
+`metadata$indicators` and `metadata$source_updated` record
 the indicator codes and source update dates.
 
 Trade per person divides each flow by population. The signed balance is
