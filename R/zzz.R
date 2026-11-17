@@ -1,4 +1,3 @@
-#' @importFrom stats runif
 .join_hc_opts <- function() {
   list(
     global = getOption("highcharter.global"),
@@ -11,12 +10,9 @@
   libname = find.package("highcharter"),
   pkgname = "highcharter"
 ) {
-  if (stats::runif(1) <= 1 / 3) {
-    packageStartupMessage(
-      "Highcharts (www.highcharts.com) is a Highsoft software product which is"
-    )
-
-    packageStartupMessage("not free for commercial and Governmental use")
+  if (interactive() && !isTRUE(getOption("highcharter.license_notice_shown"))) {
+    packageStartupMessage("Highcharts JS licensing: see ?highcharter.")
+    options(highcharter.license_notice_shown = TRUE)
   }
 }
 

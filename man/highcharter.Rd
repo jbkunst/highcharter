@@ -11,6 +11,15 @@ Highcharts \url{https://www.highcharts.com/} is a mature javascript
 charting library. Highcharts provide a various type of charts, from
 scatters to heatmaps or treemaps.
 }
+\section{Licensing}{
+
+The R wrapper in \code{highcharter} is licensed under MIT. Every chart created with
+\code{highcharter} uses the bundled Highcharts JavaScript library. Your use of
+Highcharts must be covered by the applicable Highsoft terms for
+\href{https://shop.highcharts.com/license}{commercial use} or
+\href{https://shop.highcharts.com/license-eula}{personal and educational use}.
+}
+
 \seealso{
 Useful links:
 \itemize{

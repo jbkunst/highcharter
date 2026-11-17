@@ -1,5 +1,8 @@
 # highcharter (development version)
 
+* The homepage, package description and `?highcharter` clarify the licensing
+  of the R wrapper and the bundled Highcharts JavaScript library. Attaching
+  the package in an interactive session now points to the help topic once.
 * Icons and pictograms restores the original R/Python scatter and food counts,
   colors and symbols, using embedded SVGs instead of PNG conversion. The original
   Datalegreya graph lettering returns to the homepage and navbar. The navbar

@@ -6,6 +6,8 @@ Description: A wrapper for the 'Highcharts' library including
     shortcut functions to plot R objects. 'Highcharts'
     <https://www.highcharts.com/> is a charting library offering
     numerous chart types with a simple configuration syntax.
+    The R wrapper is licensed under MIT. The bundled 'Highcharts' JavaScript
+    library is subject to separate license terms from 'Highsoft'.
 Authors@R: c(
     person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
     person("Nuno", "Agostinho", role = "ctb"),

@@ -212,7 +212,6 @@ importFrom(stats,
   complete.cases,
   ecdf,
   qnorm,
-  runif,
   setNames,
   time
 )

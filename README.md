@@ -58,12 +58,17 @@ annotations, exporting and accessibility features.
   and [JavaScript-to-R guide](articles/highchartsjs-api-basics.html):
   learn how Highcharts options translate to R code.
 
+## Licensing
+
+The R wrapper in `highcharter` is licensed under MIT. Every chart created with
+`highcharter` uses the bundled Highcharts JavaScript library. Your use of
+Highcharts must be covered by the applicable Highsoft terms for
+[commercial use](https://shop.highcharts.com/license) or
+[personal and educational use](https://shop.highcharts.com/license-eula).
+
 [Source code](https://github.com/jbkunst/highcharter) ·
 [Report an issue](https://github.com/jbkunst/highcharter/issues) ·
 [Contribute](CONTRIBUTING.md) ·
 [Authors and citation](authors.html)
-
-Highcharter is licensed under MIT. Highcharts has its own
-[licensing terms](https://www.highcharts.com/license).
 
 </div>

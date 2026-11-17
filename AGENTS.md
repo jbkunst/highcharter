@@ -14,6 +14,16 @@ examples or the website. It describes each `dev/` directory and the build steps.
 - Match validation to the change. Run an R example for an R helper. For rendering, keyboard navigation or resize, also exercise the output in a browser. For an issue, try its reproducible example and report what was observed.
 - Place each new public help topic in the `_pkgdown.yml` section where a user would look for it. Reuse an existing selector when it fits and run `pkgdown::check_pkgdown()` after updating the documentation.
 
+## Licensing
+
+Keep the licensing notice visible when changing the README, package metadata,
+R help, or bundled JavaScript. In the README (the pkgdown homepage), keep
+`Licensing` immediately after `Where to start`. The README, `DESCRIPTION` and
+`?highcharter` must distinguish the MIT-licensed R wrapper from the Highcharts
+JavaScript library used to render every chart. Keep the links to Highsoft's
+commercial and personal/educational terms in the README and package help.
+Preserve upstream copyright and license notices when rebuilding the bundles.
+
 ## Highcharts updates
 
 Follow the [package versioning rule and NEWS format](dev/readme.md#package-versioning) when preparing a highcharter release.
