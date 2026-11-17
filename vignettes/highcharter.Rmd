@@ -24,7 +24,7 @@ let us start start with a simple example using `hchart` function.
 library(highcharter)
 
 # install.packages("palmerpenguins")
-data(penguins, package = "palmerpenguins") 
+data(penguins, package = "palmerpenguins")
 
 hchart(
   penguins,
@@ -39,7 +39,7 @@ its class with the generic `hchart` function. In the next example `x` is numeric
 ```{r}
 x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 
-hchart(x, name = "data", color = "#17b8b6") 
+hchart(x, name = "data", color = "#17b8b6")
 ```
 
 One of the nicest class which `hchart` can plot is the `forecast`
@@ -75,7 +75,7 @@ library(quantmod)
 data(sample_matrix, package = "xts")
 x <- xts::as.xts(sample_matrix)
 
-highchart(type = "stock") |> 
+highchart(type = "stock") |>
   hc_add_series(x, name = "Sample prices")
 ```
 
@@ -86,14 +86,34 @@ build interactive maps to display data linked to geographic objects.
 
 ```{r}
 data(GNI2014, package = "treemap")
-world <- jsonlite::read_json(here::here("dev", "examples-charts", "data", "maps",
-                                        "custom-world-robinson-lowres.geo.json"))
-hcmap(world,
-      data = GNI2014, value = "GNI", joinBy = c("iso-a3", "iso3"),
-      name = "GNI per capita", borderWidth = 0.2) |>
+world <- jsonlite::read_json(here::here(
+  "dev",
+  "examples-charts",
+  "data",
+  "maps",
+  "custom-world-robinson-lowres.geo.json"
+))
+hcmap(
+  world,
+  data = GNI2014,
+  value = "GNI",
+  joinBy = c("iso-a3", "iso3"),
+  name = "GNI per capita",
+  borderWidth = 0.2
+) |>
   hc_title(text = "Gross national income per capita, 2014") |>
-  hc_colorAxis(type = "logarithmic", stops = color_stops(colors = c(
-    "#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4"))) |>
+  hc_colorAxis(
+    type = "logarithmic",
+    stops = color_stops(
+      colors = c(
+        "#000004",
+        "#56106E",
+        "#BB3754",
+        "#F98C0A",
+        "#FCFFA4"
+      )
+    )
+  ) |>
   hc_tooltip(valuePrefix = "$", valueDecimals = 0)
 ```
 
@@ -104,5 +124,5 @@ Since you know the basics now it could be interesting:
 - Go motivate yourself with the `vignette("showcase")` and look everything that can be
 done with the {highcharter} package.
 - Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
-- Explore chart types and their R examples in the [series gallery](series-gallery.html).
+- Explore [chart types](chart-types.html) and their R examples.
 

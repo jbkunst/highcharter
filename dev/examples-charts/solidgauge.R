@@ -5,8 +5,8 @@ col_stops <- data.frame(
   stringsAsFactors = FALSE
 )
 
-highchart() %>%
-  hc_chart(type = "solidgauge") %>%
+highchart() |>
+  hc_chart(type = "solidgauge") |>
   hc_pane(
     startAngle = -90,
     endAngle = 90,
@@ -15,8 +15,8 @@ highchart() %>%
       innerRadius = '60%',
       shape = "arc"
     )
-  ) %>%
-  hc_tooltip(enabled = FALSE) %>%
+  ) |>
+  hc_tooltip(enabled = FALSE) |>
   hc_yAxis(
     stops = list_parse2(col_stops),
     lineWidth = 0,
@@ -25,7 +25,7 @@ highchart() %>%
     min = 0,
     max = 100,
     labels = list(y = 26, style = list(fontSize = "22px"))
-  ) %>%
+  ) |>
   hc_add_series(
     data = 90,
     dataLabels = list(
@@ -34,5 +34,5 @@ highchart() %>%
       useHTML = TRUE,
       style = list(fontSize = "40px")
     )
-  ) %>%
+  ) |>
   hc_size(height = 300)

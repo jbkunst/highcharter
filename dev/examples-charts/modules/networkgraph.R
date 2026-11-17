@@ -27,7 +27,7 @@ UKvisits <- data.frame(
   )
 )
 
-highchart() %>%
+highchart() |>
   hc_add_series(
     UKvisits,
     "networkgraph",
@@ -46,7 +46,7 @@ df <- igraph::as_data_frame(karate, what = "edges")
 
 str(df)
 
-highchart() %>%
+highchart() |>
   hc_add_series(
     df,
     "networkgraph",
@@ -56,16 +56,16 @@ highchart() %>%
 
 
 # example 3 ---------------------------------------------------------------
-highchart() %>%
-  hc_chart(type = 'networkgraph') %>%
-  hc_title(text = 'The Indo-European Language Tree') %>%
-  hc_subtitle(text = 'A Force-Directed Network Graph in Highcharts') %>%
+highchart() |>
+  hc_chart(type = 'networkgraph') |>
+  hc_title(text = 'The Indo-European Language Tree') |>
+  hc_subtitle(text = 'A Force-Directed Network Graph in Highcharts') |>
   hc_plotOptions(
     networkgraph = list(
       keys = c('from', 'to'),
       layoutAlgorithm = list(enableSimulation = TRUE, friction = -0.9)
     )
-  ) %>%
+  ) |>
   hc_add_series(
     dataLabels = list(enabled = TRUE, linkFormat = ''),
     id = 'lang-tree',
@@ -195,5 +195,5 @@ highchart() %>%
       c('South Slavic', 'Belarusian'),
       c('South Slavic', 'Rusyn')
     )
-  ) %>%
+  ) |>
   hc_exporting(enabled = TRUE)

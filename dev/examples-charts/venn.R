@@ -1,8 +1,8 @@
 #' ## venn
 #'
 
-highchart() %>%
-  hc_chart(type = "venn") %>%
+highchart() |>
+  hc_chart(type = "venn") |>
   hc_add_series(
     dataLabels = list(style = list(fontSize = "20px")),
     name = "Venn Diagram",
@@ -25,8 +25,8 @@ highchart() %>%
     )
   )
 
-highchart() %>%
-  hc_chart(type = "venn") %>%
+highchart() |>
+  hc_chart(type = "venn") |>
   hc_add_series(
     name = "Euler Diagram",
     dataLabels = list(style = list(fontSize = "20px")),

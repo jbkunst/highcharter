@@ -36,7 +36,7 @@ data(gapminder, package = "gapminder")
 gapminder2007 <- gapminder |>
   filter(year == max(year)) |>
   select(-year) |>
-  mutate(pop = pop/1e6) |>
+  mutate(pop = pop / 1e6) |>
   arrange(desc(pop))
 
 gapminder_column <- gapminder2007 |>
@@ -58,7 +58,7 @@ gapminder_drilldown <- gapminder2007 |>
     id = continent,
     type = "column",
     # in the drilldown we'll give the mapping via creating the columns
-    data = map(data, mutate, name = country, y  = pop),
+    data = map(data, mutate, name = country, y = pop),
     data = map(data, list_parse)
   )
 
@@ -130,14 +130,18 @@ hchart(
   type = "treemap",
   hcaes(name = type_1, value = n, color = color, drilldown = type_1),
   name = "Pokémons"
-  ) |>
+) |>
   hc_drilldown(
     activeAxisLabelStyle = list(textDecoration = "none"),
     allowPointDrilldown = TRUE,
     series = list_parse(pkmn_ddn)
   ) |>
-  hc_plotOptions(treemap = list(layoutAlgorithm = "squarified",
-                                 dataLabels = list(enabled = TRUE, format = "{point.name}")))
+  hc_plotOptions(
+    treemap = list(
+      layoutAlgorithm = "squarified",
+      dataLabels = list(enabled = TRUE, format = "{point.name}")
+    )
+  )
 ```
 
 ## Example III: Custom tooltips and colors
@@ -150,9 +154,9 @@ dtrees <- tibble(
   apples = c(5, 7),
   species = c("Fuji", "Gala"),
   trunk_size = c(30, 40)
-  ) |> 
+) |>
   # rowise is used to avoid vectorization in tags$td, ie, do it row by row
-  rowwise() |> 
+  rowwise() |>
   mutate(
     tooltip_text = list(
       tags$table(
@@ -160,13 +164,13 @@ dtrees <- tibble(
         tags$tr(tags$th("# Apples"), tags$td(apples))
       )
     )
-  ) |> 
-  ungroup() |> 
+  ) |>
+  ungroup() |>
   mutate(
     tooltip_text = map_chr(tooltip_text, as.character),
     # clean text
     tooltip_text = str_trim(str_squish(tooltip_text))
-    )
+  )
 
 dflowers <- tibble(
   tree = c(rep("A", 3), rep("B", 4)),
@@ -182,8 +186,8 @@ dflowers <- tibble(
     "red"
   ),
   price = c(3, 2, 4, 3.5, 5, 2.5, 4.5)
-  ) |>   
-  rowwise() |> 
+) |>
+  rowwise() |>
   mutate(
     tooltip_text = list(
       tags$table(
@@ -191,9 +195,9 @@ dflowers <- tibble(
         tags$tr(tags$th("# Petals"), tags$td(petals)),
         tags$tr(tags$th("Price"), tags$td(str_c("$ ", price)))
       )
-    )  
-  ) |> 
-  ungroup() |> 
+    )
+  ) |>
+  ungroup() |>
   mutate(
     tooltip_text = map_chr(tooltip_text, as.character),
     # clean text
@@ -221,16 +225,16 @@ hchart(
       format = 'back to {level.name} series',
       # enabled = FALSE,
       showFullPath = FALSE
-      ),
+    ),
     allowPointDrilldown = TRUE,
     series = list_parse(dflowers_dd)
-    ) |>
-  hc_yAxis(title = list(text  = "")) |>
-  hc_xAxis(title = list(text  = "")) |>
+  ) |>
+  hc_yAxis(title = list(text = "")) |>
+  hc_xAxis(title = list(text = "")) |>
   hc_tooltip(
     headerFormat = "", # remove header
     pointFormat = "{point.tooltip_text}",
     useHTML = TRUE
-    )
+  )
 ```
 

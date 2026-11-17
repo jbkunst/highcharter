@@ -39,6 +39,6 @@ hchart(
   center = list("50%", "75%"),
   startAngle = -100,
   endAngle = 100
-) %>%
-  hc_title(text = "Item chart with different layout") %>%
+) |>
+  hc_title(text = "Item chart with different layout") |>
   hc_legend(labelFormat = '{name} <span style="opacity: 0.4">{y}</span>')

@@ -6,8 +6,8 @@ df <- data.frame(
 
 dplyr::glimpse(df)
 
-hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
-  hc_chart(inverted = TRUE) %>%
+hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") |>
+  hc_chart(inverted = TRUE) |>
   hc_yAxis(
     min = 0,
     max = 10,
@@ -17,11 +17,11 @@ hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
       list(from = 7, to = 9, color = "#999"),
       list(from = 9, to = 10, color = "#bbb")
     )
-  ) %>%
+  ) |>
   hc_xAxis(
     gridLineWidth = 15,
     gridLineColor = "white"
-  ) %>%
+  ) |>
   hc_plotOptions(
     series = list(
       pointPadding = 0.25,
@@ -29,5 +29,5 @@ hchart(df, "bullet", hcaes(x = x, y = y, target = target), color = "black") %>%
       borderWidth = 0,
       targetOptions = list(width = '200%')
     )
-  ) %>%
+  ) |>
   hc_size(height = 300)

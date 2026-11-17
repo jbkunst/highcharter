@@ -44,10 +44,10 @@ annotations, exporting and accessibility features.
   chart time series, forecasts and other R objects.
 - [Showcase](articles/showcase.html):
   discover ideas for customization and chart design.
-- [Chart gallery](articles/series-gallery.html):
+- [Chart types](articles/chart-types.html):
   find a chart type and its R example.
 - [Maps](articles/maps.html) and
-  [Stock charts](articles/stock.html):
+  [Stock charts and Stock Tools](articles/stock.html):
   explore places and financial time series.
 - [Shiny](articles/shiny.html) and
   [accessibility](articles/accessibility.html):

@@ -1,8 +1,8 @@
 ---
-title: "Maps with Highmaps"
+title: "Maps"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Maps with Highmaps}
+  %\VignetteIndexEntry{Maps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,7 +26,10 @@ map_dir <- here::here("dev", "examples-charts", "data", "maps")
 ```
 
 ```{r map-basics}
-new_zealand <- jsonlite::read_json(file.path(map_dir, "countries-nz-nz-all.geo.json"))
+new_zealand <- jsonlite::read_json(file.path(
+  map_dir,
+  "countries-nz-nz-all.geo.json"
+))
 hcmap(new_zealand, showInLegend = FALSE) |>
   hc_title(text = "New Zealand") |>
   hc_mapNavigation(enabled = TRUE)
@@ -40,18 +43,35 @@ three-letter country code to the map's `iso-a3` property. A logarithmic color
 scale makes the differences visible across the full range of incomes.
 
 ```{r world-income}
-world <- jsonlite::read_json(file.path(map_dir, "custom-world-robinson-lowres.geo.json"))
+world <- jsonlite::read_json(file.path(
+  map_dir,
+  "custom-world-robinson-lowres.geo.json"
+))
 data(GNI2014, package = "treemap")
 head(GNI2014)
 
 income_map <- hcmap(
-  world, data = GNI2014,
-  value = "GNI", joinBy = c("iso-a3", "iso3"),
-  name = "GNI per capita", borderWidth = 0.2, nullColor = "#eceef2"
+  world,
+  data = GNI2014,
+  value = "GNI",
+  joinBy = c("iso-a3", "iso3"),
+  name = "GNI per capita",
+  borderWidth = 0.2,
+  nullColor = "#eceef2"
 ) |>
   hc_title(text = "Gross national income per capita, 2014") |>
-  hc_colorAxis(type = "logarithmic", stops = color_stops(colors = c(
-    "#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4"))) |>
+  hc_colorAxis(
+    type = "logarithmic",
+    stops = color_stops(
+      colors = c(
+        "#000004",
+        "#56106E",
+        "#BB3754",
+        "#F98C0A",
+        "#FCFFA4"
+      )
+    )
+  ) |>
   hc_tooltip(valuePrefix = "$", valueDecimals = 0) |>
   hc_mapNavigation(enabled = TRUE)
 income_map
@@ -64,7 +84,9 @@ properties. The package's local world boundaries use `iso3`; map-collection
 boundaries commonly use `iso-a2`, `iso-a3` or `hc-key`.
 
 ```{r map-properties}
-get_data_from_map(worldgeojson) |> select(any_of(c("name", "iso3", "continent"))) |> head()
+get_data_from_map(worldgeojson) |>
+  select(any_of(c("name", "iso3", "continent"))) |>
+  head()
 ```
 
 To save boundaries for offline use, call `download_map_data()` once and retain
@@ -82,18 +104,47 @@ These are standard-time groups, without seasonal daylight-saving adjustments.
 
 ```{r europe-zones}
 zones <- data.frame(
-  country = c("PT", "IE", "GB", "IS", "FR", "DE", "ES", "IT", "NO", "SE",
-              "PL", "AT", "CH", "FI", "EE", "LV", "LT", "GR", "RO", "BG"),
+  country = c(
+    "PT",
+    "IE",
+    "GB",
+    "IS",
+    "FR",
+    "DE",
+    "ES",
+    "IT",
+    "NO",
+    "SE",
+    "PL",
+    "AT",
+    "CH",
+    "FI",
+    "EE",
+    "LV",
+    "LT",
+    "GR",
+    "RO",
+    "BG"
+  ),
   value = c(rep(0, 4), rep(1, 9), rep(2, 7))
 )
 europe <- jsonlite::read_json(file.path(map_dir, "custom-europe.geo.json"))
-hcmap(europe, data = zones, value = "value", joinBy = c("iso-a2", "country"),
-      name = "Standard time", dataLabels = list(enabled = TRUE, format = "{point.country}")) |>
-  hc_colorAxis(dataClassColor = "category", dataClasses = list(
-    list(from = 0, to = 0, name = "UTC"),
-    list(from = 1, to = 1, name = "UTC + 1"),
-    list(from = 2, to = 2, name = "UTC + 2")
-  )) |>
+hcmap(
+  europe,
+  data = zones,
+  value = "value",
+  joinBy = c("iso-a2", "country"),
+  name = "Standard time",
+  dataLabels = list(enabled = TRUE, format = "{point.country}")
+) |>
+  hc_colorAxis(
+    dataClassColor = "category",
+    dataClasses = list(
+      list(from = 0, to = 0, name = "UTC"),
+      list(from = 1, to = 1, name = "UTC + 1"),
+      list(from = 2, to = 2, name = "UTC + 2")
+    )
+  ) |>
   hc_title(text = "Standard time in Europe")
 ```
 
@@ -105,22 +156,53 @@ in South America; the values below are illustrative connection counts.
 
 ```{r airports}
 airports <- data.frame(
-  name = c("Santiago", "Buenos Aires", "São Paulo", "Lima", "Bogotá", "Quito",
-           "Montevideo", "Asunción", "La Paz"),
+  name = c(
+    "Santiago",
+    "Buenos Aires",
+    "São Paulo",
+    "Lima",
+    "Bogotá",
+    "Quito",
+    "Montevideo",
+    "Asunción",
+    "La Paz"
+  ),
   lat = c(-33.39, -34.82, -23.44, -12.02, 4.70, -0.13, -34.84, -25.24, -16.51),
-  lon = c(-70.79, -58.54, -46.47, -77.11, -74.15, -78.36, -56.03, -57.52, -68.19),
+  lon = c(
+    -70.79,
+    -58.54,
+    -46.47,
+    -77.11,
+    -74.15,
+    -78.36,
+    -56.03,
+    -57.52,
+    -68.19
+  ),
   z = c(35, 40, 65, 42, 50, 24, 16, 14, 12)
 )
-boundaries <- jsonlite::read_json(file.path(map_dir, "custom-south-america.geo.json"))
+boundaries <- jsonlite::read_json(file.path(
+  map_dir,
+  "custom-south-america.geo.json"
+))
 south_america <- hcmap(boundaries, showInLegend = FALSE)
 south_america |>
-  hc_add_series(airports, type = "mappoint", name = "Airports",
-                hcaes(lon = lon, lat = lat, name = name)) |>
+  hc_add_series(
+    airports,
+    type = "mappoint",
+    name = "Airports",
+    hcaes(lon = lon, lat = lat, name = name)
+  ) |>
   hc_title(text = "Airports in South America")
 
 south_america |>
-  hc_add_series(airports, type = "mapbubble", name = "Illustrative connections",
-                hcaes(lon = lon, lat = lat, z = z, name = name), maxSize = "12%") |>
+  hc_add_series(
+    airports,
+    type = "mapbubble",
+    name = "Illustrative connections",
+    hcaes(lon = lon, lat = lat, z = z, name = name),
+    maxSize = "12%"
+  ) |>
   hc_title(text = "Locations with a magnitude")
 ```
 
@@ -132,7 +214,11 @@ longitude first and latitude second.
 ```{r map-view}
 globe <- jsonlite::read_json(file.path(map_dir, "custom-world.geo.json"))
 hcmap(globe, showInLegend = FALSE) |>
-  hc_mapView(projection = list(name = "Orthographic"), center = c(-65, -20), zoom = 1) |>
+  hc_mapView(
+    projection = list(name = "Orthographic"),
+    center = c(-65, -20),
+    zoom = 1
+  ) |>
   hc_title(text = "A view centered on South America") |>
   hc_mapNavigation(enabled = TRUE)
 ```

@@ -4,6 +4,7 @@ home:
   sidebar: false
 repo:
   url:
+    home: https://github.com/jbkunst/highcharter/
     source: https://github.com/jbkunst/highcharter/blob/feat/highcharts-bundle/
 authors:
   Joshua Kunst:
@@ -31,13 +32,7 @@ navbar:
   structure:
     right:
     - search
-    - twitter
     - github
-  components:
-    twitter:
-      icon: fa-twitter
-      href: https://twitter.com/jbkunst
-      aria-label: Twitter
 figures:
   message: no
   warning: no
@@ -177,7 +172,7 @@ articles:
 - title: Explore charts
   navbar: Explore charts
   contents:
-  - series-gallery
+  - chart-types
   - maps
   - stock
   - showcase
@@ -188,10 +183,12 @@ articles:
   - highchartsjs-api-basics
   - themes
   - accessibility
-- title: Extensions and interaction
-  navbar: Extensions
+- title: Extensions and examples
+  navbar: Extensions and examples
   contents:
+  - multiple-axes
   - drilldown
+  - icons-and-pictograms
   - modules
 - title: Shiny applications
   navbar: Shiny
@@ -199,8 +196,9 @@ articles:
   - shiny
 redirects:
 - ["highmaps.html", "articles/maps.html"]
-- ["articles/fontawesome.html", "articles/series-gallery.html#markers-and-tooltips"]
-- ["articles/highcharts.html", "articles/series-gallery.html"]
+- ["articles/fontawesome.html", "articles/icons-and-pictograms.html"]
+- ["articles/highcharts.html", "articles/chart-types.html"]
 - ["articles/howtos.html", "articles/highcharts-api.html#category-order"]
 - ["articles/motion.html", "articles/modules.html#motion"]
-- ["series-gallery.html", "articles/series-gallery.html"]
+- ["series-gallery.html", "articles/chart-types.html"]
+- ["articles/series-gallery.html", "articles/chart-types.html"]

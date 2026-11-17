@@ -5,8 +5,8 @@ library(dplyr)
 
 data(gapminder, package = "gapminder")
 
-gapminder <- gapminder %>%
-  filter(year == max(year)) %>%
+gapminder <- gapminder |>
+  filter(year == max(year)) |>
   select(country, pop, continent)
 
 hc <- hchart(
@@ -17,11 +17,11 @@ hc <- hchart(
 
 q95 <- as.numeric(quantile(gapminder$pop, .95))
 
-hc %>%
+hc |>
   hc_tooltip(
     useHTML = TRUE,
     pointFormat = "<b>{point.name}:</b> {point.value}"
-  ) %>%
+  ) |>
   hc_plotOptions(
     packedbubble = list(
       maxSize = "150%",

@@ -1,0 +1,90 @@
+---
+title: Icons and pictograms
+output: rmarkdown::html_vignette
+description: >
+  Use images as scatter markers, in tooltips and as symbols in an item chart.
+resource_files:
+  - icons/r-project.svg
+  - icons/python.svg
+vignette: >
+  %\VignetteIndexEntry{Icons and pictograms}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(highcharter)
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+```
+
+## Icons as markers
+
+A scatter series can use the same SVG for its markers and its tooltip. Save
+the [R icon](icons/r-project.svg) and [Python icon](icons/python.svg) in an
+`icons/` directory alongside the HTML page. These brand icons come from
+[Font Awesome Free 6.7.2](https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands)
+and are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+The example uses simulated task times; the same approach works with other images.
+
+```{r svg-markers}
+r_icon <- "./icons/r-project.svg"
+python_icon <- "./icons/python.svg"
+
+highchart() |>
+  hc_title(text = "Simulated task times") |>
+  hc_xAxis(categories = c("Read", "Transform", "Plot")) |>
+  hc_yAxis(title = list(text = "Seconds")) |>
+  hc_chart(type = "scatter") |>
+  hc_add_series(
+    name = "R",
+    data = c(2, 4, 3),
+    custom = list(icon = r_icon),
+    marker = list(symbol = paste0("url(", r_icon, ")"), width = 20, height = 20)
+  ) |>
+  hc_add_series(
+    name = "Python",
+    data = c(3, 2, 4),
+    custom = list(icon = python_icon),
+    marker = list(
+      symbol = paste0("url(", python_icon, ")"),
+      width = 20,
+      height = 20
+    )
+  ) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = paste0(
+      "<img src='{series.options.custom.icon}' width='16' height='16' alt=''/> ",
+      "{series.name}: <b>{point.y} s</b>"
+    )
+  )
+```
+
+## Count with pictograms
+
+An item chart draws one symbol per unit. Here one icon represents one simulated
+workshop registration. Set the marker on each point to distinguish the two groups.
+The data and counts are illustrative.
+
+```{r item-icons}
+registrations <- list(
+  list(name = "R", y = 24, marker = list(symbol = paste0("url(", r_icon, ")"))),
+  list(
+    name = "Python",
+    y = 16,
+    marker = list(symbol = paste0("url(", python_icon, ")"))
+  )
+)
+highchart() |>
+  hc_chart(type = "item") |>
+  hc_title(text = "Simulated workshop registrations") |>
+  hc_subtitle(text = "One icon = one registration") |>
+  hc_add_series(
+    data = registrations,
+    name = "Registrations",
+    showInLegend = TRUE,
+    dataLabels = list(enabled = FALSE)
+  ) |>
+  hc_tooltip(pointFormat = "<b>{point.name}</b>: {point.y} registrations") |>
+  hc_legend(labelFormat = "{name}: {y}")
+```

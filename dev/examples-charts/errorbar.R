@@ -2,9 +2,9 @@
 example_dat <- tibble(
   Type = c("Human", "High-Elf", "Orc"),
   key = c("World1", "World2", "World3")
-) %>%
-  expand.grid() %>%
-  mutate(mean = runif(9, 5, 7)) %>%
+) |>
+  expand.grid() |>
+  mutate(mean = runif(9, 5, 7)) |>
   mutate(sd = runif(9, 0.5, 1))
 
 hchart(
@@ -12,7 +12,7 @@ hchart(
   "column",
   hcaes(x = key, y = mean, group = Type),
   id = c("a", "b", "c")
-) %>%
+) |>
 
   hc_add_series(
     example_dat,
@@ -21,7 +21,7 @@ hchart(
     linkedTo = c("a", "b", "c"),
     enableMouseTracking = TRUE,
     showInLegend = FALSE
-  ) %>%
+  ) |>
 
   hc_plotOptions(
     errorbar = list(

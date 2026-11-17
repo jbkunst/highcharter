@@ -1,5 +1,15 @@
 # highcharter (development version)
 
+* Explore charts uses the titles Chart types, Maps, Stock charts and Stock Tools,
+  and Showcase. The chart-types vignette replaces series-gallery, with redirects
+  preserving the previous URLs.
+  The Extensions and examples section includes a new Multiple axes vignette,
+  moving the four-panel example out of the Highcharts API guide.
+  Vignette R chunks follow the shared Air formatting. The navbar links to the
+  package repository on GitHub and removes the Twitter icon.
+  Website examples consistently use the base R pipe.
+  Icons and pictograms has its own article alongside Drilldown, with image
+  markers, tooltip icons and item symbols; the old Fontawesome URL redirects to it.
 * Histograms created by `hchart()` use square corners by default. A series-level
   `borderRadius` can still customize them. The hchart article removes the point-list
   and companion fitted-model examples to focus on its supported R objects.
@@ -66,7 +76,7 @@
   browser, including after resizing. Percentage-height containers no longer leave
   the chart at Highcharts' 400-pixel fallback height.
 
-* The website now groups 13 articles by task. The series gallery includes
+* The website groups articles by task. The chart-types gallery includes
   polar charts and pictograms. The Highcharts API guide includes Tom Bishop's
   legend walkthrough; marker and tooltip recipes live in the chart-types article.
   The Motion example now

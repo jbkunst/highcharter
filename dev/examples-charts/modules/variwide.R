@@ -2,7 +2,7 @@
 #
 library(highcharter)
 
-highchart() %>%
+highchart() |>
   hc_add_series(
     name = 'Labor Costs',
     data = list(
@@ -37,6 +37,6 @@ highchart() %>%
         'GDP: <b>€ {point.z} million</b><br>'
       )
     )
-  ) %>%
-  hc_title(text = 'Labor Costs in Europe, 2016') %>%
+  ) |>
+  hc_title(text = 'Labor Costs in Europe, 2016') |>
   hc_xAxis(type = "category")

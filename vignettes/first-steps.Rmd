@@ -78,7 +78,10 @@ or `color` to color individual points. A heatmap uses `value` to color a cell.
 ```{r}
 data(economics_long, package = "ggplot2")
 
-economics_long2 <- dplyr::filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
+economics_long2 <- dplyr::filter(
+  economics_long,
+  variable %in% c("pop", "uempmed", "unemploy")
+)
 
 head(economics_long2)
 
@@ -94,16 +97,27 @@ dfdiam <- diamonds |>
   group_by(cut, clarity) |>
   summarize(price = median(price))
 
-hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price),
-       name = "Median price") |>
-  hc_colorAxis(stops = color_stops(colors = c(
-    "#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4"
-  )))
+hchart(
+  dfdiam,
+  "heatmap",
+  hcaes(x = cut, y = clarity, value = price),
+  name = "Median price"
+) |>
+  hc_colorAxis(
+    stops = color_stops(
+      colors = c(
+        "#000004",
+        "#56106E",
+        "#BB3754",
+        "#F98C0A",
+        "#FCFFA4"
+      )
+    )
+  )
 
 mpgman <- mpg |>
   group_by(manufacturer) |>
-  summarise(n = n(),
-            unique = length(unique(model))) |>
+  summarise(n = n(), unique = length(unique(model))) |>
   arrange(-n, -unique)
 
 hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n, color = unique))
@@ -120,10 +134,15 @@ field <- expand.grid(x = coordinates, y = coordinates)
 field$length <- 200 - (field$x + field$y)
 field$direction <- (field$x + field$y) / 200 * 360
 
-hchart(field, "vector", hcaes(x, y, length = length, direction = direction),
-       name = "Sample vector field") |>
+hchart(
+  field,
+  "vector",
+  hcaes(x, y, length = length, direction = direction),
+  name = "Sample vector field"
+) |>
   hc_xAxis(min = 0, max = 100) |>
-  hc_yAxis(min = 0, max = 100) |> hc_size(height = 550)
+  hc_yAxis(min = 0, max = 100) |>
+  hc_size(height = 550)
 ```
 
 ## Extra parameters
@@ -142,7 +161,7 @@ hchart(
   color = c("#7CB5EC", "#F7A35C"),
   name = c("Year 1999", "Year 2008"),
   showInLegend = c(TRUE, FALSE) # only show the first one in the legend
-  )
+)
 ```
 
 Highcharts has a very complete API with a lot of options. You can
@@ -172,7 +191,7 @@ hc <- hchart(
   hcaes(x = speed, y = dist),
   name = "Speed and Stopping Distances of Cars",
   showInLegend = TRUE
-  )
+)
 
 hc
 ```
@@ -182,7 +201,7 @@ function `hc_add_series`. The parameters in this functions are similar to
 the `hchart`:
 
 
-```r
+```text
 hc_add_series(<highcarter_object>, <data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)
 
 # or with the pipe:
@@ -206,17 +225,17 @@ hc |>
     id = "fit", # this is for link the arearange series to this one and have one legend
     lineWidth = 1,
     showInLegend = TRUE
-    ) |>
+  ) |>
   hc_add_series(
     fit,
     type = "arearange",
     name = "SE",
-    hcaes(x = speed, low = .fitted - qtint*.se, high = .fitted + qtint*.se),
+    hcaes(x = speed, low = .fitted - qtint * .se, high = .fitted + qtint * .se),
     linkedTo = "fit", # here we link the legends in one.
     showInLegend = FALSE,
-    color = hex_to_rgba("gray", 0.2),  # put a semi transparent color
+    color = hex_to_rgba("gray", 0.2), # put a semi transparent color
     zIndex = -3 # this is for put the series in a back so the points are showed first
-    )
+  )
 ```
 
 Example of data from https://stackoverflow.com/questions/22717930/how-to-get-the-confidence-intervals-for-lowess-fit-using-r.
@@ -228,4 +247,4 @@ Since you know the basics now it could be interesting:
 - Go motivate yourself with the `vignette("showcase")` and observe everything that can be
 done with the highcharter package.
 - Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
-- Explore chart types and their R examples in the [series gallery](series-gallery.html).
+- Explore [chart types](chart-types.html) and their R examples.

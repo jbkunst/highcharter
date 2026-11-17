@@ -5,8 +5,8 @@
 grid_file <- here::here("dev", "examples-charts", "data", "world-tile-grid.csv")
 data <- utils::read.csv(grid_file, na.strings = character())
 
-hchart(data, "tilemap", hcaes(x = x, y = y, name = name, group = region)) %>%
-  hc_chart(type = "tilemap") %>%
+hchart(data, "tilemap", hcaes(x = x, y = y, name = name, group = region)) |>
+  hc_chart(type = "tilemap") |>
   hc_plotOptions(
     series = list(
       dataLabels = list(
@@ -16,11 +16,11 @@ hchart(data, "tilemap", hcaes(x = x, y = y, name = name, group = region)) %>%
         style = list(textOutline = FALSE)
       )
     )
-  ) %>%
+  ) |>
   hc_tooltip(
     headerFormat = "",
     pointFormat = "<b>{point.name}</b> is in <b>{point.region}</b>"
-  ) %>%
-  hc_xAxis(visible = FALSE) %>%
-  hc_yAxis(visible = FALSE) %>%
+  ) |>
+  hc_xAxis(visible = FALSE) |>
+  hc_yAxis(visible = FALSE) |>
   hc_size(height = 800)

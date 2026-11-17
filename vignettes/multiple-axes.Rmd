@@ -1,0 +1,79 @@
+---
+title: Multiple axes
+output: rmarkdown::html_vignette
+description: >
+  Arrange four scatter plots in one chart using separate pairs of axes.
+vignette: >
+  %\VignetteIndexEntry{Multiple axes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(highcharter)
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+```
+
+## Four panels with their own axes
+
+Plot vehicle weight against fuel economy in `mtcars`. Each column is a
+transmission (`am`), each row an engine shape (`vs`). Give the matching X and
+Y axes the same panel bounds and bind each series to the pair. All four panels
+use the same scales so their points can be compared directly.
+
+```{r four-panels}
+groups <- expand.grid(am = 0:1, vs = 0:1)
+panels <- lapply(seq_len(nrow(groups)), function(i) {
+  list(
+    left = if (groups$am[i] == 0) "0%" else "58%",
+    top = if (groups$vs[i] == 0) "0%" else "58%",
+    width = "42%",
+    height = "36%",
+    offset = 0,
+    lineWidth = 1,
+    tickWidth = 1,
+    tickLength = 4,
+    tickColor = "#45545d",
+    lineColor = "#45545d",
+    labels = list(
+      enabled = TRUE,
+      step = 1,
+      style = list(width = "30px", textOverflow = "clip")
+    ),
+    startOnTick = FALSE,
+    endOnTick = FALSE,
+    showFirstLabel = TRUE,
+    showLastLabel = TRUE,
+    title = list(text = NULL)
+  )
+})
+x_axes <- lapply(panels, function(p) {
+  c(p, list(min = 1, max = 6, tickPositions = 2:5))
+})
+y_axes <- lapply(panels, function(p) {
+  c(p, list(min = 8, max = 36, tickPositions = c(10, 20, 30)))
+})
+grid <- highchart() |>
+  hc_chart(alignTicks = FALSE, animation = FALSE, margin = c(60, 22, 60, 38)) |>
+  hc_title(text = "Weight and fuel economy") |>
+  hc_subtitle(
+    text = "Columns: automatic / manual. Rows: V-shaped / straight."
+  ) |>
+  hc_legend(enabled = FALSE) |>
+  hc_xAxis(x_axes) |>
+  hc_yAxis(y_axes)
+for (i in seq_len(nrow(groups))) {
+  cars <- mtcars[mtcars$am == groups$am[i] & mtcars$vs == groups$vs[i], ]
+  grid <- hc_add_series(
+    grid,
+    cars,
+    "scatter",
+    hcaes(wt, mpg),
+    name = paste("am", groups$am[i], "vs", groups$vs[i]),
+    xAxis = i - 1L,
+    yAxis = i - 1L,
+    marker = list(symbol = "circle")
+  )
+}
+grid
+```

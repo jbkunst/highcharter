@@ -30,15 +30,31 @@ The browser app uses the release available in webR; running the source locally
 uses your installed highcharter version.
 
 ```{r shiny-tabs, echo=FALSE}
-app <- paste(readLines(here::here("dev", "shiny", "site-demo", "app.R")), collapse = "\n")
+app <- paste(
+  readLines(here::here("dev", "shiny", "site-demo", "app.R")),
+  collapse = "\n"
+)
 bslib::navset_card_tab(
-  bslib::nav_panel("Browser app",
-    htmltools::tags$iframe(src = "../live/index.html", title = "Interactive iris chart in Shinylive",
-                          loading = "lazy", style = "width:100%;height:510px;border:0;")),
-  bslib::nav_panel("App source", htmltools::tags$pre(htmltools::tags$code(app))),
-  bslib::nav_panel("Run locally",
+  bslib::nav_panel(
+    "Browser app",
+    htmltools::tags$iframe(
+      src = "../live/index.html",
+      title = "Interactive iris chart in Shinylive",
+      loading = "lazy",
+      style = "width:100%;height:510px;border:0;"
+    )
+  ),
+  bslib::nav_panel(
+    "App source",
+    htmltools::tags$pre(htmltools::tags$code(app))
+  ),
+  bslib::nav_panel(
+    "Run locally",
     htmltools::tags$p("From the repository root, run:"),
-    htmltools::tags$pre(htmltools::tags$code('shiny::runApp("dev/shiny/site-demo")')))
+    htmltools::tags$pre(htmltools::tags$code(
+      'shiny::runApp("dev/shiny/site-demo")'
+    ))
+  )
 )
 ```
 
@@ -51,7 +67,11 @@ an ID so updates do not depend on its position in the series list.
 ```{r proxy-recipe, eval=FALSE}
 proxy <- highchartProxy("prices", session)
 hcpxy_set_data(proxy, data = replacement, idSeries = "closing")
-hcpxy_set_extremes(proxy, min = base::as.Date("2025-01-03"), max = base::as.Date("2025-01-08"))
+hcpxy_set_extremes(
+  proxy,
+  min = base::as.Date("2025-01-03"),
+  max = base::as.Date("2025-01-08")
+)
 ```
 
 The [Stock article](stock.html#update-a-series-and-its-visible-range-in-shiny)

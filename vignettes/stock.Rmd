@@ -43,12 +43,29 @@ an indicator interactively.
 ```{r}
 price_chart <- highchartstock() |>
   hc_add_series(prices, name = "Price", id = "price") |>
-  hc_add_series(type = "sma", linkedTo = "price", name = "10-day mean",
-                params = list(period = 10)) |>
-  hc_add_series(type = "flags", onSeries = "price", data = list(
-    list(x = datetime_to_timestamp(time(prices)[30]), title = "A", text = "Day 30")
-  )) |>
-  hc_stockTools(gui = list(enabled = TRUE, buttons = c("indicators", "zoomChange", "fullScreen"))) |>
+  hc_add_series(
+    type = "sma",
+    linkedTo = "price",
+    name = "10-day mean",
+    params = list(period = 10)
+  ) |>
+  hc_add_series(
+    type = "flags",
+    onSeries = "price",
+    data = list(
+      list(
+        x = datetime_to_timestamp(time(prices)[30]),
+        title = "A",
+        text = "Day 30"
+      )
+    )
+  ) |>
+  hc_stockTools(
+    gui = list(
+      enabled = TRUE,
+      buttons = c("indicators", "zoomChange", "fullScreen")
+    )
+  ) |>
   hc_navigator(enabled = TRUE)
 
 price_chart
@@ -64,7 +81,12 @@ daily_range <- prices[, "High"] - prices[, "Low"]
 highchart(type = "stock") |>
   hc_yAxis(create_axis(2, heights = c(3, 1))) |>
   hc_add_series(prices, name = "Price", yAxis = 0) |>
-  hc_add_series(daily_range, name = "High minus low", type = "column", yAxis = 1)
+  hc_add_series(
+    daily_range,
+    name = "High minus low",
+    type = "column",
+    yAxis = 1
+  )
 ```
 
 ## Update a series and its visible range in Shiny
@@ -85,7 +107,12 @@ on a live quote request. `adjustOHLC()` adjusts the price fields using the
 downloaded adjusted close; volume remains the reported daily volume.
 
 ```{r stock-dashboard}
-snapshot <- read.csv(here::here("dev", "examples-charts", "data", "spy-2025.csv"))
+snapshot <- read.csv(here::here(
+  "dev",
+  "examples-charts",
+  "data",
+  "spy-2025.csv"
+))
 SPY <- xts::xts(snapshot[-1], order.by = base::as.Date(snapshot$date))
 SPY <- quantmod::adjustOHLC(SPY, use.Adjusted = TRUE)
 close <- quantmod::Cl(SPY)
@@ -101,14 +128,33 @@ highchart(type = "stock") |>
   hc_add_series(SPY, yAxis = 0, name = "SPY", id = "instrument") |>
   hc_add_series(fast_mean, yAxis = 0, name = "5-day mean") |>
   hc_add_series(slow_mean, yAxis = 0, name = "100-day mean") |>
-  hc_add_series(quantmod::Vo(SPY), yAxis = 1, name = "Volume", type = "column") |>
+  hc_add_series(
+    quantmod::Vo(SPY),
+    yAxis = 1,
+    name = "Volume",
+    type = "column"
+  ) |>
   hc_add_series(momentum, yAxis = 2, name = "RSI (14)") |>
-  hc_add_series(sell_level, yAxis = 2, name = "RSI 70", dashStyle = "ShortDash",
-                color = "#94A3B8", lineWidth = 1, showInLegend = FALSE,
-                enableMouseTracking = FALSE) |>
-  hc_add_series(buy_level, yAxis = 2, name = "RSI 30", dashStyle = "ShortDash",
-                color = "#94A3B8", lineWidth = 1, showInLegend = FALSE,
-                enableMouseTracking = FALSE) |>
+  hc_add_series(
+    sell_level,
+    yAxis = 2,
+    name = "RSI 70",
+    dashStyle = "ShortDash",
+    color = "#94A3B8",
+    lineWidth = 1,
+    showInLegend = FALSE,
+    enableMouseTracking = FALSE
+  ) |>
+  hc_add_series(
+    buy_level,
+    yAxis = 2,
+    name = "RSI 30",
+    dashStyle = "ShortDash",
+    color = "#94A3B8",
+    lineWidth = 1,
+    showInLegend = FALSE,
+    enableMouseTracking = FALSE
+  ) |>
   hc_yAxis(title = list(text = "Price")) |>
   hc_tooltip(valueDecimals = 2, shared = TRUE) |>
   hc_size(height = 720)

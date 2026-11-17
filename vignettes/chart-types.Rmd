@@ -1,9 +1,6 @@
 ---
 title: "Chart types"
 output: rmarkdown::html_vignette
-resource_files:
-  - icons/r-project.svg
-  - icons/python.svg
 vignette: >
   %\VignetteIndexEntry{Chart types}
   %\VignetteEngine{knitr::rmarkdown}
@@ -38,10 +35,14 @@ df <- tibble(x = seq_len(n) - 1) |>
     y = 10 + x + 10 * sin(x - 1),
     z = 5 + x * y - median(x * y),
     e = round(10 * abs(rnorm(n)) + 2, 1),
-    low = y - e, high = y + e, value = round(y - 1),
+    low = y - e,
+    high = y + e,
+    value = round(y - 1),
     name = sample(fruit[str_length(fruit) <= 5], n),
-    color = colors, label = name,
-    xlow = x - 0.3, xhigh = x + 0.3
+    color = colors,
+    label = name,
+    xlow = x - 0.3,
+    xhigh = x + 0.3
   ) |>
   mutate(across(where(is.numeric), ~ round(.x, 1))) |>
   select(-e) |>
@@ -57,47 +58,93 @@ knitr::kable(df)
 create_hc <- function(t) {
   polar <- startsWith(t, "polar")
   type <- sub("^polar", "", t)
-  ranges <- c("arearange", "areasplinerange", "columnrange", "errorbar", "dumbbell")
-  links <- c("sankey", "dependencywheel", "arcdiagram", "organization", "networkgraph")
+  ranges <- c(
+    "arearange",
+    "areasplinerange",
+    "columnrange",
+    "errorbar",
+    "dumbbell"
+  )
+  links <- c(
+    "sankey",
+    "dependencywheel",
+    "arcdiagram",
+    "organization",
+    "networkgraph"
+  )
   points <- df |> select(x, y, name, color)
-  if (type %in% ranges) points <- df |> select(x, low, high, name, color)
+  if (type %in% ranges) {
+    points <- df |> select(x, low, high, name, color)
+  }
   if (type %in% c("bubble", "scatter3d", "variwide", "variablepie")) {
     points <- df |> transmute(x, y, z = abs(z) + 1, name, color)
   }
-  if (type %in% c("treemap", "packedbubble")) points <- df |> select(name, value, color)
-  if (type %in% links) points <- df |> select(from, to, weight)
-  if (type == "wordcloud") points <- df |> transmute(name, weight = value, color)
-  if (type == "item") points <- df |> transmute(name, y = round(y), color)
-  if (type == "timeline") points <- df |> transmute(x, name, label, description = name, color)
-  if (type == "bullet") points <- df |> transmute(x, y, target = y + 5, color)
-  if (type == "vector") points <- df |> transmute(x, y, length = value, direction = x * 60, color)
-  if (type == "windbarb") points <- df |> transmute(x, value, direction = x * 60, color)
+  if (type %in% c("treemap", "packedbubble")) {
+    points <- df |> select(name, value, color)
+  }
+  if (type %in% links) {
+    points <- df |> select(from, to, weight)
+  }
+  if (type == "wordcloud") {
+    points <- df |> transmute(name, weight = value, color)
+  }
+  if (type == "item") {
+    points <- df |> transmute(name, y = round(y), color)
+  }
+  if (type == "timeline") {
+    points <- df |> transmute(x, name, label, description = name, color)
+  }
+  if (type == "bullet") {
+    points <- df |> transmute(x, y, target = y + 5, color)
+  }
+  if (type == "vector") {
+    points <- df |> transmute(x, y, length = value, direction = x * 60, color)
+  }
+  if (type == "windbarb") {
+    points <- df |> transmute(x, value, direction = x * 60, color)
+  }
   if (type == "boxplot") {
-    points <- df |> transmute(x, low, q1 = y - 1, median = y, q3 = y + 1, high, color)
+    points <- df |>
+      transmute(x, low, q1 = y - 1, median = y, q3 = y + 1, high, color)
   }
   if (type %in% c("heatmap", "tilemap", "contour")) {
     points <- expand.grid(x = 0:5, y = 0:5) |>
       mutate(value = round(sin(x) + cos(y), 2))
   }
   if (type %in% c("sunburst", "treegraph")) {
-    points <- bind_rows(tibble(id = "fruit", name = "Fruit", color = colors[1]),
-                        df |> transmute(id = name, parent = "fruit", name, value, color))
+    points <- bind_rows(
+      tibble(id = "fruit", name = "Fruit", color = colors[1]),
+      df |> transmute(id = name, parent = "fruit", name, value, color)
+    )
   }
   hc <- highchart() |>
-    hc_chart(type = type, polar = polar, inverted = type %in% c("dumbbell", "organization")) |>
+    hc_chart(
+      type = type,
+      polar = polar,
+      inverted = type %in% c("dumbbell", "organization")
+    ) |>
     hc_title(text = t, style = list(fontSize = "16px")) |>
     hc_colors(colors) |>
     hc_xAxis(categories = df$name) |>
     hc_yAxis(visible = !type %in% c("streamgraph", "timeline")) |>
-    hc_add_series(data = list_parse(points), type = type, name = "Fruit consumption",
-                  colorByPoint = TRUE, showInLegend = FALSE) |>
+    hc_add_series(
+      data = list_parse(points),
+      type = type,
+      name = "Fruit consumption",
+      colorByPoint = TRUE,
+      showInLegend = FALSE
+    ) |>
     hc_tooltip(outside = TRUE) |>
     hc_size(height = 300)
   if (type %in% c("scatter3d", "cylinder", "funnel3d", "pyramid3d")) {
-    hc <- hc |> hc_chart(options3d = list(enabled = TRUE, alpha = 15, beta = 15, depth = 50))
+    hc <- hc |>
+      hc_chart(
+        options3d = list(enabled = TRUE, alpha = 15, beta = 15, depth = 50)
+      )
   }
   if (type %in% c("heatmap", "tilemap", "contour")) {
-    hc <- hc |> hc_colorAxis(stops = color_stops(colors = colors2), min = -2, max = 2)
+    hc <- hc |>
+      hc_colorAxis(stops = color_stops(colors = colors2), min = -2, max = 2)
   }
   hc
 }
@@ -105,15 +152,56 @@ create_hc <- function(t) {
 
 ```{r all-basic-types, echo=FALSE}
 types <- c(
-  "line", "spline", "area", "areaspline", "column", "columnpyramid", "bar",
-  "scatter", "bubble", "lollipop", "waterfall", "funnel", "pyramid",
-  "pie", "treemap", "packedbubble", "arearange", "areasplinerange",
-  "columnrange", "errorbar", "dumbbell", "polygon", "polarline",
-  "polarcolumn", "polarcolumnrange", "streamgraph", "item", "wordcloud",
-  "timeline", "sankey", "dependencywheel", "arcdiagram", "networkgraph",
-  "organization", "variablepie", "variwide", "bullet", "vector", "windbarb",
-  "dotplot", "boxplot", "heatmap", "tilemap", "contour", "sunburst",
-  "treegraph", "scatter3d", "cylinder", "funnel3d", "pyramid3d"
+  "line",
+  "spline",
+  "area",
+  "areaspline",
+  "column",
+  "columnpyramid",
+  "bar",
+  "scatter",
+  "bubble",
+  "lollipop",
+  "waterfall",
+  "funnel",
+  "pyramid",
+  "pie",
+  "treemap",
+  "packedbubble",
+  "arearange",
+  "areasplinerange",
+  "columnrange",
+  "errorbar",
+  "dumbbell",
+  "polygon",
+  "polarline",
+  "polarcolumn",
+  "polarcolumnrange",
+  "streamgraph",
+  "item",
+  "wordcloud",
+  "timeline",
+  "sankey",
+  "dependencywheel",
+  "arcdiagram",
+  "networkgraph",
+  "organization",
+  "variablepie",
+  "variwide",
+  "bullet",
+  "vector",
+  "windbarb",
+  "dotplot",
+  "boxplot",
+  "heatmap",
+  "tilemap",
+  "contour",
+  "sunburst",
+  "treegraph",
+  "scatter3d",
+  "cylinder",
+  "funnel3d",
+  "pyramid3d"
 )
 htmltools::div(class = "chart-grid", map(types, create_hc))
 ```
@@ -138,11 +226,18 @@ Each row supplies the two whisker ends, the lower and upper quartiles, and the m
 
 ```{r mapping-boxplot}
 waits <- data.frame(
-  clinic = c("North", "South"), lower = c(4, 6), p25 = c(6, 8),
-  p50 = c(10, 12), p75 = c(14, 15), upper = c(19, 22)
+  clinic = c("North", "South"),
+  lower = c(4, 6),
+  p25 = c(6, 8),
+  p50 = c(10, 12),
+  p75 = c(14, 15),
+  upper = c(19, 22)
 )
-hchart(waits, "boxplot",
-  hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper))
+hchart(
+  waits,
+  "boxplot",
+  hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper)
+)
 ```
 
 ## Map links between nodes
@@ -161,10 +256,15 @@ diagram, the width of each link shows how many passengers took that route.
 
 ```{r mapping-sankey}
 trips <- data.frame(
-  origin = c("North", "North", "South"), destination = c("Bus", "Rail", "Rail"),
+  origin = c("North", "North", "South"),
+  destination = c("Bus", "Rail", "Rail"),
   passengers = c(30, 20, 15)
 )
-hchart(trips, "sankey", hcaes(from = origin, to = destination, weight = passengers))
+hchart(
+  trips,
+  "sankey",
+  hcaes(from = origin, to = destination, weight = passengers)
+)
 ```
 
 ## Style network nodes and tooltips
@@ -176,23 +276,34 @@ and orange identifies transport modes. Circle area is proportional to the
 passenger total at each node.
 
 ```{r mapping-networkgraph}
-passengers <- tapply(rep(trips$passengers, 2), c(trips$origin, trips$destination), sum)
+passengers <- tapply(
+  rep(trips$passengers, 2),
+  c(trips$origin, trips$destination),
+  sum
+)
 nodes <- lapply(names(passengers), function(id) {
   n <- passengers[[id]]
   district <- id %in% trips$origin
   list(
-    id = id, name = if (district) paste(id, "district") else id,
+    id = id,
+    name = if (district) paste(id, "district") else id,
     color = if (district) "#386B9E" else "#BD6333",
     marker = list(radius = 2 * sqrt(n)),
     custom = list(passengers = n)
   )
 })
 
-hchart(trips, "networkgraph", hcaes(from = origin, to = destination),
-       nodes = nodes,
-       dataLabels = list(enabled = TRUE, format = "{point.name}", linkFormat = ""),
-       tooltip = list(headerFormat = "",
-                      nodeFormat = "<b>{point.name}</b><br>Passengers: {point.custom.passengers}"))
+hchart(
+  trips,
+  "networkgraph",
+  hcaes(from = origin, to = destination),
+  nodes = nodes,
+  dataLabels = list(enabled = TRUE, format = "{point.name}", linkFormat = ""),
+  tooltip = list(
+    headerFormat = "",
+    nodeFormat = "<b>{point.name}</b><br>Passengers: {point.custom.passengers}"
+  )
+)
 ```
 
 `dataLabels.format` shows the node name on the chart. `tooltip.nodeFormat`
@@ -209,7 +320,15 @@ Some charts need their own data shape. These examples include weighted arcs,
 unit symbols, fields and timelines, with the R code beside each result.
 
 ```{r specialized-recipes, echo=FALSE, results='asis'}
-recipes <- c("arcdiagram", "item", "wordcloud", "tilemap", "vector", "venn", "solidgauge")
+recipes <- c(
+  "arcdiagram",
+  "item",
+  "wordcloud",
+  "tilemap",
+  "vector",
+  "venn",
+  "solidgauge"
+)
 for (name in recipes) {
   path <- here::here("dev", "examples-charts", paste0(name, ".R"))
   cat(knitr::spin_child(path), sep = "\n")
@@ -218,32 +337,5 @@ for (name in recipes) {
 
 ## Markers and tooltips
 
-A scatter series can use the same SVG for its markers and its tooltip. Save
-the [R icon](icons/r-project.svg) and [Python icon](icons/python.svg) in an
-`icons/` directory alongside the HTML page. These brand icons come from
-[Font Awesome Free 6.7.2](https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands)
-and are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-
-```{r svg-markers}
-r_icon <- "./icons/r-project.svg"
-python_icon <- "./icons/python.svg"
-
-highchart() |>
-  hc_title(text = "Simulated task times") |>
-  hc_xAxis(categories = c("Read", "Transform", "Plot")) |>
-  hc_yAxis(title = list(text = "Seconds")) |>
-  hc_chart(type = "scatter") |>
-  hc_add_series(
-    name = "R", data = c(2, 4, 3), custom = list(icon = r_icon),
-    marker = list(symbol = paste0("url(", r_icon, ")"), width = 20, height = 20)
-  ) |>
-  hc_add_series(
-    name = "Python", data = c(3, 2, 4), custom = list(icon = python_icon),
-    marker = list(symbol = paste0("url(", python_icon, ")"), width = 20, height = 20)
-  ) |>
-  hc_tooltip(
-    useHTML = TRUE,
-    pointFormat = paste0("<img src='{series.options.custom.icon}' width='16' height='16' alt=''/> ",
-                         "{series.name}: <b>{point.y} s</b>")
-  )
-```
+See [Icons and pictograms](icons-and-pictograms.html) for image markers,
+icons in tooltips and symbols that represent individual items.

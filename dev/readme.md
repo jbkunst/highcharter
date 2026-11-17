@@ -23,6 +23,7 @@ in `tests/`, and website articles in `vignettes/`.
 
 At this level, `build-site.R` builds the website,
 `build-shinylive.R` exports the browser app,
+`format-vignettes.R` formats R chunks in the vignettes with Air,
 `generate-highcharts-api.R` regenerates the R option API, and
 `set-dev-options.R` enables interactive debugging options and a theme.
 This README documents their workflows and the release conventions.
@@ -34,12 +35,20 @@ Use Air for R code, with the root `air.toml` as the shared configuration:
 ```sh
 air format .
 air format --check .
+Rscript dev/format-vignettes.R
+Rscript dev/format-vignettes.R --check
 ```
 
 The configuration uses two spaces, an 80-column limit and persistent line
 breaks. Keep an explicit line break after `|>` when laying out chart pipelines.
+Use the base R pipe `|>` throughout website examples, including the canonical
+chart and helper scripts that supply code to articles and reference pages.
 Air does not format the code inside roxygen comments; keep those examples
 readable manually and regenerate their Rd files with `devtools::document()`.
+The vignette formatter sends each R chunk to Air through its documented
+`--stdin-file-path` interface, using the root configuration. It preserves prose,
+YAML, chunk headers and non-R code. If Air is outside PATH, set `AIR` to its
+executable path before running the script.
 
 Positron's Air extension includes the executable. If `air` is not on the
 terminal PATH, enable its **Air: Add Executable To Terminal Path** setting and
@@ -138,6 +147,19 @@ the option-by-option guide remains in `vignettes/highcharts-api.Rmd`.
 Organize website articles in the root `_pkgdown.yml`. When merging an
 article, move its examples to the destination and add a pkgdown redirect
 from the original HTML path to the new page or section.
+The Explore charts section uses the titles Chart types, Maps, Stock charts and
+Stock Tools, and Showcase. The chart-types article lives in
+`vignettes/chart-types.Rmd`; the former `series-gallery.html` URLs redirect to it.
+The Extensions and examples section includes `vignettes/multiple-axes.Rmd`,
+which holds the four-panel example formerly embedded in the Highcharts API guide.
+`vignettes/icons-and-pictograms.Rmd` groups image markers, tooltip icons and item
+symbols as examples alongside Drilldown. It reuses the local SVGs in
+`vignettes/icons/`; the former Fontawesome article URL redirects to it.
+
+pkgdown redirects use the canonical website URL. To review old URLs on a local
+server, regenerate redirects with `pkgdown::build_redirects(override =
+list(url = "http://127.0.0.1:8765"))`, substituting the active server address.
+The next normal website build restores the canonical destination for deployment.
 The bundle validation gallery checks the types registered in the bundled
 JavaScript. Its examples live in `dev/R/test-highcharts-bundle.R` and render to
 `bundle-gallery.html`, separate from the public chart-types article. The public

@@ -129,7 +129,7 @@ hc |>
     floating = TRUE,
     x = 90,
     y = 45
-    )
+  )
 ```
 
 Halfway there, now we just need to add the legend title. There are some arguments
@@ -173,9 +173,9 @@ hc |>
       text = "Species",
       style = list(
         textDecoration = "underline"
-        )
       )
     )
+  )
 ```
 
 CSS properties are often hyphenated words (like `text-decoration`)

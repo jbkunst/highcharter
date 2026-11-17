@@ -46,7 +46,7 @@ library(highcharter)
 
 data(penguins, package = "palmerpenguins")
 
-penguins <- penguins[complete.cases(penguins),]
+penguins <- penguins[complete.cases(penguins), ]
 
 hchart(
   penguins,
@@ -62,8 +62,9 @@ hchart(
     order = 3,
     lineWidth = 5,
     name = "%eq | r2: %r",
-    hideInLegend = FALSE)
-  ) |>
+    hideInLegend = FALSE
+  )
+) |>
   hc_add_dependency("plugins/highcharts-regression.js")
 ```
 
@@ -75,7 +76,7 @@ hchart(
   "scatter",
   hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
   regression = TRUE
-  ) |>
+) |>
   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
   hc_add_dependency("plugins/highcharts-regression.js")
 ```
@@ -113,13 +114,13 @@ hchart(
   "column",
   name = "Cars",
   hcaes(y = count)
-  ) |>
+) |>
   hc_xAxis(
     # specify the grouped categories
     categories = categories_grouped,
     # styling a little bit
     labels = list(style = list(fontSize = "10px"))
-    ) |>
+  ) |>
   hc_add_dependency("plugins/grouped-categories.js")
 ```
 
@@ -130,7 +131,12 @@ More details in https://api.highcharts.com/highcharts/plotOptions.series.dragDro
 ```{r}
 set.seed(123)
 
-df <- tibble(x = runif(10), y = runif(10), z = runif(10), name = paste("cat", 1:10))
+df <- tibble(
+  x = runif(10),
+  y = runif(10),
+  z = runif(10),
+  name = paste("cat", 1:10)
+)
 
 hchart(
   df,
@@ -142,8 +148,8 @@ hchart(
   dragDrop = list(
     draggableX = TRUE,
     draggableY = TRUE
-    )
   )
+)
 
 
 df$x <- NULL
@@ -157,8 +163,8 @@ hchart(
   cursor = 'ns-resize',
   dragDrop = list(
     draggableY = TRUE
-    )
   )
+)
 ```
 
 ## Pattern fills
@@ -175,7 +181,22 @@ Example taken from https://jsfiddle.net/gh/get/library/pure/highcharts/highchart
 hc_fill <- highchart() |>
   hc_chart(type = 'area') |>
   hc_title(text = 'Pattern fills from the bundled module') |>
-  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) |>
+  hc_xAxis(
+    categories = c(
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    )
+  ) |>
   hc_plotOptions(
     area = list(
       fillColor = list(
@@ -183,32 +204,32 @@ hc_fill <- highchart() |>
           path = list(
             d = 'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
             strokeWidth = 3
-            ),
+          ),
           width = 10,
           height = 10,
           opacity = 0.4
-          )
         )
       )
     )
+  )
 
 # test with 2 series
 hc_fill |>
   hc_add_series(
     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6),
-    color= '#88e',
+    color = '#88e',
     fillColor = list(
       pattern = list(
         color = '#11d'
       )
     )
-    ) |>
+  ) |>
   hc_add_series(
     data = c(NA, NA, NA, NA, NA, 43.1, 95.6, 148.5, 216.4, 194.1, 95.6, 54.4),
     color = '#e88',
     fillColor = list(
       pattern = list(
-        color= '#d11'
+        color = '#d11'
       )
     )
   )
@@ -220,14 +241,27 @@ More examples for fun.
 # test with 1 series and a theme
 hc_fill |>
   hc_add_series(
-    data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
-    color= '#000',
+    data = c(
+      7.0,
+      6.9,
+      9.5,
+      14.5,
+      18.2,
+      21.5,
+      25.2,
+      26.5,
+      23.3,
+      18.3,
+      13.9,
+      9.6
+    ),
+    color = '#000',
     fillColor = list(
       pattern = list(
         color = '#000'
       )
     )
-    )
+  )
 ```
 
 And the last one.
@@ -244,9 +278,9 @@ highchart() |>
     fillColor = list(
       pattern = list(
         image = 'https://cdn.pixabay.com/photo/2014/12/04/02/02/wall-556100_960_720.jpg'
-        )
       )
     )
+  )
 ```
 
 
@@ -289,12 +323,22 @@ highchart() |>
   hc_title(text = "Longer lives, different trajectories") |>
   hc_subtitle(text = "Population-weighted life expectancy by continent") |>
   hc_xAxis(categories = continents) |>
-  hc_yAxis(min = 25, max = 85, title = list(text = "Life expectancy (years)")) |>
+  hc_yAxis(
+    min = 25,
+    max = 85,
+    title = list(text = "Life expectancy (years)")
+  ) |>
   hc_add_series(name = "Life expectancy", data = points, colorByPoint = TRUE) |>
   hc_tooltip(valueDecimals = 1, valueSuffix = " years") |>
-  hc_motion(labels = as.character(years), startIndex = 0,
-            magnet = list(step = 1), updateInterval = 900) |>
-  hc_caption(text = "Source: Gapminder. The continent means are weighted by population.") |>
+  hc_motion(
+    labels = as.character(years),
+    startIndex = 0,
+    magnet = list(step = 1),
+    updateInterval = 900
+  ) |>
+  hc_caption(
+    text = "Source: Gapminder. The continent means are weighted by population."
+  ) |>
   hc_size(height = 460)
 ```
 

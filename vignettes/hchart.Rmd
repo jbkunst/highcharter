@@ -39,7 +39,11 @@ library(dplyr)
 data(penguins, package = "palmerpenguins")
 data(diamonds, economics_long, package = "ggplot2")
 
-hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group = species))
+hchart(
+  penguins,
+  "scatter",
+  hcaes(x = body_mass_g, y = flipper_length_mm, group = species)
+)
 
 penguins2 <- penguins |>
   count(species, island) |>
@@ -89,7 +93,7 @@ hchart(x, type = "column")
 ## Time Series
 
 ```{r}
-hchart(LakeHuron, name = "Level") |> 
+hchart(LakeHuron, name = "Level") |>
   hc_title(text = "Level of Lake Huron 1875–1972")
 ```
 
@@ -222,8 +226,16 @@ data(volcano)
 
 hchart(volcano) |> # changing default color
   hc_colorAxis(
-    stops = color_stops(colors = c("#000004FF", "#56106EFF", "#BB3754FF", "#F98C0AFF", "#FCFFA4FF"))
+    stops = color_stops(
+      colors = c(
+        "#000004FF",
+        "#56106EFF",
+        "#BB3754FF",
+        "#F98C0AFF",
+        "#FCFFA4FF"
+      )
     )
+  )
 ```
 
 ## Distance matrix 
