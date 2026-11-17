@@ -19,8 +19,8 @@
   and companion fitted-model examples to focus on its supported R objects.
 * The `hchart()` examples list supported methods with `methods(hchart)`.
   The `hcmap()` help uses a concise title and a descriptive map-collection link.
-* The homepage introduces the shared Highcharts bundle, installation and a first
-  chart, with standard CRAN/GitHub installation commands and direct links to
+* The homepage introduces the shared Highcharts bundle and installation,
+  with standard CRAN/GitHub installation commands and direct links to
   examples and reference pages through relative links. Datalegreya returns
   to the navbar brand and homepage title; the homepage header rule is removed.
 * The homepage uses a full-width 2-by-2 chart grid with four synchronized states,
@@ -53,6 +53,12 @@
   Export series retain every region's color in all four states.
   A series label identifies South America in the third export view.
   Panel descriptions use native Highcharts captions and update with each state.
+  Captions use smaller italic text, and the grid omits the shared narrative below
+  the charts.
+  The scatter supplies a native regional legend at the top left; the external
+  legend is removed. Scatter and export plots keep matching margins, and the
+  export time axis is labeled Years.
+  The homepage omits the introductory chart recipe beneath Where to start.
 * The hcrt theme uses the built-in three-dot export menu icon.
 * Language examples compare dates and export-data menus across eight locales.
   They use a shared chart factory, compact layouts and horizontal date labels.

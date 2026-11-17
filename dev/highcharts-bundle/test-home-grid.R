@@ -166,7 +166,7 @@ tryCatch(
           "({center:map.mapView.center,zoom:map.mapView.zoom,",
           "tracking:scatter.series.filter(s=>s.type==='bubble').every(s=>",
           "s.options.enableMouseTracking===(s.name==='South America')),",
-          "story:root.querySelector('.grid-story').textContent,",
+          "caption:scatter.options.caption.text,",
           "labels:scatter.series.flatMap(s=>s.points).filter(p=>",
           "p.options.dataLabels?.enabled).map(p=>p.name)})"
         ))
@@ -175,7 +175,7 @@ tryCatch(
           regional$center[2] < 0,
           regional$zoom > initial$worldZoom + 0.5,
           isTRUE(regional$tracking),
-          grepl("South America", regional$story),
+          grepl("South America", regional$caption),
           setequal(unlist(regional$labels), c("Chile", "Uruguay"))
         )
         table <- js(paste0(

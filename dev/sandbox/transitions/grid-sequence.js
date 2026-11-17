@@ -167,13 +167,6 @@ function(el, x, sequence) {
     function sync() {
       play.textContent = root.dataset.playing === 'true' ? 'Pause' : 'Play';
       picker.value = root.dataset.phase;
-      const current = sequence.steps[Number(root.dataset.phase)];
-      const story = root.querySelector('.grid-story');
-      if (story) story.textContent = current.story;
-      root.querySelectorAll('.grid-legend li').forEach(item => {
-        item.style.opacity = current.focus &&
-          !current.focusRegions.includes(item.dataset.region) ? '0.35' : '1';
-      });
     }
     function step(index, animate) {
       root.dataset.phase = index;

@@ -57,16 +57,6 @@ label_countries <- c("CHL", "URY")
 
 
 # 1. Shared appearance and four synchronized analytical stages -------------
-stories <- c(
-  "Trade and longevity do not have identical geographies.",
-  "Large populations do not always sit at the income frontier.",
-  sprintf(
-    "South America: %s%% of people, %s%% of goods exports across these economies.",
-    pct(population_share),
-    pct(export_share)
-  ),
-  "Trade intensity and trade balance describe different kinds of openness."
-)
 stage_names <- c(
   "Global patterns",
   "People and scale",
@@ -124,7 +114,19 @@ country_chart <- function(stage) {
     life_limits
   }
   hc <- base |>
-    hc_chart(type = "bubble", margin = list(18, 16, 108, 68)) |>
+    hc_chart(type = "bubble", margin = list(54, 16, 82, 68)) |>
+    hc_legend(
+      enabled = TRUE,
+      align = "left",
+      verticalAlign = "top",
+      layout = "horizontal",
+      padding = 0,
+      margin = 8,
+      itemDistance = 10,
+      symbolWidth = 8,
+      symbolHeight = 8,
+      itemStyle = list(fontSize = "10px", fontWeight = "normal")
+    ) |>
     hc_xAxis(
       type = "logarithmic",
       min = x_limits[1],
@@ -256,6 +258,7 @@ country_chart <- function(stage) {
       type = "line",
       id = "trade-parity",
       name = "Exports equal imports",
+      showInLegend = FALSE,
       data = list_parse2(data.frame(x = trade_limits, y = trade_limits)),
       color = "#A6ADBA",
       opacity = if (trading) 1 else 0,
@@ -289,12 +292,12 @@ trade_chart <- function(stage) {
   percent <- stage == 2L
   stream <- stage == 4L
   hc <- base |>
-    hc_chart(type = "streamgraph") |>
+    hc_chart(type = "streamgraph", margin = list(54, 16, 82, 68)) |>
     hc_xAxis(
       min = metadata$start_year,
       max = year,
       tickInterval = 5,
-      title = list(text = NULL),
+      title = list(text = "Years"),
       gridLineWidth = if (stream) 0 else 0.75,
       gridLineColor = soft_grid,
       crosshair = list(color = "#B8BECA", width = 1),
@@ -621,9 +624,10 @@ for (family in names(widget_families)) {
         align = "center",
         margin = 12,
         style = list(
-          fontSize = "14px",
+          fontSize = "12px",
+          fontStyle = "italic",
           fontWeight = "300",
-          lineHeight = "22px",
+          lineHeight = "18px",
           color = "#666666"
         )
       )
@@ -658,9 +662,6 @@ families <- lapply(names(widget_families), function(family) {
     list(
       id = paste0(family, "-", stage),
       label = stage_names[stage],
-      story = stories[stage],
-      focus = stage == 3L,
-      focusRegions = as.list(focus_regions),
       wait = 2500,
       duration = if (stage == 1L) 2000 else 1400,
       options = options,
@@ -698,18 +699,13 @@ panels <- lapply(names(families), function(family) {
 })
 
 
-# 7. A wide grid, analytical caption and common playback controls ----------
+# 7. A wide grid and common playback controls -----------------------------
 css <- "
 body { margin: 0; background: white; }
 .transition-grid-page { max-width: 1200px; margin: auto; padding: 12px;
   font: 300 14px/1.6 'IBM Plex Sans', sans-serif; color: #666; }
 .transition-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 24px; }
 .transition-panel { min-width: 0; }
-.grid-story { max-width: 60rem; margin: 20px auto 10px; text-align: center; font-size: 16px; }
-.grid-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px;
-  padding: 0; margin: 12px 0; list-style: none; }
-.grid-legend li { transition: opacity 1.4s; }
-.grid-legend span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
 .grid-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .grid-controls button,.grid-controls select { padding: 7px 18px; font: inherit; cursor: pointer;
   border: 1px solid #ddd; border-radius: 22px; background: #fff; color: #47475c; }
@@ -719,15 +715,7 @@ body { margin: 0; background: white; }
   background-size: 12px 12px; }
 .grid-controls .grid-play { background: #47475c; color: #fff; }
 @media(max-width:720px) { .transition-grid { grid-template-columns:1fr; } }
-@media(prefers-reduced-motion:reduce) { .grid-legend li { transition:none; } }
 "
-legend <- lapply(regions, function(region) {
-  htmltools::tags$li(
-    "data-region" = region,
-    htmltools::tags$span(style = paste0("background:", colors[[region]])),
-    region
-  )
-})
 grid <- htmltools::browsable(htmltools::tagList(
   htmltools::tags$head(htmltools::tags$title(
     "Highcharter: a world of contrasts"
@@ -736,8 +724,6 @@ grid <- htmltools::browsable(htmltools::tagList(
   htmltools::tags$main(
     class = "transition-grid-page",
     htmltools::tags$div(class = "transition-grid", panels),
-    htmltools::tags$p(class = "grid-story", role = "status", stories[1]),
-    htmltools::tags$ul(class = "grid-legend", "aria-label" = "Regions", legend),
     htmltools::tags$div(
       class = "grid-controls",
       htmltools::tags$button(class = "grid-play", type = "button", "Pause"),

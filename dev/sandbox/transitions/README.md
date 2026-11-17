@@ -105,6 +105,7 @@ view labels the uppermost series at 2008 and 2020, with a 24-pixel offset.
 There are no vertical year guides in any view.
 Panel descriptions use native `hc_caption()` options and change through
 Highcharts' `chart.update()` with each stage, rather than separate HTML paragraphs.
+Captions use 12-pixel italic text. The grid has no separate shared narrative.
 Plain country names label
 Chile and Uruguay during the regional view.
 
@@ -143,7 +144,9 @@ building, set `options(highcharter.website.refresh_data = TRUE)`; reset that
 option after the refresh.
 
 On small screens the grid becomes one column. It uses the hcrt theme, IBM Plex
-Sans, one shared regional legend, Play/Pause, Restart and a stage picker.
+Sans, a native regional legend at the scatter's top left, Play/Pause, Restart
+and a stage picker. The scatter and export chart use matching plot margins;
+the export time axis is labeled Years.
 Initial widgets render without entrance animation. The executor reuses the R
 first scene, then performs one native sizing pass after fonts and layout settle.
 Playback starts only after that pass; the initial scatter must be visible without

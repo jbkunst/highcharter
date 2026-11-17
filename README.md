@@ -58,18 +58,6 @@ annotations, exporting and accessibility features.
   and [JavaScript-to-R guide](articles/highchartsjs-api-basics.html):
   learn how Highcharts options translate to R code.
 
-Try a first chart: pass a data frame to `hchart()`, map columns with `hcaes()`
-and add titles and options with the R pipe.
-
-```r
-library(highcharter)
-
-hchart(mtcars, "scatter", hcaes(x = wt, y = mpg, group = cyl)) |>
-  hc_title(text = "Fuel economy by car weight") |>
-  hc_xAxis(title = list(text = "Weight (1,000 lbs)")) |>
-  hc_yAxis(title = list(text = "Miles per gallon"))
-```
-
 [Source code](https://github.com/jbkunst/highcharter) ·
 [Report an issue](https://github.com/jbkunst/highcharter/issues) ·
 [Contribute](CONTRIBUTING.md) ·
