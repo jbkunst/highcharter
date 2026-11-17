@@ -16,16 +16,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}   
 ---
 
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "magic"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
-
 ```{r, include=FALSE}
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
@@ -80,6 +70,48 @@ hchart(x)
 hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
 ```
 
+## Precomputed histograms
+
+Pass a histogram object when you want R to choose the breaks before charting.
+The bin boundaries and counts are preserved.
+
+```{r precomputed-histogram}
+hchart(hist(diamonds$price, breaks = 30, plot = FALSE), name = "Diamond prices")
+```
+
+## Fitted models
+
+Fitted `lm` and `loess` objects use the companion `hc_add_series()` API. The
+fitted curve and its uncertainty band stay aligned with the predictor, even
+when the original rows are not ordered.
+
+```{r fitted-models}
+fit <- loess(dist ~ speed, data = cars)
+highchart() |> hc_add_series(fit, name = "Stopping distance")
+```
+
+## Lists of points
+
+Use a point list when points have different options or nested metadata. A data
+frame is usually simpler for rectangular data. Here only the South point needs
+a custom marker and an explanatory label; each point also carries a nested
+`custom` object for the tooltip. No placeholder columns or flattening are needed.
+
+```{r point-list}
+points <- list(
+  list(name = "North", y = 12, custom = list(manager = "Ana", target = 15)),
+  list(name = "South", y = 18, custom = list(manager = "Luis", target = 16),
+       marker = list(radius = 9, fillColor = "#F49952"),
+       dataLabels = list(enabled = TRUE, format = "Above target"))
+)
+hchart(points, type = "scatter", name = "Orders") |>
+  hc_xAxis(type = "category") |>
+  hc_tooltip(pointFormat = paste0(
+    "{point.name}: <b>{point.y}</b><br>Manager: {point.custom.manager}",
+    "<br>Target: {point.custom.target}"
+  ))
+```
+
 ## Character & Factor
 
 ```{r}
@@ -103,11 +135,25 @@ hchart(x)
 
 ## Forecast package
 
+The legend distinguishes the observed series from the forecast. Prediction
+intervals are linked to the forecast series. Supply `name` to label the subject;
+the chart adds the observed/forecast suffixes.
+
 ```{r}
 library(forecast)
 
 x <- forecast(ets(USAccDeaths), h = 48, level = 95)
 hchart(x)
+```
+
+## Exponential-smoothing components
+
+An `ets` model shows its observed values and fitted level, slope or seasonal
+states in aligned panels. To show future values instead, pass the model to
+`forecast()` and chart the resulting forecast object.
+
+```{r ets-components}
+hchart(forecast::ets(AirPassengers))
 ```
 
 ## Igraph package

@@ -14,16 +14,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}    
 ---
 
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "newspaper-o"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
-
 ```{r, include=FALSE}
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
@@ -166,11 +156,11 @@ hchart(
   tooltip = list(valueDecimals = FALSE)
   ) |> 
   hc_chart(
-    style = list(fontFamily = "Gloria Hallelujah")
+    style = list(fontFamily = "IBM Plex Sans")
   ) |> 
   hc_title(
     text = "Gotta Catch 'Em All!",
-    style = list(fontFamily = "Gloria Hallelujah")
+    style = list(fontFamily = "Alegreya Sans SC")
     ) |> 
   hc_size(height = 700)
 ```
@@ -264,26 +254,30 @@ hchart(
   ) |>
   hc_chart(
     # backgroundColor = "black"
-    backgroundColor = hex_to_rgba("black", 0.5),
-    divBackgroundImage = "https://img.freepik.com/free-photo/beautiful-shining-stars-night-sky_181624-622.jpg"
+    backgroundColor = hex_to_rgba("#071426", 0.88),
+    divBackgroundImage = "../stars-field.jpg"
     ) |>
   hc_xAxis(
-    title = list(text = "Temperature"),
+    title = list(text = "Temperature", style = list(color = "#F2F6FF")),
     type = "logarithmic",
     gridLineWidth = 0,
-    reversed = TRUE
+    reversed = TRUE,
+    labels = list(style = list(color = "#F2F6FF")),
+    lineColor = "#A9B9D2"
     ) |>
   hc_yAxis(
-    title = list(text = "Luminosity"),
+    title = list(text = "Luminosity", style = list(color = "#F2F6FF")),
     type = "logarithmic", 
-    gridLineWidth = 0
+    gridLineWidth = 0,
+    labels = list(style = list(color = "#F2F6FF")),
+    lineColor = "#A9B9D2"
     ) |>
   hc_title(
-    style = list(color = hex_to_rgba("white", 0.5)),
+    style = list(color = "#F2F6FF"),
     text = "Our nearest Stars"
     ) |>
   hc_subtitle(
-    style = list(color = hex_to_rgba("white", 0.5)),
+    style = list(color = "#DCE5EF"),
     text = "In a Hertzsprung-Russell diagram"
     ) |>
   hc_tooltip(
@@ -298,6 +292,9 @@ hchart(
 
 ```{r stars, eval=FALSE}
 ```
+
+Background photograph: [ESO/Digitized Sky Survey 2, around the Hubble Ultra Deep Field](https://www.eso.org/public/images/eso1832b/).
+The dark overlay keeps both axes legible over the stars.
 
 ## The Impact of Vaccines
 

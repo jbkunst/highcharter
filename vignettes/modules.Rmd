@@ -7,23 +7,13 @@ description: >
   There are many plugins for highcharts created by both the Highsoft team and the
   community. The plugins can from adding features to series or legends, as well
   as in data export formats or adjusting regressions or smoothing.
-editor_options: 
+editor_options:
   chunk_output_type: console
 vignette: >
   %\VignetteIndexEntry{Modules & plugins}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}    
+  %\VignetteEncoding{UTF-8}
 ---
-
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "puzzle-piece"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
 
 ```{r, include=FALSE}
 library(highcharter)
@@ -47,8 +37,8 @@ other so you must be careful in using them.
 
 This plugin was created by Ignacio Vazquez (https://github.com/phpepe) and
 let you add a regression series to any existing series on your chart. Calculates
-the r-squared value (coefficient of determination) and optionally prints it on 
-the legend. If Linear or Polynomial regression is selected, you can print 
+the r-squared value (coefficient of determination) and optionally prints it on
+the legend. If Linear or Polynomial regression is selected, you can print
 the equation on the legend.
 
 ```{r}
@@ -81,7 +71,7 @@ Even you can get a regression for each series/group.
 
 ```{r}
 hchart(
-  penguins, 
+  penguins,
   "scatter",
   hcaes(x = flipper_length_mm, y = bill_length_mm, group = species),
   regression = TRUE
@@ -101,39 +91,39 @@ Let's try an example:
 
 ```{r}
 library(purrr) # map function to make grouped categories argument
-library(dplyr) # for select function 
+library(dplyr) # for select function
 
 data(mpg, package = "ggplot2")
 
-mpgg <- mpg |> 
-  filter(!manufacturer %in% c("volkswagen", "chevrolet")) |> 
-  filter(class %in% c("compact", "midsize", "subcompact")) |> 
-  group_by(class, manufacturer) |> 
-  summarize(count = n()) |> 
+mpgg <- mpg |>
+  filter(!manufacturer %in% c("volkswagen", "chevrolet")) |>
+  filter(class %in% c("compact", "midsize", "subcompact")) |>
+  group_by(class, manufacturer) |>
+  summarize(count = n()) |>
   ungroup()
 
 categories_grouped <- mpgg |>
   select(class, manufacturer) |>
-  group_by(name = class) |> 
-  summarise(categories = list(manufacturer)) |> 
+  group_by(name = class) |>
+  summarise(categories = list(manufacturer)) |>
   list_parse()
 
 hchart(
   mpgg,
-  "column", 
+  "column",
   name = "Cars",
   hcaes(y = count)
-  ) |> 
+  ) |>
   hc_xAxis(
     # specify the grouped categories
-    categories = categories_grouped, 
+    categories = categories_grouped,
     # styling a little bit
     labels = list(style = list(fontSize = "10px"))
     ) |>
   hc_add_dependency("plugins/grouped-categories.js")
 ```
 
-## Draggable-points  
+## Draggable-points
 
 More details in https://api.highcharts.com/highcharts/plotOptions.series.dragDrop.
 
@@ -173,16 +163,19 @@ hchart(
 
 ## Pattern fills
 
-More information in https://www.highcharts.com/blog/tutorials/pattern-fills/.
+Pattern fill is an official Highcharts module, already included in the shared
+bundle. It belongs here as a bundled extension: there is no need to add a module
+dependency. Community plugins such as Motion and Regression remain optional.
+See https://www.highcharts.com/blog/tutorials/pattern-fills/.
 
 Example taken from https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/series/pattern-fill-area.
 
 ```{r}
 # base chart without series
-hc_fill <- highchart() |> 
-  hc_chart(type = 'area') |> 
-  hc_title(text = 'Pattern fill plugin demo') |> 
-  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) |> 
+hc_fill <- highchart() |>
+  hc_chart(type = 'area') |>
+  hc_title(text = 'Pattern fills from the bundled module') |>
+  hc_xAxis(categories = c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) |>
   hc_plotOptions(
     area = list(
       fillColor = list(
@@ -200,7 +193,7 @@ hc_fill <- highchart() |>
     )
 
 # test with 2 series
-hc_fill |> 
+hc_fill |>
   hc_add_series(
     data = c(29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6),
     color= '#88e',
@@ -209,7 +202,7 @@ hc_fill |>
         color = '#11d'
       )
     )
-    ) |> 
+    ) |>
   hc_add_series(
     data = c(NA, NA, NA, NA, NA, 43.1, 95.6, 148.5, 216.4, 194.1, 95.6, 54.4),
     color = '#e88',
@@ -225,7 +218,7 @@ More examples for fun.
 
 ```{r}
 # test with 1 series and a theme
-hc_fill |> 
+hc_fill |>
   hc_add_series(
     data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
     color= '#000',
@@ -234,20 +227,15 @@ hc_fill |>
         color = '#000'
       )
     )
-    ) |> 
-  hc_add_theme(hc_theme("handdrawn"))
+    )
 ```
-
-For a silhouette that fills with a value, see the
-[pictorial bus example](series-gallery.html#seats-and-occupancy).
 
 And the last one.
 
 ```{r}
 dim(volcano)
 
-highchart() |> 
-  hc_add_theme(hc_theme("null")) |>
+highchart() |>
   hc_add_series(
     type = "area", # area needs fill color
     name = "Maunga Whau Volcano",
@@ -262,36 +250,62 @@ highchart() |>
 ```
 
 
-## Motion
+## Gantt schedules
 
-The Motion plugin adds a time slider to an ordinary chart. Each point carries
-a `sequence` of values in label order. Move the slider or press Play to see
-how the two routes change between Monday and Wednesday. The chart opens on Monday.
+Gantt is another bundled extension. Each task supplies start/end times and can
+refer to earlier tasks by ID. No additional JavaScript dependency is needed.
 
-```{r motion-routes}
-highchart() |>
-  hc_chart(type = "bar") |>
-  hc_title(text = "Daily bus trips") |>
-  hc_xAxis(categories = c("North", "South")) |>
-  hc_yAxis(min = 0, max = 20, title = list(text = "Trips")) |>
-  hc_add_series(name = "Trips", data = list(
-    list(y = 8, sequence = c(8, 12, 15)),
-    list(y = 16, sequence = c(16, 10, 13))
-  )) |>
-  hc_motion(labels = c("Monday", "Tuesday", "Wednesday"),
-            magnet = list(step = 1), updateInterval = 700)
+```{r gantt-extension, code=readLines(here::here("dev", "examples-charts", "gantt.R"))[-1]}
 ```
 
-## Optional plugins in highcharter
+## Motion
+
+Motion is a [community plugin by Lars Cabrera](https://github.com/larsac07/Motion-Highcharts-Plugin),
+not an official Highcharts module. Its JavaScript ships separately in the R
+package; `hc_motion()` attaches it to this chart. It is not part of the shared
+Highcharts bundle.
+
+Watch life expectancy change across continents from 1952 to 2007. Each point
+carries a sequence of population-weighted means from the local Gapminder data.
+The fixed value scale makes the changes comparable. Press Play or drag the
+year slider; the chart begins in 1952.
+
+```{r motion-life-expectancy}
+library(dplyr)
+data(gapminder, package = "gapminder")
+history <- gapminder |>
+  group_by(continent, year) |>
+  summarise(lifeExp = weighted.mean(lifeExp, pop), .groups = "drop")
+years <- sort(unique(history$year))
+continents <- unique(as.character(history$continent))
+points <- lapply(continents, function(continent) {
+  values <- history[as.character(history$continent) == continent, ]
+  values <- values[order(values$year), ]
+  list(name = continent, y = values$lifeExp[1], sequence = values$lifeExp)
+})
+
+highchart() |>
+  hc_chart(type = "bar", marginBottom = 85) |>
+  hc_title(text = "Longer lives, different trajectories") |>
+  hc_subtitle(text = "Population-weighted life expectancy by continent") |>
+  hc_xAxis(categories = continents) |>
+  hc_yAxis(min = 25, max = 85, title = list(text = "Life expectancy (years)")) |>
+  hc_add_series(name = "Life expectancy", data = points, colorByPoint = TRUE) |>
+  hc_tooltip(valueDecimals = 1, valueSuffix = " years") |>
+  hc_motion(labels = as.character(years), startIndex = 0,
+            magnet = list(step = 1), updateInterval = 900) |>
+  hc_caption(text = "Source: Gapminder. The continent means are weighted by population.") |>
+  hc_size(height = 460)
+```
+
+## Optional community plugins
 
 The official modules are already part of the generated bundle. These community
 plugins remain optional:
 
-```{r, include=TRUE}
-dir(system.file("htmlwidgets/lib/highcharts/plugins", package = "highcharter"))
-```
+- Motion adds a time slider with `hc_motion()`.
+- Regression adds fitted curves with `hc_add_dependency("plugins/highcharts-regression.js")`.
+- Grouped Categories adds nested axis labels.
+- Draggable Legend lets readers reposition a legend.
 
-```{r, include=TRUE}
-dir(system.file("htmlwidgets/lib/highcharts/custom", package = "highcharter"))
-```
-
+For click-to-detail navigation, see [Drilldown](drilldown.html).

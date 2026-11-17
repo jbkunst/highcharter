@@ -11,22 +11,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}    
 ---
 
-<script>
-  $(document).ready(function(){ 
-    el = $(".page-header > h1")
-    icon = "rocket"
-    text = el.text()
-    text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-    el.html(text_new) 
-  }) ;
-</script>
-
 ```{r, include=FALSE}
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
-## <span class="fa fa-bar-chart"></span> Highcharts
+## Highcharts
 
 let us start start with a simple example using `hchart` function.
 
@@ -66,7 +56,7 @@ hchart(airforecast)
 
 See more examples of `hchart` in `vignette("hchart")`.
 
-## <span class="fa fa-line-chart"></span> Highstock
+## Highstock
 
 With {highcharter} you can use the highstock library which 
 include sophisticated navigation options like:
@@ -89,16 +79,22 @@ highchart(type = "stock") |>
   hc_add_series(x, name = "Sample prices")
 ```
 
-## <span class="fa fa-map-o"></span> Highmaps
+## Highmaps
 
 We can chart maps elements and choropleth using the highmaps and
 build interactive maps to display data linked to geographic objects.
 
 ```{r}
-states <- transform(USArrests, state = rownames(USArrests))
-highchart(type = "map") |>
-  hc_add_series_map(usgeojson, states, value = "UrbanPop",
-                    joinBy = c("name", "state"), name = "Urban population (%)")
+data(GNI2014, package = "treemap")
+world <- jsonlite::read_json(here::here("dev", "examples-charts", "data", "maps",
+                                        "custom-world-robinson-lowres.geo.json"))
+hcmap(world,
+      data = GNI2014, value = "GNI", joinBy = c("iso-a3", "iso3"),
+      name = "GNI per capita", borderWidth = 0.2) |>
+  hc_title(text = "Gross national income per capita, 2014") |>
+  hc_colorAxis(type = "logarithmic", stops = color_stops(colors = c(
+    "#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4"))) |>
+  hc_tooltip(valuePrefix = "$", valueDecimals = 0)
 ```
 
 ## What now?

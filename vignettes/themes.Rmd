@@ -12,6 +12,8 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(error = FALSE)
 old_options <- options("highcharter.theme")
+old_bootstrap_theme <- shiny::getShinyOption("bootstrapTheme")
+shiny::shinyOptions(bootstrapTheme = bslib::bs_theme(version = 5))
 ```
 
 ## Choose a theme
@@ -113,9 +115,28 @@ The setter changes an R process option shared by its sessions.
 
 ## The collection
 
-```{r}
-hc_themes()
+Choose a preset below; every tab uses the same sales data. The chart is
+resized when its tab becomes visible.
+
+```{r gallery, echo=FALSE}
+panels <- lapply(hc_themes(), function(name) {
+  chart <- if (name %in% c("sparkline", "sparkline_vb")) {
+    highchart(height = 85) |>
+      hc_add_series(type = if (name == "sparkline_vb") "area" else "line",
+                    name = "Sales", data = c(14, 17, 15, 21, 23, 24))
+  } else {
+    sales_chart()
+  }
+  chart <- hc_add_theme(chart, hc_theme(name))
+  if (name == "sparkline_vb") {
+    chart <- htmltools::div(style = "background-color: #166B70", chart)
+  }
+  bslib::nav_panel(name, chart)
+})
+do.call(bslib::navset_card_tab, panels)
 ```
+
+Use `hc_themes()` to list the available preset names.
 
 The FT adaptation uses its web paper color and categorical line palette.
 Its separate bar palette applies to bars and columns with `colorByPoint = TRUE`.
@@ -158,24 +179,6 @@ single-series sparkline examples. The white area in `sparkline_vb` is shown
 on a teal value-box background. The chalkboard, paper and sand textures
 are embedded in the widgets and work offline.
 
-```{r gallery, echo=FALSE}
-other <- setdiff(hc_themes(), c("ft", "economist"))
-htmltools::tagList(lapply(other, function(name) {
-  chart <- if (name %in% c("sparkline", "sparkline_vb")) {
-    highchart(height = 85) |>
-      hc_add_series(type = if (name == "sparkline_vb") "area" else "line",
-                    name = "Sales", data = c(14, 17, 15, 21, 23, 24))
-  } else {
-    sales_chart()
-  }
-  chart <- hc_add_theme(chart, hc_theme(name))
-  if (name == "sparkline_vb") {
-    chart <- htmltools::div(style = "background-color: #166B70", chart)
-  }
-  htmltools::tagList(htmltools::tags$h3(name), chart)
-}))
-```
-
 ## Migrate an existing script
 
 Replace `hc_theme_ft()` with `hc_theme("ft")`. A previous call to
@@ -195,4 +198,5 @@ sales_chart() |> hc_chart(type = "column") |> hc_add_theme(bars)
 
 ```{r restore, include=FALSE}
 options(old_options)
+shiny::shinyOptions(bootstrapTheme = old_bootstrap_theme)
 ```

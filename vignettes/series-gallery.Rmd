@@ -1,84 +1,249 @@
 ---
-title: "Series gallery"
+title: "Chart types"
 output: rmarkdown::html_vignette
+resource_files:
+  - icons/r-project.svg
+  - icons/python.svg
 vignette: >
-  %\VignetteIndexEntry{Series gallery}
+  %\VignetteIndexEntry{Chart types}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 library(highcharter)
-options(highcharter.google_fonts = FALSE)
-knitr::read_chunk(here::here("dev", "examples-charts", "bus-occupancy.R"))
-```
-
-The [interactive gallery](../series-gallery.html) renders a small example for
-each series type registered by the shared bundle. The examples use local
-data, including an embedded sample tile for the map. Open a chart title to
-read the Highcharts API for that series. The contour plot requires a browser
-with WebGPU support.
-
-| Family | Examples |
-| --- | --- |
-| Basic series | [area](../series-gallery.html#area), [areaspline](../series-gallery.html#areaspline), [bar](../series-gallery.html#bar), [column](../series-gallery.html#column), [dotplot](../series-gallery.html#dotplot), [line](../series-gallery.html#line), [pie](../series-gallery.html#pie), [polygon](../series-gallery.html#polygon), [scatter](../series-gallery.html#scatter), [spline](../series-gallery.html#spline), [streamgraph](../series-gallery.html#streamgraph) |
-| Maps | [flowmap](../series-gallery.html#flowmap), [geoheatmap](../series-gallery.html#geoheatmap), [map](../series-gallery.html#map), [mapbubble](../series-gallery.html#mapbubble), [mapline](../series-gallery.html#mapline), [mappoint](../series-gallery.html#mappoint), [tiledwebmap](../series-gallery.html#tiledwebmap) |
-| Stock | [candlestick](../series-gallery.html#candlestick), [flags](../series-gallery.html#flags), [heikinashi](../series-gallery.html#heikinashi), [hlc](../series-gallery.html#hlc), [hollowcandlestick](../series-gallery.html#hollowcandlestick), [ohlc](../series-gallery.html#ohlc), [pointandfigure](../series-gallery.html#pointandfigure), [renko](../series-gallery.html#renko) |
-| Networks and hierarchies | [arcdiagram](../series-gallery.html#arcdiagram), [dependencywheel](../series-gallery.html#dependencywheel), [networkgraph](../series-gallery.html#networkgraph), [organization](../series-gallery.html#organization), [sankey](../series-gallery.html#sankey), [sunburst](../series-gallery.html#sunburst), [treegraph](../series-gallery.html#treegraph), [treemap](../series-gallery.html#treemap), [venn](../series-gallery.html#venn) |
-| Statistical charts | [bellcurve](../series-gallery.html#bellcurve), [boxplot](../series-gallery.html#boxplot), [errorbar](../series-gallery.html#errorbar), [histogram](../series-gallery.html#histogram), [pareto](../series-gallery.html#pareto) |
-| Scientific and fields | [bubble](../series-gallery.html#bubble), [contour](../series-gallery.html#contour), [heatmap](../series-gallery.html#heatmap), [scatter3d](../series-gallery.html#scatter3d), [tilemap](../series-gallery.html#tilemap), [vector](../series-gallery.html#vector), [windbarb](../series-gallery.html#windbarb) |
-| Ranges and schedules | [arearange](../series-gallery.html#arearange), [areasplinerange](../series-gallery.html#areasplinerange), [columnrange](../series-gallery.html#columnrange), [dumbbell](../series-gallery.html#dumbbell), [gantt](../series-gallery.html#gantt), [xrange](../series-gallery.html#xrange) |
-| Other forms | [bullet](../series-gallery.html#bullet), [columnpyramid](../series-gallery.html#columnpyramid), [cylinder](../series-gallery.html#cylinder), [funnel](../series-gallery.html#funnel), [funnel3d](../series-gallery.html#funnel3d), [gauge](../series-gallery.html#gauge), [item](../series-gallery.html#item), [lollipop](../series-gallery.html#lollipop), [packedbubble](../series-gallery.html#packedbubble), [pictorial](../series-gallery.html#pictorial), [pyramid](../series-gallery.html#pyramid), [pyramid3d](../series-gallery.html#pyramid3d), [solidgauge](../series-gallery.html#solidgauge), [timeline](../series-gallery.html#timeline), [variablepie](../series-gallery.html#variablepie), [variwide](../series-gallery.html#variwide), [waterfall](../series-gallery.html#waterfall), [wordcloud](../series-gallery.html#wordcloud) |
-
-The [R examples](https://github.com/jbkunst/highcharter/blob/HEAD/dev/R/test-highcharts-bundle.R) construct the widgets with `hchart()` or `hc_add_series()`.
-
-## Seats and occupancy
-
-Seven of the ten bus seats are occupied. An `item` series draws one symbol
-per seat, so you can count both groups. A stacked `pictorial` series fills
-the bus silhouette up to the same proportion.
-
-```{r bus-capacity}
-```
-
-```{r count-seats}
-```
-
-```{r fill-bus}
-```
-
-To put a different image on each scatter series, see [Markers and tooltips](highcharts-api.html#markers-and-tooltips).
-
-## Polar coordinates
-
-The same monthly measurements can be drawn as a polar line or as columns.
-For a polar range, supply the low and high value of each month.
-
-```{r polar-charts}
-polar_chart <- highchart() |>
-  hc_chart(polar = TRUE) |>
-  hc_xAxis(categories = as.character(citytemp$month), tickmarkPlacement = "on") |>
-  hc_yAxis(title = list(text = "Temperature (°C)"))
-
-polar_chart |> hc_add_series(type = "line", name = "Tokyo", data = citytemp$tokyo)
-polar_chart |> hc_add_series(type = "column", name = "London", data = citytemp$london)
-
-temperatures <- with(citytemp, Map(list, pmin(tokyo, london), pmax(tokyo, london)))
-polar_chart |> hc_add_series(type = "columnrange", name = "Tokyo–London range",
-                             data = temperatures)
-```
-
-## Worked examples in R
-
-These recipes illustrate layouts, point fields and options for individual
-series. Each example renders below its R code.
-
-```{r series-recipes, echo=FALSE, results='asis'}
 library(dplyr)
-recipes <- c("arcdiagram", "errorbar", "item", "packedbubble", "solidgauge",
-             "tilemap", "vector", "venn", "wordcloud", "xrange")
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+```
+
+## Basic charts
+
+The original gallery starts from one colorful table and changes the series type.
+Polar charts stay in the same list. The additional types below are available in
+the shared bundle; no separate module download is needed. The [Maps](maps.html)
+and [Stock](stock.html) articles cover geographic and financial series.
+
+```{r common-data}
+library(dplyr)
+library(stringr)
+library(purrr)
+
+set.seed(123)
+n <- 6
+colors <- c("#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d")
+colors2 <- c("#000004", "#3B0F70", "#8C2981", "#DE4968", "#FE9F6D", "#FCFDBF")
+
+df <- tibble(x = seq_len(n) - 1) |>
+  mutate(
+    y = 10 + x + 10 * sin(x - 1),
+    z = 5 + x * y - median(x * y),
+    e = round(10 * abs(rnorm(n)) + 2, 1),
+    low = y - e, high = y + e, value = round(y - 1),
+    name = sample(fruit[str_length(fruit) <= 5], n),
+    color = colors, label = name,
+    xlow = x - 0.3, xhigh = x + 0.3
+  ) |>
+  mutate(across(where(is.numeric), ~ round(.x, 1))) |>
+  select(-e) |>
+  mutate(
+    from = name[c(1, 1, 1, 2, 3, 4)],
+    to = name[c(3, 4, 5, 3, 6, 6)],
+    weight = c(1, 1, 1, 1, 2, 2)
+  )
+knitr::kable(df)
+```
+
+```{r chart-helper}
+create_hc <- function(t) {
+  polar <- startsWith(t, "polar")
+  type <- sub("^polar", "", t)
+  ranges <- c("arearange", "areasplinerange", "columnrange", "errorbar", "dumbbell")
+  links <- c("sankey", "dependencywheel", "arcdiagram", "organization", "networkgraph")
+  points <- df |> select(x, y, name, color)
+  if (type %in% ranges) points <- df |> select(x, low, high, name, color)
+  if (type %in% c("bubble", "scatter3d", "variwide", "variablepie")) {
+    points <- df |> transmute(x, y, z = abs(z) + 1, name, color)
+  }
+  if (type %in% c("treemap", "packedbubble")) points <- df |> select(name, value, color)
+  if (type %in% links) points <- df |> select(from, to, weight)
+  if (type == "wordcloud") points <- df |> transmute(name, weight = value, color)
+  if (type == "item") points <- df |> transmute(name, y = round(y), color)
+  if (type == "timeline") points <- df |> transmute(x, name, label, description = name, color)
+  if (type == "bullet") points <- df |> transmute(x, y, target = y + 5, color)
+  if (type == "vector") points <- df |> transmute(x, y, length = value, direction = x * 60, color)
+  if (type == "windbarb") points <- df |> transmute(x, value, direction = x * 60, color)
+  if (type == "boxplot") {
+    points <- df |> transmute(x, low, q1 = y - 1, median = y, q3 = y + 1, high, color)
+  }
+  if (type %in% c("heatmap", "tilemap", "contour")) {
+    points <- expand.grid(x = 0:5, y = 0:5) |>
+      mutate(value = round(sin(x) + cos(y), 2))
+  }
+  if (type %in% c("sunburst", "treegraph")) {
+    points <- bind_rows(tibble(id = "fruit", name = "Fruit", color = colors[1]),
+                        df |> transmute(id = name, parent = "fruit", name, value, color))
+  }
+  hc <- highchart() |>
+    hc_chart(type = type, polar = polar, inverted = type %in% c("dumbbell", "organization")) |>
+    hc_title(text = t, style = list(fontSize = "16px")) |>
+    hc_colors(colors) |>
+    hc_xAxis(categories = df$name) |>
+    hc_yAxis(visible = !type %in% c("streamgraph", "timeline")) |>
+    hc_add_series(data = list_parse(points), type = type, name = "Fruit consumption",
+                  colorByPoint = TRUE, showInLegend = FALSE) |>
+    hc_tooltip(outside = TRUE) |>
+    hc_size(height = 300)
+  if (type %in% c("scatter3d", "cylinder", "funnel3d", "pyramid3d")) {
+    hc <- hc |> hc_chart(options3d = list(enabled = TRUE, alpha = 15, beta = 15, depth = 50))
+  }
+  if (type %in% c("heatmap", "tilemap", "contour")) {
+    hc <- hc |> hc_colorAxis(stops = color_stops(colors = colors2), min = -2, max = 2)
+  }
+  hc
+}
+```
+
+```{r all-basic-types, echo=FALSE}
+types <- c(
+  "line", "spline", "area", "areaspline", "column", "columnpyramid", "bar",
+  "scatter", "bubble", "lollipop", "waterfall", "funnel", "pyramid",
+  "pie", "treemap", "packedbubble", "arearange", "areasplinerange",
+  "columnrange", "errorbar", "dumbbell", "polygon", "polarline",
+  "polarcolumn", "polarcolumnrange", "streamgraph", "item", "wordcloud",
+  "timeline", "sankey", "dependencywheel", "arcdiagram", "networkgraph",
+  "organization", "variablepie", "variwide", "bullet", "vector", "windbarb",
+  "dotplot", "boxplot", "heatmap", "tilemap", "contour", "sunburst",
+  "treegraph", "scatter3d", "cylinder", "funnel3d", "pyramid3d"
+)
+htmltools::div(class = "chart-grid", map(types, create_hc))
+```
+
+## Task intervals
+
+Each row spans two dates. Map the start to `x`, the end to `x2` and the lane's zero-based index to `y`.
+
+```{r mapping-xrange}
+tasks <- data.frame(
+  start = base::as.Date(c("2025-01-06", "2025-01-08")),
+  finish = base::as.Date(c("2025-01-09", "2025-01-13")),
+  lane = 0:1
+)
+hchart(tasks, "xrange", hcaes(x = start, x2 = finish, y = lane)) |>
+  hc_yAxis(categories = c("Design", "Review"))
+```
+
+## Five-number summaries
+
+Each row supplies the two whisker ends, the lower and upper quartiles, and the median for one box.
+
+```{r mapping-boxplot}
+waits <- data.frame(
+  clinic = c("North", "South"), lower = c(4, 6), p25 = c(6, 8),
+  p50 = c(10, 12), p75 = c(14, 15), upper = c(19, 22)
+)
+hchart(waits, "boxplot",
+  hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper))
+```
+
+## Map links between nodes
+
+Each row describes a link. Map its two node IDs to `from` and `to`. The
+series type determines what you can read from those links.
+
+| What you want to show | Series | Point fields |
+|---|---|---|
+| Which nodes are connected | `networkgraph` | `from`, `to` |
+| How much flows between them | `sankey`, `dependencywheel`, `arcdiagram` | `from`, `to`, `weight` |
+| Who reports to whom | `organization` | `from` (parent), `to` (child) |
+
+These trips connect two districts to two transport modes. In the Sankey
+diagram, the width of each link shows how many passengers took that route.
+
+```{r mapping-sankey}
+trips <- data.frame(
+  origin = c("North", "North", "South"), destination = c("Bus", "Rail", "Rail"),
+  passengers = c(30, 20, 15)
+)
+hchart(trips, "sankey", hcaes(from = origin, to = destination, weight = passengers))
+```
+
+## Style network nodes and tooltips
+
+Rail serves both districts. To show those connections, reuse the trip table
+as the links of a `networkgraph`. Style the endpoints separately in `nodes`,
+matching each `id` to a value in `from` or `to`. Here blue identifies districts
+and orange identifies transport modes. Circle area is proportional to the
+passenger total at each node.
+
+```{r mapping-networkgraph}
+passengers <- tapply(rep(trips$passengers, 2), c(trips$origin, trips$destination), sum)
+nodes <- lapply(names(passengers), function(id) {
+  n <- passengers[[id]]
+  district <- id %in% trips$origin
+  list(
+    id = id, name = if (district) paste(id, "district") else id,
+    color = if (district) "#386B9E" else "#BD6333",
+    marker = list(radius = 2 * sqrt(n)),
+    custom = list(passengers = n)
+  )
+})
+
+hchart(trips, "networkgraph", hcaes(from = origin, to = destination),
+       nodes = nodes,
+       dataLabels = list(enabled = TRUE, format = "{point.name}", linkFormat = ""),
+       tooltip = list(headerFormat = "",
+                      nodeFormat = "<b>{point.name}</b><br>Passengers: {point.custom.passengers}"))
+```
+
+`dataLabels.format` shows the node name on the chart. `tooltip.nodeFormat`
+adds detail on hover. Hover over Rail to see 35 passengers, 20 from North
+and 15 from South.
+
+If you already have an `igraph` object, `hchart(graph, layout = igraph::layout_with_fr)`
+uses the layout calculated in R and carries node attributes into the chart.
+
+
+## Specialized chart recipes
+
+Some charts need their own data shape. These examples include weighted arcs,
+unit symbols, fields and timelines, with the R code beside each result.
+
+```{r specialized-recipes, echo=FALSE, results='asis'}
+recipes <- c("arcdiagram", "item", "wordcloud", "tilemap", "vector", "venn", "solidgauge")
 for (name in recipes) {
   path <- here::here("dev", "examples-charts", paste0(name, ".R"))
   cat(knitr::spin_child(path), sep = "\n")
 }
+```
+
+## Markers and tooltips
+
+A scatter series can use the same SVG for its markers and its tooltip. Save
+the [R icon](icons/r-project.svg) and [Python icon](icons/python.svg) in an
+`icons/` directory alongside the HTML page. These brand icons come from
+[Font Awesome Free 6.7.2](https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands)
+and are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+```{r svg-markers}
+r_icon <- "./icons/r-project.svg"
+python_icon <- "./icons/python.svg"
+
+highchart() |>
+  hc_title(text = "Simulated task times") |>
+  hc_xAxis(categories = c("Read", "Transform", "Plot")) |>
+  hc_yAxis(title = list(text = "Seconds")) |>
+  hc_chart(type = "scatter") |>
+  hc_add_series(
+    name = "R", data = c(2, 4, 3), custom = list(icon = r_icon),
+    marker = list(symbol = paste0("url(", r_icon, ")"), width = 20, height = 20)
+  ) |>
+  hc_add_series(
+    name = "Python", data = c(3, 2, 4), custom = list(icon = python_icon),
+    marker = list(symbol = paste0("url(", python_icon, ")"), width = 20, height = 20)
+  ) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = paste0("<img src='{series.options.custom.icon}' width='16' height='16' alt=''/> ",
+                         "{series.name}: <b>{point.y} s</b>")
+  )
 ```

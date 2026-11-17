@@ -1,8 +1,57 @@
 # highcharter (development version)
 
+* The homepage uses a full-width 2-by-2 chart grid with four synchronized states,
+  ordered as scatter, exports, map and pie. Its Americas focus connects the same
+  countries and indicators across panels, with quantitative income, longevity
+  and trade-balance maps, shared export tooltips and crisis markers. The Americas
+  are emphasized for one state before returning to the world. The final scatter
+  compares exports and imports per person on logarithmic axes, changing both
+  variables. A versioned World Bank snapshot covers 179 economies in 2024,
+  including Russia; R can refresh the data. Pies compare export and population shares
+  before opening into a semicircular donut. The R source uses the hcrt theme
+  and native Highcharts updates; project links and single-column prose follow
+  the grid.
+  Transitions retain points and paths for continuous changes of size, position,
+  fill and stacking, and wait for fonts before starting playback. The loop
+  and Restart animate back to the first state.
+  Longer map color bars display explicit numeric labels. The scatter uses
+  plain regional country labels and a stable plot box with continuous marker
+  geometry when returning to its initial variables.
+  Island economies classified as open ocean in the map are assigned to their
+  continents so all four panels include the same cohort.
+* The hcrt theme uses the built-in three-dot export menu icon.
+* Language examples compare dates and export-data menus across eight locales.
+  They use a shared chart factory, compact layouts and horizontal date labels.
+  Simulated Stock candles start at the current date and compare translated OHLC
+  tooltips and compact numeric labels on a logarithmic axis.
+  French, Norwegian Bokmål and Simplified Chinese use official Highcharts packs;
+  Japanese and Korean controls use explicitly identified AI-generated translations.
+* Circle-only presets preserve rectangular heatmap cells. The website restores
+  the colorful shared-data gallery, the JavaScript-to-R walkthrough and Pokémon
+  treemap drilldown, adds constructor examples and a tabbed theme collection,
+  and gives the article menu more vertical space.
+  Credits in the hcrt theme use the same IBM Plex Sans font as the chart body.
+* Website pages have descriptive titles, working source and documentation links,
+  and complete favicon assets, including when hosted under `/highcharter/`.
+* Forecast charts distinguish observed values, forecasts and their prediction
+  intervals in legends and tooltips, including when a custom series name is supplied.
+* The hcrt and smpl presets use circular markers consistently across series.
+* The website restores an inline chart-types gallery and international map
+  examples, adds a Shinylive app, and aligns chart and article typography.
+* `hcmap()` accepts an already loaded GeoJSON list without downloading map data.
+  Network charts preserve the current theme while hiding their coordinate axes.
+
+* The series gallery article builds correctly when knitr extracts its shared
+  examples for the website.
+
+* Charts fill the available widget width and height in the Viewer and standalone
+  browser, including after resizing. Percentage-height containers no longer leave
+  the chart at Highcharts' 400-pixel fallback height.
+
 * The website now groups 13 articles by task. The series gallery includes
   polar charts and pictograms. The Highcharts API guide includes Tom Bishop's
-  legend walkthrough, custom markers and tooltips. The Motion example now
+  legend walkthrough; marker and tooltip recipes live in the chart-types article.
+  The Motion example now
   runs with local data in the modules and plugins guide. The five former
   article URLs redirect to their new locations.
 * The Motion plugin uses native array iteration with the bundled Highcharts.
@@ -217,9 +266,9 @@ Now `hw_grid` add `htmlwdgtgrid.css` automatically.
 Additionally `hw_grid` gain new parameters:  1) `add_htmlgrid_css` To add or 
 not `htmlgrid.css` and 2) `browsable` -set as TRUE the default value- so now
 there is no need to use htmltools::browsable #622 
-* Adding new `hc_add_yAxis`. Thanks to @nordicgit70.
+* Adding new `hc_add_yAxis`. Thanks to `@nordicgit70`.
 * Added option to switch to `rjson::toJSON` for better plotting performance.
-To use execute `options(highcharter.rjon =TRUE)`. See #613.  Thanks to @nordicgit70.
+To use execute `options(highcharter.rjon =TRUE)`. See #613.  Thanks to `@nordicgit70`.
 
 ## Bugs
 
@@ -317,7 +366,7 @@ with the data.table class (#263).
  * `hc_add_series` is a generic generic function (#213). 
  * New `hcmap` function to chart maps (#218). And use remote sources (#215).
  * New _charting data frames_ vignette (http://rpubs.com/jbkunst/230276) (#220). 
- * New _charting maps_ vignette (http://jkunst.com/highcharter/highmaps.html) (#218). 
+ * New _charting maps_ vignette (https://jkunst.com/highcharter/articles/maps.html) (#218).
  * `debug` as an option instead of argument. Example `options(highcharter.debug = TRUE)` (#216).
  * Upgrade to highcharts V5 (#154) (#208). 
  * Added helpers & shortcuts for tooltip: sort and table (#206).
@@ -362,7 +411,7 @@ with the data.table class (#263).
  * `hchart`support matrix objects charting a heatmap (`hchart.matrix`) (#86).
  * `hchart` support phylo objects (#64).
  * New `hcboxplot`, `hcwaffle`, `hcbar`, `hcpie`, `hchist`, `hcdensity`, 
- `hcts` function to get quick some style of charts. Thanks to @nuo-agostinho.
+ `hcts` function to get quick some style of charts. Thanks to @nuno-agostinho.
  `hc_add_series_density` implementation  (#99 #70).
  * New `hc_add_series_bwp` to chart box and whisker plots (#81).
  * New  `hc_add_series_list` to add list of series (#68).
@@ -381,7 +430,7 @@ with the data.table class (#263).
  (#90 #79).
  * New `hc_grid` to create a grid of highchart objects, inspired from 
  `mjs_grid` (#67 #66).
- * Add motion plugin http://www.highcharts.com/plugin-registry/single/40/Motion
+ * Add motion plugin https://github.com/larsac07/Motion-Highcharts-Plugin
  (#62).
  
 

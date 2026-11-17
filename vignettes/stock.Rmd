@@ -9,13 +9,14 @@ vignette: >
 
 ```{r, include=FALSE}
 library(highcharter)
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 options(highcharter.google_fonts = FALSE)
 ```
 
 `highchart(type = "stock")` adds the Stock navigator and range selector.
 Use `highchartstock()` when readers also need drawing tools and technical
-indicators. All prices in these examples come from the xts package's sample
-OHLC matrix.
+indicators. The introductory examples use the xts package's sample OHLC matrix;
+the closing dashboard restores the SPY example with a local historical snapshot.
 
 ```{r}
 data(sample_matrix, package = "xts")
@@ -25,13 +26,11 @@ hchart(prices, id = "price", name = "Sample instrument")
 
 ## Lines and price bars
 
-One ordinary column produces a line. Several columns such as the two below
-produce one named line each. All four price fields together produce candles.
+One ordinary column produces a line. All four price fields together produce candles.
 Use `type = "ohlc"` for open–high–low–close bars.
 
 ```{r}
 hchart(prices[, "Close"], name = "Close")
-hchart(prices[, c("Open", "Close")])
 hchart(prices, type = "ohlc", name = "Sample instrument")
 ```
 
@@ -50,7 +49,6 @@ price_chart <- highchartstock() |>
     list(x = datetime_to_timestamp(time(prices)[30]), title = "A", text = "Day 30")
   )) |>
   hc_stockTools(gui = list(enabled = TRUE, buttons = c("indicators", "zoomChange", "fullScreen"))) |>
-  hc_rangeSelector(selected = 0) |>
   hc_navigator(enabled = TRUE)
 
 price_chart
@@ -76,4 +74,42 @@ the proxy changes the selected series and the x-axis range. Redraw the updated
 series before setting the range so the Stock navigator has its new data limits.
 
 ```{r stock-proxy, eval=FALSE, code=readLines(system.file("examples", "stock-proxy.R", package="highcharter"))}
+```
+
+## Price, moving averages, volume and momentum
+
+The earlier advanced example combined SPY prices, two moving averages, trading
+volume and RSI, including its 30/70 guide levels. This version uses a local
+snapshot of 2025 daily prices from Yahoo Finance, so rendering does not depend
+on a live quote request. `adjustOHLC()` adjusts the price fields using the
+downloaded adjusted close; volume remains the reported daily volume.
+
+```{r stock-dashboard}
+snapshot <- read.csv(here::here("dev", "examples-charts", "data", "spy-2025.csv"))
+SPY <- xts::xts(snapshot[-1], order.by = base::as.Date(snapshot$date))
+SPY <- quantmod::adjustOHLC(SPY, use.Adjusted = TRUE)
+close <- quantmod::Cl(SPY)
+fast_mean <- TTR::SMA(close, n = 5)
+slow_mean <- TTR::SMA(close, n = 100)
+momentum <- TTR::RSI(close, n = 14)
+sell_level <- xts::xts(rep(70, NROW(SPY)), order.by = time(SPY))
+buy_level <- xts::xts(rep(30, NROW(SPY)), order.by = time(SPY))
+
+highchart(type = "stock") |>
+  hc_title(text = "SPY: price, volume and momentum in 2025") |>
+  hc_yAxis(create_axis(3, heights = c(3, 1, 1), turnopposite = TRUE)) |>
+  hc_add_series(SPY, yAxis = 0, name = "SPY", id = "instrument") |>
+  hc_add_series(fast_mean, yAxis = 0, name = "5-day mean") |>
+  hc_add_series(slow_mean, yAxis = 0, name = "100-day mean") |>
+  hc_add_series(quantmod::Vo(SPY), yAxis = 1, name = "Volume", type = "column") |>
+  hc_add_series(momentum, yAxis = 2, name = "RSI (14)") |>
+  hc_add_series(sell_level, yAxis = 2, name = "RSI 70", dashStyle = "ShortDash",
+                color = "#94A3B8", lineWidth = 1, showInLegend = FALSE,
+                enableMouseTracking = FALSE) |>
+  hc_add_series(buy_level, yAxis = 2, name = "RSI 30", dashStyle = "ShortDash",
+                color = "#94A3B8", lineWidth = 1, showInLegend = FALSE,
+                enableMouseTracking = FALSE) |>
+  hc_yAxis(title = list(text = "Price")) |>
+  hc_tooltip(valueDecimals = 2, shared = TRUE) |>
+  hc_size(height = 720)
 ```

@@ -3,7 +3,7 @@
 N <- 6
 set.seed(1234)
 
-months <- seq(as.Date("2025-01-01"), by = "month", length.out = 26)
+months <- seq(base::as.Date("2025-01-01"), by = "month", length.out = 26)
 start_month <- sort(2 + sample(10:20, N))
 
 df <- tibble::tibble(

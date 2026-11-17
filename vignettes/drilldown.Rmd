@@ -15,16 +15,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}   
 ---
 
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "arrow-down"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
-
 ```{r, include=FALSE}
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
@@ -114,7 +104,7 @@ hchart(
 
 ## Exmaple II: Pokémon data
 
-Same recipe, different data. Just copy & pasting code:
+Click a type to explore its secondary types. Rectangle area represents the number of Pokémon.
 
 ```{r}
 pkmn_min <- pokemon |>
@@ -129,16 +119,16 @@ pkmn_ddn <- pokemon |>
   group_nest(type_1) |>
   mutate(
     id = type_1,
-    type = "column",
+    type = "treemap",
     # in the drilldown we'll give the mapping via creating the columns
-    data = map(data, mutate, name = type_2, y  = n),
+    data = map(data, mutate, name = type_2, value = n),
     data = map(data, list_parse)
   )
 
 hchart(
   pkmn_min,
-  type = "column",
-  hcaes(x = type_1, y = n, color = color, drilldown = type_1),
+  type = "treemap",
+  hcaes(name = type_1, value = n, color = color, drilldown = type_1),
   name = "Pokémons"
   ) |>
   hc_drilldown(
@@ -146,20 +136,8 @@ hchart(
     allowPointDrilldown = TRUE,
     series = list_parse(pkmn_ddn)
   ) |>
-  hc_yAxis(
-    title = list(text = ""),
-    endOnTick = FALSE,
-    opposite = TRUE
-    ) |>
-  hc_xAxis(
-    title = list(text = ""),
-    endOnTick = FALSE,
-    gridLineWidth = 0,
-    tickWidth = 0
-    ) |>
-  hc_chart(
-    style = list(fontFamily = "Gloria Hallelujah")
-  )
+  hc_plotOptions(treemap = list(layoutAlgorithm = "squarified",
+                                 dataLabels = list(enabled = TRUE, format = "{point.name}")))
 ```
 
 ## Example III: Custom tooltips and colors

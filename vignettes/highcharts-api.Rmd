@@ -3,30 +3,17 @@ title: Highcharts API
 author: Joshua Kunst
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-resource_files:
-  - icons/r-project.svg
-  - icons/python.svg
 description: >
-  Highcharts have a rich API which allows you to have control of the entire chart, 
+  Highcharts have a rich API which allows you to have control of the entire chart,
   from title, subtitle to axis ticks, labels, annotations. We'll review the
   main functions with simple examples.
-editor_options: 
+editor_options:
   chunk_output_type: console
 vignette: >
   %\VignetteIndexEntry{Highcharts API}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}    
+  %\VignetteEncoding{UTF-8}
 ---
-
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "cogs"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
 
 ```{r, include=FALSE}
 library(highcharter)
@@ -34,6 +21,9 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
 ## Translate Highcharts options to R
+
+For the complete walkthrough with Palmer penguins, JavaScript objects and
+nested R lists, see [JavaScript API Basics](highchartsjs-api-basics.html).
 
 Tom Bishop's legend example shows how to read the Highcharts API from R.
 Start with the monthly temperatures of three cities.
@@ -43,14 +33,14 @@ library(highcharter)
 
 data("citytemp")
 
-hc <- highchart() |> 
-  hc_xAxis(categories = citytemp$month) |> 
+hc <- highchart() |>
+  hc_xAxis(categories = citytemp$month) |>
   hc_add_series(
     name = "Tokyo", data = citytemp$tokyo
-    ) |> 
+    ) |>
   hc_add_series(
     name = "London", data = citytemp$london
-    ) |> 
+    ) |>
   hc_add_series(
     name = "Other city",
     data = (citytemp$tokyo + citytemp$london)/2
@@ -81,12 +71,12 @@ hc |>
   )
 ```
 
-## Chart
+## Chart layout and type
 
 With `hc_chart` you can define general chart options.
 
 ```{r}
-hc |> 
+hc |>
   hc_chart(
     borderColor = '#EBBA95',
     borderRadius = 10,
@@ -104,11 +94,11 @@ hc |>
 Now change type to column and add 3d effect.
 
 ```{r}
-hc <- hc |> 
+hc <- hc |>
   hc_chart(
     type = "column",
     options3d = list(
-      enabled = TRUE, 
+      enabled = TRUE,
       beta = 15,
       alpha = 15
       )
@@ -125,21 +115,21 @@ A good chart always have at least title, right? Then you can do it better adding
 using a subtitle or caption, even link to the source of data:
 
 ```{r}
-hc |> 
+hc |>
   hc_title(
     text = "This is the title of the chart"
-    ) |> 
+    ) |>
   hc_subtitle(
     text = "This is an intereseting subtitle to give
     context for the chart or some interesting fact"
-    ) |> 
+    ) |>
   hc_caption(
-    text = "This is a long text to give some 
-    subtle details of the data which can be relevant to the reader. 
-    This is usually a long text that's why I'm trying to put a 
-    <i>loooooong</i> text.", 
+    text = "This is a long text to give some
+    subtle details of the data which can be relevant to the reader.
+    This is usually a long text that's why I'm trying to put a
+    <i>loooooong</i> text.",
     useHTML = TRUE
-    ) |> 
+    ) |>
   hc_credits(
     text = "Chart created using R and highcharter",
     href = "http://jkunst.com/highcharter",
@@ -147,18 +137,18 @@ hc |>
     )
 ```
 
-## Axis
+## Axes, ticks and plot bands
 
 Usually is desirable get control or modify the behavior of the axis:
 
 ```{r}
-hc |> 
+hc |>
   hc_xAxis(
     title = list(text = "Month in x Axis"),
     opposite = TRUE
-    ) |> 
+    ) |>
   hc_yAxis(
-    title = list(text = "Temperature <b>in y Axis</b>", useHTML = TRUE),
+    title = list(text = "Temperature on the Y axis"),
     opposite = TRUE,
     minorTickInterval = "auto",
     minorGridLineDashStyle = "LongDashDotDot",
@@ -170,7 +160,7 @@ hc |>
 A good feature is `plotLines` and `plotBand` which you can use in both axis. For example:
 
 ```{r}
-hc |> 
+hc |>
   hc_xAxis(
     plotLines = list(
       list(
@@ -178,11 +168,11 @@ hc |>
         color = "#FF0000",
         width = 2,
         value = 4,
-        # the zIndex is used to put the label text over the grid lines 
+        # the zIndex is used to put the label text over the grid lines
         zIndex = 1
         )
       )
-    ) |> 
+    ) |>
   hc_yAxis(
     plotBands = list(
       list(
@@ -190,14 +180,14 @@ hc |>
         to = 50,
         color = hex_to_rgba("red", 0.1),
         label = list(text = "This is a plotBand"),
-        # the zIndex is used to put the label text over the grid lines 
+        # the zIndex is used to put the label text over the grid lines
         zIndex = 1
         )
       )
-    ) 
+    )
 ```
 
-### Category order
+## Category order
 
 Order the counts first, then pass their names and values in the same order.
 Here the categories run from the most to the least common cylinder count.
@@ -212,7 +202,7 @@ highchart() |>
 
 For another common adjustment, see [Keep other series visible on hover](#keep-other-series-visible-on-hover).
 
-### Four panels with their own axes
+## Four panels with their own axes
 
 Plot vehicle weight against fuel economy in `mtcars`. Each column is a
 transmission (`am`), each row an engine shape (`vs`). Give the matching X and
@@ -262,12 +252,12 @@ hc |>
   hc_tooltip(
     crosshairs = TRUE,
     backgroundColor = "#F0F0F0",
-    shared = TRUE, 
+    shared = TRUE,
     borderWidth = 5
     )
 ```
 
-### Keep other series visible on hover
+## Keep other series visible on hover
 
 Move the pointer over a city to inspect it. An inactive opacity of one keeps
 the other cities visible at full strength for comparison.
@@ -275,38 +265,3 @@ the other cities visible at full strength for comparison.
 ```{r inactive-series}
 hc |> hc_plotOptions(series = list(states = list(inactive = list(opacity = 1))))
 ```
-
-### Markers and tooltips
-
-A scatter series can use the same SVG for its markers and its tooltip. Save
-the [R icon](icons/r-project.svg) and [Python icon](icons/python.svg) in an
-`icons/` directory alongside the HTML page. These brand icons come from
-[Font Awesome Free 6.7.2](https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands)
-and are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-
-```{r svg-markers}
-r_icon <- "./icons/r-project.svg"
-python_icon <- "./icons/python.svg"
-
-highchart() |>
-  hc_title(text = "Simulated task times") |>
-  hc_xAxis(categories = c("Read", "Transform", "Plot")) |>
-  hc_yAxis(title = list(text = "Seconds")) |>
-  hc_chart(type = "scatter") |>
-  hc_add_series(
-    name = "R", data = c(2, 4, 3), custom = list(icon = r_icon),
-    marker = list(symbol = paste0("url(", r_icon, ")"), width = 20, height = 20)
-  ) |>
-  hc_add_series(
-    name = "Python", data = c(3, 2, 4), custom = list(icon = python_icon),
-    marker = list(symbol = paste0("url(", python_icon, ")"), width = 20, height = 20)
-  ) |>
-  hc_tooltip(
-    useHTML = TRUE,
-    pointFormat = paste0("<img src='{series.options.custom.icon}' width='16' height='16' alt=''/> ",
-                         "{series.name}: <b>{point.y} s</b>")
-  )
-```
-
-To count units with symbols or fill a silhouette, see
-[Seats and occupancy in the series gallery](series-gallery.html#seats-and-occupancy).

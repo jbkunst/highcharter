@@ -8,6 +8,7 @@ if (!exists("site_dir", inherits = FALSE)) {
 }
 options(highcharter.google_fonts = FALSE)
 library(highcharter)
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 library(htmltools)
 
 dates <- as.numeric(as.Date("2025-01-01") + 0:7) * 86400000
@@ -200,12 +201,30 @@ add_chart(
     })
   )
 )
-source(
-  file.path(root, "dev", "examples-charts", "bus-occupancy.R"),
-  local = TRUE
+add_chart(
+  "item",
+  highchart() |>
+    hc_title(text = "Books read this month") |>
+    hc_add_series(
+      type = "item",
+      data = list(
+        list(name = "Fiction", y = 7),
+        list(name = "Non-fiction", y = 3)
+      ),
+      marker = list(symbol = "circle"),
+      rows = 2
+    )
 )
-add_chart("item", seat_chart)
-add_chart("pictorial", bus_chart)
+add_chart(
+  "pictorial",
+  highchart() |>
+    hc_title(text = "Completion") |>
+    hc_add_series(
+      type = "pictorial",
+      data = list(75),
+      paths = list(list(definition = "M 0 0 L 20 0 L 20 100 L 0 100 Z"))
+    )
+)
 add_chart(
   "gauge",
   highchart() |>
@@ -550,6 +569,6 @@ page <- tagList(
 dir.create(site_dir, recursive = TRUE, showWarnings = FALSE)
 save_html(
   page,
-  file.path(site_dir, "series-gallery.html"),
+  file.path(site_dir, "bundle-gallery.html"),
   libdir = "gallery-libs"
 )

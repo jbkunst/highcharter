@@ -1,5 +1,10 @@
 url: https://jkunst.com/highcharter/
 lang: en
+home:
+  sidebar: false
+repo:
+  url:
+    source: https://github.com/jbkunst/highcharter/blob/feat/highcharts-bundle/
 authors:
   Joshua Kunst:
     href: https://jkunst.com
@@ -8,12 +13,6 @@ template:
     in_header: |
       <!-- Google tag (gtag.js) -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECZ9XLT78C"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-ECZ9XLT78C');
-      </script>
   bootstrap: 5
   bslib:
     primary: '#47475C'
@@ -24,6 +23,7 @@ template:
     base_font:
       google:
         family: IBM Plex Sans
+        wght: [300, 400, 500]
     code_font:
       google: Fira Mono
 navbar:
@@ -36,7 +36,7 @@ navbar:
   components:
     twitter:
       icon: fa-twitter
-      href: http://twitter.com/jbkunst
+      href: https://twitter.com/jbkunst
       aria-label: Twitter
 figures:
   message: no
@@ -44,115 +44,105 @@ figures:
   out.width: 100%
 reference:
 - title: Create a chart
-- contents:
+  contents:
   - hchart
   - highchart
-  - highcharts_demo
-  - highcharter
-- subtitle: Specialized charts
-- contents:
-  - hchart.igraph
-  - hchart.survfit
-  - hcparcords
-- title: Map data and add series
-- contents:
+  - highchartstock
+- title: Add data and series
+  desc: Map R columns to point fields with hcaes(), then add series to a chart.
+  contents:
   - hcaes
   - hcaes_string
   - hc_add_series
   - hc_add_series_list
   - hc_rm_series
-  - hc_data
-  - hc_series
-- subtitle: Series methods for R objects
-- contents:
-  - starts_with("hc_add_series.")
-  - '-hc_add_series.geo_json'
-- subtitle: Prepare series data
-- contents:
-  - starts_with("data_to_")
-  - mutate_mapping
 - title: Configure a chart
 - subtitle: Titles and labels
-- contents:
+  contents:
   - hc_title
   - hc_subtitle
   - hc_caption
   - hc_credits
   - hc_legend
   - hc_annotations
-  - hc_add_annotation
-  - df_to_annotations_labels
 - subtitle: Axes and layout
-- contents:
+  contents:
   - hc_chart
   - hc_xAxis
   - hc_yAxis
   - hc_zAxis
-  - create_axis
   - hc_pane
-  - hc_size
   - hc_responsive
   - hc_time
 - subtitle: Series appearance and colors
-- contents:
+  contents:
   - hc_plotOptions
   - hc_colors
   - hc_colorAxis
-  - color_classes
-  - color_stops
-  - colorize
   - hc_defs
   - hc_connectors
 - subtitle: Interaction and exporting
-- contents:
+  contents:
   - hc_tooltip
-  - tooltip_chart
-  - tooltip_table
   - hc_drilldown
-  - hc_add_event_point
   - hc_navigation
   - hc_exporting
-  - export_hc
   - hc_accessibility
   - hc_sonification
-- subtitle: Loading, performance and plugins
-- contents:
+- subtitle: Loading and performance
+  contents:
   - hc_loading
   - hc_noData
   - hc_boost
-  - hc_add_dependency
-  - hc_motion
-- title: Maps and Stock
-- subtitle: Maps
-- contents:
-  - hcmap
-  - download_map_data
-  - get_data_from_map
-  - hc_add_series_map
-  - hc_add_series.geo_json
+  - hc_data
+  - hc_series
+- subtitle: Map and Stock options
+  contents:
   - hc_mapView
   - hc_mapNavigation
-- subtitle: Stock
-- contents:
-  - highchartstock
   - hc_navigator
   - hc_rangeSelector
   - hc_scrollbar
   - hc_stockTools
+- title: R helpers
+  contents:
+  - starts_with("data_to_")
+  - mutate_mapping
+  - create_axis
+  - hc_size
+  - color_classes
+  - color_stops
+  - colorize
+  - tooltip_chart
+  - tooltip_table
+  - hc_add_annotation
+  - df_to_annotations_labels
+  - hc_add_event_point
+  - export_hc
+- title: Maps
+  contents:
+  - hcmap
+  - download_map_data
+  - get_data_from_map
+  - hc_add_series_map
 - title: Themes and language
-- contents:
+  contents:
   - hc_theme
   - hc_add_theme
   - hc_theme_merge
   - hc_language
 - title: Shiny and proxies
-- contents:
+  contents:
   - highchartOutput
   - renderHighchart
   - highchartProxy
   - starts_with("hcpxy_")
+- title: Extensions
+  contents:
+  - hc_add_dependency
+  - hc_motion
 - title: Utilities
-- contents:
+  contents:
   - datetime_to_timestamp
   - hex_to_rgba
   - is.hexcolor
@@ -162,11 +152,20 @@ reference:
   - random_id
   - str_to_id
   - highcharter-exports
-- title: Example data
-- contents:
+- title: Examples and package information
+  contents:
+  - highcharts_demo
+  - highcharter
   - has_keyword("datasets")
+- title: Methods for R objects
+  desc: These methods are selected automatically by hchart() and hc_add_series().
+  contents:
+  - hchart.igraph
+  - hchart.survfit
+  - hcparcords
+  - starts_with("hc_add_series.")
 - title: Deprecated
-- contents:
+  contents:
   - hc_yAxis_multiples
 articles:
 - title: Get started
@@ -186,17 +185,22 @@ articles:
   navbar: Configure and interact
   contents:
   - highcharts-api
+  - highchartsjs-api-basics
   - themes
   - accessibility
+- title: Extensions and interaction
+  navbar: Extensions
+  contents:
   - drilldown
-- title: Integrate and extend
-  navbar: Integrate and extend
+  - modules
+- title: Shiny applications
+  navbar: Shiny
   contents:
   - shiny
-  - modules
 redirects:
-- ["articles/fontawesome.html", "articles/highcharts-api.html#markers-and-tooltips"]
+- ["highmaps.html", "articles/maps.html"]
+- ["articles/fontawesome.html", "articles/series-gallery.html#markers-and-tooltips"]
 - ["articles/highcharts.html", "articles/series-gallery.html"]
 - ["articles/howtos.html", "articles/highcharts-api.html#category-order"]
-- ["articles/highchartsjs-api-basics.html", "articles/highcharts-api.html#translate-highcharts-options-to-r"]
 - ["articles/motion.html", "articles/modules.html#motion"]
+- ["series-gallery.html", "articles/series-gallery.html"]

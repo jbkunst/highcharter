@@ -1,4 +1,4 @@
-## Pull Request
+# Pull request
 
 Before you submit a pull request, please do the following:
   
@@ -8,10 +8,10 @@ Before you submit a pull request, please do the following:
 
 * Run Build->Check Package in the RStudio IDE, or `devtools::check()`, to make sure your change did not add any messages, warnings, or errors.
 
-Doing these things will make it easier for the plumber development team to evaluate your pull request. Even so, we may still decide to modify your code or even not merge it at all. Factors that may prevent us from merging the pull request include:
+Doing these things will make it easier for the highcharter development team to evaluate your pull request. Even so, we may still decide to modify your code or even not merge it at all. Factors that may prevent us from merging the pull request include:
   
 * breaking backward compatibility
-* adding a feature that we do not consider relevant for plumber
+* adding a feature that we do not consider relevant for highcharter
 * is hard to understand
 * is hard to maintain in the future
 * is computationally expensive

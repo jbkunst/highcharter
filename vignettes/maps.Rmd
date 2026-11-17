@@ -1,82 +1,148 @@
 ---
-title: "Maps, projections and map views"
+title: "Maps with Highmaps"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Maps, projections and map views}
+  %\VignetteIndexEntry{Maps with Highmaps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 library(highcharter)
-options(highcharter.google_fonts = FALSE)
+library(dplyr)
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
-## A map from local GeoJSON
+## Start with a map
 
-The package includes the state boundaries in `usgeojson`. Join its `name`
-property to a column of state names. The values below are the percentage of
-the population living in urban areas in the 1973 USArrests data.
+`hcmap()` selects a map from the [Highcharts collection](https://code.highcharts.com/mapdata/)
+and creates the map widget. The rest of the chart API works as usual. These
+examples use local snapshots of those official boundaries, so the maps also
+work without a CDN request. `hcmap()` accepts either a collection name or an
+already loaded GeoJSON list. Keep the map attribution visible when publishing.
 
-```{r local-map}
-states <- transform(USArrests, state = rownames(USArrests))
-urban_map <- highchart(type = "map") |>
-  hc_add_series_map(usgeojson, states, value = "UrbanPop",
-                    joinBy = c("name", "state"), name = "Urban population (%)") |>
-  hc_title(text = "Urban population by state, 1973") |>
+```{r map-directory}
+map_dir <- here::here("dev", "examples-charts", "data", "maps")
+```
+
+```{r map-basics}
+new_zealand <- jsonlite::read_json(file.path(map_dir, "countries-nz-nz-all.geo.json"))
+hcmap(new_zealand, showInLegend = FALSE) |>
+  hc_title(text = "New Zealand") |>
   hc_mapNavigation(enabled = TRUE)
-urban_map
 ```
 
-For a categorized choropleth, use the same chart and pass limits and
-names to `hc_colorAxis()`. This groups states by their urban population share.
+## Income around the world
 
-```{r categorized-map}
-urban_map |>
-  hc_colorAxis(dataClasses = list(
-    list(to = 49, name = "Under 50%"),
-    list(from = 50, to = 69, name = "50–69%"),
-    list(from = 70, name = "70% and over")
-  ))
+This is the international income example from the earlier homepage. The
+`treemap` package supplies 2014 gross national income per capita. Join its
+three-letter country code to the map's `iso-a3` property. A logarithmic color
+scale makes the differences visible across the full range of incomes.
+
+```{r world-income}
+world <- jsonlite::read_json(file.path(map_dir, "custom-world-robinson-lowres.geo.json"))
+data(GNI2014, package = "treemap")
+head(GNI2014)
+
+income_map <- hcmap(
+  world, data = GNI2014,
+  value = "GNI", joinBy = c("iso-a3", "iso3"),
+  name = "GNI per capita", borderWidth = 0.2, nullColor = "#eceef2"
+) |>
+  hc_title(text = "Gross national income per capita, 2014") |>
+  hc_colorAxis(type = "logarithmic", stops = color_stops(colors = c(
+    "#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4"))) |>
+  hc_tooltip(valuePrefix = "$", valueDecimals = 0) |>
+  hc_mapNavigation(enabled = TRUE)
+income_map
+```
+
+## Map properties and joins
+
+The join keys depend on the selected map. `get_data_from_map()` exposes those
+properties. The package's local world boundaries use `iso3`; map-collection
+boundaries commonly use `iso-a2`, `iso-a3` or `hc-key`.
+
+```{r map-properties}
+get_data_from_map(worldgeojson) |> select(any_of(c("name", "iso3", "continent"))) |> head()
+```
+
+To save boundaries for offline use, call `download_map_data()` once and retain
+the returned object with your project. Pass it as `mapData` to a map series.
+
+```{r offline-map, eval=FALSE}
+boundaries <- download_map_data("custom/world-robinson-lowres")
+saveRDS(boundaries, "world-map.rds")
+```
+
+## European time zones
+
+Categorical maps use named data classes rather than a continuous scale.
+These are standard-time groups, without seasonal daylight-saving adjustments.
+
+```{r europe-zones}
+zones <- data.frame(
+  country = c("PT", "IE", "GB", "IS", "FR", "DE", "ES", "IT", "NO", "SE",
+              "PL", "AT", "CH", "FI", "EE", "LV", "LT", "GR", "RO", "BG"),
+  value = c(rep(0, 4), rep(1, 9), rep(2, 7))
+)
+europe <- jsonlite::read_json(file.path(map_dir, "custom-europe.geo.json"))
+hcmap(europe, data = zones, value = "value", joinBy = c("iso-a2", "country"),
+      name = "Standard time", dataLabels = list(enabled = TRUE, format = "{point.country}")) |>
+  hc_colorAxis(dataClassColor = "category", dataClasses = list(
+    list(from = 0, to = 0, name = "UTC"),
+    list(from = 1, to = 1, name = "UTC + 1"),
+    list(from = 2, to = 2, name = "UTC + 2")
+  )) |>
+  hc_title(text = "Standard time in Europe")
+```
+
+## Points and bubbles
+
+Longitude and latitude place points on the basemap. Add a magnitude with `z`
+to turn those locations into bubbles. These are selected international airports
+in South America; the values below are illustrative connection counts.
+
+```{r airports}
+airports <- data.frame(
+  name = c("Santiago", "Buenos Aires", "São Paulo", "Lima", "Bogotá", "Quito",
+           "Montevideo", "Asunción", "La Paz"),
+  lat = c(-33.39, -34.82, -23.44, -12.02, 4.70, -0.13, -34.84, -25.24, -16.51),
+  lon = c(-70.79, -58.54, -46.47, -77.11, -74.15, -78.36, -56.03, -57.52, -68.19),
+  z = c(35, 40, 65, 42, 50, 24, 16, 14, 12)
+)
+boundaries <- jsonlite::read_json(file.path(map_dir, "custom-south-america.geo.json"))
+south_america <- hcmap(boundaries, showInLegend = FALSE)
+south_america |>
+  hc_add_series(airports, type = "mappoint", name = "Airports",
+                hcaes(lon = lon, lat = lat, name = name)) |>
+  hc_title(text = "Airports in South America")
+
+south_america |>
+  hc_add_series(airports, type = "mapbubble", name = "Illustrative connections",
+                hcaes(lon = lon, lat = lat, z = z, name = name), maxSize = "12%") |>
+  hc_title(text = "Locations with a magnitude")
 ```
 
 ## Projection and initial view
 
-Use longitude first and latitude second. The two cities below have geographic
-coordinates, so the map view can project the same points at different zoom
-levels. The chart resizes with its container.
+Set a projection, center and zoom through `hc_mapView()`. Coordinates are always
+longitude first and latitude second.
 
-```{r mapview-cities}
-cities <- list(list(name = "Santiago", lon = -70.67, lat = -33.45),
-               list(name = "Valparaíso", lon = -71.62, lat = -33.05))
-highchart(type = "map") |>
-  hc_add_series(type = "mappoint", data = cities, name = "Cities") |>
-  hc_mapView(projection = list(name = "WebMercator"), center = c(-71.1, -33.3), zoom = 7) |>
+```{r map-view}
+globe <- jsonlite::read_json(file.path(map_dir, "custom-world.geo.json"))
+hcmap(globe, showInLegend = FALSE) |>
+  hc_mapView(projection = list(name = "Orthographic"), center = c(-65, -20), zoom = 1) |>
+  hc_title(text = "A view centered on South America") |>
   hc_mapNavigation(enabled = TRUE)
 ```
 
-Use `mapline` for boundaries, `mapbubble` for locations with a magnitude,
-`geoheatmap` for gridded geographic values and `flowmap` for connections.
-The [series gallery](../series-gallery.html#mapline) contains runnable charts
-for each of these types.
+## Web tiles and other geographic series
 
-## Downloaded maps and web tiles
+`mapline` draws boundaries, `geoheatmap` colors geographic cells and `flowmap`
+connects places. A tiled map requests tiles as readers move around.
 
-`hcmap()` reads the Highcharts map collection. This example needs network
-access. Alternatively, download a GeoJSON once, keep it with the project
-and pass it as `mapData` to a map series.
-
-```{r, eval=FALSE}
-hcmap("countries/nz/nz-all") |>
-  hc_mapView(zoom = 3) |>
-  hc_mapNavigation(enabled = TRUE)
-```
-
-A tiled web map requests tiles from its provider when the user pans or zooms.
-For an offline report, use local boundaries or local tiles. The gallery uses
-an embedded demonstration tile. For a live basemap:
-
-```{r, eval=FALSE}
+```{r web-tiles, eval=FALSE}
 highchart(type = "map") |>
   hc_mapView(center = c(-70.67, -33.45), zoom = 9) |>
   hc_add_series(type = "tiledwebmap", provider = list(type = "OpenStreetMap"))
