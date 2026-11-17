@@ -354,6 +354,10 @@ Their copies in `inst/htmlwidgets/lib/highcharts/plugins/` are maintained indepe
 of Highcharts and are loaded only when requested. The CSS and highcharter's custom scripts
 are also maintained in the repository.
 
+The grouped-categories example sets `xAxis.labels.distance = 0` so Highcharts'
+default label distance does not shift manufacturer labels into the group row.
+Its numeric position column is only used to place points; the axis has no title.
+
 ## Maintain theme presets
 
 Each file in `inst/themes/` defines one preset. Its filename is the name

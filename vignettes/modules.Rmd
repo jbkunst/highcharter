@@ -118,8 +118,9 @@ hchart(
   hc_xAxis(
     # specify the grouped categories
     categories = categories_grouped,
+    title = list(text = NULL),
     # styling a little bit
-    labels = list(style = list(fontSize = "10px"))
+    labels = list(distance = 0, style = list(fontSize = "10px"))
   ) |>
   hc_add_dependency("plugins/grouped-categories.js")
 ```
