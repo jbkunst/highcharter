@@ -24,6 +24,7 @@ jQuery(function () {
       node.replaceChildren(label, graphic);
     }
     decorate(document.querySelector('.template-home #highcharter'), wordmark + '{rpackage}');
+    decorate(document.querySelector('.navbar-brand'), wordmark);
   }).catch(() => {});
 
   // htmlwidgets initially measures hidden tab panes at zero width.

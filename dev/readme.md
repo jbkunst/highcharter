@@ -88,8 +88,8 @@ and served locally from `pkgdown/assets/fonts/`. Its upstream source is
 beside the font. Other headings keep Alegreya Sans SC. Run `pkgdown::init_site()`
 when previewing changes to these assets without rebuilding the entire website.
 The shared initializer restores the original Datalegreya graph-encoded lettering
-after the font loads. The navbar keeps plain Datalegreya lettering for legibility
-at its smaller size. Accessible labels and the plain-text fallback remain the
+after the font loads. The navbar uses the same graph sequence without the
+`{rpackage}` suffix. Accessible labels and the plain-text fallback remain the
 package name.
 
 In an R session at the repository root:
