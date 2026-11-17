@@ -10,7 +10,34 @@ descriptions <- vapply(
   fields = "Description"
 )
 words <- unlist(strsplit(tolower(descriptions), "[^a-z]+"))
-counts <- sort(table(words[nchar(words) > 3]), decreasing = TRUE)
+stopwords <- c(
+  "that",
+  "this",
+  "with",
+  "from",
+  "into",
+  "which",
+  "using",
+  "such",
+  "also",
+  "their"
+)
+counts <- sort(
+  table(words[nchar(words) > 3 & !words %in% stopwords]),
+  decreasing = TRUE
+)
 terms <- data.frame(word = names(counts), count = as.integer(counts))
 
-hchart(terms, "wordcloud", hcaes(name = word, weight = count))
+hchart(
+  head(terms, 45),
+  "wordcloud",
+  hcaes(name = word, weight = count),
+  name = "Occurrences",
+  rotation = list(from = 0, to = 0),
+  minFontSize = 10,
+  maxFontSize = 42
+) |>
+  hc_colors(c("#134e4a", "#216c79", "#3375a0", "#8a572a", "#854665")) |>
+  hc_title(text = "The words behind three R packages") |>
+  hc_tooltip(pointFormat = "{point.weight} occurrences") |>
+  hc_size(height = 340)

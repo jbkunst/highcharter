@@ -6,6 +6,7 @@ grid_file <- here::here("dev", "examples-charts", "data", "world-tile-grid.csv")
 data <- utils::read.csv(grid_file, na.strings = character())
 
 hchart(data, "tilemap", hcaes(x = x, y = y, name = name, group = region)) |>
+  hc_title(text = "One country, one tile") |>
   hc_chart(type = "tilemap") |>
   hc_plotOptions(
     series = list(

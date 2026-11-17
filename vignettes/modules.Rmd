@@ -225,11 +225,8 @@ hc_fill |>
 
 ## Gantt schedules
 
-Gantt is another bundled extension. Each task supplies start/end times and can
-refer to earlier tasks by ID. No additional JavaScript dependency is needed.
-
-```{r gantt-extension, code=readLines(here::here("dev", "examples-charts", "gantt.R"))[-1]}
-```
+Use `hchart(tasks, "gantt")` for a schedule with dependencies. See the
+[complete Gantt example](showcase.html#gantt-schedules) for a release plan with progress bars.
 
 ## Motion
 

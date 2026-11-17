@@ -19,8 +19,139 @@ library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
-In this vignette we'll review some examples to show what highcharts and
-highcharter can do in terms of customization and design.
+Explore complete charts and expand **Show R code** below each one to see how it was built.
+For short examples grouped by data shape, see [Chart types](chart-types.html).
+
+## Word cloud
+
+Larger words appear more often in the descriptions of highcharter, htmlwidgets and knitr.
+
+```{r word-cloud, echo=FALSE, code=grep("^#'", readLines(here::here("dev", "examples-charts", "wordcloud.R")), invert=TRUE, value=TRUE)}
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r word-cloud-source, ref.label="word-cloud", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+## Gantt schedules
+
+Follow a release from data import to publication. Arrows connect prerequisites and the filled portion of each bar shows completion.
+
+```{r gantt-schedules, echo=FALSE, code=grep("^#'", readLines(here::here("dev", "examples-charts", "gantt.R")), invert=TRUE, value=TRUE)}
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r gantt-schedules-source, ref.label="gantt-schedules", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+## Wind over South American capitals
+
+These illustrative winds use the same four capitals as the [vector example](chart-types.html#positions-bubbles-and-wind). Arrow length shows speed and the tip points in the direction of travel.
+
+```{r capital-winds, echo=FALSE}
+world <- jsonlite::read_json(here::here(
+  "dev",
+  "examples-charts",
+  "data",
+  "maps",
+  "custom-world.topo.json"
+))
+world$objects$default$geometries <- Filter(
+  function(country) identical(country$properties$continent, "South America"),
+  world$objects$default$geometries
+)
+
+# Bearings are clockwise from north. The arrow tip points downwind.
+# fmt: skip
+cities <- tibble::tribble(
+  ~name,           ~lon,   ~lat, ~speed, ~bearing,
+  "Santiago",    -70.67, -33.45,      5,      210,
+  "Lima",        -77.04, -12.05,      8,      180,
+  "Brasília",    -47.88, -15.79,      3,       90,
+  "Buenos Aires",-58.38, -34.60,     11,      135
+)
+arrows <- lapply(seq_len(nrow(cities)), function(i) {
+  city <- as.list(cities[i, ])
+  svg <- sprintf(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path transform="rotate(%d 20 20)" d="M20 1 L27 13 L22 12 L22 38 L18 38 L18 12 L13 13 Z" fill="#174b68"/></svg>',
+    city$bearing
+  )
+  size <- 4 * city$speed
+  city$marker <- list(
+    symbol = paste0(
+      "url(data:image/svg+xml;base64,",
+      gsub("\n", "", jsonlite::base64_enc(charToRaw(svg))),
+      ")"
+    ),
+    width = size,
+    height = size
+  )
+  city
+})
+
+hcmap(
+  world,
+  nullColor = "#e2ede9",
+  borderColor = "white",
+  showInLegend = FALSE
+) |>
+  hc_mapView(
+    projection = list(name = "WebMercator"),
+    fitToGeometry = list(
+      type = "MultiPoint",
+      coordinates = list(c(-81, -56), c(-34, 13))
+    )
+  ) |>
+  hc_add_series(
+    type = "mappoint",
+    name = "Illustrative wind",
+    data = arrows,
+    showInLegend = FALSE,
+    dataLabels = list(
+      enabled = TRUE,
+      format = "{point.name}",
+      align = "left",
+      x = 12
+    ),
+    tooltip = list(
+      pointFormat = "{point.name}: {point.speed} m/s · {point.bearing}°"
+    )
+  ) |>
+  hc_title(text = "Winds across South America") |>
+  hc_subtitle(text = "Illustrative speeds and bearings at four capitals") |>
+  hc_size(height = 530)
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r capital-winds-source, ref.label="capital-winds", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+## Tile map
+
+Each hexagon represents one country, colored by region. Hover over a tile to read its country name. The layout follows [Maarten Lambrechts’ world tile grid](https://gist.github.com/maartenzam/787498bbc07ae06b637447dbd430ea0a).
+
+```{r world-tiles, echo=FALSE, code=grep("^#'", readLines(here::here("dev", "examples-charts", "tilemap.R")), invert=TRUE, value=TRUE)}
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r world-tiles-source, ref.label="world-tiles", eval=FALSE, echo=TRUE}
+```
+
+</details>
 
 ## HIMYM example
 
@@ -95,14 +226,29 @@ highchart() |>
   )
 ```
 
-```{r bar, eval=FALSE}
+<details>
+<summary>Show R code</summary>
+
+```{r bar-source, ref.label="bar", eval=FALSE, echo=TRUE}
 ```
+
+</details>
 
 
 ## Pokemon
 
+Select a Pokémon type to explore its secondary types.
+
 ```{r pokemon, echo=FALSE, code=readLines(here::here("dev", "examples-charts", "pokemon.R"), encoding="UTF-8")}
 ```
+
+<details>
+<summary>Show R code</summary>
+
+```{r pokemon-source, ref.label="pokemon", eval=FALSE, echo=TRUE}
+```
+
+</details>
 
 ## Weathers Radials
 
@@ -157,8 +303,13 @@ hchart(
   )
 ```
 
-```{r weather, eval=FALSE}
+<details>
+<summary>Show R code</summary>
+
+```{r weather-source, ref.label="weather", eval=FALSE, echo=TRUE}
 ```
+
+</details>
 
 ## Stars
 
@@ -236,8 +387,13 @@ hchart(
   )
 ```
 
-```{r stars, eval=FALSE}
+<details>
+<summary>Show R code</summary>
+
+```{r stars-source, ref.label="stars", eval=FALSE, echo=TRUE}
 ```
+
+</details>
 
 Background photograph: [ESO/Digitized Sky Survey 2, around the Hubble Ultra Deep Field](https://www.eso.org/public/images/eso1832b/).
 The dark overlay keeps both axes legible over the stars.
@@ -314,12 +470,10 @@ hchart(
   hc_size(height = 900)
 ```
 
-```{r vaccines, eval=FALSE}
+<details>
+<summary>Show R code</summary>
+
+```{r vaccines-source, ref.label="vaccines", eval=FALSE, echo=TRUE}
 ```
 
-```{r tile-and-word-examples, echo=FALSE, results='asis'}
-for (type in c("tilemap", "wordcloud")) {
-  path <- here::here("dev", "examples-charts", paste0(type, ".R"))
-  cat(knitr::spin_child(path), sep = "\n")
-}
-```
+</details>

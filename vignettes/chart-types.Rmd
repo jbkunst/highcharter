@@ -343,13 +343,30 @@ Each row spans two dates. Map the start to `x`, the end to `x2` and the lane's z
 
 ```{r mapping-xrange}
 tasks <- data.frame(
-  start = base::as.Date(c("2025-01-06", "2025-01-08")),
+  start = base::as.Date(c("2025-01-06", "2025-01-09")),
   finish = base::as.Date(c("2025-01-09", "2025-01-13")),
   lane = 0:1
 )
 hchart(tasks, "xrange", hcaes(x = start, x2 = finish, y = lane)) |>
   hc_yAxis(categories = c("Design", "Review"))
 ```
+
+The same intervals can be shown as Gantt tasks. Assign an ID to each task
+and use it as the dependency of the next task.
+
+```{r minimal-gantt}
+schedule <- tasks |>
+  transmute(
+    name = c("Design", "Review"),
+    id = c("design", "review"),
+    start = datetime_to_timestamp(start),
+    end = datetime_to_timestamp(finish),
+    dependency = c(NA_character_, "design")
+  )
+hchart(schedule, "gantt", name = "Tasks")
+```
+
+[See the release schedule with dependencies and completion bars](showcase.html#gantt-schedules).
 
 ```{r specialized-recipes, echo=FALSE, results='asis'}
 recipes <- c("venn", "solidgauge")
@@ -361,7 +378,8 @@ for (name in recipes) {
 
 ### Related articles
 
-[Showcase](showcase.html#tile-map) builds a world tile map and a word cloud from package descriptions.
+Explore the finished [world tile map](showcase.html#tile-map), [word cloud](showcase.html#word-cloud)
+and [wind map](showcase.html#wind-over-south-american-capitals) in Showcase.
 
 See [Icons and pictograms](icons-and-pictograms.html) for image markers,
 icons in tooltips and symbols that represent individual items.
