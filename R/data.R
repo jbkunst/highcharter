@@ -245,3 +245,22 @@
 #' @usage worldgeojson
 #' @format A `list` in geojson format.
 "worldgeojson"
+
+#' Highcharts boundaries used in the map examples
+#'
+#' @format A named list of five maps. `world_robinson` is a low-resolution
+#'   world GeoJSON with ISO A3 keys. `world` is geographic TopoJSON for custom
+#'   projections. `europe`, `south_america` and `new_zealand` are GeoJSON.
+#' @source [Highcharts Map Collection](https://github.com/highcharts/map-collection-dist).
+#'   Each map retains its original attribution.
+#' @examples
+#' hcmap(hc_maps$world_robinson)
+"hc_maps"
+
+#' Gross national income per person in 2014
+#'
+#' @format A data frame with 188 rows and five columns: ISO A3 code (`iso3`),
+#'   `country`, `continent`, `population` and Atlas-method `GNI` per person in US dollars.
+#' @source The `GNI2014` dataset of the treemap package, based on the World Bank
+#'   (income) and Natural Earth (population).
+"gni2014"

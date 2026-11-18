@@ -38,7 +38,7 @@ la primera vez. La familia visible, al no haber títulos, es IBM Plex Sans.
 las actualizaciones de Highcharts, sin servidor Shiny ni librerías adicionales.
 
 El script lee los indicadores y las exportaciones del ZIP local, y reutiliza
-la grilla de `dev/examples-charts/data/world-tile-grid.csv`. Hong Kong conserva
+la grilla de `inst/extdata/world-tile-grid.csv`. Hong Kong conserva
 la celda adicional de la referencia. No descarga datos al reproducir la secuencia.
 
 Desde la raíz del repositorio:
@@ -95,7 +95,7 @@ data and determines the latest comparable year, rather than mixing current
 observations from different years. Each build downloads the source data and produces a CSV for readers. See the
 [data guide](data/README.md) for provenance, units, selection and refresh steps.
 
-[The playback script](../../../pkgdown/grid-sequence.js) maintains one clock and shared analytical
+[The playback script](../../../inst/examples/grid-sequence.js) maintains one clock and shared analytical
 state. When the map focuses on South America, the scatter emphasizes South American
 economies and smoothly fades other regions into the background; the export
 chart keeps all regional colors and the pie highlights South America's population

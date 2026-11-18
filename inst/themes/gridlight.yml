@@ -36,3 +36,7 @@ plotOptions:
   candlestick:
     lineColor: '#404048'
 background2: '#F0F0EA'
+exporting:
+  buttons:
+    contextButton:
+      symbol: menu

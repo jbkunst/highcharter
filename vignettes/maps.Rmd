@@ -21,38 +21,24 @@ examples use local snapshots of those official boundaries, so the maps also
 work without a CDN request. `hcmap()` accepts either a collection name or an
 already loaded GeoJSON list. Keep the map attribution visible when publishing.
 
-```{r map-directory}
-map_dir <- here::here("dev", "examples-charts", "data", "maps")
-```
-
 ```{r map-basics}
-new_zealand <- jsonlite::read_json(file.path(
-  map_dir,
-  "countries-nz-nz-all.geo.json"
-))
-hcmap(new_zealand, nullColor = "#D9E3E8", showInLegend = FALSE) |>
+hcmap(hc_maps$new_zealand, nullColor = "#D9E3E8", showInLegend = FALSE) |>
   hc_title(text = "New Zealand") |>
   hc_mapNavigation(enabled = TRUE)
 ```
 
 ## Income around the world
 
-This is the international income example from the earlier homepage. The
-`treemap` package supplies 2014 gross national income per capita. Join its
+The packaged `gni2014` table contains World Bank Atlas-method income per person. Join its
 three-letter country code to the map's `iso-a3` property. A logarithmic color
 scale makes the differences visible across the full range of incomes.
 
 ```{r world-income}
-world <- jsonlite::read_json(file.path(
-  map_dir,
-  "custom-world-robinson-lowres.geo.json"
-))
-data(GNI2014, package = "treemap")
-head(GNI2014)
+palette <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
 
-income_map <- hcmap(
-  world,
-  data = GNI2014,
+hcmap(
+  hc_maps$world_robinson,
+  data = gni2014,
   value = "GNI",
   joinBy = c("iso-a3", "iso3"),
   name = "GNI per capita",
@@ -62,19 +48,10 @@ income_map <- hcmap(
   hc_title(text = "Gross national income per capita, 2014") |>
   hc_colorAxis(
     type = "logarithmic",
-    stops = color_stops(
-      colors = c(
-        "#000004",
-        "#56106E",
-        "#BB3754",
-        "#F98C0A",
-        "#FCFFA4"
-      )
-    )
+    stops = color_stops(colors = palette)
   ) |>
   hc_tooltip(valuePrefix = "$", valueDecimals = 0) |>
   hc_mapNavigation(enabled = TRUE)
-income_map
 ```
 
 ## Map properties and joins
@@ -109,9 +86,8 @@ zones <- data.frame(
               "PL", "AT", "CH", "FI", "EE", "LV", "LT", "GR", "RO", "BG"),
   value = c(rep(0, 4), rep(1, 9), rep(2, 7))
 )
-europe <- jsonlite::read_json(file.path(map_dir, "custom-europe.geo.json"))
 hcmap(
-  europe,
+  hc_maps$europe,
   data = zones,
   value = "value",
   joinBy = c("iso-a2", "country"),
@@ -142,11 +118,11 @@ airports <- tibble::tribble(
   "Bogotá",       4.70, -74.15,
   "Asunción",   -25.24, -57.52
 )
-boundaries <- jsonlite::read_json(file.path(
-  map_dir,
-  "custom-south-america.geo.json"
-))
-south_america <- hcmap(boundaries, nullColor = "#D9E3E8", showInLegend = FALSE)
+south_america <- hcmap(
+  hc_maps$south_america,
+  nullColor = "#D9E3E8",
+  showInLegend = FALSE
+)
 south_america |>
   hc_add_series(
     airports,
@@ -163,8 +139,7 @@ Set a projection, center and zoom through `hc_mapView()`. Coordinates are always
 longitude first and latitude second.
 
 ```{r map-view}
-globe <- jsonlite::read_json(file.path(map_dir, "custom-world.topo.json"))
-hcmap(globe, nullColor = "#D9E3E8", showInLegend = FALSE) |>
+hcmap(hc_maps$world, nullColor = "#D9E3E8", showInLegend = FALSE) |>
   hc_mapView(
     projection = list(name = "Orthographic", rotation = c(65, 20))
   ) |>
@@ -175,12 +150,23 @@ hcmap(globe, nullColor = "#D9E3E8", showInLegend = FALSE) |>
 ## Web tiles and other geographic series
 
 `mapline` draws boundaries, `geoheatmap` colors geographic cells and `flowmap`
-connects places. A tiled map requests tiles as readers move around.
+connects places. The Santiago example loads Esri World Imagery satellite tiles over the internet as you pan or zoom.
 
-```{r web-tiles, eval=FALSE}
+```{r web-tiles}
 highchart(type = "map") |>
-  hc_mapView(center = c(-70.67, -33.45), zoom = 9) |>
-  hc_add_series(type = "tiledwebmap", provider = list(type = "OpenStreetMap"))
+  hc_mapView(
+    projection = list(name = "WebMercator"),
+    center = c(-70.67, -33.45),
+    zoom = 9
+  ) |>
+  hc_add_series(
+    type = "tiledwebmap",
+    name = "Santiago",
+    showInLegend = FALSE,
+    provider = list(type = "Esri", theme = "WorldImagery")
+  ) |>
+  hc_mapNavigation(enabled = TRUE) |>
+  hc_credits(enabled = TRUE)
 ```
 
 [Highcharts Maps documentation](https://www.highcharts.com/docs/maps/getting-started)

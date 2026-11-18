@@ -107,11 +107,10 @@ on a live quote request. `adjustOHLC()` adjusts the price fields using the
 downloaded adjusted close; volume remains the reported daily volume.
 
 ```{r stock-dashboard}
-snapshot <- read.csv(here::here(
-  "dev",
-  "examples-charts",
-  "data",
-  "spy-2025.csv"
+snapshot <- read.csv(system.file(
+  "extdata",
+  "spy-2025.csv",
+  package = "highcharter"
 ))
 SPY <- xts::xts(snapshot[-1], order.by = base::as.Date(snapshot$date))
 SPY <- quantmod::adjustOHLC(SPY, use.Adjusted = TRUE)

@@ -1,7 +1,5 @@
 ---
 title: Showcase
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   In this vignette we'll review some examples to show what highcharts and
@@ -107,7 +105,7 @@ highchart() |>
 
 Select a Pokémon type to explore its secondary types.
 
-```{r pokemon, echo=FALSE, code=readLines(here::here("dev", "examples-charts", "pokemon.R"), encoding="UTF-8")}
+```{r pokemon, echo=FALSE, code=readLines(system.file("examples", "pokemon.R", package="highcharter"), encoding="UTF-8")}
 ```
 
 <details>
@@ -348,9 +346,9 @@ hchart(
 
 ## Word cloud
 
-Larger words appear more often in the descriptions of highcharter, htmlwidgets and knitr.
+The 160 most frequent terms in R’s graphics manual fill the cloud. Word size reflects the number of mentions across help-page descriptions.
 
-```{r word-cloud, echo=FALSE, code=grep("^#'", readLines(here::here("dev", "examples-charts", "wordcloud.R")), invert=TRUE, value=TRUE)}
+```{r word-cloud, echo=FALSE, code=grep("^#'", readLines(system.file("examples", "wordcloud.R", package="highcharter")), invert=TRUE, value=TRUE)}
 ```
 
 <details>
@@ -365,7 +363,7 @@ Larger words appear more often in the descriptions of highcharter, htmlwidgets a
 
 Follow a release from data import to publication. Arrows connect prerequisites and the filled portion of each bar shows completion.
 
-```{r gantt-schedules, echo=FALSE, code=grep("^#'", readLines(here::here("dev", "examples-charts", "gantt.R")), invert=TRUE, value=TRUE)}
+```{r gantt-schedules, echo=FALSE, code=grep("^#'", readLines(system.file("examples", "gantt.R", package="highcharter")), invert=TRUE, value=TRUE)}
 ```
 
 <details>
@@ -376,88 +374,112 @@ Follow a release from data import to publication. Arrows connect prerequisites a
 
 </details>
 
-## Wind over South American capitals
+## South Atlantic wind field
 
-These illustrative winds use four of the capitals shown in the [vector example](chart-types.html#positions-bubbles-and-wind). Arrow length shows speed and the tip points in the direction of travel.
+On 27 March 2004, Hurricane Catarina approached southern Brazil. This snapshot
+shows ERA5 wind at 10 m at 18:00 UTC. Each arrow points downwind and its color
+gives the speed. Sampling the 0.25° reanalysis every 0.75° keeps the circulation
+legible at this scale. Hover over an arrow for its speed and bearing.
+[Copernicus ERA5](https://doi.org/10.24381/cds.adbb2d47) ·
+[NASA satellite image of Catarina](https://science.nasa.gov/earth/earth-observatory/rare-south-atlantic-tropical-cyclone-12939/).
 
-```{r capital-winds, echo=FALSE}
-world <- jsonlite::read_json(here::here(
-  "dev",
-  "examples-charts",
-  "data",
-  "maps",
-  "custom-world.topo.json"
+```{r catarina, echo=FALSE}
+wind <- read.csv(system.file(
+  "extdata",
+  "catarina-wind.csv",
+  package = "highcharter"
 ))
-world$objects$default$geometries <- Filter(
-  function(country) identical(country$properties$continent, "South America"),
-  world$objects$default$geometries
-)
+wind$speed <- sqrt(wind$u^2 + wind$v^2)
+wind$bearing <- (atan2(wind$u, wind$v) * 180 / pi + 360) %% 360
 
-# Bearings are clockwise from north. The arrow tip points downwind.
-# fmt: skip
-cities <- tibble::tribble(
-  ~name,           ~lon,   ~lat, ~speed, ~bearing,
-  "Santiago",    -70.67, -33.45,      5,      210,
-  "Lima",        -77.04, -12.05,      8,      180,
-  "Brasília",    -47.88, -15.79,      3,       90,
-  "Buenos Aires",-58.38, -34.60,     11,      135
-)
-arrows <- lapply(seq_len(nrow(cities)), function(i) {
-  city <- as.list(cities[i, ])
-  svg <- sprintf(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path transform="rotate(%d 20 20)" d="M20 1 L27 13 L22 12 L22 38 L18 38 L18 12 L13 13 Z" fill="#174b68"/></svg>',
-    city$bearing
+# Draw each arrow in local east/north coordinates, then convert to longitude/latitude.
+arrows <- lapply(seq_len(nrow(wind)), function(i) {
+  cell <- wind[i, ]
+  angle <- cell$bearing * pi / 180
+  along <- c(-0.24, 0.24, 0.08, 0.24, 0.08)
+  across <- c(0, 0, -0.09, 0, 0.09)
+  east <- along * sin(angle) + across * cos(angle)
+  north <- along * cos(angle) - across * sin(angle)
+  coordinates <- Map(
+    c,
+    cell$lon + east / cos(cell$lat * pi / 180),
+    cell$lat + north
   )
-  size <- 4 * city$speed
-  city$marker <- list(
-    symbol = paste0(
-      "url(data:image/svg+xml;base64,",
-      gsub("\n", "", jsonlite::base64_enc(charToRaw(svg))),
-      ")"
-    ),
-    width = size,
-    height = size
+  list(
+    value = cell$speed,
+    bearing = cell$bearing,
+    lon = cell$lon,
+    lat = cell$lat,
+    geometry = list(type = "LineString", coordinates = coordinates)
   )
-  city
 })
 
 hcmap(
-  world,
-  nullColor = "#e2ede9",
-  borderColor = "white",
-  showInLegend = FALSE
+  hc_maps$world,
+  nullColor = "#f0eee8",
+  borderColor = "#a8b1af",
+  showInLegend = FALSE,
+  enableMouseTracking = FALSE
 ) |>
+  hc_chart(plotBackgroundColor = "#eaf3f6") |>
   hc_mapView(
     projection = list(name = "WebMercator"),
+    padding = 0,
     fitToGeometry = list(
       type = "MultiPoint",
-      coordinates = list(c(-81, -56), c(-34, 13))
+      coordinates = list(c(-56, -33.5), c(-40.5, -22.75))
     )
   ) |>
   hc_add_series(
-    type = "mappoint",
-    name = "Illustrative wind",
+    type = "mapline",
+    name = "10 m wind",
     data = arrows,
+    colorKey = "value",
+    lineWidth = 2,
+    tooltip = list(
+      pointFormat = "{point.lat:.1f}°, {point.lon:.1f}° · {point.value:.1f} m/s towards {point.bearing:.0f}°"
+    )
+  ) |>
+  hc_colorAxis(
+    min = 0,
+    max = 15,
+    tickPositions = c(0, 3, 6, 9, 12, 15),
+    stops = color_stops(colors = c("#497991", "#137b78", "#c87b21", "#a63742"))
+  ) |>
+  hc_legend(
+    layout = "horizontal",
+    align = "center",
+    title = list(text = "Wind speed (m/s)")
+  ) |>
+  hc_add_series(
+    type = "mappoint",
+    name = "Coastal cities",
     showInLegend = FALSE,
+    color = "#45434a",
+    marker = list(radius = 2),
+    data = list(
+      list(name = "Florianópolis", lon = -48.55, lat = -27.60),
+      list(name = "Porto Alegre", lon = -51.23, lat = -30.03)
+    ),
     dataLabels = list(
       enabled = TRUE,
       format = "{point.name}",
-      align = "left",
-      x = 12
-    ),
-    tooltip = list(
-      pointFormat = "{point.name}: {point.speed} m/s · {point.bearing}°"
+      align = "right",
+      style = list(fontSize = "10px", fontWeight = "normal")
     )
   ) |>
-  hc_title(text = "Winds across South America") |>
-  hc_subtitle(text = "Illustrative speeds and bearings at four capitals") |>
-  hc_size(height = 530)
+  hc_caption(
+    text = "Wind: Copernicus Climate Change Service (ERA5), sampled at 0.75°."
+  ) |>
+  hc_title(text = "Catarina off the coast of Brazil") |>
+  hc_subtitle(text = "Surface wind · 27 March 2004, 18:00 UTC") |>
+  hc_size(height = 500)
 ```
 
 <details>
 <summary>Show R code</summary>
 
-```{r capital-winds-source, ref.label="capital-winds", eval=FALSE, echo=TRUE}
+```{r catarina-source, ref.label="catarina", eval=FALSE, echo=TRUE}
 ```
 
 </details>
@@ -466,7 +488,7 @@ hcmap(
 
 Each hexagon represents one country, colored by region. Hover over a tile to read its country name. The layout follows [Maarten Lambrechts’ world tile grid](https://gist.github.com/maartenzam/787498bbc07ae06b637447dbd430ea0a).
 
-```{r world-tiles, echo=FALSE, code=grep("^#'", readLines(here::here("dev", "examples-charts", "tilemap.R")), invert=TRUE, value=TRUE)}
+```{r world-tiles, echo=FALSE, code=grep("^#'", readLines(system.file("examples", "tilemap.R", package="highcharter")), invert=TRUE, value=TRUE)}
 ```
 
 <details>
@@ -476,3 +498,148 @@ Each hexagon represents one country, colored by region. Hover over a tile to rea
 ```
 
 </details>
+
+## Icons and pictograms
+
+### Icons as markers
+
+The [fontawesome package](https://rstudio.github.io/fontawesome/) provides SVG
+icons that can be used in markers and tooltips. These are the original R and
+Python examples, with the same data and colors. Embedding the SVG directly keeps
+the icons sharp and avoids an intermediate PNG file.
+
+```{r svg-markers, echo=FALSE}
+library(fontawesome)
+
+set.seed(123)
+df <- data.frame(
+  a = round(rnorm(10), 2),
+  b = round(rnorm(10), 2)
+)
+
+fa_to_data_uri <- function(name, fill, width = 22) {
+  size <- paste0(width, "px")
+  icon <- fontawesome::fa(name, fill = fill, width = size, height = size)
+  svg <- as.character(icon)
+  # Standalone images need an XML namespace and intrinsic pixel dimensions.
+  svg <- sub(
+    "<svg",
+    sprintf(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="%s" height="%s"',
+      width,
+      width
+    ),
+    svg,
+    fixed = TRUE
+  )
+  svg <- sub(
+    'preserveAspectRatio="none"',
+    'preserveAspectRatio="xMidYMid meet"',
+    svg,
+    fixed = TRUE
+  )
+  paste0(
+    "data:image/svg+xml,",
+    utils::URLencode(svg, reserved = TRUE)
+  )
+}
+
+# Reuse the same colors in markers, series and tooltips.
+rcol <- "#4C83B6"
+pcol <- "#3CAB48"
+rproj <- fa_to_data_uri("r-project", fill = rcol)
+pthon <- fa_to_data_uri("python", fill = pcol)
+
+highchart() |>
+  hc_title(text = "Font Awesome icons") |>
+  hc_add_series(
+    df,
+    "scatter",
+    hcaes(a, b),
+    name = "R icons",
+    color = rcol,
+    marker = list(symbol = paste0("url(", rproj, ")")),
+    icon = as.character(fontawesome::fa(
+      "r-project",
+      fill = rcol,
+      height = "15px",
+      vertical_align = "middle"
+    ))
+  ) |>
+  hc_add_series(
+    df,
+    "scatter",
+    hcaes(b, a),
+    name = "Python icons",
+    color = pcol,
+    marker = list(symbol = paste0("url(", pthon, ")")),
+    icon = as.character(fontawesome::fa(
+      "python",
+      fill = pcol,
+      height = "15px",
+      vertical_align = "middle"
+    ))
+  ) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = paste0(
+      "<b>",
+      "{series.options.icon} ",
+      "[{point.x}, {point.y}]",
+      "</b>"
+    )
+  )
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r svg-markers-source, ref.label="svg-markers", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+### Count with pictograms
+
+This example, inspired by [waffle](https://github.com/hrbrmstr/waffle), uses the
+original food categories, counts and colors. Each symbol represents one unit.
+
+```{r item-icons, echo=FALSE}
+library(dplyr)
+library(purrr)
+
+df2 <- tibble(
+  type = c("fruit", "samminch", "pizza"),
+  amount = c(46, 54, 80),
+  faico = c("apple", "bread-slice", "pizza-slice"),
+  col = c("#d35400", "#907E4D", "#F89101")
+)
+
+
+df2 <- df2 |>
+  mutate(
+    uri = map2_chr(faico, col, ~ fa_to_data_uri(.x, fill = .y)),
+    marker = map(uri, ~ list(symbol = paste0("url(", .x, ")")))
+  )
+
+hchart(
+  df2,
+  "item",
+  hcaes(name = type, y = amount),
+  name = "What I eat",
+  showInLegend = TRUE
+) |>
+  hc_legend(labelFormat = "{name} <span style='opacity: 0.4'>{y}</span>") |>
+  hc_colors(pull(df2, col))
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r item-icons-source, ref.label="item-icons", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+See the [Highcharts item chart guide](https://www.highcharts.com/docs/chart-and-series-types/item-chart)
+for other layouts and symbol options.

@@ -12,14 +12,15 @@ in `tests/`, and website articles in `vignettes/`.
 | --- | --- |
 | `R/` | The bundle gallery builder, `test-highcharts-bundle.R`, shared by the website build and local browser review. |
 | `examples-api/` | One runnable example per Highcharts option. roxygen reads these for help pages, and the API generator validates them. |
-| `examples-charts/` | Examples of individual chart types, including shared gallery examples. `data/` holds local input data; `modules/` holds specialized series examples. |
+| `examples-charts/` | Examples of individual chart types, for development; `modules/` holds specialized series examples. |
 | `examples-helpers/` | Worked examples of R helpers, currently stacked panels with `create_axis()`. |
 | `examples-modules-plugins/` | Additional module and interaction examples, currently draggable points. |
 | `highcharts-bundle/` | The pinned npm manifests, module selection, build and update scripts. See its [bundle guide](highcharts-bundle/README.md). `preview/` and `node_modules/` are generated locally and ignored by Git. |
 | `issues/` | Reproducible examples for individual GitHub issues. Some older examples require optional packages or network access. |
 | `sandbox/` | Exploratory scripts, not an automated test suite. `transitions/` contains the offline animated chart prototypes and their data; see its [README](sandbox/transitions/README.md). |
-| `shiny/` | Small Shiny applications exported with Shinylive for the website. |
 | `stackoverflow/` | Examples associated with Stack Overflow questions, named by question ID. |
+
+Article scripts and the Shinylive app are installed from `inst/examples/`. CSV inputs live in `inst/extdata/`; `data-raw/map-examples.R` refreshes the packaged map and income objects.
 
 At this level, `build-site.R` builds the website,
 `build-shinylive.R` exports the browser app,
@@ -162,11 +163,10 @@ Stock Tools, and Showcase. The chart-types article lives in
 `vignettes/chart-types.Rmd`; the former `series-gallery.html` URLs redirect to it.
 Keep Showcase's established examples first and append new examples at the end.
 The Extensions and examples section includes `vignettes/multiple-axes.Rmd`,
-which plots a sample of diamonds across six panels with paired axes.
-`vignettes/icons-and-pictograms.Rmd` groups image markers, tooltip icons and item
-symbols as examples alongside Drilldown. It keeps the original Fontawesome
-examples and embeds colored SVGs from the suggested fontawesome package directly
-as data URIs. The former Fontawesome article URL redirects to it.
+which plots a sample of diamonds across nine panels with paired axes.
+Showcase includes the Font Awesome marker and pictogram examples with folded R code.
+Both former article URLs point to that section. Omit build dates and maintainer
+bylines from articles; retain the author credit on guest contributions.
 
 pkgdown redirects use the canonical website URL. To review old URLs on a local
 server, regenerate redirects with `pkgdown::build_redirects(override =
@@ -182,7 +182,7 @@ All four shopping categories have an illustrative session duration for `z`.
 Variable pie and packed bubble use a zero size baseline so the smallest
 observation remains visible. Network nodes set `marker.radius` explicitly from
 team headcounts. The compact three-set Venn recipe lives in
-`dev/examples-charts/venn.R` and is reused by the article.
+`inst/examples/venn.R` and is reused by the article.
 [From data to charts](../vignettes/from-data-to-charts.Rmd) is the
 canonical source for the homepage's data preparation, R chart definitions,
 theme, captions and four states. Start every homepage chart change there, then
@@ -194,7 +194,7 @@ prepared CSVs or sources scripts from `dev/`.
 `pkgdown/index-examples.R` defines `build_home_gallery(output_dir)`. It uses
 `knitr::purl()` to extract the article's R code. The article renders each sequence with its own
 controls and the homepage calls the same player with all four sequences. Both
-use `pkgdown/grid-sequence.js` for playback. Do not add an independent data or chart recipe to the
+use `inst/examples/grid-sequence.js` for playback. Do not add an independent data or chart recipe to the
 adapter. Four persistent charts share four times, a common playback control
 and native Highcharts updates. They use the hcrt theme and highcharter's Google
 Fonts loader. The current common year is 2024: 179 economies, including Russia,
@@ -284,7 +284,7 @@ fetch the relative homepage and Shinylive iframe URLs. The HTML embeds work
 in the served site; their live content is omitted from the text export.
 
 `dev/build-shinylive.R` uses the official Shinylive exporter for the example in
-`dev/shiny/site-demo/`. These website-only dependencies are recorded in
+`inst/examples/site-demo/`. These website-only dependencies are recorded in
 `Config/Needs/website`. Initial export and first browser launch require internet.
 The browser app uses the highcharter release available in webR, which can lag
 behind this branch. Let webR resolve that release's dependencies at launch;

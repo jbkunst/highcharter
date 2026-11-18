@@ -1,7 +1,5 @@
 ---
 title: First steps on highcharter package
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   Start here if this is your first time with highcharter. You'll learn the main

@@ -12,7 +12,10 @@ build_home_gallery <- function(output_dir) {
   )
 
   executor <- paste(
-    readLines("pkgdown/grid-sequence.js", encoding = "UTF-8"),
+    readLines(
+      system.file("examples", "grid-sequence.js", package = "highcharter"),
+      encoding = "UTF-8"
+    ),
     collapse = "\n"
   )
   # A wide grid and common playback controls

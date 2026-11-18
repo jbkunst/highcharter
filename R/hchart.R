@@ -301,6 +301,15 @@ hchart.acf <- function(object, ...) {
   if (object$type != "covariance") {
     hc <- hc |>
       hc_yAxis(
+        startOnTick = FALSE,
+        endOnTick = FALSE,
+        minPadding = 0.06,
+        maxPadding = 0.06,
+        tickPositioner = JS(
+          "function () {
+          return this.tickPositions.filter(function (tick) { return Math.abs(tick) <= 1; });
+        }"
+        ),
         plotLines = list(
           list(width = 1, value = sv, color = "gray"),
           list(width = 1, value = -sv, color = "gray")

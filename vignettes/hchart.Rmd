@@ -1,7 +1,5 @@
 ---
 title: hchart Function
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   This a generic function, this means you can chart various R like numeric, 

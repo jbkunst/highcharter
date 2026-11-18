@@ -30,20 +30,20 @@ hchart(
   skills,
   "venn",
   name = "Analysts",
-  opacity = 0.6,
+  opacity = 1,
   borderColor = "#ffffff",
   borderWidth = 2,
   dataLabels = list(
     format = "{point.label}",
     style = list(
       fontSize = "11px",
-      color = "#303044",
+      color = "#ffffff",
       fontWeight = "normal",
-      textOutline = "none"
+      textOutline = "2px #253238"
     )
   )
 ) |>
-  hc_colors(hc_theme("hcrt")$colors[c(1, 3, 2)]) |>
+  hc_colors(c("#216595", "#367444", "#936816")) |>
   hc_tooltip(pointFormat = "{point.name}: {point.value} analysts") |>
   hc_caption(
     text = "Illustrative skills of 100 analysts; intersection counts include all three tools.",

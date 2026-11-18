@@ -48,6 +48,8 @@ jQuery(function () {
       $nav: jQuery(toc),
       $scope: jQuery('main .section.level2 > h2')
     });
+    // The old links were removed. Track the new section anchors on scroll.
+    window.bootstrap?.ScrollSpy.getInstance(document.body)?.refresh();
   }
 
   const frame = document.querySelector('iframe.home-gallery');

@@ -31,7 +31,11 @@ uses your installed highcharter version.
 
 ```{r shiny-tabs, echo=FALSE}
 app <- paste(
-  readLines(here::here("dev", "shiny", "site-demo", "app.R")),
+  readLines(system.file(
+    "examples/site-demo",
+    "app.R",
+    package = "highcharter"
+  )),
   collapse = "\n"
 )
 bslib::navset_card_tab(
@@ -50,9 +54,9 @@ bslib::navset_card_tab(
   ),
   bslib::nav_panel(
     "Run locally",
-    htmltools::tags$p("From the repository root, run:"),
+    htmltools::tags$p("With highcharter installed, run:"),
     htmltools::tags$pre(htmltools::tags$code(
-      'shiny::runApp("dev/shiny/site-demo")'
+      'shiny::runApp(system.file("examples", "site-demo", package = "highcharter"))'
     ))
   )
 )

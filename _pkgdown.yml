@@ -189,7 +189,6 @@ articles:
   - from-data-to-charts
   - multiple-axes
   - drilldown
-  - icons-and-pictograms
   - modules
 - title: Shiny applications
   navbar: Shiny
@@ -197,7 +196,8 @@ articles:
   - shiny
 redirects:
 - ["highmaps.html", "articles/maps.html"]
-- ["articles/fontawesome.html", "articles/icons-and-pictograms.html"]
+- ["articles/fontawesome.html", "articles/showcase.html#icons-and-pictograms"]
+- ["articles/icons-and-pictograms.html", "articles/showcase.html#icons-and-pictograms"]
 - ["articles/highcharts.html", "articles/chart-types.html"]
 - ["articles/howtos.html", "articles/highcharts-api.html#category-order"]
 - ["articles/motion.html", "articles/modules.html#motion"]

@@ -23,10 +23,6 @@ credits:
   style:
     fontFamily: IBM Plex Sans
     fontSize: 10px
-exporting:
-  buttons:
-    contextButton:
-      symbol: menuball
 legend:
   align: right
   verticalAlign: bottom

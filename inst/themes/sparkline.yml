@@ -28,16 +28,28 @@ yAxis:
     text: null
   tickPositions: []
 tooltip:
-  backgroundColor: null
+  backgroundColor: transparent
   borderWidth: 0
   shadow: false
-  useHTML: true
+  headerFormat: ''
+  pointFormat: '{point.y}'
   hideDelay: 0
-  shared: true
   padding: 0
+  shared: false
+  useHTML: false
+  style:
+    color: '#263746'
+    textOutline: 2px white
   positioner: !js |-
-    function (w, h, point) {
-      return { x: point.plotX - w / 2, y: point.plotY - h };
+    function (width, height, point) {
+      const chart = this.chart;
+      const x = chart.plotLeft + point.plotX;
+      const y = chart.plotTop + point.plotY;
+      const top = y >= height + 3 ? y - height - 3 : y + 3;
+      return {
+        x: Math.max(0, Math.min(x - width / 2, chart.chartWidth - width)),
+        y: Math.max(0, Math.min(top, chart.chartHeight - height))
+      };
     }
 plotOptions:
   series:

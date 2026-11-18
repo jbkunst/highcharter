@@ -104,7 +104,7 @@ who reached each step: 100 viewed products, 66 added to cart, 42 started checkou
 and 24 purchased. For variable-width columns and variable-radius slices, `z`
 is the illustrative average session duration in minutes, available for all four steps.
 Variwide uses it for column width; variable pie uses it for radius, with zero
-as the lower bound. The treemap subdivides the same visits by acquisition source.
+as the lower bound. The treemap and packed bubbles split each stage by acquisition source. The word cloud compares stage and source totals.
 
 ```{r shopping-data, summary="Show shopping data"}
 # fmt: skip
@@ -164,7 +164,23 @@ gallery(
       points$y <- rev(cumsum(rev(points$y)))
     }
     if (type == "packedbubble") {
-      points$value <- points$y
+      return(hchart(
+        shopping_sources,
+        type,
+        hcaes(group = stage, name = source, value = value),
+        minSize = "16%",
+        maxSize = "49%",
+        zMin = 0,
+        layoutAlgorithm = list(splitSeries = TRUE, seriesInteraction = FALSE),
+        dataLabels = list(
+          enabled = TRUE,
+          format = "{point.name}",
+          style = list(fontSize = "9px")
+        ),
+        tooltip = list(
+          pointFormat = "{series.name} / {point.name}: {point.value} visits"
+        )
+      ))
     }
     if (type == "treemap") {
       nodes <- bind_rows(
@@ -186,11 +202,13 @@ gallery(
             colorByPoint = TRUE,
             dataLabels = list(
               enabled = TRUE,
-              headers = TRUE,
+              align = "left",
+              verticalAlign = "top",
+              format = "{point.name}",
               style = list(fontSize = "10px", fontWeight = "normal")
             )
           ),
-          list(level = 2, colorVariation = list(key = "brightness", to = 0.2))
+          list(level = 2, colorVariation = list(key = "brightness", to = 0.35))
         ),
         dataLabels = list(enabled = FALSE),
         tooltip = list(
@@ -199,7 +217,19 @@ gallery(
       ))
     }
     if (type == "wordcloud") {
-      points$weight <- points$y
+      words <- bind_rows(
+        transmute(shopping, name, weight = y),
+        summarise(
+          group_by(shopping_sources, name = source),
+          weight = sum(value)
+        )
+      )
+      return(hchart(
+        words,
+        type,
+        name = "Visits",
+        rotation = list(from = 0, to = 0)
+      ))
     }
     hchart(points, type, name = "Visits", colorByPoint = TRUE) |>
       hc_plotOptions(
@@ -215,8 +245,7 @@ gallery(
           tooltip = list(
             pointFormat = "{point.name}: {point.y} visits<br>Average session: {point.z} min"
           )
-        ),
-        packedbubble = list(zMin = 0, maxSize = "100%")
+        )
       ) |>
       hc_xAxis(
         categories = points$name,
@@ -350,7 +379,9 @@ Each point is a South American capital or seat of government at its longitude
 [Natural Earth's populated places](https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_populated_places_simple.geojson).
 Illustrative wind speed in m/s supplies bubble size and the third dimension
 (`z`), vector `length` and wind-barb `value`. `direction` gives the angle in
-degrees. All points use the same color.
+degrees. Hover for the city name where nearby labels overlap. A hollow circle
+in a wind-barb series means calm wind (below 0.3 m/s). All the illustrative
+speeds here are at least 3 m/s.
 
 ```{r capital-data, summary="Show capital data and illustrative winds"}
 # fmt: skip
@@ -386,13 +417,17 @@ gallery(
         "scatter",
         id = "cities",
         color = "#47475c",
-        marker = list(radius = 2)
+        marker = list(enabled = FALSE),
+        dataLabels = list(enabled = FALSE),
+        enableMouseTracking = FALSE,
+        showInLegend = FALSE
       ) |>
         hc_add_series(
           points,
           "windbarb",
           hcaes(value = speed),
           color = "#47475c",
+          dataGrouping = list(enabled = FALSE),
           onSeries = "cities",
           yOffset = 0,
           name = "Wind"
@@ -419,7 +454,20 @@ gallery(
           beta = 20
         )
       ) |>
-      hc_plotOptions(bubble = list(zMin = 0, minSize = 5, maxSize = "18%")) |>
+      hc_plotOptions(
+        series = list(
+          dataLabels = list(
+            enabled = TRUE,
+            format = "{point.name}",
+            style = list(fontSize = "9px", fontWeight = "normal")
+          )
+        ),
+        bubble = list(zMin = 0, minSize = 5, maxSize = "18%")
+      ) |>
+      hc_tooltip(
+        headerFormat = "",
+        pointFormat = "{point.name}: {point.speed} m/s"
+      ) |>
       hc_xAxis(min = -82, max = -43, title = list(text = "Longitude")) |>
       hc_yAxis(min = -40, max = 15, title = list(text = "Latitude"))
   }
@@ -453,44 +501,42 @@ Intervals use start and end positions. A Venn diagram sizes intersections by
 `sets` and `value`, and a solid
 gauge displays a single measurement (`y`).
 
-### Comparing a measurement with a target
+### Timeline
 
-The bullet compares ten daily means (`y`) with a `target` of 18 °C.
+Five milestones in Albert Einstein’s life. Spacing follows calendar years.
+[ETH Library biography](https://library.ethz.ch/en/collections-and-archives/short-portraits/einstein-albert-1879-1955.html).
 
-```{r temperature-target}
-daily <- tibble::tibble(
-  name = paste(rep(c("W1", "W2"), each = 5), rep(temperatures$name, 2)),
-  y = c(temperatures$y, 18, 19, 17, 20, 18)
-)
-hchart(
-  daily,
-  "bullet",
-  hcaes(x = name, y = y, target = 18),
-  colorByPoint = TRUE
-) |>
-  hc_yAxis(title = list(text = "Temperature (°C)")) |>
-  hc_size(height = 300)
-```
-
-### Shopping timeline
-
-A timeline places each event at its position (`x`) and labels it by `name`.
-This illustrative session follows six events, with elapsed time on hover.
-
-```{r shopping-timeline}
+```{r einstein-timeline}
 events <- tibble::tibble(
-  name = c("Viewed", "Search", "Product", "Added", "Checkout", "Purchased"),
-  x = as.POSIXct("2025-01-06 10:00:00", tz = "UTC") +
-    c(0, 30, 85, 200, 310, 430)
+  x = c(1879, 1905, 1921, 1933, 1955),
+  name = c(
+    "Born in Ulm",
+    "Special relativity",
+    "Physics Nobel",
+    "Princeton",
+    "Dies in Princeton"
+  )
 )
 hchart(
   events,
   "timeline",
-  name = "Shopping steps",
-  dataLabels = list(format = "{point.name}", style = list(fontSize = "11px"))
+  name = "Albert Einstein",
+  colorByPoint = FALSE,
+  color = "#285876",
+  dataLabels = list(
+    format = "{point.x} · {point.name}",
+    color = "#FFFFFF",
+    backgroundColor = "#285876",
+    style = list(
+      fontSize = "11px",
+      fontWeight = "normal",
+      textOutline = "none"
+    )
+  )
 ) |>
-  hc_chart(type = "timeline") |>
-  hc_tooltip(pointFormat = "{point.name}: {point.x:%H:%M:%S}") |>
+  hc_xAxis(type = "linear", visible = FALSE) |>
+  hc_yAxis(visible = FALSE, title = list(text = NULL)) |>
+  hc_tooltip(headerFormat = "", pointFormat = "{point.x} · {point.name}") |>
   hc_size(height = 300)
 ```
 
@@ -539,7 +585,12 @@ hchart(
   dataLabels = list(
     enabled = TRUE,
     format = "{point.name}",
-    style = list(fontSize = "10px", fontWeight = "normal", textOutline = "none")
+    style = list(
+      fontSize = "10px",
+      color = "white",
+      fontWeight = "normal",
+      textOutline = "none"
+    )
   )
 ) |>
   hc_xAxis(title = list(text = "")) |>
@@ -548,6 +599,7 @@ hchart(
     reversed = TRUE,
     title = list(text = "")
   ) |>
+  hc_colors(c("#285876", "#316346", "#85581D")) |>
   hc_plotOptions(xrange = list(grouping = FALSE, pointWidth = 22)) |>
   hc_tooltip(
     pointFormat = "{point.name}<br>{point.x:%e %b} to {point.x2:%e %b}"
@@ -571,7 +623,23 @@ schedule <- tasks |>
     completed = progress,
     dependency
   )
-hchart(schedule, "gantt", name = "Tasks") |>
+hchart(schedule, "gantt", name = "Tasks", color = "#285876") |>
+  hc_yAxis(
+    labels = list(
+      levels = list(list(level = 1, style = list(fontWeight = "normal")))
+    )
+  ) |>
+  hc_plotOptions(
+    gantt = list(
+      dataLabels = list(
+        style = list(
+          fontWeight = "normal",
+          color = "#FFFFFF",
+          textOutline = "none"
+        )
+      )
+    )
+  ) |>
   hc_size(height = 500)
 ```
 
@@ -580,7 +648,7 @@ hchart(schedule, "gantt", name = "Tasks") |>
 ```{r specialized-recipes, echo=FALSE, results='asis'}
 recipes <- c("venn", "solidgauge")
 for (name in recipes) {
-  path <- here::here("dev", "examples-charts", paste0(name, ".R"))
+  path <- system.file("examples", paste0(name, ".R"), package = "highcharter")
   cat(sub("(?m)^## ", "### ", knitr::spin_child(path), perl = TRUE), sep = "\n")
 }
 ```
@@ -588,9 +656,9 @@ for (name in recipes) {
 ### Related articles
 
 Explore the finished [world tile map](showcase.html#tile-map), [word cloud](showcase.html#word-cloud)
-and [wind map](showcase.html#wind-over-south-american-capitals) in Showcase.
+and [wind map](showcase.html#south-atlantic-wind-field) in Showcase.
 
-See [Icons and pictograms](icons-and-pictograms.html) for image markers,
+See [Icons and pictograms](showcase.html#icons-and-pictograms) for image markers,
 icons in tooltips and symbols that represent individual items.
 
 The [Maps](maps.html) and [Stock](stock.html) articles cover geographic
@@ -636,4 +704,23 @@ hchart(fuel, "scatter", id = "fuel", visible = FALSE, showInLegend = FALSE) |>
     name = "Normal curve"
   ) |>
   hc_xAxis(title = list(text = "Fuel economy (mpg)"))
+```
+
+### Comparing a measurement with a target
+
+The bullet compares ten daily means (`y`) with a `target` of 18 °C.
+
+```{r temperature-target}
+daily <- tibble::tibble(
+  name = paste(rep(c("W1", "W2"), each = 5), rep(temperatures$name, 2)),
+  y = c(temperatures$y, 18, 19, 17, 20, 18)
+)
+hchart(
+  daily,
+  "bullet",
+  hcaes(x = name, y = y, target = 18),
+  colorByPoint = TRUE
+) |>
+  hc_yAxis(title = list(text = "Temperature (°C)")) |>
+  hc_size(height = 300)
 ```

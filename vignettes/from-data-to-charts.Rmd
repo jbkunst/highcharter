@@ -14,12 +14,7 @@ vignette: >
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 executor <- paste(
   readLines(
-    file.path(
-      dirname(knitr::current_input(dir = TRUE)),
-      "..",
-      "pkgdown",
-      "grid-sequence.js"
-    ),
+    system.file("examples", "grid-sequence.js", package = "highcharter"),
     encoding = "UTF-8"
   ),
   collapse = "\n"
@@ -249,23 +244,7 @@ prepare_home_data <- function(
   list(countries = snapshot, history = history, metadata = metadata)
 }
 
-map_temp <- tempfile(fileext = ".json")
-world <- tryCatch(
-  {
-    utils::download.file(
-      "https://code.highcharts.com/mapdata/2.3.3/custom/world.topo.json",
-      map_temp,
-      method = "libcurl",
-      mode = "wb",
-      quiet = TRUE,
-      headers = c("User-Agent" = "highcharter website data preparation")
-    )
-    map <- jsonlite::read_json(map_temp)
-    stopifnot(map$version == "2.3.3")
-    map
-  },
-  finally = unlink(map_temp)
-)
+world <- hc_maps$world
 home_data <- prepare_home_data(world)
 countries <- home_data$countries
 metadata <- home_data$metadata

@@ -1,7 +1,5 @@
 ---
 title: Highcharts API
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   Highcharts have a rich API which allows you to have control of the entire chart,
@@ -31,23 +29,7 @@ Start with the monthly temperatures of three cities.
 ```{r}
 library(highcharter)
 
-data("citytemp")
-
-hc <- highchart() |>
-  hc_xAxis(categories = citytemp$month) |>
-  hc_add_series(
-    name = "Tokyo",
-    data = citytemp$tokyo
-  ) |>
-  hc_add_series(
-    name = "London",
-    data = citytemp$london
-  ) |>
-  hc_add_series(
-    name = "Other city",
-    data = (citytemp$tokyo + citytemp$london) / 2
-  )
-
+hc <- highcharts_demo()
 hc
 ```
 
@@ -236,4 +218,19 @@ the other cities visible at full strength for comparison.
 
 ```{r inactive-series}
 hc |> hc_plotOptions(series = list(states = list(inactive = list(opacity = 1))))
+```
+
+## Responsive layout
+
+Resize the chart below 500 px to hide its legend. Highcharts restores the
+legend when the chart grows past that width.
+
+```{r responsive-legend}
+hc |>
+  hc_responsive(
+    rules = list(list(
+      condition = list(maxWidth = 500),
+      chartOptions = list(legend = list(enabled = FALSE))
+    ))
+  )
 ```

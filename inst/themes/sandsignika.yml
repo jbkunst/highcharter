@@ -3,6 +3,7 @@ colors: ['#F45B5B', '#8085E9', '#8D4654', '#7798BF', '#AAEEEE', '#FF0066',
   '#EEAAEE', '#55BF3B', '#DF5353', '#7798BF', '#AAEEEE']
 chart:
   backgroundColor: null
+  divBackgroundSize: auto
   divBackgroundImage: !image sand.png
   style:
     fontFamily: Signika, serif
@@ -50,3 +51,7 @@ rangeSelector:
 scrollbar:
   trackBorderColor: '#C0C0C8'
 background2: '#E0E0E8'
+exporting:
+  buttons:
+    contextButton:
+      symbol: menu

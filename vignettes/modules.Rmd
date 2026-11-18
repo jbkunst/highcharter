@@ -1,7 +1,5 @@
 ---
 title: Modules & plugins
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   There are many plugins for highcharts created by both the Highsoft team and the
@@ -29,8 +27,8 @@ needed. Stock Tools, its GUI and technical indicators are loaded by
 Community plugins are kept separate because they are narrower and can interfere
 with one another. Add one to an individual widget with `hc_add_dependency()`.
 
-It should be noted that from time to time the plugins interfere with each
-other so you must be careful in using them.
+Regression, Grouped Categories and Motion are community plugins. Draggable
+Points, Pattern Fill and Gantt ship in the Highcharts bundle.
 
 
 ## Regression
@@ -242,29 +240,34 @@ year slider; the chart begins in 1952.
 
 ```{r motion-life-expectancy}
 library(dplyr)
+
 data(gapminder, package = "gapminder")
+
 history <- gapminder |>
   group_by(continent, year) |>
   summarise(lifeExp = weighted.mean(lifeExp, pop), .groups = "drop")
+
 years <- sort(unique(history$year))
-continents <- unique(as.character(history$continent))
-points <- lapply(continents, function(continent) {
-  values <- history[as.character(history$continent) == continent, ]
-  values <- values[order(values$year), ]
-  list(name = continent, y = values$lifeExp[1], sequence = values$lifeExp)
-})
+points <- history |>
+  arrange(continent, year) |>
+  group_by(name = as.character(continent)) |>
+  summarise(y = first(lifeExp), sequence = list(lifeExp), .groups = "drop")
 
 highchart() |>
   hc_chart(type = "bar", spacingBottom = 88) |>
   hc_title(text = "Longer lives, different trajectories") |>
   hc_subtitle(text = "Population-weighted life expectancy by continent") |>
-  hc_xAxis(categories = continents) |>
+  hc_xAxis(categories = points$name) |>
   hc_yAxis(
     min = 25,
     max = 85,
     title = list(text = "Life expectancy (years)")
   ) |>
-  hc_add_series(name = "Life expectancy", data = points, colorByPoint = TRUE) |>
+  hc_add_series(
+    name = "Life expectancy",
+    data = list_parse(points),
+    colorByPoint = TRUE
+  ) |>
   hc_tooltip(valueDecimals = 1, valueSuffix = " years") |>
   hc_motion(
     labels = as.character(years),
@@ -295,14 +298,8 @@ options(old)
 htmltools::tagList(spanish, french)
 ```
 
-## Optional community plugins
+## Draggable Legend
 
-The official modules are already part of the generated bundle. These community
-plugins remain optional:
-
-- Motion adds a time slider with `hc_motion()`.
-- Regression adds fitted curves with `hc_add_dependency("plugins/highcharts-regression.js")`.
-- Grouped Categories adds nested axis labels.
-- Draggable Legend lets readers reposition a legend.
+The Draggable Legend plugin lets readers reposition a legend. Load it for one widget with `hc_add_dependency("plugins/draggable-legend.js")`.
 
 For click-to-detail navigation, see [Drilldown](drilldown.html).

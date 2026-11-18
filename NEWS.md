@@ -79,7 +79,12 @@ Bundled Highcharts JS: 12.6.0.
 
 * The hcrt, carbon and smpl themes use regular-weight titles, labels and tooltip values.
 
-* The hcrt theme uses the built-in three-dot export menu icon.
+* The sparkline tooltip shows the point value in one outlined line and stays
+  inside the chart at either edge.
+* The export menu defaults to three dots. The three Highcharts theme adaptations
+  keep their original menu icon. Sand Signika tiles its sand texture at native size.
+* The map examples use packaged boundaries (`hc_maps`) and income data (`gni2014`).
+* ACF and PACF ticks stay within the correlation range, with room for endpoint markers.
 
 * Forecast charts distinguish observations, forecasts and prediction intervals
   in the legend and shared tooltip. The tooltip shows both interval limits.

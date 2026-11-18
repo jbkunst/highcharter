@@ -67,7 +67,7 @@
       optionsChart.divBackgroundImage : themeChart.divBackgroundImage;
     if (image) {
       el.style.backgroundImage = 'url(' + image + ')';
-      el.style.backgroundSize = 'cover';
+      el.style.backgroundSize = optionsChart.divBackgroundSize || themeChart.divBackgroundSize || 'cover';
       el.dataset.highcharterBackground = 'true';
     } else if (el.dataset.highcharterBackground) {
       el.style.backgroundImage = '';
@@ -88,6 +88,7 @@
 
     loadFonts(x.fonts);
     ResetHighchartsOptions(defaults);
+    Highcharts.setOptions({ exporting: { buttons: { contextButton: { symbol: 'menuball' } } } });
     if (x.theme) Highcharts.setOptions(x.theme);
     setBackground(el, x);
     if (x.conf_opts) Highcharts.setOptions(x.conf_opts);

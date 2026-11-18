@@ -28,5 +28,21 @@ hchart(tasks, "gantt", name = "Release plan") |>
   hc_subtitle(
     text = "Exploration and modelling run in parallel before review"
   ) |>
-  hc_plotOptions(gantt = list(completed = list(fill = "#21434c"))) |>
+  hc_yAxis(
+    labels = list(
+      levels = list(list(level = 1, style = list(fontWeight = "normal")))
+    )
+  ) |>
+  hc_plotOptions(
+    gantt = list(
+      completed = list(fill = "#21434c"),
+      dataLabels = list(
+        style = list(
+          fontWeight = "normal",
+          color = "#FFFFFF",
+          textOutline = "none"
+        )
+      )
+    )
+  ) |>
   hc_size(height = 355)

@@ -74,7 +74,7 @@ countries$unit_y <- -((seq_len(nrow(countries)) - 1L) %/% 22L)
 
 # Reuse the repository's geographic grid, including its naming differences.
 grid <- utils::read.csv(
-  file.path("dev", "examples-charts", "data", "world-tile-grid.csv"),
+  system.file("extdata", "world-tile-grid.csv", package = "highcharter"),
   fileEncoding = "UTF-8"
 )
 grid_index <- match(countries$country, grid$name)

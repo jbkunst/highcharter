@@ -1,7 +1,5 @@
 ---
 title: Highcharter
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 editor_options: 
   chunk_output_type: console
@@ -85,17 +83,11 @@ We can chart maps elements and choropleth using the highmaps and
 build interactive maps to display data linked to geographic objects.
 
 ```{r}
-data(GNI2014, package = "treemap")
-world <- jsonlite::read_json(here::here(
-  "dev",
-  "examples-charts",
-  "data",
-  "maps",
-  "custom-world-robinson-lowres.geo.json"
-))
+palette <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
+
 hcmap(
-  world,
-  data = GNI2014,
+  hc_maps$world_robinson,
+  data = gni2014,
   value = "GNI",
   joinBy = c("iso-a3", "iso3"),
   name = "GNI per capita",
@@ -104,15 +96,7 @@ hcmap(
   hc_title(text = "Gross national income per capita, 2014") |>
   hc_colorAxis(
     type = "logarithmic",
-    stops = color_stops(
-      colors = c(
-        "#000004",
-        "#56106E",
-        "#BB3754",
-        "#F98C0A",
-        "#FCFFA4"
-      )
-    )
+    stops = color_stops(colors = palette)
   ) |>
   hc_tooltip(valuePrefix = "$", valueDecimals = 0)
 ```

@@ -1,7 +1,5 @@
 ---
 title: Drilldown
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 description: >
   Drilldown is the concept of inspecting increasingly high resolution data
   through clicking on chart items like columns, points or pie slices. 
@@ -106,5 +104,5 @@ hchart(
 
 Click a primary type to explore its secondary types. Area shows the number of Pokémon.
 
-```{r pokemon, code=readLines(here::here("dev", "examples-charts", "pokemon.R"), encoding="UTF-8")}
+```{r pokemon, code=readLines(system.file("examples", "pokemon.R", package="highcharter"), encoding="UTF-8")}
 ```
