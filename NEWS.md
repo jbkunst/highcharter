@@ -83,7 +83,9 @@ Bundled Highcharts JS: 12.6.0.
   inside the chart at either edge.
 * The export menu defaults to three dots. The three Highcharts theme adaptations
   keep their original menu icon. Sand Signika tiles its sand texture at native size.
-* The map examples use packaged boundaries (`hc_maps`) and income data (`gni2014`).
+* `hcmap("cl")` reads a packaged map by country code, including all 16 Chilean
+  regions. The 202 country maps and five custom maps work offline. Other
+  collection paths retain CDN support. The income example uses `gni2014`.
 * ACF and PACF ticks stay within the correlation range, with room for endpoint markers.
 
 * Forecast charts distinguish observations, forecasts and prediction intervals

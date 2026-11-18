@@ -16,7 +16,7 @@ adjusts OHLC using the supplied adjusted close and retains the reported volume.
 Source: https://finance.yahoo.com/quote/SPY/history/
 
 `world-tile-grid.csv` supplies the specialized tile-map example. Official
-map boundaries and their provenance are documented in `?hc_maps`.
+map boundaries and their provenance are documented in `maps/README.md` in the installed package.
 
 `catarina-wind.csv` contains modified Copernicus Climate Change Service
 information. Source: Hersbach et al., [ERA5 hourly data on single levels](https://doi.org/10.24381/cds.adbb2d47)

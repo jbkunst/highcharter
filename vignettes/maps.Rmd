@@ -15,17 +15,39 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 
 ## Start with a map
 
-`hcmap()` selects a map from the [Highcharts collection](https://code.highcharts.com/mapdata/)
-and creates the map widget. The rest of the chart API works as usual. These
-examples use local snapshots of those official boundaries, so the maps also
-work without a CDN request. `hcmap()` accepts either a collection name or an
-already loaded GeoJSON list. Keep the map attribution visible when publishing.
+Pass a two-letter country code to draw one of the 202 installed maps. The
+short code, its uppercase form and the full collection path all read the
+same local geometry. For Chile, `hcmap("cl")`, `hcmap("CL")` and
+`hcmap("countries/cl/cl-all")` all show the 16 regions, including Ñuble.
 
 ```{r map-basics}
-hcmap(hc_maps$new_zealand, nullColor = "#D9E3E8", showInLegend = FALSE) |>
-  hc_title(text = "New Zealand") |>
+hcmap("cl", nullColor = "#D9E3E8", showInLegend = FALSE) |>
+  hc_title(text = "Chile’s 16 regions") |>
   hc_mapNavigation(enabled = TRUE)
 ```
+
+To attach data to Chile's regions, join by the two-digit territorial code
+(`cut`). Keep it as text so leading zeros survive. The example highlights
+Biobío (08) and Ñuble (16).
+
+```{r chile-join}
+regions <- data.frame(cut = c("08", "16"), selected = 1)
+hcmap(
+  "cl",
+  data = regions,
+  value = "selected",
+  joinBy = "cut",
+  nullColor = "#e9edf0",
+  name = "Highlighted regions"
+) |>
+  hc_colorAxis(minColor = "#396e81", maxColor = "#396e81", visible = FALSE) |>
+  hc_tooltip(pointFormat = "{point.name} · CUT {point.properties.cut}")
+```
+
+Additional boundaries can be selected by path from the
+[Highcharts collection](https://code.highcharts.com/mapdata/). For a path
+outside the package, the default downloads the geometry in R. With
+`download_map_data = FALSE` the browser loads the map from the CDN instead.
 
 ## Income around the world
 
@@ -37,7 +59,7 @@ scale makes the differences visible across the full range of incomes.
 palette <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
 
 hcmap(
-  hc_maps$world_robinson,
+  "custom/world-robinson-lowres",
   data = gni2014,
   value = "GNI",
   joinBy = c("iso-a3", "iso3"),
@@ -66,12 +88,12 @@ get_data_from_map(worldgeojson) |>
   head()
 ```
 
-To save boundaries for offline use, call `download_map_data()` once and retain
+To save other collection boundaries for offline use, call `download_map_data()` once and retain
 the returned object with your project. Pass it as `mapData` to a map series.
 
 ```{r offline-map, eval=FALSE}
-boundaries <- download_map_data("custom/world-robinson-lowres")
-saveRDS(boundaries, "world-map.rds")
+boundaries <- download_map_data("countries/us/us-ca-all")
+saveRDS(boundaries, "california-counties.rds")
 ```
 
 ## European time zones
@@ -87,7 +109,7 @@ zones <- data.frame(
   value = c(rep(0, 4), rep(1, 9), rep(2, 7))
 )
 hcmap(
-  hc_maps$europe,
+  "custom/europe",
   data = zones,
   value = "value",
   joinBy = c("iso-a2", "country"),
@@ -119,7 +141,7 @@ airports <- tibble::tribble(
   "Asunción",   -25.24, -57.52
 )
 south_america <- hcmap(
-  hc_maps$south_america,
+  "custom/south-america",
   nullColor = "#D9E3E8",
   showInLegend = FALSE
 )
@@ -139,7 +161,7 @@ Set a projection, center and zoom through `hc_mapView()`. Coordinates are always
 longitude first and latitude second.
 
 ```{r map-view}
-hcmap(hc_maps$world, nullColor = "#D9E3E8", showInLegend = FALSE) |>
+hcmap("custom/world.topo.json", nullColor = "#D9E3E8", showInLegend = FALSE) |>
   hc_mapView(
     projection = list(name = "Orthographic", rotation = c(65, 20))
   ) |>

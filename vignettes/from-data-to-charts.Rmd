@@ -244,7 +244,11 @@ prepare_home_data <- function(
   list(countries = snapshot, history = history, metadata = metadata)
 }
 
-world <- hc_maps$world
+world <- readRDS(system.file(
+  "maps/custom/world.topo.rds",
+  package = "highcharter",
+  mustWork = TRUE
+))
 home_data <- prepare_home_data(world)
 countries <- home_data$countries
 metadata <- home_data$metadata

@@ -14,13 +14,13 @@ hcmap(
 )
 }
 \arguments{
-\item{map}{A map name, such as \code{"custom/world"}, from the Highcharts map
-collection, or an already loaded GeoJSON list. See examples.}
+\item{map}{A two-letter country code (case-insensitive), a collection path
+such as \code{"countries/cl/cl-all"} or \code{"custom/world"}, or a loaded map list.
+Country codes and their matching collection paths use the same local file.}
 
-\item{download_map_data}{A logical value whether to download
-(add as a dependency) the map. Default \code{TRUE} via
-\code{getOption("highcharter.download_map_data")}. Ignored when \code{map}
-is an already loaded GeoJSON list.}
+\item{download_map_data}{For maps outside the package, download the map in R
+(\code{TRUE}) or attach the CDN script to the widget (\code{FALSE}). Defaults to
+\code{getOption("highcharter.download_map_data")}.}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
@@ -33,33 +33,16 @@ the joinBy and value are needed.}
 (\url{https://api.highcharts.com/highcharts/series}).}
 }
 \description{
-Create a Highcharts map using a map name from the
-\href{https://code.highcharts.com/mapdata/}{Highcharts map collection}
-or an already loaded GeoJSON list.
+Draw a packaged country map offline, load another map by its
+\href{https://code.highcharts.com/mapdata/}{Highcharts collection} path, or supply
+a GeoJSON or TopoJSON list.
 }
 \examples{
 
-options(highcharter.download_map_data = TRUE)
-
-# An already loaded map works without a network request.
+hcmap("cl")
+hcmap("countries/us/us-all", showInLegend = FALSE)
+hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
+  joinBy = c("iso-a3", "iso3")
+)
 hcmap(worldgeojson, showInLegend = FALSE)
-
-# hcmap(nullColor = "#DADADA")
-# hcmap(nullColor = "#DADADA", download_map_data = FALSE)
-
-require(dplyr)
-data("USArrests", package = "datasets")
-USArrests <- mutate(USArrests, "woe-name" = rownames(USArrests))
-
-# hcmap(
-#   map = "countries/us/us-all", data = USArrests,
-#   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population"
-# )
-
-# download_map_data = FALSE
-# hcmap(
-#    map = "countries/us/us-all", data = USArrests,
-#   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
-#   download_map_data = FALSE
-# )
 }

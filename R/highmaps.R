@@ -77,16 +77,16 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 
 #' Create a map chart
 #'
-#' Create a Highcharts map using a map name from the
-#' [Highcharts map collection](https://code.highcharts.com/mapdata/)
-#' or an already loaded GeoJSON list.
+#' Draw a packaged country map offline, load another map by its
+#' [Highcharts collection](https://code.highcharts.com/mapdata/) path, or supply
+#' a GeoJSON or TopoJSON list.
 #'
-#' @param map A map name, such as `"custom/world"`, from the Highcharts map
-#'   collection, or an already loaded GeoJSON list. See examples.
-#' @param download_map_data A logical value whether to download
-#'   (add as a dependency) the map. Default \code{TRUE} via
-#'   \code{getOption("highcharter.download_map_data")}. Ignored when `map`
-#'   is an already loaded GeoJSON list.
+#' @param map A two-letter country code (case-insensitive), a collection path
+#'   such as `"countries/cl/cl-all"` or `"custom/world"`, or a loaded map list.
+#'   Country codes and their matching collection paths use the same local file.
+#' @param download_map_data For maps outside the package, download the map in R
+#'   (`TRUE`) or attach the CDN script to the widget (`FALSE`). Defaults to
+#'   `getOption("highcharter.download_map_data")`.
 #' @param data Optional data to make a choropleth, in case of use
 #'   the joinBy and value are needed.
 #' @param value A string value with the name of the variable to chart.
@@ -96,29 +96,12 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'
 #' @examples
 #'
-#' options(highcharter.download_map_data = TRUE)
-#'
-#' # An already loaded map works without a network request.
+#' hcmap("cl")
+#' hcmap("countries/us/us-all", showInLegend = FALSE)
+#' hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
+#'   joinBy = c("iso-a3", "iso3")
+#' )
 #' hcmap(worldgeojson, showInLegend = FALSE)
-#'
-#' # hcmap(nullColor = "#DADADA")
-#' # hcmap(nullColor = "#DADADA", download_map_data = FALSE)
-#'
-#' require(dplyr)
-#' data("USArrests", package = "datasets")
-#' USArrests <- mutate(USArrests, "woe-name" = rownames(USArrests))
-#'
-#' # hcmap(
-#' #   map = "countries/us/us-all", data = USArrests,
-#' #   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population"
-#' # )
-#'
-#' # download_map_data = FALSE
-#' # hcmap(
-#' #    map = "countries/us/us-all", data = USArrests,
-#' #   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
-#' #   download_map_data = FALSE
-#' # )
 #' @importFrom htmltools htmlDependency
 #' @importFrom rlang .data
 #' @export
@@ -132,6 +115,10 @@ hcmap <- function(
 ) {
   hc <- highchart(type = "map")
 
+  if (is.character(map)) {
+    local <- packaged_map_file(map)
+    if (nzchar(local)) map <- readRDS(local)
+  }
   if (is.list(map)) {
     mapdata <- map
   } else {
@@ -243,6 +230,31 @@ get_data_from_map <- function(mapdata) {
     purrr::map_df(function(x) {
       x[!purrr::map_lgl(x, is.null)]
     })
+}
+
+packaged_map_file <- function(map) {
+  if (length(map) != 1L || is.na(map) || !nzchar(map)) {
+    stop("Supply one country code or map path.", call. = FALSE)
+  }
+  key <- sub("\\.js$", "", map)
+  if (grepl("^[A-Za-z]{2}$", key)) {
+    path <- system.file(
+      "maps",
+      paste0(tolower(key), ".rds"),
+      package = "highcharter"
+    )
+    if (!nzchar(path)) {
+      stop("No packaged country map for: ", map, call. = FALSE)
+    }
+    return(path)
+  }
+  if (grepl("^countries/([a-z]{2})/\\1-all$", key)) {
+    key <- basename(dirname(key))
+  } else if (!grepl("^custom/[a-z0-9-]+(\\.topo\\.json)?$", key)) {
+    return("")
+  }
+  key <- sub("\\.json$", "", key)
+  system.file("maps", paste0(key, ".rds"), package = "highcharter")
 }
 
 fix_map_name <- function(x = "custom/world") {

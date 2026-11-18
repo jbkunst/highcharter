@@ -415,7 +415,7 @@ arrows <- lapply(seq_len(nrow(wind)), function(i) {
 })
 
 hcmap(
-  hc_maps$world,
+  "custom/world.topo.json",
   nullColor = "#f0eee8",
   borderColor = "#a8b1af",
   showInLegend = FALSE,

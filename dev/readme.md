@@ -20,7 +20,9 @@ in `tests/`, and website articles in `vignettes/`.
 | `sandbox/` | Exploratory scripts, not an automated test suite. `transitions/` contains the offline animated chart prototypes and their data; see its [README](sandbox/transitions/README.md). |
 | `stackoverflow/` | Examples associated with Stack Overflow questions, named by question ID. |
 
-Article scripts and the Shinylive app are installed from `inst/examples/`. CSV inputs live in `inst/extdata/`; `data-raw/map-examples.R` refreshes the packaged map and income objects.
+Article scripts and the Shinylive app are installed from `inst/examples/`. CSV inputs live in `inst/extdata/`; `data-raw/maps.R` refreshes the country and custom RDS files in `inst/maps/`.
+The refresh uses pinned upstream sources and mapshaper for the Chilean regions.
+`data-raw/gni2014.R` refreshes the income data.
 
 At this level, `build-site.R` builds the website,
 `build-shinylive.R` exports the browser app,
