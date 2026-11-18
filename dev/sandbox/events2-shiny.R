@@ -30,42 +30,41 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$hc_1 <- renderHighchart({
-    hc <- hc_base %>%
+    hc <- hc_base |>
       hc_plotOptions(
         series = list(
           cursor = "pointer"
         )
-      ) %>%
-      hc_add_event_point(event = "mouseOver") %>%
-      hc_add_event_point(event = "click")
+      ) |>
+      hc_add_event_point(event = "mouseOver")
     hc
   })
 
   output$hc_1_input1 <- renderPrint({
-    input$hc_1_mouseOver
+    input$hc_1_point_mouseOver
   })
   output$hc_1_input2 <- renderPrint({
-    input$hc_1_click
+    input$hc_1_point_click
   })
 
   output$hc_2 <- renderHighchart({
-    hc <- hc_base %>%
+    hc <- hc_base |>
       hc_plotOptions(
         series = list(
           cursor = "pointer"
         )
-      ) %>%
-      hc_add_event_series(event = "mouseOver") %>%
+      ) |>
+      hc_add_event_series(event = "mouseOver") |>
       hc_add_event_series(event = "click")
 
     hc
   })
 
   output$hc_2_input1 <- renderPrint({
-    input$hc_2_mouseOver
+    input$hc_2_series_mouseOver
   })
   output$hc_2_input2 <- renderPrint({
-    input$hc_2_click
+    input$hc_2_series_click
   })
 }
 

@@ -196,3 +196,13 @@ main h3, main h4, main h5 { font-weight: 400; }
 @media (forced-colors: active) {
   .grid-controls select { appearance: auto; background-image: none; }
 }
+
+.shiny-gallery .card-img-top {
+  aspect-ratio: 2 / 1;
+  object-fit: contain;
+  background: white;
+}
+
+.shiny-gallery a:hover, .shiny-gallery a:focus-visible {
+  border-color: var(--bs-link-color);
+}

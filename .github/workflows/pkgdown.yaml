@@ -1,7 +1,7 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, feat/highcharts-bundle]
   pull_request:
     branches: [main, master]
   release:
@@ -18,7 +18,28 @@ permissions:
   contents: write
 
 jobs:
+  dev-wasm:
+    runs-on: ubuntu-latest
+    container: ghcr.io/r-wasm/webr:v0.6.0
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build highcharter for webR
+        run: |
+          Rscript -e 'rwasm::build("local::.", out_dir = Sys.getenv("RUNNER_TEMP"))'
+          mv "$RUNNER_TEMP"/highcharter_*.tgz "$RUNNER_TEMP/highcharter.tgz"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: highcharter-webR
+          path: ${{ runner.temp }}/highcharter.tgz
+          if-no-files-found: error
+          compression-level: 0
+
   pkgdown:
+    needs: dev-wasm
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ github.token }}
@@ -38,12 +59,22 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: highcharter-webR
+          path: ${{ runner.temp }}/highcharter-webr
+
       - name: Build site
+        env:
+          HIGHCHARTER_WASM_PACKAGE: ${{ runner.temp }}/highcharter-webr/highcharter.tgz
         shell: Rscript {0}
         run: source("dev/build-site.R")
 
       - name: Deploy site
-        if: github.event_name != 'pull_request'
+        if: >-
+          github.event_name == 'release' ||
+          (github.event_name != 'pull_request' &&
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages

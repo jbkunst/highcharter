@@ -20,7 +20,7 @@ in `tests/`, and website articles in `vignettes/`.
 | `sandbox/` | Exploratory scripts, not an automated test suite. `transitions/` contains the offline animated chart prototypes and their data; see its [README](sandbox/transitions/README.md). |
 | `stackoverflow/` | Examples associated with Stack Overflow questions, named by question ID. |
 
-Article scripts and the Shinylive app are installed from `inst/examples/`. CSV inputs live in `inst/extdata/`; `data-raw/maps.R` refreshes the country and custom RDS files in `inst/maps/`.
+Article scripts are installed from `inst/examples/`. The site-only Shiny apps live in `pkgdown/shiny/`. CSV inputs live in `inst/extdata/`; `data-raw/maps.R` refreshes the country and custom RDS files in `inst/maps/`.
 The refresh uses pinned upstream sources and mapshaper for the Chilean regions.
 `data-raw/gni2014.R` refreshes the income data.
 
@@ -86,13 +86,17 @@ time index as predictions, Sankey links count adjacent columns, and
 `list_parse2()` delegates validation to `list_parse()`. The package dropped
 the `assertthat` import, the global-variable declarations and `hc_rm_series()`.
 All 12 Shiny proxy sends now use `send_proxy_message()`.
+Shiny outputs report point clicks automatically. Explicit point and series
+events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
+links five examples, including the draggable equalizer. The pkgdown workflow
+builds this checkout for webR and passes that binary to all five apps.
 See [breaking changes](../NEWS.md#breaking-changes) for the series migration.
 
 The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 1 | Shiny proxies and events | Replace the four `1:length()` loops so empty inputs send zero messages. Keep message names, order, payloads and the returned proxy. Share the event setup for points and series, remove debug output and check both Shiny inputs. |
+| 1 | Shiny proxies | Use `seq_along()` in the four loops in [R/proxy.R](../R/proxy.R). `hcpxy_remove_series(proxy, character())` currently fails with `subscript out of bounds`. An empty selection should send zero messages. Keep message names, order, payloads and the returned proxy. |
 | 2 | Multivariate series and forecasts | Fold `hchart_mts1()` and `hchart_mts2()` into `hchart.mts()`. Preserve panel heights, spacing and series IDs for STL, ETS and decompositions. Read the forecasts stored in `object$forecast` and build intervals in x, low, high order. Test shared and separate panels. |
 | 3 | Annotations, mappings and heatmaps | Respect the supplied axes in `df_to_annotations_labels()` and delegate the singular annotation adder to the plural. Share X/Y type inference and heatmap coordinate conversion. Check dates, factors, single categories, omitted axes and unnamed options in `validate_args()`. |
 | 4 | Data transformations | Assign hierarchy IDs once per path and reuse them for parent links. Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
@@ -144,7 +148,7 @@ explain the inputs, outputs and why the order matters:
 2. Clean the previous generated site and initialize its template assets.
 3. Load this checkout with pkgload and disable Google Fonts requests in widgets.
 4. Generate `home-gallery.html`, the synchronized four-chart homepage grid.
-5. Generate the bundle validation gallery and export the Shiny browser app.
+5. Generate the bundle validation gallery and export the Shiny gallery.
 6. Render the homepage, function reference, articles and NEWS through pkgdown,
    which also generates the sitemap and search index. Install the checkout into
    pkgdown's temporary library so article subprocesses use the current R code
@@ -317,12 +321,26 @@ When generating LLM text documentation, pkgdown/Pandoc warns that it cannot
 fetch the relative homepage and Shinylive iframe URLs. The HTML embeds work
 in the served site; their live content is omitted from the text export.
 
-`dev/build-shinylive.R` uses the official Shinylive exporter for the example in
-`inst/examples/site-demo/`. These website-only dependencies are recorded in
-`Config/Needs/website`. Initial export and first browser launch require internet.
-The browser app uses the highcharter release available in webR, which can lag
-behind this branch. Let webR resolve that release's dependencies at launch;
-bundling dependencies from the local checkout would miss older imports.
+The Shiny gallery and walkthrough share the apps in `pkgdown/shiny/`. Each directory holds
+one ordinary `app.R`. Run an example from the checkout with
+`shiny::runApp("pkgdown/shiny/events")` after loading the local package.
+Edit that same file to update both the app and the source shown in the article.
+The Stock walkthrough also uses the gallery's Stock app.
+
+`dev/build-shinylive.R` exports the apps to `live/<name>/` and shares one
+Shinylive runtime and one highcharter archive across them. In GitHub Actions,
+`dev-wasm` builds the checkout with webR. The pkgdown job receives its
+`highcharter-webR` artifact and passes the path in `HIGHCHARTER_WASM_PACKAGE`.
+Pin the webR image in the workflow to the version bundled with the Shinylive
+assets in the export script when upgrading either. Pushes to
+`feat/highcharts-bundle` and pull requests targeting main or master build the
+site for verification. Main, master and published releases deploy it.
+
+For local previews without a supplied binary, the script installs this checkout
+without byte compilation and checks that it contains only portable R code and
+browser assets. Both paths load the same archive URL and fetch imports as webR
+binaries. The runtime and apps are website build outputs.
+Both the first export and the first browser launch require internet access.
 
 At the end of `source("dev/build-site.R")`, an interactive R session starts
 pkgdown's local server and opens only the homepage, articles, reference index

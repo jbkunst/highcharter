@@ -50,7 +50,7 @@ build_home_gallery(site_dir)
 # 5. Generate the chart gallery -------------------------------------------
 # Reuse the canonical bundle examples for the internal bundle-gallery.html.
 # Keeping the same site_dir places their shared assets beside the homepage demo.
-cli::cli_h2("5/7 Build the bundled-series and mixed-widget gallery")
+cli::cli_h2("5/7 Build the chart and Shiny galleries")
 
 source("dev/R/test-highcharts-bundle.R", local = TRUE)
 source("dev/build-shinylive.R", local = TRUE)

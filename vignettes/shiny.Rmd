@@ -7,87 +7,100 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+Browse the [Shiny gallery](shiny-gallery.html) to open a standalone app, or
+run the examples here alongside their R source. The first launch downloads R
+and its dependencies. The apps use the highcharter version documented here.
+
 ```{r setup, include=FALSE}
-library(highcharter)
-hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
-old_bootstrap_theme <- shiny::getShinyOption("bootstrapTheme")
-shiny::shinyOptions(bootstrapTheme = bslib::bs_theme(version = 5))
-```
-
-## A chart that reacts to an input
-
-Put `highchartOutput()` in the interface and assign a `renderHighchart()`
-expression in the server. Inputs used by that expression trigger a new chart.
-The application below switches between sepal and petal measurements for the
-same 150 iris flowers. Its theme matches the documentation site.
-
-## Run it in R or in your browser
-
-The tabs keep the live application and its complete source together. The
-browser version uses Shinylive and downloads its R runtime and packages on
-first launch, which can take a moment. It runs without a hosted Shiny server.
-The browser app uses the release available in webR; running the source locally
-uses your installed highcharter version.
-
-```{r shiny-tabs, echo=FALSE}
-app <- paste(
-  readLines(system.file(
-    "examples/site-demo",
-    "app.R",
-    package = "highcharter"
-  )),
-  collapse = "\n"
-)
-bslib::navset_card_tab(
-  bslib::nav_panel(
-    "Browser app",
-    htmltools::tags$iframe(
-      src = "../live/index.html",
-      title = "Interactive iris chart in Shinylive",
-      loading = "lazy",
-      style = "width:100%;height:510px;border:0;"
-    )
-  ),
-  bslib::nav_panel(
-    "App source",
-    htmltools::tags$pre(htmltools::tags$code(app))
-  ),
-  bslib::nav_panel(
-    "Run locally",
-    htmltools::tags$p("With highcharter installed, run:"),
-    htmltools::tags$pre(htmltools::tags$code(
-      'shiny::runApp(system.file("examples", "site-demo", package = "highcharter"))'
+library(htmltools)
+demo <- function(slug, title, height = 450) {
+  src <- file.path("..", "pkgdown", "shiny", slug, "app.R")
+  url <- paste0("../live/", slug, "/index.html")
+  tagList(
+    tags$details(
+      ontoggle = "if (this.open) { const f = this.querySelector('iframe'); if (!f.hasAttribute('src')) f.src = f.dataset.src; }",
+      tags$summary(paste("Run", title)),
+      tags$iframe(
+        title = title,
+        `data-src` = url,
+        width = "100%",
+        height = height,
+        style = "border:0"
+      )
+    ),
+    tags$details(
+      tags$summary("R source"),
+      tags$pre(tags$code(paste(readLines(src), collapse = "\n")))
+    ),
+    tags$p(tags$a(
+      href = url,
+      "Open the app in its own tab",
+      target = "_blank",
+      rel = "noopener"
     ))
   )
-)
+}
 ```
 
-## Update an existing chart with a proxy
+## Basics
 
-A proxy changes a chart already on the page. This is useful when you want to
-preserve its current zoom or avoid rebuilding a large widget. Give each series
-an ID so updates do not depend on its position in the series list.
+Select **Sepal** or **Petal**. The same 150 flowers move to their new coordinates.
+Put `highchartOutput("flowers")` in the UI and read `input$measure` inside
+`renderHighchart()` to rebuild the plot when the measurement changes.
 
-```{r proxy-recipe, eval=FALSE}
-proxy <- highchartProxy("prices", session)
-hcpxy_set_data(proxy, data = replacement, idSeries = "closing")
-hcpxy_set_extremes(
-  proxy,
-  min = base::as.Date("2025-01-03"),
-  max = base::as.Date("2025-01-08")
-)
+```{r basic, echo=FALSE}
+demo("basic", "the iris explorer")
 ```
 
-The [Stock article](stock.html#update-a-series-and-its-visible-range-in-shiny)
-has the full proxy application. It changes both the data and visible date range
-while preserving the mounted chart.
+## Proxies
 
-## More applications
+Start with twelve months of air passenger counts. **Add a month** appends one
+observation with `hcpxy_add_point()`. **Columns** changes the series type with
+`hcpxy_update_series()`. Switch back to **Line** and your added months are
+still there. Both controls target the series ID `traffic` through
+`highchartProxy("passengers", session)`.
 
-The [highcharter-shiny repository](https://github.com/jbkunst/highcharter-shiny)
-collects further examples of events, linked views and time-series applications.
-For Bootstrap color modes, see the [themes article](themes.html).
-
-```{r restore-bootstrap, include=FALSE}
-shiny::shinyOptions(bootstrapTheme = old_bootstrap_theme)
+```{r proxy, echo=FALSE}
+demo("proxy", "the passenger chart")
 ```
+
+For an example that replaces a whole Stock series and sets the visible date
+range, [run the Stock proxy app](../live/stock/index.html) or
+[read the Stock walkthrough](stock.html#update-a-series-and-its-visible-range-in-shiny).
+
+## Events
+
+Click a band in the equalizer. Shiny receives its ID at
+`input$eq_point_click$pointid` automatically. Drag the band and release it.
+The app uses only `hc_add_event_point(event = "drop")` to send the final gain
+in decibels to `input$eq_point_drop$y`.
+
+```{r events, echo=FALSE}
+demo("events", "the equalizer", height = 490)
+```
+
+The output ID, scope and case-sensitive Highcharts event name determine the
+input. For example, `hc_add_event_series(event = "mouseOver")` would send
+the hovered series to `input$eq_series_mouseOver`.
+
+## Linked views
+
+Click a species in the overview to see the individual flowers in the detail
+chart. The server reads `input$overview_point_click$pointid` and uses a proxy
+to replace the detail series and its title. This combines the two preceding
+patterns and keeps both charts mounted.
+
+```{r linked, echo=FALSE}
+demo("linked", "the linked charts", height = 430)
+```
+
+To run an example from a local checkout, load the package and open the app directory:
+
+```{r local-app, eval=FALSE}
+pkgload::load_all()
+shiny::runApp("pkgdown/shiny/events")
+```
+
+The [original Shiny examples](https://github.com/jbkunst/highcharter-shiny)
+include the full [proxy playground](https://github.com/jbkunst/highcharter-shiny/tree/master/02-proxy-functions)
+and a [population explorer with linked views](https://github.com/jbkunst/highcharter-shiny/tree/master/08-idb-viz).

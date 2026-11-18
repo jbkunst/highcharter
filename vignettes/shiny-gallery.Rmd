@@ -1,0 +1,66 @@
+---
+title: "Shiny gallery"
+toc: false
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Shiny gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Open an app to run R in your browser. The first launch downloads R and the
+required packages. The [Shiny walkthrough](shiny.html) explains the code behind
+the examples.
+
+```{r gallery, echo=FALSE}
+library(htmltools)
+
+card <- function(app, title, description) {
+  tags$div(
+    class = "col",
+    tags$a(
+      class = "card h-100 text-decoration-none text-body",
+      href = paste0("../live/", app, "/index.html"),
+      tags$img(
+        class = "card-img-top",
+        src = paste0("../shiny-gallery/", app, ".webp"),
+        alt = ""
+      ),
+      tags$div(
+        class = "card-body",
+        tags$h2(class = "h5 mt-0 mb-2", title),
+        tags$p(class = "mb-0", description)
+      )
+    )
+  )
+}
+
+tags$div(
+  class = "shiny-gallery row row-cols-1 row-cols-md-2 g-3",
+  card(
+    "basic",
+    "Iris explorer",
+    "Switch between sepal and petal measurements for 150 flowers."
+  ),
+  card(
+    "proxy",
+    "Air passengers",
+    "Add a month and switch between a line and columns using a Shiny proxy."
+  ),
+  card(
+    "events",
+    "Equalizer",
+    "Select a frequency and drag its point to change the gain in decibels."
+  ),
+  card(
+    "linked",
+    "Linked charts",
+    "Click a species to explore its individual flowers in a second chart."
+  ),
+  card(
+    "stock",
+    "Stock prices",
+    "Update a price series and zoom to a new date range in one click."
+  )
+)
+```

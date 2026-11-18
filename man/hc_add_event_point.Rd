@@ -3,29 +3,35 @@
 \name{hc_add_event_point}
 \alias{hc_add_event_point}
 \alias{hc_add_event_series}
-\title{Helpers to use highcharter as input in shiny apps}
+\title{Use chart events as Shiny inputs}
 \usage{
 hc_add_event_point(hc, series = "series", event = "click")
 
 hc_add_event_series(hc, series = "series", event = "click")
 }
 \arguments{
-\item{hc}{A \code{highchart} \code{htmlwidget} object.}
+\item{hc}{A \code{highchart} htmlwidget.}
 
-\item{series}{The name of type of series to apply the event.}
+\item{series}{Highcharts series type to listen to, such as \code{"column"}.
+The default \code{"series"} applies to all types.}
 
-\item{event}{The name of event: click, mouseOut,  mouseOver. See
-\url{https://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
-for more details.}
+\item{event}{Case-sensitive Highcharts event name, such as \code{"mouseOver"}.
+See the \href{https://api.highcharts.com/highcharts/plotOptions.series.point.events}{point events}
+and \href{https://api.highcharts.com/highcharts/plotOptions.series.events}{series events}.}
+}
+\value{
+The chart with the requested event configured.
 }
 \description{
-When you use highcharter in a shiny app, for example
-\code{renderHighcharter('my_chart')}, you can access to the actions of the
-user using and then use the \code{hc_add_event_point} via the
-\code{my_chart} input (\code{input$my_chart}). That's a way you can
-use a chart as an input.
+For an output named \code{sales}, Shiny receives point clicks automatically at
+\code{input$sales_point_click}. Register other Highcharts events with these
+helpers. For example, \code{hc_add_event_point(event = "drop")} sends the
+released point to \code{input$sales_point_drop}, and
+\code{hc_add_event_series(event = "mouseOver")} sends the hovered series to
+\code{input$sales_series_mouseOver}.
 }
-\note{
-Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
-and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
+\details{
+Point events include \code{series}, \code{seriesid}, \code{pointid}, \code{name}, \code{x}, \code{y} and
+\code{category} when available. During a drag or drop, the coordinates reflect
+the proposed position. Series events include \code{name} and \code{seriesid}.
 }

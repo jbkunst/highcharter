@@ -30,9 +30,14 @@ template:
 navbar:
   bg: primary
   structure:
+    left: [intro, reference, articles, tutorials, shiny-gallery, news]
     right:
     - search
     - github
+  components:
+    shiny-gallery:
+      text: Shiny gallery
+      href: articles/shiny-gallery.html
 figures:
   message: no
   warning: no
@@ -194,6 +199,7 @@ articles:
   navbar: Shiny
   contents:
   - shiny
+  - shiny-gallery
 redirects:
 - ["highmaps.html", "articles/maps.html"]
 - ["articles/fontawesome.html", "articles/showcase.html#icons-and-pictograms"]

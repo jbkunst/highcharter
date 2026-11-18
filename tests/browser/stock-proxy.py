@@ -15,7 +15,7 @@ def test_stock_proxy():
         start = """
             port <- httpuv::randomPort()
             writeLines(as.character(port), commandArgs(TRUE)[1])
-            app <- source("inst/examples/stock-proxy.R", local = TRUE)$value
+            app <- source("pkgdown/shiny/stock/app.R", local = TRUE)$value
             shiny::runApp(app, port = port, host = "127.0.0.1", launch.browser = FALSE)
         """
         proc = subprocess.Popen(["Rscript", "-e", start, str(port_file)])

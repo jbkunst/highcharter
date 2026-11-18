@@ -779,94 +779,42 @@ hc_add_series_list <- function(hc, x) {
   hc
 }
 
-#' Helpers to use highcharter as input in shiny apps
+#' Use chart events as Shiny inputs
 #'
-#' When you use highcharter in a shiny app, for example
-#' \code{renderHighcharter('my_chart')}, you can access to the actions of the
-#' user using and then use the \code{hc_add_event_point} via the
-#' \code{my_chart} input (\code{input$my_chart}). That's a way you can
-#' use a chart as an input.
+#' For an output named `sales`, Shiny receives point clicks automatically at
+#' `input$sales_point_click`. Register other Highcharts events with these
+#' helpers. For example, `hc_add_event_point(event = "drop")` sends the
+#' released point to `input$sales_point_drop`, and
+#' `hc_add_event_series(event = "mouseOver")` sends the hovered series to
+#' `input$sales_series_mouseOver`.
 #'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param series The name of type of series to apply the event.
-#' @param event The name of event: click, mouseOut,  mouseOver. See
-#'   \url{https://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
-#'   for more details.
+#' Point events include `series`, `seriesid`, `pointid`, `name`, `x`, `y` and
+#' `category` when available. During a drag or drop, the coordinates reflect
+#' the proposed position. Series events include `name` and `seriesid`.
 #'
-#' @note Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
-#'     and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
-#'
+#' @param hc A `highchart` htmlwidget.
+#' @param series Highcharts series type to listen to, such as `"column"`.
+#'   The default `"series"` applies to all types.
+#' @param event Case-sensitive Highcharts event name, such as `"mouseOver"`.
+#'   See the [point events](https://api.highcharts.com/highcharts/plotOptions.series.point.events)
+#'   and [series events](https://api.highcharts.com/highcharts/plotOptions.series.events).
+#' @return The chart with the requested event configured.
 #' @export
 hc_add_event_point <- function(hc, series = "series", event = "click") {
-  fun <- paste0(
-    "function(){
-  var pointinfo = {series: this.series.name, seriesid: this.series.id,
-  name: this.name, x: this.x, y: this.y, category: this.category.name}
-  window.x = this;
-  console.log(pointinfo);
-
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '",
-    event,
-    "', pointinfo); }
-}"
-  )
-
-  fun <- JS(fun)
-
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(structure(
-          list(fun),
-          .Names = event
-        )),
-        .Names = "events"
-      )),
-      .Names = "point"
-    )),
-    .Names = series
-  )
-
-  hc$x$hc_opts$plotOptions <- .merge_hc_options(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-
+  if (!identical(event, "click")) {
+    hc$x$hc_opts$plotOptions[[series]]$point$events[[event]] <- JS(
+      "function(e) { HighcharterWidget.sendEvent(this, 'point', e); }"
+    )
+  }
   hc
 }
 
 #' @rdname hc_add_event_point
 #' @export
 hc_add_event_series <- function(hc, series = "series", event = "click") {
-  fun <- paste0(
-    "function(){
-  var seriesinfo = {name: this.name }
-  console.log(seriesinfo);
-  window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '",
-    event,
-    "', seriesinfo); }
-
-}"
+  hc$x$hc_opts$plotOptions[[series]]$events[[event]] <- JS(
+    "function(e) { HighcharterWidget.sendEvent(this, 'series', e); }"
   )
-  fun <- JS(fun)
-
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(fun),
-        .Names = event
-      )),
-      .Names = "events"
-    )),
-    .Names = series
-  )
-
-  hc$x$hc_opts$plotOptions <- .merge_hc_options(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-
   hc
 }
 

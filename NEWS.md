@@ -4,6 +4,12 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Shiny event helpers now include the event scope in the input name. For an
+  output named `sales`, migrate `input$sales_mouseOver` to
+  `input$sales_point_mouseOver` or `input$sales_series_mouseOver`, according
+  to the helper used. Read point clicks at `input$sales_point_click`;
+  Shiny registers them automatically.
+
 * Removed `hc_rm_series()`. Select the series to include when building a
   chart. In Shiny, use `hcpxy_remove_series(proxy, id = ...)` to remove a
   series by its ID after the chart is rendered.

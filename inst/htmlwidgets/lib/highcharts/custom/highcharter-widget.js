@@ -142,7 +142,32 @@
     }
   }
 
+  function sendEvent(target, scope, event) {
+    if (!HTMLWidgets.shinyMode) return;
+    const series = scope === 'point' ? target.series : target;
+    const el = series.chart.renderTo;
+    if (series.options.isInternal ||
+        !el.matches('.highchart.html-widget-output, .highchartstock.html-widget-output')) return;
+
+    let data = {name: series.name, seriesid: series.options.id};
+    if (scope === 'point') {
+      // Highcharts fires drag and drop before it applies the new coordinates.
+      const position = event.newPoints?.[target.id]?.newValues;
+      data = {
+        series: series.name,
+        seriesid: series.options.id,
+        pointid: target.options.id,
+        name: target.name,
+        x: position?.x ?? target.x,
+        y: position?.y ?? target.y,
+        category: target.category?.name ?? target.category
+      };
+    }
+    Shiny.setInputValue(el.id + '_' + scope + '_' + event.type, data, {priority: 'event'});
+  }
+
   global.HighcharterWidget = {
+    sendEvent: sendEvent,
     initialize: function() { return {}; },
     renderValue: renderValue,
     resize: resize,
@@ -151,6 +176,10 @@
 
   if (HTMLWidgets.shinyMode && !global.HighcharterShinyHandlersRegistered) {
     global.HighcharterShinyHandlersRegistered = true;
+
+    Highcharts.addEvent(Highcharts.Point, 'click', function(event) {
+      sendEvent(this, 'point', event);
+    });
 
     Shiny.addCustomMessageHandler('addSeries', function(msg) {
       getChart(msg.id).addSeries(msg.series);

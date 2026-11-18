@@ -95,7 +95,7 @@ Run the app below, then press **Update**. The stock widget stays mounted while
 the proxy changes the selected series and the x-axis range. Redraw the updated
 series before setting the range so the Stock navigator has its new data limits.
 
-```{r stock-proxy, eval=FALSE, code=readLines(system.file("examples", "stock-proxy.R", package="highcharter"))}
+```{r stock-proxy, eval=FALSE, code=readLines("../pkgdown/shiny/stock/app.R")}
 ```
 
 ## Price, moving averages, volume and momentum
