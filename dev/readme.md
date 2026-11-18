@@ -79,13 +79,34 @@ The simplification review left two release checks unresolved:
   theme constructors used by highdir, RKorAPClient and UnalR. AovBay also
   references the previously removed `hcboxplot()` helper.
 
-## API questions for review
+## Simplification review
 
-- Should `hc_rm_series()` remain public? Look for callers that receive an
-  existing widget and need to remove a series by name before rendering.
-  Check reverse dependencies before deprecating it. If retained, fix the
-  index shift when an unnamed series precedes the target. In Shiny,
-  `hcpxy_remove_series()` removes a rendered series by ID.
+Completed on the bundle branch: single-series forecast intervals use the same
+time index as predictions, Sankey links count adjacent columns, and
+`list_parse2()` delegates validation to `list_parse()`. The package dropped
+the `assertthat` import, the global-variable declarations and `hc_rm_series()`.
+See [breaking changes](../NEWS.md#breaking-changes) for the series migration.
+
+The following items are proposals. Each row can be reviewed independently.
+
+| Order | Area | Proposed change and what to verify |
+| --- | --- | --- |
+| 1 | Shiny proxies and events | Share the 12 message sends in `R/proxy.R`. Replace the four `1:length()` loops so empty inputs send zero messages. Keep message names, order, payloads and the returned proxy. Share the event setup for points and series, remove debug output and check both Shiny inputs. |
+| 2 | Multivariate series and forecasts | Fold `hchart_mts1()` and `hchart_mts2()` into `hchart.mts()`. Preserve panel heights, spacing and series IDs for STL, ETS and decompositions. Read the forecasts stored in `object$forecast` and build intervals in x, low, high order. Test shared and separate panels. |
+| 3 | Annotations, mappings and heatmaps | Respect the supplied axes in `df_to_annotations_labels()` and delegate the singular annotation adder to the plural. Share X/Y type inference and heatmap coordinate conversion. Check dates, factors, single categories, omitted axes and unnamed options in `validate_args()`. |
+| 4 | Data transformations | Assign hierarchy IDs once per path and reuse them for parent links. Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
+| 5 | Survival curves | Fix `hchart.survfit()` for matrix predictions from multiple profiles. Verify each curve, confidence interval and censoring marker against the fitted model. |
+| 6 | Fonts and tooltips | Honor `google_fonts = FALSE` in `.hc_opt()` and measure the cost of repeated scans. Keep `tooltip_chart()` and replace its JSON rewriting and debug output. Check callbacks, dimensions and repeated hover across two widgets. |
+| 7 | Imports, defaults and small helpers | Review the six stale imports (`count_`, `do`, `everything`, `rename_all`, `select_`, `rownames_to_column`), duplicated palette, legacy VML/canvas and language defaults, and unused `joindf` in maps. Inline `fix_1_length_data()` and `.join_hc_opts()` where readable. Share the GeoJSON methods, use a literal `.js` suffix in `export_hc()` and drop the internal `random_id()` from the website index. |
+| 8 | Public API and optional dependencies | Review `hcparcords()` first for deprecation. Check external use and provide a parallel-coordinates recipe covering colors and constant columns. Retain the `lm` and `loess` series methods for adding fits and bands to existing charts. Evaluate the optional `rjson` path with its direct `vctrs` use by comparing missing rows, list columns and serialization time. |
+| 9 | Smaller fixes from the function review | Check histogram labels for unequal breaks, matrix heatmap borders and placeholder options, and the literal `tibble` S3 registration. Consider shorter implementations for `datetime_to_timestamp()`, `hex_to_rgba()`, `is.highchart()`, density data and map-name normalization. Compare outputs before changing them. |
+
+Keep both `list_parse()` formats, `hc_elementId()`, `export_hc()`,
+`create_axis()`, `hc_size()`, `hc_maps()`, `get_data_from_map()`,
+`hcaes_string()`, `as_hcaes()`, `.merge_options()`, `.hc_axis_options()`,
+`hchart_pca()`, the generated setters and Stock Tools constructors. Keep the
+deprecated `hc_yAxis_multiples()` alias for this release. The demo, color
+helpers and `tooltip_table()` still have distinct uses.
 
 ## Build the website
 

@@ -50,7 +50,6 @@ reference:
   - hcaes_string
   - hc_add_series
   - hc_add_series_list
-  - hc_rm_series
 - title: Configure a chart
 - subtitle: Titles and labels
   contents:

@@ -752,26 +752,6 @@ data_to_options <- function(data, type, mapping) {
 }
 
 
-#' Removing series to highchart objects
-#'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param names The series's names to delete.
-#'
-#' @export
-hc_rm_series <- function(hc, names = NULL) {
-  stopifnot(!is.null(names))
-
-  positions <- hc$x$hc_opts$series |>
-    map("name") |>
-    unlist()
-
-  position <- which(positions %in% names)
-
-  hc$x$hc_opts$series[position] <- NULL
-
-  hc
-}
-
 #' Shortcut for data series from a list of data series
 #'
 #' @param hc A `highchart` `htmlwidget` object.

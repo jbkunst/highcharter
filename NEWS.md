@@ -4,6 +4,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Removed `hc_rm_series()`. Select the series to include when building a
+  chart. In Shiny, use `hcpxy_remove_series(proxy, id = ...)` to remove a
+  series by its ID after the chart is rendered.
+
 * `hc_xAxis()`, `hc_yAxis()` and `hc_zAxis()` now accept one or several
   axis definitions. Replace `hc_xAxis_multiples()` and `hc_zAxis_multiples()`
   with the corresponding axis function. `hc_yAxis_multiples()` remains a
