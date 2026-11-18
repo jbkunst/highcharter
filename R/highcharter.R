@@ -65,7 +65,7 @@ highchart <- function(
   elementId,
   google_fonts
 ) {
-  assertthat::assert_that(type %in% c("chart", "stock", "map", "gantt"))
+  stopifnot(length(type) == 1L, type %in% c("chart", "stock", "map", "gantt"))
 
   opts <- .join_hc_opts()
 

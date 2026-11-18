@@ -10,16 +10,12 @@
 #'   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "orange")
 #' @export
 hc_add_series <- function(hc, data = NULL, ...) {
-  # assertthat::assert_that(is.highchart(hc))
-
   UseMethod("hc_add_series", data)
 }
 
 
 #' @export
 hc_add_series.default <- function(hc, ...) {
-  # assertthat::assert_that(is.highchart(hc))
-
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.default")
   }
@@ -792,7 +788,7 @@ hc_rm_series <- function(hc, names = NULL) {
 #'   hc_add_series_list(ds)
 #' @export
 hc_add_series_list <- function(hc, x) {
-  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  stopifnot(is.highchart(hc), (is.list(x) | is.data.frame(x)))
 
   if (is.data.frame(x)) {
     x <- list_parse(x)
@@ -901,7 +897,7 @@ hc_add_event_series <- function(hc, series = "series", event = "click") {
 #'
 #' @export
 hc_add_annotation <- function(hc, ...) {
-  assertthat::assert_that(is.highchart(hc))
+  stopifnot(is.highchart(hc))
 
   hc$x$hc_opts[["annotations"]] <- append(
     hc$x$hc_opts[["annotations"]],
@@ -917,7 +913,7 @@ hc_add_annotation <- function(hc, ...) {
 #'   elements
 #' @export
 hc_add_annotations <- function(hc, x) {
-  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  stopifnot(is.highchart(hc), (is.list(x) | is.data.frame(x)))
 
   if (is.data.frame(x)) {
     x <- list_parse(x)

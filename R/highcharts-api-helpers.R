@@ -94,7 +94,7 @@ validate_args <- function(name, lstargs) {
 }
 
 .hc_opt <- function(hc, name, ...) {
-  assertthat::assert_that(is.highchart(hc))
+  stopifnot(is.highchart(hc))
   options <- list(...)
   current <- hc$x$hc_opts[[name]]
   if (name %in% c("xAxis", "yAxis", "zAxis")) {
@@ -246,7 +246,7 @@ tooltip_chart <- function(
   width = 250,
   height = 150
 ) {
-  assertthat::assert_that(assertthat::is.string(accesor))
+  stopifnot(is.character(accesor), length(accesor) == 1L)
 
   if (is.null(hc_opts)) {
     hc_opts[["series"]][[1]] <- list(data = sprintf("point.%s", accesor))
@@ -352,7 +352,7 @@ tooltip_chart <- function(
 #' @importFrom htmltools tags tagList
 #' @export
 tooltip_table <- function(x, y, title = NULL, img = NULL, ...) {
-  assertthat::assert_that(length(x) == length(y))
+  stopifnot(length(x) == length(y))
 
   tbl <- map2(x, y, function(x, y) {
     tags$tr(
@@ -387,7 +387,7 @@ tooltip_table <- function(x, y, title = NULL, img = NULL, ...) {
 #'   hc_elementId("newid")
 #' @export
 hc_elementId <- function(hc, id = NULL) {
-  assertthat::assert_that(is.highchart(hc))
+  stopifnot(is.highchart(hc))
 
   hc$elementId <- as.character(id)
 
@@ -407,7 +407,7 @@ hc_elementId <- function(hc, id = NULL) {
 #' hc_size(hc, 200, 200)
 #' @export
 hc_size <- function(hc, width = NULL, height = NULL) {
-  assertthat::assert_that(is.highchart(hc))
+  stopifnot(is.highchart(hc))
 
   if (!is.null(width)) {
     # Set for both static renderer and `shinyRenderer`,

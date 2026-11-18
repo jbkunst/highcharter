@@ -50,11 +50,13 @@
 #' @importFrom utils tail
 #' @export
 hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
-  assertthat::assert_that(
+  stopifnot(
     is.highchart(hc),
     is.list(map),
     is.data.frame(df),
+    length(value) == 1L,
     value %in% names(df),
+    length(joinBy) > 0L,
     tail(joinBy, 1) %in% names(df)
   )
 

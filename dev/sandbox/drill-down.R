@@ -17,7 +17,7 @@ hc_add_series_drilldown <- function(hc, df, percent = FALSE) {
     df <- data_frame(df)
   }
 
-  assert_that(is.data.frame(df), nrow(df) > 0)
+  stopifnot(is.data.frame(df), nrow(df) > 0)
 
   # data(diamonds, package = "ggplot2")
   # df <- diamonds %>% select(cut, color, clarity)

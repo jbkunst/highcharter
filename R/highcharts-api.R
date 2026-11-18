@@ -144,9 +144,10 @@ hc_colorAxis <- function(hc, ...) {
 #' @export
 hc_colors <- function (hc, colors)
 {
-    assertthat::assert_that(is.vector(colors))
-    if (length(colors) == 1L)
+    stopifnot(is.vector(colors))
+    if (length(colors) == 1L) {
         colors <- list(colors)
+    }
     hc$x$hc_opts$colors <- colors
     hc
 }
@@ -544,12 +545,15 @@ hc_title <- function(hc, ...) {
 #' @export
 hc_tooltip <- function (hc, ..., sort = FALSE, table = FALSE)
 {
-    if (sort)
+    if (sort) {
         hc <- .hc_tooltip_sort(hc)
-    if (table)
+    }
+    if (table) {
         hc <- .hc_tooltip_table(hc)
-    if (length(list(...)))
+    }
+    if (length(list(...))) {
         hc <- .hc_opt(hc, "tooltip", ...)
+    }
     hc
 }
 

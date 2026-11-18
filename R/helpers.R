@@ -56,7 +56,7 @@ data_to_boxplot <- function(
   )
 
   dx <- data |>
-    transmute(x := {{ variable }})
+    transmute(x = {{ variable }})
 
   if (!missing(group_var)) {
     dg <- data |>
@@ -78,25 +78,25 @@ data_to_boxplot <- function(
   dat <- bind_cols(dx, dg, dg2)
 
   dat1 <- dat |>
-    group_by(series, name) |>
-    summarise(get_box_values(x), .groups = "drop") |>
-    group_nest(series) |>
+    group_by(.data$series, .data$name) |>
+    summarise(get_box_values(.data$x), .groups = "drop") |>
+    group_nest(.data$series) |>
     mutate(data = map(data, list_parse)) |>
-    rename(name = series) |>
-    mutate(id = name) |>
+    rename(name = "series") |>
+    mutate(id = .data$name) |>
     mutate(type = "boxplot", ...)
   # list_parse()
 
   if (add_outliers) {
     dat2 <- dat |>
-      mutate(name = as.numeric(factor(name)) - 1) |>
-      group_by(series, name) |>
+      mutate(name = as.numeric(factor(.data$name)) - 1) |>
+      group_by(.data$series, .data$name) |>
       dplyr::group_modify(~ data.frame(y = get_outliers_values(.x$x))) |>
       ungroup() |>
-      rename(x = name) |>
-      group_nest(series) |>
+      rename(x = "name") |>
+      group_nest(.data$series) |>
       mutate(data = map(data, list_parse)) |>
-      rename(linkedTo = series) |>
+      rename(linkedTo = "series") |>
       mutate(type = "scatter", showInLegend = FALSE, ...)
 
     dout <- bind_rows(dat1, dat2)
@@ -153,10 +153,10 @@ data_to_hierarchical <- function(
   # group to calculate the sum if there are duplicated combinations
   dat <- dat |>
     group_by_at(all_of(gvars)) |>
-    summarise(value = sum(value, na.rm = TRUE), .groups = "drop") |>
+    summarise(value = sum(.data$value, na.rm = TRUE), .groups = "drop") |>
     ungroup() |>
     mutate_if(is.factor, as.character) |>
-    arrange(desc(value))
+    arrange(desc(.data$value))
 
   dout <- map(seq_along(gvars), function(depth = 1) {
     datg <- dat |>
@@ -179,7 +179,7 @@ data_to_hierarchical <- function(
 
     # depth == lastdepth add value
     if (depth == ngvars) {
-      dd <- dd |> append(list(dat |> select(value)))
+      dd <- dd |> append(list(dat |> select("value")))
     }
 
     dd <- dd |>
@@ -213,7 +213,6 @@ data_to_hierarchical <- function(
 #' }
 #'
 #' @importFrom dplyr all_of count group_by_all vars mutate_at
-#' @importFrom stats complete.cases
 #' @export
 data_to_sankey <- function(data = NULL) {
   # numeric to categories
@@ -226,12 +225,8 @@ data_to_sankey <- function(data = NULL) {
     )
   }
 
-  # combintaion data
-  dcmb <- tibble::tibble(
-    var1 = names(data),
-    var2 = dplyr::lead(var1)
-  ) |>
-    dplyr::filter(complete.cases(.))
+  columns <- names(data)
+  dcmb <- tibble::tibble(var1 = head(columns, -1L), var2 = tail(columns, -1L))
 
   # sankey data
   dsnky <- purrr::pmap_df(dcmb, function(var1 = "cut", var2 = "color") {
@@ -243,7 +238,7 @@ data_to_sankey <- function(data = NULL) {
       setNames(c("from", "to", "weight")) |>
       mutate_if(is.factor, as.character) |>
       mutate_at(vars(1, 2), as.character) |>
-      mutate(id := paste0(from, to))
+      mutate(id = paste0(.data$from, .data$to))
   })
 
   dsnky
@@ -304,7 +299,7 @@ hcparcords <- function(df, ...) {
 #' list_parse2(x)
 #' @export
 list_parse <- function(df) {
-  assertthat::assert_that(is.data.frame(df))
+  stopifnot(is.data.frame(df))
 
   if (getOption("highcharter.rjson")) {
     rows <- nrow(df)
@@ -321,8 +316,6 @@ list_parse <- function(df) {
 #' @rdname list_parse
 #' @export
 list_parse2 <- function(df) {
-  assertthat::assert_that(is.data.frame(df))
-
   list_parse(df) |>
     map(setNames, NULL)
 }
@@ -338,7 +331,7 @@ list_parse2 <- function(df) {
 #' str_to_id(" A string _ with sd / sdg    Underscores \   ")
 #' @export
 str_to_id <- function(x) {
-  assertthat::assert_that(is.character(x) | is.factor(x))
+  stopifnot(is.character(x) | is.factor(x))
 
   x |>
     as.character() |>
@@ -352,20 +345,10 @@ str_to_id <- function(x) {
 }
 
 #' @rdname str_to_id
-#' @importFrom dplyr pull
 str_to_id_vec <- function(x) {
-  # x <- c("A_ aa", "A_  Aa", "a_   aa"
-
-  tibble(
-    var = x,
-    id = str_to_id(x),
-    un = cumsum(duplicated(id))
-  ) |>
-    mutate(
-      un = ifelse(un == 0, "", str_c("_", un)),
-      id2 = str_c(id, un)
-    ) |>
-    pull("id2")
+  id <- str_to_id(x)
+  suffix <- cumsum(duplicated(id))
+  str_c(id, ifelse(suffix == 0L, "", str_c("_", suffix)))
 }
 
 #' Date to timestamps
@@ -384,7 +367,7 @@ str_to_id_vec <- function(x) {
 #' @export
 datetime_to_timestamp <- function(dt) {
   # http://stackoverflow.com/questions/10160822/
-  assertthat::assert_that(assertthat::is.date(dt) | assertthat::is.time(dt))
+  stopifnot(inherits(dt, c("Date", "POSIXt")))
 
   tmstmp <- as.numeric(as.POSIXct(dt))
 
@@ -586,7 +569,9 @@ df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
 
   df |>
     rowwise() |>
-    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) |>
-    select(-x, -y) |>
+    mutate(
+      point = list(list(x = .data$x, y = .data$y, xAxis = 0, yAxis = 0))
+    ) |>
+    select(-c("x", "y")) |>
     list_parse()
 }

@@ -25,7 +25,6 @@ Depends:
 Imports:
     htmlwidgets,
     purrr,
-    assertthat,
     zoo,
     dplyr (>= 1.0.0),
     tibble (>= 1.1),

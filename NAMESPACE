@@ -142,11 +142,6 @@ export(str_to_id)
 export(tags)
 export(tooltip_chart)
 export(tooltip_table)
-importFrom(assertthat,
-  are_equal,
-  assert_that,
-  on_failure
-)
 importFrom(dplyr,
   all_of,
   arrange,
@@ -167,7 +162,6 @@ importFrom(dplyr,
   mutate,
   mutate_at,
   mutate_if,
-  pull,
   rename,
   rename_all,
   rowwise,
@@ -210,7 +204,6 @@ importFrom(rlang,
   .data
 )
 importFrom(stats,
-  complete.cases,
   ecdf,
   qnorm,
   setNames,

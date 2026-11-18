@@ -126,7 +126,10 @@ hc_set_theme <- function(theme, ...) {
 #'   hc_add_theme(hc_theme("ft"))
 #' @export
 hc_add_theme <- function(hc, hc_thm) {
-  assert_that(is.highchart(hc), .is_hc_theme(hc_thm))
+  stopifnot(
+    is.highchart(hc),
+    "The theme used is not from hc_theme class" = .is_hc_theme(hc_thm)
+  )
   hc$x$theme <- hc_thm
   if (!identical(hc$x$google_fonts, FALSE)) {
     hc$x$fonts <- unique(c(.hc_get_fonts(hc$x$hc_opts), .hc_get_fonts(hc_thm)))
@@ -143,7 +146,7 @@ hc_add_theme <- function(hc, hc_thm) {
 #' @export
 hc_theme_merge <- function(...) {
   themes <- list(...)
-  assert_that(all(vapply(themes, .is_hc_theme, logical(1))))
+  stopifnot(all(vapply(themes, .is_hc_theme, logical(1))))
   structure(
     Reduce(
       function(x, y) .merge_options(x, y, keep_null = TRUE),
@@ -152,6 +155,10 @@ hc_theme_merge <- function(...) {
     ),
     class = "hc_theme"
   )
+}
+
+.is_hc_theme <- function(theme) {
+  identical(class(theme), "hc_theme")
 }
 
 .hc_get_fonts <- function(lst) {

@@ -49,7 +49,7 @@ generate_api <- function() {
   # Preserve the two public signatures with R-specific behavior.
   special <- list(
     colors = function(hc, colors) {
-      assertthat::assert_that(is.vector(colors))
+      stopifnot(is.vector(colors))
       if (length(colors) == 1L) {
         colors <- list(colors)
       }

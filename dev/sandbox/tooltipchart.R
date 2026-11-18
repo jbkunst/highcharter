@@ -37,7 +37,6 @@ options(highcharter.theme = hc_theme("smpl"), highcharter.debug = TRUE)
 #   height = 150
 # ) {
 #
-#   assertthat::assert_that(assertthat::is.string(accesor))
 #
 #   if(is.null(hc_opts)) {
 #     hc_opts[["series"]][[1]] <- list(data =  sprintf("point.%s", accesor))
