@@ -11,6 +11,21 @@ local_proxy_session <- function() {
   )
 }
 
+test_that("empty series and point selections send no proxy messages", {
+  capture <- local_proxy_session()
+  proxy <- highchartProxy("chart", capture$session)
+  empty <- data.frame(x = numeric(), y = numeric())
+
+  result <- proxy |>
+    hcpxy_add_series(empty, type = "line", mapping = hcaes(x, y)) |>
+    hcpxy_remove_series(character()) |>
+    hcpxy_update_series(character(), visible = FALSE) |>
+    hcpxy_update_point("sales", integer(), y = 5)
+
+  expect_identical(result, proxy)
+  expect_length(capture$messages(), 0)
+})
+
 test_that("hcpxy_set_data can target a series by ID", {
   capture <- local_proxy_session()
   proxy <- highchartProxy("stock", capture$session)

@@ -45,7 +45,7 @@ hcpxy_add_series <- function(proxy, data = NULL, ...) {
 
   series <- hcaux[["x"]][["hc_opts"]][["series"]]
 
-  for (i in 1:length(series)) {
+  for (i in seq_along(series)) {
     if (getOption("highcharter.verbose")) {
       message("hcpxy_add_series")
     }
@@ -76,7 +76,7 @@ hcpxy_remove_series <- function(proxy, id = NULL, all = FALSE) {
     return(send_proxy_message(proxy, "removeAllSeries"))
   }
 
-  for (i in 1:length(id)) {
+  for (i in seq_along(id)) {
     if (getOption("highcharter.verbose")) {
       message("hcpxy_remove_series")
     }
@@ -129,7 +129,7 @@ hcpxy_update <- function(proxy, ...) {
 hcpxy_update_series <- function(proxy, id = NULL, ...) {
   checkProxy(proxy)
 
-  for (i in 1:length(id)) {
+  for (i in seq_along(id)) {
     if (getOption("highcharter.verbose")) {
       message("hcpxy_update_series")
     }
@@ -158,7 +158,7 @@ hcpxy_update_series <- function(proxy, id = NULL, ...) {
 hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...) {
   checkProxy(proxy)
 
-  for (i in 1:length(id_point)) {
+  for (i in seq_along(id_point)) {
     if (getOption("highcharter.verbose")) {
       message("hcpxy_update_point")
     }

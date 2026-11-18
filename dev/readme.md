@@ -86,6 +86,8 @@ time index as predictions, Sankey links count adjacent columns, and
 `list_parse2()` delegates validation to `list_parse()`. The package dropped
 the `assertthat` import, the global-variable declarations and `hc_rm_series()`.
 All 12 Shiny proxy sends now use `send_proxy_message()`.
+Item 1 is complete. The four loops in [R/proxy.R](../R/proxy.R) use
+`seq_along()` and send zero messages for empty selections.
 Shiny outputs report point clicks automatically. Explicit point and series
 events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
 links five examples, including the draggable equalizer. The pkgdown workflow
@@ -96,7 +98,6 @@ The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 1 | Shiny proxies | Use `seq_along()` in the four loops in [R/proxy.R](../R/proxy.R). `hcpxy_remove_series(proxy, character())` currently fails with `subscript out of bounds`. An empty selection should send zero messages. Keep message names, order, payloads and the returned proxy. |
 | 2 | Multivariate series and forecasts | Fold `hchart_mts1()` and `hchart_mts2()` into `hchart.mts()`. Preserve panel heights, spacing and series IDs for STL, ETS and decompositions. Read the forecasts stored in `object$forecast` and build intervals in x, low, high order. Test shared and separate panels. |
 | 3 | Annotations, mappings and heatmaps | Respect the supplied axes in `df_to_annotations_labels()` and delegate the singular annotation adder to the plural. Share X/Y type inference and heatmap coordinate conversion. Check dates, factors, single categories, omitted axes and unnamed options in `validate_args()`. |
 | 4 | Data transformations | Assign hierarchy IDs once per path and reuse them for parent links. Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |

@@ -129,6 +129,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Shiny proxies now send zero messages when there are no series to add,
+  remove or update, or no points to update.
+
 * Forecast charts use the same time index for predictions and their intervals.
   Series with frequencies other than 1, 4 or 12 use a numeric axis.
 
