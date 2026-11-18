@@ -240,7 +240,7 @@ hc_add_series.forecast <- function(
   )
 
   if (addLevels) {
-    tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
+    tmf <- ts_x_values(data$mean)
     nmf <- paste(forecast_name, paste0(data$level, "% interval"))
 
     for (m in seq(ncol(data$upper))) {

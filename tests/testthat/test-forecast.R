@@ -21,3 +21,19 @@ test_that("forecast charts distinguish observations, predictions and intervals",
     "Passengers forecast"
   )
 })
+
+test_that("forecasts and all prediction intervals use the same time index", {
+  skip_if_not_installed("forecast")
+  x <- ts(1:35, start = 2020, frequency = 7)
+  model <- forecast::naive(x, h = 3, level = c(80, 95))
+  expected <- as.numeric(time(model$mean))
+
+  for (levels in c(FALSE, TRUE)) {
+    opts <- hchart(model, addOriginal = FALSE, addLevels = levels)$x$hc_opts
+    expect_identical(opts$xAxis$type, "linear")
+    expect_length(opts$series, if (levels) 3L else 1L)
+    for (series in opts$series) {
+      expect_equal(vapply(series$data, `[[`, numeric(1), 1L), expected)
+    }
+  }
+})

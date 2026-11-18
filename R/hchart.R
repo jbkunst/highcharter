@@ -192,7 +192,7 @@ hchart.forecast <- function(object, addOriginal = TRUE, addLevels = TRUE, ...) {
         )
       )
     ) |>
-    hc_xAxis(type = "datetime") |>
+    hc_xAxis(type = ts_axis_type(object$mean)) |>
     hc_add_series(
       data = object,
       addOriginal = addOriginal,

@@ -79,6 +79,14 @@ The simplification review left two release checks unresolved:
   theme constructors used by highdir, RKorAPClient and UnalR. AovBay also
   references the previously removed `hcboxplot()` helper.
 
+## API questions for review
+
+- Should `hc_rm_series()` remain public? Look for callers that receive an
+  existing widget and need to remove a series by name before rendering.
+  Check reverse dependencies before deprecating it. If retained, fix the
+  index shift when an unnamed series precedes the target. In Shiny,
+  `hcpxy_remove_series()` removes a rendered series by ID.
+
 ## Build the website
 
 Run `Rscript dev/build-site.R` from the repository root with the website

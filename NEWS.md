@@ -119,6 +119,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Forecast charts use the same time index for predictions and their intervals.
+  Series with frequencies other than 1, 4 or 12 use a numeric axis.
+
 * Axes with one category now display its label on the axis and in tooltips,
   including when the category is numeric (#395, #438).
 
