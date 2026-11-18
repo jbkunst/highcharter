@@ -58,6 +58,79 @@ through `hc_sonification()` for readers who choose to play the chart.
 
 [Highcharts accessibility guide](https://www.highcharts.com/docs/accessibility/accessibility-module)
 
+## A patterned pie chart
+
+Mara Averick adapted the Highcharts accessible pie chart for highcharter and
+shared it in [issue #736](https://github.com/jbkunst/highcharter/issues/736).
+Her design gives each slice a distinct pattern and labels it with the reader's
+name and percentage. [Mara's original example on RPubs](https://rpubs.com/maraaverick/highcharter-accessible-pie-chart).
+
+The values come from [WebAIM's 2019 screen reader survey](https://webaim.org/projects/screenreadersurvey8/#primary).
+“Other” groups the four smallest responses. Tab to the pie and use the arrow
+keys to hear each slice's name and survey share with a screen reader.
+
+```{r patterned-screen-reader-pie}
+reader_slice <- function(name, share, color, path) {
+  list(
+    name = name,
+    y = share,
+    color = list(
+      pattern = list(
+        path = path,
+        color = color,
+        width = 5,
+        height = 5,
+        patternTransform = "scale(1.4 1.4)"
+      )
+    )
+  )
+}
+
+highchart() |>
+  hc_title(text = "Primary desktop/laptop screen readers") |>
+  hc_subtitle(text = "WebAIM Screen Reader User Survey, 2019") |>
+  hc_caption(
+    text = "NVDA (40.6%) and JAWS (40.1%) were the most common responses."
+  ) |>
+  hc_add_series(
+    type = "pie",
+    name = "Screen reader usage",
+    data = list(
+      reader_slice(
+        "NVDA",
+        40.6,
+        "#49a65e",
+        "M 0 0 L 5 5 M 4.5 -0.5 L 5.5 0.5 M -0.5 4.5 L 0.5 5.5"
+      ),
+      reader_slice(
+        "JAWS",
+        40.1,
+        "#5f98cf",
+        "M 0 5 L 5 0 M -0.5 0.5 L 0.5 -0.5 M 4.5 5.5 L 5.5 4.5"
+      ),
+      reader_slice("VoiceOver", 12.9, "#f45b5b", "M 2 0 L 2 5 M 4 0 L 4 5"),
+      reader_slice("ZoomText/Fusion", 2, "#434348", "M 0 2 L 5 2 M 0 4 L 5 4"),
+      reader_slice(
+        "Other",
+        4.4,
+        "#708090",
+        "M 0 1.5 L 2.5 1.5 L 2.5 0 M 2.5 5 L 2.5 3.5 L 5 3.5"
+      )
+    ),
+    borderWidth = 3,
+    dataLabels = list(
+      enabled = TRUE,
+      connectorColor = "#777",
+      format = "{point.name}: {point.y:.1f}%"
+    )
+  ) |>
+  hc_tooltip(valueSuffix = "%", borderColor = "#8ae") |>
+  hc_accessibility(
+    point = list(valueDescriptionFormat = "{point.name}, {point.y}%.")
+  ) |>
+  hc_exporting(enabled = TRUE)
+```
+
 ## Screen readers and sound
 
 Accessibility does not make a chart play sound automatically. A screen reader
