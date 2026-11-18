@@ -162,15 +162,14 @@ hchart.seas <- function(object, ...) {
   }
   hc <- hc |> hc_add_series(adjusted, name = "Seasonally adjusted", ...)
   outliers <- seasonal::outlier(object)
-  dates <- ts_x_values(adjusted)
-  labels <- lapply(which(!is.na(outliers)), function(i) {
-    list(
-      point = list(xAxis = 0, yAxis = 0, x = dates[i], y = adjusted[[i]]),
-      text = as.character(outliers[[i]])
+  i <- which(!is.na(outliers))
+  if (length(i)) {
+    events <- data.frame(
+      x = ts_x_values(adjusted)[i],
+      y = as.numeric(adjusted[i]),
+      text = as.character(outliers[i])
     )
-  })
-  if (length(labels)) {
-    hc <- hc |> hc_annotations(list(labels = labels))
+    hc <- hc_add_annotation(hc, labels = data_to_annotation_labels(events))
   }
   hc
 }
@@ -283,6 +282,7 @@ hchart.mforecast <- function(
   )
 }
 
+#' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...) {
   ytitle <- switch(
@@ -954,22 +954,16 @@ hchart_pca <- function(
   extent <- apply(abs(xy), 2L, max)
   ends <- ends * (0.8 * min(extent[used] / max_loading[used]))
   origin <- list(xAxis = 0L, yAxis = 0L, x = 0, y = 0)
-  tips <- lapply(seq_len(nrow(ends)), function(i) {
-    list(
-      xAxis = 0L,
-      yAxis = 0L,
-      x = unname(ends[i, 1L]),
-      y = unname(ends[i, 2L])
-    )
+  tips <- data.frame(x = ends[, 1L], y = ends[, 2L], row.names = NULL)
+  points <- list_parse(transform(tips, xAxis = 0, yAxis = 0))
+  shapes <- lapply(points, function(point) {
+    list(type = "path", markerEnd = "arrow", points = list(origin, point))
   })
-  shapes <- lapply(tips, function(tip) {
-    list(type = "path", markerEnd = "arrow", points = list(origin, tip))
-  })
-  labels <- Map(
-    function(tip, text) list(point = tip, text = text),
-    tips,
-    rownames(ends)
-  )
+  labels <- list()
+  if (!is.null(rownames(ends))) {
+    tips$text <- rownames(ends)
+    labels <- data_to_annotation_labels(tips)
+  }
   hc_add_annotation(hc, draggable = "", shapes = shapes, labels = labels)
 }
 

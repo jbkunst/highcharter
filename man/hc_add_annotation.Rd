@@ -3,23 +3,20 @@
 \name{hc_add_annotation}
 \alias{hc_add_annotation}
 \alias{hc_add_annotations}
-\title{Helper to add annotations from data frame or list}
+\title{Add annotations to a chart}
 \usage{
 hc_add_annotation(hc, ...)
 
 hc_add_annotations(hc, x)
 }
 \arguments{
-\item{hc}{A \code{highchart} \code{htmlwidget} object.}
+\item{hc}{A \code{highchart} widget.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}.}
+\item{...}{Named options for one Highcharts annotation, including \code{labels}
+and \code{shapes}. See \code{\link[=data_to_annotation_labels]{data_to_annotation_labels()}} to create labels from rows.}
 
-\item{x}{A \code{list} or a \code{data.frame} of annotations.}
+\item{x}{A list of annotations or a data frame with one annotation per row.}
 }
 \description{
-Helper to add annotations from data frame or list
-}
-\details{
-The \code{x} elements must have \code{xValue} and \code{yValue}
-elements
+Add annotations to a chart
 }

@@ -44,11 +44,11 @@ export(color_classes)
 export(color_stops)
 export(colorize)
 export(create_axis)
+export(data_to_annotation_labels)
 export(data_to_boxplot)
 export(data_to_hierarchical)
 export(data_to_sankey)
 export(datetime_to_timestamp)
-export(df_to_annotations_labels)
 export(download_map_data)
 export(export_hc)
 export(get_data_from_map)
@@ -163,7 +163,6 @@ importFrom(dplyr,
   mutate_if,
   rename,
   rename_all,
-  rowwise,
   select,
   select_,
   summarise,
@@ -228,7 +227,6 @@ importFrom(tibble,
 importFrom(utils,
   data,
   download.file,
-  hasName,
   head,
   tail
 )

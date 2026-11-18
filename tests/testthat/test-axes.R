@@ -39,3 +39,25 @@ test_that("a single axis category stays an array when serialized", {
   expect_identical(chart$x$hc_opts$yAxis[[1]]$categories, list("one"))
   expect_identical(chart$x$hc_opts$yAxis[[2]]$categories, list(2012))
 })
+
+test_that("annotation rows keep label options and anchor to the requested axes", {
+  notes <- data.frame(x = c(2, 4), y = c(5, 8), text = c("A", "B"))
+  notes$style <- list(list(color = "red"), list(color = "blue"))
+  labels <- data_to_annotation_labels(notes, xAxis = "months", yAxis = 1)
+  expect_identical(
+    labels[[2]]$point,
+    list(x = 4, y = 8, xAxis = "months", yAxis = 1)
+  )
+  expect_identical(labels[[2]]$text, "B")
+  expect_identical(labels[[2]]$style, notes$style[[2]])
+  expect_identical(data_to_annotation_labels(notes[0, ]), list())
+  expect_error(data_to_annotation_labels(notes["x"]))
+
+  chart <- highchart() |>
+    hc_add_annotation(id = "first") |>
+    hc_add_annotation(labels = labels)
+  expect_identical(
+    chart$x$hc_opts$annotations,
+    list(list(id = "first"), list(labels = labels))
+  )
+})

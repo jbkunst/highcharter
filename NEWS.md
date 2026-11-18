@@ -4,6 +4,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Renamed `df_to_annotations_labels()` to `data_to_annotation_labels()`.
+  Pass the table as `data` and use `xAxis` and `yAxis` to select the axes
+  for the labels.
+
 * Shiny event helpers now include the event scope in the input name. For an
   output named `sales`, migrate `input$sales_mouseOver` to
   `input$sales_point_mouseOver` or `input$sales_series_mouseOver`, according
@@ -186,6 +190,7 @@ Bundled Highcharts JS: 12.6.0.
 
 | Previous call | Current call |
 | --- | --- |
+| `df_to_annotations_labels(df = notes)` | `data_to_annotation_labels(data = notes)` |
 | `hc_xAxis_multiples()`, `hc_yAxis_multiples()`, `hc_zAxis_multiples()` | Pass the same list of axes to `hc_xAxis()`, `hc_yAxis()` or `hc_zAxis()`. The Y alias emits a deprecation warning. |
 | `hc_add_dependency("modules/...")` | Omit the call for built-in modules. Use `highchartstock()` for Stock Tools and technical indicators. Pass an explicit `"plugins/..."` path for packaged community plugins. |
 | Repeated `hc_add_yAxis()` | Collect the axes in order, then call `hc_yAxis(axes)`. |

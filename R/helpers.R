@@ -244,6 +244,35 @@ data_to_sankey <- function(data = NULL) {
   dsnky
 }
 
+#' Convert data to annotation labels
+#'
+#' @param data A data frame with columns `x`, `y` and `text`. Each row defines
+#'   one label. Additional columns supply label options such as `backgroundColor`.
+#' @param xAxis,yAxis Axis index (starting at zero) or axis ID for the points.
+#' @return A list for the `labels` option of [hc_add_annotation()].
+#' @examples
+#' peaks <- data.frame(x = c(0, 2), y = c(5, 6), text = c("Start", "Peak"))
+#' highchart() |>
+#'   hc_add_series(data = c(5, 3, 6)) |>
+#'   hc_add_annotation(labels = data_to_annotation_labels(peaks))
+#' @export
+data_to_annotation_labels <- function(data, xAxis = 0, yAxis = 0) {
+  stopifnot(
+    is.data.frame(data),
+    all(c("x", "y", "text") %in% names(data)),
+    length(xAxis) == 1L,
+    length(yAxis) == 1L
+  )
+  data$point <- Map(
+    function(x, y) list(x = x, y = y, xAxis = xAxis, yAxis = yAxis),
+    data$x,
+    data$y
+  )
+  data[c("x", "y")] <- NULL
+  list_parse(data)
+}
+
+
 #' Shortcut to create parallel coordinates
 #' @param df A data frame object.
 #' @param ... Additional shared arguments for the data series
@@ -548,30 +577,4 @@ fix_1_length_data <- function(x) {
     x <- list(x)
   }
   x
-}
-
-#' Function to create annotations arguments from a data frame
-#' @param df A data frame with `x`, `y` and `text` columns names.
-#' @param xAxis Index (js 0-based) of the x axis to put the annotations.
-#' @param yAxis Index (js 0-based) of the y axis to put the annotations.
-#' @examples
-#'
-#' df <- data.frame(text = c("hi", "bye"), x = c(0, 1), y = c(1, 0))
-#'
-#' df_to_annotations_labels(df)
-#' @importFrom utils hasName
-#' @importFrom dplyr rowwise
-#' @export
-df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
-  stopifnot(hasName(df, "x"))
-  stopifnot(hasName(df, "y"))
-  stopifnot(hasName(df, "text"))
-
-  df |>
-    rowwise() |>
-    mutate(
-      point = list(list(x = .data$x, y = .data$y, xAxis = 0, yAxis = 0))
-    ) |>
-    select(-c("x", "y")) |>
-    list_parse()
 }

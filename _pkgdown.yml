@@ -115,7 +115,6 @@ reference:
   - tooltip_chart
   - tooltip_table
   - hc_add_annotation
-  - df_to_annotations_labels
   - hc_add_event_point
   - export_hc
 - title: Maps
@@ -201,6 +200,7 @@ articles:
   - shiny
   - shiny-gallery
 redirects:
+- ["reference/df_to_annotations_labels.html", "reference/data_to_annotation_labels.html"]
 - ["highmaps.html", "articles/maps.html"]
 - ["articles/fontawesome.html", "articles/showcase.html#icons-and-pictograms"]
 - ["articles/icons-and-pictograms.html", "articles/showcase.html#icons-and-pictograms"]

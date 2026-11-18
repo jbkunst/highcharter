@@ -827,27 +827,18 @@ hc_add_event_series <- function(hc, series = "series", event = "click") {
   hc
 }
 
-#' Helper to add annotations from data frame or list
+#' Add annotations to a chart
 #'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}.
-#'
+#' @param hc A `highchart` widget.
+#' @param ... Named options for one Highcharts annotation, including `labels`
+#'   and `shapes`. See [data_to_annotation_labels()] to create labels from rows.
 #' @export
 hc_add_annotation <- function(hc, ...) {
-  stopifnot(is.highchart(hc))
-
-  hc$x$hc_opts[["annotations"]] <- append(
-    hc$x$hc_opts[["annotations"]],
-    list(list(...))
-  )
-
-  hc
+  hc_add_annotations(hc, list(list(...)))
 }
 
 #' @rdname hc_add_annotation
-#' @param x A \code{list} or a \code{data.frame} of annotations.
-#' @details The \code{x} elements must have \code{xValue} and \code{yValue}
-#'   elements
+#' @param x A list of annotations or a data frame with one annotation per row.
 #' @export
 hc_add_annotations <- function(hc, x) {
   stopifnot(is.highchart(hc), (is.list(x) | is.data.frame(x)))

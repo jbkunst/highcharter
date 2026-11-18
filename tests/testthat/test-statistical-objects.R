@@ -31,6 +31,10 @@ test_that("PCA scales each selected component and keeps the variable directions"
     expect_equal(raw$series[[1]]$data[[1]]$x, unname(scores[1, 3]))
     expect_true(raw$series[[1]]$dataLabels$enabled)
     annotation <- raw$annotations[[1]]
+    expect_identical(
+      lapply(annotation$labels, `[[`, "point"),
+      lapply(annotation$shapes, function(shape) shape$points[[2]])
+    )
     tips <- t(vapply(
       annotation$shapes,
       function(s) unlist(s$points[[2]][c("x", "y")]),
@@ -48,6 +52,11 @@ test_that("PCA scales each selected component and keeps the variable directions"
       rownames(vectors)
     )
   }
+
+  unnamed <- prcomp(unname(as.matrix(USArrests)))
+  annotation <- hchart(unnamed, loadings = TRUE)$x$hc_opts$annotations[[1]]
+  expect_length(annotation$shapes, ncol(USArrests))
+  expect_length(annotation$labels, 0)
 
   expect_error(hchart(prcomp(USArrests, retx = FALSE)), "observation scores")
   expect_error(hchart(prcomp(USArrests, rank. = 1)), "two distinct")
