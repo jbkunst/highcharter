@@ -208,7 +208,7 @@ hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
   tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean[[1]])))
   nms <- attr(object$x, "dimnames")[[2]]
 
-  hc <- hchart_mts2(object$x) |>
+  hc <- hchart(object$x) |>
     hc_plotOptions(
       series = list(
         marker = list(enabled = FALSE)
@@ -321,73 +321,41 @@ hchart.acf <- function(object, ...) {
 }
 
 #' @export
-hchart.mts <- function(
-  object,
-  ...,
-  separate = TRUE,
-  heights = rep(1, ncol(object))
-) {
-  if (separate) {
-    hc <- hchart_mts2(object, heights = heights, ...)
-  } else {
-    hc <- hchart_mts1(object, ...)
-  }
-
-  hc
-}
-
-hchart_mts1 <- function(object, ...) {
-  hc <- highchart() |>
-    hc_tooltip(table = TRUE) |>
-    hc_xAxis(type = ts_axis_type(object))
-
-  for (i in seq(dim(object)[2])) {
-    nm <- attr(object, "dimnames")[[2]][i]
-    if ("ts" %in% class(object[, i])) {
-      hc <- hc |> hc_add_series(object[, i], name = nm, id = nm, ...)
-    } else {
-      hc <- hc |> hc_add_series(object[, i], name = nm, id = nm, ...)
-    }
-  }
-
-  hc
-}
-
-hchart_mts2 <- function(
-  object,
-  ...,
-  heights = rep(1, ncol(object)),
-  sep = 0.01
-) {
-  ntss <- ncol(object)
-
+hchart.mts <- function(object, ..., separate = TRUE, heights = 1, sep = 0.01) {
+  n <- ncol(object)
+  labels <- colnames(object)
   hc <- highchart() |>
     hc_xAxis(type = ts_axis_type(object)) |>
     hc_tooltip(table = TRUE)
 
-  hc <- hc |>
-    hc_yAxis(
+  if (separate) {
+    labels <- as.character(labels)
+    hc <- hc_yAxis(
+      hc,
       create_axis(
-        ntss,
+        n,
         heights = heights,
         sep = sep,
-        turnopposite = TRUE,
         title = list(text = NULL),
-        offset = 0,
         lineWidth = 2,
         showFirstLabel = FALSE,
         showLastLabel = FALSE
       )
     )
-
-  namestss <- as.character(attr(object, "dimnames")[[2]])
-
-  for (col in seq(ntss)) {
-    nm <- namestss[col]
-    hc <- hc |>
-      hc_add_series(object[, col], yAxis = col - 1, name = nm, id = nm, ...)
   }
 
+  for (i in seq_len(n)) {
+    axis <- if (separate) list(yAxis = i - 1) else list()
+    hc <- rlang::exec(
+      hc_add_series,
+      hc,
+      object[, i],
+      !!!axis,
+      name = labels[i],
+      id = labels[i],
+      ...
+    )
+  }
   hc
 }
 
@@ -400,7 +368,7 @@ hchart.stl <- function(object, ..., heights = c(2, 1, 1, 1), sep = 0.01) {
 
   attr(tss, "dimnames")[[2]] <- gsub("tss\\.", "", attr(tss, "dimnames")[[2]])
 
-  hchart_mts2(tss, heights = heights, sep = sep, ...)
+  hchart(tss, heights = heights, sep = sep, ...)
 }
 
 #' @rdname hchart
@@ -418,7 +386,7 @@ hchart.decomposed.ts <- function(object, ...) {
     trend = drop(object$trend),
     remainder = drop(object$random)
   )
-  hchart_mts2(components, ...)
+  hchart(components, ...)
 }
 
 #' @export
@@ -434,11 +402,8 @@ hchart.ets <- function(object, ...) {
 
   colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
 
-  hc <- hchart_mts2(data)
-
-  hc <- hc_title(hc, text = paste("Decomposition by", object$method, "method"))
-
-  hc
+  hchart(data) |>
+    hc_title(text = paste("Decomposition by", object$method, "method"))
 }
 
 #' @importFrom dplyr count_ left_join select

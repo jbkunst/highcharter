@@ -113,10 +113,28 @@ test_that("hchart returns a valid stocks plot after valid data input", {
   )
 })
 
-test_that("multivariate time series use shared HTML tooltips", {
+test_that("multivariate layouts preserve series identities and shared HTML tooltips", {
   x <- cbind(mdeaths, fdeaths)
   for (separate in c(TRUE, FALSE)) {
-    tooltip <- hchart(x, separate = separate)$x$hc_opts$tooltip
+    opts <- hchart(
+      x,
+      separate = separate,
+      heights = c(2, 1),
+      sep = 0.02
+    )$x$hc_opts
+    expect_identical(vapply(opts$series, `[[`, "", "id"), colnames(x))
+    if (separate) {
+      expect_equal(vapply(opts$series, `[[`, numeric(1), "yAxis"), c(0, 1))
+      axes <- create_axis(2, heights = c(2, 1), sep = 0.02)
+      expect_identical(
+        lapply(opts$yAxis, `[[`, "height"),
+        lapply(axes, `[[`, "height")
+      )
+    } else {
+      expect_null(opts$series[[1]]$yAxis)
+      expect_null(opts$series[[2]]$yAxis)
+    }
+    tooltip <- opts$tooltip
     expect_true(tooltip$shared)
     expect_true(tooltip$useHTML)
   }
