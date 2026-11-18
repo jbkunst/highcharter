@@ -82,7 +82,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' a GeoJSON or TopoJSON list.
 #'
 #' @param map A two-letter country code (case-insensitive), a collection path
-#'   such as `"countries/cl/cl-all"` or `"custom/world"`, or a loaded map list.
+#'   such as `"countries/jp/jp-all"` or `"custom/world"`, or a loaded map list.
 #'   Country codes and their matching collection paths use the same local file.
 #' @param download_map_data For maps outside the package, download the map in R
 #'   (`TRUE`) or attach the CDN script to the widget (`FALSE`). Defaults to
@@ -96,7 +96,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'
 #' @examples
 #'
-#' hcmap("cl")
+#' hcmap("jp")
 #' hcmap("countries/us/us-all", showInLegend = FALSE)
 #' hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
 #'   joinBy = c("iso-a3", "iso3")

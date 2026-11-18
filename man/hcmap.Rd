@@ -15,7 +15,7 @@ hcmap(
 }
 \arguments{
 \item{map}{A two-letter country code (case-insensitive), a collection path
-such as \code{"countries/cl/cl-all"} or \code{"custom/world"}, or a loaded map list.
+such as \code{"countries/jp/jp-all"} or \code{"custom/world"}, or a loaded map list.
 Country codes and their matching collection paths use the same local file.}
 
 \item{download_map_data}{For maps outside the package, download the map in R
@@ -39,7 +39,7 @@ a GeoJSON or TopoJSON list.
 }
 \examples{
 
-hcmap("cl")
+hcmap("jp")
 hcmap("countries/us/us-all", showInLegend = FALSE)
 hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
   joinBy = c("iso-a3", "iso3")

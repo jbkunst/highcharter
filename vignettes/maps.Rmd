@@ -15,33 +15,36 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 
 ## Start with a map
 
-Pass a two-letter country code to draw one of the 202 installed maps. The
-short code, its uppercase form and the full collection path all read the
-same local geometry. For Chile, `hcmap("cl")`, `hcmap("CL")` and
-`hcmap("countries/cl/cl-all")` all show the 16 regions, including Ñuble.
+Pass a two-letter country code to draw one of the 202 installed maps.
+For Japan, `hcmap("jp")`, `hcmap("JP")` and `hcmap("countries/jp/jp-all")`
+all load the same local map.
 
 ```{r map-basics}
-hcmap("cl", nullColor = "#D9E3E8", showInLegend = FALSE) |>
-  hc_title(text = "Chile’s 16 regions") |>
+hcmap("jp", nullColor = "#D9E3E8", showInLegend = FALSE) |>
+  hc_title(text = "Prefectures of Japan") |>
   hc_mapNavigation(enabled = TRUE)
 ```
 
-To attach data to Chile's regions, join by the two-digit territorial code
-(`cut`). Keep it as text so leading zeros survive. The example highlights
-Biobío (08) and Ñuble (16).
+To highlight Hokkaido, Tokyo and Kyoto, match the names in a small table
+to the map's `name` property. The other prefectures keep the background color.
 
-```{r chile-join}
-regions <- data.frame(cut = c("08", "16"), selected = 1)
+```{r japan-join}
+prefectures <- data.frame(
+  prefecture = c("Hokkaido", "Tokyo", "Kyoto"),
+  selected = 1
+)
+
 hcmap(
-  "cl",
-  data = regions,
+  "jp",
+  data = prefectures,
   value = "selected",
-  joinBy = "cut",
-  nullColor = "#e9edf0",
-  name = "Highlighted regions"
+  joinBy = c("name", "prefecture"),
+  nullColor = "#E3E8EC",
+  dataLabels = list(enabled = TRUE, format = "{point.prefecture}")
 ) |>
-  hc_colorAxis(minColor = "#396e81", maxColor = "#396e81", visible = FALSE) |>
-  hc_tooltip(pointFormat = "{point.name} · CUT {point.properties.cut}")
+  hc_title(text = "Hokkaido, Tokyo and Kyoto") |>
+  hc_colorAxis(minColor = "#B63848", maxColor = "#B63848", visible = FALSE) |>
+  hc_tooltip(headerFormat = "", pointFormat = "{point.name}")
 ```
 
 Additional boundaries can be selected by path from the
