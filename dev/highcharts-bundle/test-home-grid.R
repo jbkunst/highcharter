@@ -258,6 +258,12 @@ tryCatch(
         "return players.every(p=>p.querySelector('.html-widget').dataset.phase==='0');});})()"
       ))
       stopifnot(isTRUE(phases))
+      playback <- js(paste0(
+        "(()=>{const players=[...document.querySelectorAll('.transition-grid-page')];",
+        "return players.every(player=>{player.querySelector('.grid-play').click();",
+        "return players.every(p=>(p.dataset.playing==='true')===(p===player));});})()"
+      ))
+      stopifnot(isTRUE(playback))
       js("document.querySelector('main details summary').focus();void 0")
       for (type in c("keyDown", "keyUp")) {
         browser$Input$dispatchKeyEvent(

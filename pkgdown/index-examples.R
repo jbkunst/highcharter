@@ -45,7 +45,8 @@ body { margin: 0; background: white; }
       countries = country_widgets,
       history = trade_widgets,
       map = map_widgets,
-      pie = share_widgets
+      pie = share_widgets,
+      autoplay = TRUE
     )
   ))
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)

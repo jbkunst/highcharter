@@ -97,7 +97,7 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #' @examples
 #'
 #' hcmap("jp")
-#' hcmap("countries/us/us-all", showInLegend = FALSE)
+#' hcmap("custom/south-america", showInLegend = FALSE)
 #' hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
 #'   joinBy = c("iso-a3", "iso3")
 #' )

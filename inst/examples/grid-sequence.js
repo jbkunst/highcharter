@@ -157,7 +157,7 @@ function(el, x, sequence) {
 
   if (!root.dataset.bound) {
     root.dataset.bound = 'true';
-    root.dataset.playing = String(!reduced);
+    root.dataset.playing = String(root.dataset.autoplay === 'true' && !reduced);
     root.dataset.phase = '0';
     root.dataset.ready = 'false';
     const play = root.querySelector('.grid-play');
@@ -188,8 +188,12 @@ function(el, x, sequence) {
       root.dataset.playing = 'false';
       sync();
     }
+    root.addEventListener('grid-pause', pause);
     play.addEventListener('click', () => {
       if (root.dataset.playing === 'true') return pause();
+      for (const other of document.querySelectorAll('.transition-grid-page[data-playing="true"]')) {
+        other.dispatchEvent(new Event('grid-pause'));
+      }
       root.dataset.playing = 'true';
       sync();
       if (root.dataset.ready === 'true') schedule();

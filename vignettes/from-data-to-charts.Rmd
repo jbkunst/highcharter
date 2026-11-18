@@ -23,8 +23,8 @@ executor <- paste(
 
 The homepage connects four views of the same economies: income and longevity,
 regional exports, a world map and regional shares. This article contains the
-original R code for their data, colors, captions and four states. Each chart below plays all four stages. Pause playback to inspect a stage,
-choose a stage directly, or restart at the beginning.
+original R code for their data, colors, captions and four states. Press Play below a chart to explore its four stages, or select a stage directly.
+Starting another chart pauses the previous one.
 
 ```{r home-libraries}
 library(highcharter)
@@ -388,7 +388,7 @@ own controls. On the homepage, one set of controls advances all four charts.
 <summary>Show the R code for playback and controls</summary>
 
 ```{r home-player}
-chart_player <- function(...) {
+chart_player <- function(..., autoplay = FALSE) {
   charts <- list(...)
   panels <- lapply(names(charts), function(family) {
     widgets <- charts[[family]]
@@ -447,10 +447,11 @@ chart_player <- function(...) {
   })
   htmltools::tags$div(
     class = "transition-grid-page",
+    `data-autoplay` = if (autoplay) "true",
     htmltools::tags$div(class = "transition-grid", panels),
     htmltools::tags$div(
       class = "grid-controls",
-      htmltools::tags$button(class = "grid-play", type = "button", "Pause"),
+      htmltools::tags$button(class = "grid-play", type = "button", "Play"),
       htmltools::tags$button(
         class = "grid-reset",
         type = "button",

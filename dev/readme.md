@@ -196,7 +196,9 @@ prepared CSVs or sources scripts from `dev/`.
 
 `pkgdown/index-examples.R` defines `build_home_gallery(output_dir)`. It uses
 `knitr::purl()` to extract the article's R code. The article renders each sequence with its own
-controls and the homepage calls the same player with all four sequences. Both
+controls. Article players start paused and pressing Play pauses the previous player.
+The homepage enables autoplay for its shared four-chart player, subject to the
+reader’s reduced-motion preference. Both
 use `inst/examples/grid-sequence.js` for playback. Do not add an independent data or chart recipe to the
 adapter. Four persistent charts share four times, a common playback control
 and native Highcharts updates. They use the hcrt theme and highcharter's Google
