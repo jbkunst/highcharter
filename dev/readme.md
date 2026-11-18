@@ -145,6 +145,8 @@ inline `src` into `/NA` on 404.
 Article sidebars use Bootstrap TOC's documented `$scope` option in
 `pkgdown/extra.js`. Only article section headings are selected; Highcharts'
 screen-reader headings remain accessible without appearing in the sidebar.
+Rebuild only the generated navigation list so pkgdown's "On this page" heading
+and its spacing below the navbar remain intact.
 The theme collection uses bslib tabs. The shared script reflows visible widgets
 on Bootstrap's `shown.bs.tab` event so hidden charts fill their pane when opened.
 Static tabbed articles set Shiny's `bootstrapTheme` option to Bootstrap 5 while
@@ -158,6 +160,7 @@ from the original HTML path to the new page or section.
 The Explore charts section uses the titles Chart types, Maps, Stock charts and
 Stock Tools, and Showcase. The chart-types article lives in
 `vignettes/chart-types.Rmd`; the former `series-gallery.html` URLs redirect to it.
+Keep Showcase's established examples first and append new examples at the end.
 The Extensions and examples section includes `vignettes/multiple-axes.Rmd`,
 which plots a sample of diamonds across six panels with paired axes.
 `vignettes/icons-and-pictograms.Rmd` groups image markers, tooltip icons and item
@@ -173,7 +176,14 @@ The bundle validation gallery checks the types registered in the bundled
 JavaScript. Its examples live in `dev/R/test-highcharts-bundle.R` and render to
 `bundle-gallery.html`, separate from the public chart-types article. The public
 chart-types article renders its common-data charts and specialized recipes
-inline. [From data to charts](../vignettes/from-data-to-charts.Rmd) is the
+inline. Bars, columns and cylinders share the quantities-by-category data;
+keep `low`/`high` fields in the range examples so ordinary columns start at zero.
+All four shopping categories have an illustrative session duration for `z`.
+Variable pie and packed bubble use a zero size baseline so the smallest
+observation remains visible. Network nodes set `marker.radius` explicitly from
+team headcounts. The compact three-set Venn recipe lives in
+`dev/examples-charts/venn.R` and is reused by the article.
+[From data to charts](../vignettes/from-data-to-charts.Rmd) is the
 canonical source for the homepage's data preparation, R chart definitions,
 theme, captions and four states. Start every homepage chart change there, then
 regenerate and review both the article and homepage. Keep its explanation in
@@ -196,6 +206,8 @@ Each panel's description is a native `hc_caption()`, included in the R chart
 and updated through `chart.update()` as the shared state changes. Captions use
 small italic text aligned to the bottom right; there is no separate explanatory
 text shared by the grid.
+The homepage iframe observes the shared `.transition-grid-page` player to match
+its full height, including captions and playback controls, at every width.
 The scatter's native legend identifies regions at the top left. The scatter and
 export chart share fixed margins to align their plotting areas; the export time
 axis is labeled Years. No separate HTML legend is generated.
@@ -329,6 +341,11 @@ and the exact bundled Highcharts JS version in the next paragraph. Read the
 JS version from `devDependencies.highcharts` in
 [`package.json`](highcharts-bundle/package.json). Include both even when the
 numbers match or the bundle is unchanged.
+
+Group development and new-release entries under `Breaking changes`,
+`New features`, `Changes` and `Bug fixes`, omitting empty groups. Keep migration
+instructions in a separate `Migration guide` when needed. Preserve the content
+and headings of historical releases.
 
 ```markdown
 # highcharter 12.6.1

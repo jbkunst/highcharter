@@ -13,10 +13,15 @@
 #' @examples
 #' methods(hchart)
 #'
-#' fit <- prcomp(USArrests, scale. = TRUE)
+#' # Principal component analysis
+#' fit <- stats::prcomp(USArrests, scale. = TRUE)
 #' hchart(fit)
-#' hchart(fit, choices = c(1, 3), loadings = TRUE)
-#' hchart(stats::decompose(AirPassengers, type = "multiplicative"))
+#'
+#' # An igraph network
+#' if (requireNamespace("igraph", quietly = TRUE)) {
+#'   net <- igraph::make_graph("Zachary")
+#'   hchart(net, layout = igraph::layout_with_kk)
+#' }
 #' @export
 hchart <- function(object, ...) {
   UseMethod("hchart")

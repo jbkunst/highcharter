@@ -42,8 +42,10 @@ jQuery(function () {
   });
   const toc = document.querySelector('.template-article #toc');
   if (toc && window.Toc) {
+    // Keep pkgdown's heading and rebuild only the generated navigation list.
+    jQuery(toc).children('.nav').remove();
     Toc.init({
-      $nav: jQuery(toc).empty(),
+      $nav: jQuery(toc),
       $scope: jQuery('main .section.level2 > h2')
     });
   }
@@ -52,7 +54,7 @@ jQuery(function () {
   if (!frame) return;
   let observed;
   function observeGallery() {
-    const panel = frame.contentDocument.querySelector('main');
+    const panel = frame.contentDocument.querySelector('.transition-grid-page');
     if (panel && panel !== observed) {
       observed = panel;
       let pending;

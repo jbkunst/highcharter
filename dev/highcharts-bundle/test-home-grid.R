@@ -112,6 +112,23 @@ tryCatch(
           " initial scatter points; no viewport resize or footer"
         )
 
+        if (page == "/") {
+          frame <- js(paste0(
+            "(()=>{const frame=document.querySelector('iframe.home-gallery');",
+            "return {height:frame.clientHeight,content:root.getBoundingClientRect().height,",
+            "scroll:g.documentElement.scrollHeight,viewport:g.documentElement.clientHeight,",
+            "controls:root.querySelector('.grid-controls').getBoundingClientRect().bottom}})()"
+          ))
+          stopifnot(
+            frame$height >= ceiling(frame$content),
+            frame$scroll <= frame$viewport,
+            frame$controls <= frame$height
+          )
+          message(
+            "  Full iframe content and controls visible without inner scrolling"
+          )
+        }
+
         events <- js(paste0(
           "(()=>{const h=charts.find(c=>c.renderTo.dataset.family==='history');",
           "const box=h.container.getBoundingClientRect();return h.series.flatMap(s=>",

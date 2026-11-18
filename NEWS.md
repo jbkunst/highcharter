@@ -1,32 +1,8 @@
 # highcharter (development version)
 
-* `hchart(data, type = "gantt")` selects the native Gantt constructor for data
-  frames, preserving task rows, date axes and dependency links.
-* Attaching highcharter in an interactive session points to `?highcharter`
-  for the licensing terms of the R package and the bundled Highcharts library.
-* Supplying a new `rules` list to `hc_responsive()` replaces the previous rules.
-* `hchart()` plots the original and adjusted series from a seasonal X-13 fit and labels its outliers.
-* `hchart()` shows ACF and PACF as lollipops at their reported lags.
-  Multivariate time series and decompositions use shared table tooltips.
-* Histograms created by `hchart()` use square corners by default.
-* Circle-only presets preserve rectangular heatmap cells. The hcrt theme uses
-  IBM Plex Sans for credits. French, Norwegian Bokmål and Simplified Chinese
-  use official Highcharts language packs. Japanese and Korean use AI-generated
-  translations.
-* The hcrt, carbon and smpl themes use regular-weight titles, labels and tooltip values.
-* The hcrt theme uses the built-in three-dot export menu icon.
-* Forecast charts distinguish observations, forecasts and prediction intervals
-  in the legend and shared tooltip. The tooltip shows both interval limits.
-  Custom series names are supported.
-* The hcrt and smpl presets use circular markers consistently across series.
-* `hcmap()` accepts an already loaded GeoJSON list without downloading map data.
-  Network charts preserve the current theme while hiding their coordinate axes.
+Bundled Highcharts JS: 12.6.0.
 
-* With reflow enabled, charts fill the available widget width and height in
-  the Viewer and standalone browser, including after resizing. Percentage-height containers no longer leave
-  the chart at Highcharts' 400-pixel fallback height.
-
-* The Motion plugin uses native array iteration with the bundled Highcharts.
+## Breaking changes
 
 * `hc_xAxis()`, `hc_yAxis()` and `hc_zAxis()` now accept one or several
   axis definitions. Replace `hc_xAxis_multiples()` and `hc_zAxis_multiples()`
@@ -34,57 +10,82 @@
   deprecated alias. Replace successive `hc_add_yAxis()` calls with a single
   `hc_yAxis()` call. Use `create_axis()` to calculate relative panel heights.
 
-
-* PCA charts now scale each component separately and label axes with the
-  percentage of variance explained. Points are shown by default. Use
-  `loadings = TRUE` for variable arrows and `label = TRUE` for observation names.
-* `hchart(stats::decompose(x))` displays the observed series, seasonality, trend
-  and remainder in four panels. Series with frequencies outside the annual,
-  quarterly and monthly calendars use their numeric time index.
-
 * Use `highchart()` in place of `highchartzero()`. In Shiny, replace
   `highchartOutputZ()` and `renderHighchartZ()` with `highchartOutput()`
   and `renderHighchart()` together. The regular widget applies the package
   options and uses the knitr figure dimensions. Set `width = "100%"` to
   fill the available width in R Markdown.
+
 * Use `hcaes_string()` in place of the removed alias `hcaes_()`.
+
 * `hchart()` and `hc_add_series()` now draw a separate line for each
   ordinary `xts` column. One instrument with Open, High, Low and Close
   produces candlesticks by default. For mixed OHLC instruments, select
   the columns for one instrument per call.
 
-* X-range series accept `Date` and `POSIXt` columns for both interval ends
-  (`x` and `x2`).
-
-* `hcaes()` and `hcaes_string()` evaluate expressions in the environment
-  where the mapping was created. Computed axes show the expression as their
-  title. Date and date-time mappings use millisecond timestamps. Grouped
-  data-frame charts build point lists using row indices.
-* Data-frame charts can inherit the chart type or receive empty data.
-  Point colors retain supplied hex values alongside missing values, and
-  factor colors handle unused levels.
-
 * The `fast` argument for data-frame series has been removed. Omit it in
   `hchart()` and `hc_add_series()`. Their point data stay editable as R lists
   until the widget is serialized.
 
-* Heatmaps of `dist` objects now respect the matrix display options
-  `label` and `showInLegend`.
+* This release replaces the per-preset constructors with one public constructor.
+  The collection keeps `tufte` as its single Tufte preset. The theme vignette
+  shows how to recreate the former `tufte2` bar style. This release refreshes
+  `ft` and `economist` and adds `carbon`, `cloudscape` and `bslib`.
+  Cloudscape uses the AWS chart palette and Open Sans, with circular markers
+  and gridlines on both axes. The bslib preset inherits Bootstrap colors and the base font.
 
-* Matrix heatmaps now use matrix positions directly, including when labels
-  repeat or cells contain missing values. highcharter no longer requires tidyr.
+## New features
 
-* highcharter uses base R for date checks, model predictions, row conversion
-  and option merging. Charts of `lm` and `loess` fits now include the fitted
-  curve and its two-standard-error band.
-* `xts` and `rjson` are optional. Charting a regular `xts` series only needs
-  `xts`; OHLC prices also use `quantmod`. The optional JSON serializer is
-  requested only when `options(highcharter.rjson = TRUE)` is set.
-* `download_map_data()` uses R's configured download method by default.
+* Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included
+  by default, including keyboard navigation (#755).
+
+* The bundle now includes the official chart types and common feature modules. A new
+  `highchartstock()` widget adds Stock Tools, advanced annotations and technical indicators.
+  Third-party Motion, Regression, Grouped Categories and Draggable Legend plugins remain optional.
 
 * Ten new option wrappers cover accessibility, map views, time zones, data
   imports, empty charts, SVG definitions, sonification, navigation, Stock Tools
   and Gantt connectors. Each has a runnable example in its help page.
+
+* `hc_set_language("es")` sets the language for new charts in the current R
+  process. Use `hc_set_language("en")` to switch to English.
+  `hc_language()` returns the corresponding options list.
+  Spanish, Portuguese and French include translated controls. Regional tags select
+  the browser's date and number formats. The default English short weekdays now
+  start on Sunday, matching Highcharts' weekday index.
+
+* Theme presets now use `hc_theme("ft")` and live in individual YAML files.
+  `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or
+  a custom theme for subsequent charts. See `vignette("themes", package = "highcharter")`.
+
+* `hcpxy_set_extremes()` controls an x-axis range from Shiny. `hcpxy_set_data()`
+  can now target a series by ID, which is safer when Stock indicators change series order.
+
+* `hchart()` plots the original and adjusted series from a seasonal X-13 fit and labels its outliers.
+
+* `hchart(stats::decompose(x))` displays the observed series, seasonality, trend
+  and remainder in four panels. Series with frequencies outside the annual,
+  quarterly and monthly calendars use their numeric time index.
+
+* X-range series accept `Date` and `POSIXt` columns for both interval ends
+  (`x` and `x2`).
+
+## Changes
+
+* `hchart()` shows ACF and PACF as lollipops at their reported lags.
+  Multivariate time series and decompositions use shared table tooltips.
+
+* Histograms created by `hchart()` use square corners by default.
+
+* The hcrt, carbon and smpl themes use regular-weight titles, labels and tooltip values.
+
+* The hcrt theme uses the built-in three-dot export menu icon.
+
+* Forecast charts distinguish observations, forecasts and prediction intervals
+  in the legend and shared tooltip. The tooltip shows both interval limits.
+  Custom series names are supported.
+
+* The hcrt and smpl presets use circular markers consistently across series.
 
 * The classic Highcharts themes use the 12.6.0 palettes and legend backgrounds.
   Dark presets have more legible axis labels. Monokai now uses four distinct
@@ -94,28 +95,59 @@
 * The chalk, handdrawn and sandsignika presets embed their original backgrounds
   for offline use. The Carbon preset draws horizontal and vertical gridlines
   and uses circular point markers across series.
-* Theme presets now use `hc_theme("ft")` and live in individual YAML files.
-  `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or
-  a custom theme for subsequent charts. See `vignette("themes", package = "highcharter")`.
-* This release replaces the per-preset constructors with one public constructor.
-  The collection keeps `tufte` as its single Tufte preset. The theme vignette
-  shows how to recreate the former `tufte2` bar style. This release refreshes
-  `ft` and `economist` and adds `carbon`, `cloudscape` and `bslib`.
-  Cloudscape uses the AWS chart palette and Open Sans, with circular markers
-  and gridlines on both axes. The bslib preset inherits Bootstrap colors and the base font.
-* `hc_set_language("es")` sets the language for new charts in the current R
-  process. Use `hc_set_language("en")` to switch to English.
-  `hc_language()` returns the corresponding options list.
-  Spanish, Portuguese and French include translated controls. Regional tags select
-  the browser's date and number formats. The default English short weekdays now
-  start on Sunday, matching Highcharts' weekday index.
-* Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included
-  by default, including keyboard navigation (#755).
-* The bundle now includes the official chart types and common feature modules. A new
-  `highchartstock()` widget adds Stock Tools, advanced annotations and technical indicators.
-  Third-party Motion, Regression, Grouped Categories and Draggable Legend plugins remain optional.
-* `hcpxy_set_extremes()` controls an x-axis range from Shiny. `hcpxy_set_data()`
-  can now target a series by ID, which is safer when Stock indicators change series order.
+
+* highcharter uses base R for date checks, model predictions, row conversion
+  and option merging. Charts of `lm` and `loess` fits now include the fitted
+  curve and its two-standard-error band.
+
+* `xts` and `rjson` are optional. Charting a regular `xts` series only needs
+  `xts`; OHLC prices also use `quantmod`. The optional JSON serializer is
+  requested only when `options(highcharter.rjson = TRUE)` is set.
+
+* `download_map_data()` uses R's configured download method by default.
+
+* Attaching highcharter in an interactive session points to `?highcharter`
+  for the licensing terms of the R package and the bundled Highcharts library.
+
+## Bug fixes
+
+* `hchart(data, type = "gantt")` selects the native Gantt constructor for data
+  frames, preserving task rows, date axes and dependency links.
+
+* Supplying a new `rules` list to `hc_responsive()` replaces the previous rules.
+
+* Circle-only presets preserve rectangular heatmap cells. The hcrt theme uses
+  IBM Plex Sans for credits. French, Norwegian Bokmål and Simplified Chinese
+  use official Highcharts language packs. Japanese and Korean use AI-generated
+  translations.
+
+* `hcmap()` accepts an already loaded GeoJSON list without downloading map data.
+  Network charts preserve the current theme while hiding their coordinate axes.
+
+* With reflow enabled, charts fill the available widget width and height in
+  the Viewer and standalone browser, including after resizing. Percentage-height containers no longer leave
+  the chart at Highcharts' 400-pixel fallback height.
+
+* The Motion plugin uses native array iteration with the bundled Highcharts.
+
+* PCA charts now scale each component separately and label axes with the
+  percentage of variance explained. Points are shown by default. Use
+  `loadings = TRUE` for variable arrows and `label = TRUE` for observation names.
+
+* `hcaes()` and `hcaes_string()` evaluate expressions in the environment
+  where the mapping was created. Computed axes show the expression as their
+  title. Date and date-time mappings use millisecond timestamps. Grouped
+  data-frame charts build point lists using row indices.
+
+* Data-frame charts can inherit the chart type or receive empty data.
+  Point colors retain supplied hex values alongside missing values, and
+  factor colors handle unused levels.
+
+* Heatmaps of `dist` objects now respect the matrix display options
+  `label` and `showInLegend`.
+
+* Matrix heatmaps now use matrix positions directly, including when labels
+  repeat or cells contain missing values. highcharter no longer requires tidyr.
 
 ## Migration guide
 
