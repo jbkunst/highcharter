@@ -85,13 +85,14 @@ Completed on the bundle branch: single-series forecast intervals use the same
 time index as predictions, Sankey links count adjacent columns, and
 `list_parse2()` delegates validation to `list_parse()`. The package dropped
 the `assertthat` import, the global-variable declarations and `hc_rm_series()`.
+All 12 Shiny proxy sends now use `send_proxy_message()`.
 See [breaking changes](../NEWS.md#breaking-changes) for the series migration.
 
 The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 1 | Shiny proxies and events | Share the 12 message sends in `R/proxy.R`. Replace the four `1:length()` loops so empty inputs send zero messages. Keep message names, order, payloads and the returned proxy. Share the event setup for points and series, remove debug output and check both Shiny inputs. |
+| 1 | Shiny proxies and events | Replace the four `1:length()` loops so empty inputs send zero messages. Keep message names, order, payloads and the returned proxy. Share the event setup for points and series, remove debug output and check both Shiny inputs. |
 | 2 | Multivariate series and forecasts | Fold `hchart_mts1()` and `hchart_mts2()` into `hchart.mts()`. Preserve panel heights, spacing and series IDs for STL, ETS and decompositions. Read the forecasts stored in `object$forecast` and build intervals in x, low, high order. Test shared and separate panels. |
 | 3 | Annotations, mappings and heatmaps | Respect the supplied axes in `df_to_annotations_labels()` and delegate the singular annotation adder to the plural. Share X/Y type inference and heatmap coordinate conversion. Check dates, factors, single categories, omitted axes and unnamed options in `validate_args()`. |
 | 4 | Data transformations | Assign hierarchy IDs once per path and reuse them for parent links. Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
