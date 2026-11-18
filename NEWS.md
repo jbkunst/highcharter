@@ -118,6 +118,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Axes with one category now display its label on the axis and in tooltips,
+  including when the category is numeric (#395, #438).
+
 * `hchart(data, type = "gantt")` selects the native Gantt constructor for data
   frames, preserving task rows, date axes and dependency links.
 

@@ -53,6 +53,14 @@ validate_args <- function(name, lstargs) {
 
 # Named options update the primary axis. Unnamed axis objects replace the collection.
 .hc_axis_options <- function(current, options) {
+  # htmlwidgets unboxes atomic scalars, but Highcharts expects a category array.
+  normalize_categories <- function(axis) {
+    categories <- axis[["categories"]]
+    if (is.atomic(categories) && length(categories) == 1L) {
+      axis$categories <- as.list(unname(categories))
+    }
+    axis
+  }
   if (!length(options)) {
     return(current)
   }
@@ -60,6 +68,7 @@ validate_args <- function(name, lstargs) {
     if (!all(nzchar(names(options)))) {
       stop("Supply named axis options or a list of axes.", call. = FALSE)
     }
+    options <- normalize_categories(options)
     if (length(current) && is.null(names(current))) {
       current[[1L]] <- .merge_options(current[[1L]], options)
       return(current)
@@ -81,7 +90,7 @@ validate_args <- function(name, lstargs) {
   if (!all(vapply(options, valid_axis, logical(1)))) {
     stop("Each axis must be a list of named Highcharts options.", call. = FALSE)
   }
-  unclass(options)
+  lapply(unclass(options), normalize_categories)
 }
 
 .hc_opt <- function(hc, name, ...) {

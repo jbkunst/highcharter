@@ -21,3 +21,21 @@ test_that("axis wrappers accept collections and preserve other axes on named upd
   expect_identical(opts[[2]]$title, list(text = "Value"))
   expect_warning(hc_yAxis_multiples(highchart(), x), "deprecated")
 })
+
+test_that("a single axis category stays an array when serialized", {
+  for (category in list(2012, "one")) {
+    chart <- hc_xAxis(highchart(), categories = category)
+    expect_identical(chart$x$hc_opts$xAxis$categories, list(category))
+  }
+
+  axes <- list(
+    list(categories = c("one", "two")),
+    list(categories = c(year = 2012))
+  )
+  chart <- hc_yAxis(highchart(), axes)
+  expect_identical(chart$x$hc_opts$yAxis[[1]]$categories, c("one", "two"))
+  expect_identical(chart$x$hc_opts$yAxis[[2]]$categories, list(2012))
+  chart <- hc_yAxis(chart, categories = "one")
+  expect_identical(chart$x$hc_opts$yAxis[[1]]$categories, list("one"))
+  expect_identical(chart$x$hc_opts$yAxis[[2]]$categories, list(2012))
+})
