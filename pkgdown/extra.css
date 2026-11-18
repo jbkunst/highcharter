@@ -93,11 +93,90 @@ main h3, main h4, main h5 { font-weight: 400; }
 .template-home .home-copy { max-width: 52rem; margin-inline: auto; }
 @media (max-width: 520px) { .home-gallery { height: 720px; } }
 
-/* Each chart in From data to charts has independent playback controls. */
+/* Playback controls below each chart in From data to charts. */
 .transition-grid-page .grid-controls {
+  --control-ink: var(--bs-body-color, #38384b);
+  --control-surface: var(--bs-body-bg, #fff);
+  --control-border: color-mix(in srgb, var(--control-ink) 32%, var(--control-surface));
+  --control-hover: color-mix(in srgb, var(--control-ink) 7%, var(--control-surface));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: .5rem;
-  margin: .5rem 0 1.5rem;
+  margin: .75rem 0 1.5rem;
+}
+
+.grid-controls :is(button, select) {
+  min-height: 44px;
+  max-width: 100%;
+  padding: .5rem .875rem;
+  border: 1px solid var(--control-border);
+  border-radius: .65rem;
+  background-color: var(--control-surface);
+  color: var(--control-ink);
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.grid-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+
+.grid-controls .grid-play {
+  min-width: 6rem;
+  border-color: transparent;
+  background-color: #47475c;
+  color: white;
+}
+
+.grid-controls button::before {
+  content: "";
+  width: .85em;
+  height: .85em;
+  background-color: currentColor;
+}
+
+.grid-play::before {
+  clip-path: polygon(14% 0, 95% 50%, 14% 100%);
+}
+
+[data-playing="true"] .grid-play::before {
+  clip-path: polygon(8% 0, 38% 0, 38% 100%, 62% 100%, 62% 0, 92% 0, 92% 100%, 8% 100%);
+}
+
+.grid-reset::before {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3v4h4M2.5 7a5.5 5.5 0 1 1 .7 4.3'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.grid-controls select {
+  appearance: none;
+  padding-inline-end: 2.4rem;
+  background-image: var(--bs-form-select-bg-img, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%236d7383' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2 4 4 4 4-4'/%3E%3C/svg%3E"));
+  background-repeat: no-repeat;
+  background-position: right .85rem center;
+  background-size: .8rem;
+}
+
+.grid-controls :is(button, select):hover:enabled {
+  background-color: var(--control-hover);
+  border-color: var(--control-ink);
+}
+
+.grid-controls .grid-play:hover:enabled { background-color: #353548; }
+
+.grid-controls :is(button, select):focus-visible {
+  outline: 3px solid var(--bs-emphasis-color, #47475c);
+  outline-offset: 2px;
+}
+
+.grid-controls select:disabled { opacity: .6; cursor: wait; }
+
+@media (forced-colors: active) {
+  .grid-controls select { appearance: auto; background-image: none; }
 }
