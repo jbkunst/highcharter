@@ -202,77 +202,87 @@ hchart.forecast <- function(object, addOriginal = TRUE, addLevels = TRUE, ...) {
 }
 
 #' @export
-hchart.mforecast <- function(object, separate = TRUE, fillOpacity = 0.3, ...) {
-  ntss <- ncol(object$x)
-  lvls <- object$level
-  tmf <- datetime_to_timestamp(zoo::as.Date(time(object$mean[[1]])))
-  nms <- attr(object$x, "dimnames")[[2]]
-
-  hc <- hchart(object$x) |>
-    hc_plotOptions(
-      series = list(
-        marker = list(enabled = FALSE)
+hchart.mforecast <- function(
+  object,
+  separate = TRUE,
+  fillOpacity = 0.3,
+  ...,
+  addLevels = TRUE,
+  addOriginal = TRUE
+) {
+  forecasts <- object$forecast
+  x <- object$x
+  if (is.null(forecasts)) {
+    # Older mforecast objects store the results in parallel lists.
+    means <- object$mean
+    if (!is.null(names(means)) && !is.null(colnames(x))) {
+      means <- means[colnames(x)]
+    }
+    forecasts <- lapply(seq_along(means), function(i) {
+      list(
+        x = x[, i],
+        mean = means[[i]],
+        level = object$level,
+        lower = object$lower[[i]],
+        upper = object$upper[[i]]
       )
-    )
-
-  # means
-  hc <- hc |> hc_add_series(data = NULL, id = "forecasts", name = "forecasts")
-
-  for (i in seq(ntss)) {
-    nm <- nms[i]
-    hc <- hc |>
-      hc_add_series(
-        object$mean[[nm]],
-        name = paste("forecast", nm),
-        yAxis = i - 1,
-        linkedTo = "forecasts",
-        ...
-      )
+    })
+  } else {
+    x <- do.call(cbind, unname(lapply(forecasts, `[[`, "x")))
+    if (is.null(dim(x))) {
+      dim(x) <- c(length(x), 1L)
+    }
+    colnames(x) <- names(forecasts)
   }
+  if (is.null(colnames(x))) {
+    colnames(x) <- paste("Series", seq_along(forecasts))
+  }
+  labels <- colnames(x)
+  hc <- hchart.mts(x, separate = separate) |>
+    hc_plotOptions(series = list(marker = list(enabled = FALSE)))
+  observed <- if (addOriginal) hc$x$hc_opts$series
+  hc$x$hc_opts$series <- list()
 
-  # levels
-  for (lvl in seq_along(lvls)) {
-    idlvl <- paste0("level", lvls[lvl])
-    nmlvl <- paste("level", lvls[lvl])
-
-    hc <- hc |> hc_add_series(data = NULL, id = idlvl, name = nmlvl, ...)
-
-    for (i in seq(ntss)) {
-      nm <- nms[i]
-
-      dfbands <- tibble(
-        t = tmf,
-        u = as.vector(object$upper[[i]][, lvl]),
-        l = as.vector(object$lower[[i]][, lvl])
-      )
-
-      hc <- hc |>
-        hc_add_series(
-          data = list_parse2(dfbands),
-          name = paste(nmlvl, nm),
-          linkedTo = idlvl,
-          yAxis = i - 1,
-          type = "arearange",
-          fillOpacity = fillOpacity,
-          zIndex = 1,
-          lineWidth = 0,
-          ...
-        )
+  # Each legend entry controls the same layer across all panels.
+  groups <- list()
+  for (i in seq_along(forecasts)) {
+    f <- forecasts[[i]]
+    chart <- hc_add_series.forecast(
+      hc,
+      f,
+      name = labels[i],
+      addLevels = addLevels,
+      fillOpacity = fillOpacity,
+      ...
+    )
+    layers <- chart$x$hc_opts$series
+    titles <- c("forecasts", sprintf("level %s", f$level))
+    for (j in seq_along(layers)) {
+      title <- titles[j]
+      id <- sub(" ", "", title, fixed = TRUE)
+      if (is.null(groups[[id]])) {
+        key <- list(data = NULL, id = id, name = title)
+        if (j > 1L) {
+          key <- c(key, list(...))
+        }
+        groups[[id]] <- list(key)
+      }
+      layer <- layers[[j]]
+      if (separate) {
+        layer$yAxis <- i - 1
+      }
+      layer$id <- NULL
+      layer$linkedTo <- id
+      layer$name <- paste(if (j == 1L) "forecast" else title, labels[i])
+      groups[[id]] <- append(groups[[id]], list(layer))
     }
   }
-
-  if (!separate) {
-    hc$x$hc_opts$yAxis <- NULL
-    hc$x$hc_opts$series <- map(hc$x$hc_opts$series, function(x) {
-      x$yAxis <- NULL
-      x
-    })
-  }
-
-  hc
+  hc_add_series_list(
+    hc,
+    c(observed, unlist(groups, recursive = FALSE, use.names = FALSE))
+  )
 }
 
-#' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...) {
   ytitle <- switch(

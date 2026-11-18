@@ -129,6 +129,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Multivariate forecasts plot the predictions and intervals for each series
+  on shared or separate axes. The legend toggles each confidence level
+  across all panels.
+
 * Shiny proxies now send zero messages when there are no series to add,
   remove or update, or no points to update.
 

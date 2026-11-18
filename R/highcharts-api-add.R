@@ -45,7 +45,11 @@ hc_add_series.numeric <- function(hc, data, ...) {
 
 
 ts_axis_type <- function(x) {
-  if (stats::frequency(x) %in% c(1, 4, 12)) "datetime" else "linear"
+  if (stats::is.ts(x) && stats::frequency(x) %in% c(1, 4, 12)) {
+    "datetime"
+  } else {
+    "linear"
+  }
 }
 
 ts_x_values <- function(data) {
@@ -226,9 +230,15 @@ hc_add_series.forecast <- function(
     hc <- hc_add_series(hc, data$x, name = observed_name, zIndex = 3, ...)
   }
 
+  # Regression forecasts can have ordinary numeric responses with no ts index.
+  tmf <- if (stats::is.ts(data$mean)) {
+    ts_x_values(data$mean)
+  } else {
+    NROW(data$x) + seq_along(data$mean) - 1
+  }
   hc <- hc_add_series(
     hc,
-    data$mean,
+    data = list_parse2(data.frame(t = tmf, y = as.numeric(data$mean))),
     name = forecast_name,
     zIndex = 2,
     id = rid,
@@ -236,10 +246,9 @@ hc_add_series.forecast <- function(
   )
 
   if (addLevels) {
-    tmf <- ts_x_values(data$mean)
     nmf <- paste(forecast_name, paste0(data$level, "% interval"))
 
-    for (m in seq(ncol(data$upper))) {
+    for (m in seq_along(data$level)) {
       dfbands <- tibble(
         t = tmf,
         l = as.vector(data$lower[, m]),

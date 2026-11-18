@@ -88,6 +88,9 @@ the `assertthat` import, the global-variable declarations and `hc_rm_series()`.
 All 12 Shiny proxy sends now use `send_proxy_message()`.
 Item 1 is complete. The four loops in [R/proxy.R](../R/proxy.R) use
 `seq_along()` and send zero messages for empty selections.
+Item 2 is complete. `hchart.mts()` handles both panel layouts. Multivariate
+forecasts reuse the single-series forecasts and intervals, with a shared legend
+entry for each confidence level.
 Shiny outputs report point clicks automatically. Explicit point and series
 events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
 links five examples, including the draggable equalizer. The pkgdown workflow
@@ -98,7 +101,6 @@ The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 2 | Multivariate series and forecasts | Fold `hchart_mts1()` and `hchart_mts2()` into `hchart.mts()`. Preserve panel heights, spacing and series IDs for STL, ETS and decompositions. Read the forecasts stored in `object$forecast` and build intervals in x, low, high order. Test shared and separate panels. |
 | 3 | Annotations, mappings and heatmaps | Respect the supplied axes in `df_to_annotations_labels()` and delegate the singular annotation adder to the plural. Share X/Y type inference and heatmap coordinate conversion. Check dates, factors, single categories, omitted axes and unnamed options in `validate_args()`. |
 | 4 | Data transformations | Assign hierarchy IDs once per path and reuse them for parent links. Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
 | 5 | Survival curves | Fix `hchart.survfit()` for matrix predictions from multiple profiles. Verify each curve, confidence interval and censoring marker against the fitted model. |

@@ -37,3 +37,49 @@ test_that("forecasts and all prediction intervals use the same time index", {
     }
   }
 })
+
+test_that("multivariate forecasts preserve panels, legend groups and interval bounds", {
+  skip_if_not_installed("forecast")
+  x <- cbind(mdeaths, fdeaths)
+  fit <- forecast::forecast(x, h = 3, level = c(80, 95))
+  for (separate in c(TRUE, FALSE)) {
+    opts <- hchart(fit, separate = separate)$x$hc_opts
+    series <- opts$series
+    names(series) <- vapply(series, `[[`, "", "name")
+    expect_identical(series[["forecasts"]]$id, "forecasts")
+    for (i in seq_along(fit$forecast)) {
+      name <- colnames(x)[i]
+      f <- fit$forecast[[i]]
+      mean <- series[[paste("forecast", name)]]
+      expect_identical(mean$linkedTo, "forecasts")
+      expect_equal(mean$yAxis, if (separate) i - 1 else NULL)
+      for (j in seq_along(f$level)) {
+        group <- paste("level", f$level[j])
+        band <- series[[paste(group, name)]]
+        expect_identical(band$linkedTo, series[[group]]$id)
+        expect_identical(band$yAxis, mean$yAxis)
+        expect_equal(
+          band$data,
+          Map(
+            list,
+            ts_x_values(f$mean),
+            as.numeric(f$lower[, j]),
+            as.numeric(f$upper[, j])
+          )
+        )
+      }
+    }
+  }
+
+  legacy <- structure(
+    list(
+      x = x,
+      level = fit$forecast[[1]]$level,
+      mean = lapply(fit$forecast, `[[`, "mean"),
+      lower = lapply(fit$forecast, `[[`, "lower"),
+      upper = lapply(fit$forecast, `[[`, "upper")
+    ),
+    class = "mforecast"
+  )
+  expect_equal(hchart(legacy)$x$hc_opts, hchart(fit)$x$hc_opts)
+})
