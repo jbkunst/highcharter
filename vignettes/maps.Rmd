@@ -25,26 +25,45 @@ hcmap("jp", nullColor = "#D9E3E8", showInLegend = FALSE) |>
   hc_mapNavigation(enabled = TRUE)
 ```
 
-To highlight Hokkaido, Tokyo and Kyoto, match the names in a small table
-to the map's `name` property. The other prefectures keep the background color.
+Five prefectures in the Kantō region have mountain roads featured in *Initial D*.
+In Gunma, Mount Haruna is the real mountain behind Takumi’s Mount Akina.
+Hover over a highlighted prefecture to see its road.
+[Roads and prefectures in Initial D](https://jdmism.wordpress.com/initial-d-roads/).
 
 ```{r japan-join}
-prefectures <- data.frame(
-  prefecture = c("Hokkaido", "Tokyo", "Kyoto"),
-  selected = 1
+# fmt: skip
+routes <- tibble::tribble(
+  ~prefecture, ~road,
+  "Gunma",     "Mount Haruna (Akina)",
+  "Tochigi",   "Irohazaka",
+  "Saitama",   "Shomaru Pass",
+  "Ibaraki",   "Tsukuba Fruits Line",
+  "Kanagawa",  "Hakone Turnpike"
+) |> mutate(selected = 1)
+
+kanto <- readRDS(system.file("maps", "jp.rds", package = "highcharter"))
+kanto$features <- Filter(
+  function(f) {
+    isTRUE(f$properties$name %in% c(routes$prefecture, "Tokyo", "Chiba"))
+  },
+  kanto$features
 )
 
 hcmap(
-  "jp",
-  data = prefectures,
+  kanto,
+  data = routes,
   value = "selected",
   joinBy = c("name", "prefecture"),
   nullColor = "#E3E8EC",
   dataLabels = list(enabled = TRUE, format = "{point.prefecture}")
 ) |>
-  hc_title(text = "Hokkaido, Tokyo and Kyoto") |>
+  hc_title(text = "Initial D roads in Kantō") |>
   hc_colorAxis(minColor = "#B63848", maxColor = "#B63848", visible = FALSE) |>
-  hc_tooltip(headerFormat = "", pointFormat = "{point.name}")
+  hc_mapNavigation(enabled = TRUE) |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "<b>{point.name}</b><br>{point.road}"
+  )
 ```
 
 Additional boundaries can be selected by path from the

@@ -379,7 +379,7 @@ Each point is a South American capital or seat of government at its longitude
 [Natural Earth's populated places](https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_populated_places_simple.geojson).
 Illustrative wind speed in m/s supplies bubble size and the third dimension
 (`z`), vector `length` and wind-barb `value`. `direction` gives the angle in
-degrees. Hover for the city name where nearby labels overlap. A hollow circle
+degrees. Hover over a point to see the city and wind speed. The 3D scatter also labels the cities. A hollow circle
 in a wind-barb series means calm wind (below 0.3 m/s). All the illustrative
 speeds here are at least 3 m/s.
 
@@ -450,14 +450,15 @@ gallery(
         type = if (type == "windbarb") "scatter" else type,
         options3d = list(
           enabled = type == "scatter3d",
-          alpha = 15,
-          beta = 20
+          alpha = 20,
+          beta = 32,
+          depth = 160
         )
       ) |>
       hc_plotOptions(
         series = list(
           dataLabels = list(
-            enabled = TRUE,
+            enabled = type == "scatter3d",
             format = "{point.name}",
             style = list(fontSize = "9px", fontWeight = "normal")
           )
@@ -507,7 +508,9 @@ Five milestones in Albert Einstein’s life. Spacing follows calendar years.
 [ETH Library biography](https://library.ethz.ch/en/collections-and-archives/short-portraits/einstein-albert-1879-1955.html).
 
 ```{r einstein-timeline}
+event_colors <- unlist(hc_theme("smpl")$colors)[c(2, 3, 1, 4, 5)]
 events <- tibble::tibble(
+  color = event_colors,
   x = c(1879, 1905, 1921, 1933, 1955),
   name = c(
     "Born in Ulm",
@@ -515,18 +518,23 @@ events <- tibble::tibble(
     "Physics Nobel",
     "Princeton",
     "Dies in Princeton"
+  ),
+  # Deeper shades of the five marker colors keep the white lettering legible.
+  dataLabels = lapply(
+    c("#246E9E", "#17774B", "#B34605", "#846707", "#354D63"),
+    function(fill) list(backgroundColor = fill)
   )
 )
 hchart(
   events,
   "timeline",
+  hcaes(color = color),
   name = "Albert Einstein",
-  colorByPoint = FALSE,
-  color = "#285876",
+  colorByPoint = TRUE,
   dataLabels = list(
     format = "{point.x} · {point.name}",
     color = "#FFFFFF",
-    backgroundColor = "#285876",
+    borderWidth = 0,
     style = list(
       fontSize = "11px",
       fontWeight = "normal",
@@ -587,9 +595,9 @@ hchart(
     format = "{point.name}",
     style = list(
       fontSize = "10px",
-      color = "white",
+      color = "contrast",
       fontWeight = "normal",
-      textOutline = "none"
+      textOutline = "1px contrast"
     )
   )
 ) |>
@@ -599,7 +607,7 @@ hchart(
     reversed = TRUE,
     title = list(text = "")
   ) |>
-  hc_colors(c("#285876", "#316346", "#85581D")) |>
+  hc_colors(event_colors[1:3]) |>
   hc_plotOptions(xrange = list(grouping = FALSE, pointWidth = 22)) |>
   hc_tooltip(
     pointFormat = "{point.name}<br>{point.x:%e %b} to {point.x2:%e %b}"
@@ -616,6 +624,7 @@ schedule <- tasks |>
   mutate(id = paste(team, row_number(), sep = "-"), dependency = lag(id)) |>
   ungroup() |>
   transmute(
+    color = event_colors[as.integer(phase)],
     name = paste(team, task, sep = ": "),
     id,
     start = datetime_to_timestamp(start),
@@ -623,7 +632,7 @@ schedule <- tasks |>
     completed = progress,
     dependency
   )
-hchart(schedule, "gantt", name = "Tasks", color = "#285876") |>
+hchart(schedule, "gantt", hcaes(color = color), name = "Tasks") |>
   hc_yAxis(
     labels = list(
       levels = list(list(level = 1, style = list(fontWeight = "normal")))

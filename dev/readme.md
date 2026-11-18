@@ -97,7 +97,8 @@ when previewing changes to these assets without rebuilding the entire website.
 The shared initializer restores the original Datalegreya graph-encoded lettering
 after each font loads. The navbar uses the same graph sequence without the
 `{rpackage}` suffix. Accessible labels and the plain-text fallback remain the
-package name.
+package name. On the homepage, `pkgdown/assets/home-hex.svg` places the paper
+plane from `man/figures/hexicon.svg` beside the title.
 
 In an R session at the repository root:
 
@@ -225,8 +226,7 @@ The second export view uses native percent stacking, a 0–100% axis and
 The line view labels the highest series point in 2008 and 2020, 24 pixels
 above the point, without vertical year guides in any view.
 Export event labels identify the 2008 crisis
-and COVID-19; plain country names label Chile and Uruguay in the regional
-scatter. Map color bars occupy 76% of their panel width, with explicit numeric
+and COVID-19. The scatter shows country names in its tooltips. Map color bars occupy 76% of their panel width, with explicit numeric
 formats. The regional camera fits the bounds of South American economies instead
 of relying on a fixed zoom that can crop the north or south.
 Sources, units and coverage are documented in the

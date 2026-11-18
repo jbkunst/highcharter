@@ -44,11 +44,27 @@ main h3, main h4, main h5 { font-weight: 400; }
   font-family: "Datalegreya-Thin", "Alegreya Sans SC", sans-serif;
   font-size: 1.7rem;
 }
-.template-home #highcharter { font-size: clamp(2.8rem, 7vw, 5rem); }
-.template-home .page-header { border-bottom: 0; }
-@media (max-width: 575.98px) {
-  .template-home #highcharter { font-size: clamp(2rem, 8.5vw, 2.8rem); }
-  .template-home .page-header .logo { width: 76px; margin-left: 1rem; }
+.template-home .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(.75rem, 2vw, 1.5rem);
+  border-bottom: 0;
+}
+
+.template-home #highcharter {
+  margin: 0;
+  font-size: clamp(1.75rem, 7vw, 5rem);
+}
+
+.template-home .page-header .logo {
+  content: url("home-hex.svg");
+  order: 1;
+  position: static;
+  margin: 0;
+  width: clamp(3rem, 9vw, 6rem);
+  height: auto;
+  aspect-ratio: 166 / 192;
 }
 .template-article-index h3,
 .template-article-index .h3,
