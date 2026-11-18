@@ -35,3 +35,19 @@ test_that("country codes and canonical paths use the same installed boundaries",
     "countries/us/us-ca-all.js"
   )
 })
+
+test_that("installed map identifiers resolve to local files", {
+  ids <- hc_maps()
+  expect_true(all(
+    c("jp", "custom/south-america", "custom/world.topo.json") %in% ids
+  ))
+  expect_identical(anyDuplicated(ids), 0L)
+  expect_true(all(file.exists(vapply(ids, packaged_map_file, character(1)))))
+})
+
+test_that("TopoJSON properties come from the first map layer", {
+  path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+  topo <- jsonlite::read_json(path, simplifyVector = FALSE)
+  topo$objects$default <- list(type = "GeometryCollection", geometries = list())
+  expect_identical(get_data_from_map(topo)$code, c("01", "02"))
+})

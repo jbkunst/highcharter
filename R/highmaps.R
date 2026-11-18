@@ -75,6 +75,24 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
     hc_colorAxis(min = 0)
 }
 
+#' List installed maps
+#'
+#' @return A character vector of map identifiers accepted by [hcmap()].
+#'   Country maps use two-letter codes. World and regional maps use collection paths.
+#' @examples
+#' head(hc_maps())
+#' grep("^custom/", hc_maps(), value = TRUE)
+#' @export
+hc_maps <- function() {
+  files <- list.files(
+    system.file("maps", package = "highcharter", mustWork = TRUE),
+    pattern = "\\.rds$",
+    recursive = TRUE
+  )
+  ids <- sub("\\.rds$", "", files)
+  sub("\\.topo$", ".topo.json", ids)
+}
+
 #' Create a map chart
 #'
 #' Draw a packaged country map offline, load another map by its
@@ -83,7 +101,8 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
 #'
 #' @param map A two-letter country code (case-insensitive), a collection path
 #'   such as `"countries/jp/jp-all"` or `"custom/world"`, or a loaded map list.
-#'   Country codes and their matching collection paths use the same local file.
+#'   See [hc_maps()] for installed identifiers. Country codes and their matching
+#'   collection paths use the same local file.
 #' @param download_map_data For maps outside the package, download the map in R
 #'   (`TRUE`) or attach the CDN script to the widget (`FALSE`). Defaults to
 #'   `getOption("highcharter.download_map_data")`.
@@ -214,18 +233,22 @@ download_map_data <- function(
 }
 
 #' Helper function to get the data inside the map data
-#' The urls are listed in \url{https://code.highcharts.com/mapdata/}.
-#' @param mapdata A list obtained from \code{\link{download_map_data}}.
+#' @param mapdata A GeoJSON FeatureCollection or a TopoJSON Topology read as
+#'   an R list. For TopoJSON, the first object's geometry collection supplies
+#'   the properties, matching the layer drawn by [hcmap()].
+#' @return A tibble of feature properties, including any keys used by `joinBy`.
 #' @examples
-#' \dontrun{
-#' dta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
-#' get_data_from_map(dta)
-#' }
-#' @seealso \code{\link{download_map_data}}
+#' head(get_data_from_map(worldgeojson))
+#' @seealso [hcmap()], [download_map_data()]
 #' @importFrom purrr map_lgl
 #' @export
 get_data_from_map <- function(mapdata) {
-  mapdata$features |>
+  features <- if (identical(mapdata$type, "Topology")) {
+    mapdata$objects[[1L]]$geometries
+  } else {
+    mapdata$features
+  }
+  features |>
     purrr::map("properties") |>
     purrr::map_df(function(x) {
       x[!purrr::map_lgl(x, is.null)]

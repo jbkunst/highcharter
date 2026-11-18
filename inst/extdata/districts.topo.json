@@ -1,0 +1,17 @@
+{
+  "type": "Topology",
+  "objects": {
+    "districts": {
+      "type": "GeometryCollection",
+      "geometries": [
+        {"type": "Polygon", "arcs": [[0, 1]], "properties": {"code": "01", "name": "West"}},
+        {"type": "Polygon", "arcs": [[-1, 2]], "properties": {"code": "02", "name": "East"}}
+      ]
+    }
+  },
+  "arcs": [
+    [[1, 0], [1.1, 0.45], [1, 1]],
+    [[1, 1], [0.1, 1.15], [0, 0.25], [0.3, 0], [1, 0]],
+    [[1, 0], [1.85, 0.12], [2.1, 0.8], [1.9, 1.1], [1, 1]]
+  ]
+}

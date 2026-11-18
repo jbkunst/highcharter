@@ -117,6 +117,7 @@ reference:
 - title: Maps
   contents:
   - hcmap
+  - hc_maps
   - download_map_data
   - get_data_from_map
   - hc_add_series_map

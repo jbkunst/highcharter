@@ -16,7 +16,8 @@ hcmap(
 \arguments{
 \item{map}{A two-letter country code (case-insensitive), a collection path
 such as \code{"countries/jp/jp-all"} or \code{"custom/world"}, or a loaded map list.
-Country codes and their matching collection paths use the same local file.}
+See \code{\link[=hc_maps]{hc_maps()}} for installed identifiers. Country codes and their matching
+collection paths use the same local file.}
 
 \item{download_map_data}{For maps outside the package, download the map in R
 (\code{TRUE}) or attach the CDN script to the widget (\code{FALSE}). Defaults to

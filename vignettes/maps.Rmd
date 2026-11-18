@@ -16,6 +16,13 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ## Start with a map
 
 Pass a two-letter country code to draw one of the 202 installed maps.
+Use `hc_maps()` to list every installed identifier, including regional and world maps.
+
+```{r installed-maps}
+head(hc_maps())
+grep("^custom/", hc_maps(), value = TRUE)
+```
+
 For Japan, `hcmap("jp")`, `hcmap("JP")` and `hcmap("countries/jp/jp-all")`
 all load the same local map.
 
@@ -116,6 +123,44 @@ the returned object with your project. Pass it as `mapData` to a map series.
 ```{r offline-map, eval=FALSE}
 boundaries <- download_map_data("countries/us/us-ca-all")
 saveRDS(boundaries, "california-counties.rds")
+```
+
+## Bring your own GeoJSON or TopoJSON
+
+Read your file with `jsonlite::read_json()`, keeping the nested lists intact.
+TopoJSON can store a shared border once for both neighbors. This example uses two
+illustrative districts that share a boundary. The file ships with highcharter so
+you can run the example offline. Substitute your own file path to use your map.
+
+```{r custom-boundaries}
+path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+districts <- jsonlite::read_json(path, simplifyVector = FALSE)
+get_data_from_map(districts)
+```
+
+The map has a `code` property and the observations use `district_id`. Supply the
+map key first and the table key second. Keep identifiers with leading zeros as text.
+
+```{r custom-boundaries-join}
+visits <- data.frame(district_id = c("01", "02"), visits = c(18, 42))
+
+hcmap(
+  districts,
+  data = visits,
+  value = "visits",
+  joinBy = c("code", "district_id")
+) |>
+  hc_title(text = "Visits by district") |>
+  hc_tooltip(pointFormat = "{point.name}: {point.value} visits")
+```
+
+For a GeoJSON FeatureCollection the same workflow applies. To draw a boundary
+file on its own, pass the list directly to `hcmap()`.
+
+```{r own-geojson, eval=FALSE}
+districts <- jsonlite::read_json("districts.geojson", simplifyVector = FALSE)
+names(get_data_from_map(districts))
+hcmap(districts)
 ```
 
 ## European time zones

@@ -84,7 +84,8 @@ Bundled Highcharts JS: 12.6.0.
 * The export menu defaults to three dots. The three Highcharts theme adaptations
   keep their original menu icon. Sand Signika tiles its sand texture at native size.
 * `hcmap("jp")` reads the packaged map of Japan by country code.
-  The 202 country maps and five custom maps work offline. Other
+  `hc_maps()` lists the 202 country maps and five custom maps available offline.
+  `get_data_from_map()` reads join properties from GeoJSON and TopoJSON. Other
   collection paths retain CDN support. The income example uses `gni2014`.
 * ACF and PACF ticks stay within the correlation range, with room for endpoint markers.
 
