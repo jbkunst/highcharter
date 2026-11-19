@@ -136,31 +136,9 @@
     )
   )
 
-  options(
-    highcharter.theme = getOption(
-      "highcharter.theme",
-      hc_theme(
-        chart = list(backgroundColor = "transparent"),
-        colors = c(
-          "#7cb5ec",
-          "#434348",
-          "#90ed7d",
-          "#f7a35c",
-          "#8085e9",
-          "#f15c80",
-          "#e4d354",
-          "#2b908f",
-          "#f45b5b",
-          "#91e8e1"
-        )
-      )
-    ),
-    highcharter.verbose = FALSE,
-    highcharter.google_fonts = TRUE,
-    highcharter.debug = FALSE,
-    highcharter.rjson = FALSE,
-    highcharter.download_map_data = TRUE,
-    highcharter.color_palette = c(
+  default_theme <- hc_theme(
+    chart = list(backgroundColor = "transparent"),
+    colors = c(
       "#7cb5ec",
       "#434348",
       "#90ed7d",
@@ -172,5 +150,14 @@
       "#f45b5b",
       "#91e8e1"
     )
+  )
+  options(
+    highcharter.theme = getOption("highcharter.theme", default_theme),
+    highcharter.verbose = FALSE,
+    highcharter.google_fonts = TRUE,
+    highcharter.debug = FALSE,
+    highcharter.rjson = FALSE,
+    highcharter.download_map_data = TRUE,
+    highcharter.color_palette = default_theme$colors
   )
 }
