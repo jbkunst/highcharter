@@ -16,11 +16,118 @@ old_bootstrap_theme <- shiny::getShinyOption("bootstrapTheme")
 shiny::shinyOptions(bootstrapTheme = bslib::bs_theme(version = 5))
 ```
 
+## Start from a clean R session
+
+Run each example separately in a fresh R session. They all plot stopping
+distance against speed using `datasets::cars`, which ships with R.
+
+**Default.** Omitting the theme uses the package default in a fresh session.
+
+```r
+library(highcharter)
+
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
+```
+
+**Preset for one chart.** Carbon supplies its colors, grid and IBM Plex Sans.
+
+```r
+library(highcharter)
+
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(hc_theme("carbon"))
+```
+
+**Preset for subsequent charts.** Set the theme before creating the first
+widget. A later call to `hc_set_theme()` affects charts created after it.
+
+```r
+library(highcharter)
+
+hc_set_theme("carbon")
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
+```
+
+**Custom theme with a bundled font.** Select IBM Plex Sans by name even
+when starting from an empty theme.
+
+```r
+library(highcharter)
+
+team <- hc_theme(
+  colors = c("#005F73", "#CA6702"),
+  chart = list(style = list(fontFamily = "IBM Plex Sans, sans-serif"))
+)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+**System font.** Keep Carbon's colors and let the operating system choose
+the typeface. Each viewer sees their own system font.
+
+```r
+library(highcharter)
+
+team <- hc_theme("carbon", chart = list(style = list(fontFamily = "system-ui")))
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+### Proposed support for external fonts
+
+The next three examples illustrate a proposed API. The current version expects
+a CSS string in `fontFamily`. The proposal would also accept a font from
+`sass` here and carry its HTML dependency with the theme.
+
+**Use a font supplied by the viewer or page.** With a plain family name,
+the browser would use Noto Sans where available and `sans-serif` elsewhere.
+
+```r
+library(highcharter)
+
+team <- hc_theme(
+  chart = list(style = list(fontFamily = "Noto Sans, sans-serif"))
+)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+**Include Noto Sans with the chart.** With `local = TRUE`, preparing the
+font requires an internet connection on the first download. The exported
+chart can then use the included files offline.
+
+```r
+library(highcharter)
+
+team <- hc_theme(
+  chart = list(
+    style = list(fontFamily = sass::font_google("Noto Sans", local = TRUE))
+  )
+)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+**Load Noto Sans from Google when the chart opens.** With `local = FALSE`,
+the viewer needs a connection to Google Fonts. This example sets the custom
+theme for subsequent charts.
+
+```r
+library(highcharter)
+
+team <- hc_theme(
+  chart = list(
+    style = list(fontFamily = sass::font_google("Noto Sans", local = FALSE))
+  )
+)
+hc_set_theme(team)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
+```
+
 ## Choose a theme
 
-Set a default at the top of a script to use the same theme for subsequent
-charts. Widgets capture the theme when you create them. This example plots
-monthly sales for the same two regions throughout the article.
+The following gallery uses monthly sales for two regions. Set a default
+at the top of the script. Each widget captures it when you create the chart.
 
 ```{r}
 library(highcharter)
@@ -93,9 +200,11 @@ a family such as `Noto Sans KR` with `google_fonts = TRUE`.
 
 ## Inherit a Shiny app's theme
 
-Use `hc_set_theme("bslib")` once at app startup. With Bootstrap 5.3, the
-browser resolves the primary series color, base font, text, gridlines and
-tooltip against the CSS around each chart. The transparent background lets
+Use `hc_set_theme("bslib")` once at app startup. In this standalone example
+the app supplies Noto Sans and every chart using the preset inherits it.
+With Bootstrap 5.3, the browser resolves the primary series color, base
+font, text, gridlines and tooltip against the CSS around each chart.
+The transparent background lets
 the card or page show through. Text and gridlines follow the page's color
 mode. Other series use a categorical palette that you can replace with
 `hc_colors()`. Chart titles use the base font.
@@ -108,13 +217,15 @@ library(highcharter)
 hc_set_theme("bslib")
 
 ui <- page_fluid(
-  theme = bs_theme(version = 5, primary = "#783356", base_font = "Georgia"),
+  theme = bs_theme(version = 5, base_font = font_google("Noto Sans")),
   input_dark_mode(),
-  highchartOutput("sales")
+  highchartOutput("stopping")
 )
 
 server <- function(input, output, session) {
-  output$sales <- renderHighchart(sales_chart())
+  output$stopping <- renderHighchart(
+    hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
+  )
 }
 
 shinyApp(ui, server)
