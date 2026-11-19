@@ -70,61 +70,12 @@ package documentation so the help pages display the formatted examples.
 
 ## Open release follow-up
 
-The simplification review left two release checks unresolved:
-
-- Perform a manual screen-reader listening review. Keyboard navigation and
-  automated accessibility checks were covered, but listening was not.
-- Resolve the reverse-dependency migrations recorded in the
-  [NEWS migration guide](../NEWS.md#migration-guide), particularly the removed
-  theme constructors used by highdir, RKorAPClient and UnalR. AovBay also
-  references the previously removed `hcboxplot()` helper.
+Track the [release checks in the simplification plan](../plan.md#release-checks).
 
 ## Simplification review
 
-Completed on the bundle branch: single-series forecast intervals use the same
-time index as predictions, Sankey links count adjacent columns, and
-`list_parse2()` delegates validation to `list_parse()`. The package dropped
-the `assertthat` import, the global-variable declarations and `hc_rm_series()`.
-All 12 Shiny proxy sends now use `send_proxy_message()`.
-Item 1 is complete. The four loops in [R/proxy.R](../R/proxy.R) use
-`seq_along()` and send zero messages for empty selections.
-Item 2 is complete. `hchart.mts()` handles both panel layouts. Multivariate
-forecasts reuse the single-series forecasts and intervals, with a shared legend
-entry for each confidence level.
-Item 3 is complete. X-13 outliers and PCA loadings share `data_to_annotation_labels()`.
-A single annotation is appended through `hc_add_annotations()`. Mapped heatmaps
-now use the same coordinate rules on both axes, including dates and factors.
-Highcharts options in `...` require names. Setters for collections still accept
-whole objects by position.
-Item 4 is complete. Hierarchy nodes use globally unique IDs and look up each parent
-by its original group columns. Boxplots compute statistics once per group
-and share category positions with the outlier series. Sankey counts complete
-transitions between adjacent stages, with unique link IDs and distinct quantile cuts.
-Item 5 is complete. Survival curves, confidence bands and censoring times use
-the same survival summary for each stratum and prediction profile.
-For item 6, the widget attaches bundled fonts when enabled and checks the final
-options once for additional families.
-Shiny outputs report point clicks automatically. Explicit point and series
-events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
-links five examples, including the draggable equalizer. The pkgdown workflow
-builds this checkout for webR and passes that binary to all five apps.
-See [breaking changes](../NEWS.md#breaking-changes) for the series migration.
-
-The following items are proposals. Each row can be reviewed independently.
-
-| Order | Area | Proposed change and what to verify |
-| --- | --- | --- |
-| 6 | Fonts and tooltips | Keep `tooltip_chart()` and replace its JSON rewriting and debug output. Check callbacks, dimensions and repeated hover across two widgets. |
-| 7 | Imports, defaults and small helpers | Review the remaining stale imports (`count_`, `do`, `select_`, `rownames_to_column`), duplicated palette, legacy VML/canvas and language defaults, and unused `joindf` in maps. Inline `fix_1_length_data()` and `.join_hc_opts()` where readable. Share the GeoJSON methods, use a literal `.js` suffix in `export_hc()` and drop the internal `random_id()` from the website index. |
-| 8 | Public API and optional dependencies | Review `hcparcords()` first for deprecation. Check external use and provide a parallel-coordinates recipe covering colors and constant columns. Retain the `lm` and `loess` series methods for adding fits and bands to existing charts. Evaluate the optional `rjson` path with its direct `vctrs` use by comparing missing rows, list columns and serialization time. |
-| 9 | Smaller fixes from the function review | Check histogram labels for unequal breaks, matrix heatmap borders and placeholder options, and the literal `tibble` S3 registration. Consider shorter implementations for `datetime_to_timestamp()`, `hex_to_rgba()`, `is.highchart()`, density data and map-name normalization. Compare outputs before changing them. |
-
-Keep both `list_parse()` formats, `hc_elementId()`, `export_hc()`,
-`create_axis()`, `hc_size()`, `hc_maps()`, `get_data_from_map()`,
-`hcaes_string()`, `as_hcaes()`, `.merge_options()`, `.hc_axis_options()`,
-`hchart_pca()`, the generated setters and Stock Tools constructors. Keep the
-deprecated `hc_yAxis_multiples()` alias for this release. The demo, color
-helpers and `tooltip_table()` still have distinct uses.
+The [simplification plan](../plan.md) lists the remaining work in review order,
+completed changes and API decisions.
 
 ## Build the website
 

@@ -33,4 +33,5 @@ index.Rmd
 ^CRAN-SUBMISSION$
 ^.*\.qmd$
 ^AGENTS\.md$
+^plan\.md$
 ^air\.toml$
