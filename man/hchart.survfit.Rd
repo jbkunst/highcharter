@@ -56,6 +56,7 @@ hchart(lsurv2, fun = "cumhaz")
 
 # Plot the fit of a Cox proportional hazards regression model
 fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
-ovarian.surv <- survfit(fit, newdata = data.frame(age = 60))
+profiles <- data.frame(age = c(50, 70), row.names = c("Age 50", "Age 70"))
+ovarian.surv <- survfit(fit, newdata = profiles)
 hchart(ovarian.surv, ranges = TRUE)
 }

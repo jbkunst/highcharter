@@ -137,6 +137,11 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* `hchart.survfit()` draws a separate curve for each Cox prediction profile
+  within each stratum. Confidence bands follow the corresponding curve, and
+  censoring markers include times with multiple censored observations.
+  This method requires survival 3.6-5 or later.
+
 * Boxplots from `data_to_boxplot()` place outliers at the same x coordinate as
   their box when categories differ between series.
 

@@ -715,7 +715,8 @@ hchart.igraph <- function(object, ..., layout = NULL) {
 #'
 #' # Plot the fit of a Cox proportional hazards regression model
 #' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
-#' ovarian.surv <- survfit(fit, newdata = data.frame(age = 60))
+#' profiles <- data.frame(age = c(50, 70), row.names = c("Age 50", "Age 70"))
+#' ovarian.surv <- survfit(fit, newdata = profiles)
 #' hchart(ovarian.surv, ranges = TRUE)
 #' @export
 hchart.survfit <- function(
@@ -728,145 +729,102 @@ hchart.survfit <- function(
   ranges = FALSE,
   rangesOpacity = 0.3
 ) {
-  group <- NULL
-
-  # Check if there are groups
-  if (is.null(object$strata)) {
-    strata <- c("Series 1" = length(object$time))
-  } else {
-    strata <- object$strata
+  rlang::check_installed(
+    "survival",
+    version = "3.6-5",
+    reason = "to chart survival curves."
+  )
+  data <- summary(object, censored = TRUE, data.frame = TRUE)
+  if (is.null(data$surv)) {
+    stop("The fit must contain survival probabilities.", call. = FALSE)
   }
 
-  # Modify data according to functions (adapted from survival:::plot.survfit)
-  if (is.character(fun)) {
-    tfun <- switch(
+  transform_y <- if (is.character(fun)) {
+    switch(
       fun,
-      log = function(x) x,
-      event = function(x) 1 - x,
-      cumhaz = function(x) -log(x),
-      cloglog = function(x) log(-log(x)),
-      pct = function(x) x * 100,
-      logpct = function(x) 100 * x,
-      identity = function(x) x,
-      function(x) x
+      event = function(y) 1 - y,
+      cumhaz = function(y) -log(y),
+      cloglog = function(y) log(-log(y)),
+      pct = ,
+      logpct = function(y) 100 * y,
+      identity
     )
   } else if (is.function(fun)) {
-    tfun <- fun
+    fun
   } else {
-    tfun <- function(x) x
+    identity
   }
 
-  firsty <- tfun(1)
-
-  object$surv <- tfun(object$surv)
-
-  if (ranges && !is.null(object$upper)) {
-    object$upper <- tfun(object$upper)
-    object$lower <- tfun(object$lower)
+  first_y <- transform_y(1)
+  data$surv <- transform_y(data$surv)
+  ranges <- ranges && !is.null(data$lower) && !is.null(data$upper)
+  if (ranges) {
+    lower <- transform_y(data$lower)
+    upper <- transform_y(data$upper)
+    data$lower <- pmin(lower, upper)
+    data$upper <- pmax(lower, upper)
   }
-
-  # Prepare data
-  data <- data.frame(
-    x = object$time,
-    y = object$surv,
-    up = object$upper,
-    low = object$lower,
-    group = rep(names(strata), strata),
-    stringsAsFactors = FALSE
+  curves <- dplyr::group_split(
+    data,
+    dplyr::across(dplyr::any_of(c("strata", "data")))
   )
-
-  # Data markers
-  marker <- list(list(fillColor = markerColor, symbol = symbol, enabled = TRUE))
-
-  if (markTimes) {
-    mark <- object$n.censor == 1
-  } else {
-    mark <- FALSE
-  }
-
-  # Adjust Y axis range
-  yValues <- object$surv
-  ymin <- ifelse(min(yValues) >= 0, 0, min(yValues))
-  ymax <- ifelse(max(yValues) <= 1, 1, max(yValues))
-
+  profile_names <- colnames(object$surv)
+  marker <- list(fillColor = markerColor, symbol = symbol, enabled = TRUE)
+  bounds <- if (ranges) c(data$lower, data$upper)
+  limits <- range(0, 1, first_y, data$surv, bounds, finite = TRUE)
   hc <- highchart() |>
     hc_tooltip(shared = TRUE) |>
-    hc_yAxis(min = ymin, max = ymax) |>
-    hc_plotOptions(line = list(marker = list(enabled = FALSE)))
-
-  count <- 0
-
-  # Process groups by columns (CoxPH-like) or in a single column
-  if (!is.null(ncol(object$surv))) {
-    groups <- seq(ncol(object$surv))
-  } else {
-    groups <- names(strata)
-  }
-
-  for (name in groups) {
-    if (!is.null(ncol(object$surv))) {
-      df <- df[c("x", paste(c("y", "low", "up"), col, sep = "."))]
-      names(df) <- c("x", "y", "low", "up")
-      submark <- mark
-    } else {
-      df <- subset(data, group == name)
-      submark <- mark[data$group == name]
-    }
-
-    # Add first value if there is no value for time at 0 in the data
-    if (!0 %in% df$x) {
-      first <- list(list(x = 0, y = firsty))
-    } else {
-      first <- NULL
-    }
-
-    # Mark events
-    ls <- list_parse(df)
-    if (markTimes) {
-      ls[submark] <- lapply(ls[submark], c, marker = marker)
-    }
-
-    hc <- hc |>
-      hc_add_series(
-        data = c(first, ls),
-        step = "left",
-        name = name,
-        zIndex = 1,
-        color = JS(sprintf("Highcharts.getOptions().colors[%s]", count)),
-        ...
-      )
-
-    if (ranges && !is.null(object$upper)) {
-      # Add interval range
-      range <- lapply(ls, function(i) {
-        setNames(i[c("x", "low", "up")], NULL)
-      })
-
-      hc <- hc |>
-        hc_add_series(
-          data = range,
-          step = "left",
-          name = "Ranges",
-          type = "arearange",
-          zIndex = 0,
-          linkedTo = ":previous",
-          fillOpacity = rangesOpacity,
-          lineWidth = 0,
-          color = JS(sprintf("Highcharts.getOptions().colors[%s]", count)),
-          ...
-        )
-    }
-    count <- count + 1
-  }
-
-  hc <- hc |>
+    hc_yAxis(min = limits[1L], max = limits[2L]) |>
     hc_plotOptions(
-      series = list(
-        states = list(hover = list(enabled = FALSE))
-      )
+      line = list(marker = list(enabled = FALSE)),
+      series = list(states = list(hover = list(enabled = FALSE)))
     )
 
-  return(hc)
+  for (i in seq_along(curves)) {
+    curve <- curves[[i]]
+    profile <- curve[["data"]][1L]
+    if (!is.null(profile_names)) {
+      profile <- profile_names[profile]
+    }
+    label <- c(as.character(curve[["strata"]][1L]), profile)
+    name <- if (length(label)) paste(label, collapse = " / ") else "Series 1"
+
+    df <- data.frame(x = curve$time, y = curve$surv, group = name)
+    df$low <- curve[["lower"]]
+    df$up <- curve[["upper"]]
+    points <- purrr::pmap(df, list)
+    marked <- markTimes & curve$n.censor > 0
+    points[marked] <- lapply(points[marked], c, list(marker = marker))
+    if (!0 %in% curve$time) {
+      points <- c(list(list(x = 0, y = first_y)), points)
+    }
+    color <- JS(sprintf("Highcharts.getOptions().colors[%s]", i - 1L))
+    hc <- hc_add_series(
+      hc,
+      data = points,
+      step = "left",
+      name = name,
+      zIndex = 1,
+      color = color,
+      ...
+    )
+    if (ranges) {
+      hc <- hc_add_series(
+        hc,
+        data = Map(list, curve$time, curve$lower, curve$upper),
+        step = "left",
+        name = "Ranges",
+        type = "arearange",
+        zIndex = 0,
+        linkedTo = ":previous",
+        fillOpacity = rangesOpacity,
+        lineWidth = 0,
+        color = color,
+        ...
+      )
+    }
+  }
+  hc
 }
 
 #' @importFrom tibble rownames_to_column

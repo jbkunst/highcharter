@@ -42,7 +42,7 @@ Suggests:
     knitr,
     rmarkdown,
     fontawesome,
-    survival,
+    survival (>= 3.6-5),
     quantmod,
     xts,
     igraph,
