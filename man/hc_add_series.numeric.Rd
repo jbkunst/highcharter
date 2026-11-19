@@ -4,7 +4,7 @@
 \alias{hc_add_series.numeric}
 \title{\code{hc_add_series} for numeric objects}
 \usage{
-\method{hc_add_series}{numeric}(hc, data, ...)
+\method{hc_add_series}{numeric}(hc, data = NULL, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}

@@ -94,9 +94,6 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
   hc
 }
 
-#' @export
-hchart.tibble <- hchart.data.frame
-
 #' @importFrom graphics hist
 #' @export
 hchart.numeric <- function(object, breaks = "FD", ...) {
@@ -106,18 +103,35 @@ hchart.numeric <- function(object, breaks = "FD", ...) {
 }
 
 #' @export
-hchart.histogram <- function(object, ...) {
-  d <- diff(object$breaks)[1]
-
-  df <- tibble(
+hchart.histogram <- function(object, ..., type = "column") {
+  breaks <- object$breaks
+  left <- breaks[-length(breaks)]
+  right <- breaks[-1L]
+  df <- data.frame(
     x = object$mids,
     y = object$counts,
-    name = sprintf("(%s, %s]", object$mids - d / 2, object$mids + d / 2)
+    name = sprintf("%s \u2013 %s", left, right)
   )
 
-  highchart() |>
+  hc <- highchart()
+  point_range <- right[1L] - left[1L]
+  if (
+    identical(type, "variwide") ||
+      (identical(type, "column") && !isTRUE(object$equidist))
+  ) {
+    type <- "variwide"
+    df$x <- left
+    df$z <- right - left
+    point_range <- 0
+    hc <- hc_xAxis(hc, softMax = max(right))
+  }
+
+  hc |>
     hc_chart(zoomType = "x") |>
-    hc_plotOptions(column = list(borderRadius = 0)) |>
+    hc_plotOptions(
+      column = list(borderRadius = 0),
+      variwide = list(borderRadius = 0)
+    ) |>
     hc_tooltip(
       formatter = JS(
         "function() { return  this.point.name + '<br/>' + this.y; }"
@@ -125,8 +139,8 @@ hchart.histogram <- function(object, ...) {
     ) |>
     hc_add_series(
       data = list_parse(df),
-      type = "column",
-      pointRange = d,
+      type = type,
+      pointRange = point_range,
       groupPadding = 0,
       pointPadding = 0,
       borderWidth = 0,
@@ -462,13 +476,12 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
     hc_plotOptions(
       series = list(
         showInLegend = showInLegend,
-        boderWidth = 0,
         dataLabels = list(enabled = label)
       )
     ) |>
     hc_tooltip(formatter = fntltp) |>
     hc_legend(enabled = TRUE) |>
-    hc_colorAxis(auxarg = TRUE)
+    hc_colorAxis(visible = TRUE)
 
   if (!has_labels) {
     hc <- hc |>
@@ -496,8 +509,6 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
       min = -1,
       max = 1
     )
-  } else {
-    hc <- hc_colorAxis(hc, nullpar = NULL)
   }
 
   hc

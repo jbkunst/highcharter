@@ -287,8 +287,6 @@ packaged_map_file <- function(map) {
 }
 
 fix_map_name <- function(x = "custom/world") {
-  x <- stringr::str_replace(x, "\\.js$", "")
-  x <- stringr::str_replace(x, "https://code\\.highcharts\\.com/mapdata/", "")
-  x <- sprintf("%s.js", x)
-  x
+  x <- sub("^https://code\\.highcharts\\.com/mapdata/", "", x)
+  sprintf("%s.js", sub("\\.js$", "", x))
 }

@@ -1,23 +1,18 @@
 # Highcharter simplification plan
 
-The next review on `feat/highcharts-bundle` is **7, internal helpers and GeoJSON methods**.
+The next review on `feat/highcharts-bundle` is **7, GeoJSON methods**.
 
 ## Remaining work
 
 ### 7. Imports, defaults and internal helpers
 
-- [ ] Review the callers of `fix_1_length_data()` for inlining. Check whether the GeoJSON methods can share an implementation.
+- [ ] Check whether the GeoJSON methods can share an implementation.
 - [ ] Match a literal `.js` suffix in `export_hc()` and remove the internal `random_id()` from the pkgdown index.
 
 ### 8. Public API and optional dependencies
 
 - [ ] Check external uses of `hcparcords()` before deciding whether to deprecate it. Verify a replacement recipe for parallel coordinates with colors and constant columns.
 - [ ] Compare the optional `rjson` path with the default serializer. Measure serialization time and compare the handling of missing rows and list columns before deciding whether to retain that path and its direct use of `vctrs`.
-
-### 9. Findings from the function review
-
-- [ ] Check histogram labels with unequal bin widths, the borders and placeholder options in matrix heatmaps, and the S3 registration for the literal class `tibble`.
-- [ ] Compare outputs before simplifying `datetime_to_timestamp()`, `hex_to_rgba()`, `is.highchart()`, density series and map-name normalization.
 
 ## Completed
 
@@ -34,6 +29,8 @@ The next review on `feat/highcharts-bundle` is **7, internal helpers and GeoJSON
 | 7.2. Default palette | The default theme defines the ten series colors once. Its colors also initialize the independent `highcharter.color_palette` option used by `data_to_hierarchical()`. |
 | 7.3. Legacy defaults and map joins | Removed the unused VML and canvas URLs from widget defaults and the unused `joindf` assignment from `hc_add_series_map()`. |
 | 7.4. Language and global options | New sessions use `hc_set_language("en")` and the bundle's UTC default. The widget reads language and optional global settings directly, preserving user choices. Removed `.join_hc_opts()`. |
+| 7.5. Single numeric points | The common series-list path wraps a single numeric value for both serializers. Removed `fix_1_length_data()`. |
+| 9. Function review | Histograms use real bin limits and widths. Matrix heatmaps use a visible color axis and the bundle's border default. Tibbles use the data-frame method. Simplified timestamps, RGBA colors, density series and map-name normalization. `is.highchart()` recognizes the two widget classes. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
 

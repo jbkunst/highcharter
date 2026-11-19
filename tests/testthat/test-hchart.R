@@ -56,6 +56,27 @@ test_that("hchart returns a valid time series plot after valid data input", {
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
+test_that("histogram columns follow the computed bin boundaries", {
+  values <- c(0, 0.8, 2, 2.7, 5, 6)
+  h <- hist(values, breaks = c(0, 1, 3, 6), plot = FALSE)
+  series <- hchart(h)$x$hc_opts$series[[1]]
+  expect_identical(series$type, "variwide")
+  expect_identical(
+    vapply(series$data, `[[`, "", "name"),
+    c("0 \u2013 1", "1 \u2013 3", "3 \u2013 6")
+  )
+  expect_equal(vapply(series$data, `[[`, numeric(1), "x"), c(0, 1, 3))
+  expect_equal(vapply(series$data, `[[`, numeric(1), "z"), c(1, 2, 3))
+  expect_equal(vapply(series$data, `[[`, numeric(1), "y"), h$counts)
+  expect_identical(
+    hchart(values, breaks = h$breaks, type = "column")$x$hc_opts$series[[1]],
+    series
+  )
+  equal <- hchart(values, breaks = seq(0, 6, 2))$x$hc_opts$series[[1]]
+  expect_identical(equal$type, "column")
+  expect_equal(equal$pointRange, 2)
+})
+
 test_that("hchart returns a valid time series decomposition plot after valid data input", {
   x <- stl(log(AirPassengers), "per")
   h <- hchart(x)
@@ -280,6 +301,7 @@ test_that("matrix heatmaps use positions even when labels repeat", {
   expect_equal(c(opts$colorAxis$min, opts$colorAxis$max), c(-1, 1))
 
   plain <- hchart(unname(m))$x$hc_opts
+  expect_true(plain$colorAxis$visible)
   expect_false(plain$xAxis$visible)
   expect_identical(plain$series[[1]]$data[[1]]$x, 1L)
   expect_identical(plain$series[[1]]$data[[1]]$y, 1L)

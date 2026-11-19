@@ -33,15 +33,7 @@ hc_add_series.default <- function(hc, data = NULL, ...) {
 #' @param data A numeric object
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
-hc_add_series.numeric <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.numeric")
-  }
-
-  data <- fix_1_length_data(data)
-
-  hc_add_series.default(hc, data = data, ...)
-}
+hc_add_series.numeric <- hc_add_series.default
 
 
 ts_axis_type <- function(x) {
@@ -282,7 +274,7 @@ hc_add_series.density <- function(hc, data, ...) {
     message("hc_add_series.density")
   }
 
-  data <- list_parse(data.frame(cbind(x = data$x, y = data$y)))
+  data <- list_parse(data.frame(x = data$x, y = data$y))
 
   hc_add_series(hc, data = data, ...)
 }
@@ -777,6 +769,14 @@ hc_add_series_list <- function(hc, x) {
 
   if (is.data.frame(x)) {
     x <- list_parse(x)
+  }
+
+  # Both JSON serializers must send a single numeric point as an array.
+  for (i in seq_along(x)) {
+    points <- x[[i]][["data"]]
+    if (is.numeric(points) && length(points) == 1L && is.null(dim(points))) {
+      x[[i]]$data <- list(unname(points))
+    }
   }
 
   start <- length(hc$x$hc_opts$series)

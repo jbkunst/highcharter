@@ -4,6 +4,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* `is.highchart()` recognizes the `highchart` and `highchartstock` widget
+  classes. The legacy `highchart2` class is no longer recognized on its own.
+  Tibbles use the `data.frame` method for `hchart()`.
+
 * New charts use the same English preset as `hc_set_language("en")`. In
   English, `12,345.67` uses a comma for thousands. To keep a space, use
   `hc_set_language("en", thousandsSep = " ")`. Drilldown navigation uses the
@@ -72,6 +76,10 @@ Bundled Highcharts JS: 12.6.0.
 * The bundle now includes the official chart types and common feature modules. A new
   `highchartstock()` widget adds Stock Tools, advanced annotations and technical indicators.
   Third-party Motion, Regression, Grouped Categories and Draggable Legend plugins remain optional.
+
+* `hc_add_series_list()` draws a single numeric value as one point, matching
+  `hc_add_series()`. Histograms use the actual bin limits for their labels
+  and draw unequal-width bins to scale.
 
 * Ten new option wrappers cover accessibility, map views, time zones, data
   imports, empty charts, SVG definitions, sonification, navigation, Stock Tools

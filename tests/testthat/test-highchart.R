@@ -6,6 +6,22 @@ test_that("highchart object is a from highchart and htmlwidget class", {
   expect_true(all(class(hc) %in% c("highchart", "htmlwidget")))
 })
 
+test_that("single numeric values use the same point array in both series APIs", {
+  series <- list(
+    list(data = c(a = 7)),
+    list(data = 1:3),
+    list(data = numeric()),
+    list(name = "empty")
+  )
+  batch <- hc_add_series_list(highchart(), series)$x$hc_opts$series
+  expect_identical(batch[[1]]$data, list(7))
+  expect_identical(
+    batch[[1]],
+    hc_add_series(highchart(), data = 7)$x$hc_opts$series[[1]]
+  )
+  expect_identical(batch[-1], series[-1])
+})
+
 # highchartOutput ----
 
 test_that("highchartOutput returns a function", {

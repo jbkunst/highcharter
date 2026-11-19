@@ -152,9 +152,7 @@ highchartstock <- function(
 #' @param x An object to test
 #' @export
 is.highchart <- function(x) {
-  inherits(x, "highchart") ||
-    inherits(x, "highchart2") ||
-    inherits(x, "highchartstock")
+  inherits(x, c("highchart", "highchartstock"))
 }
 
 #' Widget output function for use in Shiny

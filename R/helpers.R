@@ -382,14 +382,8 @@ str_to_id <- function(x) {
 #' )
 #' @export
 datetime_to_timestamp <- function(dt) {
-  # http://stackoverflow.com/questions/10160822/
   stopifnot(inherits(dt, c("Date", "POSIXt")))
-
-  tmstmp <- as.numeric(as.POSIXct(dt))
-
-  tmstmp <- 1000 * tmstmp
-
-  tmstmp
+  1000 * as.numeric(as.POSIXct(dt))
 }
 
 #' Transform colors from hexadecimal format to rgba hc notation
@@ -403,14 +397,8 @@ datetime_to_timestamp <- function(dt) {
 #' @importFrom grDevices col2rgb
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
-  rgb <- x |>
-    col2rgb() |>
-    # t() |>
-    as.data.frame() |>
-    purrr::map_chr(str_c, collapse = ",")
-
-  rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
-  rgba
+  rgb <- col2rgb(x)
+  sprintf("rgba(%d,%d,%d,%s)", rgb[1L, ], rgb[2L, ], rgb[3L, ], alpha)
 }
 
 #' Monthly temperatures in Tokyo, London and Berlin
@@ -544,24 +532,4 @@ random_id <- function(n = 1, length = 10) {
     n,
     paste0(sample(x = source, size = length, replace = TRUE), collapse = "")
   )
-}
-
-#' Function to avoid the jsonlite::auto_unbox default
-#' @param x And element, numeric or character
-#' @examples
-#'
-#' hchart("A")
-#'
-#' highchart() |>
-#'   hc_add_series(data = 1)
-#' @noRd
-fix_1_length_data <- function(x) {
-  if (getOption("highcharter.verbose")) {
-    message("fix_1_length")
-  }
-
-  if (!is.list(x) && length(x) == 1) {
-    x <- list(x)
-  }
-  x
 }
