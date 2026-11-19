@@ -133,6 +133,11 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Data-frame heatmaps position dates and times on either axis and accept omitted
+  coordinates. Date cells span one day. Date-time cells use the shortest observed
+  interval on their axis, or one second for a single time. Set `colsize` or
+  `rowsize` to choose a different interval in milliseconds.
+
 * Multivariate forecasts plot the predictions and intervals for each series
   on shared or separate axes. The legend toggles each confidence level
   across all panels.

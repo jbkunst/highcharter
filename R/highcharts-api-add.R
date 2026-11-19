@@ -649,15 +649,28 @@ data_to_series <- function(data, mapping, type, ...) {
     type <- "bubble"
   }
 
-  # heatmap
+  cell_sizes <- list()
   if (identical(type, "heatmap")) {
-    if (!is.numeric(data[["x"]])) {
-      data[["xf"]] <- as.factor(data[["x"]])
-      data[["x"]] <- as.integer(data[["xf"]]) - 1
-    }
-    if (!is.numeric(data[["y"]])) {
-      data[["yf"]] <- as.factor(data[["y"]])
-      data[["y"]] <- as.integer(data[["yf"]]) - 1
+    for (axis in intersect(c("x", "y"), names(data))) {
+      values <- data[[axis]]
+      if (is.numeric(values)) {
+        next
+      }
+      labels <- as.factor(values)
+      data[[paste0(axis, "f")]] <- labels
+      if (inherits(values, c("Date", "POSIXt"))) {
+        times <- datetime_to_timestamp(values)
+        data[[axis]] <- times
+        size <- if (axis == "x") "colsize" else "rowsize"
+        step <- if (inherits(values, "Date")) {
+          86400000
+        } else {
+          diff(sort(unique(times)))
+        }
+        cell_sizes[[size]] <- if (length(step)) min(step) else 1000
+      } else {
+        data[[axis]] <- as.integer(labels) - 1
+      }
     }
   }
 
@@ -708,6 +721,9 @@ data_to_series <- function(data, mapping, type, ...) {
   if (...length()) {
     series <- add_arg_to_df(series, ...)
   }
+  for (size in setdiff(names(cell_sizes), names(series))) {
+    series[[size]] <- cell_sizes[[size]]
+  }
   if (has_name(mapping, "group") && !("name" %in% ...names())) {
     series <- rename(series, name = "group")
   }
@@ -715,46 +731,26 @@ data_to_series <- function(data, mapping, type, ...) {
 }
 
 data_to_options <- function(data, type, mapping) {
-  opts <- list()
+  heatmap <- identical(type, "heatmap")
+  opts <- list(
+    series_plotOptions_showInLegend = has_name(mapping, "group"),
+    add_colorAxis = heatmap ||
+      (identical(type, "treemap") && has_name(data, "color"))
+  )
 
-  # x
-  if (has_name(data, "x")) {
-    if (inherits(data[["x"]], c("Date", "POSIXt"))) {
-      opts$xAxis_type <- "datetime"
-    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-      opts$xAxis_type <- "category"
+  for (axis in intersect(c("x", "y"), names(data))) {
+    values <- data[[axis]]
+    axis_type <- if (inherits(values, c("Date", "POSIXt"))) {
+      "datetime"
+    } else if (heatmap && !is.numeric(values)) {
+      opts[[paste0(axis, "Axis_categories")]] <- levels(as.factor(values))
+      "category"
+    } else if (is.character(values) || is.factor(values)) {
+      "category"
     } else {
-      opts$xAxis_type <- "linear"
+      "linear"
     }
-  }
-
-  # y
-  if (has_name(data, "y")) {
-    if (inherits(data[["y"]], c("Date", "POSIXt"))) {
-      opts$yAxis_type <- "datetime"
-    } else if (is.character(data[["y"]]) | is.factor(data[["y"]])) {
-      opts$yAxis_type <- "category"
-    } else {
-      opts$yAxis_type <- "linear"
-    }
-  }
-
-  # showInLegend
-  opts$series_plotOptions_showInLegend <- has_name(mapping, "group")
-
-  # colorAxis
-  opts$add_colorAxis <-
-    (identical(type, "treemap") && "color" %in% names(data)) ||
-    identical(type, "heatmap")
-
-  # heatmap
-  if (identical(type, "heatmap")) {
-    if (!is.numeric(data[["x"]])) {
-      opts$xAxis_categories <- levels(as.factor(data[["x"]]))
-    }
-    if (!is.numeric(data[["y"]])) {
-      opts$yAxis_categories <- levels(as.factor(data[["y"]]))
-    }
+    opts[[paste0(axis, "Axis_type")]] <- axis_type
   }
 
   opts

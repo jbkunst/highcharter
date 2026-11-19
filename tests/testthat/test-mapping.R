@@ -124,3 +124,46 @@ test_that("xrange converts both date endpoints and preserves numeric coordinates
     expect_identical(added$x$hc_opts$series[[1]]$data, points)
   }
 })
+
+test_that("heatmap coordinates agree with their axes and cell sizes", {
+  cells <- data.frame(
+    day = as.Date("2026-11-18") + c(0, 2, 5),
+    store = factor(c("North", "South", "North"), levels = c("South", "North")),
+    value = c(5, 3, 7)
+  )
+  mapping <- hcaes(day, store, value = value)
+  opts <- hchart(cells, "heatmap", mapping)$x$hc_opts
+  series <- opts$series[[1]]
+  expect_identical(opts$xAxis$type, "datetime")
+  expect_null(opts$xAxis$categories)
+  expect_identical(opts$yAxis$categories, levels(cells$store))
+  expect_equal(
+    vapply(series$data, "[[", 0, "x"),
+    datetime_to_timestamp(cells$day)
+  )
+  expect_equal(vapply(series$data, "[[", 0, "y"), c(1, 0, 1))
+  expect_equal(series$colsize, 86400000)
+  added <- hc_add_series(highchart(), cells, "heatmap", mapping)
+  expect_identical(added$x$hc_opts$series, opts$series)
+
+  cells$time <- as.POSIXct("2026-11-18", tz = "UTC") + c(5400, 0, 1800)
+  mapping <- hcaes(store, time, value = value)
+  opts <- hchart(cells, "heatmap", mapping)$x$hc_opts
+  expect_identical(opts$yAxis$type, "datetime")
+  expect_null(opts$yAxis$categories)
+  expect_equal(opts$series[[1]]$rowsize, 1800000)
+  expect_equal(
+    vapply(opts$series[[1]]$data, "[[", 0, "y"),
+    datetime_to_timestamp(cells$time)
+  )
+  custom <- hchart(cells, "heatmap", mapping, rowsize = 60000)
+  expect_equal(custom$x$hc_opts$series[[1]]$rowsize, 60000)
+  single <- hchart(cells[1, ], "heatmap", hcaes(y = time, value = value))
+  expect_equal(single$x$hc_opts$series[[1]]$rowsize, 1000)
+  expect_null(single$x$hc_opts$series[[1]]$data[[1]]$x)
+
+  cells$store <- "Centro"
+  opts <- hchart(cells, "heatmap", hcaes(store, value = value))$x$hc_opts
+  expect_identical(opts$xAxis$categories, list("Centro"))
+  expect_null(opts$series[[1]]$data[[1]]$y)
+})

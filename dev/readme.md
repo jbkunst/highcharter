@@ -92,7 +92,8 @@ Item 2 is complete. `hchart.mts()` handles both panel layouts. Multivariate
 forecasts reuse the single-series forecasts and intervals, with a shared legend
 entry for each confidence level.
 For item 3, X-13 outliers and PCA loadings now share `data_to_annotation_labels()`.
-A single annotation is appended through `hc_add_annotations()`.
+A single annotation is appended through `hc_add_annotations()`. Mapped heatmaps
+now use the same coordinate rules on both axes, including dates and factors.
 Shiny outputs report point clicks automatically. Explicit point and series
 events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
 links five examples, including the draggable equalizer. The pkgdown workflow
@@ -103,7 +104,7 @@ The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 3 | Mappings and heatmaps | Share X/Y type inference and heatmap coordinate conversion. Check dates, factors, single categories, omitted axes and unnamed options in `validate_args()`. |
+| 3 | Option validation | Review unnamed options in `validate_args()` and keep positional axis collections working. |
 | 4 | Data transformations | Assign hierarchy IDs once per path and reuse them for parent links. Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
 | 5 | Survival curves | Fix `hchart.survfit()` for matrix predictions from multiple profiles. Verify each curve, confidence interval and censoring marker against the fitted model. |
 | 6 | Fonts and tooltips | Honor `google_fonts = FALSE` in `.hc_opt()` and measure the cost of repeated scans. Keep `tooltip_chart()` and replace its JSON rewriting and debug output. Check callbacks, dimensions and repeated hover across two widgets. |
