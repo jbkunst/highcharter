@@ -298,6 +298,9 @@ options(old)
 htmltools::tagList(spanish, french)
 ```
 
+`hc_set_language()` selects the text shown in chart controls. To choose the
+typeface for those labels, see [Use system fonts with a preset](themes.html#use-system-fonts-with-a-preset).
+
 ## Draggable Legend
 
 The Draggable Legend plugin lets readers reposition a legend. Load it for one widget with `hc_add_dependency("plugins/draggable-legend.js")`.

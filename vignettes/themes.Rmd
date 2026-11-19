@@ -27,8 +27,8 @@ library(highcharter)
 
 hc_set_theme("ft")
 
-sales_chart <- function() {
-  highchart(height = 260) |>
+sales_chart <- function(...) {
+  highchart(height = 260, ...) |>
     hc_title(text = "Monthly sales") |>
     hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun")) |>
     hc_yAxis(title = list(text = "Units")) |>
@@ -67,6 +67,28 @@ sales_chart()
 Use `hc_theme_merge(hc_theme("carbon"), team)` to reuse all of the options in
 `team`. Nested fields merge by name. A supplied array replaces the previous
 array, so a two-color palette stays two colors long.
+
+## Use system fonts with a preset
+
+To keep Carbon's palette and gridlines while using the device's interface
+font, override `chart.style.fontFamily`. Pass `google_fonts = FALSE` to
+`highchart()` to skip both the bundled fonts and requests to Google Fonts.
+The `sales_chart()` example above forwards this argument to `highchart()`.
+
+```{r carbon-system-font}
+carbon_system <- hc_theme(
+  "carbon",
+  chart = list(style = list(fontFamily = "system-ui, sans-serif"))
+)
+
+sales_chart(theme = carbon_system, google_fonts = FALSE)
+```
+
+Carbon's title, axis labels and legend inherit this font. Other presets can
+set fonts on individual elements. For example, to change the title in `hcrt`,
+also set `title = list(style = list(fontFamily = "system-ui, sans-serif"))`.
+For characters outside the chosen font, such as Korean place names, the
+browser can use another installed font that covers those characters.
 
 ## Inherit a Shiny app's theme
 
