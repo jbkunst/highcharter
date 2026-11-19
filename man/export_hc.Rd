@@ -9,7 +9,8 @@ export_hc(hc, filename = NULL, as = "is", name = NULL)
 \arguments{
 \item{hc}{A \code{Highcharts object}.}
 
-\item{filename}{String of the exported file.}
+\item{filename}{Output path. A \code{.js} extension is appended unless the path
+already ends in \code{.js}, \code{.mjs} or \code{.cjs}.}
 
 \item{as}{String to define how to save the configuration options.
 One of 'is', 'container', 'variable'.}

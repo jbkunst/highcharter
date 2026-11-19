@@ -522,9 +522,10 @@ is.hexcolor <- function(x) {
   str_detect(x, pattern)
 }
 
-#' Function to generate iids
+#' Generate random series IDs
 #' @param n Number of ids
 #' @param length Length of ids
+#' @keywords internal
 random_id <- function(n = 1, length = 10) {
   source <- c(seq(0, 9), letters)
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{random_id}
 \alias{random_id}
-\title{Function to generate iids}
+\title{Generate random series IDs}
 \usage{
 random_id(n = 1, length = 10)
 }
@@ -12,5 +12,6 @@ random_id(n = 1, length = 10)
 \item{length}{Length of ids}
 }
 \description{
-Function to generate iids
+Generate random series IDs
 }
+\keyword{internal}

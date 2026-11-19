@@ -194,7 +194,6 @@ importFrom(stats,
   time
 )
 importFrom(stringr,
-  str_c,
   str_detect,
   str_remove,
   str_replace,

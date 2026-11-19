@@ -148,7 +148,6 @@ reference:
   - is.highchart
   - list_parse
   - hc_elementId
-  - random_id
   - str_to_id
   - highcharter-exports
 - title: Examples and package information

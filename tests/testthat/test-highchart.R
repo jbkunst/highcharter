@@ -22,6 +22,26 @@ test_that("single numeric values use the same point array in both series APIs", 
   expect_identical(batch[-1], series[-1])
 })
 
+test_that("export_hc appends .js only when a JavaScript extension is absent", {
+  dir <- tempfile()
+  dir.create(dir)
+  on.exit(unlink(dir, recursive = TRUE), add = TRUE)
+  hc <- highchart()
+  for (filename in c(
+    "sales",
+    "salesjs",
+    "plot.js",
+    "module.mjs",
+    "module.cjs"
+  )) {
+    export_hc(hc, file.path(dir, filename))
+  }
+  expect_setequal(
+    list.files(dir),
+    c("sales.js", "salesjs.js", "plot.js", "module.mjs", "module.cjs")
+  )
+})
+
 # highchartOutput ----
 
 test_that("highchartOutput returns a function", {

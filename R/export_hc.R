@@ -1,7 +1,8 @@
 #' Function to export js file the configuration options
 #'
 #' @param hc A \code{Highcharts object}.
-#' @param filename String of the exported file.
+#' @param filename Output path. A `.js` extension is appended unless the path
+#'   already ends in `.js`, `.mjs` or `.cjs`.
 #' @param as String to define how to save the configuration options.
 #'   One of 'is', 'container', 'variable'.
 #' @param name A variable used to put as name of the generated object if
@@ -51,8 +52,8 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
     js <- sprintf("var %s = %s;", name, js)
   }
 
-  if (!str_detect(filename, ".js$")) {
-    filename <- str_c(filename, ".js")
+  if (!any(endsWith(filename, c(".js", ".mjs", ".cjs")))) {
+    filename <- paste0(filename, ".js")
   }
 
   if (getOption("highcharter.verbose")) {

@@ -164,6 +164,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* `export_hc()` appends `.js` to filenames such as `salesjs` and preserves
+  the JavaScript extensions `.js`, `.mjs` and `.cjs`.
+
 * Reusing one `tooltip_chart()` formatter across widgets now renders each
   mini chart in its own tooltip. The helper preserves `JS()` callbacks in
   `hc_opts` and accepts data column names containing spaces or hyphens.
