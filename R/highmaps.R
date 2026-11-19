@@ -60,8 +60,6 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
     tail(joinBy, 1) %in% names(df)
   )
 
-  joindf <- tail(joinBy, 1)
-
   ddta <- rename(df, value := value)
   ddta <- list_parse(ddta)
 

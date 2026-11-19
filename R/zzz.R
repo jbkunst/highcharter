@@ -19,8 +19,6 @@
   options(
     highcharter.global = list(
       Date = NULL,
-      VMLRadialGradientURL = "http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png",
-      canvasToolsURL = "http =//code.highcharts.com/list(version)/modules/canvas-tools.js",
       getTimezoneOffset = NULL,
       timezoneOffset = 0,
       useUTC = TRUE
