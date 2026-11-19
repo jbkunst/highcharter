@@ -87,8 +87,9 @@ sales_chart(theme = carbon_system, google_fonts = FALSE)
 Carbon's title, axis labels and legend inherit this font. Other presets can
 set fonts on individual elements. For example, to change the title in `hcrt`,
 also set `title = list(style = list(fontFamily = "system-ui, sans-serif"))`.
-For characters outside the chosen font, such as Korean place names, the
-browser can use another installed font that covers those characters.
+The bundled theme fonts include the Latin subset, including Spanish accents.
+For other scripts the browser can use an installed font, or you can request
+a family such as `Noto Sans KR` with `google_fonts = TRUE`.
 
 ## Inherit a Shiny app's theme
 

@@ -106,7 +106,7 @@ highchart <- function(
     dependencies = if (google_fonts) {
       list(htmltools::htmlDependency(
         name = "highcharter-fonts",
-        version = "5.3.0",
+        version = "5.3.0.1",
         src = "fonts",
         package = "highcharter",
         stylesheet = "fonts.css"

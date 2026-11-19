@@ -447,14 +447,14 @@ Its numeric position column is only used to place points; the axis has no title.
 
 ## Maintain theme presets
 
-Decide whether a new preset's typefaces should work offline. Reuse an existing
-family where it suits the design. When adding an offline family, obtain its
-regular (400, upright) WOFF2 files and license from the pinned
-[`@fontsource/<family>` release](https://www.npmjs.com/org/fontsource) (currently
-5.3.0). Place the script subsets and license in `inst/fonts/<family-slug>/`
-and add the corresponding `@font-face` rules from upstream's `400.css` to
-`inst/fonts/fonts.css`, preserving the Unicode ranges and using relative WOFF2
-URLs. Keep monospace companions for themes that request them.
+Decide whether a new preset's typefaces should work offline. For an offline
+family, add its Fontsource slug to [data-raw/fonts.R](../data-raw/fonts.R).
+Run `Rscript data-raw/fonts.R` from the repository root to rebuild `inst/fonts/`.
+The script downloads the regular (400, upright) Latin WOFF2 face and license
+for each selected family from a pinned release and writes the shared CSS with
+the upstream Unicode ranges. When the generated assets change, bump the
+`highcharter-fonts` dependency version in `R/highcharter.R`. Keep monospace
+companions for themes that use them.
 
 Each file in `inst/themes/` defines one preset. Its filename is the name
 accepted by `hc_theme()`. Use Highcharts option names, quote hex colors and
