@@ -166,6 +166,33 @@ hcmap(
 Use `get_data_from_map(map)` to inspect the identifiers in your own file.
 Both formats support a map on its own or a join to observations.
 
+### Overlay GeoJSON points
+
+With **geojsonio**, pass the district polygons to `hchart()` and add a second
+FeatureCollection for the clinics. The geometry selects a polygon series for
+the districts and a point series for the clinics.
+
+```{r geojson-clinics}
+library(geojsonio)
+
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+districts <- geojson_list(as.json(path))
+clinics <- data.frame(
+  name = c("West clinic", "East clinic"),
+  lon = c(0.5, 1.5),
+  lat = c(0.6, 0.4)
+)
+locations <- geojson_json(clinics, lon = "lon", lat = "lat")
+
+hchart(districts, name = "Districts") |>
+  hc_add_series(data = locations, name = "Clinics") |>
+  hc_title(text = "Clinics by district")
+```
+
+For a FeatureCollection containing several geometry families, select one with
+`type = "map"` (polygons), `"mapline"` (lines) or `"mappoint"` (points).
+Use another `hc_add_series()` call to draw a second family from the same object.
+
 ## European time zones
 
 Categorical maps use named data classes rather than a continuous scale.

@@ -307,30 +307,61 @@ hc_add_series.factor <- hc_add_series.character
 #' hc_add_series for geo_json & geo_list objects
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A \code{geo_json} or \code{geo_list} object.
-#' @param type Type of series. Can be 'mapline', 'mapoint'.
+#' @param type Series type inferred from the geometry. For mixed collections,
+#'   select `"map"` for polygons, `"mapline"` for lines or `"mappoint"` for points.
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
   if (getOption("highcharter.verbose")) {
-    message("hc_add_series.geo_json")
+    message("hc_add_series (GeoJSON)")
   }
 
-  stopifnot(hc$x$type == "map", !is.null(type))
+  stopifnot(hc$x$type == "map")
+
+  if (is.null(type)) {
+    geo <- if (is.character(data)) {
+      jsonlite::fromJSON(data, simplifyVector = FALSE)
+    } else {
+      data
+    }
+    stopifnot(identical(geo$type, "FeatureCollection"))
+    geometry <- purrr::map_chr(
+      geo$features,
+      c("geometry", "type"),
+      .default = NA_character_
+    )
+    series_types <- c(
+      Polygon = "map",
+      MultiPolygon = "map",
+      LineString = "mapline",
+      MultiLineString = "mapline",
+      Point = "mappoint"
+    )
+    geometry <- unique(geometry[!is.na(geometry)])
+    types <- unique(unname(series_types[geometry]))
+    if (anyNA(types)) {
+      stop(
+        "Unsupported GeoJSON geometry: ",
+        paste(setdiff(geometry, names(series_types)), collapse = ", "),
+        call. = FALSE
+      )
+    }
+    if (length(types) > 1L) {
+      stop(
+        "Mixed GeoJSON geometries. Select a series with type: ",
+        paste(types, collapse = ", "),
+        call. = FALSE
+      )
+    }
+    type <- if (length(types)) types[[1L]] else "map"
+  }
 
   hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
 }
 
 #' @rdname hc_add_series.geo_json
 #' @export
-hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.geo_list")
-  }
-
-  stopifnot(hc$x$type == "map", !is.null(type))
-
-  hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
-}
+hc_add_series.geo_list <- hc_add_series.geo_json
 
 #' hc_add_series for lm and loess objects
 #' @param hc A `highchart` `htmlwidget` object.

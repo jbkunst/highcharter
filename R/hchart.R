@@ -5,6 +5,8 @@
 #' generic that other classes and packages can extend.
 #'
 #' Run \code{methods(hchart)} to see what objects are supported.
+#' For a GeoJSON FeatureCollection from \pkg{geojsonio}, the geometry
+#' determines the series type. Supply `type` to select a layer explicitly.
 #'
 #' @param object  A R object.
 #' @param ... Additional arguments for the data series
@@ -46,6 +48,15 @@ hchart.list <- function(object, ...) {
   highchart() |>
     hc_add_series(data = object, ...)
 }
+
+#' @export
+hchart.geo_json <- function(object, ...) {
+  highchart(type = "map") |>
+    hc_add_series(data = object, ...)
+}
+
+#' @export
+hchart.geo_list <- hchart.geo_json
 
 #' @export
 hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {

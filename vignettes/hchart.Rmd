@@ -59,6 +59,22 @@ economics_long2 <- economics_long |>
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ```
 
+## GeoJSON
+
+`hchart()` reads the geometry from a `geo_list` or `geo_json` FeatureCollection
+from **geojsonio**. Here the local file contains two district polygons.
+
+```{r hchart-geojson}
+library(geojsonio)
+
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+districts <- geojson_list(as.json(path))
+hchart(districts)
+```
+
+The same call draws lines for routes and markers for points.
+The [Maps vignette](maps.html#overlay-geojson-points) shows how to combine layers.
+
 ## Numeric & Histograms
 
 ```{r}

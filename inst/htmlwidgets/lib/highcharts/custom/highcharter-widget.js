@@ -37,8 +37,9 @@
     if (!Array.isArray(options.series)) return;
     options.series = options.series.map(function(series) {
       if (series.geojson === true) {
-        if (debug) console.log('geojson', series.type, typeof series.series);
-        series.data = Highcharts.geojson(series.data, series.type);
+        if (debug) console.log('geojson', series.type, typeof series.data);
+        var geojson = typeof series.data === 'string' ? JSON.parse(series.data) : series.data;
+        series.data = Highcharts.geojson(geojson, series.type);
       }
       return series;
     });

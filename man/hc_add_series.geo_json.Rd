@@ -14,7 +14,8 @@
 
 \item{data}{A \code{geo_json} or \code{geo_list} object.}
 
-\item{type}{Type of series. Can be 'mapline', 'mapoint'.}
+\item{type}{Series type inferred from the geometry. For mixed collections,
+select \code{"map"} for polygons, \code{"mapline"} for lines or \code{"mappoint"} for points.}
 
 \item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}
 }

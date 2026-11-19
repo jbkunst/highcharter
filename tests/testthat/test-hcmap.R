@@ -1,3 +1,32 @@
+test_that("hchart dispatches both GeoJSON forms and forwards series options", {
+  skip_if_not_installed("geojsonio")
+  path <- system.file("extdata", "districts.geojson", package = "highcharter")
+  districts <- geojsonio::geojson_list(geojsonio::as.json(path))
+  for (geo in list(districts, geojsonio::geojson_json(districts))) {
+    chart <- hchart(geo, name = "Districts")
+    series <- chart$x$hc_opts$series[[1]]
+    expect_identical(chart$x$type, "map")
+    expect_identical(series$type, "map")
+    expect_identical(series$name, "Districts")
+    expect_true(series$geojson)
+    expect_identical(series$data, geo)
+  }
+  point <- geojsonio::geojson_list(c(-70.67, -33.45))
+  expect_identical(hchart(point)$x$hc_opts$series[[1]]$type, "mappoint")
+  route <- point
+  route$features[[1]]$geometry <- list(
+    type = "LineString",
+    coordinates = list(c(-71, -33), c(-70, -34))
+  )
+  expect_identical(hchart(route)$x$hc_opts$series[[1]]$type, "mapline")
+  route$features <- c(route$features, point$features)
+  expect_error(hchart(route), "Mixed GeoJSON")
+  expect_identical(
+    hchart(route, type = "mapline")$x$hc_opts$series[[1]]$type,
+    "mapline"
+  )
+})
+
 test_that("hcmap uses a loaded map without downloads or remote dependencies", {
   chart <- hcmap(worldgeojson, showInLegend = FALSE)
   expect_identical(chart$x$type, "map")
