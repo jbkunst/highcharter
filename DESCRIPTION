@@ -32,12 +32,12 @@ Imports:
     vctrs (>= 0.3.7),
     htmltools,
     jsonlite,
+    yyjsonr (>= 0.1.22),
     yaml,
     rlang (>= 0.4.10)
 VignetteBuilder: knitr
 Suggests:
     seasonal,
-    rjson,
     bslib,
     sass,
     knitr,

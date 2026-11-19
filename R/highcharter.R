@@ -79,13 +79,7 @@ highchart <- function(
     attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
   }
 
-  if (getOption("highcharter.rjson")) {
-    rlang::check_installed(
-      "rjson",
-      reason = "to use `options(highcharter.rjson = TRUE)`."
-    )
-    attr(x, "TOJSON_FUNC") <- rjson::toJSON
-  }
+  attr(x, "TOJSON_FUNC") <- widget_json
 
   # create widget
   hc <- htmlwidgets::createWidget(
@@ -110,6 +104,55 @@ highchart <- function(
   hc <- hc_size(hc, width = width, height = height)
 
   hc
+}
+
+# htmlwidgets calls this for both standalone widgets and Shiny outputs.
+widget_json <- function(
+  x,
+  pretty = FALSE,
+  digits = getOption("shiny.json.digits", 16L)
+) {
+  yyjsonr::write_json_str(
+    widget_json_value(x),
+    pretty = pretty,
+    digits_signif = if (is.finite(digits)) digits else -1L,
+    auto_unbox = TRUE,
+    dataframe = "columns",
+    name_repair = "minimal",
+    json_verbatim = TRUE
+  )
+}
+
+# Preserve the shapes used by htmlwidgets for options and point metadata.
+widget_json_value <- function(x) {
+  if (is.raw(x)) {
+    return(jsonlite::base64_enc(x))
+  }
+  if (is.complex(x)) {
+    x <- as.character(x)
+  }
+  if (is.list(x) && !inherits(x, "POSIXlt") && !is.array(x)) {
+    fields <- lapply(x, widget_json_value)
+    if (is.data.frame(x) && nrow(x) == 1L) {
+      fields <- lapply(fields, I)
+    }
+    return(fields)
+  }
+  if (is.null(attributes(x))) {
+    return(x)
+  }
+  if (inherits(x, "POSIXt")) {
+    stamp <- format(as.POSIXct(x), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+    x <- if (inherits(x, "AsIs")) I(stamp) else stamp
+  }
+  if (length(dim(x)) > 2L) {
+    return(lapply(asplit(x, 1L), widget_json_value))
+  }
+  if (length(x) && !is.null(names(x)) && is.null(dim(x))) {
+    names(x)[is.na(names(x))] <- ""
+    return(as.list(x))
+  }
+  x
 }
 
 #' Create a Highcharts Stock widget with Stock Tools

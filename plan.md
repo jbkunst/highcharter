@@ -1,24 +1,7 @@
 # Highcharter simplification plan
 
-The next review on `feat/highcharts-bundle` is **8.2, the optional `rjson` serializer**.
-
-## Remaining work
-
-### 8. Public API and optional dependencies
-
-- [ ] Decide whether to keep `rjson` as an opt-in for large charts and how to preserve missing observations across both routes. Removing it would still leave `vctrs::vec_match()` in the hierarchy helper.
-
-The [serializer benchmark](dev/sandbox/benchmark-serializers.R) ran on Linux with R 4.5.0, htmlwidgets 1.6.4, jsonlite 2.0.0 and rjson 0.2.23. The table gives median milliseconds from building the widget through producing its JSON, across ten paired runs after warm-up. Timing excludes browser rendering and file I/O for HTML output. Both serializers produced equivalent decoded payloads for the five complete inputs.
-
-| Input | Default (jsonlite) | Optional (rjson) |
-| --- | ---: | ---: |
-| 100 x/y points | 23.3 | 8.4 |
-| 10,000 values in a numeric vector | 3.6 | 3.3 |
-| 10,000 x/y points | 1,636.5 | 252.5 |
-| 1,000 points with nested metadata | 339.3 | 57.7 |
-| Packaged Chile map | 977.8 | 119.6 |
-
-In Chromium, a missing y value in an x/y table left a gap with the default route. The optional route dropped the row and connected its neighbors. It also dropped a point with a valid y and a null `custom` field. The map drew the same 16 regions in both cases.
+The function review on `feat/highcharts-bundle` is complete. The
+[screen-reader check](#release-checks) remains on the release checklist.
 
 ## Completed
 
@@ -35,13 +18,36 @@ In Chromium, a missing y value in an x/y table left a gap with the default route
 | 7.2. Default palette | The default theme defines the ten series colors once. Its colors also initialize the independent `highcharter.color_palette` option used by `data_to_hierarchical()`. |
 | 7.3. Legacy defaults and map joins | Removed the unused VML and canvas URLs from widget defaults and the unused `joindf` assignment from `hc_add_series_map()`. |
 | 7.4. Language and global options | New sessions use `hc_set_language("en")` and the bundle's UTC default. The widget reads language and optional global settings directly, preserving user choices. Removed `.join_hc_opts()`. |
-| 7.5. Single numeric points | The common series-list path wraps a single numeric value for both serializers. Removed `fix_1_length_data()`. |
+| 7.5. Single numeric points | The common series-list path wraps a single numeric value in a point array. Removed `fix_1_length_data()`. |
 | 7.6. GeoJSON methods | `hchart()` and `hc_add_series()` share one method for `geo_list` and `geo_json`. Mixed collections draw one layer per geometry family. Supply `type` to select a single family. |
 | 7.7. Export filenames and reference index | `export_hc()` recognizes literal JavaScript extensions using base R. The pkgdown index omits the internal `random_id()` helper. |
 | 8.1. Parallel coordinates | Removed `hcparcords()`. Use `data_to_parallel_coordinates()` with native parallel axes. The [data helpers article](vignettes/data-helpers.Rmd) shows the migration and all five public helpers. |
+| 8.2. Widget serialization | All chart constructors use `yyjsonr`. Removed the `highcharter.rjson` switch, its dependency and the missing-row filter. See the [benchmark](#widget-serialization-benchmark). |
 | 9. Function review | Histograms use real bin limits and widths. Matrix heatmaps use a visible color axis and the bundle's border default. Tibbles use the data-frame method. Simplified timestamps, RGBA colors, density series and map-name normalization. `is.highchart()` recognizes the two widget classes. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
+
+## Widget serialization benchmark
+
+Median milliseconds from constructing the widget through writing its JSON,
+across ten paired runs after warm-up. Both columns use the same inputs and
+their decoded payloads agree, including the missing observations. The current
+writer includes the conversions for named options and UTC timestamps.
+Browser rendering and HTML file output are outside these timings.
+
+| Widget | Previous htmlwidgets default (jsonlite) | Current highcharter (yyjsonr) |
+| --- | ---: | ---: |
+| 100 x/y points | 22.5 | 8.1 |
+| 10,000 values in a numeric vector | 3.6 | 1.6 |
+| 10,000 x/y points | 1,635 | 312 |
+| 10,000 x/y points with a missing y | 1,559 | 348 |
+| 1,000 points with nested metadata | 367 | 67 |
+| Three points with missing metadata | 6.8 | 5.8 |
+| Packaged Chile map | 1,013 | 152 |
+
+The [reproducible benchmark](dev/sandbox/benchmark-serializers.R) also
+reports the preparation and encoding times separately. This run used
+R 4.5.0, htmlwidgets 1.6.4, jsonlite 2.0.0 and yyjsonr 0.1.22 on Linux.
 
 ## Decisions to retain
 

@@ -303,8 +303,7 @@ data_to_parallel_coordinates <- function(data, ...) {
 #' Convert an object to list with identical structure
 #'
 #' Each row becomes one list of values. `list_parse()` keeps column names and
-#' `list_parse2()` drops them. With `highcharter.rjson = TRUE`, rows with
-#' missing values are omitted.
+#' `list_parse2()` drops them. Both keep rows with missing values.
 #'
 #' @importFrom tibble as_tibble
 #' @param df A data frame to parse to list
@@ -316,14 +315,6 @@ data_to_parallel_coordinates <- function(data, ...) {
 #' @export
 list_parse <- function(df) {
   stopifnot(is.data.frame(df))
-
-  if (getOption("highcharter.rjson")) {
-    rows <- nrow(df)
-    df <- df[vctrs::vec_detect_complete(df), , drop = FALSE]
-    if (getOption("highcharter.verbose") && (rows > nrow(df))) {
-      warning("Removed ", (rows - nrow(df)), " rows with NA's.")
-    }
-  }
 
   columns <- as_tibble(purrr::map_if(df, is.factor, as.character))
   .mapply(list, columns, NULL)

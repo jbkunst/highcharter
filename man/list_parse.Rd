@@ -14,8 +14,7 @@ list_parse2(df)
 }
 \description{
 Each row becomes one list of values. \code{list_parse()} keeps column names and
-\code{list_parse2()} drops them. With \code{highcharter.rjson = TRUE}, rows with
-missing values are omitted.
+\code{list_parse2()} drops them. Both keep rows with missing values.
 }
 \examples{
 

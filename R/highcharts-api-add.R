@@ -870,7 +870,7 @@ hc_add_series_list <- function(hc, x) {
     x <- list_parse(x)
   }
 
-  # Both JSON serializers must send a single numeric point as an array.
+  # Highcharts expects an array even for a single numeric point.
   for (i in seq_along(x)) {
     points <- x[[i]][["data"]]
     if (is.numeric(points) && length(points) == 1L && is.null(dim(points))) {

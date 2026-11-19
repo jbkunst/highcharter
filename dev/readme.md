@@ -77,8 +77,7 @@ Track the [release checks in the simplification plan](../plan.md#release-checks)
 The [simplification plan](../plan.md) lists the remaining work in review order,
 completed changes and API decisions. Run
 `Rscript dev/sandbox/benchmark-serializers.R` from the package root to repeat
-the JSON timings and missing-value comparisons. The script needs `pkgload`
-and the optional `rjson` package.
+the JSON timings and compare the decoded widgets against the htmlwidgets default.
 
 ## Build the website
 

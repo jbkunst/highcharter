@@ -4,6 +4,12 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Widgets now use `yyjsonr` to write JSON. Remove
+  `options(highcharter.rjson = TRUE)` from application code. Missing
+  observations stay in their original positions and reach Highcharts as
+  `null`. A missing optional field also preserves its point. For custom
+  `htmlwidgets.TOJSON_ARGS`, the widget writer accepts `pretty` and `digits`.
+
 * Removed `hcparcords()`. Pass your measurement columns to
   `data_to_parallel_coordinates()`, enable `parallelCoordinates = TRUE` in
   `hc_chart()` and add the result with `hc_add_series_list()`. Use
@@ -80,8 +86,7 @@ Bundled Highcharts JS: 12.6.0.
 
 * `hchart()` and `hc_add_series()` draw each geometry family in a mixed
   `geojsonio` FeatureCollection, with polygons below lines and points.
-  Supply `type` to draw just one family. Both `geo_json` and `geo_list` work with
-  the default serializer and with `highcharter.rjson = TRUE`.
+  Supply `type` to draw just one family. Both `geo_json` and `geo_list` are supported.
 
 * Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included
   by default, including keyboard navigation (#755).
@@ -161,9 +166,7 @@ Bundled Highcharts JS: 12.6.0.
   and option merging. Charts of `lm` and `loess` fits now include the fitted
   curve and its two-standard-error band.
 
-* `xts` and `rjson` are optional. Charting a regular `xts` series only needs
-  `xts`; OHLC prices also use `quantmod`. The optional JSON serializer is
-  requested only when `options(highcharter.rjson = TRUE)` is set.
+* `xts` is optional. Charting OHLC prices also uses `quantmod`.
 
 * `download_map_data()` uses R's configured download method by default.
 
