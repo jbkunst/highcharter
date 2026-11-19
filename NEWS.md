@@ -70,8 +70,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## New features
 
-* `hchart()` and `hc_add_series()` recognize points, lines and polygons in
-  `geojsonio` FeatureCollections. Both `geo_json` and `geo_list` work with
+* `hchart()` and `hc_add_series()` draw each geometry family in a mixed
+  `geojsonio` FeatureCollection, with polygons below lines and points.
+  Supply `type` to draw just one family. Both `geo_json` and `geo_list` work with
   the default serializer and with `highcharter.rjson = TRUE`.
 
 * Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included

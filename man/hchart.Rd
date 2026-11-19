@@ -36,8 +36,8 @@ generic that other classes and packages can extend.
 }
 \details{
 Run \code{methods(hchart)} to see what objects are supported.
-For a GeoJSON FeatureCollection from \pkg{geojsonio}, the geometry
-determines the series type. Supply \code{type} to select a layer explicitly.
+For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
+family gets its own layer. Supply \code{type} to select one layer explicitly.
 }
 \examples{
 methods(hchart)

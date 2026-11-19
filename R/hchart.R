@@ -5,8 +5,8 @@
 #' generic that other classes and packages can extend.
 #'
 #' Run \code{methods(hchart)} to see what objects are supported.
-#' For a GeoJSON FeatureCollection from \pkg{geojsonio}, the geometry
-#' determines the series type. Supply `type` to select a layer explicitly.
+#' For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
+#' family gets its own layer. Supply `type` to select one layer explicitly.
 #'
 #' @param object  A R object.
 #' @param ... Additional arguments for the data series

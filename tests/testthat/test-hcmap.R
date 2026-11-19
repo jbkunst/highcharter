@@ -19,11 +19,54 @@ test_that("hchart dispatches both GeoJSON forms and forwards series options", {
     coordinates = list(c(-71, -33), c(-70, -34))
   )
   expect_identical(hchart(route)$x$hc_opts$series[[1]]$type, "mapline")
-  route$features <- c(route$features, point$features)
-  expect_error(hchart(route), "Mixed GeoJSON")
+  route$features <- c(point$features, route$features, districts$features)
+  types <- c("map", "mapline", "mappoint")
+  for (geo in list(route, geojsonio::geojson_json(route))) {
+    layers <- hchart(geo, name = "Clinics", id = types)$x$hc_opts$series
+    expect_identical(vapply(layers, "[[", "", "type"), types)
+    expect_identical(vapply(layers, "[[", "", "id"), types)
+    expect_identical(
+      vapply(layers, "[[", "", "name"),
+      paste("Clinics", c("Polygons", "Lines", "Points"))
+    )
+    expect_identical(
+      vapply(layers, function(s) length(s$data$features), 0L),
+      c(2L, 1L, 1L)
+    )
+    expect_identical(
+      hchart(geo, type = "mapline")$x$hc_opts$series[[1]]$type,
+      "mapline"
+    )
+  }
+  expect_error(hchart(route, id = "single"), "distinct series ID")
+})
+
+test_that("nested GeoJSON geometries preserve feature properties across layers", {
+  point <- list(type = "MultiPoint", coordinates = list(c(0, 0), c(1, 1)))
+  line <- list(type = "LineString", coordinates = list(c(0, 0), c(1, 1)))
+  nested <- list(type = "GeometryCollection", geometries = list(point))
+  feature <- list(
+    type = "Feature",
+    properties = list(name = "Route 1"),
+    geometry = list(
+      type = "GeometryCollection",
+      geometries = list(nested, line)
+    )
+  )
+  geo <- structure(
+    list(type = "FeatureCollection", features = list(feature)),
+    class = "geo_list"
+  )
+  layers <- hchart(geo)$x$hc_opts$series
+  expect_identical(vapply(layers, "[[", "", "type"), c("mapline", "mappoint"))
+  points <- layers[[2]]$data$features
   expect_identical(
-    hchart(route, type = "mapline")$x$hc_opts$series[[1]]$type,
-    "mapline"
+    lapply(points, function(f) f$geometry$coordinates),
+    point$coordinates
+  )
+  expect_identical(
+    lapply(points, "[[", "properties"),
+    rep(list(feature$properties), 2)
   )
 })
 

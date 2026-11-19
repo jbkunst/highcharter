@@ -182,16 +182,36 @@ clinics <- data.frame(
   lon = c(0.5, 1.5),
   lat = c(0.6, 0.4)
 )
-locations <- geojson_json(clinics, lon = "lon", lat = "lat")
+locations <- geojson_list(clinics, lon = "lon", lat = "lat")
 
 hchart(districts, name = "Districts") |>
   hc_add_series(data = locations, name = "Clinics") |>
   hc_title(text = "Clinics by district")
 ```
 
-For a FeatureCollection containing several geometry families, select one with
-`type = "map"` (polygons), `"mapline"` (lines) or `"mappoint"` (points).
-Use another `hc_add_series()` call to draw a second family from the same object.
+If the districts, shuttle route and clinics arrive in **one FeatureCollection**,
+`hchart()` draws all three layers. The polygons sit below the route and the
+clinic markers, regardless of feature order in the file.
+
+```{r mixed-geojson}
+route <- list(
+  type = "Feature",
+  properties = list(name = "Clinic shuttle"),
+  geometry = list(
+    type = "LineString",
+    coordinates = lapply(locations$features, function(f) f$geometry$coordinates)
+  )
+)
+network <- districts
+network$features <- c(locations$features, list(route), districts$features)
+hchart(network)
+```
+
+To draw just the clinics from that collection, use
+`hchart(network, type = "mappoint")`. Use `"mapline"` for the route or
+`"map"` for the districts. The initial view includes points outside the
+districts as well. Set a center and zoom with `hc_mapView()` to frame a
+specific area.
 
 ## European time zones
 

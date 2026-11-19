@@ -39,10 +39,39 @@
       if (series.geojson === true) {
         if (debug) console.log('geojson', series.type, typeof series.data);
         var geojson = typeof series.data === 'string' ? JSON.parse(series.data) : series.data;
-        series.data = Highcharts.geojson(geojson, series.type);
+        return Object.assign({}, series, { data: Highcharts.geojson(geojson, series.type) });
       }
       return series;
     });
+  }
+
+  // Highcharts fits polygon and line series, but does not include mappoint bounds.
+  function fitGeojsonLayers(options, theme) {
+    var series = options.series;
+    if (!Array.isArray(series) || options.mapView || (theme && theme.mapView) ||
+        (options.chart && options.chart.map) || !series.every(s => s.geojson === true)) return;
+    var visible = series.filter(s => s.affectsMapView !== false);
+    if (!visible.some(s => s.type === 'mappoint') ||
+        !visible.some(s => s.type === 'map' || s.type === 'mapline')) return;
+
+    var west = Infinity, east = -Infinity, south = Infinity, north = -Infinity;
+    function visit(coords) {
+      if (typeof coords[0] === 'number') {
+        west = Math.min(west, coords[0]);
+        east = Math.max(east, coords[0]);
+        south = Math.min(south, coords[1]);
+        north = Math.max(north, coords[1]);
+      } else {
+        coords.forEach(visit);
+      }
+    }
+    visible.forEach(s => s.data.forEach(p => visit(p.geometry.coordinates)));
+    if (west <= east && south <= north) {
+      options.mapView = {
+        fitToGeometry: { type: 'MultiPoint', coordinates: [[west, south], [east, north]] },
+        padding: 8
+      };
+    }
   }
 
   function setBackground(el, x) {
@@ -95,6 +124,7 @@
       chart = Highcharts.stockChart(el, options);
     } else if (x.type === 'map') {
       prepareMapSeries(options, x.debug);
+      fitGeojsonLayers(options, x.theme);
       chart = Highcharts.mapChart(el, options);
     } else if (x.type === 'gantt') {
       chart = Highcharts.ganttChart(el, options);

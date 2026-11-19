@@ -12,12 +12,15 @@
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{data}{A \code{geo_json} or \code{geo_list} object.}
+\item{data}{A GeoJSON FeatureCollection of class \code{geo_json} or \code{geo_list}.}
 
-\item{type}{Series type inferred from the geometry. For mixed collections,
-select \code{"map"} for polygons, \code{"mapline"} for lines or \code{"mappoint"} for points.}
+\item{type}{By default, draw a series for every geometry family present, in
+polygon, line, point order. Supply \code{"map"}, \code{"mapline"} or \code{"mappoint"} to
+select one family.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.}
+\item{...}{Highcharts series options. For multiple layers, supply one name
+per layer or a shared name prefix. If supplying IDs, give one distinct
+ID per layer, in the same order.}
 }
 \description{
 hc_add_series for geo_json & geo_list objects

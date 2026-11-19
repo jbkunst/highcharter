@@ -304,32 +304,67 @@ hc_add_series.character <- function(hc, data, ...) {
 #' @export
 hc_add_series.factor <- hc_add_series.character
 
+# Highcharts draws Point features individually and expects a single geometry per feature.
+geojson_feature_parts <- function(feature, geometry = feature$geometry) {
+  switch(
+    geometry$type,
+    GeometryCollection = unlist(
+      lapply(geometry$geometries, function(part) {
+        geojson_feature_parts(feature, part)
+      }),
+      recursive = FALSE,
+      use.names = FALSE
+    ),
+    MultiPoint = lapply(geometry$coordinates, function(xy) {
+      feature$geometry <- list(type = "Point", coordinates = xy)
+      feature
+    }),
+    {
+      feature$geometry <- geometry
+      list(feature)
+    }
+  )
+}
+
 #' hc_add_series for geo_json & geo_list objects
 #' @param hc A `highchart` `htmlwidget` object.
-#' @param data A \code{geo_json} or \code{geo_list} object.
-#' @param type Series type inferred from the geometry. For mixed collections,
-#'   select `"map"` for polygons, `"mapline"` for lines or `"mappoint"` for points.
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
+#' @param data A GeoJSON FeatureCollection of class `geo_json` or `geo_list`.
+#' @param type By default, draw a series for every geometry family present, in
+#'   polygon, line, point order. Supply `"map"`, `"mapline"` or `"mappoint"` to
+#'   select one family.
+#' @param ... Highcharts series options. For multiple layers, supply one name
+#'   per layer or a shared name prefix. If supplying IDs, give one distinct
+#'   ID per layer, in the same order.
 #' @export
 hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
   if (getOption("highcharter.verbose")) {
     message("hc_add_series (GeoJSON)")
   }
-
   stopifnot(hc$x$type == "map")
 
+  geo <- if (is.character(data)) {
+    jsonlite::fromJSON(data, simplifyVector = FALSE)
+  } else {
+    data
+  }
+  geometry <- purrr::map_chr(
+    geo$features,
+    c("geometry", "type"),
+    .default = NA_character_
+  )
+  if (any(geometry %in% c("GeometryCollection", "MultiPoint"))) {
+    features <- geo$features[!is.na(geometry)]
+    geo$features <- as.list(unlist(
+      lapply(features, geojson_feature_parts),
+      recursive = FALSE,
+      use.names = FALSE
+    ))
+    data <- geo
+    geometry <- purrr::map_chr(geo$features, c("geometry", "type"))
+  }
+  labels <- c(map = "Polygons", mapline = "Lines", mappoint = "Points")
   if (is.null(type)) {
-    geo <- if (is.character(data)) {
-      jsonlite::fromJSON(data, simplifyVector = FALSE)
-    } else {
-      data
-    }
     stopifnot(identical(geo$type, "FeatureCollection"))
-    geometry <- purrr::map_chr(
-      geo$features,
-      c("geometry", "type"),
-      .default = NA_character_
-    )
     series_types <- c(
       Polygon = "map",
       MultiPolygon = "map",
@@ -337,26 +372,59 @@ hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
       MultiLineString = "mapline",
       Point = "mappoint"
     )
-    geometry <- unique(geometry[!is.na(geometry)])
-    types <- unique(unname(series_types[geometry]))
-    if (anyNA(types)) {
+    unknown <- setdiff(geometry[!is.na(geometry)], names(series_types))
+    if (length(unknown)) {
       stop(
         "Unsupported GeoJSON geometry: ",
-        paste(setdiff(geometry, names(series_types)), collapse = ", "),
+        paste(unknown, collapse = ", "),
         call. = FALSE
       )
     }
-    if (length(types) > 1L) {
-      stop(
-        "Mixed GeoJSON geometries. Select a series with type: ",
-        paste(types, collapse = ", "),
-        call. = FALSE
-      )
+
+    families <- unname(series_types[geometry])
+    types <- intersect(names(labels), families)
+    if (length(types) <= 1L) {
+      type <- if (length(types)) types else "map"
     }
-    type <- if (length(types)) types[[1L]] else "map"
+  }
+  if (!is.null(type)) {
+    return(hc_add_series.default(
+      hc,
+      data = data,
+      geojson = TRUE,
+      type = type,
+      ...
+    ))
   }
 
-  hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
+  opts <- validate_args("hc_add_series", list(...))
+  layer_names <- unname(labels[types])
+  if (length(opts$name) == 1L) {
+    layer_names <- paste(opts$name, layer_names)
+  }
+  if (length(opts$name) > 1L) {
+    layer_names <- opts$name
+  }
+  if (length(layer_names) != length(types)) {
+    stop("Supply one name per GeoJSON layer or a shared prefix.", call. = FALSE)
+  }
+  ids <- opts$id
+  if (
+    !is.null(ids) &&
+      (length(ids) != length(types) || anyNA(ids) || anyDuplicated(ids))
+  ) {
+    stop("Supply one distinct series ID per GeoJSON layer.", call. = FALSE)
+  }
+  series <- lapply(seq_along(types), function(i) {
+    geo$features <- unname(geo$features[which(families == types[i])])
+    opts$data <- geo
+    opts$geojson <- TRUE
+    opts$type <- types[i]
+    opts$name <- layer_names[i]
+    opts$id <- ids[i]
+    opts
+  })
+  hc_add_series_list(hc, series)
 }
 
 #' @rdname hc_add_series.geo_json

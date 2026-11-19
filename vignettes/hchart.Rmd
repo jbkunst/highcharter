@@ -72,8 +72,8 @@ districts <- geojson_list(as.json(path))
 hchart(districts)
 ```
 
-The same call draws lines for routes and markers for points.
-The [Maps vignette](maps.html#overlay-geojson-points) shows how to combine layers.
+With a mixed collection, the same call draws polygons, then lines, then points.
+The [Maps vignette](maps.html#overlay-geojson-points) shows a clinic network with all three.
 
 ## Numeric & Histograms
 
