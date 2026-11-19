@@ -106,9 +106,6 @@ validate_args <- function(name, options) {
     }
   }
 
-  # Setting fonts
-  hc$x$fonts <- unique(c(hc$x$fonts, .hc_get_fonts(hc$x$hc_opts)))
-
   hc
 }
 

@@ -25,11 +25,9 @@ highchartstock(
 
 \item{elementId}{Use an explicit element ID for the widget.}
 
-\item{google_fonts}{A boolean value. If TRUE (default), adds a reference to the
-Google Fonts API to the HTML head, downloading CSS for the font families
-defined in the Highcharts theme from https://fonts.googleapis.com. Set to
-FALSE if you load your own fonts using CSS. This option as default is
-controlled by \code{"highcharter.google_fonts"} option.}
+\item{google_fonts}{Use the bundled theme fonts and load additional font
+families from Google Fonts. Set to FALSE to manage fonts with your own
+CSS. Defaults to the \code{"highcharter.google_fonts"} option.}
 }
 \description{
 \code{highchartstock()} creates a Stock chart with the official Stock Tools GUI,

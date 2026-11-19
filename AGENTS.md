@@ -23,6 +23,7 @@ examples or the website. It describes each `dev/` directory and the build steps.
 - Before pushing, fetch the remote and inspect incoming commits, outgoing
   commits and local changes so the working branch stays synchronized.
 - Match validation to the change. Run an R example for an R helper. For rendering, keyboard navigation or resize, also exercise the output in a browser. For an issue, try its reproducible example and report what was observed.
+- When adding a theme with a new font family, decide whether it belongs in the offline collection. Record the choice in the theme change. Add a monospace companion only when a theme uses it. See the [theme maintenance guide](dev/readme.md#maintain-theme-presets).
 - Place each new public help topic in the `_pkgdown.yml` section where a user would look for it. Reuse an existing selector when it fits and run `pkgdown::check_pkgdown()` after updating the documentation.
 
 ## Licensing

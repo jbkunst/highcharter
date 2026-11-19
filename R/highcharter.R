@@ -12,11 +12,9 @@
 #' @param width A numeric width in pixels, or a CSS width such as `"100%"`.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
-#' @param google_fonts A boolean value. If TRUE (default), adds a reference to the
-#'   Google Fonts API to the HTML head, downloading CSS for the font families
-#'   defined in the Highcharts theme from https://fonts.googleapis.com. Set to
-#'   FALSE if you load your own fonts using CSS. This option as default is
-#'   controlled by \code{"highcharter.google_fonts"} option.
+#' @param google_fonts Use the bundled theme fonts and load additional font
+#'   families from Google Fonts. Set to FALSE to manage fonts with your own
+#'   CSS. Defaults to the \code{"highcharter.google_fonts"} option.
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #' @examples
 #' highchart(width = "100%") |>
@@ -73,11 +71,6 @@ highchart <- function(
     hc_opts <- opts$chart
   }
 
-  unfonts <- NULL
-  if (google_fonts) {
-    unfonts <- unique(c(.hc_get_fonts(hc_opts), .hc_get_fonts(theme)))
-  }
-
   opts$chart <- NULL
 
   # forward options using x
@@ -86,7 +79,6 @@ highchart <- function(
     theme = theme,
     conf_opts = opts,
     type = type,
-    fonts = unfonts,
     google_fonts = google_fonts,
     debug = getOption("highcharter.debug")
   )
@@ -111,6 +103,21 @@ highchart <- function(
     height = height,
     package = "highcharter",
     elementId = elementId,
+    dependencies = if (google_fonts) {
+      list(htmltools::htmlDependency(
+        name = "highcharter-fonts",
+        version = "5.3.0",
+        src = "fonts",
+        package = "highcharter",
+        stylesheet = "fonts.css"
+      ))
+    },
+    preRenderHook = if (google_fonts) {
+      function(hc) {
+        hc$x$fonts <- .hc_get_fonts(list(hc$x$hc_opts, hc$x$theme))
+        hc
+      }
+    },
     sizingPolicy = htmlwidgets::sizingPolicy(
       defaultWidth = "100%",
       # knitr.figure = FALSE,

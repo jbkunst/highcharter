@@ -102,6 +102,8 @@ and share category positions with the outlier series. Sankey counts complete
 transitions between adjacent stages, with unique link IDs and distinct quantile cuts.
 Item 5 is complete. Survival curves, confidence bands and censoring times use
 the same survival summary for each stratum and prediction profile.
+For item 6, the widget attaches bundled fonts when enabled and checks the final
+options once for additional families.
 Shiny outputs report point clicks automatically. Explicit point and series
 events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
 links five examples, including the draggable equalizer. The pkgdown workflow
@@ -112,7 +114,7 @@ The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 6 | Fonts and tooltips | Honor `google_fonts = FALSE` in `.hc_opt()` and measure the cost of repeated scans. Keep `tooltip_chart()` and replace its JSON rewriting and debug output. Check callbacks, dimensions and repeated hover across two widgets. |
+| 6 | Fonts and tooltips | Keep `tooltip_chart()` and replace its JSON rewriting and debug output. Check callbacks, dimensions and repeated hover across two widgets. |
 | 7 | Imports, defaults and small helpers | Review the remaining stale imports (`count_`, `do`, `select_`, `rownames_to_column`), duplicated palette, legacy VML/canvas and language defaults, and unused `joindf` in maps. Inline `fix_1_length_data()` and `.join_hc_opts()` where readable. Share the GeoJSON methods, use a literal `.js` suffix in `export_hc()` and drop the internal `random_id()` from the website index. |
 | 8 | Public API and optional dependencies | Review `hcparcords()` first for deprecation. Check external use and provide a parallel-coordinates recipe covering colors and constant columns. Retain the `lm` and `loess` series methods for adding fits and bands to existing charts. Evaluate the optional `rjson` path with its direct `vctrs` use by comparing missing rows, list columns and serialization time. |
 | 9 | Smaller fixes from the function review | Check histogram labels for unequal breaks, matrix heatmap borders and placeholder options, and the literal `tibble` S3 registration. Consider shorter implementations for `datetime_to_timestamp()`, `hex_to_rgba()`, `is.highchart()`, density data and map-name normalization. Compare outputs before changing them. |
@@ -246,8 +248,7 @@ The homepage enables autoplay for its shared four-chart player, subject to the
 reader’s reduced-motion preference. Both
 use `inst/examples/grid-sequence.js` for playback. Do not add an independent data or chart recipe to the
 adapter. Four persistent charts share four times, a common playback control
-and native Highcharts updates. They use the hcrt theme and highcharter's Google
-Fonts loader. The current common year is 2024: 179 economies, including Russia,
+and native Highcharts updates. They use the hcrt theme and its bundled fonts. The current common year is 2024: 179 economies, including Russia,
 with complete merchandise-export histories from 2005. The panel order is
 scatter, exports, map and pie. Only the third state focuses on South America in
 the scatter, map and pie; exports keep every region's color in all states.
@@ -325,7 +326,7 @@ For the separate 16-view single-chart experiment authored in R, run
 `dev/sandbox/transitions/pie-sequence.R` from the repository root after loading
 this checkout. Its data, chart objects and timed steps live in R;
 `pie-sequence.js` executes them through `htmlwidgets::onRender()`. It uses the
-`hcrt` theme and highcharter's Google Fonts loader for the actual typefaces.
+`hcrt` theme and its bundled fonts.
 See the [transition guide](sandbox/transitions/README.md).
 
 When generating LLM text documentation, pkgdown/Pandoc warns that it cannot
@@ -443,6 +444,15 @@ default label distance does not shift manufacturer labels into the group row.
 Its numeric position column is only used to place points; the axis has no title.
 
 ## Maintain theme presets
+
+Decide whether a new preset's typefaces should work offline. Reuse an existing
+family where it suits the design. When adding an offline family, obtain its
+regular (400, upright) WOFF2 files and license from the pinned
+[`@fontsource/<family>` release](https://www.npmjs.com/org/fontsource) (currently
+5.3.0). Place the script subsets and license in `inst/fonts/<family-slug>/`
+and add the corresponding `@font-face` rules from upstream's `400.css` to
+`inst/fonts/fonts.css`, preserving the Unicode ranges and using relative WOFF2
+URLs. Keep monospace companions for themes that request them.
 
 Each file in `inst/themes/` defines one preset. Its filename is the name
 accepted by `hc_theme()`. Use Highcharts option names, quote hex colors and

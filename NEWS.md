@@ -90,6 +90,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Changes
 
+* Theme fonts work offline. With automatic fonts enabled, the widget uses the
+  packaged WOFF2 families and requests additional families from Google Fonts
+  when it renders. Set `google_fonts = FALSE` to manage all fonts in page CSS.
+
 * `hchart()` shows ACF and PACF as lollipops at their reported lags.
   Multivariate time series and decompositions use shared table tooltips.
 

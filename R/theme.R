@@ -126,9 +126,6 @@ hc_add_theme <- function(hc, hc_thm) {
     "The theme used is not from hc_theme class" = .is_hc_theme(hc_thm)
   )
   hc$x$theme <- hc_thm
-  if (!identical(hc$x$google_fonts, FALSE)) {
-    hc$x$fonts <- unique(c(.hc_get_fonts(hc$x$hc_opts), .hc_get_fonts(hc_thm)))
-  }
   hc
 }
 
@@ -162,6 +159,12 @@ hc_theme_merge <- function(...) {
   # CSS variables and generic/system fonts are provided by the surrounding page.
   families <- families[!grepl("^var\\(", trimws(families))]
   families <- trimws(sub(",.*", "", families))
+  families <- gsub("^['\"]|['\"]$", "", families)
+  packaged <- basename(list.dirs(
+    system.file("fonts", package = "highcharter", mustWork = TRUE),
+    recursive = FALSE
+  ))
+  families <- families[!tolower(gsub("\\s+", "-", families)) %in% packaged]
   families <- families[
     !tolower(families) %in%
       c(
@@ -178,5 +181,5 @@ hc_theme_merge <- function(...) {
         "inherit"
       )
   ]
-  unname(gsub("\\s+", "+", families))
+  unique(unname(gsub("\\s+", "+", families)))
 }

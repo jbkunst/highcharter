@@ -116,12 +116,25 @@ test_that("the setter snapshots names and custom themes for each widget", {
   expect_identical(getOption("highcharter.theme"), theme)
 })
 
-test_that("CSS font variables do not create Google Fonts requests", {
-  expect_length(highchart(theme = hc_theme("bslib"))$x$fonts, 0)
-  off <- highchart(google_fonts = FALSE)
-  expect_length(hc_add_theme(off, hc_theme("carbon"))$x$fonts, 0)
-  expect_identical(
-    unname(highchart(theme = hc_theme("carbon"), google_fonts = TRUE)$x$fonts),
-    "IBM+Plex+Sans"
+test_that("theme fonts are local and extra families are resolved at render time", {
+  chart <- highchart(theme = hc_theme("carbon"), google_fonts = TRUE)
+  expect_equal(
+    vapply(chart$dependencies, "[[", character(1), "name"),
+    "highcharter-fonts"
   )
+  expect_length(chart$preRenderHook(chart)$x$fonts, 0)
+  chart <- hc_add_theme(chart, hc_theme("bslib")) |>
+    hc_title(style = list(fontFamily = "'IBM Plex Sans', sans-serif")) |>
+    hc_add_series(
+      data = 1:3,
+      dataLabels = list(style = list(fontFamily = "Fira Sans"))
+    )
+  expect_identical(chart$preRenderHook(chart)$x$fonts, "Fira+Sans")
+
+  off <- highchart(google_fonts = FALSE) |>
+    hc_add_theme(hc_theme("carbon")) |>
+    hc_title(style = list(fontFamily = "Fira Sans"))
+  expect_length(off$dependencies, 0)
+  expect_null(off$preRenderHook)
+  expect_null(off$x$fonts)
 })

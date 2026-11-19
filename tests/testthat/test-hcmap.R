@@ -2,7 +2,10 @@ test_that("hcmap uses a loaded map without downloads or remote dependencies", {
   chart <- hcmap(worldgeojson, showInLegend = FALSE)
   expect_identical(chart$x$type, "map")
   expect_identical(chart$x$hc_opts$series[[1]]$mapData, worldgeojson)
-  expect_null(chart$dependencies)
+  expect_length(
+    Filter(function(dep) !is.null(dep$src$href), chart$dependencies),
+    0L
+  )
   values <- data.frame(iso3 = "CHL", income = 12345)
   joined <- hcmap(
     worldgeojson,
@@ -30,8 +33,10 @@ test_that("country codes and canonical paths use the same installed boundaries",
   expect_equal(map("custom/world.topo.json")$type, "Topology")
   expect_error(map("zz"), "No packaged country map")
   external <- hcmap("countries/us/us-ca-all", download_map_data = FALSE)
+  remote <- Filter(function(dep) !is.null(dep$src$href), external$dependencies)
+  expect_length(remote, 1L)
   expect_identical(
-    external$dependencies[[1]]$script,
+    remote[[1L]]$script,
     "countries/us/us-ca-all.js"
   )
 })

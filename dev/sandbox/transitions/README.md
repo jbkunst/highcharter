@@ -31,9 +31,8 @@ en R, en `scenes` y `steps`:
 
 Usa el tema `hcrt`, la paleta de la referencia asignada por continente y un
 diseño sin título ni subtítulo, con leyenda y explicación centradas.
-Las fuentes IBM Plex Sans y Alegreya Sans SC se cargan mediante el mecanismo
-de Google Fonts de highcharter (`google_fonts = TRUE`); necesitan conexión
-la primera vez. La familia visible, al no haber títulos, es IBM Plex Sans.
+Con `google_fonts = TRUE`, highcharter carga IBM Plex Sans y Alegreya Sans SC
+desde los archivos incluidos en el paquete. La familia visible, al no haber títulos, es IBM Plex Sans.
 [pie-sequence.js](pie-sequence.js) ejecuta la secuencia usando `onRender()` y
 las actualizaciones de Highcharts, sin servidor Shiny ni librerías adicionales.
 
