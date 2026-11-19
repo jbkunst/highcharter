@@ -26,6 +26,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Disable the unused rig APT repository
+        run: rm -f /etc/apt/sources.list.d/rig.list
+
       - name: Build highcharter for webR
         run: |
           Rscript -e 'rwasm::build("local::.", out_dir = Sys.getenv("RUNNER_TEMP"))'

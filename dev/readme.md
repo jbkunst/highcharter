@@ -341,7 +341,9 @@ The Stock walkthrough also uses the gallery's Stock app.
 
 `dev/build-shinylive.R` exports the apps to `live/<name>/` and shares one
 Shinylive runtime and one highcharter archive across them. In GitHub Actions,
-`dev-wasm` builds the checkout with webR. The pkgdown job receives its
+`dev-wasm` builds the checkout with the R installation in the webR image.
+It disables the image's rig APT repository before installing build dependencies.
+The pkgdown job receives its
 `highcharter-webR` artifact and passes the path in `HIGHCHARTER_WASM_PACKAGE`.
 Pin the webR image in the workflow to the version bundled with the Shinylive
 assets in the export script when upgrading either. Pushes to
