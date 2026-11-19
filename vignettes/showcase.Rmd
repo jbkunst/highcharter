@@ -101,6 +101,114 @@ highchart() |>
 
 </details>
 
+## Charts inside tooltips
+
+These two Gapminder examples come from [Using tooltips in unexpected ways](https://jkunst.com/blog/posts/2019-02-04-using-tooltips-in-unexpected-ways/).
+
+### A country's population over time
+
+Each bubble is a country in 2007. Hover over one to see its population from 1952 to 2007.
+The `ttdata` column holds that country's observations as a list of points.
+
+```{r tooltip-gapminder, echo=FALSE}
+library(dplyr)
+library(purrr)
+library(highcharter)
+
+gp <- gapminder::gapminder |>
+  arrange(desc(year)) |>
+  distinct(country, .keep_all = TRUE)
+```
+
+```{r tooltip-population, echo=FALSE}
+gp2 <- gapminder::gapminder |>
+  select(country, x = year, y = pop) |>
+  group_nest(country, .key = "ttdata") |>
+  mutate(ttdata = map(ttdata, list_parse))
+
+gptot <- left_join(gp, gp2, by = "country")
+
+hchart(
+  gptot,
+  "point",
+  hcaes(lifeExp, gdpPercap, name = country, size = pop, group = continent)
+) |>
+  hc_yAxis(type = "logarithmic") |>
+  hc_tooltip(
+    useHTML = TRUE,
+    headerFormat = "<b>{point.key}</b>",
+    pointFormatter = tooltip_chart(accesor = "ttdata")
+  )
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r tooltip-population-source, ref.label=c("tooltip-gapminder", "tooltip-population"), eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+### A scatter plot inside a donut
+
+Each slice represents a continent's share of the 2007 population. Hover over a
+slice to see its countries in the center of the donut. The scatter plot shows
+life expectancy on the horizontal axis and GDP per capita on the vertical axis.
+
+```{r tooltip-donut, echo=FALSE}
+donutdata <- gp |>
+  group_by(continent) |>
+  summarise(pop = sum(as.double(pop)), .groups = "drop")
+
+donutdata2 <- gp |>
+  select(continent, x = lifeExp, y = gdpPercap) |>
+  group_nest(continent, .key = "ttdata") |>
+  mutate(ttdata = map(ttdata, list_parse)) |>
+  left_join(donutdata, by = "continent")
+
+hchart(
+  donutdata2,
+  "pie",
+  hcaes(name = continent, y = pop),
+  innerSize = "78%"
+) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    headerFormat = "<b>{point.key}</b>",
+    pointFormatter = tooltip_chart(
+      accesor = "ttdata",
+      hc_opts = list(
+        chart = list(type = "scatter"),
+        credits = list(enabled = FALSE),
+        plotOptions = list(scatter = list(marker = list(radius = 2)))
+      ),
+      width = 200,
+      height = 150
+    ),
+    positioner = JS(
+      "function (width, height) {
+      const chart = this.chart, center = chart.series[0].center;
+      return {
+        x: chart.plotLeft + center[0] - width / 2,
+        y: chart.plotTop + center[1] - height / 2
+      };
+    }"
+    ),
+    shadow = FALSE,
+    borderWidth = 0,
+    backgroundColor = "transparent",
+    hideDelay = 1000
+  )
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r tooltip-donut-source, ref.label=c("tooltip-gapminder", "tooltip-donut"), eval=FALSE, echo=TRUE}
+```
+
+</details>
+
 ## Pokemon
 
 Select a Pokémon type to explore its secondary types.

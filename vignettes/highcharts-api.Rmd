@@ -211,6 +211,8 @@ hc |>
   )
 ```
 
+For a chart inside the tooltip, see [Charts inside tooltips](showcase.html#charts-inside-tooltips).
+
 ## Keep other series visible on hover
 
 Move the pointer over a city to inspect it. An inactive opacity of one keeps
