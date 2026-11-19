@@ -641,7 +641,7 @@ convert_date_coordinates <- function(data, keys) {
   data
 }
 
-#' @importFrom dplyr mutate do ungroup
+#' @importFrom dplyr mutate
 #' @importFrom tibble tibble has_name
 data_to_series <- function(data, mapping, type, ...) {
   if (identical(type, "point")) {

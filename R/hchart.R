@@ -418,7 +418,6 @@ hchart.ets <- function(object, ...) {
     hc_title(text = paste("Decomposition by", object$method, "method"))
 }
 
-#' @importFrom dplyr count_ left_join select
 #' @importFrom rlang .data
 #' @export
 hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
@@ -504,7 +503,6 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   hc
 }
 
-#' @importFrom dplyr count_ left_join select_
 #' @export
 hchart.dist <- function(object, ...) {
   hchart.matrix(as.matrix(object), ...)
@@ -516,6 +514,7 @@ hchart.dist <- function(object, ...) {
 #' @param layout A layout from igraph package.
 #' @param ... Additional arguments for the data series
 #'    (\url{https://api.highcharts.com/highcharts/series}).
+#' @importFrom dplyr left_join select
 #' @importFrom stats setNames
 #' @importFrom rlang .data
 #' @examples
@@ -827,7 +826,6 @@ hchart.survfit <- function(
   hc
 }
 
-#' @importFrom tibble rownames_to_column
 #' @importFrom rlang .data
 #' @export
 hchart.density <- function(object, type = "area", ...) {

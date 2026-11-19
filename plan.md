@@ -1,12 +1,12 @@
 # Highcharter simplification plan
 
-The next review on `feat/highcharts-bundle` is **7, imports, defaults and internal helpers**.
+The next review on `feat/highcharts-bundle` is **7.2, chart defaults and map cleanup**.
 
 ## Remaining work
 
 ### 7. Imports, defaults and internal helpers
 
-- [ ] Check usage before dropping the legacy imports `count_`, `do`, `select_` and `rownames_to_column`. Review the duplicated palette, legacy VML/canvas settings, language defaults and the unused `joindf` assignment in maps.
+- [ ] Review the duplicated palette, legacy VML/canvas settings, language defaults and the unused `joindf` assignment in maps.
 - [ ] Review the callers of `fix_1_length_data()` and `.join_hc_opts()` for inlining. Check whether the GeoJSON methods can share an implementation.
 - [ ] Match a literal `.js` suffix in `export_hc()` and remove the internal `random_id()` from the pkgdown index.
 
@@ -31,6 +31,7 @@ The next review on `feat/highcharts-bundle` is **7, imports, defaults and intern
 | 5. Survival curves | Curves, confidence bands and censoring times come from the same survival summary for each stratum and prediction profile. |
 | 6.1. Fonts | The 15 theme families ship with their Latin WOFF2 subsets. The widget checks the final options once for additional families and respects `google_fonts = FALSE`. [Font maintenance](dev/readme.md#maintain-theme-presets) |
 | 6.2. Charts in tooltips | `tooltip_chart()` shares JavaScript serialization with `export_hc()`. Each tooltip renders its own chart when a formatter is reused across widgets. [Examples](vignettes/showcase.Rmd#charts-inside-tooltips) |
+| 7.1. Imports | Removed six redundant imports and moved the declarations for `left_join()` and `select()` to `hchart.igraph()`, which uses both. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
 

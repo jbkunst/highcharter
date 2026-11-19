@@ -284,7 +284,6 @@ data_to_annotation_labels <- function(data, xAxis = 0, yAxis = 0) {
 #' iris <- sample_n(iris, 60)
 #'
 #' hcparcords(iris, color = colorize(iris$Species))
-#' @importFrom dplyr mutate_if
 #' @export
 hcparcords <- function(df, ...) {
   stopifnot(is.data.frame(df))
