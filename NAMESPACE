@@ -144,7 +144,6 @@ export(tooltip_table)
 importFrom(dplyr,
   all_of,
   arrange,
-  bind_cols,
   bind_rows,
   count,
   count_,
@@ -167,7 +166,6 @@ importFrom(dplyr,
   vars
 )
 importFrom(grDevices,
-  boxplot.stats,
   col2rgb,
   colorRampPalette
 )

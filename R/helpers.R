@@ -1,12 +1,7 @@
-get_box_values <- function(x) {
-  boxplot.stats(x)$stats |>
-    t() |>
-    as.data.frame() |>
-    setNames(c("low", "q1", "median", "q3", "high"))
-}
-
-get_outliers_values <- function(x) {
-  boxplot.stats(x)$out
+get_box_values <- function(x, add_outliers) {
+  result <- grDevices::boxplot.stats(x, do.conf = FALSE, do.out = add_outliers)
+  box <- as.list(setNames(result$stats, c("low", "q1", "median", "q3", "high")))
+  tibble(!!!box, out = list(result$out))
 }
 
 #' Helper to transform data frame for boxplot highcharts format
@@ -38,9 +33,8 @@ get_outliers_values <- function(x) {
 #'
 #' }
 #'
-#' @importFrom dplyr transmute group_nest rename group_by bind_cols bind_rows summarise
+#' @importFrom dplyr transmute group_nest rename group_by bind_rows summarise
 #' @importFrom purrr map_if
-#' @importFrom grDevices boxplot.stats
 #' @export
 data_to_boxplot <- function(
   data,
@@ -50,62 +44,56 @@ data_to_boxplot <- function(
   add_outliers = FALSE,
   ...
 ) {
-  stopifnot(
-    is.data.frame(data),
-    !missing(variable)
-  )
-
+  stopifnot(is.data.frame(data), !missing(variable))
   options <- validate_args("data_to_boxplot", rlang::enquos(...))
-  dx <- data |>
-    transmute(x = {{ variable }})
 
-  if (!missing(group_var)) {
-    dg <- data |>
-      select({{ group_var }})
+  values <- tibble::as_tibble(transmute(data, value = {{ variable }}))
+  values$name <- if (missing(group_var)) {
+    0
   } else {
-    dg <- data.frame(rep(0, nrow(dx)))
+    dplyr::pull(data, {{ group_var }})
+  }
+  values$series <- if (missing(group_var2)) {
+    NA
+  } else {
+    dplyr::pull(data, {{ group_var2 }})
   }
 
-  if (!missing(group_var2)) {
-    dg2 <- data |>
-      select({{ group_var2 }})
-  } else {
-    dg2 <- data.frame(rep(NA, nrow(dx)))
-  }
-
-  dg <- dg |> setNames("name")
-  dg2 <- dg2 |> setNames("series")
-
-  dat <- bind_cols(dx, dg, dg2)
-
-  dat1 <- dat |>
+  groups <- values |>
     group_by(.data$series, .data$name) |>
-    summarise(get_box_values(.data$x), .groups = "drop") |>
+    summarise(get_box_values(.data$value, add_outliers), .groups = "drop") |>
+    mutate(x = match(.data$name, unique(.data$name)) - 1L)
+
+  boxes <- groups |>
+    select(-"out") |>
     group_nest(.data$series) |>
-    mutate(data = map(data, list_parse)) |>
-    rename(name = "series") |>
-    mutate(id = .data$name) |>
-    mutate(type = "boxplot", !!!options)
-  # list_parse()
+    transmute(
+      name = .data$series,
+      data = map(.data$data, list_parse),
+      id = .data$series,
+      type = "boxplot",
+      !!!options
+    )
 
-  if (add_outliers) {
-    dat2 <- dat |>
-      mutate(name = as.numeric(factor(.data$name)) - 1) |>
-      group_by(.data$series, .data$name) |>
-      dplyr::group_modify(~ data.frame(y = get_outliers_values(.x$x))) |>
-      ungroup() |>
-      rename(x = "name") |>
-      group_nest(.data$series) |>
-      mutate(data = map(data, list_parse)) |>
-      rename(linkedTo = "series") |>
-      mutate(type = "scatter", showInLegend = FALSE, !!!options)
-
-    dout <- bind_rows(dat1, dat2)
-  } else {
-    dout <- dat1
+  if (!add_outliers) {
+    return(boxes)
   }
 
-  dout
+  counts <- lengths(groups$out)
+  points <- tibble(
+    linkedTo = rep(groups$series, counts),
+    x = rep(groups$x, counts),
+    y = unlist(groups$out, use.names = FALSE)
+  ) |>
+    group_nest(.data$linkedTo) |>
+    mutate(
+      data = map(.data$data, list_parse),
+      type = "scatter",
+      showInLegend = FALSE,
+      !!!options
+    )
+
+  bind_rows(boxes, points)
 }
 
 #' Helper to transform data frame for treemap/sunburst highcharts format

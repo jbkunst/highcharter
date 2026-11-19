@@ -137,6 +137,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Boxplots from `data_to_boxplot()` place outliers at the same x coordinate as
+  their box when categories differ between series.
+
 * Treemap and sunburst nodes from `data_to_hierarchical()` now keep the
   correct parent when labels on different paths produce the same ID.
 

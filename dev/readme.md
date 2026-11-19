@@ -97,7 +97,8 @@ now use the same coordinate rules on both axes, including dates and factors.
 Highcharts options in `...` require names. Setters for collections still accept
 whole objects by position.
 For item 4, hierarchy nodes use globally unique IDs and look up each parent
-by its original group columns.
+by its original group columns. Boxplots compute statistics once per group
+and share category positions with the outlier series.
 Shiny outputs report point clicks automatically. Explicit point and series
 events use separate input names. The [Shiny gallery](../vignettes/shiny-gallery.Rmd)
 links five examples, including the draggable equalizer. The pkgdown workflow
@@ -108,7 +109,7 @@ The following items are proposals. Each row can be reviewed independently.
 
 | Order | Area | Proposed change and what to verify |
 | --- | --- | --- |
-| 4 | Data transformations | Compute boxplot statistics and outliers once per group and absorb `get_outliers_values()`. For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
+| 4 | Data transformations | For Sankey, decide the behavior for fewer than two columns, missing values and repeated quantile breaks. |
 | 5 | Survival curves | Fix `hchart.survfit()` for matrix predictions from multiple profiles. Verify each curve, confidence interval and censoring marker against the fitted model. |
 | 6 | Fonts and tooltips | Honor `google_fonts = FALSE` in `.hc_opt()` and measure the cost of repeated scans. Keep `tooltip_chart()` and replace its JSON rewriting and debug output. Check callbacks, dimensions and repeated hover across two widgets. |
 | 7 | Imports, defaults and small helpers | Review the remaining stale imports (`count_`, `do`, `select_`, `rownames_to_column`), duplicated palette, legacy VML/canvas and language defaults, and unused `joindf` in maps. Inline `fix_1_length_data()` and `.join_hc_opts()` where readable. Share the GeoJSON methods, use a literal `.js` suffix in `export_hc()` and drop the internal `random_id()` from the website index. |
