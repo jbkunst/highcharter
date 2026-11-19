@@ -22,12 +22,7 @@
 #' @export
 hc_theme <- function(preset = NULL, ...) {
   base <- if (is.null(preset)) list() else .read_theme_preset(preset)
-  options <- list(...)
-  if (
-    length(options) && (is.null(names(options)) || any(!nzchar(names(options))))
-  ) {
-    stop("Name each Highcharts theme option.", call. = FALSE)
-  }
+  options <- validate_args("hc_theme", list(...))
   # htmlwidgets unboxes a one-element vector; Highcharts expects a color array.
   if (is.character(options$colors) && length(options$colors) == 1L) {
     options$colors <- as.list(options$colors)

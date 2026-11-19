@@ -285,6 +285,7 @@ hchart.mforecast <- function(
 #' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...) {
+  validate_args("hchart", rlang::enquos(...))
   ytitle <- switch(
     object$type,
     partial = "Partial ACF",
@@ -401,6 +402,7 @@ hchart.decomposed.ts <- function(object, ...) {
 
 #' @export
 hchart.ets <- function(object, ...) {
+  validate_args("hchart", rlang::enquos(...))
   names <- c(y = "observed", l = "level", b = "slope", s1 = "season")
 
   data <- cbind(
@@ -420,6 +422,7 @@ hchart.ets <- function(object, ...) {
 #' @importFrom rlang .data
 #' @export
 hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
+  validate_args("hchart", rlang::enquos(...))
   if (getOption("highcharter.verbose")) {
     message("hchart.matrix")
   }

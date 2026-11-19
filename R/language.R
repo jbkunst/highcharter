@@ -57,13 +57,7 @@ hc_language <- function(locale = "en", ...) {
     lang <- jsonlite::fromJSON(path)
   }
   lang$locale <- locale
-  overrides <- list(...)
-  if (
-    length(overrides) &&
-      (is.null(names(overrides)) || any(!nzchar(names(overrides))))
-  ) {
-    stop("Name each Highcharts lang override.", call. = FALSE)
-  }
+  overrides <- validate_args("hc_language", list(...))
   .merge_options(lang, overrides, keep_null = TRUE)
 }
 

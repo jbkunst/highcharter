@@ -15,14 +15,16 @@ hc_add_series <- function(hc, data = NULL, ...) {
 
 
 #' @export
-hc_add_series.default <- function(hc, ...) {
+hc_add_series.default <- function(hc, data = NULL, ...) {
   if (getOption("highcharter.verbose")) {
     message("hc_add_series.default")
   }
 
-  validate_args("add_series", eval(substitute(alist(...))))
-
-  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
+  options <- validate_args("hc_add_series", list(...))
+  if (!missing(data)) {
+    options <- c(list(data = data), options)
+  }
+  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(options))
 
   hc
 }
@@ -123,8 +125,7 @@ hc_add_series.xts <- function(hc, data, ..., name = NULL) {
 
   timestamps <- datetime_to_timestamp(time(data))
   n <- NCOL(data)
-  opts <- list(...)
-  validate_args("add_series", c(list(data = NULL), opts))
+  opts <- validate_args("hc_add_series", list(...))
   if (is.null(name)) {
     name <- colnames(data)
   }
@@ -623,7 +624,8 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
 add_arg_to_df <- function(data, ...) {
   datal <- as.list(data)
 
-  l <- map_if(list(...), function(x) is.list(x), list)
+  options <- validate_args("hc_add_series", list(...))
+  l <- map_if(options, function(x) is.list(x), list)
 
   datal <- append(datal, l)
 
@@ -830,7 +832,7 @@ hc_add_event_series <- function(hc, series = "series", event = "click") {
 #'   and `shapes`. See [data_to_annotation_labels()] to create labels from rows.
 #' @export
 hc_add_annotation <- function(hc, ...) {
-  hc_add_annotations(hc, list(list(...)))
+  hc_add_annotations(hc, list(validate_args("hc_add_annotation", list(...))))
 }
 
 #' @rdname hc_add_annotation

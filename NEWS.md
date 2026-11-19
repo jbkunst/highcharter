@@ -4,6 +4,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Give each Highcharts option in `...` a name, for example
+  `hc_title(hc, text = "Sales")`. Collections still accept positional objects,
+  as in `hc_yAxis(hc, list(id = "sales"), list(id = "margin"))`.
+
 * Renamed `df_to_annotations_labels()` to `data_to_annotation_labels()`.
   Pass the table as `data` and use `xAxis` and `yAxis` to select the axes
   for the labels.

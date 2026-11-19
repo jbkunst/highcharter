@@ -1,25 +1,8 @@
-validate_args <- function(name, lstargs) {
-  lstargsnn <- lstargs[which(names(lstargs) == "")]
-  lenlst <- length(lstargsnn)
-
-  if (lenlst != 0) {
-    chrargs <- lstargsnn |>
-      unlist() |>
-      as.character()
-
-    chrargs <- paste0("'", chrargs, "'", collapse = ", ")
-
-    txt <- ifelse(lenlst == 1, " is ", "s are ")
-
-    stop(
-      chrargs,
-      " argument",
-      txt,
-      "not named in ",
-      paste0("hc_", name),
-      call. = FALSE
-    )
+validate_args <- function(name, options) {
+  if (length(options) && !rlang::is_named(options)) {
+    stop("Name each option in ", name, "().", call. = FALSE)
   }
+  options
 }
 
 # Merge named objects recursively and replace arrays as a whole.
@@ -65,7 +48,7 @@ validate_args <- function(name, lstargs) {
     return(current)
   }
   if (!is.null(names(options))) {
-    if (!all(nzchar(names(options)))) {
+    if (!rlang::is_named(options)) {
       stop("Supply named axis options or a list of axes.", call. = FALSE)
     }
     options <- normalize_categories(options)
@@ -96,11 +79,26 @@ validate_args <- function(name, lstargs) {
 .hc_opt <- function(hc, name, ...) {
   stopifnot(is.highchart(hc))
   options <- list(...)
+  if (!length(options)) {
+    return(hc)
+  }
   current <- hc$x$hc_opts[[name]]
   if (name %in% c("xAxis", "yAxis", "zAxis")) {
     hc$x$hc_opts[[name]] <- .hc_axis_options(current, options)
+  } else if (
+    name %in%
+      c("annotations", "colorAxis", "pane", "series") &&
+      is.null(names(options))
+  ) {
+    for (item in options) {
+      if (!is.list(item)) {
+        stop("Supply option lists to hc_", name, "().", call. = FALSE)
+      }
+      validate_args(paste0("hc_", name), item)
+    }
+    hc$x$hc_opts[[name]] <- options
   } else {
-    validate_args(name, eval(substitute(alist(...))))
+    validate_args(paste0("hc_", name), options)
     hc$x$hc_opts[[name]] <- if (is.null(current)) {
       options
     } else {
@@ -361,6 +359,7 @@ tooltip_table <- function(x, y, title = NULL, img = NULL, ...) {
     )
   })
 
+  validate_args("tooltip_table", list(...))
   tbl <- tags$table(tbl, ...)
 
   if (!is.null(title)) {
@@ -507,7 +506,7 @@ create_axis <- function(
   total <- 1 + sep * (naxis - 1)
   heights <- heights / sum(heights) / total
   tops <- c(0, head(cumsum(heights + sep / total), -1L))
-  options <- list(...)
+  options <- validate_args("create_axis", list(...))
   lapply(seq_len(naxis), function(i) {
     axis <- list(
       height = paste0(round(100 * heights[i], 4), "%"),

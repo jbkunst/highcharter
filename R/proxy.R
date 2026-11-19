@@ -114,7 +114,11 @@ hcpxy_loading <- function(proxy, action = "show") {
 hcpxy_update <- function(proxy, ...) {
   checkProxy(proxy)
 
-  send_proxy_message(proxy, "updateChart", options = list(...))
+  send_proxy_message(
+    proxy,
+    "updateChart",
+    options = validate_args("hcpxy_update", list(...))
+  )
 }
 
 #' Update options series in a higchartProxy object
@@ -128,6 +132,7 @@ hcpxy_update <- function(proxy, ...) {
 #' @export
 hcpxy_update_series <- function(proxy, id = NULL, ...) {
   checkProxy(proxy)
+  options <- validate_args("hcpxy_update_series", list(...))
 
   for (i in seq_along(id)) {
     if (getOption("highcharter.verbose")) {
@@ -138,7 +143,7 @@ hcpxy_update_series <- function(proxy, id = NULL, ...) {
       proxy,
       "updateSeries",
       idSeries = id[[i]],
-      options = list(...)
+      options = options
     )
   }
 
@@ -157,6 +162,7 @@ hcpxy_update_series <- function(proxy, id = NULL, ...) {
 #' @export
 hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...) {
   checkProxy(proxy)
+  options <- validate_args("hcpxy_update_point", list(...))
 
   for (i in seq_along(id_point)) {
     if (getOption("highcharter.verbose")) {
@@ -168,7 +174,7 @@ hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...) {
       "updatePoint",
       idSeries = id,
       idPoint = id_point[[i]],
-      options = list(...)
+      options = options
     )
   }
 

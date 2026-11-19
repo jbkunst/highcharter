@@ -125,3 +125,12 @@ test_that("mapped proxy updates follow chart series and handle empty data", {
   hcpxy_set_data(proxy, "line", df[0, ], mapping)
   expect_length(capture$messages(), 2)
 })
+
+test_that("proxy updates reject unnamed options before sending a message", {
+  capture <- local_proxy_session()
+  proxy <- highchartProxy("sales", capture$session)
+  expect_error(hcpxy_update(proxy, "red"), "Name each option in hcpxy_update")
+  expect_error(hcpxy_update_series(proxy, "units", "red"), "Name each option")
+  expect_error(hcpxy_update_point(proxy, "units", 0, "red"), "Name each option")
+  expect_length(capture$messages(), 0)
+})

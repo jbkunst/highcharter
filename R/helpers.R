@@ -55,6 +55,7 @@ data_to_boxplot <- function(
     !missing(variable)
   )
 
+  options <- validate_args("data_to_boxplot", rlang::enquos(...))
   dx <- data |>
     transmute(x = {{ variable }})
 
@@ -84,7 +85,7 @@ data_to_boxplot <- function(
     mutate(data = map(data, list_parse)) |>
     rename(name = "series") |>
     mutate(id = .data$name) |>
-    mutate(type = "boxplot", ...)
+    mutate(type = "boxplot", !!!options)
   # list_parse()
 
   if (add_outliers) {
@@ -97,7 +98,7 @@ data_to_boxplot <- function(
       group_nest(.data$series) |>
       mutate(data = map(data, list_parse)) |>
       rename(linkedTo = "series") |>
-      mutate(type = "scatter", showInLegend = FALSE, ...)
+      mutate(type = "scatter", showInLegend = FALSE, !!!options)
 
     dout <- bind_rows(dat1, dat2)
   } else {
@@ -294,6 +295,7 @@ data_to_annotation_labels <- function(data, xAxis = 0, yAxis = 0) {
 #' @export
 hcparcords <- function(df, ...) {
   stopifnot(is.data.frame(df))
+  validate_args("hcparcords", rlang::enquos(...))
 
   rescale01 <- function(x) {
     rng <- range(x, na.rm = TRUE)

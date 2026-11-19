@@ -134,6 +134,7 @@ hcmap <- function(
   joinBy = NULL,
   ...
 ) {
+  validate_args("hcmap", rlang::enquos(...))
   hc <- highchart(type = "map")
 
   if (is.character(map)) {

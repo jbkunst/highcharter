@@ -101,3 +101,40 @@ test_that("repeated responsive rules replace the array and keep sibling options"
   expect_identical(axis$plotLines, list(list(value = 2)))
   expect_false("rotation" %in% names(axis$labels))
 })
+
+test_that("Highcharts options require names and collections accept complete objects", {
+  hc <- highchart()
+  expect_identical(hc_title(hc), hc)
+  expect_identical(hc_title(hc, text = "Sales")$x$hc_opts$title$text, "Sales")
+  expect_error(hc_title(hc, "Sales"), "Name each option in hc_title")
+  expect_error(hc_caption(hc, "Sales"), "Name each option in hc_caption")
+  expect_error(
+    hc_title(hc, text = "Sales", "left"),
+    "Name each option in hc_title"
+  )
+  expect_error(
+    hc_add_annotation(hc, "Sales"),
+    "Name each option in hc_add_annotation"
+  )
+
+  points <- list(list(x = 1, y = 2))
+  expect_identical(hc_add_series(hc, points)$x$hc_opts$series[[1]]$data, points)
+  expect_error(
+    hc_add_series(hc, points, "line"),
+    "Name each option in hc_add_series"
+  )
+  expect_error(
+    hchart(iris, "scatter", hcaes(Sepal.Length, Sepal.Width), 3),
+    "Name each option"
+  )
+  for (key in c("series", "annotations", "colorAxis", "pane")) {
+    setter <- get(paste0("hc_", key))
+    chart <- setter(hc, list(id = "a"), list(id = "b"))
+    expect_identical(
+      chart$x$hc_opts[[key]],
+      list(list(id = "a"), list(id = "b"))
+    )
+    expect_error(setter(hc, list("a")), "Name each option")
+    expect_error(setter(hc, list(id = "a"), id = "b"), "Name each option")
+  }
+})
