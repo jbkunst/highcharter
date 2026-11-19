@@ -6,7 +6,19 @@ The next review on `feat/highcharts-bundle` is **8.2, the optional `rjson` seria
 
 ### 8. Public API and optional dependencies
 
-- [ ] Compare the optional `rjson` path with the default serializer. Measure serialization time and compare the handling of missing rows and list columns before deciding whether to retain that path and its direct use of `vctrs`.
+- [ ] Decide whether to keep `rjson` as an opt-in for large charts and how to preserve missing observations across both routes. Removing it would still leave `vctrs::vec_match()` in the hierarchy helper.
+
+The [serializer benchmark](dev/sandbox/benchmark-serializers.R) ran on Linux with R 4.5.0, htmlwidgets 1.6.4, jsonlite 2.0.0 and rjson 0.2.23. The table gives median milliseconds from building the widget through producing its JSON, across ten paired runs after warm-up. Timing excludes browser rendering and file I/O for HTML output. Both serializers produced equivalent decoded payloads for the five complete inputs.
+
+| Input | Default (jsonlite) | Optional (rjson) |
+| --- | ---: | ---: |
+| 100 x/y points | 23.3 | 8.4 |
+| 10,000 values in a numeric vector | 3.6 | 3.3 |
+| 10,000 x/y points | 1,636.5 | 252.5 |
+| 1,000 points with nested metadata | 339.3 | 57.7 |
+| Packaged Chile map | 977.8 | 119.6 |
+
+In Chromium, a missing y value in an x/y table left a gap with the default route. The optional route dropped the row and connected its neighbors. It also dropped a point with a valid y and a null `custom` field. The map drew the same 16 regions in both cases.
 
 ## Completed
 

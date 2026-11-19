@@ -75,7 +75,10 @@ Track the [release checks in the simplification plan](../plan.md#release-checks)
 ## Simplification review
 
 The [simplification plan](../plan.md) lists the remaining work in review order,
-completed changes and API decisions.
+completed changes and API decisions. Run
+`Rscript dev/sandbox/benchmark-serializers.R` from the package root to repeat
+the JSON timings and missing-value comparisons. The script needs `pkgload`
+and the optional `rjson` package.
 
 ## Build the website
 
