@@ -456,6 +456,14 @@ the upstream Unicode ranges. When the generated assets change, bump the
 `highcharter-fonts` dependency version in `R/highcharter.R`. Keep monospace
 companions for themes that use them.
 
+With `google_fonts = TRUE`, the [widget constructor](../R/highcharter.R)
+attaches `inst/fonts/fonts.css` through `htmltools::htmlDependency()`. The
+browser loads the bundled faces used by the chart. Just before rendering,
+R checks the final theme and chart options once for additional families. The
+[widget's JavaScript](../inst/htmlwidgets/lib/highcharts/custom/highcharter-widget.js)
+requests those families from Google Fonts. With `google_fonts = FALSE`, the
+page manages the fonts through its own CSS.
+
 Each file in `inst/themes/` defines one preset. Its filename is the name
 accepted by `hc_theme()`. Use Highcharts option names, quote hex colors and
 use the top-level `symbols` array to make ordinary point markers circular.
