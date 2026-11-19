@@ -123,6 +123,11 @@ hc_maps <- function() {
 #'   joinBy = c("iso-a3", "iso3")
 #' )
 #' hcmap(worldgeojson, showInLegend = FALSE)
+#'
+#' # Read a local GeoJSON or TopoJSON file and plot its boundaries.
+#' path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+#' map <- jsonlite::read_json(path, simplifyVector = FALSE)
+#' hcmap(map, showInLegend = FALSE)
 #' @importFrom htmltools htmlDependency
 #' @importFrom rlang .data
 #' @export

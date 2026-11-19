@@ -1,5 +1,9 @@
 # Chart example data
 
+`districts.geojson` and `districts.topo.json` encode the same two illustrative
+districts in the maps vignette. Their `code` properties are the strings
+`"01"` and `"02"`.
+
 `spy-2025.csv` is a fixed snapshot of daily SPDR S&P 500 ETF Trust (SPY)
 OHLC, volume and adjusted-close values from Yahoo Finance. Downloaded on
 2026-11-16 with:

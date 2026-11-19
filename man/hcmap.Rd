@@ -46,4 +46,9 @@ hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
   joinBy = c("iso-a3", "iso3")
 )
 hcmap(worldgeojson, showInLegend = FALSE)
+
+# Read a local GeoJSON or TopoJSON file and plot its boundaries.
+path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+map <- jsonlite::read_json(path, simplifyVector = FALSE)
+hcmap(map, showInLegend = FALSE)
 }

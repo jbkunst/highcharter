@@ -127,25 +127,34 @@ saveRDS(boundaries, "california-counties.rds")
 
 ## Bring your own GeoJSON or TopoJSON
 
-Read your file with `jsonlite::read_json()`, keeping the nested lists intact.
-TopoJSON can store a shared border once for both neighbors. This example uses two
-illustrative districts that share a boundary. The file ships with highcharter so
-you can run the example offline. Substitute your own file path to use your map.
+Read a local path with `jsonlite::read_json()` and pass the resulting list to
+`hcmap()`. Keep `simplifyVector = FALSE` to preserve the nested coordinates.
+Both examples run independently in a fresh R session using two illustrative
+districts. Replace `system.file(...)` with the path to your own file.
 
-```{r custom-boundaries}
-path <- system.file("extdata", "districts.topo.json", package = "highcharter")
-districts <- jsonlite::read_json(path, simplifyVector = FALSE)
-get_data_from_map(districts)
+**GeoJSON boundaries.** Draw the shapes directly from a FeatureCollection.
+
+```{r own-geojson}
+library(highcharter)
+
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+map <- jsonlite::read_json(path, simplifyVector = FALSE)
+hcmap(map, showInLegend = FALSE)
 ```
 
-The map has a `code` property and the observations use `district_id`. Supply the
-map key first and the table key second. Keep identifiers with leading zeros as text.
+**TopoJSON with data.** The Topology stores the districts' shared border once.
+The map identifies each district by `code`, while the table uses `district_id`.
+Keep the leading zeros when joining the two.
 
 ```{r custom-boundaries-join}
+library(highcharter)
+
+path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+map <- jsonlite::read_json(path, simplifyVector = FALSE)
 visits <- data.frame(district_id = c("01", "02"), visits = c(18, 42))
 
 hcmap(
-  districts,
+  map,
   data = visits,
   value = "visits",
   joinBy = c("code", "district_id")
@@ -154,14 +163,8 @@ hcmap(
   hc_tooltip(pointFormat = "{point.name}: {point.value} visits")
 ```
 
-For a GeoJSON FeatureCollection the same workflow applies. To draw a boundary
-file on its own, pass the list directly to `hcmap()`.
-
-```{r own-geojson, eval=FALSE}
-districts <- jsonlite::read_json("districts.geojson", simplifyVector = FALSE)
-names(get_data_from_map(districts))
-hcmap(districts)
-```
+Use `get_data_from_map(map)` to inspect the identifiers in your own file.
+Both formats support a map on its own or a join to observations.
 
 ## European time zones
 
