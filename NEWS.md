@@ -142,6 +142,10 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Reusing one `tooltip_chart()` formatter across widgets now renders each
+  mini chart in its own tooltip. The helper preserves `JS()` callbacks in
+  `hc_opts` and accepts data column names containing spaces or hyphens.
+
 * `hchart.survfit()` draws a separate curve for each Cox prediction profile
   within each stratum. Confidence bands follow the corresponding curve, and
   censoring markers include times with multiple censored observations.

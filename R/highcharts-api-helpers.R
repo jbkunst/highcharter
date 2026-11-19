@@ -152,16 +152,16 @@ validate_args <- function(name, options) {
 
 #' Helper to create charts in tooltips.
 #'
-#' @details This function needs to be used in the `pointFormatter` argument
-#' inside of `hc_tooltip` function an `useHTML = TRUE` option.
+#' @details Use the result as `pointFormatter` in `hc_tooltip(useHTML = TRUE, ...)`.
+#' In `hc_opts`, use `"point.name"` to read a field from the hovered point
+#' and `JS()` to supply a JavaScript callback.
 #'
 #' @param accesor A string indicating the name of the column where the data is.
 #' @param hc_opts A list of options using the  \url{https://api.highcharts.com/highcharts/}
 #'   syntax.
-#' @param width	A numeric input in pixels indicating the with of the tooltip.
-#' @param height	A numeric input in pixels indicating the height of the tooltip.
+#' @param width Width of the tooltip chart in pixels.
+#' @param height Height of the tooltip chart in pixels.
 #'
-#' @importFrom stringr str_glue
 #' @importFrom htmlwidgets JS
 #' @examples
 #'
@@ -243,83 +243,61 @@ tooltip_chart <- function(
 ) {
   stopifnot(is.character(accesor), length(accesor) == 1L)
 
-  if (is.null(hc_opts)) {
-    hc_opts[["series"]][[1]] <- list(data = sprintf("point.%s", accesor))
-  } else {
-    if (!has_name(hc_opts, "series")) {
-      hc_opts[["series"]][[1]] <- list()
-    }
-    hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
+  point_field <- function(name) {
+    JS(sprintf("point[%s]", toJSON(name, auto_unbox = TRUE)))
+  }
+  hc_opts$series[[1L]]$data <- point_field(accesor)
+  if (!has_name(hc_opts$series[[1L]], "color")) {
+    hc_opts$series[[1L]]$color <- "point.color"
   }
 
   defaults <- getOption("highcharter.chart")
   fields <- c("title", "yAxis", "xAxis", "credits", "exporting")
-  hc_opts <- .merge_hc_options(
+  options <- .merge_hc_options(
     defaults[intersect(names(defaults), fields)],
-    list(chart = list(backgroundColor = "transparent")),
     list(
+      chart = list(backgroundColor = "transparent"),
       legend = list(enabled = FALSE),
       plotOptions = list(series = list(animation = FALSE))
     ),
     hc_opts
   )
 
-  if (!has_name(hc_opts[["series"]][[1]], "color")) {
-    hc_opts[["series"]][[1]][["color"]] <- "point.color"
+  # Convert complete point references before serialization, leaving format strings intact.
+  point_refs <- function(x) {
+    x[x %in% "{point.color}"] <- "point.color"
+    refs <- grepl("^point\\.[A-Za-z_0-9]+$", x)
+    if (!any(refs)) {
+      return(x)
+    }
+    values <- as.list(x)
+    values[refs] <- lapply(substring(x[refs], 7L), point_field)
+    if (length(x) == 1L) values[[1L]] else values
   }
+  options <- rapply(options, point_refs, classes = "character", how = "replace")
 
-  hcopts <- toJSON(
-    x = hc_opts,
-    pretty = TRUE,
-    auto_unbox = TRUE,
-    json_verbatim = TRUE,
-    force = TRUE,
-    null = "null",
-    na = "null"
-  )
-  hcopts <- as.character(hcopts)
-
-  # fix point.color
-  hcopts <- str_replace(hcopts, "\\{point.color\\}", "point.color")
-
-  # remove "\"" to have access to the point object
-  ts <- stringr::str_extract_all(hcopts, "\"point\\.\\w+\"") |> unlist()
-  for (t in ts) {
-    hcopts <- str_replace(hcopts, t, str_replace_all(t, "\"", ""))
-  }
-
-  # remove "\"" in the options
-  ts <- stringr::str_extract_all(hcopts, "\"\\w+\":") |> unlist()
-  for (t in ts) {
-    t2 <- str_replace_all(t, "\"", "")
-    hcopts <- str_replace(hcopts, t, t2)
-  }
-
-  jss <- "function() {{
-  var point = this;
-  console.log(point);
-  console.log(point.{accesor});
-  setTimeout(function() {{
-
-  $(\"#tooltipchart-{id}\").highcharts(hcopts);
-
-  }, 0);
-
-  return '<div id=\"tooltipchart-{id}\" style=\"width: {w}px; height: {h}px;\"></div>';
-
-  }}"
-
-  jsss <- stringr::str_glue(
-    jss,
-    id = random_id(),
-    w = width,
-    h = height,
-    accesor = accesor
-  )
-
-  jsss <- stringr::str_replace(jsss, "hcopts", hcopts)
-
-  JS(jsss)
+  JS(sprintf(
+    "function () {
+      const point = this, series = point.series;
+      const id = 'tooltipchart-' + Highcharts.uniqueKey();
+      setTimeout(function () {
+        const container = document.getElementById(id);
+        if (!container || !series.chart) return;
+        if (series.hcTooltipChart) {
+          series.hcTooltipChart.destroy();
+        } else {
+          Highcharts.addEvent(series, 'destroy', function () {
+            if (this.hcTooltipChart) this.hcTooltipChart.destroy();
+          });
+        }
+        series.hcTooltipChart = Highcharts.chart(container, %s);
+      }, 0);
+      return '<div id=\"' + id + '\" style=\"width: %spx; height: %spx;\"></div>';
+    }",
+    .hc_options_js(options),
+    as.numeric(width),
+    as.numeric(height)
+  ))
 }
 
 #' Helper for make table in tooltips

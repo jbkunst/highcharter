@@ -1,12 +1,8 @@
 # Highcharter simplification plan
 
-The next review on `feat/highcharts-bundle` is **6.2, charts in tooltips**.
+The next review on `feat/highcharts-bundle` is **7, imports, defaults and internal helpers**.
 
 ## Remaining work
-
-### 6.2. Charts in tooltips
-
-- [ ] Keep `tooltip_chart()`. Replace the string substitutions that rewrite its JSON and remove the browser console output. Verify that JavaScript callbacks and the requested width and height survive. Hover repeatedly in two widgets on the same page and check that each shows its own chart. [Implementation](R/highcharts-api-helpers.R) · [Showcase](vignettes/showcase.Rmd)
 
 ### 7. Imports, defaults and internal helpers
 
@@ -34,6 +30,7 @@ The next review on `feat/highcharts-bundle` is **6.2, charts in tooltips**.
 | 4. Data transformations | Hierarchy nodes have unique IDs and use their original group columns to find their parent. Boxplots compute statistics once per group and align outliers with their box. Sankey counts valid adjacent links, with unique IDs and distinct quantile cuts. |
 | 5. Survival curves | Curves, confidence bands and censoring times come from the same survival summary for each stratum and prediction profile. |
 | 6.1. Fonts | The 15 theme families ship with their Latin WOFF2 subsets. The widget checks the final options once for additional families and respects `google_fonts = FALSE`. [Font maintenance](dev/readme.md#maintain-theme-presets) |
+| 6.2. Charts in tooltips | `tooltip_chart()` shares JavaScript serialization with `export_hc()`. Each tooltip renders its own chart when a formatter is reused across widgets. [Examples](vignettes/showcase.Rmd#charts-inside-tooltips) |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
 

@@ -43,27 +43,7 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
     stopifnot(!is.null(name))
   }
 
-  JS_to_json <- function(x) {
-    class(x) <- "json"
-    return(x)
-  }
-
-  hc$x$hc_opts <- rapply(
-    object = hc$x$hc_opts,
-    f = JS_to_json,
-    classes = "JS_EVAL",
-    how = "replace"
-  )
-
-  js <- toJSON(
-    x = hc$x$hc_opts,
-    pretty = TRUE,
-    auto_unbox = TRUE,
-    json_verbatim = TRUE,
-    force = TRUE,
-    null = "null",
-    na = "null"
-  )
+  js <- .hc_options_js(hc$x$hc_opts, pretty = TRUE)
 
   if (as == "container") {
     js <- sprintf("$(function(){\n\t$('%s').highcharts(\n%s\n);\n});", name, js)
@@ -80,4 +60,23 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
   }
 
   writeLines(js, filename)
+}
+
+# Keep explicit JS() expressions executable while quoting ordinary R strings.
+.hc_options_js <- function(options, pretty = FALSE) {
+  options <- rapply(
+    options,
+    function(x) structure(as.character(x), class = "json"),
+    classes = "JS_EVAL",
+    how = "replace"
+  )
+  toJSON(
+    options,
+    pretty = pretty,
+    auto_unbox = TRUE,
+    json_verbatim = TRUE,
+    force = TRUE,
+    null = "null",
+    na = "null"
+  )
 }
