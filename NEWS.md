@@ -133,6 +133,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Stock Tools now loads its indicators and embeds its toolbar icons in
+  self-contained HTML widgets and vignettes.
+
 * Stock Tools can add technical indicators after another widget renders or
   re-renders on the same page (#595).
 

@@ -133,17 +133,12 @@ highchart <- function(
 #'
 #' @inheritParams highchart
 #' @examples
-#' prices <- data.frame(
-#'   day = base::as.Date("2025-01-01") + 0:19,
-#'   close = 100 + seq_len(20) + 3 * sin(seq_len(20))
-#' )
+#' data(sample_matrix, package = "xts")
+#' prices <- xts::as.xts(sample_matrix)
 #' highchartstock(width = "100%") |>
-#'   hc_add_series(prices, "line", hcaes(x = day, y = close),
-#'                 name = "Close", id = "price") |>
+#'   hc_add_series(prices, name = "Price", id = "price") |>
 #'   hc_add_series(type = "sma", linkedTo = "price", name = "5-day mean",
 #'                 params = list(period = 5)) |>
-#'   hc_stockTools(gui = list(enabled = TRUE,
-#'                           buttons = c("indicators", "zoomChange", "fullScreen"))) |>
 #'   hc_title(text = "Explore prices with Stock Tools")
 #' @seealso [highchart()]
 #' @export

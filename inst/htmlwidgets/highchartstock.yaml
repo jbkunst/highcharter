@@ -17,6 +17,7 @@ dependencies:
     src: "htmlwidgets/lib/stock-tools"
     script: highcharter-stock-tools.js
     stylesheet:
+      - inline-icons.css
       - css/stocktools/gui.css
       - css/annotations/popup.css
     all_files: true

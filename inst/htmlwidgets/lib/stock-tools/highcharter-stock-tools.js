@@ -1,5 +1,6 @@
 /*! Highcharter Stock Tools for Highcharts JS v12.6.0 */
-window.HighcharterStockToolsBaseUrl = new URL(".", document.currentScript.src).href;
+window.HighcharterStockIconsURL = /^(https?:|file:)/.test(document.currentScript?.src)
+  ? new URL("gfx/stock-icons/", document.currentScript.src).href : "#highcharter-stock-icons/";
 ResetHighchartsOptions();
 !/**
  * Highstock JS v12.6.0 (2026-04-13)

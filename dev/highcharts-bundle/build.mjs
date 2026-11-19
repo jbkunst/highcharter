@@ -4,6 +4,7 @@ import {
   cp,
   mkdir,
   readFile,
+  readdir,
   rm,
   writeFile
 } from 'node:fs/promises';
@@ -53,7 +54,9 @@ const stockContents = await Promise.all(
 );
 const stockPrelude = [
   `/*! Highcharter Stock Tools for Highcharts JS v${pkg.version} */`,
-  'window.HighcharterStockToolsBaseUrl = new URL(".", document.currentScript.src).href;',
+  // Self-contained HTML inlines the script and has no adjacent icon directory.
+  'window.HighcharterStockIconsURL = /^(https?:|file:)/.test(document.currentScript?.src)',
+  '  ? new URL("gfx/stock-icons/", document.currentScript.src).href : "#highcharter-stock-icons/";',
   'ResetHighchartsOptions();'
 ].join('\n');
 
@@ -77,6 +80,13 @@ await cp(
   join(stockToolsDir, 'gfx', 'stock-icons'),
   { recursive: true }
 );
+
+// Pandoc embeds CSS image URLs when the widget is saved as standalone HTML.
+const iconFiles = await readdir(join(stockToolsDir, 'gfx', 'stock-icons'));
+const inlineIcons = iconFiles.filter(name => name.endsWith('.svg')).sort().map(name =>
+  `[style*="#highcharter-stock-icons/${name}"] { background-image: url("gfx/stock-icons/${name}") !important; }`
+);
+await writeFile(join(stockToolsDir, 'inline-icons.css'), inlineIcons.join('\n') + '\n');
 
 async function updateDependencyVersion(yamlName, dependencyNames) {
   const yamlPath = join(widgetsDir, yamlName);

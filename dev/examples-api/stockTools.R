@@ -1,6 +1,5 @@
-# Show just the zoom and fullscreen controls in the Stock Tools toolbar.
+# Start with the full toolbar expanded beside the candlestick chart.
+data(sample_matrix, package = "xts")
 highchartstock() |>
-  hc_add_series(AirPassengers, name = "Passengers") |>
-  hc_stockTools(
-    gui = list(enabled = TRUE, buttons = c("zoomChange", "fullScreen"))
-  )
+  hc_add_series(xts::as.xts(sample_matrix), name = "Price", id = "price") |>
+  hc_stockTools(gui = list(visible = TRUE))

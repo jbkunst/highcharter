@@ -37,8 +37,9 @@ hchart(prices, type = "ohlc", name = "Sample instrument")
 ## Flags, navigator and indicators
 
 The flag and moving average select the price series by ID. The range selector
-and navigator act on the same time axis. Open the Stock Tools toolbar to add
-an indicator interactively.
+and navigator act on the same time axis. The full Stock Tools toolbar is enabled
+by default. Use **Indicators** to add a moving average, or **Type change** to
+switch the price series between candlesticks and OHLC bars.
 
 ```{r}
 price_chart <- highchartstock() |>
@@ -58,12 +59,6 @@ price_chart <- highchartstock() |>
         title = "A",
         text = "Day 30"
       )
-    )
-  ) |>
-  hc_stockTools(
-    gui = list(
-      enabled = TRUE,
-      buttons = c("indicators", "zoomChange", "fullScreen")
     )
   ) |>
   hc_navigator(enabled = TRUE)
