@@ -48,6 +48,7 @@ export(create_axis)
 export(data_to_annotation_labels)
 export(data_to_boxplot)
 export(data_to_hierarchical)
+export(data_to_parallel_coordinates)
 export(data_to_sankey)
 export(datetime_to_timestamp)
 export(download_map_data)
@@ -112,7 +113,6 @@ export(hcaes)
 export(hcaes_string)
 export(hchart)
 export(hcmap)
-export(hcparcords)
 export(hcpxy_add_point)
 export(hcpxy_add_series)
 export(hcpxy_loading)
@@ -179,8 +179,7 @@ importFrom(jsonlite,toJSON)
 importFrom(purrr,
   map,
   map2,
-  map_if,
-  map_lgl
+  map_if
 )
 importFrom(rlang,
   "!!!",

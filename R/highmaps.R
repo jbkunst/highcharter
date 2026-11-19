@@ -246,7 +246,6 @@ download_map_data <- function(
 #' @examples
 #' head(get_data_from_map(worldgeojson))
 #' @seealso [hcmap()], [download_map_data()]
-#' @importFrom purrr map_lgl
 #' @export
 get_data_from_map <- function(mapdata) {
   features <- if (identical(mapdata$type, "Topology")) {

@@ -267,44 +267,37 @@ data_to_annotation_labels <- function(data, xAxis = 0, yAxis = 0) {
 }
 
 
-#' Shortcut to create parallel coordinates
-#' @param df A data frame object.
-#' @param ... Additional shared arguments for the data series
-#'   (\url{https://api.highcharts.com/highcharts/series}) for the
-#'   \code{hchar.data.frame} function.
+#' Prepare series for a parallel coordinates chart
+#'
+#' @param data A data frame of numeric measurements. Each row is an observation
+#'   and each column is an axis, in display order.
+#' @param ... Named series options such as `name` or `color`. Supply one value
+#'   for all observations or one value per row.
+#' @return A tibble for [hc_add_series_list()] with one series per row.
+#'   Its `data` column holds the measurements in their original units.
+#'   Missing measurements leave gaps on their axes.
 #' @examples
-#' n <- 15
+#' measurements <- iris[1:4]
+#' series <- data_to_parallel_coordinates(measurements, color = colorize(iris$Species))
 #'
-#' hcparcords(head(mtcars, n), color = hex_to_rgba(grDevices::hcl.colors(n, "Inferno"), 0.5))
-#'
-#' require(dplyr)
-#' data(iris)
-#' set.seed(123)
-#'
-#' iris <- sample_n(iris, 60)
-#'
-#' hcparcords(iris, color = colorize(iris$Species))
+#' highchart() |>
+#'   hc_chart(type = "line", parallelCoordinates = TRUE) |>
+#'   hc_xAxis(categories = names(measurements)) |>
+#'   hc_add_series_list(series)
 #' @export
-hcparcords <- function(df, ...) {
-  stopifnot(is.data.frame(df))
-  validate_args("hcparcords", rlang::enquos(...))
-
-  rescale01 <- function(x) {
-    rng <- range(x, na.rm = TRUE)
-    (x - rng[1]) / (rng[2] - rng[1])
+data_to_parallel_coordinates <- function(data, ...) {
+  stopifnot(is.data.frame(data), ncol(data) > 0L)
+  if (
+    !all(vapply(data, function(x) is.numeric(x) && is.null(dim(x)), logical(1)))
+  ) {
+    stop("Select one numeric column per axis.", call. = FALSE)
   }
-
-  columns <- lapply(df[map_lgl(df, is.numeric)], rescale01)
-  df <- data.frame(
-    .row = rep(rownames(df), times = length(columns)),
-    var = rep(names(columns), each = nrow(df)),
-    val = as.numeric(unlist(columns, use.names = FALSE))
-  )
-
-  hchart(df, "line", hcaes_string(x = "var", y = "val", group = ".row")) |>
-    hc_plotOptions(series = list(showInLegend = FALSE)) |>
-    hc_yAxis(min = 0, max = 1) |>
-    hc_tooltip(sort = TRUE, table = TRUE, valueDecimals = 2)
+  options <- validate_args("data_to_parallel_coordinates", list(...))
+  rows <- purrr::pmap(unname(as.list(data)), function(...) {
+    values <- list(...)
+    replace(values, is.na(values), list(NULL))
+  })
+  tibble(data = rows, !!!options, .rows = nrow(data))
 }
 
 #' Convert an object to list with identical structure

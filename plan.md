@@ -1,12 +1,11 @@
 # Highcharter simplification plan
 
-The next review on `feat/highcharts-bundle` is **8, parallel coordinates and optional dependencies**.
+The next review on `feat/highcharts-bundle` is **8.2, the optional `rjson` serializer**.
 
 ## Remaining work
 
 ### 8. Public API and optional dependencies
 
-- [ ] Decide whether to retire `hcparcords()`. The GitHub code search found package copies and documentation. A browser check with `iris` confirmed that `list_parse2()`, `hc_add_series_list()` and `parallelCoordinates = TRUE` retain row colors and constant measurements.
 - [ ] Compare the optional `rjson` path with the default serializer. Measure serialization time and compare the handling of missing rows and list columns before deciding whether to retain that path and its direct use of `vctrs`.
 
 ## Completed
@@ -27,6 +26,7 @@ The next review on `feat/highcharts-bundle` is **8, parallel coordinates and opt
 | 7.5. Single numeric points | The common series-list path wraps a single numeric value for both serializers. Removed `fix_1_length_data()`. |
 | 7.6. GeoJSON methods | `hchart()` and `hc_add_series()` share one method for `geo_list` and `geo_json`. Mixed collections draw one layer per geometry family. Supply `type` to select a single family. |
 | 7.7. Export filenames and reference index | `export_hc()` recognizes literal JavaScript extensions using base R. The pkgdown index omits the internal `random_id()` helper. |
+| 8.1. Parallel coordinates | Removed `hcparcords()`. Use `data_to_parallel_coordinates()` with native parallel axes. The [data helpers article](vignettes/data-helpers.Rmd) shows the migration and all five public helpers. |
 | 9. Function review | Histograms use real bin limits and widths. Matrix heatmaps use a visible color axis and the bundle's border default. Tibbles use the data-frame method. Simplified timestamps, RGBA colors, density series and map-name normalization. `is.highchart()` recognizes the two widget classes. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.

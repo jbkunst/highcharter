@@ -160,7 +160,6 @@ reference:
   contents:
   - hchart.igraph
   - hchart.survfit
-  - hcparcords
   - starts_with("hc_add_series.")
 - title: Deprecated
   contents:
@@ -172,6 +171,7 @@ articles:
   - highcharter
   - first-steps
   - hchart
+  - data-helpers
 - title: Explore charts
   navbar: Explore charts
   contents:
@@ -199,6 +199,7 @@ articles:
   - shiny
   - shiny-gallery
 redirects:
+- ["reference/hcparcords.html", "articles/data-helpers.html#parallel-coordinates"]
 - ["reference/df_to_annotations_labels.html", "reference/data_to_annotation_labels.html"]
 - ["highmaps.html", "articles/maps.html"]
 - ["articles/fontawesome.html", "articles/showcase.html#icons-and-pictograms"]

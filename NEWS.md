@@ -4,6 +4,14 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Removed `hcparcords()`. Pass your measurement columns to
+  `data_to_parallel_coordinates()`, enable `parallelCoordinates = TRUE` in
+  `hc_chart()` and add the result with `hc_add_series_list()`. Use
+  `hc_xAxis(categories = names(measurements))` for the axis labels.
+  Each axis now displays its original units. Supply series names or colors
+  explicitly, one per observation. See the
+  [migration example](https://jkunst.com/highcharter/articles/data-helpers.html#parallel-coordinates).
+
 * `is.highchart()` recognizes the `highchart` and `highchartstock` widget
   classes. The legacy `highchart2` class is no longer recognized on its own.
   Tibbles use the `data.frame` method for `hchart()`.
