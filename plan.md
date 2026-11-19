@@ -1,14 +1,12 @@
 # Highcharter simplification plan
 
-The next review on `feat/highcharts-bundle` is **7, default language and time options**.
+The next review on `feat/highcharts-bundle` is **7, internal helpers and GeoJSON methods**.
 
 ## Remaining work
 
 ### 7. Imports, defaults and internal helpers
 
-- [ ] Decide whether to adopt the bundle's English formatting at startup. The current R defaults set a space as the thousands separator and supply the legacy `drillUpText` label. Preserve a user's existing `highcharter.lang` setting.
-- [ ] Review the time options still initialized under `highcharter.global`. The bundle already defaults to UTC. Keep support for user-supplied global options such as `buttonTheme`.
-- [ ] Review the callers of `fix_1_length_data()` and `.join_hc_opts()` for inlining. Check whether the GeoJSON methods can share an implementation.
+- [ ] Review the callers of `fix_1_length_data()` for inlining. Check whether the GeoJSON methods can share an implementation.
 - [ ] Match a literal `.js` suffix in `export_hc()` and remove the internal `random_id()` from the pkgdown index.
 
 ### 8. Public API and optional dependencies
@@ -35,6 +33,7 @@ The next review on `feat/highcharts-bundle` is **7, default language and time op
 | 7.1. Imports | Removed six redundant imports and moved the declarations for `left_join()` and `select()` to `hchart.igraph()`, which uses both. |
 | 7.2. Default palette | The default theme defines the ten series colors once. Its colors also initialize the independent `highcharter.color_palette` option used by `data_to_hierarchical()`. |
 | 7.3. Legacy defaults and map joins | Removed the unused VML and canvas URLs from widget defaults and the unused `joindf` assignment from `hc_add_series_map()`. |
+| 7.4. Language and global options | New sessions use `hc_set_language("en")` and the bundle's UTC default. The widget reads language and optional global settings directly, preserving user choices. Removed `.join_hc_opts()`. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
 

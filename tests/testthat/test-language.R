@@ -50,11 +50,15 @@ test_that("language overrides merge nested keys and replace arrays", {
   expect_identical(hc_language("es")$exportData$categoryHeader, "Categoría")
 })
 
-test_that("the default abbreviated weekdays have the Highcharts Sunday-first order", {
-  expect_identical(
-    getOption("highcharter.lang")$shortWeekdays,
-    c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-  )
+test_that("widgets use the English preset and omit unset global options", {
+  old <- options(highcharter.global = NULL)
+  on.exit(options(old))
+  expect_identical(highchart()$x$conf_opts, list(lang = hc_language("en")))
+
+  global <- list(buttonTheme = list(fill = "white"))
+  options(highcharter.global = global)
+  expect_identical(highchart()$x$conf_opts$global, global)
+  expect_identical(highchartstock()$x$conf_opts$global, global)
 })
 
 test_that("the setter snapshots the language for new widgets and restores the option", {

@@ -4,6 +4,11 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* New charts use the same English preset as `hc_set_language("en")`. In
+  English, `12,345.67` uses a comma for thousands. To keep a space, use
+  `hc_set_language("en", thousandsSep = " ")`. Drilldown navigation uses the
+  Highcharts breadcrumb labels.
+
 * Removed the `google_fonts` argument from `highchart()` and `highchartstock()`
   and the `highcharter.google_fonts` option. Bundled families work offline by
   name. Other plain family names use fonts supplied by the page or device.
@@ -76,8 +81,7 @@ Bundled Highcharts JS: 12.6.0.
   process. Use `hc_set_language("en")` to switch to English.
   `hc_language()` returns the corresponding options list.
   Spanish, Portuguese and French include translated controls. Regional tags select
-  the browser's date and number formats. The default English short weekdays now
-  start on Sunday, matching Highcharts' weekday index.
+  the browser's date and number formats.
 
 * Theme presets now use `hc_theme("ft")` and live in individual YAML files.
   `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or

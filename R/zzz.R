@@ -1,11 +1,3 @@
-.join_hc_opts <- function() {
-  list(
-    global = getOption("highcharter.global"),
-    lang = getOption("highcharter.lang"),
-    chart = getOption("highcharter.chart")
-  )
-}
-
 .onAttach <- function(libname, pkgname) {
   if (interactive()) {
     packageStartupMessage("Highcharts JS licensing: see ?highcharter.")
@@ -16,88 +8,9 @@
   libname = find.package("highcharter"),
   pkgname = "highcharter"
 ) {
-  options(
-    highcharter.global = list(
-      Date = NULL,
-      getTimezoneOffset = NULL,
-      timezoneOffset = 0,
-      useUTC = TRUE
-    )
-  )
-
-  options(
-    highcharter.lang = getOption(
-      "highcharter.lang",
-      list(
-        contextButtonTitle = "Chart context menu",
-        decimalPoint = ".",
-        downloadCSV = "Download CSV",
-        downloadJPEG = "Download JPEG image",
-        downloadPDF = "Download PDF document",
-        downloadPNG = "Download PNG image",
-        downloadSVG = "Download SVG vector image",
-        downloadXLS = "Download XLS",
-        drillUpText = "\u25C1 Back to {series.name}",
-        exitFullscreen = "Exit from full screen",
-        exportData = list(
-          annotationHeader = "Annotations",
-          categoryDatetimeHeader = "DateTime",
-          categoryHeader = "Category"
-        ),
-        hideData = "Hide data table",
-        invalidDate = NULL,
-        loading = "Loading...",
-        months = c(
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December"
-        ),
-        # navigation
-        noData = "No data to display",
-        numericSymbolMagnitude = 1000,
-        numericSymbols = c("k", "M", "G", "T", "P", "E"),
-        printChart = "Print chart",
-        resetZoom = "Reset zoom",
-        resetZoomTitle = "Reset zoom level 1:1",
-        shortMonths = c(
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ),
-        shortWeekdays = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
-        thousandsSep = " ",
-        viewData = "View data table",
-        viewFullscreen = "View in full screen",
-        weekdays = c(
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
-        )
-      )
-    )
-  )
+  if (is.null(getOption("highcharter.lang"))) {
+    hc_set_language("en")
+  }
 
   options(
     highcharter.chart = list(
@@ -123,10 +36,8 @@
       ),
       plotOptions = list(
         series = list(
-          # start disabled series-label.js module https://api.highcharts.com/highcharts/plotOptions.series.label
           label = list(enabled = FALSE),
-          # this is DUE inteally all data is given as named arrays
-          # https://www.highcharts.com/errors/12/
+          # Preserve mixed point formats in long OHLC and range series.
           turboThreshold = 0
         ),
         treemap = list(layoutAlgorithm = "squarified")

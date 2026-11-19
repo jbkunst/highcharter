@@ -59,19 +59,18 @@ highchart <- function(
 ) {
   stopifnot(length(type) == 1L, type %in% c("chart", "stock", "map", "gantt"))
 
-  opts <- .join_hc_opts()
-
   if (identical(hc_opts, list())) {
-    hc_opts <- opts$chart
+    hc_opts <- getOption("highcharter.chart")
   }
 
-  opts$chart <- NULL
+  conf_opts <- list(lang = getOption("highcharter.lang"))
+  conf_opts$global <- getOption("highcharter.global")
 
   # forward options using x
   x <- list(
     hc_opts = hc_opts,
     theme = theme,
-    conf_opts = opts,
+    conf_opts = conf_opts,
     type = type,
     debug = getOption("highcharter.debug")
   )
