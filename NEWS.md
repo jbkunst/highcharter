@@ -133,6 +133,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Stock Tools can add technical indicators after another widget renders or
+  re-renders on the same page (#595).
+
 * Data-frame heatmaps position dates and times on either axis and accept omitted
   coordinates. Date cells span one day. Date-time cells use the shortest observed
   interval on their axis, or one second for a single time. Set `colsize` or

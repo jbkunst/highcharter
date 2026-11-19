@@ -9,4 +9,12 @@ function ResetHighchartsOptions(defaults = HCDefaults) {
     }
     // Fall back to the defaults that we captured initially, this resets the theme
     Highcharts.setOptions(defaults);
+    if (defaults === HCDefaults && window.HCStockToolsDefaults) {
+        // Existing Stock toolbars read these options when an indicator is added.
+        // Keep navigation bindings and the toolbar itself local to the Stock widget.
+        Highcharts.setOptions({
+            plotOptions: window.HCStockToolsDefaults.plotOptions,
+            lang: window.HCStockToolsDefaults.lang
+        });
+    }
 }

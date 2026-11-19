@@ -5,7 +5,7 @@ library(htmltools)
 plain <- highchart(type = "stock", elementId = "plain") |>
   hc_add_series(AirPassengers)
 tools <- highchartstock(elementId = "tools") |>
-  hc_add_series(AirPassengers) |>
+  hc_add_series(AirPassengers, id = "passengers") |>
   hc_stockTools(gui = list(buttons = c("zoomChange", "fullScreen")))
 
 checks <- tags$script(HTML(
@@ -19,6 +19,14 @@ window.addEventListener('load', function () {
       !toolbar.querySelector('.highcharts-full-screen')) {
     throw Error('Unexpected Stock Tools toolbar or missing chart');
   }
+  // Shiny may render a neighboring widget again while this toolbar is open.
+  const payload = document.querySelector('script[data-for=plain]');
+  HighcharterWidget.renderValue(plain.renderTo, JSON.parse(payload.textContent).x);
+  if (HighcharterWidget.getChart('plain').stockTools?.guiEnabled) {
+    throw Error('Plain widget acquired a Stock Tools toolbar');
+  }
+  const sma = tools.addSeries({ type: 'sma', linkedTo: 'passengers' });
+  if (!sma.getColumn('y').length) throw Error('SMA has no calculated values');
   document.body.dataset.stockToolsTest = 'passed';
 });
 "
