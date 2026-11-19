@@ -45,4 +45,14 @@ The package also dropped `assertthat`, the global-variable declarations and `hc_
 ## Release checks
 
 - [ ] Listen to the charts with a screen reader to complement the completed keyboard navigation and automated accessibility checks.
-- [ ] Resolve the reverse-dependency migrations. Removed theme constructors affect highdir, RKorAPClient and UnalR. AovBay references the previously removed `hcboxplot()`. [Migration guide](NEWS.md#migration-guide)
+
+## After the merge to `main`
+
+- [ ] Recheck the latest CRAN and development versions of the affected packages. Where a migration is still needed, consider offering the maintainer a focused pull request. [Migration guide](NEWS.md#migration-guide)
+
+| Package reviewed | What to revisit |
+| --- | --- |
+| RKorAPClient 1.5.1 | Its plotting helpers passed all 241 expectations we ran, including theme compatibility. The `frequency_curves` Shiny app still calls `hc_theme_hcrt()` when `idsThemeR` is unavailable. |
+| highdir 0.6.0 and UnalR 1.0.2 | Migrate calls to removed theme constructors, including `hc_theme_smpl()` in highdir and `hc_theme_flat()` in UnalR. |
+| AovBay 0.1.0 and xplorerr 0.2.0 | Migrate the boxplots in their Shiny apps from `hcboxplot()`. |
+| vistime 1.3.0 | The widget works. Update the vignette example that relies on highcharter exporting `%>%`. |
