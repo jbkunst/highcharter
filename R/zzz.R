@@ -154,7 +154,6 @@
   options(
     highcharter.theme = getOption("highcharter.theme", default_theme),
     highcharter.verbose = FALSE,
-    highcharter.google_fonts = TRUE,
     highcharter.debug = FALSE,
     highcharter.rjson = FALSE,
     highcharter.download_map_data = TRUE,

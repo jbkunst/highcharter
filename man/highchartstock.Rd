@@ -9,8 +9,7 @@ highchartstock(
   theme = getOption("highcharter.theme"),
   width = NULL,
   height = NULL,
-  elementId = NULL,
-  google_fonts = getOption("highcharter.google_fonts")
+  elementId = NULL
 )
 }
 \arguments{
@@ -24,10 +23,6 @@ highchartstock(
 \item{height}{A numeric input in pixels.}
 
 \item{elementId}{Use an explicit element ID for the widget.}
-
-\item{google_fonts}{Use the bundled theme fonts and load additional font
-families from Google Fonts. Set to FALSE to manage fonts with your own
-CSS. Defaults to the \code{"highcharter.google_fonts"} option.}
 }
 \description{
 \code{highchartstock()} creates a Stock chart with the official Stock Tools GUI,

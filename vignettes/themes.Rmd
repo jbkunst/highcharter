@@ -73,14 +73,14 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
   hc_add_theme(team)
 ```
 
-### Proposed support for external fonts
+### Use an external font
 
-The next three examples illustrate a proposed API. The current version expects
-a CSS string in `fontFamily`. The proposal would also accept a font from
-`sass` here and carry its HTML dependency with the theme.
+Set `fontFamily` to a CSS family name to use a font supplied by the page or
+device. To bring a font with the theme, use `sass::font_google()`.
+The same theme works with `hc_add_theme()` and `hc_set_theme()`.
 
 **Use a font supplied by the viewer or page.** With a plain family name,
-the browser would use Noto Sans where available and `sans-serif` elsewhere.
+the browser uses Noto Sans where available and `sans-serif` elsewhere.
 
 ```r
 library(highcharter)
@@ -92,7 +92,7 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
   hc_add_theme(team)
 ```
 
-**Include Noto Sans with the chart.** With `local = TRUE`, preparing the
+**Include Noto Sans with the chart.** With the default `local = TRUE`, preparing the
 font requires an internet connection on the first download. The exported
 chart can then use the included files offline.
 
@@ -101,7 +101,7 @@ library(highcharter)
 
 team <- hc_theme(
   chart = list(
-    style = list(fontFamily = sass::font_google("Noto Sans", local = TRUE))
+    style = list(fontFamily = sass::font_google("Noto Sans"))
   )
 )
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
@@ -178,9 +178,7 @@ array, so a two-color palette stays two colors long.
 ## Use system fonts with a preset
 
 To keep Carbon's palette and gridlines while using the device's interface
-font, override `chart.style.fontFamily`. Pass `google_fonts = FALSE` to
-`highchart()` to skip both the bundled fonts and requests to Google Fonts.
-The `sales_chart()` example above forwards this argument to `highchart()`.
+font, override `chart.style.fontFamily`. A system font needs no web font files.
 
 ```{r carbon-system-font}
 carbon_system <- hc_theme(
@@ -188,7 +186,7 @@ carbon_system <- hc_theme(
   chart = list(style = list(fontFamily = "system-ui, sans-serif"))
 )
 
-sales_chart(theme = carbon_system, google_fonts = FALSE)
+sales_chart(theme = carbon_system)
 ```
 
 Carbon's title, axis labels and legend inherit this font. Other presets can
@@ -196,7 +194,7 @@ set fonts on individual elements. For example, to change the title in `hcrt`,
 also set `title = list(style = list(fontFamily = "system-ui, sans-serif"))`.
 The bundled theme fonts include the Latin subset, including Spanish accents.
 For other scripts the browser can use an installed font, or you can request
-a family such as `Noto Sans KR` with `google_fonts = TRUE`.
+a family explicitly with `sass::font_google("Noto Sans KR")`.
 
 ## Inherit a Shiny app's theme
 

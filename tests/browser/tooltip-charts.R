@@ -23,7 +23,7 @@ widget <- function(id, offset) {
       `trend-values` = offset + i + 1:2
     )
   })
-  highchart(elementId = id, google_fonts = FALSE) |>
+  highchart(elementId = id) |>
     hc_add_series(data = points) |>
     hc_tooltip(useHTML = TRUE, pointFormatter = formatter)
 }

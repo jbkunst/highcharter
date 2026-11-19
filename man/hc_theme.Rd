@@ -17,7 +17,9 @@ hc_set_theme(theme, ...)
 an empty theme.}
 
 \item{...}{Named Highcharts options. Nested options override individual
-fields. Arrays such as \code{colors} and gradient stops are replaced in full.}
+fields. Arrays such as \code{colors} and gradient stops are replaced in full.
+In a \code{fontFamily} field, name a bundled or page-supplied family, or
+pass \code{sass::font_google()} to include a web font with the chart.}
 
 \item{theme}{A preset name or an object created with \code{hc_theme()}.}
 }
@@ -34,6 +36,10 @@ from a packaged preset or supply your own named Highcharts options.
 hc_themes()
 highchart(theme = hc_theme("ft")) |> hc_add_series(data = c(3, 1, 4))
 team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"))
+hc_theme(chart = list(style = list(fontFamily = "IBM Plex Sans")))
+\dontrun{
+hc_theme(chart = list(style = list(fontFamily = sass::font_google("Noto Sans"))))
+}
 old <- hc_set_theme(team)
 highchart() |> hc_add_series(data = c(3, 1, 4))
 options(old)

@@ -12,9 +12,6 @@
 #' @param width A numeric width in pixels, or a CSS width such as `"100%"`.
 #' @param height  A numeric input in pixels.
 #' @param elementId	Use an explicit element ID for the widget.
-#' @param google_fonts Use the bundled theme fonts and load additional font
-#'   families from Google Fonts. Set to FALSE to manage fonts with your own
-#'   CSS. Defaults to the \code{"highcharter.google_fonts"} option.
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #' @examples
 #' highchart(width = "100%") |>
@@ -38,8 +35,7 @@ highchart <- function(
   type = "chart",
   width = NULL,
   height = NULL,
-  elementId = NULL,
-  google_fonts = getOption("highcharter.google_fonts")
+  elementId = NULL
 ) {
   .highchart_widget(
     name = "highchart",
@@ -48,8 +44,7 @@ highchart <- function(
     type = type,
     width = width,
     height = height,
-    elementId = elementId,
-    google_fonts = google_fonts
+    elementId = elementId
   )
 }
 
@@ -60,8 +55,7 @@ highchart <- function(
   type,
   width,
   height,
-  elementId,
-  google_fonts
+  elementId
 ) {
   stopifnot(length(type) == 1L, type %in% c("chart", "stock", "map", "gantt"))
 
@@ -79,7 +73,6 @@ highchart <- function(
     theme = theme,
     conf_opts = opts,
     type = type,
-    google_fonts = google_fonts,
     debug = getOption("highcharter.debug")
   )
 
@@ -103,21 +96,6 @@ highchart <- function(
     height = height,
     package = "highcharter",
     elementId = elementId,
-    dependencies = if (google_fonts) {
-      list(htmltools::htmlDependency(
-        name = "highcharter-fonts",
-        version = "5.3.0.1",
-        src = "fonts",
-        package = "highcharter",
-        stylesheet = "fonts.css"
-      ))
-    },
-    preRenderHook = if (google_fonts) {
-      function(hc) {
-        hc$x$fonts <- .hc_get_fonts(list(hc$x$hc_opts, hc$x$theme))
-        hc
-      }
-    },
     sizingPolicy = htmlwidgets::sizingPolicy(
       defaultWidth = "100%",
       # knitr.figure = FALSE,
@@ -125,6 +103,9 @@ highchart <- function(
       padding = 0
     )
   )
+
+  hc <- .hc_apply_fonts(hc, "theme")
+  hc <- .hc_apply_fonts(hc, "hc_opts")
 
   # set sizing for `shinyRenderer`
   hc <- hc_size(hc, width = width, height = height)
@@ -154,8 +135,7 @@ highchartstock <- function(
   theme = getOption("highcharter.theme"),
   width = NULL,
   height = NULL,
-  elementId = NULL,
-  google_fonts = getOption("highcharter.google_fonts")
+  elementId = NULL
 ) {
   .highchart_widget(
     name = "highchartstock",
@@ -164,8 +144,7 @@ highchartstock <- function(
     type = "stock",
     width = width,
     height = height,
-    elementId = elementId,
-    google_fonts = google_fonts
+    elementId = elementId
   )
 }
 

@@ -6,7 +6,6 @@ if (!file.exists(file.path(root, "DESCRIPTION"))) {
 if (!exists("site_dir", inherits = FALSE)) {
   site_dir <- file.path(root, "dev", "highcharts-bundle", "preview")
 }
-options(highcharter.google_fonts = FALSE)
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 library(htmltools)

@@ -39,6 +39,7 @@ Suggests:
     seasonal,
     rjson,
     bslib,
+    sass,
     knitr,
     rmarkdown,
     fontawesome,

@@ -33,22 +33,6 @@
     });
   }
 
-  function loadFonts(fonts) {
-    if (fonts === null || fonts === undefined) return;
-    if (typeof fonts === 'string') fonts = [fonts];
-
-    fonts.forEach(function(font) {
-      var url = 'https://fonts.googleapis.com/css?family=' + font;
-      if (!document.querySelector("link[href='" + url + "']")) {
-        var link = document.createElement('link');
-        link.href = url;
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        document.head.appendChild(link);
-      }
-    });
-  }
-
   function prepareMapSeries(options, debug) {
     if (!Array.isArray(options.series)) return;
     options.series = options.series.map(function(series) {
@@ -86,7 +70,6 @@
       console.log('conf_opts', x.conf_opts);
     }
 
-    loadFonts(x.fonts);
     ResetHighchartsOptions(defaults);
     Highcharts.setOptions({ exporting: { buttons: { contextButton: { symbol: 'menuball' } } } });
     if (x.theme) Highcharts.setOptions(x.theme);

@@ -7,6 +7,8 @@
 #'   an empty theme.
 #' @param ... Named Highcharts options. Nested options override individual
 #'   fields. Arrays such as `colors` and gradient stops are replaced in full.
+#'   In a `fontFamily` field, name a bundled or page-supplied family, or
+#'   pass `sass::font_google()` to include a web font with the chart.
 #' @param theme A preset name or an object created with `hc_theme()`.
 #' @return `hc_theme()` returns an `hc_theme` object. `hc_themes()` lists the
 #'   available preset names. `hc_set_theme()` sets `highcharter.theme` for
@@ -16,6 +18,10 @@
 #' hc_themes()
 #' highchart(theme = hc_theme("ft")) |> hc_add_series(data = c(3, 1, 4))
 #' team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"))
+#' hc_theme(chart = list(style = list(fontFamily = "IBM Plex Sans")))
+#' \dontrun{
+#' hc_theme(chart = list(style = list(fontFamily = sass::font_google("Noto Sans"))))
+#' }
 #' old <- hc_set_theme(team)
 #' highchart() |> hc_add_series(data = c(3, 1, 4))
 #' options(old)
@@ -126,7 +132,7 @@ hc_add_theme <- function(hc, hc_thm) {
     "The theme used is not from hc_theme class" = .is_hc_theme(hc_thm)
   )
   hc$x$theme <- hc_thm
-  hc
+  .hc_apply_fonts(hc, "theme")
 }
 
 #' Merge chart themes
@@ -153,33 +159,129 @@ hc_theme_merge <- function(...) {
   identical(class(theme), "hc_theme")
 }
 
-.hc_get_fonts <- function(lst) {
-  values <- unlist(lst)
-  families <- values[grepl("fontFamily$", names(values))]
-  # CSS variables and generic/system fonts are provided by the surrounding page.
-  families <- families[!grepl("^var\\(", trimws(families))]
-  families <- trimws(sub(",.*", "", families))
+# Track font declarations by their option paths so an explicit style can
+# override a theme and a replacement theme can drop unused dependencies.
+.hc_apply_fonts <- function(hc, slot, section = NULL, append_from = NULL) {
+  previous <- hc$font_fields[[slot]]
+  fields <- previous
+  options <- hc$x[[slot]]
+  prefix <- if (is.null(section)) "" else paste0("/", section)
+  if (is.null(append_from)) {
+    fields <- if (is.null(section)) {
+      list()
+    } else {
+      previous[!startsWith(as.character(names(previous)), paste0(prefix, "/"))]
+    }
+  }
+
+  walk <- function(node, path) {
+    if (!is.list(node)) {
+      return(node)
+    }
+    keys <- rlang::names2(node)
+    for (i in which(keys == "fontFamily")) {
+      font <- node[[i]]
+      if (inherits(font, "font_collection")) {
+        font <- htmltools::attachDependencies(
+          font$families,
+          htmltools::findDependencies(font)
+        )
+        node[[i]] <- font
+      }
+      if (!is.character(font) || length(font) != 1L || is.na(font)) {
+        next
+      }
+      key <- paste0(path, "/fontFamily")
+      fields[key] <<- list(font)
+    }
+    # GeoJSON coordinates and TopoJSON arcs contain no Highcharts styles.
+    children <- which(
+      vapply(node, is.list, logical(1)) &
+        !keys %in% c("fontFamily", "mapData", "geometry", "coordinates", "arcs")
+    )
+    for (i in children) {
+      key <- if (nzchar(keys[i])) keys[i] else as.character(i)
+      child_path <- paste0(path, "/", key)
+      if (key == "data" && grepl("^/series/[^/]+$", path)) {
+        # Only point data labels can supply a font in a series data array.
+        points <- node[[i]]
+        styled <- vapply(
+          points,
+          function(point) is.list(point) && !is.null(point[["dataLabels"]]),
+          logical(1)
+        )
+        for (j in which(styled)) {
+          points[[j]]$dataLabels <- walk(
+            points[[j]]$dataLabels,
+            paste0(child_path, "/", j, "/dataLabels")
+          )
+        }
+        if (any(styled)) node[[i]] <- points
+      } else {
+        node[i] <- list(walk(node[[i]], child_path))
+      }
+    }
+    node
+  }
+
+  if (is.null(section)) {
+    hc$x[[slot]] <- walk(options, "")
+  } else if (is.null(append_from)) {
+    hc$x[[slot]][section] <- list(walk(options[[section]], prefix))
+  } else {
+    items <- options[[section]]
+    for (i in append_from + seq_len(length(items) - append_from)) {
+      items[i] <- list(walk(items[[i]], paste0(prefix, "/", i)))
+    }
+    hc$x[[slot]][[section]] <- items
+  }
+
+  if (!length(previous) && !length(fields) || identical(previous, fields)) {
+    return(hc)
+  }
+  hc$font_fields[[slot]] <- fields
+  overrides <- hc$font_fields$hc_opts
+  defaults <- hc$font_fields$theme
+  active <- c(overrides, defaults[setdiff(names(defaults), names(overrides))])
+  fonts <- unique(unname(active))
+  deps <- unlist(lapply(fonts, .hc_font_dependencies), recursive = FALSE)
+  deps <- lapply(
+    htmltools::resolveDependencies(deps, resolvePackageDir = FALSE),
+    function(dep) {
+      attr(dep, "highcharter_font") <- TRUE
+      dep
+    }
+  )
+  other <- Filter(
+    function(dep) !isTRUE(attr(dep, "highcharter_font")),
+    hc$dependencies
+  )
+  hc$dependencies <- c(other, deps)
+  hc
+}
+
+.hc_font_dependencies <- function(font) {
+  explicit <- htmltools::htmlDependencies(font)
+  if (!is.null(explicit)) {
+    return(explicit)
+  }
+  if (startsWith(trimws(font), "var(")) {
+    return(list())
+  }
+  families <- trimws(strsplit(font, ",", fixed = TRUE)[[1L]])
   families <- gsub("^['\"]|['\"]$", "", families)
-  packaged <- basename(list.dirs(
-    system.file("fonts", package = "highcharter", mustWork = TRUE),
+  slugs <- tolower(gsub("\\s+", "-", families))
+  bundled <- basename(list.dirs(
+    system.file("fonts", package = "highcharter"),
     recursive = FALSE
   ))
-  families <- families[!tolower(gsub("\\s+", "-", families)) %in% packaged]
-  families <- families[
-    !tolower(families) %in%
-      c(
-        "arial",
-        "helvetica",
-        "georgia",
-        "verdana",
-        "times new roman",
-        "courier new",
-        "system-ui",
-        "sans-serif",
-        "serif",
-        "monospace",
-        "inherit"
-      )
-  ]
-  unique(unname(gsub("\\s+", "+", families)))
+  lapply(intersect(slugs, bundled), function(slug) {
+    htmltools::htmlDependency(
+      name = paste0("highcharter-font-", slug),
+      version = "5.3.0.1",
+      src = file.path("fonts", slug),
+      package = "highcharter",
+      stylesheet = "font.css"
+    )
+  })
 }

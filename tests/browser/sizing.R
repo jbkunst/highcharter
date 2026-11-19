@@ -1,6 +1,5 @@
 # Run from the repository root: Rscript tests/browser/sizing.R
 pkgload::load_all(".", quiet = TRUE)
-options(highcharter.google_fonts = FALSE)
 
 check_sizing <- function() {
   directory <- tempfile("highcharter-sizing-")

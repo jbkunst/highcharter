@@ -12,6 +12,8 @@ validate_args <- function(name, options) {
     if (
       is.list(base[[key]]) &&
         !is.null(names(base[[key]])) &&
+        !inherits(base[[key]], "font_collection") &&
+        !inherits(value, "font_collection") &&
         is.list(value) &&
         !is.null(names(value))
     ) {
@@ -106,7 +108,7 @@ validate_args <- function(name, options) {
     }
   }
 
-  hc
+  .hc_apply_fonts(hc, "hc_opts", name)
 }
 
 .hc_tooltip_table <- function(hc, ...) {

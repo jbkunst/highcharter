@@ -10,8 +10,7 @@ highchart(
   type = "chart",
   width = NULL,
   height = NULL,
-  elementId = NULL,
-  google_fonts = getOption("highcharter.google_fonts")
+  elementId = NULL
 )
 }
 \arguments{
@@ -28,10 +27,6 @@ Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 \item{height}{A numeric input in pixels.}
 
 \item{elementId}{Use an explicit element ID for the widget.}
-
-\item{google_fonts}{Use the bundled theme fonts and load additional font
-families from Google Fonts. Set to FALSE to manage fonts with your own
-CSS. Defaults to the \code{"highcharter.google_fonts"} option.}
 }
 \description{
 This function creates a Highchart chart using \pkg{htmlwidgets}. The

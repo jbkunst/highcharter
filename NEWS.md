@@ -4,14 +4,12 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
-* Proposed font API (pending implementation). The proposal removes the
-  `google_fonts` argument and the `highcharter.google_fonts` option.
-  Bundled families would work offline by name. Other plain family names
-  would use fonts supplied by the page or the viewer's device. To migrate
-  an automatic Google Fonts request, set `chart.style.fontFamily` in
-  `hc_theme()` to `sass::font_google("Noto Sans", local = FALSE)`. Choose
-  `local = TRUE` to include the font files with the widget. See the
-  independent examples in `vignette("themes", package = "highcharter")`.
+* Removed the `google_fonts` argument from `highchart()` and `highchartstock()`
+  and the `highcharter.google_fonts` option. Bundled families work offline by
+  name. Other plain family names use fonts supplied by the page or device.
+  To include an external font with the widget, set `chart.style.fontFamily`
+  in `hc_theme()` to `sass::font_google("Noto Sans")`. Use `local = FALSE`
+  for a link to Google Fonts. See `vignette("themes", package = "highcharter")`.
 
 * Give each Highcharts option in `...` a name, for example
   `hc_title(hc, text = "Sales")`. Collections still accept positional objects,
@@ -99,10 +97,8 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Changes
 
-* The Latin subsets of the 15 theme fonts work offline. With automatic fonts
-  enabled, the widget uses the packaged WOFF2 files and requests additional
-  families from Google Fonts when it renders. Set `google_fonts = FALSE` to
-  manage all fonts in page CSS.
+* Widgets attach the Latin WOFF2 files for the bundled families selected by
+  their theme and chart options. Charts using system fonts need no font files.
 
 * `hchart()` shows ACF and PACF as lollipops at their reported lags.
   Multivariate time series and decompositions use shared table tooltips.

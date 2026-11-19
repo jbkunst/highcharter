@@ -402,18 +402,15 @@ Decide whether a new preset's typefaces should work offline. For an offline
 family, add its Fontsource slug to [data-raw/fonts.R](../data-raw/fonts.R).
 Run `Rscript data-raw/fonts.R` from the repository root to rebuild `inst/fonts/`.
 The script downloads the regular (400, upright) Latin WOFF2 face and license
-for each selected family from a pinned release and writes the shared CSS with
-the upstream Unicode ranges. When the generated assets change, bump the
-`highcharter-fonts` dependency version in `R/highcharter.R`. Keep monospace
-companions for themes that use them.
+for each selected family from a pinned release and writes a CSS file for each family with
+the upstream Unicode range. When the generated assets change, bump the font
+dependency version in `R/theme.R`. Keep monospace companions for themes that
+use them.
 
-With `google_fonts = TRUE`, the [widget constructor](../R/highcharter.R)
-attaches `inst/fonts/fonts.css` through `htmltools::htmlDependency()`. The
-browser loads the bundled faces used by the chart. Just before rendering,
-R checks the final theme and chart options once for additional families. The
-[widget's JavaScript](../inst/htmlwidgets/lib/highcharts/custom/highcharter-widget.js)
-requests those families from Google Fonts. With `google_fonts = FALSE`, the
-page manages the fonts through its own CSS.
+The widget resolves each `fontFamily` when a theme or chart option changes.
+A matching packaged family attaches its own directory in `inst/fonts/`.
+An explicit `sass::font_google()` provides its CSS family name and HTML
+dependency. Other CSS family names and variables use the surrounding page.
 
 Each file in `inst/themes/` defines one preset. Its filename is the name
 accepted by `hc_theme()`. Use Highcharts option names, quote hex colors and

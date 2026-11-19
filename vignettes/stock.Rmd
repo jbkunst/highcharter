@@ -10,7 +10,6 @@ vignette: >
 ```{r, include=FALSE}
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
-options(highcharter.google_fonts = FALSE)
 ```
 
 `highchart(type = "stock")` adds the Stock navigator and range selector.

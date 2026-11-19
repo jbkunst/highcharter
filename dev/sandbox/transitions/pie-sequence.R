@@ -142,8 +142,7 @@ tree_exports <- c(
 base <- highchart(
   theme = hc_theme("hcrt"),
   width = "100%",
-  height = 420,
-  google_fonts = TRUE
+  height = 420
 ) |>
   hc_chart(type = "pie", inverted = FALSE, animation = list(duration = 1200)) |>
   hc_title(text = NULL) |>

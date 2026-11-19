@@ -32,7 +32,6 @@ dir.create(site_dir, recursive = TRUE, showWarnings = FALSE)
 cli::cli_h2("3/7 Load the local highcharter package")
 
 pkgload::load_all(".", quiet = TRUE)
-options(highcharter.google_fonts = FALSE)
 highcharter::hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 
 

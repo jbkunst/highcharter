@@ -328,8 +328,7 @@ chart_height <- 350
 base <- highchart(
   theme = hc_theme("hcrt"),
   width = "100%",
-  height = chart_height,
-  google_fonts = TRUE
+  height = chart_height
 ) |>
   hc_chart(animation = list(duration = 1200), inverted = FALSE) |>
   hc_title(text = NULL) |>

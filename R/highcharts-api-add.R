@@ -24,9 +24,7 @@ hc_add_series.default <- function(hc, data = NULL, ...) {
   if (!missing(data)) {
     options <- c(list(data = data), options)
   }
-  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(options))
-
-  hc
+  hc_add_series_list(hc, list(options))
 }
 
 
@@ -781,9 +779,9 @@ hc_add_series_list <- function(hc, x) {
     x <- list_parse(x)
   }
 
+  start <- length(hc$x$hc_opts$series)
   hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)
-
-  hc
+  .hc_apply_fonts(hc, "hc_opts", "series", append_from = start)
 }
 
 #' Use chart events as Shiny inputs
@@ -845,9 +843,9 @@ hc_add_annotations <- function(hc, x) {
     x <- list_parse(x)
   }
 
-  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], x)
-
-  hc
+  start <- length(hc$x$hc_opts$annotations)
+  hc$x$hc_opts$annotations <- append(hc$x$hc_opts$annotations, x)
+  .hc_apply_fonts(hc, "hc_opts", "annotations", append_from = start)
 }
 
 #' Add a bundled community plugin to a chart

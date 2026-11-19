@@ -116,25 +116,61 @@ test_that("the setter snapshots names and custom themes for each widget", {
   expect_identical(getOption("highcharter.theme"), theme)
 })
 
-test_that("theme fonts are local and extra families are resolved at render time", {
-  chart <- highchart(theme = hc_theme("carbon"), google_fonts = TRUE)
-  expect_equal(
-    vapply(chart$dependencies, "[[", character(1), "name"),
-    "highcharter-fonts"
-  )
-  expect_length(chart$preRenderHook(chart)$x$fonts, 0)
-  chart <- hc_add_theme(chart, hc_theme("bslib")) |>
-    hc_title(style = list(fontFamily = "'IBM Plex Sans', sans-serif")) |>
+test_that("widgets keep only the font families in their theme and options", {
+  fonts <- function(hc) unname(vapply(hc$dependencies, "[[", "", "name"))
+  ibm <- "highcharter-font-ibm-plex-sans"
+  title <- "highcharter-font-alegreya-sans-sc"
+  chart <- highchart(theme = hc_theme("hcrt"))
+  expect_setequal(fonts(chart), c(ibm, title))
+  expect_identical(fonts(hc_add_theme(chart, hc_theme("carbon"))), ibm)
+
+  chart <- chart |>
+    hc_title(style = list(fontFamily = "system-ui")) |>
     hc_add_series(
       data = 1:3,
-      dataLabels = list(style = list(fontFamily = "Fira Sans"))
+      dataLabels = list(style = list(fontFamily = "IBM Plex Sans"))
     )
-  expect_identical(chart$preRenderHook(chart)$x$fonts, "Fira+Sans")
+  expect_identical(fonts(chart), ibm)
+  expect_identical(fonts(hc_add_theme(chart, hc_theme("bslib"))), ibm)
+  expect_length(fonts(highchart(theme = hc_theme("bslib"))), 0L)
 
-  off <- highchart(google_fonts = FALSE) |>
+  point <- list(
+    y = 1,
+    dataLabels = list(style = list(fontFamily = "Alegreya Sans SC"))
+  )
+  chart <- highchart(theme = hc_theme()) |> hc_add_series(data = list(point))
+  expect_identical(fonts(chart), title)
+  expect_match(chart$dependencies[[1L]]$src$file, "alegreya-sans-sc$")
+})
+
+test_that("explicit web fonts survive theme merges and reach the widget as CSS", {
+  skip_if_not_installed("sass")
+  font <- sass::font_google("Noto Sans", local = FALSE)
+  custom <- hc_theme(chart = list(style = list(fontFamily = font)))
+  combined <- hc_theme_merge(hc_theme("carbon"), custom)
+  old <- hc_set_theme(combined)
+  on.exit(options(old), add = TRUE)
+
+  chart <- highchartstock()
+  expect_identical(
+    as.character(chart$x$theme$chart$style$fontFamily),
+    "'Noto Sans'"
+  )
+  expect_length(chart$dependencies, 1L)
+  expect_match(
+    chart$dependencies[[1L]]$head,
+    "fonts.googleapis.com",
+    fixed = TRUE
+  )
+
+  chart <- chart |>
     hc_add_theme(hc_theme("carbon")) |>
-    hc_title(style = list(fontFamily = "Fira Sans"))
-  expect_length(off$dependencies, 0)
-  expect_null(off$preRenderHook)
-  expect_null(off$x$fonts)
+    hc_title(style = list(fontFamily = font))
+  expect_length(chart$dependencies, 2L)
+  chart <- hc_title(chart, style = list(fontFamily = "system-ui"))
+  expect_identical(
+    chart$dependencies[[1L]]$name,
+    "highcharter-font-ibm-plex-sans"
+  )
+  expect_length(chart$dependencies, 1L)
 })

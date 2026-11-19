@@ -10,7 +10,6 @@ vignette: >
 ```{r, include=FALSE}
 library(highcharter)
 hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
-options(highcharter.google_fonts = FALSE)
 ```
 
 Highcharter includes the Highcharts accessibility module in the shared bundle.
