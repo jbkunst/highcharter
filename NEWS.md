@@ -137,6 +137,9 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Treemap and sunburst nodes from `data_to_hierarchical()` now keep the
+  correct parent when labels on different paths produce the same ID.
+
 * Stock Tools now loads its indicators and embeds its toolbar icons in
   self-contained HTML widgets and vignettes.
 

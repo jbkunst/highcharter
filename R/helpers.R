@@ -133,8 +133,7 @@ data_to_boxplot <- function(
 #' hchart(dout, type = "treemap")
 #' }
 #'
-#' @importFrom dplyr group_by_at arrange desc distinct rename_all everything
-#' @importFrom purrr reduce
+#' @importFrom dplyr arrange desc
 #' @export
 data_to_hierarchical <- function(
   data,
@@ -145,56 +144,43 @@ data_to_hierarchical <- function(
   dat <- data |>
     select({{ group_vars }}, {{ size_var }})
 
-  ngvars <- ncol(dat) - 1
-
-  names(dat) <- c(str_c("group_var_", seq(1, ngvars)), "value")
-
-  gvars <- names(dat)[seq(1, ngvars)]
-
-  # group to calculate the sum if there are duplicated combinations
+  if (ncol(dat) < 2L) {
+    stop("Select at least one group column and a size column.", call. = FALSE)
+  }
+  if (!nrow(dat)) {
+    return(list())
+  }
+  groups <- paste0("group_", seq_len(ncol(dat) - 1L))
+  names(dat) <- c(groups, "value")
   dat <- dat |>
-    group_by_at(all_of(gvars)) |>
+    group_by(dplyr::across(all_of(groups))) |>
     summarise(value = sum(.data$value, na.rm = TRUE), .groups = "drop") |>
-    ungroup() |>
-    mutate_if(is.factor, as.character) |>
     arrange(desc(.data$value))
 
-  dout <- map(seq_along(gvars), function(depth = 1) {
-    datg <- dat |>
-      select(1:depth) |>
-      distinct()
-
-    ids <- do.call(paste, c(as.list(datg), sep = "_"))
-    dd <- list(tibble(name = datg[[depth]], id = str_to_id_vec(ids)))
-
-    if (depth > 1L) {
-      parents <- do.call(paste, c(as.list(datg[-depth]), sep = "_"))
-      dd <- append(dd, list(tibble(parent = str_to_id(parents))))
-    }
-
-    # depth == 1 add colors
-    if (depth == 1 & !is.null(colors)) {
-      dd <- dd |>
-        append(list(tibble(color = rep(colors, length.out = nrow(datg)))))
-    }
-
-    # depth == lastdepth add value
-    if (depth == ngvars) {
-      dd <- dd |> append(list(dat |> select("value")))
-    }
-
-    dd <- dd |>
-      bind_cols() |>
-      mutate(level = depth)
-
-    dd
-
-    list_parse(dd)
+  paths <- lapply(seq_along(groups), function(i) unique(dat[seq_len(i)]))
+  keys <- lapply(paths, function(path) {
+    do.call(paste, c(as.list(path), sep = "_"))
   })
+  ids <- str_to_id(unlist(keys, use.names = FALSE))
+  ids[ids == ""] <- "node"
+  ids <- utils::relist(make.unique(ids, sep = "_"), keys)
 
-  dout <- reduce(dout, c)
-
-  dout
+  levels <- lapply(seq_along(paths), function(i) {
+    path <- paths[[i]]
+    nodes <- tibble(name = path[[i]], id = ids[[i]])
+    if (i > 1L) {
+      parent <- vctrs::vec_match(path[-i], paths[[i - 1L]])
+      nodes$parent <- ids[[i - 1L]][parent]
+    } else if (!is.null(colors)) {
+      nodes$color <- rep(colors, length.out = nrow(path))
+    }
+    if (i == length(paths)) {
+      nodes$value <- dat$value
+    }
+    nodes$level <- i
+    list_parse(nodes)
+  })
+  unlist(levels, recursive = FALSE, use.names = FALSE)
 }
 
 #' Helper to transform data frame for sankey highcharts format
@@ -373,13 +359,6 @@ str_to_id <- function(x) {
     stringr::str_replace_all("\\[|\\]", "_") |>
     stringr::str_replace_all("_+", "_") |>
     stringr::str_replace_all("_$|^_", "")
-}
-
-#' @rdname str_to_id
-str_to_id_vec <- function(x) {
-  id <- str_to_id(x)
-  suffix <- cumsum(duplicated(id))
-  str_c(id, ifelse(suffix == 0L, "", str_c("_", suffix)))
 }
 
 #' Date to timestamps
