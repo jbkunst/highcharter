@@ -2,15 +2,22 @@
 % Please edit documentation in R/helpers.R
 \name{data_to_sankey}
 \alias{data_to_sankey}
-\title{Helper to transform data frame for sankey highcharts format}
+\title{Count links between consecutive columns for a Sankey chart}
 \usage{
 data_to_sankey(data = NULL)
 }
 \arguments{
-\item{data}{A data frame}
+\item{data}{A data frame with one column per stage, in traversal order.
+Numeric columns with more than ten distinct finite values are grouped by
+quintiles. Tied cut points produce fewer groups.}
+}
+\value{
+A tibble with \code{from}, \code{to}, \code{weight} (number of transitions) and a
+unique link \code{id}. Links with a missing endpoint are omitted. Fewer than
+two columns produce an empty tibble with the same columns.
 }
 \description{
-Helper to transform data frame for sankey highcharts format
+Count links between consecutive columns for a Sankey chart
 }
 \examples{
 \dontrun{

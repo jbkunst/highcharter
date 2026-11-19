@@ -164,7 +164,10 @@ Bundled Highcharts JS: 12.6.0.
 * Forecast charts use the same time index for predictions and their intervals.
   Series with frequencies other than 1, 4 or 12 use a numeric axis.
 
-* `data_to_sankey()` counts transitions between consecutive columns again.
+* `data_to_sankey()` counts transitions between consecutive columns, skips
+  links with missing endpoints and assigns unique link IDs. Numeric binning
+  handles missing values and tied quantiles. Inputs with fewer than two
+  columns return an empty link table.
 
 * Axes with one category now display its label on the axis and in tooltips,
   including when the category is numeric (#395, #438).

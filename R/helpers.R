@@ -171,9 +171,14 @@ data_to_hierarchical <- function(
   unlist(levels, recursive = FALSE, use.names = FALSE)
 }
 
-#' Helper to transform data frame for sankey highcharts format
+#' Count links between consecutive columns for a Sankey chart
 #'
-#' @param data A data frame
+#' @param data A data frame with one column per stage, in traversal order.
+#'   Numeric columns with more than ten distinct finite values are grouped by
+#'   quintiles. Tied cut points produce fewer groups.
+#' @return A tibble with `from`, `to`, `weight` (number of transitions) and a
+#'   unique link `id`. Links with a missing endpoint are omitted. Fewer than
+#'   two columns produce an empty tibble with the same columns.
 #'
 #' @examples
 #' \dontrun{
@@ -187,36 +192,50 @@ data_to_hierarchical <- function(
 #' hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
 #' }
 #'
-#' @importFrom dplyr all_of count group_by_all vars mutate_at
+#' @importFrom dplyr all_of count
 #' @export
 data_to_sankey <- function(data = NULL) {
-  # numeric to categories
-  if (any(unlist(purrr::map(data, class)) %in% c("integer", "numeric"))) {
-    warning("numeric variables were treated with cut() function")
-    data <- dplyr::mutate_if(
-      data,
-      function(x) is.numeric(x) && length(unique(x)) > 10,
-      ~ cut(.x, breaks = c(-Inf, quantile(.x, c(2, 4, 6, 8) / 10), Inf))
+  if (length(data) < 2L) {
+    return(tibble(
+      from = character(),
+      to = character(),
+      weight = integer(),
+      id = character()
+    ))
+  }
+  columns <- as.list(data)
+  bin <- vapply(
+    columns,
+    function(x) {
+      is.numeric(x) && length(unique(x[is.finite(x)])) > 10L
+    },
+    logical(1)
+  )
+
+  if (any(bin)) {
+    warning(
+      "Numeric columns grouped by quantiles: ",
+      paste(names(columns)[bin], collapse = ", ")
     )
+    columns[bin] <- lapply(columns[bin], function(x) {
+      cuts <- stats::quantile(x[is.finite(x)], (1:4) / 5, names = FALSE)
+      cut(x, unique(c(-Inf, cuts, Inf)), include.lowest = -Inf %in% x)
+    })
   }
 
-  columns <- names(data)
-  dcmb <- tibble::tibble(var1 = head(columns, -1L), var2 = tail(columns, -1L))
+  links <- Map(
+    function(from, to) {
+      tibble(from, to) |>
+        dplyr::filter(!is.na(.data$from), !is.na(.data$to)) |>
+        count(.data$from, .data$to, name = "weight") |>
+        mutate(dplyr::across(c("from", "to"), as.character))
+    },
+    head(columns, -1L),
+    tail(columns, -1L)
+  )
 
-  # sankey data
-  dsnky <- purrr::pmap_df(dcmb, function(var1 = "cut", var2 = "color") {
-    data |>
-      select(all_of(var1), all_of(var2)) |>
-      group_by_all() |>
-      count() |>
-      ungroup() |>
-      setNames(c("from", "to", "weight")) |>
-      mutate_if(is.factor, as.character) |>
-      mutate_at(vars(1, 2), as.character) |>
-      mutate(id = paste0(.data$from, .data$to))
-  })
-
-  dsnky
+  bind_rows(unname(links)) |>
+    mutate(id = make.unique(paste0(.data$from, .data$to)))
 }
 
 #' Convert data to annotation labels
