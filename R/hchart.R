@@ -773,9 +773,14 @@ hchart.survfit <- function(
     data$lower <- pmin(lower, upper)
     data$upper <- pmax(lower, upper)
   }
+  # The summary stacks one block of times per column of the survival matrix.
+  if (is.matrix(object$surv)) {
+    data$.profile <- rep(seq_len(ncol(object$surv)), each = length(object$time))
+  }
+  if (is.null(object$strata)) data$strata <- NULL
   curves <- dplyr::group_split(
     data,
-    dplyr::across(dplyr::any_of(c("strata", "data")))
+    dplyr::across(dplyr::any_of(c("strata", ".profile")))
   )
   profile_names <- colnames(object$surv)
   marker <- list(fillColor = markerColor, symbol = symbol, enabled = TRUE)
@@ -791,7 +796,7 @@ hchart.survfit <- function(
 
   for (i in seq_along(curves)) {
     curve <- curves[[i]]
-    profile <- curve[["data"]][1L]
+    profile <- curve[[".profile"]][1L]
     if (!is.null(profile_names)) {
       profile <- profile_names[profile]
     }
