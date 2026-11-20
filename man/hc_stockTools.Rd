@@ -17,9 +17,16 @@ the stockTools module to be loaded. For a description of the module
 and information on its features, see Highcharts StockTools.
 }
 \examples{
-# Start with the full toolbar expanded beside the candlestick chart.
 data(sample_matrix, package = "xts")
-highchartstock() |>
-  hc_add_series(xts::as.xts(sample_matrix), name = "Price", id = "price") |>
-  hc_stockTools(gui = list(visible = TRUE))
+
+# Show the full Stock Tools toolbar by default.
+price_chart <- highchartstock() |>
+  hc_add_series(xts::as.xts(sample_matrix), name = "Price", id = "price")
+price_chart
+
+# You can show only selected buttons, in the order specified.
+price_chart |>
+  hc_stockTools(
+    gui = list(buttons = c("indicators", "zoomChange", "fullScreen"))
+  )
 }

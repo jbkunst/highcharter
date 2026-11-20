@@ -292,9 +292,9 @@ It disables the image's rig APT repository before installing build dependencies.
 The pkgdown job receives its
 `highcharter-webR` artifact and passes the path in `HIGHCHARTER_WASM_PACKAGE`.
 Pin the webR image in the workflow to the version bundled with the Shinylive
-assets in the export script when upgrading either. Pushes to
-`feat/highcharts-bundle` and pull requests targeting main or master build the
-site for verification. Main, master and published releases deploy it.
+assets in the export script when upgrading either. Pull requests targeting
+`main` build the site for verification. Pushes to `main`, published releases
+and manual runs on `main` deploy the site to `gh-pages`.
 
 For local previews without a supplied binary, the script installs this checkout
 without byte compilation and checks that it contains only portable R code and

@@ -1,9 +1,9 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 on:
   push:
-    branches: [main, master, feat/highcharts-bundle]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
   release:
     types: [published]
   workflow_dispatch:
@@ -76,8 +76,7 @@ jobs:
       - name: Deploy site
         if: >-
           github.event_name == 'release' ||
-          (github.event_name != 'pull_request' &&
-          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
+          (github.event_name != 'pull_request' && github.ref == 'refs/heads/main')
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
