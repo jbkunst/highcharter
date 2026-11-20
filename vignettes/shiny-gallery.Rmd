@@ -52,7 +52,7 @@ tags$div(
   card(
     "events",
     "Equalizer",
-    "Drag a frequency band to change its gain and watch the event table update."
+    "Drag a frequency band and compare its live gain with the final value on release."
   ),
   card(
     "linked",

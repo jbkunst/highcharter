@@ -10,13 +10,23 @@ colors <- setNames(
 
 ui <- fluidPage(
   theme = bslib::bs_theme(version = 5),
-  p(
-    "Each dot represents 1 mm of mean petal length.",
-    "Hover or click a species to see its 50 flowers in the same color."
-  ),
-  fluidRow(
-    column(5, highchartOutput("overview", height = "295px")),
-    column(7, highchartOutput("detail", height = "295px"))
+  style = "max-width: 60rem;",
+  tags$main(
+    p(
+      "Each dot represents 1 mm of mean petal length.",
+      "Hover or click a species to see its 50 flowers in the same color."
+    ),
+    fluidRow(
+      column(
+        5,
+        div(
+          class = "mx-auto",
+          style = "max-width: 24rem;",
+          highchartOutput("overview", height = "295px")
+        )
+      ),
+      column(7, highchartOutput("detail", height = "295px"))
+    )
   )
 )
 
@@ -41,15 +51,19 @@ server <- function(input, output, session) {
   })
 
   initial <- as.character(species$Species[1])
+  requested <- reactiveVal(initial)
   selected <- reactiveVal(initial)
+  settled <- debounce(requested, 200)
+  observeEvent(settled(), selected(settled()), ignoreInit = TRUE)
   observeEvent(
     input$overview_point_mouseOver,
-    selected(input$overview_point_mouseOver$pointid)
+    requested(input$overview_point_mouseOver$pointid)
   )
-  observeEvent(
-    input$overview_point_click,
-    selected(input$overview_point_click$pointid)
-  )
+  observeEvent(input$overview_point_click, {
+    group <- input$overview_point_click$pointid
+    requested(group)
+    selected(group)
+  })
 
   output$detail <- renderHighchart({
     hchart(

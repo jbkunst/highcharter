@@ -71,12 +71,12 @@ To switch from weekly to daily Stock prices when the visible date range narrows,
 ## Events
 
 Each lit segment adds 1 dB to the band's gain, starting at −12 dB.
-Hover over a band, click it, then drag its top and release it. The table keeps
-the latest band and gain for each event. Watch the `drag` row change as you
-move and the `drop` row update when you release.
+Hover over a band, click it, then drag its top and release it. Each event has
+its own readout. The `drag` and `mouseOver` values refresh at most once every
+150 ms. The `drop` value shows the final gain as soon as you release the band.
 
 ```{r events, echo=FALSE}
-demo("events", "the equalizer", height = 660)
+demo("events", "the equalizer", height = 595)
 ```
 
 Point clicks arrive automatically at `input$eq_point_click`. Register
@@ -88,8 +88,9 @@ band under the pointer and `input$eq_point_drag$y` gives its gain during a drag.
 
 The dotplot shows mean petal length by species, rounded to the nearest
 millimeter. With `colorByPoint = TRUE`, each species gets its own color.
-Hover over a species or click it to see petal length and width for its 50
-flowers in the same color. A Shiny proxy updates the detail points, series
+Pause over a species for 200 ms or click it for an immediate selection. The
+detail shows petal length and width for its 50 flowers in the same color.
+A Shiny proxy updates the detail points, series
 color and title while keeping the axes fixed for comparison.
 
 ```{r linked, echo=FALSE}

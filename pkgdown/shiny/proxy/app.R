@@ -3,6 +3,7 @@ library(highcharter)
 
 ui <- fluidPage(
   theme = bslib::bs_theme(version = 5),
+  style = "max-width: 48rem;",
   actionButton("next_month", "Add a month"),
   radioButtons(
     "type",

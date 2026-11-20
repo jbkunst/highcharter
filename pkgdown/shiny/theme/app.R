@@ -30,6 +30,7 @@ observatory <- bs_theme(
 
 ui <- page_fluid(
   theme = observatory,
+  style = "max-width: 48rem;",
   title = "Solar cycles",
   div(
     class = "d-flex justify-content-end align-items-center gap-2 py-2",
