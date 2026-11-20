@@ -1,4 +1,4 @@
-# Generated from Highcharts 12.6.0 by dev/generate-highcharts-api.R
+# Generated from Highcharts 12.6.2 by dev/generate-highcharts-api.R
 
 #' Accessibility options for highcharter objects
 #'

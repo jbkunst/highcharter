@@ -10,7 +10,7 @@ highcharter-logo.png
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^cran-comments\.md$
-^tests$
+^tests/browser$
 ^dev$
 ^\.travis\.yml$
 .lintr

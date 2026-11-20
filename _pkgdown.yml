@@ -2,10 +2,6 @@ url: https://jkunst.com/highcharter/
 lang: en
 home:
   sidebar: false
-repo:
-  url:
-    home: https://github.com/jbkunst/highcharter/
-    source: https://github.com/jbkunst/highcharter/blob/feat/highcharts-bundle/
 authors:
   Joshua Kunst:
     href: https://jkunst.com

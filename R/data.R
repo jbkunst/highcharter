@@ -20,7 +20,7 @@
 #' @format A data frame with 1,460 rows. `city` and `date` identify each day.
 #'   `temp_min`, `temp_mean` and `temp_max` are daily air temperatures at 2 m in degrees Celsius.
 #' @source [Open-Meteo Historical Weather API](https://open-meteo.com/en/docs/historical-weather-api),
-#'   based on [ERA5, Copernicus Climate Change Service](https://doi.org/10.24381/cds.adbb2d47).
+#'   based on ERA5, Copernicus Climate Change Service, \doi{10.24381/cds.adbb2d47}.
 "city_weather"
 
 #' Pokémon types and base stats

@@ -129,10 +129,8 @@ before deployment. A build that fails before cleanup must not be deployed.
 The script rebuilds generated output; it does not deploy it. Review the local
 site with `pkgdown::preview_site()` so search also runs through a local server.
 
-Source links currently point to `feat/highcharts-bundle` in `_pkgdown.yml`,
-because these articles and bundle files are not in the default branch yet.
-Switch them to `HEAD` when that branch contains the published sources. Public
-installation examples use the standard CRAN and GitHub commands without a branch.
+pkgdown reads the GitHub repository from `DESCRIPTION`. Source links use the
+current branch in GitHub Actions and `HEAD` for local builds.
 
 Extra root Markdown pages need a level-one heading for pkgdown to extract their
 page title. Generate favicon assets with `pkgdown::build_favicons(overwrite = TRUE)`;
@@ -332,8 +330,8 @@ Run the affected tests from the repository root, for example:
 testthat::test_local(filter = "hchart")
 ```
 
-`.Rbuildignore` excludes `tests/` from the source tarball. Run the source-tree
-tests alongside package checks. For a change to optional dependencies, repeat
+`R CMD check` runs the packaged testthat suite. Run the browser checks from
+`tests/browser/` in the checkout. For a change to optional dependencies, repeat
 the affected examples in a fresh R session with those packages absent.
 
 ## Package versioning

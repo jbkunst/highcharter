@@ -1,6 +1,6 @@
 # highcharter (development version)
 
-Bundled Highcharts JS: 12.6.0.
+Bundled Highcharts JS: 12.6.2.
 
 ## Breaking changes
 

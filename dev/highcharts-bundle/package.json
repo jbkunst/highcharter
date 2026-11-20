@@ -8,6 +8,6 @@
   },
   "devDependencies": {
     "esbuild": "0.25.12",
-    "highcharts": "12.6.0"
+    "highcharts": "12.6.2"
   }
 }

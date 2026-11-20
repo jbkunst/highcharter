@@ -204,7 +204,7 @@ hchart.forecast <- function(object, addOriginal = TRUE, addLevels = TRUE, ...) {
     hc_plotOptions(
       arearange = list(
         tooltip = list(
-          pointFormat = "<tr><td>{series.name}</td><td><b>{point.low} – {point.high}</b></td></tr>"
+          pointFormat = "<tr><td>{series.name}</td><td><b>{point.low} \u2013 {point.high}</b></td></tr>"
         )
       )
     ) |>

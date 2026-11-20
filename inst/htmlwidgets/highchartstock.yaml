@@ -4,7 +4,7 @@ dependencies:
     src: "htmlwidgets/lib/jquery"
     script: jquery.min.js
   - name: highcharts
-    version: 12.6.0
+    version: 12.6.2
     src: "htmlwidgets/lib"
     script:
       - highcharter-bundle.js
@@ -13,7 +13,7 @@ dependencies:
     stylesheet: highcharts/custom/tooltip.css
     all_files: false
   - name: highcharts-stock-tools
-    version: 12.6.0
+    version: 12.6.2
     src: "htmlwidgets/lib/stock-tools"
     script: highcharter-stock-tools.js
     stylesheet:

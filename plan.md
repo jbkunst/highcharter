@@ -72,3 +72,4 @@ R 4.5.0, htmlwidgets 1.6.4, jsonlite 2.0.0 and yyjsonr 0.1.22 on Linux.
 | highdir 0.6.0 and UnalR 1.0.2 | Migrate calls to removed theme constructors, including `hc_theme_smpl()` in highdir and `hc_theme_flat()` in UnalR. |
 | AovBay 0.1.0 and xplorerr 0.2.0 | Migrate the boxplots in their Shiny apps from `hcboxplot()`. |
 | vistime 1.3.0 | The widget works. Update the vignette example that relies on highcharter exporting `%>%`. |
+| cTRAP 1.30.0 and psichomics 1.38.1 | Both import `%>%` from highcharter and already depend on dplyr. psichomics also declares an unused `fa_icon_mark` import. Their maintainer was notified on November 20, 2026. Recheck both namespaces before submission. |

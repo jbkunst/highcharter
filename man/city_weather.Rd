@@ -10,7 +10,7 @@ A data frame with 1,460 rows. \code{city} and \code{date} identify each day.
 }
 \source{
 \href{https://open-meteo.com/en/docs/historical-weather-api}{Open-Meteo Historical Weather API},
-based on \href{https://doi.org/10.24381/cds.adbb2d47}{ERA5, Copernicus Climate Change Service}.
+based on ERA5, Copernicus Climate Change Service, \doi{10.24381/cds.adbb2d47}.
 }
 \usage{
 city_weather
