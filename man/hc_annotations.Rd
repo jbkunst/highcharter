@@ -27,9 +27,10 @@ are supported.
 See more in the general docs.
 }
 \examples{
-peak <- which.max(citytemp$tokyo)
+tokyo <- subset(city_weather, city == "Tokyo")
+monthly <- tapply(tokyo$temp_mean, format(tokyo$date, "\%m"), mean)
+peak <- which.max(monthly)
 
-# Highcharts numbers categories from zero, so August is at x = 7.
 highcharts_demo() |>
   hc_annotations(list(
     labels = list(list(
@@ -37,9 +38,9 @@ highcharts_demo() |>
         xAxis = 0,
         yAxis = 0,
         x = peak - 1L,
-        y = citytemp$tokyo[peak]
+        y = unname(monthly[peak])
       ),
-      format = "Tokyo in August: {y:.1f} \u00b0C",
+      format = "Warmest month in Tokyo: {y:.1f} \u00b0C",
       y = 24
     ))
   ))

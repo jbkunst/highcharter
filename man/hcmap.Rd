@@ -42,10 +42,10 @@ a GeoJSON or TopoJSON list.
 
 hcmap("jp")
 hcmap("custom/south-america", showInLegend = FALSE)
-hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
+hcmap("custom/world-robinson-lowres", data = subset(world_income, year == 2024),
+  value = "gni_per_capita",
   joinBy = c("iso-a3", "iso3")
 )
-hcmap(worldgeojson, showInLegend = FALSE)
 
 # Read a local GeoJSON or TopoJSON file and plot its boundaries.
 path <- system.file("extdata", "districts.topo.json", package = "highcharter")

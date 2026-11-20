@@ -20,7 +20,7 @@ Options for the tooltip that
 appears when the user hovers over a series or point.
 }
 \examples{
-# Hover over July to see Tokyo, Berlin and London in descending order.
+# Hover over July to see the four cities in descending order.
 highcharts_demo() |>
   hc_tooltip(table = TRUE, sort = TRUE)
 }

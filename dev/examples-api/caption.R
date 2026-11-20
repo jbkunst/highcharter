@@ -1,7 +1,4 @@
 highcharts_demo() |>
   hc_caption(
-    text = paste(
-      "In January, Berlin averages below freezing",
-      "while London and Tokyo are above freezing."
-    )
+    text = "Compare July in Tokyo and Santiago to see the seasons reverse."
   )

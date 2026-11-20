@@ -71,22 +71,24 @@ test_that("nested GeoJSON geometries preserve feature properties across layers",
 })
 
 test_that("hcmap uses a loaded map without downloads or remote dependencies", {
-  chart <- hcmap(worldgeojson, showInLegend = FALSE)
+  path <- system.file("extdata", "districts.geojson", package = "highcharter")
+  districts <- jsonlite::read_json(path, simplifyVector = FALSE)
+  chart <- hcmap(districts, showInLegend = FALSE)
   expect_identical(chart$x$type, "map")
-  expect_identical(chart$x$hc_opts$series[[1]]$mapData, worldgeojson)
+  expect_identical(chart$x$hc_opts$series[[1]]$mapData, districts)
   expect_length(
     Filter(function(dep) !is.null(dep$src$href), chart$dependencies),
     0L
   )
-  values <- data.frame(iso3 = "CHL", income = 12345)
+  values <- data.frame(code = "01", income = 12345)
   joined <- hcmap(
-    worldgeojson,
+    districts,
     data = values,
     value = "income",
-    joinBy = "iso3"
+    joinBy = "code"
   )
   expect_identical(joined$x$hc_opts$series[[1]]$data[[1]]$value, 12345)
-  expect_identical(joined$x$hc_opts$series[[1]]$joinBy, "iso3")
+  expect_identical(joined$x$hc_opts$series[[1]]$joinBy, "code")
 })
 
 test_that("country codes and canonical paths use the same installed boundaries", {

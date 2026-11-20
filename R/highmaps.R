@@ -11,40 +11,14 @@
 #'
 #' @examples
 #'
-#' library("dplyr")
-#'
-#' data("USArrests", package = "datasets")
-#' data("usgeojson")
-#'
-#' USArrests <- mutate(USArrests, state = rownames(USArrests))
-#'
-#' highchart() |>
-#'   hc_title(text = "Violent Crime Rates by US State") |>
-#'   hc_subtitle(text = "Source: USArrests data") |>
-#'   hc_add_series_map(usgeojson, USArrests,
-#'     name = "Murder arrests (per 100,000)",
-#'     value = "Murder", joinBy = c("woename", "state"),
-#'     dataLabels = list(
-#'       enabled = TRUE,
-#'       format = "{point.properties.postalcode}"
-#'     )
-#'   ) |>
-#'   hc_colorAxis(stops = color_stops()) |>
-#'   hc_legend(valueDecimals = 0, valueSuffix = "%") |>
-#'   hc_mapNavigation(enabled = TRUE)
-#' \dontrun{
-#'
-#' data(worldgeojson, package = "highcharter")
-#' data("GNI2014", package = "treemap")
-#'
+#' path <- system.file("maps/custom/world-robinson-lowres.rds", package = "highcharter")
+#' world <- readRDS(path)
+#' income <- subset(world_income, year == 2024)
 #' highchart(type = "map") |>
-#'   hc_add_series_map(map = worldgeojson, df = GNI2014, value = "GNI", joinBy = "iso3") |>
-#'   hc_colorAxis(stops = color_stops()) |>
-#'   hc_tooltip(
-#'     useHTML = TRUE, headerFormat = "",
-#'     pointFormat = "this is {point.name} and have {point.population} people with gni of {point.GNI}"
-#'   )
-#' }
+#'   hc_add_series_map(world, income, value = "gni_per_capita",
+#'     joinBy = c("iso-a3", "iso3"), name = "GNI per capita"
+#'   ) |>
+#'   hc_tooltip(valuePrefix = "$", valueDecimals = 0)
 #'
 #' @details This function force the highchart object to be map type.
 #' @importFrom utils tail
@@ -117,10 +91,10 @@ hc_maps <- function() {
 #'
 #' hcmap("jp")
 #' hcmap("custom/south-america", showInLegend = FALSE)
-#' hcmap("custom/world-robinson-lowres", data = gni2014, value = "GNI",
+#' hcmap("custom/world-robinson-lowres", data = subset(world_income, year == 2024),
+#'   value = "gni_per_capita",
 #'   joinBy = c("iso-a3", "iso3")
 #' )
-#' hcmap(worldgeojson, showInLegend = FALSE)
 #'
 #' # Read a local GeoJSON or TopoJSON file and plot its boundaries.
 #' path <- system.file("extdata", "districts.topo.json", package = "highcharter")
@@ -244,7 +218,8 @@ download_map_data <- function(
 #'   the properties, matching the layer drawn by [hcmap()].
 #' @return A tibble of feature properties, including any keys used by `joinBy`.
 #' @examples
-#' head(get_data_from_map(worldgeojson))
+#' path <- system.file("maps/custom/world-robinson-lowres.rds", package = "highcharter")
+#' head(get_data_from_map(readRDS(path)))
 #' @seealso [hcmap()], [download_map_data()]
 #' @export
 get_data_from_map <- function(mapdata) {

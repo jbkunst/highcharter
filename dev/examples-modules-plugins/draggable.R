@@ -18,7 +18,8 @@ hchart(
 )
 
 
-data("citytemp")
+daily <- subset(city_weather, city %in% c("Tokyo", "Berlin"))
+monthly <- with(daily, tapply(temp_mean, list(format(date, "%m"), city), mean))
 
 highchart() |>
   hc_chart(animation = FALSE) |>
@@ -58,13 +59,13 @@ highchart() |>
     minPointLength = 2
   ) |>
   hc_add_series(
-    data = citytemp$new_york,
+    data = as.numeric(monthly[, "Tokyo"]),
     draggableY = TRUE,
     dragMinY = 0,
     type = "column",
     minPointLength = 2
   ) |>
   hc_add_series(
-    data = citytemp$berlin,
+    data = as.numeric(monthly[, "Berlin"]),
     draggableY = TRUE
   )

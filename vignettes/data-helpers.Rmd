@@ -3,6 +3,8 @@ title: "Prepare chart data with data helpers"
 description: >
   Turn observations into series, links, hierarchy nodes or annotation labels.
 output: rmarkdown::html_vignette
+resource_files:
+  - data/tour-2017-stage-8.csv
 vignette: >
   %\VignetteIndexEntry{Prepare chart data with data helpers}
   %\VignetteEngine{knitr::rmarkdown}
@@ -104,4 +106,35 @@ notes <- data.frame(x = 2, y = 8, text = "Peak")
 highchart() |>
   hc_add_series(data = c(3, 5, 8, 6)) |>
   hc_add_annotation(labels = data_to_annotation_labels(notes))
+```
+
+The same helper can label summits on an elevation profile. Stage 8 of the 2017
+Tour de France ran from Dole to Station des Rousses. The profile and the
+published summit positions come from [the original annotated example](https://jkunst.com/blog/posts/2020-06-02-30diasdegraficos-parte-3/).
+[Download the elevation profile (CSV)](data/tour-2017-stage-8.csv).
+
+```{r tour-elevation}
+stage <- read.csv("data/tour-2017-stage-8.csv")
+summits <- data.frame(
+  x = c(101.44, 138.5, 176.4),
+  y = c(1026, 748, 1202),
+  text = c(
+    "Col de la Joux",
+    "Côte de Viry",
+    "Montée de la Combe de Laisia Les Molunes"
+  )
+)
+
+hchart(
+  stage,
+  "area",
+  hcaes(distance, elevation),
+  name = "Elevation",
+  fillOpacity = 0.25
+) |>
+  hc_title(text = "Tour de France 2017 · Stage 8") |>
+  hc_xAxis(title = list(text = "Distance (km)")) |>
+  hc_yAxis(title = list(text = "Elevation (m)")) |>
+  hc_tooltip(valueSuffix = " m") |>
+  hc_add_annotation(labels = data_to_annotation_labels(summits))
 ```

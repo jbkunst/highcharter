@@ -1,5 +1,5 @@
 highchart() |>
-  hc_xAxis(categories = citytemp$month) |>
+  hc_xAxis(categories = month.abb) |>
   hc_add_series(name = "Tokyo", data = sample(1:12)) |>
   hc_credits(
     enabled = TRUE,

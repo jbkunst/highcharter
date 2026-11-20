@@ -2,12 +2,13 @@
 % Please edit documentation in R/helpers.R
 \name{highcharts_demo}
 \alias{highcharts_demo}
-\title{Monthly temperatures in Tokyo, London and Berlin}
+\title{Monthly temperatures in four cities}
 \usage{
 highcharts_demo()
 }
 \description{
-Use this line chart of \link{citytemp} to try themes and chart options.
+Use this line chart to try themes and chart options. Each point is the
+mean of the daily temperatures in \link{city_weather} for one city and month.
 }
 \examples{
 highcharts_demo()

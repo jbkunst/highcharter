@@ -1,6 +1,9 @@
 ---
 title: Showcase
 output: rmarkdown::html_vignette
+resource_files:
+  - data/stars.csv
+  - data/measles-coverage.csv
 description: >
   In this vignette we'll review some examples to show what highcharts and
   highcharter can do in terms of customization and design.
@@ -26,8 +29,26 @@ For short examples grouped by data shape, see [Chart types](chart-types.html).
 > - _Marshall Eriksen_
 
 ```{r bar, echo=FALSE}
-data(favorite_bars)
-data(favorite_pies)
+favorite_bars <- data.frame(
+  bar = c(
+    "Mclaren's",
+    "McGee's",
+    "P & G",
+    "White Horse Tavern",
+    "King Cole Bar"
+  ),
+  percent = c(30, 28, 27, 12, 3)
+)
+favorite_pies <- data.frame(
+  pie = c(
+    "Strawberry Rhubarb",
+    "Pumpkin",
+    "Lemon Meringue",
+    "Blueberry",
+    "Key Lime"
+  ),
+  percent = c(85, 64, 75, 100, 57)
+)
 
 highchart() |>
   # Data
@@ -224,54 +245,37 @@ Select a Pokémon type to explore its secondary types.
 
 </details>
 
-## Weathers Radials
+## Daily temperature range
 
-Example inspired by http://weather-radials.com/.
+Inspired by [Weather Radials](http://weather-radials.com/), each spoke shows one day in Santiago in 2025. Its ends mark the minimum and
+maximum temperature, and its color reflects the daily mean. The monthly lines
+in `highcharts_demo()` average those same daily means for each city.
 
 ```{r weather, echo=FALSE}
-library(highcharter)
-data(weather)
-
-x <- c("Min", "Mean", "Max")
-y <- sprintf(
-  "{point.%s}°",
-  c("min_temperaturec", "mean_temperaturec", "max_temperaturec")
-)
-
-tltip <- tooltip_table(x, y)
+santiago <- subset(city_weather, city == "Santiago")
 
 hchart(
-  weather,
+  santiago,
   type = "columnrange",
-  hcaes(
-    x = date,
-    low = min_temperaturec,
-    high = max_temperaturec,
-    color = mean_temperaturec
-  )
+  hcaes(x = date, low = temp_min, high = temp_max, color = temp_mean)
 ) |>
-  hc_chart(
-    polar = TRUE
-  ) |>
+  hc_chart(polar = TRUE) |>
   hc_yAxis(
-    max = 30,
-    min = -10,
-    labels = list(format = "{value} C"),
+    title = list(text = NULL),
+    labels = list(format = "{value} °C"),
     showFirstLabel = FALSE
   ) |>
   hc_xAxis(
-    title = list(text = ""),
+    title = list(text = NULL),
     gridLineWidth = 0.5,
-    labels = list(format = "{value: %b}")
+    labels = list(format = "{value:%b}")
   ) |>
   hc_tooltip(
-    useHTML = TRUE,
-    pointFormat = tltip,
-    headerFormat = as.character(tags$small("{point.x:%d %B, %Y}"))
+    headerFormat = "<b>{point.x:%e %B %Y}</b><br>",
+    pointFormat = "Min: {point.low} °C<br>Mean: {point.temp_mean} °C<br>Max: {point.high} °C"
   ) |>
-  hc_title(
-    text = "Climatical characteristics of San Francisco"
-  ) |>
+  hc_title(text = "Daily temperature range in Santiago, 2025") |>
+  hc_subtitle(text = "ERA5 reanalysis via Open-Meteo") |>
   hc_size(
     height = 600
   )
@@ -288,9 +292,10 @@ hchart(
 ## Stars
 
 Inspired by Nadieh Bremer's [block](http://bl.ocks.org/nbremer/eb0d1fd4118b731d069e2ff98dfadc47).
+[Download the star sample (CSV)](data/stars.csv).
 
 ```{r stars, echo=FALSE}
-data(stars)
+stars <- read.csv("data/stars.csv")
 
 colors <- c(
   "#FB1108",
@@ -372,82 +377,38 @@ hchart(
 Background photograph: [ESO/Digitized Sky Survey 2, around the Hubble Ultra Deep Field](https://www.eso.org/public/images/eso1832b/).
 The dark overlay keeps both axes legible over the stars.
 
-## The Impact of Vaccines
+## Measles vaccination coverage
 
-From [WSJ graphic: Battling Infectious Diseases in the 20th Century](http://graphics.wsj.com/infectious-diseases-and-vaccines/): 
+How has first-dose coverage changed across countries? Each cell shows the
+estimated percentage of the target population receiving the first dose of a
+measles-containing vaccine (MCV1). The nine countries share a 0–100% scale.
+Estimates come from the [2025 WHO/UNICEF revision](https://data.unicef.org/resources/dataset/immunization/).
+[Download the coverage estimates (CSV)](data/measles-coverage.csv).
 
-```{r vaccines, echo=FALSE}
-data(vaccines)
+```{r measles-coverage, echo=FALSE}
+coverage <- read.csv("data/measles-coverage.csv")
 
-fntltp <- JS(
-  "function(){
-  return this.point.x + ' ' +  this.series.yAxis.categories[this.point.y] + ': ' +
-  Highcharts.numberFormat(this.point.value, 2);
-}"
-)
-
-plotline <- list(
-  color = "#fde725",
-  value = 1963,
-  width = 2,
-  zIndex = 5,
-  label = list(
-    text = "Vaccine Intoduced",
-    verticalAlign = "top",
-    style = list(color = "#606060"),
-    textAlign = "left",
-    rotation = 0,
-    y = -5
-  )
-)
-
-hchart(
-  vaccines,
-  "heatmap",
-  hcaes(
-    x = year,
-    y = state,
-    value = count
-  )
-) |>
+hchart(coverage, "heatmap", hcaes(x = year, y = country, value = coverage)) |>
+  hc_title(text = "First-dose measles vaccination coverage") |>
+  hc_subtitle(text = "Nine countries, 2000–2025 · WHO/UNICEF estimates") |>
+  hc_xAxis(title = list(text = NULL), tickInterval = 5) |>
+  hc_yAxis(title = list(text = NULL), reversed = TRUE) |>
   hc_colorAxis(
-    stops = color_stops(10, viridisLite::inferno(10, direction = -1)),
-    type = "logarithmic"
-  ) |>
-  hc_yAxis(
-    title = list(text = ""),
-    reversed = TRUE,
-    offset = -20,
-    tickLength = 0,
-    gridLineWidth = 0,
-    minorGridLineWidth = 0,
-    labels = list(style = list(fontSize = "9px"))
+    min = 0,
+    max = 100,
+    stops = color_stops(colors = c("#f7fbff", "#6baed6", "#08306b")),
+    labels = list(format = "{value}%")
   ) |>
   hc_tooltip(
-    formatter = fntltp
-  ) |>
-  hc_xAxis(
-    plotLines = list(plotline)
-  ) |>
-  hc_title(
-    text = "Infectious Diseases and Vaccines"
-  ) |>
-  hc_subtitle(
-    text = "Number of cases per 100,000 people"
-  ) |>
-  hc_legend(
-    layout = "horizontal",
-    verticalAlign = "top",
-    align = "left",
-    valueDecimals = 0
-  ) |>
-  hc_size(height = 900)
+    headerFormat = "",
+    pointFormat = "{point.country}, {point.x}: <b>{point.value}%</b>"
+  )
 ```
 
 <details>
 <summary>Show R code</summary>
 
-```{r vaccines-source, ref.label="vaccines", eval=FALSE, echo=TRUE}
+```{r measles-coverage-source, ref.label="measles-coverage", eval=FALSE, echo=TRUE}
 ```
 
 </details>

@@ -24,7 +24,7 @@ get_box_values <- function(x, add_outliers) {
 #'   hc_xAxis(type = "category") |>
 #'   hc_add_series_list(dat)
 #'
-#' dat <- data_to_boxplot(pokemon, height, type_1, name = "height in meters")
+#' dat <- data_to_boxplot(pokemon, height / 10, type_1, name = "Height (m)")
 #'
 #' highchart() |>
 #'   hc_xAxis(type = "category") |>
@@ -385,34 +385,32 @@ hex_to_rgba <- function(x, alpha = 1) {
   sprintf("rgba(%d,%d,%d,%s)", rgb[1L, ], rgb[2L, ], rgb[3L, ], alpha)
 }
 
-#' Monthly temperatures in Tokyo, London and Berlin
+#' Monthly temperatures in four cities
 #'
-#' Use this line chart of [citytemp] to try themes and chart options.
+#' Use this line chart to try themes and chart options. Each point is the
+#' mean of the daily temperatures in [city_weather] for one city and month.
 #' @examples
 #' highcharts_demo()
 #' @export
 highcharts_demo <- function() {
-  temperatures <- highcharter::citytemp
-
-  highchart() |>
-    hc_title(text = "Monthly Average Temperature") |>
-    hc_subtitle(text = "Source: WorldClimate.com") |>
-    hc_caption(
-      text = "Tokyo peaks in August, while London and Berlin peak in July."
-    ) |>
-    hc_credits(
-      text = "Made with highcharter",
-      href = "https://jkunst.com/highcharter/",
-      enabled = TRUE
-    ) |>
+  daily <- highcharter::city_weather
+  monthly <- stats::aggregate(
+    list(temperature = daily$temp_mean),
+    list(month = as.integer(format(daily$date, "%m")), city = daily$city),
+    mean
+  )
+  monthly$month <- monthly$month - 1L
+  hchart(
+    monthly,
+    "line",
+    hcaes(x = .data$month, y = .data$temperature, group = .data$city)
+  ) |>
+    hc_title(text = "Monthly mean temperatures in 2025") |>
+    hc_subtitle(text = "ERA5 reanalysis via Open-Meteo") |>
+    hc_caption(text = "July was warmer in Tokyo than in Santiago.") |>
+    hc_xAxis(categories = month.abb, title = list(text = NULL)) |>
     hc_yAxis(title = list(text = "Temperature (\u00b0C)")) |>
-    hc_xAxis(
-      title = list(text = "Months"),
-      categories = as.character(temperatures$month)
-    ) |>
-    hc_add_series(name = "Tokyo", data = temperatures$tokyo) |>
-    hc_add_series(name = "London", data = temperatures$london) |>
-    hc_add_series(name = "Berlin", data = temperatures$berlin)
+    hc_tooltip(shared = TRUE, valueDecimals = 1, valueSuffix = " \u00b0C")
 }
 
 #' Create vector of color from vector

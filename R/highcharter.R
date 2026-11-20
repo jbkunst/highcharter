@@ -14,11 +14,11 @@
 #' @param elementId	Use an explicit element ID for the widget.
 #' @importFrom htmlwidgets createWidget sizingPolicy
 #' @examples
+#' tokyo <- subset(city_weather, city == "Tokyo")
 #' highchart(width = "100%") |>
-#'   hc_xAxis(categories = citytemp$month) |>
-#'   hc_add_series(name = "Tokyo", data = citytemp$tokyo) |>
-#'   hc_add_series(name = "London", data = citytemp$london) |>
-#'   hc_title(text = "Monthly temperatures")
+#'   hc_add_series(tokyo, "line", hcaes(date, temp_mean), name = "Tokyo") |>
+#'   hc_xAxis(type = "datetime") |>
+#'   hc_title(text = "Daily mean temperature in Tokyo, 2025")
 #'
 #' # Stock navigation is available in the shared bundle.
 #' prices <- data.frame(

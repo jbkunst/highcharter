@@ -1,5 +1,16 @@
 # highcharts demos ----
 
+test_that("the monthly demo averages daily temperatures within each city", {
+  series <- highcharts_demo()$x$hc_opts$series
+  expect_setequal(vapply(series, `[[`, "", "name"), unique(city_weather$city))
+  for (line in series) {
+    daily <- city_weather[city_weather$city == line$name, ]
+    expected <- tapply(daily$temp_mean, format(daily$date, "%m"), mean)
+    expect_equal(vapply(line$data, `[[`, numeric(1), "x"), 0:11)
+    expect_equal(vapply(line$data, `[[`, numeric(1), "y"), as.numeric(expected))
+  }
+})
+
 test_that("Monthly Average Temperature example works", {
   h <- highchart() %>%
     hc_chart(type = "line") %>%

@@ -4,6 +4,22 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Use `hcmap("us")` or `hcmap("custom/world-robinson-lowres")` in place of
+  `usgeojson` and `worldgeojson`. For a world income map, join the map's
+  `iso-a3` to `world_income$iso3` after selecting a year. `world_income`
+  replaces `gni2014` and reports Atlas-method GNI per capita in current US
+  dollars and total population. The county geometry and unemployment table
+  (`uscountygeojson` and `unemployment`) have been retired. The external
+  collection path for US counties is `"countries/us/us-all-all"`.
+* `city_weather` supplies daily temperatures for four cities in 2025. Average
+  `temp_mean` by city and month to migrate examples using `citytemp` or
+  `citytemp_long`. For a daily range, select one city and use `temp_min` and
+  `temp_max`. This replaces the `weather` sample from San Francisco in 2014.
+  The historical `globaltemp` and `mountains_panorama`
+  datasets have been retired. The showcase defines `favorite_bars` and
+  `favorite_pies` locally, keeps the star sample with the article, and uses
+  annual MCV1 coverage in place of the historical `vaccines` incidence table.
+
 * Widgets now use `yyjsonr` to write JSON. Remove
   `options(highcharter.rjson = TRUE)` from application code. Missing
   observations stay in their original positions and reach Highcharts as
@@ -144,7 +160,7 @@ Bundled Highcharts JS: 12.6.0.
 * `hcmap("jp")` reads the packaged map of Japan by country code.
   `hc_maps()` lists the 202 country maps and five custom maps available offline.
   `get_data_from_map()` reads join properties from GeoJSON and TopoJSON. Other
-  collection paths retain CDN support. The income example uses `gni2014`.
+  collection paths retain CDN support. The income example uses `world_income`.
 * ACF and PACF ticks stay within the correlation range, with room for endpoint markers.
 
 * Forecast charts distinguish observations, forecasts and prediction intervals

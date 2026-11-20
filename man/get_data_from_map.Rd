@@ -18,7 +18,8 @@ A tibble of feature properties, including any keys used by \code{joinBy}.
 Helper function to get the data inside the map data
 }
 \examples{
-head(get_data_from_map(worldgeojson))
+path <- system.file("maps/custom/world-robinson-lowres.rds", package = "highcharter")
+head(get_data_from_map(readRDS(path)))
 }
 \seealso{
 \code{\link[=hcmap]{hcmap()}}, \code{\link[=download_map_data]{download_map_data()}}

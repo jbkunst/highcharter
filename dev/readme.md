@@ -20,9 +20,10 @@ in `tests/`, and website articles in `vignettes/`.
 | `sandbox/` | Exploratory scripts, not an automated test suite. `transitions/` contains the offline animated chart prototypes and their data; see its [README](sandbox/transitions/README.md). |
 | `stackoverflow/` | Examples associated with Stack Overflow questions, named by question ID. |
 
-Article scripts are installed from `inst/examples/`. The site-only Shiny apps live in `pkgdown/shiny/`. CSV inputs live in `inst/extdata/`; `data-raw/maps.R` refreshes the country and custom RDS files in `inst/maps/`.
+Article scripts are installed from `inst/examples/`. The site-only Shiny apps live in `pkgdown/shiny/`. Installed example inputs live in `inst/extdata/`. Article-only CSVs and their sources live in `vignettes/data/`.
+`data-raw/maps.R` refreshes the country and custom RDS files in `inst/maps/`.
 The refresh uses pinned upstream sources and mapshaper for the Chilean regions.
-`data-raw/gni2014.R` refreshes the income data.
+`data-raw/world_income.R` and `data-raw/city_weather.R` refresh the offline data from the World Bank and Open-Meteo.
 
 At this level, `build-site.R` builds the website,
 `build-shinylive.R` exports the browser app,
