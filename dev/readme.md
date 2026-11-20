@@ -291,8 +291,9 @@ When generating LLM text documentation, pkgdown/Pandoc warns that it cannot
 fetch the relative homepage and Shinylive iframe URLs. The HTML embeds work
 in the served site; their live content is omitted from the text export.
 
-The Shiny gallery and walkthrough share the apps in `pkgdown/shiny/`. Each directory holds
-one ordinary `app.R`. Run an example from the checkout with
+The site-only Shiny apps live in `pkgdown/shiny/`. The Solar cycles app lives in
+`inst/examples/theme/app.R` so the installed themes vignette and the gallery
+share its source. Each directory holds one ordinary `app.R`. Run an example from the checkout with
 `shiny::runApp("pkgdown/shiny/events")` after loading the local package.
 Edit that same file to update both the app and the source shown in the article.
 The Stock walkthrough also uses the gallery's Stock app.

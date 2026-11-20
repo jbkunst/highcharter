@@ -201,16 +201,18 @@ a family explicitly with `sass::font_google("Noto Sans KR")`.
 Switch the observatory between daylight and night. The sunspot series changes
 from copper to amber, and the axes, gridlines and tooltip follow the page.
 The chart uses the app's serif typeface in both modes.
-[Open Solar cycles in a new tab](../live/theme/index.html){target="_blank" rel="noopener"}.
+[Open Solar cycles in a new tab](https://jkunst.com/highcharter/live/theme/index.html){target="_blank" rel="noopener"}.
 
+```{asis, echo=identical(Sys.getenv("IN_PKGDOWN"), "true")}
 <iframe title="Solar cycles theme demo" src="../live/theme/index.html" loading="lazy" width="100%" height="395" style="border:0"></iframe>
+```
 
 Set `hc_set_theme("bslib")` once at app startup. With Bootstrap 5.3, the
 first series inherits the primary color and the transparent chart background
 lets the page show through. Additional series use a categorical palette
 that you can replace with `hc_colors()`.
 
-```{r shiny, eval=FALSE, code=readLines("../pkgdown/shiny/theme/app.R")}
+```{r shiny, eval=FALSE, code=readLines(system.file("examples", "theme", "app.R", package="highcharter", mustWork=TRUE), encoding="UTF-8")}
 ```
 
 If the project uses a `_brand.yml`, put the same choices there and use

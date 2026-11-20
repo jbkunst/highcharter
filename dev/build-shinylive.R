@@ -39,7 +39,11 @@ build_shiny_gallery <- function(site_dir) {
     file.path(app, "app.R")
   )
 
-  for (example in list.dirs("pkgdown/shiny", recursive = FALSE)) {
+  examples <- c(
+    list.dirs("pkgdown/shiny", recursive = FALSE),
+    "inst/examples/theme"
+  )
+  for (example in examples) {
     stopifnot(file.copy(
       file.path(example, "app.R"),
       file.path(app, "example.txt"),
