@@ -57,8 +57,8 @@ source("dev/build-shinylive.R", local = TRUE)
 
 # 6. Render the documentation around the generated examples -----------------
 # Do not clean again: that would remove the galleries built above. The local
-# galleries use pkgload above. Articles run in separate R processes, so install
-# this checkout into pkgdown's temporary library to give them the same version.
+# galleries use pkgload above. Articles run in separate R processes. CI already
+# installed this checkout with local::. during dependency setup.
 # This creates GitHub Pages-compatible output without deploying it.
 # pkgdown also handles root Markdown pages, the sitemap and the search index.
 cli::cli_h2("6/7 Render the documentation and generate the site indexes")
@@ -68,7 +68,7 @@ pkgload::unload("highcharter")
 pkgdown::build_site_github_pages(
   pkg,
   clean = FALSE,
-  install = TRUE,
+  install = getOption("highcharter.pkgdown.install", TRUE),
   new_process = TRUE
 )
 

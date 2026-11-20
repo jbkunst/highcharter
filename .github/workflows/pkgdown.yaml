@@ -71,7 +71,9 @@ jobs:
         env:
           HIGHCHARTER_WASM_PACKAGE: ${{ runner.temp }}/highcharter-webr/highcharter.tgz
         shell: Rscript {0}
-        run: source("dev/build-site.R")
+        run: |
+          options(highcharter.pkgdown.install = FALSE)
+          source("dev/build-site.R")
 
       - name: Deploy site
         if: >-

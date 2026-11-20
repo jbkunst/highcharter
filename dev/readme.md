@@ -113,7 +113,9 @@ explain the inputs, outputs and why the order matters:
 6. Render the homepage, function reference, articles and NEWS through pkgdown,
    which also generates the sitemap and search index. Install the checkout into
    pkgdown's temporary library so article subprocesses use the current R code
-   and theme files rather than the package in the user's library.
+   and theme files rather than the package in the user's library. In CI,
+   `setup-r-dependencies` already installs this checkout with `local::.`,
+   so the workflow sets `highcharter.pkgdown.install = FALSE` to reuse it.
    Unload the gallery's package first so Windows permits installation.
 7. Remove `AGENTS.html`, its LLM Markdown copy and its sitemap entry, then
    rebuild search with pkgdown.
