@@ -107,6 +107,7 @@ daily <- data.frame(day = as.Date(snapshot$date), close = snapshot$SPY.Close)
 weekly <- daily[!duplicated(cut(daily$day, "week"), fromLast = TRUE), ]
 
 ui <- fluidPage(
+  theme = bslib::bs_theme(version = 5),
   p(
     "View up to six weeks for daily closing prices. Zoom out to see weekly closes."
   ),

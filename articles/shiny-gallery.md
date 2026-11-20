@@ -1,7 +1,7 @@
 # Shiny gallery
 
-Open an app to run R in your browser. The first launch downloads R and
-the required packages. The [Shiny
+Open an app in a new tab to run R in your browser. The first launch
+downloads R and the required packages. The [Shiny
 walkthrough](https://jkunst.com/highcharter/articles/shiny.md) explains
 the code behind the examples.
 
@@ -21,16 +21,25 @@ Add a month and switch between a line and columns using a Shiny proxy.
 
 ## Equalizer
 
-Select a frequency and drag its point to change the gain in decibels.
+Drag a frequency band to change its gain and watch the event table
+update.
 
 [![](../shiny-gallery/linked.webp)](https://jkunst.com/highcharter/live/linked/index.md)
 
 ## Linked charts
 
-Click a species to explore its individual flowers in a second chart.
+Hover or click a species in the dotplot to see its flowers in the same
+color.
 
 [![](../shiny-gallery/stock.webp)](https://jkunst.com/highcharter/live/stock/index.md)
 
 ## Stock prices
 
 Zoom from weekly SPY closes to daily prices for the selected dates.
+
+[![](../shiny-gallery/theme.webp)](https://jkunst.com/highcharter/live/theme/index.md)
+
+## Solar cycles
+
+Switch the observatory from daylight to night to see the chart inherit
+the app’s theme.

@@ -208,15 +208,17 @@ request a family explicitly with `sass::font_google("Noto Sans KR")`.
 
 ## Inherit a Shiny app’s theme
 
-Use `hc_set_theme("bslib")` once at app startup. In this standalone
-example the app supplies Noto Sans and every chart using the preset
-inherits it. With Bootstrap 5.3, the browser resolves the primary series
-color, base font, text, gridlines and tooltip against the CSS around
-each chart. The transparent background lets the card or page show
-through. Text and gridlines follow the page’s color mode. Other series
-use a categorical palette that you can replace with
+Switch the observatory between daylight and night. The sunspot series
+changes from copper to amber, and the axes, gridlines and tooltip follow
+the page. The chart uses the app’s serif typeface in both modes. [Open
+Solar cycles in a new
+tab](https://jkunst.com/highcharter/live/theme/index.md).
+
+Set `hc_set_theme("bslib")` once at app startup. With Bootstrap 5.3, the
+first series inherits the primary color and the transparent chart
+background lets the page show through. Additional series use a
+categorical palette that you can replace with
 [`hc_colors()`](https://jkunst.com/highcharter/reference/hc_colors.md).
-Chart titles use the base font.
 
 ``` r
 
@@ -224,18 +226,62 @@ library(shiny)
 library(bslib)
 library(highcharter)
 
+observations <- window(sunspot.month, start = c(1950, 1), end = c(2019, 12))
+annual <- aggregate(observations, nfrequency = 1, FUN = mean)
+sunspots <- data.frame(
+  year = as.integer(time(annual)),
+  count = as.numeric(annual)
+)
+
 hc_set_theme("bslib")
+observatory <- bs_theme(
+  version = 5,
+  bg = "#FFF4DE",
+  fg = "#38261F",
+  primary = "#9C3C16",
+  base_font = "Georgia, serif"
+) |>
+  bs_add_rules(
+    "
+    [data-bs-theme='dark'] {
+      --bs-body-bg: #101D30;
+      --bs-body-color: #F3E6CD;
+      --bs-primary: #FFBC65;
+      --bs-border-color: #40516A;
+    }
+  "
+  )
 
 ui <- page_fluid(
-  theme = bs_theme(version = 5, base_font = font_google("Noto Sans")),
-  input_dark_mode(),
-  highchartOutput("stopping")
+  theme = observatory,
+  title = "Solar cycles",
+  div(
+    class = "d-flex justify-content-end align-items-center gap-2 py-2",
+    "Color mode",
+    input_dark_mode(mode = "light")
+  ),
+  highchartOutput("cycles", height = "320px")
 )
 
 server <- function(input, output, session) {
-  output$stopping <- renderHighchart(
-    hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
-  )
+  output$cycles <- renderHighchart({
+    hchart(
+      sunspots,
+      "area",
+      hcaes(x = year, y = count),
+      name = "Annual mean",
+      fillOpacity = 0.18,
+      marker = list(enabled = FALSE)
+    ) |>
+      hc_title(text = "Solar cycles, 1950–2019") |>
+      hc_xAxis(
+        title = list(text = NULL),
+        labels = list(format = "{value:.0f}")
+      ) |>
+      hc_yAxis(min = 0, title = list(text = "Mean sunspot number")) |>
+      hc_legend(enabled = FALSE) |>
+      hc_tooltip(headerFormat = "<b>{point.x:.0f}</b><br/>", valueDecimals = 1)
+  })
 }
 
 shinyApp(ui, server)
@@ -263,34 +309,34 @@ The setter changes an R process option shared by its sessions.
 Choose a preset below; every theme uses the same sales data. The chart
 is resized when its panel becomes visible.
 
-- [538](#tab-7308-1)
-- [alone](#tab-7308-2)
-- [bloom](#tab-7308-3)
-- [bslib](#tab-7308-4)
-- [carbon](#tab-7308-5)
-- [chalk](#tab-7308-6)
-- [cloudscape](#tab-7308-7)
-- [darkunica](#tab-7308-8)
-- [db](#tab-7308-9)
-- [economist](#tab-7308-10)
-- [elementary](#tab-7308-11)
-- [ffx](#tab-7308-12)
-- [flat](#tab-7308-13)
-- [flatdark](#tab-7308-14)
-- [ft](#tab-7308-15)
-- [ggplot2](#tab-7308-16)
-- [google](#tab-7308-17)
-- [gridlight](#tab-7308-18)
-- [handdrawn](#tab-7308-19)
-- [hcrt](#tab-7308-20)
-- [monokai](#tab-7308-21)
-- [null](#tab-7308-22)
-- [sandsignika](#tab-7308-23)
-- [smpl](#tab-7308-24)
-- [sparkline_vb](#tab-7308-25)
-- [sparkline](#tab-7308-26)
-- [superheroes](#tab-7308-27)
-- [tufte](#tab-7308-28)
+- [538](#tab-9681-1)
+- [alone](#tab-9681-2)
+- [bloom](#tab-9681-3)
+- [bslib](#tab-9681-4)
+- [carbon](#tab-9681-5)
+- [chalk](#tab-9681-6)
+- [cloudscape](#tab-9681-7)
+- [darkunica](#tab-9681-8)
+- [db](#tab-9681-9)
+- [economist](#tab-9681-10)
+- [elementary](#tab-9681-11)
+- [ffx](#tab-9681-12)
+- [flat](#tab-9681-13)
+- [flatdark](#tab-9681-14)
+- [ft](#tab-9681-15)
+- [ggplot2](#tab-9681-16)
+- [google](#tab-9681-17)
+- [gridlight](#tab-9681-18)
+- [handdrawn](#tab-9681-19)
+- [hcrt](#tab-9681-20)
+- [monokai](#tab-9681-21)
+- [null](#tab-9681-22)
+- [sandsignika](#tab-9681-23)
+- [smpl](#tab-9681-24)
+- [sparkline_vb](#tab-9681-25)
+- [sparkline](#tab-9681-26)
+- [superheroes](#tab-9681-27)
+- [tufte](#tab-9681-28)
 
 Use
 [`hc_themes()`](https://jkunst.com/highcharter/reference/hc_theme.md) to

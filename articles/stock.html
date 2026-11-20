@@ -71,7 +71,7 @@
     <li><a class="dropdown-item" href="../articles/shiny-gallery.html">Shiny gallery</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="../articles/shiny-gallery.html">Shiny gallery</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/shiny-gallery.html" target="_blank" title="Open the Shiny gallery in a new tab">Shiny gallery</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -206,6 +206,7 @@ original weekly overview as the main series changes. <a href="../live/stock/inde
 <span><span class="va">weekly</span> <span class="op">&lt;-</span> <span class="va">daily</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">daily</span><span class="op">$</span><span class="va">day</span>, <span class="st">"week"</span><span class="op">)</span>, fromLast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  theme <span class="op">=</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html" class="external-link">bs_theme</a></span><span class="op">(</span>version <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span></span>
 <span>    <span class="st">"View up to six weeks for daily closing prices. Zoom out to see weekly closes."</span></span>
 <span>  <span class="op">)</span>,</span>
