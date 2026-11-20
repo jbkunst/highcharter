@@ -113,16 +113,15 @@ The same layout can display [parallel sets in D3](https://observablehq.com/@d3/p
 
 ## Hierarchy nodes
 
-The built-in `Titanic` table already contains counts. Sum `Freq` within
-passenger class and survival status to size each leaf. The same nodes can
-also be used in a sunburst. Each passenger class takes a color from the chart
-theme, which its survival groups inherit. To keep fixed colors across themes,
-pass a palette to `colors` in `data_to_hierarchical()`.
+Count Pokémon by primary and secondary type. `data_to_hierarchical()` turns
+each primary type into a parent node and each observed combination into a
+leaf. Pokémon with a single type get their own leaf, such as “Only Electric”.
 
-```{r hierarchy-nodes}
-passengers <- as.data.frame(Titanic)
-nodes <- data_to_hierarchical(passengers, c(Class, Survived), Freq)
-hchart(nodes, type = "treemap")
+In this [treemap from Showcase](showcase.html#pokemon), the area of each
+rectangle shows the number of Pokémon. Click a primary type to explore its
+secondary types.
+
+```{r hierarchy-nodes, code=readLines(system.file("examples", "pokemon.R", package="highcharter"), encoding="UTF-8")}
 ```
 
 ## Annotation labels

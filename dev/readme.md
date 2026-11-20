@@ -81,6 +81,12 @@ dependencies installed. The script builds the home example and the series
 gallery locally, then renders the site with pkgdown. The README supplies the
 home text. Generated gallery files belong in the site output.
 
+Article and homepage prose uses the Latin variable IBM Plex Sans (upright and
+italic) in `pkgdown/assets/fonts/`. These are the weight-axis WOFF2 files from
+[Fontsource 5.3.0](https://www.npmjs.com/package/@fontsource-variable/ibm-plex-sans/v/5.3.0).
+Keep the IBM license beside them. The template names the family and
+`pkgdown/extra.css` loads the files directly.
+
 The public homepage focuses on installation, bundle features and getting started.
 Keep maintenance instructions in this guide. The navbar brand and homepage title
 use Datalegreya fonts served locally from `pkgdown/assets/fonts/`. The homepage
