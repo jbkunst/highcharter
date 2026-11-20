@@ -33,11 +33,10 @@
     });
   }
 
-  function prepareMapSeries(options, debug) {
+  function prepareMapSeries(options) {
     if (!Array.isArray(options.series)) return;
     options.series = options.series.map(function(series) {
       if (series.geojson === true) {
-        if (debug) console.log('geojson', series.type, typeof series.data);
         var geojson = typeof series.data === 'string' ? JSON.parse(series.data) : series.data;
         return Object.assign({}, series, { data: Highcharts.geojson(geojson, series.type) });
       }
@@ -91,15 +90,6 @@
   }
 
   function renderValue(el, x, instance, defaults) {
-    if (x.debug) {
-      global.xclone = JSON.parse(JSON.stringify(x));
-      global.elclone = el;
-      console.log(el);
-      console.log('hc_opts', x.hc_opts);
-      console.log('theme', x.theme);
-      console.log('conf_opts', x.conf_opts);
-    }
-
     ResetHighchartsOptions(defaults);
     Highcharts.setOptions({ exporting: { buttons: { contextButton: { symbol: 'menuball' } } } });
     if (x.theme) Highcharts.setOptions(x.theme);
@@ -123,7 +113,7 @@
     if (x.type === 'stock') {
       chart = Highcharts.stockChart(el, options);
     } else if (x.type === 'map') {
-      prepareMapSeries(options, x.debug);
+      prepareMapSeries(options);
       fitGeojsonLayers(options, x.theme);
       chart = Highcharts.mapChart(el, options);
     } else if (x.type === 'gantt') {

@@ -3,7 +3,6 @@ library(gapminder)
 library(tidyverse)
 data(gapminder, package = "gapminder")
 glimpse(gapminder)
-options(highcharter.debug = TRUE)
 
 gp <- gapminder %>%
   arrange(desc(year)) %>%

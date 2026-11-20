@@ -2,7 +2,7 @@ rm(list = ls())
 library(highcharter)
 library(tidyverse)
 library(broom)
-options(highcharter.verbose = TRUE, highcharter.theme = hc_theme("smpl"))
+hc_set_theme("smpl")
 
 
 hchart(cars, "point", hcaes(speed, dist), regression = TRUE) %>%
@@ -35,10 +35,6 @@ hc_add_series.lm <- function(
   fillOpacity = 0.1,
   ...
 ) {
-  if (getOption("highcharter.verbose")) {
-    message(sprintf("hc_add_series.%s", class(data)))
-  }
-
   data2 <- as_data_frame(augment(data))
   data2 <- arrange_(data2, .dots = names(data2)[2])
   data2 <- mutate_(data2, .dots = c("x" = names(data2)[2]))

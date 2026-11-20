@@ -2,7 +2,7 @@ library(httr)
 library(htmltools)
 
 hcmap2 <- function(map = "AUS",
-                  download_map_data = getOption("highcharter.download_map_data"),
+                  download_map_data = TRUE,
                   data = NULL, value = NULL, joinBy = NULL, 
                   ...) {
   

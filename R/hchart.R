@@ -41,10 +41,6 @@ hchart.default <- function(object, ...) {
 
 #' @export
 hchart.list <- function(object, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hchart.list")
-  }
-
   highchart() |>
     hc_add_series(data = object, ...)
 }
@@ -61,10 +57,6 @@ hchart.geo_list <- hchart.geo_json
 #' @export
 hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
   check_removed_fast(...)
-  if (getOption("highcharter.verbose")) {
-    message("hchart.data.frame")
-  }
-
   object <- as.data.frame(object)
 
   data <- mutate_mapping(object, mapping)
@@ -447,10 +439,6 @@ hchart.ets <- function(object, ...) {
 #' @export
 hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   validate_args("hchart", rlang::enquos(...))
-  if (getOption("highcharter.verbose")) {
-    message("hchart.matrix")
-  }
-
   stopifnot(is.numeric(object))
 
   row_labels <- rownames(object)

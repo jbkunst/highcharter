@@ -5,7 +5,7 @@ library(tidyverse)
 library(jsonlite)
 library(whisker)
 library(stringr)
-options(highcharter.theme = hc_theme("smpl"), highcharter.debug = TRUE)
+hc_set_theme("smpl")
 
 # minichart <- "function(){
 #   var point = this;

@@ -4,6 +4,12 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Removed the R options `highcharter.verbose`, `highcharter.debug` and
+  `highcharter.download_map_data`. For indented widget JSON, use
+  `options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE))`. For maps outside
+  the package, `hcmap()` downloads in R by default. Pass
+  `download_map_data = FALSE` to load the map in the browser.
+
 * Use `hcmap("us")` or `hcmap("custom/world-robinson-lowres")` in place of
   `usgeojson` and `worldgeojson`. For a world income map, join the map's
   `iso-a3` to `world_income$iso3` after selecting a year. `world_income`

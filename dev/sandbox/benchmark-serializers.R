@@ -3,9 +3,6 @@
 pkgload::load_all(quiet = TRUE)
 
 benchmark_serializers <- function(repetitions = 10L) {
-  old <- options(highcharter.debug = FALSE, highcharter.verbose = FALSE)
-  on.exit(options(old))
-
   points <- data.frame(x = seq_len(10000L))
   points$y <- (points$x %% 601L) / 8
   small <- head(points, 100L)

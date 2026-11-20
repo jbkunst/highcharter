@@ -71,13 +71,8 @@ highchart <- function(
     hc_opts = hc_opts,
     theme = theme,
     conf_opts = conf_opts,
-    type = type,
-    debug = getOption("highcharter.debug")
+    type = type
   )
-
-  if (getOption("highcharter.debug")) {
-    attr(x, "TOJSON_ARGS") <- list(pretty = getOption("highcharter.debug"))
-  }
 
   attr(x, "TOJSON_FUNC") <- widget_json
 

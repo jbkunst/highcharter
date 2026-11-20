@@ -67,7 +67,7 @@ hc_add_series_drilldown <- function(hc, df, percent = FALSE) {
   #
   #   str(dd)
   #
-  # hc <- highchart(debug = TRUE)
+  # hc <- highchart()
 
   hc$x$hc_opts$series <- list(
     list(

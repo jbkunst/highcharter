@@ -78,8 +78,7 @@ hc_maps <- function() {
 #'   See [hc_maps()] for installed identifiers. Country codes and their matching
 #'   collection paths use the same local file.
 #' @param download_map_data For maps outside the package, download the map in R
-#'   (`TRUE`) or attach the CDN script to the widget (`FALSE`). Defaults to
-#'   `getOption("highcharter.download_map_data")`.
+#'   (`TRUE`, the default) or attach the CDN script to the widget (`FALSE`).
 #' @param data Optional data to make a choropleth, in case of use
 #'   the joinBy and value are needed.
 #' @param value A string value with the name of the variable to chart.
@@ -105,7 +104,7 @@ hc_maps <- function() {
 #' @export
 hcmap <- function(
   map = "custom/world",
-  download_map_data = getOption("highcharter.download_map_data"),
+  download_map_data = TRUE,
   data = NULL,
   value = NULL,
   joinBy = NULL,

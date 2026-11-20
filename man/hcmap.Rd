@@ -6,7 +6,7 @@
 \usage{
 hcmap(
   map = "custom/world",
-  download_map_data = getOption("highcharter.download_map_data"),
+  download_map_data = TRUE,
   data = NULL,
   value = NULL,
   joinBy = NULL,
@@ -20,8 +20,7 @@ See \code{\link[=hc_maps]{hc_maps()}} for installed identifiers. Country codes a
 collection paths use the same local file.}
 
 \item{download_map_data}{For maps outside the package, download the map in R
-(\code{TRUE}) or attach the CDN script to the widget (\code{FALSE}). Defaults to
-\code{getOption("highcharter.download_map_data")}.}
+(\code{TRUE}, the default) or attach the CDN script to the widget (\code{FALSE}).}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}

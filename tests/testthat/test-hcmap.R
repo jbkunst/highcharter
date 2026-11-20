@@ -115,6 +115,17 @@ test_that("country codes and canonical paths use the same installed boundaries",
   )
 })
 
+test_that("external maps download in R by default", {
+  path <- system.file("extdata", "districts.geojson", package = "highcharter")
+  districts <- jsonlite::read_json(path, simplifyVector = FALSE)
+  local_mocked_bindings(download_map_data = function(url) districts)
+  old <- options(highcharter.download_map_data = FALSE)
+  on.exit(options(old))
+
+  chart <- hcmap("countries/us/us-ca-all")
+  expect_identical(chart$x$hc_opts$series[[1]]$mapData, districts)
+})
+
 test_that("installed map identifiers resolve to local files", {
   ids <- hc_maps()
   expect_true(all(

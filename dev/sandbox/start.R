@@ -2,7 +2,7 @@ library("highcharter")
 
 #### ex 0 ####
 rm(list = ls())
-hc <- highchart(debug = TRUE) %>%
+hc <- highchart() %>%
   hc_title(text = "Fruit Consumtion") %>%
   hc_subtitle(text = "This is Legen-Wait For It... DARY! LEGENDARY!") %>%
   hc_chart(type = "column") %>%

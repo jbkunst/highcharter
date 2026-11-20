@@ -16,10 +16,6 @@ hc_add_series <- function(hc, data = NULL, ...) {
 
 #' @export
 hc_add_series.default <- function(hc, data = NULL, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.default")
-  }
-
   options <- validate_args("hc_add_series", list(...))
   if (!missing(data)) {
     options <- c(list(data = data), options)
@@ -59,10 +55,6 @@ ts_x_values <- function(data) {
 #' @importFrom stats time
 #' @export
 hc_add_series.ts <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.ts")
-  }
-
   series <- list_parse2(data.frame(ts_x_values(data), as.vector(data)))
 
   hc_add_series(hc, data = series, ...)
@@ -93,10 +85,6 @@ hc_add_series.ts <- function(hc, data, ...) {
 #' }
 #' @export
 hc_add_series.xts <- function(hc, data, ..., name = NULL) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.xts")
-  }
-
   rlang::check_installed("xts", reason = "to chart an xts object.")
 
   # quantmod also recognises columns marked with Op, Hi, Lo and Cl attributes.
@@ -204,10 +192,6 @@ hc_add_series.forecast <- function(
   name = NULL,
   ...
 ) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.forecast")
-  }
-
   rid <- basename(tempfile("hc-"))
   method <- data$method
   forecast_name <- if (is.null(name)) {
@@ -270,10 +254,6 @@ hc_add_series.forecast <- function(
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.density <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.density")
-  }
-
   data <- list_parse(data.frame(x = data$x, y = data$y))
 
   hc_add_series(hc, data = data, ...)
@@ -286,10 +266,6 @@ hc_add_series.density <- function(hc, data, ...) {
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.character <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.character")
-  }
-
   series <- data |>
     table() |>
     as.data.frame(stringsAsFactors = FALSE) |>
@@ -337,9 +313,6 @@ geojson_feature_parts <- function(feature, geometry = feature$geometry) {
 #'   ID per layer, in the same order.
 #' @export
 hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series (GeoJSON)")
-  }
   stopifnot(hc$x$type == "map")
 
   geo <- if (is.character(data)) {
@@ -449,10 +422,6 @@ hc_add_series.lm <- function(
   fillOpacity = 0.1,
   ...
 ) {
-  if (getOption("highcharter.verbose")) {
-    message(sprintf("hc_add_series.%s", class(data)))
-  }
-
   if (inherits(data, "loess")) {
     x <- data$x[, 1L]
     prediction <- stats::predict(data, se = TRUE)
@@ -539,10 +508,6 @@ hc_add_series.data.frame <- function(
   ...
 ) {
   check_removed_fast(...)
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.data.frame")
-  }
-
   if (length(mapping) == 0) {
     if (has_name(data, "series")) {
       data <- rename(data, seriess = "series")

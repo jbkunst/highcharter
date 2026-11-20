@@ -39,7 +39,7 @@ marine$features[[1]]$properties
 volcano$features[[1]]$properties
 plates$features[[1]]$properties
 
-hc <- highchart(type = "map", debug = TRUE) %>%
+hc <- highchart(type = "map") %>%
   hc_add_series(mapData = world, showInLegend = FALSE) %>%
   hc_add_series(
     data = marine,

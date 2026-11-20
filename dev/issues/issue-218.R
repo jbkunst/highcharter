@@ -4,7 +4,6 @@ library(htmltools)
 library(stringr)
 library(tibble)
 library(purrr)
-options(highcharter.debug = TRUE)
 
 hcmap <- function(
   map = "custom/world",

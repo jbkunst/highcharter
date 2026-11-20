@@ -1,6 +1,5 @@
 library(highcharter)
 
-options(highcharter.debug = TRUE)
 hcmap()
 
 urlmap <- "https://code.highcharts.com/mapdata/custom/world.topo.json"

@@ -29,7 +29,8 @@ At this level, `build-site.R` builds the website,
 `build-shinylive.R` exports the browser app,
 `format-vignettes.R` formats R chunks in the vignettes with Air,
 `generate-highcharts-api.R` regenerates the R option API, and
-`set-dev-options.R` enables interactive debugging options and a theme.
+`set-dev-options.R` sets the theme for interactive development.
+Inspect a widget with `str(hc$x)` in R or `Highcharts.charts.filter(Boolean)` in the browser console.
 This README documents their workflows and the release conventions.
 
 ## Format R code

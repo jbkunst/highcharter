@@ -65,7 +65,7 @@ ddta <- GNI2010 %>%
 
 head(ddta)
 
-highchart(type = "map", debug = TRUE) %>%
+highchart(type = "map") %>%
   hc_title(text = "Gross national income") %>%
   hc_colorAxis(min = 0, minColor = "#440154", maxColor = "#FDE725") %>%
   hc_mapNavigation(enabled = TRUE) %>%
@@ -111,7 +111,7 @@ dclass <- data_frame(
 )
 dclass <- setNames(rlist::list.parse(dclass), NULL)
 
-highchart(type = "map", debug = TRUE) %>%
+highchart(type = "map") %>%
   hc_title(text = "US Counties unemployment rates") %>%
   hc_colorAxis(dataClasses = dclass) %>%
   hc_mapNavigation(enabled = TRUE) %>%
@@ -141,7 +141,7 @@ us <- gsub(".* = ", "", us)
 substr(us, 0, 20)
 map <- jsonlite::fromJSON(us, simplifyVector = FALSE)
 
-highchart(type = "map", debug = TRUE) %>%
+highchart(type = "map") %>%
   hc_add_series(name = 'Basemap', mapData = map)
 
 #### EX 3 ####
@@ -151,5 +151,5 @@ tmpfile <- tempfile(fileext = ".json")
 download.file(url, tmpfile)
 world <- geojson_read(tmpfile)
 
-highchart(type = "map", debug = TRUE) %>%
+highchart(type = "map") %>%
   hc_add_series(name = "worldgeojson", mapData = world)

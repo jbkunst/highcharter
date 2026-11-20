@@ -26,6 +26,7 @@ The function review on `feat/highcharts-bundle` is complete. The
 | 9. Function review | Histograms use real bin limits and widths. Matrix heatmaps use a visible color axis and the bundle's border default. Tibbles use the data-frame method. Simplified timestamps, RGBA colors, density series and map-name normalization. `is.highchart()` recognizes the two widget classes. |
 | 10. Final helper review | Models and forecasts use base R to generate linked series IDs without consuming random numbers. Color stops are built directly as position/color pairs. Data-frame series validate and add options in one place. GeoJSON and TopoJSON share a property extraction step using base R and `bind_rows()`. Kept `zoo` for calendar time series. |
 | 11. Example data | The map articles use the installed Robinson map and a World Bank income and population snapshot. The same daily ERA5 table powers the monthly demo and the Santiago radial. The showcase contains the HIMYM inputs, stars and WHO/UNICEF coverage, and the data helpers article annotates the Tour de France route. |
+| 12. Package options | Removed the verbose and debug switches and their R and browser traces. External map loading is selected per call with `hcmap(download_map_data = ...)`. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
 

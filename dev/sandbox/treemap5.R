@@ -4,7 +4,6 @@ library(tidyr)
 library(purrr)
 library(highcharter)
 library(data.tree)
-options(highcharter.debug = TRUE)
 
 data(GNI2014, package = "treemap")
 

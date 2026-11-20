@@ -2,7 +2,6 @@
 library(highcharter)
 library(dplyr)
 
-options(highcharter.download_map_data = TRUE)
 
 hcmap("custom/asia")
 

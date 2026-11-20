@@ -56,10 +56,6 @@ export_hc <- function(hc, filename = NULL, as = "is", name = NULL) {
     filename <- paste0(filename, ".js")
   }
 
-  if (getOption("highcharter.verbose")) {
-    message(sprintf("saving file in '%s'", filename))
-  }
-
   writeLines(js, filename)
 }
 

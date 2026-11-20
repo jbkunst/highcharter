@@ -62,9 +62,6 @@
   )
   options(
     highcharter.theme = getOption("highcharter.theme", default_theme),
-    highcharter.verbose = FALSE,
-    highcharter.debug = FALSE,
-    highcharter.download_map_data = TRUE,
     highcharter.color_palette = default_theme$colors
   )
 }

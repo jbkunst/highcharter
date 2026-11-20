@@ -1,5 +1,4 @@
 hc_set_theme("smpl")
-options(highcharter.debug = TRUE)
 
 rarima <- function(model = list(ar = 0.5), n = NULL, ...) {
   x <- arima.sim(model = model, n = n, ...)
