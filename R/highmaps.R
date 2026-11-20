@@ -253,11 +253,10 @@ get_data_from_map <- function(mapdata) {
   } else {
     mapdata$features
   }
-  features |>
-    purrr::map("properties") |>
-    purrr::map_df(function(x) {
-      x[!purrr::map_lgl(x, is.null)]
-    })
+  properties <- lapply(features, function(feature) {
+    Filter(Negate(is.null), feature[["properties"]])
+  })
+  dplyr::bind_rows(properties)
 }
 
 packaged_map_file <- function(map) {

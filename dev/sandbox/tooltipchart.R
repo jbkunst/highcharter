@@ -92,7 +92,7 @@ options(highcharter.theme = hc_theme("smpl"), highcharter.debug = TRUE)
 #
 #   jsss <- whisker.render(
 #     jss,
-#     list(id = highcharter:::random_id(), w = width, h = height, accesor = accesor)
+#     list(id = basename(tempfile("hc-")), w = width, h = height, accesor = accesor)
 #     )
 #   # cat(jsss)
 #

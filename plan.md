@@ -20,10 +20,11 @@ The function review on `feat/highcharts-bundle` is complete. The
 | 7.4. Language and global options | New sessions use `hc_set_language("en")` and the bundle's UTC default. The widget reads language and optional global settings directly, preserving user choices. Removed `.join_hc_opts()`. |
 | 7.5. Single numeric points | The common series-list path wraps a single numeric value in a point array. Removed `fix_1_length_data()`. |
 | 7.6. GeoJSON methods | `hchart()` and `hc_add_series()` share one method for `geo_list` and `geo_json`. Mixed collections draw one layer per geometry family. Supply `type` to select a single family. |
-| 7.7. Export filenames and reference index | `export_hc()` recognizes literal JavaScript extensions using base R. The pkgdown index omits the internal `random_id()` helper. |
+| 7.7. Export filenames and reference index | `export_hc()` recognizes literal JavaScript extensions using base R. The pkgdown index lists public color and data helpers. |
 | 8.1. Parallel coordinates | Removed `hcparcords()`. Use `data_to_parallel_coordinates()` with native parallel axes. The [data helpers article](vignettes/data-helpers.Rmd) shows the migration and all five public helpers. |
 | 8.2. Widget serialization | All chart constructors use `yyjsonr`. Removed the `highcharter.rjson` switch, its dependency and the missing-row filter. See the [benchmark](#widget-serialization-benchmark). |
 | 9. Function review | Histograms use real bin limits and widths. Matrix heatmaps use a visible color axis and the bundle's border default. Tibbles use the data-frame method. Simplified timestamps, RGBA colors, density series and map-name normalization. `is.highchart()` recognizes the two widget classes. |
+| 10. Final helper review | Models and forecasts use base R to generate linked series IDs without consuming random numbers. Color stops are built directly as position/color pairs. Data-frame series validate and add options in one place. GeoJSON and TopoJSON share a property extraction step using base R and `bind_rows()`. Kept `zoo` for calendar time series. |
 
 The package also dropped `assertthat`, the global-variable declarations and `hc_rm_series()`. Both list parsing formats remain available, and `list_parse2()` delegates validation to `list_parse()`. See the [breaking changes](NEWS.md#breaking-changes) for the series migration.
 

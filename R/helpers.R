@@ -34,7 +34,7 @@ get_box_values <- function(x, add_outliers) {
 #' }
 #'
 #' @importFrom dplyr transmute group_nest rename group_by bind_rows summarise
-#' @importFrom purrr map_if
+#' @importFrom purrr map map_if
 #' @export
 data_to_boxplot <- function(
   data,
@@ -443,26 +443,21 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   xcols
 }
 
-#' Function to create \code{stops} argument in \code{hc_colorAxis}
+#' Create color stops for \code{hc_colorAxis}
 #'
-#' @param n A numeric indicating how much quantiles generate.
-#' @param colors A character string of colors (ordered)
+#' @param n Positive integer number of evenly spaced stops. A single stop is
+#'   placed at zero.
+#' @param colors Character vector of colors in gradient order.
 #'
 #' @examples
 #'
 #' color_stops(5)
 #'
-#' @importFrom purrr map
 #' @export
 color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
-  palcols <- grDevices::colorRampPalette(colors)(n)
-
-  list_parse2(
-    data.frame(
-      q = seq(0, n - 1) / (n - 1),
-      c = palcols
-    )
-  )
+  stopifnot(is.numeric(n), length(n) == 1L, is.finite(n), n >= 1, n == floor(n))
+  positions <- (seq_len(n) - 1L) / max(1, n - 1L)
+  Map(list, positions, grDevices::colorRampPalette(colors)(n))
 }
 
 #' Function to create \code{dataClasses} argument in \code{hc_colorAxis}
@@ -504,17 +499,4 @@ is.hexcolor <- function(x) {
   pattern <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$"
 
   str_detect(x, pattern)
-}
-
-#' Generate random series IDs
-#' @param n Number of ids
-#' @param length Length of ids
-#' @keywords internal
-random_id <- function(n = 1, length = 10) {
-  source <- c(seq(0, 9), letters)
-
-  replicate(
-    n,
-    paste0(sample(x = source, size = length, replace = TRUE), collapse = "")
-  )
 }

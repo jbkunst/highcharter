@@ -208,7 +208,7 @@ hc_add_series.forecast <- function(
     message("hc_add_series.forecast")
   }
 
-  rid <- random_id()
+  rid <- basename(tempfile("hc-"))
   method <- data$method
   forecast_name <- if (is.null(name)) {
     paste("Forecast:", method)
@@ -484,7 +484,7 @@ hc_add_series.lm <- function(
   )
   points <- points[order(points$x), , drop = FALSE]
 
-  rid <- random_id()
+  rid <- basename(tempfile("hc-"))
 
   hc |>
     hc_add_series(
@@ -710,17 +710,6 @@ mutate_mapping <- function(data, mapping, drop = FALSE) {
   data
 }
 
-add_arg_to_df <- function(data, ...) {
-  datal <- as.list(data)
-
-  options <- validate_args("hc_add_series", list(...))
-  l <- map_if(options, function(x) is.list(x), list)
-
-  datal <- append(datal, l)
-
-  as_tibble(datal)
-}
-
 convert_date_coordinates <- function(data, keys) {
   for (key in keys) {
     if (inherits(data[[key]], c("Date", "POSIXt"))) {
@@ -810,7 +799,8 @@ data_to_series <- function(data, mapping, type, ...) {
   series$type <- type
 
   if (...length()) {
-    series <- add_arg_to_df(series, ...)
+    options <- validate_args("hc_add_series", list(...))
+    series <- as_tibble(c(as.list(series), map_if(options, is.list, list)))
   }
   for (size in setdiff(names(cell_sizes), names(series))) {
     series[[size]] <- cell_sizes[[size]]

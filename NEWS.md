@@ -175,6 +175,12 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Bug fixes
 
+* Adding a forecast, linear model or loess fit preserves R's random-number
+  state when linking the fitted series to its intervals.
+
+* `color_stops(1)` places a single color at zero. Supply a positive integer
+  for the number of stops.
+
 * `export_hc()` appends `.js` to filenames such as `salesjs` and preserves
   the JavaScript extensions `.js`, `.mjs` and `.cjs`.
 

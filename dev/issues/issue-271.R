@@ -43,7 +43,7 @@ hc_add_series.lm <- function(
   data2 <- arrange_(data2, .dots = names(data2)[2])
   data2 <- mutate_(data2, .dots = c("x" = names(data2)[2]))
 
-  rid <- random_id()
+  rid <- basename(tempfile("hc-"))
 
   hc %>%
     hc_add_series(

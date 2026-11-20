@@ -5,7 +5,9 @@ test_that("forecast charts distinguish observations, predictions and intervals",
     h = 6,
     level = c(80, 95)
   )
+  seed <- .GlobalEnv$.Random.seed
   chart <- hchart(model)
+  expect_identical(.GlobalEnv$.Random.seed, seed)
   series <- chart$x$hc_opts$series
   expect_identical(series[[1]]$name, "Observed")
   expect_match(series[[2]]$name, "^Forecast: ")
@@ -15,6 +17,7 @@ test_that("forecast charts distinguish observations, predictions and intervals",
   named <- hchart(model, name = "Passengers")$x$hc_opts$series
   expect_identical(named[[1]]$name, "Passengers observed")
   expect_identical(named[[2]]$name, "Passengers forecast")
+  expect_false(identical(named[[2]]$id, series[[2]]$id))
   forecast_only <- highchart() |> hc_add_series(model, name = "Passengers")
   expect_identical(
     forecast_only$x$hc_opts$series[[1]]$name,
