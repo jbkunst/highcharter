@@ -21,8 +21,8 @@ Add a month and switch between a line and columns using a Shiny proxy.
 
 ## Equalizer
 
-Drag a frequency band to change its gain and watch the event table
-update.
+Drag a frequency band and compare its live gain with the final value on
+release.
 
 [![](../shiny-gallery/linked.webp)](https://jkunst.com/highcharter/live/linked/index.md)
 

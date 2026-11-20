@@ -20,6 +20,7 @@ to rebuild the plot when the measurement changes.
 
     ui <- fluidPage(
       theme = bslib::bs_theme(version = 5),
+      style = "max-width: 48rem;",
       selectInput("measure", "Iris measurements", c("Sepal", "Petal")),
       highchartOutput("flowers", height = "310px")
     )
@@ -62,6 +63,7 @@ controls target the series ID `traffic` through
 
     ui <- fluidPage(
       theme = bslib::bs_theme(version = 5),
+      style = "max-width: 48rem;",
       actionButton("next_month", "Add a month"),
       radioButtons(
         "type",
@@ -117,9 +119,10 @@ walkthrough](https://jkunst.com/highcharter/articles/stock.html#update-a-series-
 ## Events
 
 Each lit segment adds 1 dB to the band’s gain, starting at −12 dB. Hover
-over a band, click it, then drag its top and release it. The table keeps
-the latest band and gain for each event. Watch the `drag` row change as
-you move and the `drop` row update when you release.
+over a band, click it, then drag its top and release it. Each event has
+its own readout. The `drag` and `mouseOver` values refresh at most once
+every 150 ms. The `drop` value shows the final gain as soon as you
+release the band.
 
 
     library(shiny)
@@ -129,15 +132,35 @@ you move and the `drop` row update when you release.
       band = c("60 Hz", "250 Hz", "1 kHz", "4 kHz", "16 kHz"),
       gain = c(0, 5, -4, 8, 2)
     )
+    events <- c("click", "drag", "mouseOver", "drop")
 
     ui <- fluidPage(
       theme = bslib::bs_theme(version = 5),
-      tags$head(tags$style("#eq .highcharts-grid-line { pointer-events: none; }")),
-      h2("Equalizer"),
-      p("Hover or click a band. Drag its top to change the gain."),
-      highchartOutput("eq", height = "320px"),
-      h3("Latest event by type"),
-      tableOutput("events")
+      style = "max-width: 48rem;",
+      tags$head(tags$style(
+        "
+        #eq .highcharts-grid-line { pointer-events: none; }
+        #readings { font-variant-numeric: tabular-nums; }
+        #readings .recalculating { opacity: 1; }
+      "
+      )),
+      tags$main(
+        h2("Equalizer"),
+        p("Hover or click a band. Drag its top to change the gain."),
+        highchartOutput("eq", height = "320px"),
+        h3("Latest event by type"),
+        tags$dl(
+          id = "readings",
+          class = "row row-cols-2 row-cols-sm-4",
+          lapply(events, function(event) {
+            div(
+              class = "col",
+              tags$dt(event),
+              tags$dd(textOutput(event, inline = TRUE))
+            )
+          })
+        )
+      )
     )
 
     server <- function(input, output, session) {
@@ -199,23 +222,21 @@ you move and the `drop` row update when you release.
           hc_add_event_point(event = "drop")
       })
 
-      output$events <- renderTable(
-        {
-          rows <- lapply(c("click", "drag", "mouseOver", "drop"), function(event) {
-            point <- input[[paste0("eq_point_", event)]]
-            data.frame(
-              Event = event,
-              Band = if (is.null(point)) NA_character_ else point$pointid,
-              `Gain (dB)` = if (is.null(point)) NA_real_ else point$y,
-              check.names = FALSE
-            )
-          })
-          do.call(rbind, rows)
-        },
-        na = "—",
-        digits = 0,
-        striped = TRUE
-      )
+      lapply(events, function(event) {
+        point <- reactive(input[[paste0("eq_point_", event)]])
+        reading <- if (event %in% c("drag", "mouseOver")) {
+          throttle(point, 150)
+        } else {
+          point
+        }
+        output[[event]] <- renderText({
+          value <- reading()
+          if (is.null(value)) {
+            return("—")
+          }
+          sprintf("%s · %+d dB", value$pointid, as.integer(value$y))
+        })
+      })
     }
 
     shinyApp(ui, server)
@@ -234,9 +255,10 @@ and `input$eq_point_drag$y` gives its gain during a drag.
 
 The dotplot shows mean petal length by species, rounded to the nearest
 millimeter. With `colorByPoint = TRUE`, each species gets its own color.
-Hover over a species or click it to see petal length and width for its
-50 flowers in the same color. A Shiny proxy updates the detail points,
-series color and title while keeping the axes fixed for comparison.
+Pause over a species for 200 ms or click it for an immediate selection.
+The detail shows petal length and width for its 50 flowers in the same
+color. A Shiny proxy updates the detail points, series color and title
+while keeping the axes fixed for comparison.
 
 
     library(shiny)
@@ -251,13 +273,23 @@ series color and title while keeping the axes fixed for comparison.
 
     ui <- fluidPage(
       theme = bslib::bs_theme(version = 5),
-      p(
-        "Each dot represents 1 mm of mean petal length.",
-        "Hover or click a species to see its 50 flowers in the same color."
-      ),
-      fluidRow(
-        column(5, highchartOutput("overview", height = "295px")),
-        column(7, highchartOutput("detail", height = "295px"))
+      style = "max-width: 60rem;",
+      tags$main(
+        p(
+          "Each dot represents 1 mm of mean petal length.",
+          "Hover or click a species to see its 50 flowers in the same color."
+        ),
+        fluidRow(
+          column(
+            5,
+            div(
+              class = "mx-auto",
+              style = "max-width: 24rem;",
+              highchartOutput("overview", height = "295px")
+            )
+          ),
+          column(7, highchartOutput("detail", height = "295px"))
+        )
       )
     )
 
@@ -282,15 +314,19 @@ series color and title while keeping the axes fixed for comparison.
       })
 
       initial <- as.character(species$Species[1])
+      requested <- reactiveVal(initial)
       selected <- reactiveVal(initial)
+      settled <- debounce(requested, 200)
+      observeEvent(settled(), selected(settled()), ignoreInit = TRUE)
       observeEvent(
         input$overview_point_mouseOver,
-        selected(input$overview_point_mouseOver$pointid)
+        requested(input$overview_point_mouseOver$pointid)
       )
-      observeEvent(
-        input$overview_point_click,
-        selected(input$overview_point_click$pointid)
-      )
+      observeEvent(input$overview_point_click, {
+        group <- input$overview_point_click$pointid
+        requested(group)
+        selected(group)
+      })
 
       output$detail <- renderHighchart({
         hchart(

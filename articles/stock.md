@@ -108,6 +108,7 @@ weekly <- daily[!duplicated(cut(daily$day, "week"), fromLast = TRUE), ]
 
 ui <- fluidPage(
   theme = bslib::bs_theme(version = 5),
+  style = "max-width: 48rem;",
   p(
     "View up to six weeks for daily closing prices. Zoom out to see weekly closes."
   ),

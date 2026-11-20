@@ -254,6 +254,7 @@ observatory <- bs_theme(
 
 ui <- page_fluid(
   theme = observatory,
+  style = "max-width: 48rem;",
   title = "Solar cycles",
   div(
     class = "d-flex justify-content-end align-items-center gap-2 py-2",
@@ -309,34 +310,34 @@ The setter changes an R process option shared by its sessions.
 Choose a preset below; every theme uses the same sales data. The chart
 is resized when its panel becomes visible.
 
-- [538](#tab-9681-1)
-- [alone](#tab-9681-2)
-- [bloom](#tab-9681-3)
-- [bslib](#tab-9681-4)
-- [carbon](#tab-9681-5)
-- [chalk](#tab-9681-6)
-- [cloudscape](#tab-9681-7)
-- [darkunica](#tab-9681-8)
-- [db](#tab-9681-9)
-- [economist](#tab-9681-10)
-- [elementary](#tab-9681-11)
-- [ffx](#tab-9681-12)
-- [flat](#tab-9681-13)
-- [flatdark](#tab-9681-14)
-- [ft](#tab-9681-15)
-- [ggplot2](#tab-9681-16)
-- [google](#tab-9681-17)
-- [gridlight](#tab-9681-18)
-- [handdrawn](#tab-9681-19)
-- [hcrt](#tab-9681-20)
-- [monokai](#tab-9681-21)
-- [null](#tab-9681-22)
-- [sandsignika](#tab-9681-23)
-- [smpl](#tab-9681-24)
-- [sparkline_vb](#tab-9681-25)
-- [sparkline](#tab-9681-26)
-- [superheroes](#tab-9681-27)
-- [tufte](#tab-9681-28)
+- [538](#tab-8951-1)
+- [alone](#tab-8951-2)
+- [bloom](#tab-8951-3)
+- [bslib](#tab-8951-4)
+- [carbon](#tab-8951-5)
+- [chalk](#tab-8951-6)
+- [cloudscape](#tab-8951-7)
+- [darkunica](#tab-8951-8)
+- [db](#tab-8951-9)
+- [economist](#tab-8951-10)
+- [elementary](#tab-8951-11)
+- [ffx](#tab-8951-12)
+- [flat](#tab-8951-13)
+- [flatdark](#tab-8951-14)
+- [ft](#tab-8951-15)
+- [ggplot2](#tab-8951-16)
+- [google](#tab-8951-17)
+- [gridlight](#tab-8951-18)
+- [handdrawn](#tab-8951-19)
+- [hcrt](#tab-8951-20)
+- [monokai](#tab-8951-21)
+- [null](#tab-8951-22)
+- [sandsignika](#tab-8951-23)
+- [smpl](#tab-8951-24)
+- [sparkline_vb](#tab-8951-25)
+- [sparkline](#tab-8951-26)
+- [superheroes](#tab-8951-27)
+- [tufte](#tab-8951-28)
 
 Use
 [`hc_themes()`](https://jkunst.com/highcharter/reference/hc_theme.md) to
