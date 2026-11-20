@@ -5,6 +5,7 @@ description: >
 output: rmarkdown::html_vignette
 resource_files:
   - data/tour-2017-stage-8.csv
+  - data/nyc-midwest-flights.csv.gz
 vignette: >
   %\VignetteIndexEntry{Prepare chart data with data helpers}
   %\VignetteEngine{knitr::rmarkdown}
@@ -25,29 +26,45 @@ transitions or reorganize rows into the structure a chart expects.
 
 ```{r setup, message=FALSE}
 library(highcharter)
+hc_set_theme("hcrt", colors = hc_theme("smpl")$colors)
 ```
 
 ## Parallel coordinates
 
 Each flower in `iris` becomes a line crossing four measurement axes.
-Select the numeric columns in display order. Use the species to name and
-color the lines. This replaces the former `hcparcords(iris, ...)` call.
+Select the numeric columns in display order. Use translucent lines to reveal where flowers overlap. The row number identifies
+each specimen, and color distinguishes the three species.
 
 ```{r parallel-coordinates}
 measurements <- iris[1:4]
 series <- data_to_parallel_coordinates(
   measurements,
-  name = as.character(iris$Species),
-  color = colorize(iris$Species)
+  name = paste(iris$Species, seq_len(nrow(iris)), sep = " · "),
+  color = hex_to_rgba(colorize(iris$Species), alpha = 0.36)
 )
 
 highchart() |>
   hc_chart(type = "line", parallelCoordinates = TRUE) |>
   hc_xAxis(categories = names(measurements)) |>
-  hc_add_series_list(series)
+  hc_add_series_list(series) |>
+  hc_tooltip(
+    formatter = JS(
+      "function () {
+    const axes = this.series.xAxis.categories;
+    const rows = this.series.points.map(p => {
+      const value = p.isNull ? '—' : Highcharts.numberFormat(p.y, 1) + ' cm';
+      const row = axes[p.x] + ': ' + value;
+      return p.x === this.x ? '<b>' + row + '</b>' : row;
+    });
+    return ['<b>' + this.series.name + '</b>', ...rows].join('<br>');
+  }"
+    )
+  )
 ```
 
-Hover over a point to read its measurement in centimeters. Highcharts scales
+Hover over any axis to see the four measurements for that flower. The tooltip
+reads the points already stored in its series and emphasizes the current axis.
+Highcharts scales
 each axis independently. A constant column keeps its value, and a missing
 measurement leaves a gap in that flower's line.
 
@@ -58,7 +75,13 @@ per group. With `add_outliers = TRUE`, it also returns the scatter series
 for the observations beyond the whiskers.
 
 ```{r boxplots}
-boxes <- data_to_boxplot(iris, Petal.Length, Species, add_outliers = TRUE)
+boxes <- data_to_boxplot(
+  iris,
+  Petal.Length,
+  Species,
+  add_outliers = TRUE,
+  name = "Petal length"
+)
 
 highchart() |>
   hc_xAxis(categories = levels(iris$Species)) |>
@@ -68,20 +91,25 @@ highchart() |>
 
 ## Sankey links
 
-Each row below is one visit. Column order defines the stages, and repeated
-transitions increase the link weight. For example, three visits went from
-Home to Search.
+Which airlines connected New York's three airports to the Midwest? Each row
+is one flight with a recorded arrival in January 2013 at one of six selected
+destinations. Order the columns as origin → airline → destination.
+`data_to_sankey()` counts the flights between each pair of adjacent stages.
+For example, the links into Chicago O’Hare (ORD) sum to 1,230 arrivals.
 
 ```{r sankey-links}
-visits <- data.frame(
-  landing = c("Home", "Home", "Home", "Offer"),
-  next_page = c("Search", "Search", "Search", "Product"),
-  outcome = c("Order", "Exit", "Order", "Order")
-)
+flights <- read.csv("data/nyc-midwest-flights.csv.gz")
+links <- data_to_sankey(flights[c("origin", "carrier", "dest")])
 
-links <- data_to_sankey(visits)
-hchart(links, type = "sankey", name = "Visits")
+hchart(links, "sankey", name = "Flights", nodeWidth = 14, nodePadding = 12) |>
+  hc_title(text = "From New York to the Midwest") |>
+  hc_subtitle(text = "3,445 flights · January 2013") |>
+  hc_tooltip(valueDecimals = 0)
 ```
+
+[Flight data from nycflights13](https://nycflights13.tidyverse.org/) ·
+[Download the three flight columns](data/nyc-midwest-flights.csv.gz).
+The same layout can display [parallel sets in D3](https://observablehq.com/@d3/parallel-sets).
 
 ## Hierarchy nodes
 
@@ -99,31 +127,40 @@ hchart(nodes, type = "treemap")
 
 ## Annotation labels
 
-Start with a chart and give each label an `x`, a `y` and its `text`. The
-axis positions for this numeric series start at zero, so `x = 2` labels its
-third point.
+Stage 8 of the 2017 Tour de France has three kinds of landmarks: towns,
+summits and climbs. Each row supplies its distance (`x`), elevation (`y`) and
+label (`text`). Convert each table with the same helper, then give its labels
+a placement suited to the terrain. Here 12 labels share a single elevation series.
 
-```{r annotation-labels}
-notes <- data.frame(x = 2, y = 8, text = "Peak")
-highchart() |>
-  hc_add_series(data = c(3, 5, 8, 6)) |>
-  hc_add_annotation(labels = data_to_annotation_labels(notes))
-```
-
-The same helper can label summits on an elevation profile. Stage 8 of the 2017
-Tour de France ran from Dole to Station des Rousses. The profile and the
-published summit positions come from [the original annotated example](https://jkunst.com/blog/posts/2020-06-02-30diasdegraficos-parte-3/).
+[Original annotated stage profile](https://jkunst.com/blog/posts/2020-06-02-30diasdegraficos-parte-3/) ·
 [Download the elevation profile (CSV)](data/tour-2017-stage-8.csv).
 
 ```{r tour-elevation}
 stage <- read.csv("data/tour-2017-stage-8.csv")
+towns <- data.frame(
+  x = c(27.98, 45.5, 63, 84, 129.5, 159),
+  y = c(255, 611, 651, 789, 382, 443),
+  text = c(
+    "Arbois",
+    "Montrond",
+    "Mont-sur-Monnet",
+    "Bonlieu",
+    "Chassal",
+    "Saint-Claude"
+  )
+)
+climbs <- data.frame(
+  x = c(96.2, 134.5, 172.2),
+  y = c(783, 540, 925),
+  text = c("6.1 km · 4.6%", "7.6 km · 5.2%", "11.7 km · 6.4%")
+)
 summits <- data.frame(
   x = c(101.44, 138.5, 176.4),
   y = c(1026, 748, 1202),
   text = c(
     "Col de la Joux",
     "Côte de Viry",
-    "Montée de la Combe de Laisia Les Molunes"
+    "Montée de la Combe<br>de Laisia Les Molunes"
   )
 )
 
@@ -138,5 +175,17 @@ hchart(
   hc_xAxis(title = list(text = "Distance (km)")) |>
   hc_yAxis(title = list(text = "Elevation (m)")) |>
   hc_tooltip(valueSuffix = " m") |>
-  hc_add_annotation(labels = data_to_annotation_labels(summits))
+  hc_add_annotation(
+    labels = data_to_annotation_labels(towns),
+    labelOptions = list(
+      verticalAlign = "top",
+      y = 10,
+      backgroundColor = "rgba(255,255,255,0.85)"
+    )
+  ) |>
+  hc_add_annotation(labels = data_to_annotation_labels(summits)) |>
+  hc_add_annotation(
+    labels = data_to_annotation_labels(climbs),
+    labelOptions = list(shape = "connector", align = "right", x = -8, y = -32)
+  )
 ```

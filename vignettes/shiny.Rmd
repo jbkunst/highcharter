@@ -17,21 +17,18 @@ demo <- function(slug, title, height = 450) {
   src <- file.path("..", "pkgdown", "shiny", slug, "app.R")
   url <- paste0("../live/", slug, "/index.html")
   tagList(
-    tags$details(
-      ontoggle = "if (this.open) { const f = this.querySelector('iframe'); if (!f.hasAttribute('src')) f.src = f.dataset.src; }",
-      tags$summary(paste("Run", title)),
-      tags$iframe(
-        title = title,
-        `data-src` = url,
-        width = "100%",
-        height = height,
-        style = "border:0"
-      )
+    tags$iframe(
+      title = title,
+      src = url,
+      loading = "lazy",
+      width = "100%",
+      height = height,
+      style = "border:0"
     ),
-    tags$details(
-      tags$summary("R source"),
-      tags$pre(tags$code(paste(readLines(src), collapse = "\n")))
-    ),
+    tags$pre(tags$code(
+      class = "language-r",
+      paste(readLines(src), collapse = "\n")
+    )),
     tags$p(tags$a(
       href = url,
       "Open the app in its own tab",

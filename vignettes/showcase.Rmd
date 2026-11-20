@@ -4,7 +4,8 @@ output: rmarkdown::html_vignette
 resource_files:
   - data/stars.csv
   - data/southern-andes.geojson
-  - data/measles-coverage.csv
+  - data/holocene-volcanoes.csv.gz
+  - data/plate-boundaries.geojson.gz
 description: >
   In this vignette we'll review some examples to show what highcharts and
   highcharter can do in terms of customization and design.
@@ -28,6 +29,12 @@ For short examples grouped by data shape, see [Chart types](chart-types.html).
 
 > This is a bar graph describing my favorite pies including a pie chart describing my favorite bars.
 > - _Marshall Eriksen_
+
+<style>
+.himym-chart .highchart { height: auto !important; aspect-ratio: 16 / 9; min-height: 300px; }
+</style>
+
+::: {.himym-chart}
 
 ```{r bar, echo=FALSE}
 favorite_bars <- data.frame(
@@ -79,18 +86,20 @@ highchart() |>
       colorByPoint = TRUE
     ),
     pie = list(
-      center = c('30%', '10%'),
-      size = 120,
+      center = c("83%", "46%"),
+      size = "62%",
       dataLabels = list(enabled = FALSE)
     )
   ) |>
   # Axis
   hc_yAxis(
+    width = "64%",
     title = list(text = "percentage of tastiness"),
     labels = list(format = "{value}%"),
     max = 100
   ) |>
   hc_xAxis(
+    width = "64%",
     categories = favorite_pies$pie
   ) |>
   # Titles, subtitle, caption and credits
@@ -109,11 +118,10 @@ highchart() |>
     text = "Source: HIMYM",
     href = "https://www.youtube.com/watch?v=f_J8QU1m0Ng",
     style = list(fontSize = "12px")
-  ) |>
-  hc_size(
-    height = 600
   )
 ```
+
+:::
 
 <details>
 <summary>Show R code</summary>
@@ -159,7 +167,16 @@ hchart(
   hc_tooltip(
     useHTML = TRUE,
     headerFormat = "<b>{point.key}</b>",
-    pointFormatter = tooltip_chart(accesor = "ttdata")
+    pointFormatter = tooltip_chart(
+      accesor = "ttdata",
+      hc_opts = list(
+        series = list(list(name = "point.name")),
+        tooltip = list(
+          headerFormat = "{point.x}<br>",
+          pointFormat = "{series.name}: {point.y:,.0f}"
+        )
+      )
+    )
   )
 ```
 
@@ -183,7 +200,7 @@ donutdata <- gp |>
   summarise(pop = sum(as.double(pop)), .groups = "drop")
 
 donutdata2 <- gp |>
-  select(continent, x = lifeExp, y = gdpPercap) |>
+  select(continent, name = country, x = lifeExp, y = gdpPercap) |>
   group_nest(continent, .key = "ttdata") |>
   mutate(ttdata = map(ttdata, list_parse)) |>
   left_join(donutdata, by = "continent")
@@ -192,6 +209,7 @@ hchart(
   donutdata2,
   "pie",
   hcaes(name = continent, y = pop),
+  name = "Population share",
   innerSize = "78%"
 ) |>
   hc_tooltip(
@@ -201,6 +219,11 @@ hchart(
       accesor = "ttdata",
       hc_opts = list(
         chart = list(type = "scatter"),
+        series = list(list(name = "point.name")),
+        tooltip = list(
+          headerFormat = "<b>{point.name}</b><br>",
+          pointFormat = "Life expectancy: {point.x:.1f} years<br>GDP per capita: ${point.y:,.0f}"
+        ),
         credits = list(enabled = FALSE),
         plotOptions = list(scatter = list(marker = list(radius = 2)))
       ),
@@ -462,42 +485,6 @@ hchart(
 Background photograph: [ESO/Digitized Sky Survey 2, around the Hubble Ultra Deep Field](https://www.eso.org/public/images/eso1832b/).
 The dark overlay keeps both axes legible over the stars.
 
-## Measles vaccination coverage
-
-How has first-dose coverage changed across countries? Each cell shows the
-estimated percentage of the target population receiving the first dose of a
-measles-containing vaccine (MCV1). The nine countries share a 0–100% scale.
-Estimates come from the [2025 WHO/UNICEF revision](https://data.unicef.org/resources/dataset/immunization/).
-[Download the coverage estimates (CSV)](data/measles-coverage.csv).
-
-```{r measles-coverage, echo=FALSE}
-coverage <- read.csv("data/measles-coverage.csv")
-
-hchart(coverage, "heatmap", hcaes(x = year, y = country, value = coverage)) |>
-  hc_title(text = "First-dose measles vaccination coverage") |>
-  hc_subtitle(text = "Nine countries, 2000–2025 · WHO/UNICEF estimates") |>
-  hc_xAxis(title = list(text = NULL), tickInterval = 5) |>
-  hc_yAxis(title = list(text = NULL), reversed = TRUE) |>
-  hc_colorAxis(
-    min = 0,
-    max = 100,
-    stops = color_stops(colors = c("#f7fbff", "#6baed6", "#08306b")),
-    labels = list(format = "{value}%")
-  ) |>
-  hc_tooltip(
-    headerFormat = "",
-    pointFormat = "{point.country}, {point.x}: <b>{point.value}%</b>"
-  )
-```
-
-<details>
-<summary>Show R code</summary>
-
-```{r measles-coverage-source, ref.label="measles-coverage", eval=FALSE, echo=TRUE}
-```
-
-</details>
-
 ## Word cloud
 
 The 160 most frequent terms in R’s graphics manual fill the cloud. Word size reflects the number of mentions across help-page descriptions.
@@ -580,6 +567,69 @@ converted to GeoJSON by [Hugo Ahlenius, Nordpil and contributors](https://github
 ```
 
 </details>
+
+### Explore the global distribution
+
+Switch from the regional view to the full Holocene catalogue. Each triangle
+marks a volcano, including submarine features. Hover for its name, country,
+landform and elevation. Toggle the plate boundaries in the legend to compare
+the volcanic arcs around the Pacific with volcanoes in plate interiors.
+
+```{r global-volcanoes, echo=FALSE}
+volcanoes <- read.csv("data/holocene-volcanoes.csv.gz")
+plates <- jsonlite::read_json("data/plate-boundaries.geojson.gz")
+
+hcmap(
+  "custom/world.topo.json",
+  name = "Land",
+  showInLegend = FALSE,
+  nullColor = "rgba(92,126,118,0.20)",
+  borderWidth = 0.3,
+  enableMouseTracking = FALSE
+) |>
+  hc_add_series(
+    type = "mapline",
+    name = "Plate boundaries",
+    data = lapply(plates$features, function(f) list(geometry = f$geometry)),
+    color = "#547682",
+    lineWidth = 1.2,
+    enableMouseTracking = FALSE
+  ) |>
+  hc_add_series(
+    volcanoes,
+    "mappoint",
+    hcaes(name = name, lon = lon, lat = lat),
+    name = "Holocene volcanoes",
+    color = "rgba(175,68,40,0.76)",
+    marker = list(symbol = "triangle", radius = 3),
+    dataLabels = list(enabled = FALSE),
+    turboThreshold = 0
+  ) |>
+  hc_title(text = "Volcanoes and plate boundaries") |>
+  hc_subtitle(
+    text = "1,215 Holocene volcanoes · Smithsonian Global Volcanism Program"
+  ) |>
+  hc_legend(enabled = TRUE) |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE) |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "<b>{point.name}</b> · {point.country}<br>{point.landform}<br>Elevation: {point.elevation:,.0f} m"
+  ) |>
+  hc_caption(
+    text = "Volcanoes: Smithsonian GVP · Boundaries: Peter Bird (PB2002), via Nordpil."
+  )
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r global-volcanoes-source, ref.label="global-volcanoes", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+[Download the volcano catalogue extract](data/holocene-volcanoes.csv.gz) ·
+[Download the simplified plate boundaries](data/plate-boundaries.geojson.gz).
 
 ## South Atlantic wind field
 

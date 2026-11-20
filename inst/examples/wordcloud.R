@@ -46,13 +46,16 @@ hchart(
   "wordcloud",
   name = "Mentions",
   placementStrategy = "center",
-  spiral = "archimedean",
-  rotation = list(from = 0, to = 90, orientations = 2),
+  spiral = "rectangular",
+  rotation = list(from = -45, to = 45, orientations = 5),
   minFontSize = 8,
   maxFontSize = 42,
   style = list(fontFamily = "Georgia, serif", fontWeight = "bold")
 ) |>
   hc_colors(c("#143f50", "#276774", "#347c74", "#9a5435", "#614876")) |>
   hc_title(text = "The language of R graphics") |>
-  hc_tooltip(pointFormat = "{point.weight} mentions in the graphics manual") |>
+  hc_tooltip(
+    valueDecimals = 0,
+    pointFormat = "{point.weight:,.0f} mentions in the graphics manual"
+  ) |>
   hc_size(height = 420)

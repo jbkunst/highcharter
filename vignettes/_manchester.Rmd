@@ -33,10 +33,10 @@ airport_map <- airport_map |>
   ) |>
   hc_mapView(projection = list(name = "WebMercator")) |>
   hc_plotOptions(
-    map = list(nullColor = "rgba(92,158,151,0.33)", borderColor = "#517973"),
+    map = list(color = "rgba(80,157,178,0.25)", borderColor = "#517973"),
     mapline = list(color = "#245A72", lineWidth = 1.5),
     mappoint = list(
-      color = "#B85A20",
+      color = "#C65D18",
       marker = list(symbol = "circle", radius = 2.6)
     ),
     series = list(dataLabels = list(enabled = FALSE))
