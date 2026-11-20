@@ -111,18 +111,59 @@ D3](https://observablehq.com/@d3/parallel-sets).
 
 ## Hierarchy nodes
 
-The built-in `Titanic` table already contains counts. Sum `Freq` within
-passenger class and survival status to size each leaf. The same nodes
-can also be used in a sunburst. Each passenger class takes a color from
-the chart theme, which its survival groups inherit. To keep fixed colors
-across themes, pass a palette to `colors` in
-[`data_to_hierarchical()`](https://jkunst.com/highcharter/reference/data_to_hierarchical.md).
+Count Pokémon by primary and secondary type.
+[`data_to_hierarchical()`](https://jkunst.com/highcharter/reference/data_to_hierarchical.md)
+turns each primary type into a parent node and each observed combination
+into a leaf. Pokémon with a single type get their own leaf, such as
+“Only Electric”.
+
+In this [treemap from
+Showcase](https://jkunst.com/highcharter/articles/showcase.html#pokemon),
+the area of each rectangle shows the number of Pokémon. Click a primary
+type to explore its secondary types.
 
 ``` r
 
-passengers <- as.data.frame(Titanic)
-nodes <- data_to_hierarchical(passengers, c(Class, Survived), Freq)
-hchart(nodes, type = "treemap")
+library(highcharter)
+library(dplyr)
+
+counts <- pokemon |>
+  count(type_1, type_2, type_1_color, name = "n") |>
+  mutate(type_2 = coalesce(type_2, paste("Only", type_1)))
+
+nodes <- data_to_hierarchical(counts, c(type_1, type_2), n)
+palette <- setNames(pokemon$type_1_color, pokemon$type_1)
+nodes <- lapply(nodes, function(node) {
+  if (node$level == 1L) {
+    node$color <- unname(palette[node$name])
+  }
+  node$name <- tools::toTitleCase(node$name)
+  node
+})
+
+hchart(
+  nodes,
+  type = "treemap",
+  name = "All Pokémon",
+  allowTraversingTree = TRUE,
+  dataLabels = list(
+    style = list(
+      fontFamily = "Shadows Into Light",
+      fontWeight = "normal",
+      fontSize = "15px",
+      color = "contrast",
+      textOutline = "none"
+    )
+  ),
+  layoutAlgorithm = "squarified",
+  levelIsConstant = FALSE,
+  levels = list(list(level = 1, dataLabels = list(enabled = TRUE)))
+) |>
+  hc_title(
+    text = "Pokémon by type",
+    style = list(fontFamily = "Shadows Into Light", fontWeight = "normal")
+  ) |>
+  hc_size(height = 480)
 ```
 
 ## Annotation labels
