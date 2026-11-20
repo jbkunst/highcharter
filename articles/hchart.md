@@ -53,26 +53,6 @@ economics_long2 <- economics_long |>
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ```
 
-## GeoJSON
-
-[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) reads
-the geometry from a `geo_list` or `geo_json` FeatureCollection from
-**geojsonio**. Here the local file contains two district polygons.
-
-``` r
-
-library(geojsonio)
-
-path <- system.file("extdata", "districts.geojson", package = "highcharter")
-districts <- geojson_list(as.json(path))
-hchart(districts)
-```
-
-With a mixed collection, the same call draws polygons, then lines, then
-points. The [Maps
-vignette](https://jkunst.com/highcharter/articles/maps.html#overlay-geojson-points)
-shows a clinic network with all three.
-
 ## Numeric & Histograms
 
 ``` r
@@ -297,3 +277,23 @@ hchart(x)
 
 hchart(cor(mtcars))
 ```
+
+## GeoJSON
+
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) reads
+the geometry from a `geo_list` or `geo_json` FeatureCollection from
+**geojsonio**. Here the local file contains two district polygons.
+
+``` r
+
+library(geojsonio)
+
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+districts <- geojson_list(as.json(path))
+hchart(districts)
+```
+
+With a mixed collection, the same call draws polygons, then lines, then
+points. The [Maps
+vignette](https://jkunst.com/highcharter/articles/maps.html#overlay-geojson-points)
+shows a clinic network with all three.
