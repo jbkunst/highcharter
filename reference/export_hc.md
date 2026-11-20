@@ -16,7 +16,8 @@ export_hc(hc, filename = NULL, as = "is", name = NULL)
 
 - filename:
 
-  String of the exported file.
+  Output path. A `.js` extension is appended unless the path already
+  ends in `.js`, `.mjs` or `.cjs`.
 
 - as:
 

@@ -1,6 +1,6 @@
-# Helper to transform data frame for sankey highcharts format
+# Count links between consecutive columns for a Sankey chart
 
-Helper to transform data frame for sankey highcharts format
+Count links between consecutive columns for a Sankey chart
 
 ## Usage
 
@@ -12,7 +12,15 @@ data_to_sankey(data = NULL)
 
 - data:
 
-  A data frame
+  A data frame with one column per stage, in traversal order. Numeric
+  columns with more than ten distinct finite values are grouped by
+  quintiles. Tied cut points produce fewer groups.
+
+## Value
+
+A tibble with `from`, `to`, `weight` (number of transitions) and a
+unique link `id`. Links with a missing endpoint are omitted. Fewer than
+two columns produce an empty tibble with the same columns.
 
 ## Examples
 

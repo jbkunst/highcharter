@@ -3,7 +3,7 @@
 Drilldown is the concept of inspecting increasingly high resolution data
 through clicking on chart items like columns, points or pie slices.
 
-## Exmaple I: Gapminder data
+## Gapminder population
 
 ``` r
 
@@ -17,7 +17,7 @@ data(gapminder, package = "gapminder")
 gapminder2007 <- gapminder |>
   filter(year == max(year)) |>
   select(-year) |>
-  mutate(pop = pop/1e6) |>
+  mutate(pop = pop / 1e6) |>
   arrange(desc(pop))
 
 gapminder_column <- gapminder2007 |>
@@ -51,7 +51,7 @@ gapminder_drilldown <- gapminder2007 |>
     id = continent,
     type = "column",
     # in the drilldown we'll give the mapping via creating the columns
-    data = map(data, mutate, name = country, y  = pop),
+    data = map(data, mutate, name = country, y = pop),
     data = map(data, list_parse)
   )
 
@@ -104,148 +104,40 @@ hchart(
   )
 ```
 
-## Exmaple II: Pokémon data
+For a geographic example, [click Chile to explore its
+regions](https://jkunst.com/highcharter/articles/maps.html#drill-down-from-south-america-to-chile).
 
-Same recipe, different data. Just copy & pasting code:
+## Pokémon types
 
-``` r
-
-pkmn_min <- pokemon |>
-  count(type_1, color = type_1_color) |>
-  mutate(type_1 = fct_reorder(type_1, .x = n)) |>
-  arrange(desc(type_1))
-
-pkmn_ddn <- pokemon |>
-  count(type_1, type_2, color = type_mix_color) |>
-  arrange(type_1, desc(n)) |>
-  mutate(type_2 = ifelse(is.na(type_2), str_c("only ", type_1), type_2)) |>
-  group_nest(type_1) |>
-  mutate(
-    id = type_1,
-    type = "column",
-    # in the drilldown we'll give the mapping via creating the columns
-    data = map(data, mutate, name = type_2, y  = n),
-    data = map(data, list_parse)
-  )
-
-hchart(
-  pkmn_min,
-  type = "column",
-  hcaes(x = type_1, y = n, color = color, drilldown = type_1),
-  name = "Pokémons"
-  ) |>
-  hc_drilldown(
-    activeAxisLabelStyle = list(textDecoration = "none"),
-    allowPointDrilldown = TRUE,
-    series = list_parse(pkmn_ddn)
-  ) |>
-  hc_yAxis(
-    title = list(text = ""),
-    endOnTick = FALSE,
-    opposite = TRUE
-    ) |>
-  hc_xAxis(
-    title = list(text = ""),
-    endOnTick = FALSE,
-    gridLineWidth = 0,
-    tickWidth = 0
-    ) |>
-  hc_chart(
-    style = list(fontFamily = "Gloria Hallelujah")
-  )
-```
-
-## Example III: Custom tooltips and colors
-
-(Example thanks to Claire).
+Click a primary type to explore its secondary types. Area shows the
+number of Pokémon.
 
 ``` r
 
-dtrees <- tibble(
-  tree = c("A", "B"),
-  apples = c(5, 7),
-  species = c("Fuji", "Gala"),
-  trunk_size = c(30, 40)
-  ) |> 
-  # rowise is used to avoid vectorization in tags$td, ie, do it row by row
-  rowwise() |> 
-  mutate(
-    tooltip_text = list(
-      tags$table(
-        tags$tr(tags$th("Tree"), tags$td(tree)),
-        tags$tr(tags$th("# Apples"), tags$td(apples))
-      )
-    )
-  ) |> 
-  ungroup() |> 
-  mutate(
-    tooltip_text = map_chr(tooltip_text, as.character),
-    # clean text
-    tooltip_text = str_trim(str_squish(tooltip_text))
-    )
+library(highcharter)
+library(dplyr)
 
-dflowers <- tibble(
-  tree = c(rep("A", 3), rep("B", 4)),
-  rose = c("R1", "R2", "R3", "R4", "R5", "R6", "R7"),
-  petals = c(10, 13, 15, 20, 24, 26, 27),
-  color = c(
-    "gray",
-    "#FFB6C1",
-    "#8B0000",
-    "purple",
-    "#FF10F0",
-    "#ffffbf",
-    "red"
-  ),
-  price = c(3, 2, 4, 3.5, 5, 2.5, 4.5)
-  ) |>   
-  rowwise() |> 
-  mutate(
-    tooltip_text = list(
-      tags$table(
-        tags$tr(tags$th("Flower"), tags$td(rose)),
-        tags$tr(tags$th("# Petals"), tags$td(petals)),
-        tags$tr(tags$th("Price"), tags$td(str_c("$ ", price)))
-      )
-    )  
-  ) |> 
-  ungroup() |> 
-  mutate(
-    tooltip_text = map_chr(tooltip_text, as.character),
-    # clean text
-    tooltip_text = str_trim(str_squish(tooltip_text))
-  )
+counts <- pokemon |>
+  count(type_1, type_2, type_1_color, name = "n") |>
+  mutate(type_2 = coalesce(type_2, paste("Only", type_1)))
 
-dflowers_dd <- dflowers |>
-  group_nest(id = tree) |>
-  mutate(
-    type = "column",
-    data = map(data, mutate, name = rose, y = petals),
-    data = map(data, list_parse),
-    name = "Petals"
-  )
+nodes <- data_to_hierarchical(counts, c(type_1, type_2), n)
+palette <- setNames(pokemon$type_1_color, pokemon$type_1)
+nodes <- lapply(nodes, function(node) {
+  if (node$level == 1L) {
+    node$color <- unname(palette[node$name])
+  }
+  node
+})
 
 hchart(
-  dtrees,
-  "column",
-  hcaes(tree, apples, drilldown = tree),
-  name = "Apples",
-  colorByPoint = TRUE
+  nodes,
+  type = "treemap",
+  allowTraversingTree = TRUE,
+  layoutAlgorithm = "squarified",
+  levelIsConstant = FALSE,
+  levels = list(list(level = 1, dataLabels = list(enabled = TRUE)))
 ) |>
-  hc_drilldown(
-    breadcrumbs = list(
-      format = 'back to {level.name} series',
-      # enabled = FALSE,
-      showFullPath = FALSE
-      ),
-    allowPointDrilldown = TRUE,
-    series = list_parse(dflowers_dd)
-    ) |>
-  hc_yAxis(title = list(text  = "")) |>
-  hc_xAxis(title = list(text  = "")) |>
-  hc_tooltip(
-    headerFormat = "", # remove header
-    pointFormat = "{point.tooltip_text}",
-    useHTML = TRUE
-    )
+  hc_title(text = "Pokémon by type") |>
+  hc_size(height = 480)
 ```

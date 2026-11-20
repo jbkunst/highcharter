@@ -1,0 +1,11 @@
+{"type":"FeatureCollection","features":[
+{"type":"Feature","properties":{"name":"Nazca–South America boundary"},"geometry":{"type":"LineString","coordinates":[[-75.558,-42.9722],[-75.4017,-42.2845],[-75.3969,-41.8256],[-75.3922,-41.3666],[-75.1889,-40.8628],[-75.1948,-40.3589],[-75.1278,-39.8131],[-75.1495,-39.5644],[-74.9883,-39.0681],[-74.8359,-38.542],[-74.6548,-38.1376],[-74.5956,-37.5635],[-74.4416,-36.7249],[-74.2617,-36.1653],[-73.8974,-35.5777]]}},
+{"type":"Feature","properties":{"name":"Antuco"},"geometry":{"type":"Point","coordinates":[-71.349,-37.406]}},
+{"type":"Feature","properties":{"name":"Copahue"},"geometry":{"type":"Point","coordinates":[-71.183,-37.856]}},
+{"type":"Feature","properties":{"name":"Lonquimay"},"geometry":{"type":"Point","coordinates":[-71.586,-38.379]}},
+{"type":"Feature","properties":{"name":"Llaima"},"geometry":{"type":"Point","coordinates":[-71.729,-38.692]}},
+{"type":"Feature","properties":{"name":"Villarrica"},"geometry":{"type":"Point","coordinates":[-71.93,-39.42]}},
+{"type":"Feature","properties":{"name":"Mocho-Choshuenco"},"geometry":{"type":"Point","coordinates":[-72.027,-39.927]}},
+{"type":"Feature","properties":{"name":"Osorno"},"geometry":{"type":"Point","coordinates":[-72.496,-41.105]}},
+{"type":"Feature","properties":{"name":"Calbuco"},"geometry":{"type":"Point","coordinates":[-72.618,-41.33]}}
+]}

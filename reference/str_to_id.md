@@ -6,8 +6,6 @@ Turn a string to `id` format used in treemaps.
 
 ``` r
 str_to_id(x)
-
-str_to_id_vec(x)
 ```
 
 ## Arguments

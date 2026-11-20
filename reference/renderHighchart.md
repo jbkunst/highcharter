@@ -7,7 +7,7 @@ Widget render function for use in Shiny
 ``` r
 renderHighchart(expr, env = parent.frame(), quoted = FALSE)
 
-renderHighchartZ(expr, env = parent.frame(), quoted = FALSE)
+renderHighchartStock(expr, env = parent.frame(), quoted = FALSE)
 ```
 
 ## Arguments

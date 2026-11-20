@@ -12,7 +12,8 @@ hcpxy_set_data(
   mapping = hcaes(),
   redraw = FALSE,
   animation = NULL,
-  updatePoints = TRUE
+  updatePoints = TRUE,
+  id = NULL
 )
 ```
 
@@ -56,3 +57,9 @@ hcpxy_set_data(
   or c) when points can be matched by X values. This allows updating
   with animation and performs better. In this case, the original array
   is not passed by reference. Set FALSE to prevent.
+
+- id:
+
+  Optional character vector with the target series ID. This is safer
+  than a numeric position when indicators or other dynamic series are
+  present.

@@ -1,6 +1,6 @@
-# Function to create `stops` argument in `hc_colorAxis`
+# Create color stops for `hc_colorAxis`
 
-Function to create `stops` argument in `hc_colorAxis`
+Create color stops for `hc_colorAxis`
 
 ## Usage
 
@@ -12,11 +12,12 @@ color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))
 
 - n:
 
-  A numeric indicating how much quantiles generate.
+  Positive integer number of evenly spaced stops. A single stop is
+  placed at zero.
 
 - colors:
 
-  A character string of colors (ordered)
+  Character vector of colors in gradient order.
 
 ## Examples
 

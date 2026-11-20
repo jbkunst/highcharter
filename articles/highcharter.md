@@ -1,6 +1,6 @@
 # Highcharter
 
-##  Highcharts
+## Highcharts
 
 let us start start with a simple example using `hchart` function.
 
@@ -9,7 +9,7 @@ let us start start with a simple example using `hchart` function.
 library(highcharter)
 
 # install.packages("palmerpenguins")
-data(penguins, package = "palmerpenguins") 
+data(penguins, package = "palmerpenguins")
 
 hchart(
   penguins,
@@ -26,7 +26,7 @@ numeric:
 
 x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 
-hchart(x, name = "data", color = "#17b8b6") 
+hchart(x, name = "data", color = "#17b8b6")
 ```
 
 One of the nicest class which `hchart` can plot is the `forecast` class
@@ -44,7 +44,7 @@ hchart(airforecast)
 See more examples of `hchart` in
 [`vignette("hchart")`](https://jkunst.com/highcharter/articles/hchart.md).
 
-##  Highstock
+## Highstock
 
 With {highcharter} you can use the highstock library which include
 sophisticated navigation options like:
@@ -61,36 +61,36 @@ example, using data from [{quantmod}](http://www.quantmod.com/) package:
 
 library(quantmod)
 
-x <- getSymbols("GOOG", auto.assign = FALSE)
-y <- getSymbols("AMZN", auto.assign = FALSE)
+data(sample_matrix, package = "xts")
+x <- xts::as.xts(sample_matrix)
 
-highchart(type = "stock") |> 
-  hc_add_series(x) |> 
-  hc_add_series(y, type = "ohlc")
+highchart(type = "stock") |>
+  hc_add_series(x, name = "Sample prices")
 ```
 
-##  Highmaps
+## Highmaps
 
 We can chart maps elements and choropleth using the highmaps and build
 interactive maps to display data linked to geographic objects.
 
 ``` r
 
-data(GNI2014, package = "treemap")
+palette <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
 
 hcmap(
   "custom/world-robinson-lowres",
-  data = GNI2014,
-  name = "Gross national income per capita",
-  value = "GNI",
-  borderWidth = 0,
-  nullColor = "#d3d3d3",
-  joinBy = c("iso-a3", "iso3")
+  data = subset(world_income, year == 2024),
+  value = "gni_per_capita",
+  joinBy = c("iso-a3", "iso3"),
+  name = "GNI per capita",
+  borderWidth = 0.2
 ) |>
+  hc_title(text = "Gross national income per capita, 2024") |>
   hc_colorAxis(
-    stops = color_stops(colors = viridisLite::inferno(10, begin = 0.1)),
-    type = "logarithmic"
-  )
+    type = "logarithmic",
+    stops = color_stops(colors = palette)
+  ) |>
+  hc_tooltip(valuePrefix = "$", valueDecimals = 0)
 ```
 
 ## What now?
@@ -102,5 +102,6 @@ Since you know the basics now it could be interesting:
   and look everything that can be done with the {highcharter} package.
 - Learn to configure graphics using the implemented API in
   [`vignette("highcharts-api")`](https://jkunst.com/highcharter/articles/highcharts-api.md).
-- See all chart you can make in
-  [`vignette("highcharts")`](https://jkunst.com/highcharter/articles/highcharts.md).
+- Explore [chart
+  types](https://jkunst.com/highcharter/articles/chart-types.md) and
+  their R examples.

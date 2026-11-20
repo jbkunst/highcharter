@@ -1,6 +1,6 @@
 # Articles
 
-### Get Started
+### Get started
 
 - [Highcharter](https://jkunst.com/highcharter/articles/highcharter.md):
 
@@ -11,17 +11,34 @@
   the main functions to get a chart from a data frame and some basic
   examples.
 
-- [Showcase](https://jkunst.com/highcharter/articles/showcase.md):
-
-  In this vignette we’ll review some examples to show what highcharts
-  and highcharter can do in terms of customization and design.
-
 - [hchart Function](https://jkunst.com/highcharter/articles/hchart.md):
 
   This a generic function, this means you can chart various R like
   numeric, histograms, character, factor, ts on the fly. The resulting
   chart is a highchart object so you can keep modifying with the
   implemented API.
+
+- [Prepare chart data with data
+  helpers](https://jkunst.com/highcharter/articles/data-helpers.md):
+
+  Turn observations into series, links, hierarchy nodes or annotation
+  labels.
+
+### Explore charts
+
+- [Chart types](https://jkunst.com/highcharter/articles/chart-types.md):
+
+- [Maps](https://jkunst.com/highcharter/articles/maps.md):
+
+- [Stock charts and Stock
+  Tools](https://jkunst.com/highcharter/articles/stock.md):
+
+- [Showcase](https://jkunst.com/highcharter/articles/showcase.md):
+
+  In this vignette we’ll review some examples to show what highcharts
+  and highcharter can do in terms of customization and design.
+
+### Configure and interact
 
 - [Highcharts
   API](https://jkunst.com/highcharter/articles/highcharts-api.md):
@@ -37,64 +54,32 @@
   functions available in highcharter and the underlying highchartsJS API
   in more detail.
 
-### The highchartsJS bundle
+- [Chart themes](https://jkunst.com/highcharter/articles/themes.md):
 
-- [Charts with
-  highcharts](https://jkunst.com/highcharter/articles/highcharts.md):
+  Use a preset, build a theme in R, or inherit the typography and colors
+  of a Bootstrap page.
 
-  Highcharts is a SVG-based, multi-platform charting library. The
-  highcharter package bring all highchartsJS capabilities to your R
-  console. So you can chart from simple charts like column, scatter to
-  more complex charts like streamgraph, packedbubble, vector field among
-  others.
+- [Accessible
+  charts](https://jkunst.com/highcharter/articles/accessibility.md):
 
-- [Maps with highmaps](https://jkunst.com/highcharter/articles/maps.md):
+### Extensions and examples
 
-  libraries from highchartsJS to chart maps, choroplets and geojson. The
-  highcharter package include
-  [highmaps](https://www.highcharts.com/demo/maps)
+- [From data to
+  charts](https://jkunst.com/highcharter/articles/from-data-to-charts.md):
 
-- [Stocks with
-  highstocks](https://jkunst.com/highcharter/articles/stock.md):
+  Recreate the homepage’s international data and four charts in R, from
+  World Bank indicators to scatter plots, exports, maps and shares.
 
-  libraries from highchartsJS to create stock or general timeline
-  charts. Features sophisticated navigation for high-volume data, user
-  annotations and range selectors. The highcharter package include
-  [highstocks](https://www.highcharts.com/demo/stock)
+- [Multiple
+  axes](https://jkunst.com/highcharter/articles/multiple-axes.md):
 
-### Shiny Integration
-
-- [Shiny Examples](https://jkunst.com/highcharter/articles/shiny.md):
-
-  This article show how simple is integrate highcharter widgets into
-  your shiny apps. Here you will find some specific examples like the
-  use of proxy funcions and other apps to give you some inspiration.
-
-### Experiments & Examples
-
-- [Fontawesome
-  integration](https://jkunst.com/highcharter/articles/fontawesome.md):
-
-  Take a look on how you can add incons to the text or even use the
-  icons as marker points.
+  Arrange nine scatter plots in one chart using separate pairs of axes.
 
 - [Drilldown](https://jkunst.com/highcharter/articles/drilldown.md):
 
   Drilldown is the concept of inspecting increasingly high resolution
   data through clicking on chart items like columns, points or pie
   slices. Let’s see some *How tos* use this feature.
-
-### More of highcharter
-
-- [Themes](https://jkunst.com/highcharter/articles/themes.md):
-
-  Highcharts is very flexible for create or themes. In Highcarter there
-  are some predefined themes and some functions to create your own or
-  merge themes.
-
-- [Commons HOW TOs](https://jkunst.com/highcharter/articles/howtos.md):
-
-  A list of examples of commons \_how to_s.
 
 - [Modules &
   plugins](https://jkunst.com/highcharter/articles/modules.md):
@@ -104,4 +89,9 @@
   or legends, as well as in data export formats or adjusting regressions
   or smoothing.
 
-- [Motion plugin](https://jkunst.com/highcharter/articles/motion.md):
+### Shiny applications
+
+- [Shiny
+  applications](https://jkunst.com/highcharter/articles/shiny.md):
+- [Shiny
+  gallery](https://jkunst.com/highcharter/articles/shiny-gallery.md):

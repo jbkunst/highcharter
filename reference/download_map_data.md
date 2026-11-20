@@ -9,7 +9,7 @@ download_map_data(
   url = "custom/world.js",
   showinfo = FALSE,
   quiet = FALSE,
-  method = "curl"
+  method = getOption("download.file.method", "auto")
 )
 ```
 
@@ -32,6 +32,7 @@ download_map_data(
 
   A string value for the download method used by
   [`download.file`](https://rdrr.io/r/utils/download.file.html).
+  Defaults to R's configured method.
 
 ## See also
 

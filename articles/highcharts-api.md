@@ -1,48 +1,58 @@
 # Highcharts API
 
-Highcharts have a rich API which allows you to have control of the
-entire chart, from title, subtitle to axis ticks, labels, annotations.
-We’ll review the main functions with simple examples.
+## Translate Highcharts options to R
 
-## Before to start
+For the complete walkthrough with Palmer penguins, JavaScript objects
+and nested R lists, see [JavaScript API
+Basics](https://jkunst.com/highcharter/articles/highchartsjs-api-basics.md).
 
-- There’s not default arguments. All arguments need to be named.
-- You can see more examples for arguments in
-  <https://api.highcharts.com/highcharts/>.
-
-If this is clear, we can continue.
-
-Now, let’s create a simple chart:
+Tom Bishop’s legend example shows how to read the Highcharts API from R.
+Start with the monthly temperatures of three cities.
 
 ``` r
 
 library(highcharter)
 
-data("citytemp")
-
-hc <- highchart() |> 
-  hc_xAxis(categories = citytemp$month) |> 
-  hc_add_series(
-    name = "Tokyo", data = citytemp$tokyo
-    ) |> 
-  hc_add_series(
-    name = "London", data = citytemp$london
-    ) |> 
-  hc_add_series(
-    name = "Other city",
-    data = (citytemp$tokyo + citytemp$london)/2
-    )
-
+hc <- highcharts_demo()
 hc
 ```
 
-## Chart
+The JavaScript legend below places the entries inside the chart and
+underlines the title. In R, the top-level option becomes
+[`hc_legend()`](https://jkunst.com/highcharter/reference/hc_legend.md)
+and each nested object becomes a named list. Keep the option names in
+camel case. [Highcharts legend
+options](https://api.highcharts.com/highcharts/legend).
+
+``` js
+legend: {
+  layout: 'vertical', align: 'left', verticalAlign: 'top', floating: true,
+  x: 70, y: 30,
+  title: { text: 'Cities', style: { textDecoration: 'underline' } }
+}
+```
+
+``` r
+
+hc |>
+  hc_legend(
+    layout = "vertical",
+    align = "left",
+    verticalAlign = "top",
+    floating = TRUE,
+    x = 70,
+    y = 30,
+    title = list(text = "Cities", style = list(textDecoration = "underline"))
+  )
+```
+
+## Chart layout and type
 
 With `hc_chart` you can define general chart options.
 
 ``` r
 
-hc |> 
+hc |>
   hc_chart(
     borderColor = '#EBBA95',
     borderRadius = 10,
@@ -52,24 +62,24 @@ hc |>
       stops = list(
         list(0, 'rgb(255, 255, 255)'),
         list(1, 'rgb(200, 200, 255)')
-        )
       )
     )
+  )
 ```
 
 Now change type to column and add 3d effect.
 
 ``` r
 
-hc <- hc |> 
+hc <- hc |>
   hc_chart(
     type = "column",
     options3d = list(
-      enabled = TRUE, 
+      enabled = TRUE,
       beta = 15,
       alpha = 15
-      )
     )
+  )
 hc
 ```
 
@@ -87,41 +97,41 @@ link to the source of data:
 
 ``` r
 
-hc |> 
+hc |>
   hc_title(
     text = "This is the title of the chart"
-    ) |> 
+  ) |>
   hc_subtitle(
     text = "This is an intereseting subtitle to give
     context for the chart or some interesting fact"
-    ) |> 
+  ) |>
   hc_caption(
-    text = "This is a long text to give some 
-    subtle details of the data which can be relevant to the reader. 
-    This is usually a long text that's why I'm trying to put a 
-    <i>loooooong</i> text.", 
+    text = "This is a long text to give some
+    subtle details of the data which can be relevant to the reader.
+    This is usually a long text that's why I'm trying to put a
+    <i>loooooong</i> text.",
     useHTML = TRUE
-    ) |> 
+  ) |>
   hc_credits(
     text = "Chart created using R and highcharter",
     href = "http://jkunst.com/highcharter",
     enabled = TRUE
-    )
+  )
 ```
 
-## Axis
+## Axes, ticks and plot bands
 
 Usually is desirable get control or modify the behavior of the axis:
 
 ``` r
 
-hc |> 
+hc |>
   hc_xAxis(
     title = list(text = "Month in x Axis"),
     opposite = TRUE
-    ) |> 
+  ) |>
   hc_yAxis(
-    title = list(text = "Temperature <b>in y Axis</b>", useHTML = TRUE),
+    title = list(text = "Temperature on the Y axis"),
     opposite = TRUE,
     minorTickInterval = "auto",
     minorGridLineDashStyle = "LongDashDotDot",
@@ -135,7 +145,7 @@ axis. For example:
 
 ``` r
 
-hc |> 
+hc |>
   hc_xAxis(
     plotLines = list(
       list(
@@ -143,11 +153,11 @@ hc |>
         color = "#FF0000",
         width = 2,
         value = 4,
-        # the zIndex is used to put the label text over the grid lines 
+        # the zIndex is used to put the label text over the grid lines
         zIndex = 1
-        )
       )
-    ) |> 
+    )
+  ) |>
   hc_yAxis(
     plotBands = list(
       list(
@@ -155,12 +165,33 @@ hc |>
         to = 50,
         color = hex_to_rgba("red", 0.1),
         label = list(text = "This is a plotBand"),
-        # the zIndex is used to put the label text over the grid lines 
+        # the zIndex is used to put the label text over the grid lines
         zIndex = 1
-        )
       )
-    ) 
+    )
+  )
 ```
+
+## Category order
+
+Order the counts first, then pass their names and values in the same
+order. Here the categories run from the most to the least common
+cylinder count.
+
+``` r
+
+counts <- sort(table(mtcars$cyl), decreasing = TRUE)
+
+highchart() |>
+  hc_xAxis(categories = names(counts), title = list(text = "Cylinders")) |>
+  hc_add_series(type = "column", name = "Cars", data = as.numeric(counts))
+```
+
+For another common adjustment, see [Keep other series visible on
+hover](#keep-other-series-visible-on-hover).
+
+For a layout with several pairs of axes, see [Multiple
+axes](https://jkunst.com/highcharter/articles/multiple-axes.md).
 
 ## Legend & tooltip
 
@@ -171,12 +202,42 @@ hc |>
     align = "left",
     verticalAlign = "top",
     layout = "vertical",
-    x = 0, y = 100
-    ) |>
+    x = 0,
+    y = 100
+  ) |>
   hc_tooltip(
     crosshairs = TRUE,
     backgroundColor = "#F0F0F0",
-    shared = TRUE, 
+    shared = TRUE,
     borderWidth = 5
-    )
+  )
+```
+
+For a chart inside the tooltip, see [Charts inside
+tooltips](https://jkunst.com/highcharter/articles/showcase.html#charts-inside-tooltips).
+
+## Keep other series visible on hover
+
+Move the pointer over a city to inspect it. An inactive opacity of one
+keeps the other cities visible at full strength for comparison.
+
+``` r
+
+hc |> hc_plotOptions(series = list(states = list(inactive = list(opacity = 1))))
+```
+
+## Responsive layout
+
+Resize the chart below 500 px to hide its legend. Highcharts restores
+the legend when the chart grows past that width.
+
+``` r
+
+hc |>
+  hc_responsive(
+    rules = list(list(
+      condition = list(maxWidth = 500),
+      chartOptions = list(legend = list(enabled = FALSE))
+    ))
+  )
 ```

@@ -6,7 +6,7 @@
 
 ``` r
 # S3 method for class 'numeric'
-hc_add_series(hc, data, ...)
+hc_add_series(hc, data = NULL, ...)
 ```
 
 ## Arguments

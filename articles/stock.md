@@ -1,119 +1,250 @@
-# Stocks with highstocks
+# Stock charts and Stock Tools
 
-The highcharter package include
-[highstocks](https://www.highcharts.com/demo/stock) libraries from
-highchartsJS to create stock or general timeline charts. Features
-sophisticated navigation for high-volume data, user annotations and
-range selectors.
-
-## Basics
-
-Highstock work well with the quantmod package. It’s easy chart symbols
-using [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md).
-Then you can add more series using
-[`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md).
+`highchart(type = "stock")` adds the Stock navigator and range selector.
+Use
+[`highchartstock()`](https://jkunst.com/highcharter/reference/highchartstock.md)
+when readers also need drawing tools and technical indicators. The
+introductory examples use the xts package’s sample OHLC matrix; the
+closing dashboard restores the SPY example with a local historical
+snapshot.
 
 ``` r
 
-library(quantmod)
-
-x <- getSymbols("GOOG", auto.assign = FALSE)
-
-hchart(x)
+data(sample_matrix, package = "xts")
+prices <- xts::as.xts(sample_matrix)
+hchart(prices, id = "price", name = "Sample instrument")
 ```
 
-Obviously you can use the implemented API functions to edit the chart:
+## Lines and price bars
+
+One ordinary column produces a line. All four price fields together
+produce candles. Use `type = "ohlc"` for open–high–low–close bars.
 
 ``` r
 
-y <- getSymbols("AMZN", auto.assign = FALSE)
-
-hchart(y, type = "ohlc") |> 
-  hc_title(text = "This is a Open-high-low-close chart with a custom theme") |> 
-  hc_add_theme(hc_theme_db())
+hchart(prices[, "Close"], name = "Close")
 ```
 
-## Candlestick and OHLC charts
-
-If you want to chart more symbols in you can use the
-[`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
-function. Don’t forget to specify `type = "stock"` to activate the
-navigator, range selector and other features of highstock.
-
 ``` r
 
-hc <- highchart(type = "stock") |> 
-  hc_add_series(x, id = 1) |> 
-  hc_add_series(y, type = "ohlc", id = 2)
-
-hc
+hchart(prices, type = "ohlc", name = "Sample instrument")
 ```
 
-## Flags
+## Flags, navigator and indicators
 
-Previously we used the `id` parameter. This is necessary to add flags to
-relate series and flags:
+The flag and moving average select the price series by ID. The range
+selector and navigator act on the same time axis. The full Stock Tools
+toolbar is enabled by default. Use **Indicators** to add a moving
+average, or **Type change** to switch the price series between
+candlesticks and OHLC bars.
 
 ``` r
 
-library(dplyr)
+price_chart <- highchartstock() |>
+  hc_add_series(prices, name = "Price", id = "price") |>
+  hc_add_series(
+    type = "sma",
+    linkedTo = "price",
+    name = "10-day mean",
+    params = list(period = 10)
+  ) |>
+  hc_add_series(
+    type = "flags",
+    onSeries = "price",
+    data = list(
+      list(
+        x = datetime_to_timestamp(time(prices)[30]),
+        title = "A",
+        text = "Day 30"
+      )
+    )
+  ) |>
+  hc_navigator(enabled = TRUE)
 
-set.seed(123)
+price_chart
+```
 
-data_flags <- tibble(
-  date = sample(time(x), size = 5),
-  title = sprintf("E #%s", seq_along(date)),
-  text = sprintf("An interesting event #%s in %s", seq_along(date), date)
+## Two stacked panels
+
+The price and the daily trading range have separate scales. Their
+heights are in the ratio 3 to 1. The panels share the time axis.
+
+``` r
+
+daily_range <- prices[, "High"] - prices[, "Low"]
+highchart(type = "stock") |>
+  hc_yAxis(create_axis(2, heights = c(3, 1))) |>
+  hc_add_series(prices, name = "Price", yAxis = 0) |>
+  hc_add_series(
+    daily_range,
+    name = "High minus low",
+    type = "column",
+    yAxis = 1
+  )
+```
+
+## Update a series and its visible range in Shiny
+
+The app opens with the last trading close of each week from the local
+2025 SPY snapshot. Press **Explore April**, choose **1m** or drag the
+navigator to a window of six weeks or less. The x-axis sends its new
+limits to Shiny, and the proxy replaces the visible series with daily
+closes for that interval. Choose **All** to return to weekly closes. The
+navigator keeps its original weekly overview as the main series changes.
+[Run the Stock app](https://jkunst.com/highcharter/live/stock/index.md).
+
+``` r
+
+library(highcharter)
+library(shiny)
+
+snapshot <- read.csv(system.file(
+  "extdata",
+  "spy-2025.csv",
+  package = "highcharter"
+))
+daily <- data.frame(day = as.Date(snapshot$date), close = snapshot$SPY.Close)
+weekly <- daily[!duplicated(cut(daily$day, "week"), fromLast = TRUE), ]
+
+ui <- fluidPage(
+  p(
+    "View up to six weeks for daily closing prices. Zoom out to see weekly closes."
+  ),
+  actionButton("april", "Explore April"),
+  highchartOutput("prices")
 )
 
-glimpse(data_flags)
-```
+server <- function(input, output, session) {
+  output$prices <- renderHighchart({
+    highchart(type = "stock") |>
+      hc_title(text = "SPY closing price, 2025") |>
+      hc_legend(enabled = TRUE) |>
+      hc_xAxis(
+        id = "days",
+        ordinal = FALSE,
+        minRange = 7 * 86400000,
+        events = list(
+          afterSetExtremes = JS(
+            "function (e) {
+              if (e.trigger !== 'updatedData') {
+                Shiny.setInputValue('prices_range', [e.min, e.max]);
+              }
+            }"
+          )
+        )
+      ) |>
+      hc_navigator(adaptToUpdatedData = FALSE) |>
+      hc_rangeSelector(
+        selected = 1,
+        buttons = list(
+          list(type = "month", count = 1, text = "1m"),
+          list(type = "all", text = "All")
+        )
+      ) |>
+      hc_add_series(
+        weekly,
+        "line",
+        hcaes(day, close),
+        id = "closing",
+        name = "Weekly close",
+        dataGrouping = list(enabled = FALSE)
+      ) |>
+      hc_tooltip(valueDecimals = 2, valuePrefix = "$")
+  })
 
-    ## Rows: 5
-    ## Columns: 3
-    ## $ date  <date> 2016-10-12, 2016-12-20, 2015-11-04, 2009-02-03, 2024-01-19
-    ## $ title <chr> "E #1", "E #2", "E #3", "E #4", "E #5"
-    ## $ text  <chr> "An interesting event #1 in 2016-10-12", "An interesting event …
+  observeEvent(input$april, {
+    highchartProxy("prices", session) |>
+      hcpxy_set_extremes(
+        as.Date("2025-04-01"),
+        as.Date("2025-04-30"),
+        axis = "days"
+      )
+  })
 
-``` r
-
-hc |> 
-  hc_add_series(
-    data_flags, 
-    hcaes(x = date),
-    type = "flags", 
-    onSeries = 2
+  observeEvent(input$prices_range, {
+    days <- as.Date(
+      unlist(input$prices_range) / 86400000,
+      origin = "1970-01-01"
     )
+    detail <- as.numeric(diff(days)) <= 42
+    prices <- if (detail) {
+      subset(daily, day >= days[1] & day <= days[2])
+    } else {
+      weekly
+    }
+    highchartProxy("prices", session) |>
+      hcpxy_set_data("line", prices, hcaes(day, close), id = "closing") |>
+      hcpxy_update_series(
+        id = "closing",
+        name = if (detail) "Daily close" else "Weekly close"
+      )
+  })
+}
+
+shinyApp(ui, server)
 ```
 
-## Advanced Example
+## Price, moving averages, volume and momentum
 
-You can do what you want. Use all the highchartsJS API to add axis,
-series, bands, etc.
+The earlier advanced example combined SPY prices, two moving averages,
+trading volume and RSI, including its 30/70 guide levels. This version
+uses a local snapshot of 2025 daily prices from Yahoo Finance, so
+rendering does not depend on a live quote request.
+[`adjustOHLC()`](https://rdrr.io/pkg/quantmod/man/adjustOHLC.html)
+adjusts the price fields using the downloaded adjusted close; volume
+remains the reported daily volume.
 
 ``` r
 
-SPY <- getSymbols("SPY", from = Sys.Date() - lubridate::years(1), auto.assign = FALSE)
-SPY <- adjustOHLC(SPY)
+snapshot <- read.csv(system.file(
+  "extdata",
+  "spy-2025.csv",
+  package = "highcharter"
+))
+SPY <- xts::xts(snapshot[-1], order.by = base::as.Date(snapshot$date))
+SPY <- quantmod::adjustOHLC(SPY, use.Adjusted = TRUE)
+close <- quantmod::Cl(SPY)
+fast_mean <- TTR::SMA(close, n = 5)
+slow_mean <- TTR::SMA(close, n = 100)
+momentum <- TTR::RSI(close, n = 14)
+sell_level <- xts::xts(rep(70, NROW(SPY)), order.by = time(SPY))
+buy_level <- xts::xts(rep(30, NROW(SPY)), order.by = time(SPY))
 
-SPY.SMA.10 <- SMA(Cl(SPY), n = 5)
-SPY.SMA.200 <- SMA(Cl(SPY), n = 100)
-SPY.RSI.14 <- RSI(Cl(SPY))
-SPY.RSI.SellLevel <- xts(rep(70, NROW(SPY)), index(SPY))
-SPY.RSI.BuyLevel <- xts(rep(30, NROW(SPY)), index(SPY))
-
-
-highchart(type = "stock") |> 
-  # create axis :)
-  hc_yAxis_multiples(create_axis(3, height = c(2, 1, 1), turnopposite = TRUE)) |> 
-  # series :D
-  hc_add_series(SPY, yAxis = 0, name = "SPY") |> 
-  hc_add_series(SPY.SMA.10, yAxis = 0, name = "Fast MA") |> 
-  hc_add_series(SPY.SMA.200, yAxis = 0, name = "Slow MA") |> 
-  hc_add_series(SPY$SPY.Volume, color = "gray", yAxis = 1, name = "Volume", type = "column") |> 
-  hc_add_series(SPY.RSI.14, yAxis = 2, name = "Osciallator", color = hex_to_rgba("green", 0.7)) |>
-  hc_add_series(SPY.RSI.SellLevel, color = hex_to_rgba("red", 0.7), yAxis = 2, name = "Sell level") |> 
-  hc_add_series(SPY.RSI.BuyLevel, color = hex_to_rgba("blue", 0.7), yAxis = 2, name = "Buy level") |> 
-  hc_tooltip(valueDecimals = 2) |> 
-  hc_size(height = 800)
+highchart(type = "stock") |>
+  hc_rangeSelector(selected = 1) |>
+  hc_title(text = "SPY: price, volume and momentum in 2025") |>
+  hc_yAxis(create_axis(3, heights = c(3, 1, 1), turnopposite = TRUE)) |>
+  hc_add_series(SPY, yAxis = 0, name = "SPY", id = "instrument") |>
+  hc_add_series(fast_mean, yAxis = 0, name = "5-day mean") |>
+  hc_add_series(slow_mean, yAxis = 0, name = "100-day mean") |>
+  hc_add_series(
+    quantmod::Vo(SPY),
+    yAxis = 1,
+    name = "Volume",
+    type = "column"
+  ) |>
+  hc_add_series(momentum, yAxis = 2, name = "RSI (14)") |>
+  hc_add_series(
+    sell_level,
+    yAxis = 2,
+    name = "RSI 70",
+    dashStyle = "ShortDash",
+    color = "#94A3B8",
+    lineWidth = 1,
+    showInLegend = FALSE,
+    enableMouseTracking = FALSE
+  ) |>
+  hc_add_series(
+    buy_level,
+    yAxis = 2,
+    name = "RSI 30",
+    dashStyle = "ShortDash",
+    color = "#94A3B8",
+    lineWidth = 1,
+    showInLegend = FALSE,
+    enableMouseTracking = FALSE
+  ) |>
+  hc_yAxis(title = list(text = "Price")) |>
+  hc_tooltip(valueDecimals = 2, shared = TRUE) |>
+  hc_size(height = 720)
 ```

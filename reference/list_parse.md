@@ -1,9 +1,7 @@
 # Convert an object to list with identical structure
 
-This functions are similar to
-[`rlist::list.parse`](https://rdrr.io/pkg/rlist/man/list.parse.html) but
-this removes names. `NA`s are removed for compatibility with
-rjson::toJSON.
+Each row becomes one list of values. `list_parse()` keeps column names
+and `list_parse2()` drops them. Both keep rows with missing values.
 
 ## Usage
 

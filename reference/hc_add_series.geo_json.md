@@ -20,13 +20,16 @@ hc_add_series(hc, data, type = NULL, ...)
 
 - data:
 
-  A `geo_json` or `geo_list` object.
+  A GeoJSON FeatureCollection of class `geo_json` or `geo_list`.
 
 - type:
 
-  Type of series. Can be 'mapline', 'mapoint'.
+  By default, draw a series for every geometry family present, in
+  polygon, line, point order. Supply `"map"`, `"mapline"` or
+  `"mappoint"` to select one family.
 
 - ...:
 
-  Arguments defined in
-  <https://api.highcharts.com/highcharts/plotOptions.series>.
+  Highcharts series options. For multiple layers, supply one name per
+  layer or a shared name prefix. If supplying IDs, give one distinct ID
+  per layer, in the same order.

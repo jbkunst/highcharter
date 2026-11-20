@@ -1,10 +1,462 @@
 # Changelog
 
+## highcharter (development version)
+
+Bundled Highcharts JS: 12.6.2.
+
+### Breaking changes
+
+- Treemaps and sunbursts use one color from the chart theme per
+  first-level group. Children inherit their parent’s color.
+  [`data_to_hierarchical()`](https://jkunst.com/highcharter/reference/data_to_hierarchical.md)
+  now omits the node’s `color` field by default. To fix colors
+  explicitly, pass a vector to its `colors` argument. This replaces the
+  `highcharter.color_palette` option.
+
+- Removed the R options `highcharter.verbose`, `highcharter.debug` and
+  `highcharter.download_map_data`. For indented widget JSON, use
+  `options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE))`. For maps
+  outside the package,
+  [`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md)
+  downloads in R by default. Pass `download_map_data = FALSE` to load
+  the map in the browser.
+
+- Use `hcmap("us")` or `hcmap("custom/world-robinson-lowres")` in place
+  of `usgeojson` and `worldgeojson`. For a world income map, join the
+  map’s `iso-a3` to `world_income$iso3` after selecting a year.
+  `world_income` replaces `gni2014` and reports Atlas-method GNI per
+  capita in current US dollars and total population. The county geometry
+  and unemployment table (`uscountygeojson` and `unemployment`) have
+  been retired. The external collection path for US counties is
+  `"countries/us/us-all-all"`.
+
+- `city_weather` supplies daily temperatures for four cities in 2025.
+  Average `temp_mean` by city and month to migrate examples using
+  `citytemp` or `citytemp_long`. For a daily range, select one city and
+  use `temp_min` and `temp_max`. This replaces the `weather` sample from
+  San Francisco in 2014. The historical `globaltemp` and
+  `mountains_panorama` datasets have been retired. The showcase defines
+  `favorite_bars` and `favorite_pies` locally, keeps the star sample
+  with the article, and uses annual MCV1 coverage in place of the
+  historical `vaccines` incidence table.
+
+- Widgets now use `yyjsonr` to write JSON. Remove
+  `options(highcharter.rjson = TRUE)` from application code. Missing
+  observations stay in their original positions and reach Highcharts as
+  `null`. A missing optional field also preserves its point. For custom
+  `htmlwidgets.TOJSON_ARGS`, the widget writer accepts `pretty` and
+  `digits`.
+
+- Removed `hcparcords()`. Pass your measurement columns to
+  [`data_to_parallel_coordinates()`](https://jkunst.com/highcharter/reference/data_to_parallel_coordinates.md),
+  enable `parallelCoordinates = TRUE` in
+  [`hc_chart()`](https://jkunst.com/highcharter/reference/hc_chart.md)
+  and add the result with
+  [`hc_add_series_list()`](https://jkunst.com/highcharter/reference/hc_add_series_list.md).
+  Use `hc_xAxis(categories = names(measurements))` for the axis labels.
+  Each axis now displays its original units. Supply series names or
+  colors explicitly, one per observation. See the [migration
+  example](https://jkunst.com/highcharter/articles/data-helpers.html#parallel-coordinates).
+
+- [`is.highchart()`](https://jkunst.com/highcharter/reference/is.highchart.md)
+  recognizes the `highchart` and `highchartstock` widget classes. The
+  legacy `highchart2` class is no longer recognized on its own. Tibbles
+  use the `data.frame` method for
+  [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md).
+
+- New charts use the same English preset as `hc_set_language("en")`. In
+  English, `12,345.67` uses a comma for thousands. To keep a space, use
+  `hc_set_language("en", thousandsSep = " ")`. Drilldown navigation uses
+  the Highcharts breadcrumb labels.
+
+- Removed the `google_fonts` argument from
+  [`highchart()`](https://jkunst.com/highcharter/reference/highchart.md)
+  and
+  [`highchartstock()`](https://jkunst.com/highcharter/reference/highchartstock.md)
+  and the `highcharter.google_fonts` option. Bundled families work
+  offline by name. Other plain family names use fonts supplied by the
+  page or device. To include an external font with the widget, set
+  `chart.style.fontFamily` in
+  [`hc_theme()`](https://jkunst.com/highcharter/reference/hc_theme.md)
+  to `sass::font_google("Noto Sans")`. Use `local = FALSE` for a link to
+  Google Fonts. See
+  [`vignette("themes", package = "highcharter")`](https://jkunst.com/highcharter/articles/themes.md).
+
+- Give each Highcharts option in `...` a name, for example
+  `hc_title(hc, text = "Sales")`. Collections still accept positional
+  objects, as in
+  `hc_yAxis(hc, list(id = "sales"), list(id = "margin"))`.
+
+- Renamed `df_to_annotations_labels()` to
+  [`data_to_annotation_labels()`](https://jkunst.com/highcharter/reference/data_to_annotation_labels.md).
+  Pass the table as `data` and use `xAxis` and `yAxis` to select the
+  axes for the labels.
+
+- Shiny event helpers now include the event scope in the input name. For
+  an output named `sales`, migrate `input$sales_mouseOver` to
+  `input$sales_point_mouseOver` or `input$sales_series_mouseOver`,
+  according to the helper used. Read point clicks at
+  `input$sales_point_click`; Shiny registers them automatically.
+
+- Removed `hc_rm_series()`. Select the series to include when building a
+  chart. In Shiny, use `hcpxy_remove_series(proxy, id = ...)` to remove
+  a series by its ID after the chart is rendered.
+
+- [`hc_xAxis()`](https://jkunst.com/highcharter/reference/hc_xAxis.md),
+  [`hc_yAxis()`](https://jkunst.com/highcharter/reference/hc_yAxis.md)
+  and
+  [`hc_zAxis()`](https://jkunst.com/highcharter/reference/hc_zAxis.md)
+  now accept one or several axis definitions. Replace
+  `hc_xAxis_multiples()` and `hc_zAxis_multiples()` with the
+  corresponding axis function.
+  [`hc_yAxis_multiples()`](https://jkunst.com/highcharter/reference/hc_yAxis_multiples.md)
+  remains a deprecated alias. Replace successive `hc_add_yAxis()` calls
+  with a single
+  [`hc_yAxis()`](https://jkunst.com/highcharter/reference/hc_yAxis.md)
+  call. Use
+  [`create_axis()`](https://jkunst.com/highcharter/reference/create_axis.md)
+  to calculate relative panel heights.
+
+- Use
+  [`highchart()`](https://jkunst.com/highcharter/reference/highchart.md)
+  in place of `highchartzero()`. In Shiny, replace `highchartOutputZ()`
+  and `renderHighchartZ()` with
+  [`highchartOutput()`](https://jkunst.com/highcharter/reference/highchartOutput.md)
+  and
+  [`renderHighchart()`](https://jkunst.com/highcharter/reference/renderHighchart.md)
+  together. The regular widget applies the package options and uses the
+  knitr figure dimensions. Set `width = "100%"` to fill the available
+  width in R Markdown.
+
+- Use
+  [`hcaes_string()`](https://jkunst.com/highcharter/reference/hcaes_string.md)
+  in place of the removed alias `hcaes_()`.
+
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) and
+  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
+  now draw a separate line for each ordinary `xts` column. One
+  instrument with Open, High, Low and Close produces candlesticks by
+  default. For mixed OHLC instruments, select the columns for one
+  instrument per call.
+
+- The `fast` argument for data-frame series has been removed. Omit it in
+  [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) and
+  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md).
+  Their point data stay editable as R lists until the widget is
+  serialized.
+
+- This release replaces the per-preset constructors with one public
+  constructor. The collection keeps `tufte` as its single Tufte preset.
+  The theme vignette shows how to recreate the former `tufte2` bar
+  style. This release refreshes `ft` and `economist` and adds `carbon`,
+  `cloudscape` and `bslib`. Cloudscape uses the AWS chart palette and
+  Open Sans, with circular markers and gridlines on both axes. The bslib
+  preset inherits Bootstrap colors and the base font.
+
+### New features
+
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) and
+  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
+  draw each geometry family in a mixed `geojsonio` FeatureCollection,
+  with polygons below lines and points. Supply `type` to draw just one
+  family. Both `geo_json` and `geo_list` are supported.
+
+- Charts, Stock, Maps and Gantt share one JavaScript bundle.
+  Accessibility is included by default, including keyboard navigation
+  ([\#755](https://github.com/jbkunst/highcharter/issues/755)).
+
+- The bundle now includes the official chart types and common feature
+  modules. A new
+  [`highchartstock()`](https://jkunst.com/highcharter/reference/highchartstock.md)
+  widget adds Stock Tools, advanced annotations and technical
+  indicators. Third-party Motion, Regression, Grouped Categories and
+  Draggable Legend plugins remain optional.
+
+- [`hc_add_series_list()`](https://jkunst.com/highcharter/reference/hc_add_series_list.md)
+  draws a single numeric value as one point, matching
+  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md).
+  Histograms use the actual bin limits for their labels and draw
+  unequal-width bins to scale.
+
+- Ten new option wrappers cover accessibility, map views, time zones,
+  data imports, empty charts, SVG definitions, sonification, navigation,
+  Stock Tools and Gantt connectors. Each has a runnable example in its
+  help page.
+
+- `hc_set_language("es")` sets the language for new charts in the
+  current R process. Use `hc_set_language("en")` to switch to English.
+  [`hc_language()`](https://jkunst.com/highcharter/reference/hc_language.md)
+  returns the corresponding options list. Spanish, Portuguese and French
+  include translated controls. Regional tags select the browser’s date
+  and number formats.
+
+- Theme presets now use `hc_theme("ft")` and live in individual YAML
+  files.
+  [`hc_themes()`](https://jkunst.com/highcharter/reference/hc_theme.md)
+  lists the collection.
+  [`hc_set_theme()`](https://jkunst.com/highcharter/reference/hc_theme.md)
+  selects a preset or a custom theme for subsequent charts. See
+  [`vignette("themes", package = "highcharter")`](https://jkunst.com/highcharter/articles/themes.md).
+
+- [`hcpxy_set_extremes()`](https://jkunst.com/highcharter/reference/hcpxy_set_extremes.md)
+  controls an x-axis range from Shiny.
+  [`hcpxy_set_data()`](https://jkunst.com/highcharter/reference/hcpxy_set_data.md)
+  can now target a series by ID, which is safer when Stock indicators
+  change series order.
+
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) plots
+  the original and adjusted series from a seasonal X-13 fit and labels
+  its outliers.
+
+- `hchart(stats::decompose(x))` displays the observed series,
+  seasonality, trend and remainder in four panels. Series with
+  frequencies outside the annual, quarterly and monthly calendars use
+  their numeric time index.
+
+- X-range series accept `Date` and `POSIXt` columns for both interval
+  ends (`x` and `x2`).
+
+### Changes
+
+- Widgets attach the Latin WOFF2 files for the bundled families selected
+  by their theme and chart options. Charts using system fonts need no
+  font files.
+
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) shows
+  ACF and PACF as lollipops at their reported lags. Multivariate time
+  series and decompositions use shared table tooltips.
+
+- Histograms created by
+  [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) use
+  square corners by default.
+
+- The hcrt, carbon and smpl themes use regular-weight titles, labels and
+  tooltip values.
+
+- The sparkline tooltip shows the point value in one outlined line and
+  stays inside the chart at either edge.
+
+- The export menu defaults to three dots. The three Highcharts theme
+  adaptations keep their original menu icon. Sand Signika tiles its sand
+  texture at native size.
+
+- `hcmap("jp")` reads the packaged map of Japan by country code.
+  [`hc_maps()`](https://jkunst.com/highcharter/reference/hc_maps.md)
+  lists the 202 country maps and five custom maps available offline.
+  [`get_data_from_map()`](https://jkunst.com/highcharter/reference/get_data_from_map.md)
+  reads join properties from GeoJSON and TopoJSON. Other collection
+  paths retain CDN support. The income example uses `world_income`.
+
+- ACF and PACF ticks stay within the correlation range, with room for
+  endpoint markers.
+
+- Forecast charts distinguish observations, forecasts and prediction
+  intervals in the legend and shared tooltip. The tooltip shows both
+  interval limits. Custom series names are supported.
+
+- The hcrt and smpl presets use circular markers consistently across
+  series.
+
+- The classic Highcharts themes use the 12.6.0 palettes and legend
+  backgrounds. Dark presets have more legible axis labels. Monokai now
+  uses four distinct series colors. The Bloom preset places its value
+  axis on the right, and sparkline presets hide their legends by
+  default.
+
+- The chalk, handdrawn and sandsignika presets embed their original
+  backgrounds for offline use. The Carbon preset draws horizontal and
+  vertical gridlines and uses circular point markers across series.
+
+- highcharter uses base R for argument validation, model predictions,
+  row conversion and option merging. Charts of `lm` and `loess` fits now
+  include the fitted curve and its two-standard-error band.
+
+- `xts` is optional. Charting OHLC prices also uses `quantmod`.
+
+- [`download_map_data()`](https://jkunst.com/highcharter/reference/download_map_data.md)
+  uses R’s configured download method by default.
+
+- Attaching highcharter in an interactive session points to
+  [`?highcharter`](https://jkunst.com/highcharter/reference/highcharter.md)
+  for the licensing terms of the R package and the bundled Highcharts
+  library.
+
+### Bug fixes
+
+- Adding a forecast, linear model or loess fit preserves R’s
+  random-number state when linking the fitted series to its intervals.
+
+- `color_stops(1)` places a single color at zero. Supply a positive
+  integer for the number of stops.
+
+- [`export_hc()`](https://jkunst.com/highcharter/reference/export_hc.md)
+  appends `.js` to filenames such as `salesjs` and preserves the
+  JavaScript extensions `.js`, `.mjs` and `.cjs`.
+
+- Reusing one
+  [`tooltip_chart()`](https://jkunst.com/highcharter/reference/tooltip_chart.md)
+  formatter across widgets now renders each mini chart in its own
+  tooltip. The helper preserves
+  [`JS()`](https://jkunst.com/highcharter/reference/highcharter-exports.md)
+  callbacks in `hc_opts` and accepts data column names containing spaces
+  or hyphens.
+
+- [`hchart.survfit()`](https://jkunst.com/highcharter/reference/hchart.survfit.md)
+  draws a separate curve for each Cox prediction profile within each
+  stratum. Confidence bands follow the corresponding curve, and
+  censoring markers include times with multiple censored observations.
+  This method requires survival 3.6-5 or later.
+
+- Boxplots from
+  [`data_to_boxplot()`](https://jkunst.com/highcharter/reference/data_to_boxplot.md)
+  place outliers at the same x coordinate as their box when categories
+  differ between series.
+
+- Treemap and sunburst nodes from
+  [`data_to_hierarchical()`](https://jkunst.com/highcharter/reference/data_to_hierarchical.md)
+  now keep the correct parent when labels on different paths produce the
+  same ID.
+
+- Stock Tools now loads its indicators and embeds its toolbar icons in
+  self-contained HTML widgets and vignettes.
+
+- Stock Tools can add technical indicators after another widget renders
+  or re-renders on the same page
+  ([\#595](https://github.com/jbkunst/highcharter/issues/595)).
+
+- Data-frame heatmaps position dates and times on either axis and accept
+  omitted coordinates. Date cells span one day. Date-time cells use the
+  shortest observed interval on their axis, or one second for a single
+  time. Set `colsize` or `rowsize` to choose a different interval in
+  milliseconds.
+
+- Multivariate forecasts plot the predictions and intervals for each
+  series on shared or separate axes. The legend toggles each confidence
+  level across all panels.
+
+- Shiny proxies now send zero messages when there are no series to add,
+  remove or update, or no points to update.
+
+- Forecast charts use the same time index for predictions and their
+  intervals. Series with frequencies other than 1, 4 or 12 use a numeric
+  axis.
+
+- [`data_to_sankey()`](https://jkunst.com/highcharter/reference/data_to_sankey.md)
+  counts transitions between consecutive columns, skips links with
+  missing endpoints and assigns unique link IDs. Numeric binning handles
+  missing values and tied quantiles. Inputs with fewer than two columns
+  return an empty link table.
+
+- Axes with one category now display its label on the axis and in
+  tooltips, including when the category is numeric
+  ([\#395](https://github.com/jbkunst/highcharter/issues/395),
+  [\#438](https://github.com/jbkunst/highcharter/issues/438)).
+
+- `hchart(data, type = "gantt")` selects the native Gantt constructor
+  for data frames, preserving task rows, date axes and dependency links.
+
+- Supplying a new `rules` list to
+  [`hc_responsive()`](https://jkunst.com/highcharter/reference/hc_responsive.md)
+  replaces the previous rules.
+
+- Circle-only presets preserve rectangular heatmap cells. The hcrt theme
+  uses IBM Plex Sans for credits. French, Norwegian Bokmål and
+  Simplified Chinese use official Highcharts language packs. Japanese
+  and Korean use AI-generated translations.
+
+- [`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md) accepts
+  an already loaded GeoJSON list without downloading map data. Network
+  charts preserve the current theme while hiding their coordinate axes.
+
+- With reflow enabled, charts fill the available widget width and height
+  in the Viewer and standalone browser, including after resizing.
+  Percentage-height containers no longer leave the chart at Highcharts’
+  400-pixel fallback height.
+
+- The Motion plugin uses native array iteration with the bundled
+  Highcharts.
+
+- PCA charts now scale each component separately and label axes with the
+  percentage of variance explained. Points are shown by default. Use
+  `loadings = TRUE` for variable arrows and `label = TRUE` for
+  observation names.
+
+- [`hcaes()`](https://jkunst.com/highcharter/reference/hcaes.md) and
+  [`hcaes_string()`](https://jkunst.com/highcharter/reference/hcaes_string.md)
+  evaluate expressions in the environment where the mapping was created.
+  Computed axes show the expression as their title. Date and date-time
+  mappings use millisecond timestamps. Grouped data-frame charts build
+  point lists using row indices.
+
+- Data-frame charts can inherit the chart type or receive empty data.
+  Point colors retain supplied hex values alongside missing values, and
+  factor colors handle unused levels.
+
+- Heatmaps of `dist` objects now respect the matrix display options
+  `label` and `showInLegend`.
+
+- Matrix heatmaps now use matrix positions directly, including when
+  labels repeat or cells contain missing values. highcharter no longer
+  requires tidyr.
+
+### Migration guide
+
+| Previous call | Current call |
+|----|----|
+| `df_to_annotations_labels(df = notes)` | `data_to_annotation_labels(data = notes)` |
+| `hc_xAxis_multiples()`, [`hc_yAxis_multiples()`](https://jkunst.com/highcharter/reference/hc_yAxis_multiples.md), `hc_zAxis_multiples()` | Pass the same list of axes to [`hc_xAxis()`](https://jkunst.com/highcharter/reference/hc_xAxis.md), [`hc_yAxis()`](https://jkunst.com/highcharter/reference/hc_yAxis.md) or [`hc_zAxis()`](https://jkunst.com/highcharter/reference/hc_zAxis.md). The Y alias emits a deprecation warning. |
+| `hc_add_dependency("modules/...")` | Omit the call for built-in modules. Use [`highchartstock()`](https://jkunst.com/highcharter/reference/highchartstock.md) for Stock Tools and technical indicators. Pass an explicit `"plugins/..."` path for packaged community plugins. |
+| Repeated `hc_add_yAxis()` | Collect the axes in order, then call `hc_yAxis(axes)`. |
+| `hc_theme_google()` and other preset constructors | Use `hc_theme("google")`, or `hc_set_theme("google")` for a session default. |
+| `hcaes_()` | Use [`hcaes_string()`](https://jkunst.com/highcharter/reference/hcaes_string.md). |
+| `highchartzero()` and its Shiny bindings | Use [`highchart()`](https://jkunst.com/highcharter/reference/highchart.md), [`highchartOutput()`](https://jkunst.com/highcharter/reference/highchartOutput.md) and [`renderHighchart()`](https://jkunst.com/highcharter/reference/renderHighchart.md). |
+| `fast = TRUE` in a data-frame chart | Omit the argument. Point data are R lists. |
+
+The reverse-dependency review found calls to the removed theme
+constructors in highdir, RKorAPClient and UnalR. Their integrations need
+the replacements above. AovBay also references the previously removed
+`hcboxplot()` helper. Its
+[`hc_yAxis_multiples()`](https://jkunst.com/highcharter/reference/hc_yAxis_multiples.md)
+call is covered by the deprecated alias.
+
+### Contributor acknowledgements
+
+A special thank you to everyone who helped build highcharter in its
+early years, before AI coding assistants were commonplace. Dean shared
+his work on boxplots, Adline made it possible to plot a matrix as a
+heatmap, and Paul helped Shiny users update a chart without rebuilding
+it. Those features grew out of people taking the time to share an
+example, write a patch or work through a bug together.
+
+I’m grateful to each of you who did that early work and to everyone who
+has kept the package working since. Thank you for your time and
+generosity.
+
+Joshua Kunst
+
+| Contributor | Contribution | Project history |
+|----|----|----|
+| Nuno Agostinho | Survival curves, density plots, scatter series and map data download fixes. | [PR](https://github.com/jbkunst/highcharter/pull/109) [\#109](https://github.com/jbkunst/highcharter/issues/109), [scatter example](https://github.com/jbkunst/highcharter/commit/574e9b84218c7f93a4243bea8c42f97751e9f4ba), [PR](https://github.com/jbkunst/highcharter/pull/844) [\#844](https://github.com/jbkunst/highcharter/issues/844) |
+| Danton Noriega | Character-based aesthetic mappings for programmatic use. | [PR](https://github.com/jbkunst/highcharter/pull/249) [\#249](https://github.com/jbkunst/highcharter/issues/249) |
+| Charlie Joey Hadley | Support for multiple event types in [`hc_add_event_point()`](https://jkunst.com/highcharter/reference/hc_add_event_point.md). | [implementation](https://github.com/jbkunst/highcharter/commit/3cfc22b49193185444ce95684e5b0545d75a0a57) |
+| Eduardo Flores | The first tidy-data helper for adding series. | [PR](https://github.com/jbkunst/highcharter/pull/114) [\#114](https://github.com/jbkunst/highcharter/issues/114) |
+| Dean Kilfoyle | The original boxplot helper and suggestions for its implementation. | [issue](https://github.com/jbkunst/highcharter/issues/81) [\#81](https://github.com/jbkunst/highcharter/issues/81) |
+| Adline Dsilva | The original matrix heatmap implementation. | [implementation](https://github.com/jbkunst/highcharter/commit/a4a04dd80252a4831b6a01cd909501bc22666d8d) |
+| [Kamil Slowikowski](https://orcid.org/0000-0002-2843-6370) | JavaScript serialization fixes for chart export and the [`JS()`](https://jkunst.com/highcharter/reference/highcharter-exports.md) re-export. | [export fix](https://github.com/jbkunst/highcharter/commit/e6fe81a9ae3ab7d12a34f35e0a19b3b51fa1f42c), [re-export](https://github.com/jbkunst/highcharter/commit/4bcf29689b81931f4c9fc9d93e33f3057e83bb6e) |
+| Christian Minich | Tidy evaluation and quasiquotation in aesthetic mappings. | [PR](https://github.com/jbkunst/highcharter/pull/423) [\#423](https://github.com/jbkunst/highcharter/issues/423) |
+| Jonathan Armond | Preserving unmapped columns in [`mutate_mapping()`](https://jkunst.com/highcharter/reference/mutate_mapping.md). | [fix](https://github.com/jbkunst/highcharter/commit/5f54456a763d83683d0c9e2578e78f8e0b638815) |
+| David Breuer | The `quiet` option for map downloads. | [PR](https://github.com/jbkunst/highcharter/pull/450) [\#450](https://github.com/jbkunst/highcharter/issues/450) |
+| Mauricio Vargas | Package testing, coverage and GitHub Actions. | [coverage](https://github.com/jbkunst/highcharter/commit/9f562f08d6f4a7f6542bf71e4c1d7576a9a32833), [CI](https://github.com/jbkunst/highcharter/commit/3982b2d6f73adcef5bf61d54d658e18a70288b46) |
+| Michael Yan | The example that motivated the treemap and sunburst data helper. | [attribution](https://github.com/jbkunst/highcharter/commit/93986f83602d40583345979ba02c91b89a795a46) |
+| Bart Oortwijn | The optional `rjson` serializer, `hc_add_yAxis()` and support on GitHub issues. | [serialization](https://github.com/jbkunst/highcharter/commit/1b9d2946c6e00592809652378ce21fc5f9458ae9), [axis helper](https://github.com/jbkunst/highcharter/commit/b7438eb3854a1121e55b3f92402d98b408bcd300) |
+| Paul Campbell | The Shiny proxies for updating series data and redrawing charts. | [proxy methods](https://github.com/jbkunst/highcharter/commit/f0838eefc4d107f2f9133f61b64b6a65ddb233e6) |
+| Marc Kupietz | CRAN check fixes, including an S3 method naming correction. | [PR](https://github.com/jbkunst/highcharter/pull/843) [\#843](https://github.com/jbkunst/highcharter/issues/843) |
+
 ## highcharter 0.12.6.1
 
 ### Changes
 
-- Highcharter now uses HighchartsJS 10.6.0.
+- Highcharter now uses HighchartsJS 12.6.0.
 
 ### Breaking changes
 
@@ -94,14 +546,11 @@ CRAN release: 2020-07-26
   -set as TRUE the default value- so now there is no need to use
   htmltools::browsable
   [\#622](https://github.com/jbkunst/highcharter/issues/622)
-- Adding new `hc_add_yAxis`. Thanks to
-  [@nordicgit70](https://github.com/nordicgit70).
-- Added option to switch to
-  [`rjson::toJSON`](https://rdrr.io/pkg/rjson/man/toJSON.html) for
-  better plotting performance. To use execute
-  `options(highcharter.rjon =TRUE)`. See
+- Adding new `hc_add_yAxis`. Thanks to `@nordicgit70`.
+- Added option to switch to `rjson::toJSON` for better plotting
+  performance. To use execute `options(highcharter.rjon =TRUE)`. See
   [\#613](https://github.com/jbkunst/highcharter/issues/613). Thanks to
-  [@nordicgit70](https://github.com/nordicgit70).
+  `@nordicgit70`.
 
 ### Bugs
 
@@ -259,7 +708,7 @@ CRAN release: 2017-01-17
   (<http://rpubs.com/jbkunst/230276>)
   ([\#220](https://github.com/jbkunst/highcharter/issues/220)).
 - New *charting maps* vignette
-  ([http://jkunst.com/highcharter/highmaps.html](http://jkunst.com/highcharter/highmaps.md))
+  (<https://jkunst.com/highcharter/articles/maps.html>)
   ([\#218](https://github.com/jbkunst/highcharter/issues/218)).
 - `debug` as an option instead of argument. Example
   `options(highcharter.debug = TRUE)`
@@ -346,7 +795,7 @@ CRAN release: 2016-07-15
   ([\#64](https://github.com/jbkunst/highcharter/issues/64)).
 - New `hcboxplot`, `hcwaffle`, `hcbar`, `hcpie`, `hchist`, `hcdensity`,
   `hcts` function to get quick some style of charts. Thanks to
-  [@nuo-agostinho](https://github.com/nuo-agostinho).
+  [@nuno-agostinho](https://github.com/nuno-agostinho).
   `hc_add_series_density` implementation
   ([\#99](https://github.com/jbkunst/highcharter/issues/99)
   [\#70](https://github.com/jbkunst/highcharter/issues/70)).
@@ -384,7 +833,7 @@ CRAN release: 2016-07-15
   `mjs_grid` ([\#67](https://github.com/jbkunst/highcharter/issues/67)
   [\#66](https://github.com/jbkunst/highcharter/issues/66)).
 - Add motion plugin
-  <http://www.highcharts.com/plugin-registry/single/40/Motion>
+  <https://github.com/larsac07/Motion-Highcharts-Plugin>
   ([\#62](https://github.com/jbkunst/highcharter/issues/62)).
 
 ### Changes

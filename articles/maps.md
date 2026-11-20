@@ -1,434 +1,395 @@
-# Maps with highmaps
+# Maps
 
-The highcharter package include
-[highmaps](https://www.highcharts.com/demo/maps) libraries from
-highchartsJS to chart maps, choropleths and geojson.
+## Start with a map
 
-## Basics
+Pass a two-letter country code to draw one of the 202 installed maps.
+Use [`hc_maps()`](https://jkunst.com/highcharter/reference/hc_maps.md)
+to list every installed identifier, including regional and world maps.
 
-The easiest way to chart a map with highcharter is using
-[`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md) function.
-Select a map (a url) from the highmaps collection
-<https://code.highcharts.com/mapdata/>. and use the url as a map in
-[`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md) function.
-This will download the map and create a `highchart` object using the
-info as a `mapData` argument.
+``` r
 
-Let’s try some maps:
+head(hc_maps())
+```
+
+    ## [1] "ad" "ae" "af" "ag" "al" "am"
+
+``` r
+
+grep("^custom/", hc_maps(), value = TRUE)
+```
+
+    ## [1] "custom/europe"                "custom/south-america"        
+    ## [3] "custom/world-robinson-lowres" "custom/world"                
+    ## [5] "custom/world.topo.json"
+
+For Japan, `hcmap("jp")`, `hcmap("JP")` and
+`hcmap("countries/jp/jp-all")` all load the same local map.
+
+``` r
+
+hcmap("jp", nullColor = "#D9E3E8", showInLegend = FALSE) |>
+  hc_title(text = "Prefectures of Japan") |>
+  hc_mapNavigation(enabled = TRUE)
+```
+
+Five prefectures in the Kantō region have mountain roads featured in
+*Initial D*. In Gunma, Mount Haruna is the real mountain behind Takumi’s
+Mount Akina. Hover over a highlighted prefecture to see its road. [Roads
+and prefectures in Initial
+D](https://jdmism.wordpress.com/initial-d-roads/).
+
+``` r
+
+# fmt: skip
+routes <- tibble::tribble(
+  ~prefecture, ~road,
+  "Gunma",     "Mount Haruna (Akina)",
+  "Tochigi",   "Irohazaka",
+  "Saitama",   "Shomaru Pass",
+  "Ibaraki",   "Tsukuba Fruits Line",
+  "Kanagawa",  "Hakone Turnpike"
+) |> mutate(selected = 1)
+
+kanto <- readRDS(system.file("maps", "jp.rds", package = "highcharter"))
+kanto$features <- Filter(
+  function(f) {
+    isTRUE(f$properties$name %in% c(routes$prefecture, "Tokyo", "Chiba"))
+  },
+  kanto$features
+)
+
+hcmap(
+  kanto,
+  data = routes,
+  value = "selected",
+  joinBy = c("name", "prefecture"),
+  nullColor = "#E3E8EC",
+  dataLabels = list(enabled = TRUE, format = "{point.prefecture}")
+) |>
+  hc_title(text = "Initial D roads in Kantō") |>
+  hc_colorAxis(minColor = "#B63848", maxColor = "#B63848", visible = FALSE) |>
+  hc_mapNavigation(enabled = TRUE) |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "<b>{point.name}</b><br>{point.road}"
+  )
+```
+
+Additional boundaries can be selected by path from the [Highcharts
+collection](https://code.highcharts.com/mapdata/). For a path outside
+the package, the default downloads the geometry in R. With
+`download_map_data = FALSE` the browser loads the map from the CDN
+instead.
+
+## Drill down from South America to Chile
+
+Click Chile to see its 16 regions. Use the breadcrumb to return to South
+America. The `drilldown` value on the country matches the regional
+series ID. Both geometries ship with highcharter.
+
+``` r
+
+chile <- readRDS(system.file("maps/cl.rds", package = "highcharter"))
+country <- data.frame(code = "cl", value = 1, drilldown = "regions")
+
+hcmap(
+  "custom/south-america",
+  data = country,
+  value = "value",
+  joinBy = c("hc-key", "code"),
+  name = "South America",
+  nullColor = "#e3e8ec"
+) |>
+  hc_colorAxis(visible = FALSE, minColor = "#167875", maxColor = "#167875") |>
+  hc_drilldown(
+    series = list(list(
+      id = "regions",
+      type = "map",
+      name = "Regions of Chile",
+      mapData = chile,
+      nullInteraction = TRUE,
+      nullColor = "#88c4b7"
+    ))
+  ) |>
+  hc_title(text = "From South America to Chile") |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "{point.name}",
+    nullFormat = "{point.name}"
+  )
+```
+
+## Income around the world
+
+The offline `world_income` table contains World Bank Atlas-method income
+per person and population for 2024 and 2025. The 2024 map has broader
+income coverage. Join its three-letter country code to the map’s
+`iso-a3` property. A logarithmic color scale makes the differences
+visible across the full range of incomes.
+
+``` r
+
+palette <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
+
+hcmap(
+  "custom/world-robinson-lowres",
+  data = subset(world_income, year == 2024),
+  value = "gni_per_capita",
+  joinBy = c("iso-a3", "iso3"),
+  name = "GNI per capita",
+  borderWidth = 0.2,
+  nullColor = "#eceef2"
+) |>
+  hc_title(text = "Gross national income per capita, 2024") |>
+  hc_colorAxis(
+    type = "logarithmic",
+    stops = color_stops(colors = palette)
+  ) |>
+  hc_tooltip(valuePrefix = "$", valueDecimals = 0) |>
+  hc_mapNavigation(enabled = TRUE)
+```
+
+## Map properties and joins
+
+The join keys depend on the selected map.
+[`get_data_from_map()`](https://jkunst.com/highcharter/reference/get_data_from_map.md)
+exposes those properties. The Robinson world map uses `iso-a3`; the
+income table calls the corresponding column `iso3`.
+
+``` r
+
+world <- readRDS(system.file(
+  "maps/custom/world-robinson-lowres.rds",
+  package = "highcharter"
+))
+get_data_from_map(world) |>
+  select(any_of(c("name", "iso-a3", "continent"))) |>
+  head()
+```
+
+    ## # A tibble: 6 × 3
+    ##   name                     `iso-a3` continent    
+    ##   <chr>                    <chr>    <chr>        
+    ## 1 Faroe Islands            FRO      Europe       
+    ## 2 United States of America USA      North America
+    ## 3 France                   FRA      Europe       
+    ## 4 China                    CHN      Asia         
+    ## 5 Portugal                 PRT      Europe       
+    ## 6 Serranilla Bank          -99      North America
+
+To save other collection boundaries for offline use, call
+[`download_map_data()`](https://jkunst.com/highcharter/reference/download_map_data.md)
+once and retain the returned object with your project. Pass it as
+`mapData` to a map series.
+
+``` r
+
+boundaries <- download_map_data("countries/us/us-ca-all")
+saveRDS(boundaries, "california-counties.rds")
+```
+
+## Bring your own GeoJSON or TopoJSON
+
+Read a local path with
+[`jsonlite::read_json()`](https://rdrr.io/pkg/jsonlite/man/read_json.html)
+and pass the resulting list to
+[`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md). Keep
+`simplifyVector = FALSE` to preserve the nested coordinates. Both
+examples run independently in a fresh R session using two illustrative
+districts. Replace `system.file(...)` with the path to your own file.
+
+**GeoJSON boundaries.** Draw the shapes directly from a
+FeatureCollection.
 
 ``` r
 
 library(highcharter)
 
-hcmap("countries/nz/nz-all")
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+map <- jsonlite::read_json(path, simplifyVector = FALSE)
+hcmap(map, showInLegend = FALSE)
 ```
+
+**TopoJSON with data.** The Topology stores the districts’ shared border
+once. The map identifies each district by `code`, while the table uses
+`district_id`. Keep the leading zeros when joining the two.
 
 ``` r
 
-hcmap("custom/usa-and-canada", showInLegend = FALSE)
-```
+library(highcharter)
 
-``` r
-
-hcmap("countries/us/us-ca-all") |>
-  hc_title(text = "California") |> 
-  hc_subtitle(text = "You can use the same functions to modify your map!")
-```
-
-**Note**: *The copyright information is added to the chart credits by
-default, but please be aware that you will have to display this
-information somewhere else if you choose to disable chart credits.
-Copyright information for each map can be found as properties in the
-GeoJSON and Javascript files*.
-
-## Choropleths
-
-What about add data to get a choropleth? Every map downloaded from the
-highchartsJS maps collection have keys to join data. There are 2
-functions to help to know what are the regions coded to know how to join
-the map and data:
-
-- [`download_map_data()`](https://jkunst.com/highcharter/reference/download_map_data.md):
-  Download the geojson data from the highchartsJS collection.
-- [`get_data_from_map()`](https://jkunst.com/highcharter/reference/get_data_from_map.md):
-  Get the properties for each region in the map, as the keys from the
-  map data.
-
-``` r
-
-require(dplyr)
-
-mapdata <- get_data_from_map(download_map_data("custom/usa-and-canada"))
-
-glimpse(mapdata)
-```
-
-    ## Rows: 64
-    ## Columns: 21
-    ## $ `hc-group`    <chr> "admin1", "admin1", "admin1", "admin1", "admin1", "admin…
-    ## $ `hc-middle-x` <dbl> 0.40, 0.50, 0.52, 0.59, 0.48, 0.50, 0.47, 0.48, 0.51, 0.…
-    ## $ `hc-middle-y` <dbl> 0.53, 0.51, 0.50, 0.50, 0.55, 0.49, 0.35, 0.50, 0.54, 0.…
-    ## $ `hc-key`      <chr> "us-ca", "us-or", "us-nd", "ca-sk", "us-mt", "us-az", "u…
-    ## $ `hc-a2`       <chr> "CA", "OR", "ND", "SK", "MT", "AZ", "NV", "AL", "NM", "C…
-    ## $ labelrank     <chr> "0", "0", "0", "2", "0", "0", "0", "0", "0", "0", "0", "…
-    ## $ hasc          <chr> "US.CA", "US.OR", "US.ND", "CA.SK", "US.MT", "US.AZ", "U…
-    ## $ `alt-name`    <chr> "CA|Calif.", "OR|Ore.", "ND|N.D.", NA, "MT|Mont.", "AZ|A…
-    ## $ `woe-id`      <chr> "2347563", "2347596", "2347593", "2344925", "2347585", "…
-    ## $ subregion     <chr> "Pacific", "Pacific", "West North Central", "Prairies", …
-    ## $ fips          <chr> "US06", "US41", "US38", "CA11", "US30", "US04", "US32", …
-    ## $ `postal-code` <chr> "CA", "OR", "ND", "SK", "MT", "AZ", "NV", "AL", "NM", "C…
-    ## $ name          <chr> "California", "Oregon", "North Dakota", "Saskatchewan", …
-    ## $ country       <chr> "United States of America", "United States of America", …
-    ## $ `type-en`     <chr> "State", "State", "State", "Province", "State", "State",…
-    ## $ region        <chr> "West", "West", "Midwest", "Western Canada", "West", "We…
-    ## $ longitude     <chr> "-119.591", "-120.386", "-100.302", "-105.682", "-110.04…
-    ## $ `woe-name`    <chr> "California", "Oregon", "North Dakota", "Saskatchewan", …
-    ## $ latitude      <chr> "36.7496", "43.8333", "47.4675", "54.4965", "46.9965", "…
-    ## $ `woe-label`   <chr> "California, US, United States", "Oregon, US, United Sta…
-    ## $ type          <chr> "State", "State", "State", "Province", "State", "State",…
-
-``` r
-
-data_fake <- mapdata |>
-  select(code = `hc-a2`) |>
-  mutate(value = 1e5 * abs(rt(nrow(mapdata), df = 10)))
-
-glimpse(data_fake)
-```
-
-    ## Rows: 64
-    ## Columns: 2
-    ## $ code  <chr> "CA", "OR", "ND", "SK", "MT", "AZ", "NV", "AL", "NM", "CO", "WY"…
-    ## $ value <dbl> 134224.53215, 512.22371, 212153.17183, 141045.54780, 50829.44759…
-
-If we compare this 2 data frames the `hc-key` is same code that `code`.
-So we’ll use these columns as keys:
-
-``` r
+path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+map <- jsonlite::read_json(path, simplifyVector = FALSE)
+visits <- data.frame(district_id = c("01", "02"), visits = c(18, 42))
 
 hcmap(
-  "custom/usa-and-canada",
-  data = data_fake,
-  value = "value",
-  joinBy = c("hc-a2", "code"),
-  name = "Fake data",
-  dataLabels = list(enabled = TRUE, format = "{point.name}"),
-  borderColor = "#FAFAFA",
-  borderWidth = 0.1,
-  tooltip = list(
-    valueDecimals = 2,
-    valuePrefix = "$",
-    valueSuffix = "USD"
-  )
-)
-```
-
-## Categorized areas
-
-``` r
-
-data <- tibble(
-  country = 
-    c("PT", "IE", "GB", "IS",
-      
-      "NO", "SE", "DK", "DE", "NL", "BE", "LU", "ES", "FR", "PL", "CZ", "AT",
-      "CH", "LI", "SK", "HU", "SI", "IT", "SM", "HR", "BA", "YF", "ME", "AL", "MK",
-      
-      "FI", "EE", "LV", "LT", "BY", "UA", "MD", "RO", "BG", "GR", "TR", "CY",
-      
-      "RU"),  
-  tz = c(rep("UTC", 4), rep("UTC + 1",25), rep("UCT + 2",12), "UTC + 3")
-  )
-
-# auxiliar variable
-data <- data |> 
-  mutate(value = cumsum(!duplicated(tz)))
-
-
-# now we'll create the dataClasses
-dta_clss <- data |> 
-  mutate(value = cumsum(!duplicated(tz))) |> 
-  group_by(tz) |> 
-  summarise(value = unique(value)) |> 
-  arrange(value) |> 
-  rename(name = tz, from = value) |> 
-  mutate(to = from + 1) |> 
-  list_parse()
-
-hcmap(
-  map = "custom/europe",
-  data = data, 
-  joinBy = c("iso-a2","country"),
-  name = "Time zone",
-  value = "value",
-  tooltip = list(pointFormat = "{point.name} {point.tz}"),
-  dataLabels = list(enabled = TRUE, format = "{point.country}")
-  ) |>
-  hc_colorAxis(
-    dataClassColor = "category",
-    dataClasses = dta_clss
-    ) |> 
-  hc_title(text = "Europe Time Zones")
-```
-
-Example from <https://www.highcharts.com/demo/maps/category-map>.
-
-## Adding Points
-
-With highcharter is possible add data as points or bubbles. For this it
-is necessary a data frame with `lat`, `lon` columns, and `name`, `z` are
-optional:
-
-``` r
-
-cities <- data.frame(
-  name = c("London", "Birmingham", "Glasgow", "Liverpool"),
-  lat = c(51.507222, 52.483056, 55.858, 53.4),
-  lon = c(-0.1275, -1.893611, -4.259, -3),
-  z = c(1, 2, 3, 2)
-)
-
-hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
-  hc_add_series(
-    data = cities, 
-    type = "mappoint",
-    name = "Cities", 
-    minSize = "1%",
-    maxSize = "5%"
-    ) |>
-  hc_mapNavigation(enabled = TRUE)
-```
-
-``` r
-
-hcmap("countries/gb/gb-all", showInLegend = FALSE) |>
-  hc_add_series(
-    data = cities, 
-    type = "mapbubble",
-    name = "Cities", 
-    minSize = "1%",
-    maxSize = "5%"
-    ) |>
-  hc_mapNavigation(enabled = TRUE)
-```
-
-Another example:
-
-``` r
-
-library(dplyr)
-
-airports <- tibble::tribble(
-  ~name, ~lat, ~lon,
-  "Santiago", -33.39, -70.79,
-  "Buenos Aires", -34.82, -58.54,
-  "São Paulo", -23.44, -46.47,
-  "Lima", -12.02, -77.11,
-  "Bogotá", 4.70, -74.15,
-  "Quito", -0.13, -78.36,
-  "Montevideo", -34.84, -56.03,
-  "Asunción", -25.24, -57.52,
-  "La Paz", -16.51, -68.19
-)
-
-hcmap(
-  "custom/south-america",
-  name = "South America",
-  showInLegend = FALSE
+  map,
+  data = visits,
+  value = "visits",
+  joinBy = c("code", "district_id")
 ) |>
-  hc_add_series(
-    data = airports,
-    type = "mappoint",
-    name = "Airports",
-    color = hex_to_rgba("darkred", alpha = 0.3),
-    maxSize = "10",
-    tooltip = list(
-      pointFormat = "{point.name}<br>
-      ({point.lat:,.2f}, {point.lon:,.2f})"
-    )
-  ) |>
-  hc_chart(zoomType = "xy")
+  hc_title(text = "Visits by district") |>
+  hc_tooltip(pointFormat = "{point.name}: {point.value} visits")
 ```
 
-## `geojsonio` Package
+Use `get_data_from_map(map)` to inspect the identifiers in your own
+file. Both formats support a map on its own or a join to observations.
 
-highchartsJS support `geo_json` classes from the `geojsonio` package. So
-you can use `hc_add_series` as usual without use `geojson = TRUE`
-parameter/argument.
+### Overlay GeoJSON points
+
+With **geojsonio**, pass the district polygons to
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) and add
+a second FeatureCollection for the clinics. The geometry selects a
+polygon series for the districts and a point series for the clinics.
 
 ``` r
 
-library(httr)
-library(jsonlite)
 library(geojsonio)
 
-ausgeojson <- GET("https://raw.githubusercontent.com/johan/world.geo.json/master/countries/AUS.geo.json") |>
-  content() |>
-  fromJSON(simplifyVector = FALSE) |>
-  as.json()
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+districts <- geojson_list(as.json(path))
+clinics <- data.frame(
+  name = c("West clinic", "East clinic"),
+  lon = c(0.5, 1.5),
+  lat = c(0.6, 0.4)
+)
+locations <- geojson_list(clinics, lon = "lon", lat = "lat")
 
-ausmap <- highchart(type = "map") |>
-  hc_add_series(mapData = ausgeojson, showInLegend = FALSE)
-
-ausmap
+hchart(districts, name = "Districts") |>
+  hc_add_series(data = locations, name = "Clinics") |>
+  hc_title(text = "Clinics by district")
 ```
 
-We can still adding data:
+If the districts, shuttle route and clinics arrive in **one
+FeatureCollection**,
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
+all three layers. The polygons sit below the route and the clinic
+markers, regardless of feature order in the file.
 
 ``` r
 
+route <- list(
+  type = "Feature",
+  properties = list(name = "Clinic shuttle"),
+  geometry = list(
+    type = "LineString",
+    coordinates = lapply(locations$features, function(f) f$geometry$coordinates)
+  )
+)
+network <- districts
+network$features <- c(locations$features, list(route), districts$features)
+hchart(network)
+```
+
+To draw just the clinics from that collection, use
+`hchart(network, type = "mappoint")`. Use `"mapline"` for the route or
+`"map"` for the districts. The initial view includes points outside the
+districts as well. Set a center and zoom with
+[`hc_mapView()`](https://jkunst.com/highcharter/reference/hc_mapView.md)
+to frame a specific area.
+
+## European time zones
+
+Categorical maps use named data classes rather than a continuous scale.
+These are standard-time groups, without seasonal daylight-saving
+adjustments.
+
+``` r
+
+zones <- data.frame(
+  # fmt: skip
+  country = c("PT", "IE", "GB", "IS", "FR", "DE", "ES", "IT", "NO", "SE",
+              "PL", "AT", "CH", "FI", "EE", "LV", "LT", "GR", "RO", "BG"),
+  value = c(rep(0, 4), rep(1, 9), rep(2, 7))
+)
+hcmap(
+  "custom/europe",
+  data = zones,
+  value = "value",
+  joinBy = c("iso-a2", "country"),
+  name = "Standard time",
+  dataLabels = list(enabled = TRUE, format = "{point.country}")
+) |>
+  hc_colorAxis(
+    dataClassColor = "category",
+    dataClasses = list(
+      list(from = 0, to = 0, name = "UTC"),
+      list(from = 1, to = 1, name = "UTC + 1"),
+      list(from = 2, to = 2, name = "UTC + 2")
+    )
+  ) |>
+  hc_title(text = "Standard time in Europe")
+```
+
+## Airport locations
+
+Longitude and latitude place these international airports on the
+basemap.
+
+``` r
+
+# fmt: skip
 airports <- tibble::tribble(
-  ~name, ~lat, ~lon,
-  "Sydney", -33.94, 151.18,
-  "Melbourne", -37.67, 144.84,
-  "Brisbane", -27.38, 153.12,
-  "Perth", -31.94, 115.97,
-  "Adelaide", -34.95, 138.53,
-  "Darwin", -12.41, 130.88
+  ~name,          ~lat,   ~lon,
+  "Santiago",   -33.39, -70.79,
+  "São Paulo",  -23.44, -46.47,
+  "Bogotá",       4.70, -74.15,
+  "Asunción",   -25.24, -57.52
 )
-
-airp_geojson <- geojson_json(airports, lat = "lat", lon = "lon")
-
-class(airp_geojson)
-```
-
-    ## [1] "geofeaturecollection" "geojson"              "geo_json"            
-    ## [4] "json"
-
-``` r
-
-ausmap |>
+south_america <- hcmap(
+  "custom/south-america",
+  nullColor = "#D9E3E8",
+  showInLegend = FALSE
+)
+south_america |>
   hc_add_series(
-    data = airp_geojson,
+    airports,
     type = "mappoint",
-    dataLabels = list(enabled = FALSE),
     name = "Airports",
-    tooltip = list(pointFormat = "{point.name}")
-  )
+    hcaes(lon = lon, lat = lat, name = name)
+  ) |>
+  hc_title(text = "Airports in South America")
 ```
 
-## Advanced Example
+## Projection and initial view
 
-Let’s download some geojson files and make a map.
+Set a projection, center and zoom through
+[`hc_mapView()`](https://jkunst.com/highcharter/reference/hc_mapView.md).
+Coordinates are always longitude first and latitude second.
 
 ``` r
 
-library(jsonlite)
-
-geojson <- fromJSON(
-  "https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/australia.geo.json",
-  simplifyVector = FALSE
-)
-
-features <- geojson$features
-
-map_features <- Filter(
-  \(x) x$geometry$type %in% c("Polygon", "MultiPolygon"),
-  features
-)
-
-line_features <- Filter(
-  \(x) x$geometry$type %in% c("LineString", "MultiLineString"),
-  features
-)
-
-point_features <- Filter(
-  \(x) x$geometry$type == "Point",
-  features
-)
-
-geojson_map <- geojson
-geojson_map$features <- map_features
-
-geojson_lines <- geojson
-geojson_lines$features <- line_features
-
-geojson_points <- geojson
-geojson_points$features <- point_features
-
-
-highchart(type = "map") |>
-  hc_add_series(
-    type = "map",
-    mapData = geojson_map,
-    name = "Map areas",
-    data = list()
+hcmap("custom/world.topo.json", nullColor = "#D9E3E8", showInLegend = FALSE) |>
+  hc_mapView(
+    projection = list(name = "Orthographic", rotation = c(65, 20))
   ) |>
-  hc_add_series(
-    type = "mapline",
-    data = line_features,
-    name = "Lines"
-  ) |>
-  hc_add_series(
-    type = "mappoint",
-    data = point_features,
-    name = "Points"
-  )
+  hc_title(text = "A view centered on South America") |>
+  hc_mapNavigation(enabled = TRUE)
 ```
+
+## Web tiles and other geographic series
+
+`mapline` draws boundaries, `geoheatmap` colors geographic cells and
+`flowmap` connects places. The Santiago example loads Esri World Imagery
+satellite tiles over the internet as you pan or zoom.
 
 ``` r
 
-`%||%` <- function(x, y) if (is.null(x)) y else x
-point_data <- lapply(point_features, \(f) {
-  coords <- f$geometry$coordinates
-
-  list(
-    name = f$properties$name %||% NA_character_,
-    lon = coords[[1]],
-    lat = coords[[2]]
-  )
-})
-
 highchart(type = "map") |>
-  hc_add_series(
-    type = "map",
-    mapData = geojson_map,
-    name = "Map",
-    color = "#8b8a",
-    nullColor = "#8b8a",
-    dataLabels = list(
-      enabled = TRUE,
-      format = '{point.name}',
-      style = list(
-        width = "80px", # force line-wrap
-        textTransform = "uppercase",
-        fontWeight = "normal",
-        textOutline = "none",
-        color = "var(--highcharts-neutral-color-100, black)",
-        opacity = 0.5
-      )
-    ),
-    tooltip = list(
-      pointFormat = "{point.name}"
-    )
+  hc_mapView(
+    projection = list(name = "WebMercator"),
+    center = c(-70.67, -33.45),
+    zoom = 9
   ) |>
   hc_add_series(
-    type = "mapline",
-    data = line_features,
-    name = "Rivers",
-    states = list(
-      hover = list(
-        lineWidth = 3
-      )
-    ),
-    color = "#2B8CBE", # river blue
-    tooltip = list(
-      pointFormat = "{point.properties.NAME}"
-    )
+    type = "tiledwebmap",
+    name = "Santiago",
+    showInLegend = FALSE,
+    provider = list(type = "Esri", theme = "WorldImagery")
   ) |>
-  hc_add_series(
-    type = "mappoint",
-    data = point_data,
-    name = "Cities",
-    type = "mappoint",
-    color = "black",
-    marker = list(
-      radius = 2
-    ),
-    dataLabels = list(
-      align = "left",
-      verticalAlign = "middle"
-    ),
-    animation = FALSE
-  )
+  hc_mapNavigation(enabled = TRUE) |>
+  hc_credits(enabled = TRUE)
 ```
+
+[Highcharts Maps
+documentation](https://www.highcharts.com/docs/maps/getting-started)

@@ -2,23 +2,25 @@ pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  accessibility: accessibility.html
+  chart-types: chart-types.html
+  data-helpers: data-helpers.html
   drilldown: drilldown.html
   first-steps: first-steps.html
-  fontawesome: fontawesome.html
+  from-data-to-charts: from-data-to-charts.html
   hchart: hchart.html
   highcharter: highcharter.html
   highcharts-api: highcharts-api.html
-  highcharts: highcharts.html
   highchartsjs-api-basics: highchartsjs-api-basics.html
-  howtos: howtos.html
   maps: maps.html
   modules: modules.html
-  motion: motion.html
+  multiple-axes: multiple-axes.html
+  shiny-gallery: shiny-gallery.html
   shiny: shiny.html
   showcase: showcase.html
   stock: stock.html
   themes: themes.html
-last_built: 2026-09-28T19:35Z
+last_built: 2026-11-20T14:32Z
 urls:
   reference: https://jkunst.com/highcharter/reference
   article: https://jkunst.com/highcharter/articles

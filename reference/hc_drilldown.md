@@ -18,80 +18,37 @@ hc_drilldown(hc, ...)
 
 - ...:
 
-  Arguments defined in
-  <https://api.highcharts.com/highcharts/drilldown>.
+  Options defined in <https://api.highcharts.com/highcharts/drilldown>.
 
 ## Examples
 
 ``` r
-
-library(highcharter)
-library(dplyr)
-library(purrr)
-
-df <- tibble(
-  name = c("Animals", "Fruits"),
-  y = c(5, 2),
-  drilldown = tolower(name)
+items <- data.frame(
+  category = c(rep("Animals", 5), rep("Fruits", 2)),
+  name = c("Cats", "Dogs", "Cows", "Sheep", "Pigs", "Apples", "Oranges"),
+  y = c(4, 3, 1, 2, 1, 4, 2)
 )
+totals <- aggregate(y ~ category, items, sum)
+detail <- lapply(totals$category, function(category) {
+  rows <- items[items$category == category, c("name", "y")]
+  list(id = category, name = category, data = list_parse(rows))
+})
 
-df
-#> # A tibble: 2 × 3
-#>   name        y drilldown
-#>   <chr>   <dbl> <chr>    
-#> 1 Animals     5 animals  
-#> 2 Fruits      2 fruits   
-
-hc <- highchart() |>
-  hc_title(text = "Basic drilldown") |>
+# Click a total to see the items that make it up. The breadcrumb takes you back.
+highchart() |>
+  hc_chart(type = "column") |>
+  hc_title(text = "Item counts by category") |>
   hc_xAxis(type = "category") |>
+  hc_yAxis(title = list(text = "Count")) |>
   hc_legend(enabled = FALSE) |>
-  hc_plotOptions(
-    series = list(
-      boderWidth = 0,
-      dataLabels = list(enabled = TRUE)
-    )
-  ) |>
   hc_add_series(
-    data = df,
-    type = "column",
-    hcaes(name = name, y = y),
-    name = "Things",
+    totals,
+    "column",
+    hcaes(name = category, y = y, drilldown = category),
+    name = "Items",
     colorByPoint = TRUE
-  )
+  ) |>
+  hc_drilldown(series = detail)
 
-dfan <- data.frame(
-  name = c("Cats", "Dogs", "Cows", "Sheep", "Pigs"),
-  value = c(4, 3, 1, 2, 1)
-)
-
-dffru <- data.frame(
-  name = c("Apple", "Organes"),
-  value = c(4, 2)
-)
-
-
-dsan <- list_parse2(dfan)
-
-dsfru <- list_parse2(dffru)
-
-hc <- hc |>
-  hc_drilldown(
-    allowPointDrilldown = TRUE,
-    series = list(
-      list(
-        id = "animals",
-        data = dsan
-      ),
-      list(
-        id = "fruits",
-        data = dsfru
-      )
-    )
-  )
-
-hc
-
-{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":"Basic drilldown"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"boderWidth":0,"dataLabels":{"enabled":true}},"treemap":{"layoutAlgorithm":"squarified"}},"xAxis":{"type":"category"},"legend":{"enabled":false},"series":[{"group":"group","data":[{"name":"Animals","y":5,"drilldown":"animals"},{"name":"Fruits","y":2,"drilldown":"fruits"}],"type":"column","name":"Things","colorByPoint":true}],"drilldown":{"allowPointDrilldown":true,"series":[{"id":"animals","data":[["Cats",4],["Dogs",3],["Cows",1],["Sheep",2],["Pigs",1]]},{"id":"fruits","data":[["Apple",4],["Organes",2]]}]}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}
-
+{"x":{"hc_opts":{"chart":{"reflow":true,"type":"column"},"title":{"text":"Item counts by category"},"yAxis":{"title":{"text":"Count"}},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0.0},"treemap":{"layoutAlgorithm":"squarified","levels":[{"level":1,"colorByPoint":true}]},"sunburst":{"levels":[{"level":1,"colorByPoint":true}]}},"xAxis":{"type":"category"},"legend":{"enabled":false},"series":[{"group":"group","data":[{"category":"Animals","y":11.0,"name":"Animals","drilldown":"Animals"},{"category":"Fruits","y":6.0,"name":"Fruits","drilldown":"Fruits"}],"type":"column","name":"Items","colorByPoint":true}],"drilldown":{"series":[{"id":"Animals","name":"Animals","data":[{"name":"Cats","y":4.0},{"name":"Dogs","y":3.0},{"name":"Cows","y":1.0},{"name":"Sheep","y":2.0},{"name":"Pigs","y":1.0}]},{"id":"Fruits","name":"Fruits","data":[{"name":"Apples","y":4.0},{"name":"Oranges","y":2.0}]}]}},"theme":{"symbols":["circle","circle","circle","circle","circle"],"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px","fontWeight":"normal"}},"subtitle":{"align":"left","style":{"fontFamily":"IBM Plex Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"IBM Plex Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"IBM Plex Sans","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#666666"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"series":{"dataLabels":{"style":{"fontWeight":"normal"}}},"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"className":"highcharter-regular-tooltip","valueDecimals":2.0}},"conf_opts":{"lang":{"locale":"en"}},"type":"chart"},"evals":[],"jsHooks":[]}
 ```

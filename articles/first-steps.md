@@ -64,18 +64,24 @@ So, a basic example would be:
 
 ``` r
 
-hchart(mpg, "point", hcaes(x = displ, y = cty, group = year))
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, group = year))
 ```
 
-## Exercising the basics
+## Map positions and values
 
-Let’s try other charts to get familiar with the syntax.
+Lines and scatter plots place each observation at `x` and `y`. Add
+`group` to split observations into series, `size` to give scatter points
+a bubble size, or `color` to color individual points. A heatmap uses
+`value` to color a cell.
 
 ``` r
 
 data(economics_long, package = "ggplot2")
 
-economics_long2 <- dplyr::filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
+economics_long2 <- dplyr::filter(
+  economics_long,
+  variable %in% c("pop", "uempmed", "unemploy")
+)
 
 head(economics_long2)
 ```
@@ -101,19 +107,28 @@ Now, a heatmap and a treemap.
 
 library(dplyr)
 
-dfdiam <- diamonds |> 
+dfdiam <- diamonds |>
   group_by(cut, clarity) |>
   summarize(price = median(price))
 
-hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price), name = "Median Price") 
+hchart(
+  dfdiam,
+  "heatmap",
+  hcaes(x = cut, y = clarity, value = price),
+  name = "Median price"
+) |>
+  hc_colorAxis(
+    stops = color_stops(
+      colors = c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
+    )
+  )
 ```
 
 ``` r
 
-mpgman <- mpg |> 
-  group_by(manufacturer) |> 
-  summarise(n = n(),
-            unique = length(unique(model))) |> 
+mpgman <- mpg |>
+  group_by(manufacturer) |>
+  summarise(n = n(), unique = length(unique(model))) |>
   arrange(-n, -unique)
 
 hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n, color = unique))
@@ -131,13 +146,13 @@ of properties.
 mpgman2 <- count(mpg, manufacturer, year)
 
 hchart(
-  mpgman2, 
+  mpgman2,
   "bar",
   hcaes(x = manufacturer, y = n, group = year),
   color = c("#7CB5EC", "#F7A35C"),
   name = c("Year 1999", "Year 2008"),
   showInLegend = c(TRUE, FALSE) # only show the first one in the legend
-  )
+)
 ```
 
 Highcharts has a very complete API with a lot of options. You can see
@@ -146,30 +161,26 @@ every option in action in
 
 ## A more advanced example
 
-Using the `broom` package is really nice due the you can transform
-models to tidy data:
+Fit a local regression and compute its predictions and standard errors:
 
 ``` r
 
-library(broom)
-
 modlss <- loess(dist ~ speed, data = cars)
 
-fit <- arrange(augment(modlss), speed) |> 
-  mutate(.se = predict(modlss, se = TRUE)$se.fit)
+prediction <- predict(modlss, se = TRUE)
+fit <- mutate(cars, .fitted = prediction$fit, .se = prediction$se.fit) |>
+  arrange(speed)
 
 head(fit)
 ```
 
-    ## # A tibble: 6 × 5
-    ##    dist speed .fitted .resid   .se
-    ##   <dbl> <dbl>   <dbl>  <dbl> <dbl>
-    ## 1     2     4    5.89 -3.89   9.89
-    ## 2    10     4    5.89  4.11   9.89
-    ## 3     4     7   12.5  -8.50   4.99
-    ## 4    22     7   12.5   9.50   4.99
-    ## 5    16     8   15.3   0.719  4.55
-    ## 6    10     9   18.4  -8.45   4.31
+    ##   speed dist   .fitted      .se
+    ## 1     4    2  5.893628 9.885466
+    ## 2     4   10  5.893628 9.885466
+    ## 3     7    4 12.499786 4.990827
+    ## 4     7   22 12.499786 4.990827
+    ## 5     8   16 15.281082 4.545284
+    ## 6     9   10 18.446568 4.308639
 
 In this case we’ll chart the original data first and store in a variable
 called `hc` (for highcharts):
@@ -182,7 +193,7 @@ hc <- hchart(
   hcaes(x = speed, y = dist),
   name = "Speed and Stopping Distances of Cars",
   showInLegend = TRUE
-  )
+)
 
 hc
 ```
@@ -191,7 +202,7 @@ We can add more series to chart (like the layers in ggplot world) using
 the function `hc_add_series`. The parameters in this functions are
 similar to the `hchart`:
 
-``` r
+``` text
 hc_add_series(<highcarter_object>, <data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)
 
 # or with the pipe:
@@ -204,7 +215,7 @@ spline then the arearange. So we’ll use `hc_add_series` 2 times.
 
 ``` r
 
-qtint <- qt(0.975, predict(modlss, se = TRUE)$df)
+qtint <- qt(0.975, prediction$df)
 
 hc |>
   hc_add_series(
@@ -215,17 +226,17 @@ hc |>
     id = "fit", # this is for link the arearange series to this one and have one legend
     lineWidth = 1,
     showInLegend = TRUE
-    ) |> 
+  ) |>
   hc_add_series(
     fit,
     type = "arearange",
     name = "SE",
-    hcaes(x = speed, low = .fitted - qtint*.se, high = .fitted + qtint*.se),
+    hcaes(x = speed, low = .fitted - qtint * .se, high = .fitted + qtint * .se),
     linkedTo = "fit", # here we link the legends in one.
     showInLegend = FALSE,
-    color = hex_to_rgba("gray", 0.2),  # put a semi transparent color
+    color = hex_to_rgba("gray", 0.2), # put a semi transparent color
     zIndex = -3 # this is for put the series in a back so the points are showed first
-    )
+  )
 ```
 
 Example of data from
@@ -240,5 +251,6 @@ Since you know the basics now it could be interesting:
   and observe everything that can be done with the highcharter package.
 - Learn to configure graphics using the implemented API in
   [`vignette("highcharts-api")`](https://jkunst.com/highcharter/articles/highcharts-api.md).
-- See all chart you can make in
-  [`vignette("highcharts")`](https://jkunst.com/highcharter/articles/highcharts.md).
+- Explore [chart
+  types](https://jkunst.com/highcharter/articles/chart-types.md) and
+  their R examples.

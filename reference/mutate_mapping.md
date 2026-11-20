@@ -1,6 +1,6 @@
-# Modify data frame according to mapping
+# Apply point mappings to a data frame
 
-Modify data frame according to mapping
+Apply point mappings to a data frame
 
 ## Usage
 
@@ -12,42 +12,35 @@ mutate_mapping(data, mapping, drop = FALSE)
 
 - data:
 
-  A data frame object.
+  A data frame.
 
 - mapping:
 
-  A mapping from `hcaes` function.
+  A mapping from
+  [`hcaes()`](https://jkunst.com/highcharter/reference/hcaes.md) or
+  [`hcaes_string()`](https://jkunst.com/highcharter/reference/hcaes_string.md).
 
 - drop:
 
-  A logical argument to you drop variables or not. Default is `FALSE`
+  If `TRUE`, keep only the mapped columns, in mapping order.
 
 ## Examples
 
 ``` r
-
-df <- head(mtcars)
-mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
-#>                    mpg cyl disp  hp drat    wt  qsec vs am gear carb x      y
-#> Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 6  8.620
-#> Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 6  8.875
-#> Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 4  6.320
-#> Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 6  9.215
-#> Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 8 11.440
-#> Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 6  9.460
-#>                   group
-#> Mazda RX4             4
-#> Mazda RX4 Wag         4
-#> Datsun 710            4
-#> Hornet 4 Drive        3
-#> Hornet Sportabout     3
-#> Valiant               3
-mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt), drop = TRUE)
-#>                   x     y
-#> Mazda RX4         6 2.620
-#> Mazda RX4 Wag     6 2.875
-#> Datsun 710        4 2.320
-#> Hornet 4 Drive    6 3.215
-#> Hornet Sportabout 8 3.440
-#> Valiant           6 3.460
+cars <- head(mtcars, 3)
+mapping <- hcaes(wt, mpg, group = factor(cyl), name = rownames(cars))
+mutate_mapping(cars, mapping)
+#>                mpg cyl disp  hp drat    wt  qsec vs am gear carb     x    y
+#> Mazda RX4     21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 2.620 21.0
+#> Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 2.875 21.0
+#> Datsun 710    22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 2.320 22.8
+#>               group          name
+#> Mazda RX4         6     Mazda RX4
+#> Mazda RX4 Wag     6 Mazda RX4 Wag
+#> Datsun 710        4    Datsun 710
+mutate_mapping(cars, mapping, drop = TRUE)
+#>                   x    y group          name
+#> Mazda RX4     2.620 21.0     6     Mazda RX4
+#> Mazda RX4 Wag 2.875 21.0     6 Mazda RX4 Wag
+#> Datsun 710    2.320 22.8     4    Datsun 710
 ```

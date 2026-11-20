@@ -1,6 +1,6 @@
-# Helper to add annotations from data frame or list
+# Add annotations to a chart
 
-Helper to add annotations from data frame or list
+Add annotations to a chart
 
 ## Usage
 
@@ -14,17 +14,15 @@ hc_add_annotations(hc, x)
 
 - hc:
 
-  A `highchart` `htmlwidget` object.
+  A `highchart` widget.
 
 - ...:
 
-  Arguments defined in
-  <https://api.highcharts.com/highcharts/annotations>.
+  Named options for one Highcharts annotation, including `labels` and
+  `shapes`. See
+  [`data_to_annotation_labels()`](https://jkunst.com/highcharter/reference/data_to_annotation_labels.md)
+  to create labels from rows.
 
 - x:
 
-  A `list` or a `data.frame` of annotations.
-
-## Details
-
-The `x` elements must have `xValue` and `yValue` elements
+  A list of annotations or a data frame with one annotation per row.

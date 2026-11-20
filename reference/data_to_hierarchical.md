@@ -5,12 +5,7 @@ Helper to transform data frame for treemap/sunburst highcharts format
 ## Usage
 
 ``` r
-data_to_hierarchical(
-  data,
-  group_vars,
-  size_var,
-  colors = getOption("highcharter.color_palette")
-)
+data_to_hierarchical(data, group_vars, size_var, colors = NULL)
 ```
 
 ## Arguments
@@ -29,7 +24,8 @@ data_to_hierarchical(
 
 - colors:
 
-  Color to chart every item in the first level.
+  Optional vector of colors for first-level groups, recycled as needed.
+  With the default `NULL`, nodes inherit colors from the chart theme.
 
 ## Examples
 

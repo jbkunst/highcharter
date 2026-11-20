@@ -7,7 +7,7 @@ Widget output function for use in Shiny
 ``` r
 highchartOutput(outputId, width = "100%", height = "400px")
 
-highchartOutputZ(outputId, width = "100%", height = "400px")
+highchartStockOutput(outputId, width = "100%", height = "400px")
 ```
 
 ## Arguments

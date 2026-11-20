@@ -4,50 +4,13 @@
 
 - **[Joshua Kunst](https://jkunst.com)**. Author, maintainer.
 
-- **Nuno Agostinho**. Contributor.  
-  hchart.survfit, densities and hc_add_series_scatter
+- **Nuno Agostinho**. Contributor.
 
-- **Danton Noriega**. Contributor.  
-  hcaes\_
+- **Mauricio Vargas**. Contributor.
 
-- **Charlie Joey Hadley**. Contributor.  
-  hc_add_event_point improvement
+- **Charlie Joey Hadley**. Contributor.
 
-- **Eduardo Flores**. Contributor.  
-  First version hc_add_series_df_tidy
-
-- **Dean Kilfoyle**. Contributor.  
-  First version hc_add_series_boxplot
-
-- **Adline Dsilva**. Contributor.  
-  First version Matrix heatmap
-
-- **Kamil Slowikowski**. Contributor.
-  [](https://orcid.org/0000-0002-2843-6370)
-
-- **Christian Minich**. Contributor.  
-  hcaes mutate_mapping improvement
-
-- **Jonathan Armond**. Contributor.  
-  mutate_mapping bugfix
-
-- **David Breuer**. Contributor.  
-  download_map_data quiet parameter
-
-- **Mauricio Vargas**. Contributor.  
-  tests and gh-actions
-
-- **Michael Yan**. Contributor.  
-  Motivational example for treemap/sunburst data helper
-
-- **Bart Oortwijn**. Contributor.  
-  rjson option, hc_add_yAxis, and GH issues collaborator
-
-- **Paul Campbell**. Contributor.  
-  additional proxy methods
-
-- **Marc Kupietz**. Contributor.  
-  contributed fixes for checks related to deprecated package usage
+- **Marc Kupietz**. Contributor.
 
 ## Citation
 

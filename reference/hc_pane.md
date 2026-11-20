@@ -1,8 +1,7 @@
 # Pane options for highcharter objects
 
 The pane serves as a container for axes and backgrounds for circular
-gauges and polar charts. When used in Highcharts.setOptions for theming,
-the pane must be a single object, otherwise arrays are supported.
+gauges and polar charts.
 
 ## Usage
 
@@ -18,91 +17,32 @@ hc_pane(hc, ...)
 
 - ...:
 
-  Arguments defined in <https://api.highcharts.com/highcharts/pane>.
+  Options defined in <https://api.highcharts.com/highcharts/pane>.
+
+## Details
+
+When used in `Highcharts.setOptions` for theming, the pane must be a
+single object, otherwise arrays are supported.
 
 ## Examples
 
 ``` r
-
-highchart() |> 
-  hc_chart(
-  type = "gauge",
-  plotBackgroundColor = NULL,
-  plotBackgroundImage = NULL,
-  plotBorderWidth = 0,
-  plotShadow = FALSE
-  ) |> 
-  hc_title(
-    text = "Speedometer"
-  ) |> 
-  hc_pane(
-    startAngle = -150,
-    endAngle = 150,
-    background = list(list(
-      backgroundColor = list(
-        linearGradient = list( x1 = 0, y1 = 0, x2 = 0, y2 = 1),
-        stops = list(
-          list(0, "#FFF"),
-          list(1, "#333")
-        )
-      ),
-      borderWidth = 0,
-      outerRadius = "109%"
-    ), list(
-      backgroundColor = list(
-        linearGradient = list( x1 = 0, y1 = 0, x2 = 0, y2 = 1),
-        stops = list(
-          list(0, "#333"),
-          list(1, "#FFF")
-        )
-      ),
-      borderWidth = 1,
-      outerRadius = "107%"
-    ), list(
-      # default background
-    ), list(
-      backgroundColor = "#DDD",
-      borderWidth = 0,
-      outerRadius = "105%",
-      innerRadius = "103%"
-    ))
-  ) |> 
-  hc_add_series(
-    data = list(80), name = "speed", tooltip = list(valueSuffix = " km/h")
-  ) |> 
-  
-  
+# The start and end angles give the speedometer a 300-degree sweep.
+highchart() |>
+  hc_chart(type = "gauge") |>
+  hc_title(text = "Speedometer") |>
+  hc_pane(startAngle = -150, endAngle = 150) |>
   hc_yAxis(
     min = 0,
     max = 200,
-    
-    minorTickInterval = "auto",
-    minorTickWidth = 1,
-    minorTickLength = 10,
-    minorTickPosition = "inside",
-    minorTickColor = "#666",
-    
-    tickPixelInterval = 30,
-    tickWidth = 2,
-    tickPosition = "inside",
-    tickLength = 10,
-    tickColor = "#666",
-    
-    labels = list(
-      step = 2,
-      rotation = "auto"
-    ),
-    title = list(
-      text = "km/h"
-    ),
-    
-    plotBands = list(
-      list(from =   0, to = 120, color = "#55BF3B"),
-      list(from = 120, to = 160, color = "#DDDF0D"),
-      list(from = 160, to = 200, color = "#DF5353")
-    )
-    
+    tickInterval = 40,
+    title = list(text = "km/h")
+  ) |>
+  hc_add_series(
+    name = "Speed",
+    data = 80,
+    tooltip = list(valueSuffix = " km/h")
   )
 
-{"x":{"hc_opts":{"chart":{"reflow":true,"type":"gauge","plotBorderWidth":0,"plotShadow":false},"title":{"text":"Speedometer"},"yAxis":{"title":{"text":"km/h"},"min":0,"max":200,"minorTickInterval":"auto","minorTickWidth":1,"minorTickLength":10,"minorTickPosition":"inside","minorTickColor":"#666","tickPixelInterval":30,"tickWidth":2,"tickPosition":"inside","tickLength":10,"tickColor":"#666","labels":{"step":2,"rotation":"auto"},"plotBands":[{"from":0,"to":120,"color":"#55BF3B"},{"from":120,"to":160,"color":"#DDDF0D"},{"from":160,"to":200,"color":"#DF5353"}]},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"pane":{"startAngle":-150,"endAngle":150,"background":[{"backgroundColor":{"linearGradient":{"x1":0,"y1":0,"x2":0,"y2":1},"stops":[[0,"#FFF"],[1,"#333"]]},"borderWidth":0,"outerRadius":"109%"},{"backgroundColor":{"linearGradient":{"x1":0,"y1":0,"x2":0,"y2":1},"stops":[[0,"#333"],[1,"#FFF"]]},"borderWidth":1,"outerRadius":"107%"},[],{"backgroundColor":"#DDD","borderWidth":0,"outerRadius":"105%","innerRadius":"103%"}]},"series":[{"data":[80],"name":"speed","tooltip":{"valueSuffix":" km/h"}}]},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}
+{"x":{"hc_opts":{"chart":{"reflow":true,"type":"gauge"},"title":{"text":"Speedometer"},"yAxis":{"title":{"text":"km/h"},"min":0.0,"max":200.0,"tickInterval":40.0},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0.0},"treemap":{"layoutAlgorithm":"squarified","levels":[{"level":1,"colorByPoint":true}]},"sunburst":{"levels":[{"level":1,"colorByPoint":true}]}},"pane":{"startAngle":-150.0,"endAngle":150.0},"series":[{"data":[80.0],"name":"Speed","tooltip":{"valueSuffix":" km/h"}}]},"theme":{"symbols":["circle","circle","circle","circle","circle"],"colors":["#47475c","#61BC7B","#508CC8","#F49952","#9C9EDB","#6699a1"],"chart":{"style":{"fontFamily":"IBM Plex Sans","color":"#666666"}},"title":{"align":"left","style":{"fontFamily":"Alegreya Sans SC","fontSize":"24px","fontWeight":"normal"}},"subtitle":{"align":"left","style":{"fontFamily":"IBM Plex Sans","fontSize":"16px"}},"caption":{"style":{"fontFamily":"IBM Plex Sans","fontSize":"14px"}},"credits":{"style":{"fontFamily":"IBM Plex Sans","fontSize":"10px"}},"legend":{"align":"right","verticalAlign":"bottom","itemStyle":{"fontWeight":"normal","color":"#666666"}},"xAxis":{"gridLineWidth":1,"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"yAxis":{"gridLineColor":"#F3F3F3","lineColor":"#F3F3F3","minorGridLineColor":"#F3F3F3","tickColor":"#F3F3F3","tickWidth":1},"plotOptions":{"series":{"dataLabels":{"style":{"fontWeight":"normal"}}},"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"tooltip":{"className":"highcharter-regular-tooltip","valueDecimals":2.0}},"conf_opts":{"lang":{"locale":"en"}},"type":"chart"},"evals":[],"jsHooks":[]}
 ```

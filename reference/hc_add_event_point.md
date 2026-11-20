@@ -1,9 +1,11 @@
-# Helpers to use highcharter as input in shiny apps
+# Use chart events as Shiny inputs
 
-When you use highcharter in a shiny app, for example
-`renderHighcharter('my_chart')`, you can access to the actions of the
-user using and then use the `hc_add_event_point` via the `my_chart`
-input (`input$my_chart`). That's a way you can use a chart as an input.
+For an output named `sales`, Shiny receives point clicks automatically
+at `input$sales_point_click`. Register other Highcharts events with
+these helpers. For example, `hc_add_event_point(event = "drop")` sends
+the released point to `input$sales_point_drop`, and
+`hc_add_event_series(event = "mouseOver")` sends the hovered series to
+`input$sales_series_mouseOver`.
 
 ## Usage
 
@@ -17,20 +19,28 @@ hc_add_event_series(hc, series = "series", event = "click")
 
 - hc:
 
-  A `highchart` `htmlwidget` object.
+  A `highchart` htmlwidget.
 
 - series:
 
-  The name of type of series to apply the event.
+  Highcharts series type to listen to, such as `"column"`. The default
+  `"series"` applies to all types.
 
 - event:
 
-  The name of event: click, mouseOut, mouseOver. See
-  <https://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select>
-  for more details.
+  Case-sensitive Highcharts event name, such as `"mouseOver"`. See the
+  [point
+  events](https://api.highcharts.com/highcharts/plotOptions.series.point.events)
+  and [series
+  events](https://api.highcharts.com/highcharts/plotOptions.series.events).
 
-## Note
+## Value
 
-Event details are accessible from hc_name_EventType, i.e. if a highchart
-is rendered against output\$my_hc and and we wanted the coordinates of
-the user-clicked point we would use input\$my_hc_click
+The chart with the requested event configured.
+
+## Details
+
+Point events include `series`, `seriesid`, `pointid`, `name`, `x`, `y`
+and `category` when available. During a drag or drop, the coordinates
+reflect the proposed position. Series events include `name` and
+`seriesid`.

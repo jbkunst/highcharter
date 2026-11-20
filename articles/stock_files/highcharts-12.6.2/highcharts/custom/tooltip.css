@@ -1,0 +1,4 @@
+/* Highcharts formats tooltip values as bold SVG spans or HTML elements. */
+.highcharter-regular-tooltip :is(tspan, b, strong, th) {
+  font-weight: normal !important;
+}

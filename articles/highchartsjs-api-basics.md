@@ -44,7 +44,7 @@ vs flipper length split by species we would use the following code:
 library(highcharter)
 
 hc <- hchart(
-  penguins,
+  dplyr::filter(penguins, !is.na(bill_length_mm), !is.na(flipper_length_mm)),
   "scatter",
   hcaes(x = bill_length_mm, y = flipper_length_mm, group = species)
 )
@@ -78,7 +78,7 @@ obvious what’s required or valid as an input to the
 function, let alone how we could add the exact customisations that we
 want to our basic chart. What is provided is a link to the legend
 section of the `highcharts` API documentation which can be found
-[here](http://api.highcharts.com/highcharts#legend) a screenshot of
+[here](https://api.highcharts.com/highcharts/legend) a screenshot of
 which is below.
 
 ![](hc-api-legend.png)
@@ -124,7 +124,7 @@ hc |>
     floating = TRUE,
     x = 90,
     y = 45
-    )
+  )
 ```
 
 Halfway there, now we just need to add the legend title. There are some
@@ -160,7 +160,7 @@ the legend header text and adding an underline to the legend header
 
 ``` r
 
-hc |> 
+hc |>
   hc_legend(
     layout = "vertical",
     align = "left",
@@ -172,9 +172,9 @@ hc |>
       text = "Species",
       style = list(
         textDecoration = "underline"
-        )
       )
     )
+  )
 ```
 
 CSS properties are often hyphenated words (like `text-decoration`) which
