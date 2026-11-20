@@ -212,7 +212,7 @@ Switch the observatory between daylight and night. The sunspot series
 changes from copper to amber, and the axes, gridlines and tooltip follow
 the page. The chart uses the app’s serif typeface in both modes. [Open
 Solar cycles in a new
-tab](https://jkunst.com/highcharter/live/theme/index.md).
+tab](https://jkunst.com/highcharter/live/theme/index.html).
 
 Set `hc_set_theme("bslib")` once at app startup. With Bootstrap 5.3, the
 first series inherits the primary color and the transparent chart
@@ -310,34 +310,34 @@ The setter changes an R process option shared by its sessions.
 Choose a preset below; every theme uses the same sales data. The chart
 is resized when its panel becomes visible.
 
-- [538](#tab-8951-1)
-- [alone](#tab-8951-2)
-- [bloom](#tab-8951-3)
-- [bslib](#tab-8951-4)
-- [carbon](#tab-8951-5)
-- [chalk](#tab-8951-6)
-- [cloudscape](#tab-8951-7)
-- [darkunica](#tab-8951-8)
-- [db](#tab-8951-9)
-- [economist](#tab-8951-10)
-- [elementary](#tab-8951-11)
-- [ffx](#tab-8951-12)
-- [flat](#tab-8951-13)
-- [flatdark](#tab-8951-14)
-- [ft](#tab-8951-15)
-- [ggplot2](#tab-8951-16)
-- [google](#tab-8951-17)
-- [gridlight](#tab-8951-18)
-- [handdrawn](#tab-8951-19)
-- [hcrt](#tab-8951-20)
-- [monokai](#tab-8951-21)
-- [null](#tab-8951-22)
-- [sandsignika](#tab-8951-23)
-- [smpl](#tab-8951-24)
-- [sparkline_vb](#tab-8951-25)
-- [sparkline](#tab-8951-26)
-- [superheroes](#tab-8951-27)
-- [tufte](#tab-8951-28)
+- [538](#tab-4373-1)
+- [alone](#tab-4373-2)
+- [bloom](#tab-4373-3)
+- [bslib](#tab-4373-4)
+- [carbon](#tab-4373-5)
+- [chalk](#tab-4373-6)
+- [cloudscape](#tab-4373-7)
+- [darkunica](#tab-4373-8)
+- [db](#tab-4373-9)
+- [economist](#tab-4373-10)
+- [elementary](#tab-4373-11)
+- [ffx](#tab-4373-12)
+- [flat](#tab-4373-13)
+- [flatdark](#tab-4373-14)
+- [ft](#tab-4373-15)
+- [ggplot2](#tab-4373-16)
+- [google](#tab-4373-17)
+- [gridlight](#tab-4373-18)
+- [handdrawn](#tab-4373-19)
+- [hcrt](#tab-4373-20)
+- [monokai](#tab-4373-21)
+- [null](#tab-4373-22)
+- [sandsignika](#tab-4373-23)
+- [smpl](#tab-4373-24)
+- [sparkline_vb](#tab-4373-25)
+- [sparkline](#tab-4373-26)
+- [superheroes](#tab-4373-27)
+- [tufte](#tab-4373-28)
 
 Use
 [`hc_themes()`](https://jkunst.com/highcharter/reference/hc_theme.md) to
