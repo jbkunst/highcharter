@@ -83,7 +83,15 @@ economics_long2 <- dplyr::filter(
 
 head(economics_long2)
 
-hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
+hchart(
+  economics_long2,
+  "line",
+  hcaes(x = date, y = value01, group = variable)
+) |>
+  hc_tooltip(
+    table = TRUE,
+    headerFormat = "<small>{point.x:%b %Y}</small><table>"
+  )
 ```
 
 Now, a heatmap and a treemap.
@@ -159,7 +167,7 @@ hc <- hchart(
   cars,
   type = "scatter",
   hcaes(x = speed, y = dist),
-  name = "Speed and Stopping Distances of Cars",
+  name = "Observed distance",
   showInLegend = TRUE
 )
 
@@ -191,7 +199,7 @@ hc |>
     fit,
     type = "spline",
     hcaes(x = speed, y = .fitted),
-    name = "Fit",
+    name = "LOESS fit",
     id = "fit", # this is for link the arearange series to this one and have one legend
     lineWidth = 1,
     showInLegend = TRUE
@@ -199,16 +207,24 @@ hc |>
   hc_add_series(
     fit,
     type = "arearange",
-    name = "SE",
+    name = "95% confidence interval",
     hcaes(x = speed, low = .fitted - qtint * .se, high = .fitted + qtint * .se),
     linkedTo = "fit", # here we link the legends in one.
     showInLegend = FALSE,
     color = hex_to_rgba("gray", 0.2), # put a semi transparent color
-    zIndex = -3 # this is for put the series in a back so the points are showed first
+    zIndex = -3, # Keep the band behind the observations.
+    tooltip = list(
+      pointFormat = '<tr><td>{series.name}</td><td style="text-align: right"><b>{point.low:.1f}–{point.high:.1f} ft</b></td></tr>'
+    )
+  ) |>
+  hc_tooltip(
+    table = TRUE,
+    headerFormat = "<b>Speed: {point.x} mph</b><table>",
+    valueDecimals = 1,
+    valueSuffix = " ft",
+    style = list(fontFamily = "IBM Plex Sans")
   )
 ```
-
-Example of data from https://stackoverflow.com/questions/22717930/how-to-get-the-confidence-intervals-for-lowess-fit-using-r.
 
 ## What now?
 

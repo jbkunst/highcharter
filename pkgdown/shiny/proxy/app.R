@@ -2,6 +2,7 @@ library(shiny)
 library(highcharter)
 
 ui <- fluidPage(
+  theme = bslib::bs_theme(version = 5),
   actionButton("next_month", "Add a month"),
   radioButtons(
     "type",

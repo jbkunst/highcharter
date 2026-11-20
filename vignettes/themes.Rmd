@@ -198,35 +198,19 @@ a family explicitly with `sass::font_google("Noto Sans KR")`.
 
 ## Inherit a Shiny app's theme
 
-Use `hc_set_theme("bslib")` once at app startup. In this standalone example
-the app supplies Noto Sans and every chart using the preset inherits it.
-With Bootstrap 5.3, the browser resolves the primary series color, base
-font, text, gridlines and tooltip against the CSS around each chart.
-The transparent background lets
-the card or page show through. Text and gridlines follow the page's color
-mode. Other series use a categorical palette that you can replace with
-`hc_colors()`. Chart titles use the base font.
+Switch the observatory between daylight and night. The sunspot series changes
+from copper to amber, and the axes, gridlines and tooltip follow the page.
+The chart uses the app's serif typeface in both modes.
+[Open Solar cycles in a new tab](../live/theme/index.html){target="_blank" rel="noopener"}.
 
-```{r shiny, eval=FALSE}
-library(shiny)
-library(bslib)
-library(highcharter)
+<iframe title="Solar cycles theme demo" src="../live/theme/index.html" loading="lazy" width="100%" height="395" style="border:0"></iframe>
 
-hc_set_theme("bslib")
+Set `hc_set_theme("bslib")` once at app startup. With Bootstrap 5.3, the
+first series inherits the primary color and the transparent chart background
+lets the page show through. Additional series use a categorical palette
+that you can replace with `hc_colors()`.
 
-ui <- page_fluid(
-  theme = bs_theme(version = 5, base_font = font_google("Noto Sans")),
-  input_dark_mode(),
-  highchartOutput("stopping")
-)
-
-server <- function(input, output, session) {
-  output$stopping <- renderHighchart(
-    hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
-  )
-}
-
-shinyApp(ui, server)
+```{r shiny, eval=FALSE, code=readLines("../pkgdown/shiny/theme/app.R")}
 ```
 
 If the project uses a `_brand.yml`, put the same choices there and use

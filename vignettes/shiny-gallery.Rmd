@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Open an app to run R in your browser. The first launch downloads R and the
+Open an app in a new tab to run R in your browser. The first launch downloads R and the
 required packages. The [Shiny walkthrough](shiny.html) explains the code behind
 the examples.
 
@@ -21,6 +21,8 @@ card <- function(app, title, description) {
     tags$a(
       class = "card h-100 text-decoration-none text-body",
       href = paste0("../live/", app, "/index.html"),
+      target = "_blank",
+      rel = "noopener",
       tags$img(
         class = "card-img-top",
         src = paste0("../shiny-gallery/", app, ".webp"),
@@ -50,17 +52,22 @@ tags$div(
   card(
     "events",
     "Equalizer",
-    "Select a frequency and drag its point to change the gain in decibels."
+    "Drag a frequency band to change its gain and watch the event table update."
   ),
   card(
     "linked",
     "Linked charts",
-    "Click a species to explore its individual flowers in a second chart."
+    "Hover or click a species in the dotplot to see its flowers in the same color."
   ),
   card(
     "stock",
     "Stock prices",
     "Zoom from weekly SPY closes to daily prices for the selected dates."
+  ),
+  card(
+    "theme",
+    "Solar cycles",
+    "Switch the observatory from daylight to night to see the chart inherit the app’s theme."
   )
 )
 ```

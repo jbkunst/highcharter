@@ -15,18 +15,21 @@ nodes <- lapply(nodes, function(node) {
   node
 })
 
+label_style <- list(fontFamily = "Shadows Into Light", fontSize = "15px")
+
 hchart(
   nodes,
   type = "treemap",
   name = "All Pokémon",
   allowTraversingTree = TRUE,
+  breadcrumbs = list(
+    buttonTheme = list(style = label_style),
+    separator = list(style = label_style)
+  ),
   dataLabels = list(
-    style = list(
-      fontFamily = "Shadows Into Light",
-      fontWeight = "normal",
-      fontSize = "15px",
-      color = "contrast",
-      textOutline = "none"
+    style = c(
+      label_style,
+      list(fontWeight = "normal", color = "contrast", textOutline = "none")
     )
   ),
   layoutAlgorithm = "squarified",
@@ -37,4 +40,5 @@ hchart(
     text = "Pokémon by type",
     style = list(fontFamily = "Shadows Into Light", fontWeight = "normal")
   ) |>
+  hc_tooltip(style = label_style) |>
   hc_size(height = 480)

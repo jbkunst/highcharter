@@ -16,13 +16,14 @@ Bundled Highcharts JS: 12.6.2.
   the package, `hcmap()` downloads in R by default. Pass
   `download_map_data = FALSE` to load the map in the browser.
 
-* Use `hcmap("us")` or `hcmap("custom/world-robinson-lowres")` in place of
-  `usgeojson` and `worldgeojson`. For a world income map, join the map's
-  `iso-a3` to `world_income$iso3` after selecting a year. `world_income`
-  replaces `gni2014` and reports Atlas-method GNI per capita in current US
-  dollars and total population. The county geometry and unemployment table
-  (`uscountygeojson` and `unemployment`) have been retired. The external
-  collection path for US counties is `"countries/us/us-all-all"`.
+* `world_income` replaces `gni2014` with Atlas-method GNI per capita
+  (current US dollars) and population for 2024 and 2025.
+
+* Removed the bundled geometries `usgeojson`, `worldgeojson` and
+  `uscountygeojson`. Their `hcmap()` keys are `"us"`,
+  `"custom/world-robinson-lowres"` and `"countries/us/us-all-all"`,
+  respectively. The `unemployment` dataset was also removed.
+
 * `city_weather` supplies daily temperatures for four cities in 2025. Average
   `temp_mean` by city and month to migrate examples using `citytemp` or
   `citytemp_long`. For a daily range, select one city and use `temp_min` and
@@ -131,11 +132,12 @@ Bundled Highcharts JS: 12.6.2.
   imports, empty charts, SVG definitions, sonification, navigation, Stock Tools
   and Gantt connectors. Each has a runnable example in its help page.
 
-* `hc_set_language("es")` sets the language for new charts in the current R
-  process. Use `hc_set_language("en")` to switch to English.
+* `hc_set_language()` sets the language for new charts in the current R
+  process. Chart controls are available in English (`en`, the default),
+  Spanish (`es`), Portuguese (`pt`), French (`fr`), Norwegian Bokmål (`nb`),
+  Japanese (`ja`), Korean (`ko`) and Simplified Chinese (`zh-CN`).
+  Regional tags select the date and number formats used by the browser.
   `hc_language()` returns the corresponding options list.
-  Spanish, Portuguese and French include translated controls. Regional tags select
-  the browser's date and number formats.
 
 * Theme presets now use `hc_theme("ft")` and live in individual YAML files.
   `hc_themes()` lists the collection. `hc_set_theme()` selects a preset or

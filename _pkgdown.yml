@@ -31,6 +31,8 @@ navbar:
     shiny-gallery:
       text: Shiny gallery
       href: articles/shiny-gallery.html
+      target: _blank
+      title: Open the Shiny gallery in a new tab
 figures:
   message: no
   warning: no

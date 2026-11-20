@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Browse the [Shiny gallery](shiny-gallery.html) to open a standalone app, or
+Browse the [Shiny gallery](shiny-gallery.html){target="_blank" rel="noopener"} in a new tab, or
 run the examples here alongside their R source. The first launch downloads R
 and its dependencies. The apps use the highcharter version documented here.
 
@@ -17,13 +17,17 @@ demo <- function(slug, title, height = 450) {
   src <- file.path("..", "pkgdown", "shiny", slug, "app.R")
   url <- paste0("../live/", slug, "/index.html")
   tagList(
-    tags$iframe(
-      title = title,
-      src = url,
-      loading = "lazy",
-      width = "100%",
-      height = height,
-      style = "border:0"
+    tags$div(
+      class = "shiny-app-frame",
+      tags$iframe(
+        title = title,
+        src = url,
+        class = paste0("shiny-app-", slug),
+        loading = "lazy",
+        width = "100%",
+        height = height,
+        style = "border:0"
+      )
     ),
     tags$pre(tags$code(
       class = "language-r",
@@ -66,28 +70,30 @@ To switch from weekly to daily Stock prices when the visible date range narrows,
 
 ## Events
 
-Click a band in the equalizer. Shiny receives its ID at
-`input$eq_point_click$pointid` automatically. Drag the band and release it.
-The app uses only `hc_add_event_point(event = "drop")` to send the final gain
-in decibels to `input$eq_point_drop$y`.
+Each lit segment adds 1 dB to the band's gain, starting at −12 dB.
+Hover over a band, click it, then drag its top and release it. The table keeps
+the latest band and gain for each event. Watch the `drag` row change as you
+move and the `drop` row update when you release.
 
 ```{r events, echo=FALSE}
-demo("events", "the equalizer", height = 490)
+demo("events", "the equalizer", height = 660)
 ```
 
-The output ID, scope and case-sensitive Highcharts event name determine the
-input. For example, `hc_add_event_series(event = "mouseOver")` would send
-the hovered series to `input$eq_series_mouseOver`.
+Point clicks arrive automatically at `input$eq_point_click`. Register
+`mouseOver`, `drag` and `drop` with `hc_add_event_point()` to receive their
+inputs too. For example, `input$eq_point_mouseOver$pointid` identifies the
+band under the pointer and `input$eq_point_drag$y` gives its gain during a drag.
 
 ## Linked views
 
-Click a species in the overview to see the individual flowers in the detail
-chart. The server reads `input$overview_point_click$pointid` and uses a proxy
-to replace the detail series and its title. This combines the two preceding
-patterns and keeps both charts mounted.
+The dotplot shows mean petal length by species, rounded to the nearest
+millimeter. With `colorByPoint = TRUE`, each species gets its own color.
+Hover over a species or click it to see petal length and width for its 50
+flowers in the same color. A Shiny proxy updates the detail points, series
+color and title while keeping the axes fixed for comparison.
 
 ```{r linked, echo=FALSE}
-demo("linked", "the linked charts", height = 430)
+demo("linked", "the linked charts", height = 400)
 ```
 
 To run an example from a local checkout, load the package and open the app directory:

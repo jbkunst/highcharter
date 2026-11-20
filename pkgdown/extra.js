@@ -7,6 +7,13 @@ gtag('config', 'G-ECZ9XLT78C');
 // Use Bootstrap TOC's documented scope option: only article sections belong
 // in the sidebar, not Highcharts' hidden screen-reader headings.
 jQuery(function () {
+  // pkgdown also generates gallery links in the article menu and index.
+  document.querySelectorAll('a[href$="shiny-gallery.html"]:not([target])').forEach(link => {
+    link.target = '_blank';
+    link.relList.add('noopener');
+    link.title = 'Open the Shiny gallery in a new tab';
+  });
+
   // Restore the original Datalegreya graph lettering after the font has loaded.
   // Keep plain package names for assistive technology and font-load failures.
   const wordmark = 'h|1i|0g|3h|2c|1h|2a|1r|3t|2e|1r|2';
