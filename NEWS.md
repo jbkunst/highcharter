@@ -4,6 +4,12 @@ Bundled Highcharts JS: 12.6.0.
 
 ## Breaking changes
 
+* Treemaps and sunbursts use one color from the chart theme per first-level
+  group. Children inherit their parent's color. `data_to_hierarchical()`
+  now omits the node's `color` field by default. To fix colors explicitly,
+  pass a vector to its `colors` argument. This replaces the
+  `highcharter.color_palette` option.
+
 * Removed the R options `highcharter.verbose`, `highcharter.debug` and
   `highcharter.download_map_data`. For indented widget JSON, use
   `options(htmlwidgets.TOJSON_ARGS = list(pretty = TRUE))`. For maps outside

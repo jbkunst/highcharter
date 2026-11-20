@@ -15,7 +15,7 @@ The function review on `feat/highcharts-bundle` is complete. The
 | 6.1. Fonts | The 15 theme families ship with their Latin WOFF2 subsets. Each widget includes its selected families. Supply other fonts explicitly with `sass::font_google()`. [Font maintenance](dev/readme.md#maintain-theme-presets) |
 | 6.2. Charts in tooltips | `tooltip_chart()` shares JavaScript serialization with `export_hc()`. Each tooltip renders its own chart when a formatter is reused across widgets. [Examples](vignettes/showcase.Rmd#charts-inside-tooltips) |
 | 7.1. Imports | Removed six redundant imports and moved the declarations for `left_join()` and `select()` to `hchart.igraph()`, which uses both. |
-| 7.2. Default palette | The default theme defines the ten series colors once. Its colors also initialize the independent `highcharter.color_palette` option used by `data_to_hierarchical()`. |
+| 7.2. Default palette | The default theme defines the ten series colors once. Treemaps and sunbursts use the active chart palette for first-level groups. Use `data_to_hierarchical(..., colors = ...)` for fixed colors. |
 | 7.3. Legacy defaults and map joins | Removed the unused VML and canvas URLs from widget defaults and the unused `joindf` assignment from `hc_add_series_map()`. |
 | 7.4. Language and global options | New sessions use `hc_set_language("en")` and the bundle's UTC default. The widget reads language and optional global settings directly, preserving user choices. Removed `.join_hc_opts()`. |
 | 7.5. Single numeric points | The common series-list path wraps a single numeric value in a point array. Removed `fix_1_length_data()`. |

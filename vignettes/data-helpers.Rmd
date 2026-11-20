@@ -87,7 +87,9 @@ hchart(links, type = "sankey", name = "Visits")
 
 The built-in `Titanic` table already contains counts. Sum `Freq` within
 passenger class and survival status to size each leaf. The same nodes can
-also be used in a sunburst.
+also be used in a sunburst. Each passenger class takes a color from the chart
+theme, which its survival groups inherit. To keep fixed colors across themes,
+pass a palette to `colors` in `data_to_hierarchical()`.
 
 ```{r hierarchy-nodes}
 passengers <- as.data.frame(Titanic)

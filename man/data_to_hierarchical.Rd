@@ -4,12 +4,7 @@
 \alias{data_to_hierarchical}
 \title{Helper to transform data frame for treemap/sunburst highcharts format}
 \usage{
-data_to_hierarchical(
-  data,
-  group_vars,
-  size_var,
-  colors = getOption("highcharter.color_palette")
-)
+data_to_hierarchical(data, group_vars, size_var, colors = NULL)
 }
 \arguments{
 \item{data}{data frame containing variables to organize each level of
@@ -19,7 +14,8 @@ the treemap.}
 
 \item{size_var}{Variable to aggregate.}
 
-\item{colors}{Color to chart every item in the first level.}
+\item{colors}{Optional vector of colors for first-level groups, recycled as
+needed. With the default \code{NULL}, nodes inherit colors from the chart theme.}
 }
 \description{
 Helper to transform data frame for treemap/sunburst highcharts format

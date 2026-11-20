@@ -12,6 +12,7 @@
     hc_set_language("en")
   }
 
+  hierarchy_levels <- list(list(level = 1L, colorByPoint = TRUE))
   options(
     highcharter.chart = list(
       chart = list(
@@ -40,7 +41,11 @@
           # Preserve mixed point formats in long OHLC and range series.
           turboThreshold = 0
         ),
-        treemap = list(layoutAlgorithm = "squarified")
+        treemap = list(
+          layoutAlgorithm = "squarified",
+          levels = hierarchy_levels
+        ),
+        sunburst = list(levels = hierarchy_levels)
       )
     )
   )
@@ -60,8 +65,5 @@
       "#91e8e1"
     )
   )
-  options(
-    highcharter.theme = getOption("highcharter.theme", default_theme),
-    highcharter.color_palette = default_theme$colors
-  )
+  options(highcharter.theme = getOption("highcharter.theme", default_theme))
 }

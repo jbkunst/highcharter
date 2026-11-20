@@ -102,7 +102,8 @@ data_to_boxplot <- function(
 #'   the treemap.
 #' @param group_vars Variables to generate treemap levels.
 #' @param size_var Variable to aggregate.
-#' @param colors Color to chart every item in the first level.
+#' @param colors Optional vector of colors for first-level groups, recycled as
+#'   needed. With the default `NULL`, nodes inherit colors from the chart theme.
 #'
 #' @examples
 #' \dontrun{
@@ -123,12 +124,7 @@ data_to_boxplot <- function(
 #'
 #' @importFrom dplyr arrange desc
 #' @export
-data_to_hierarchical <- function(
-  data,
-  group_vars,
-  size_var,
-  colors = getOption("highcharter.color_palette")
-) {
+data_to_hierarchical <- function(data, group_vars, size_var, colors = NULL) {
   dat <- data |>
     select({{ group_vars }}, {{ size_var }})
 

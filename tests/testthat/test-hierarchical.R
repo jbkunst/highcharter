@@ -29,6 +29,13 @@ test_that("hierarchies preserve single levels, colors and empty input", {
     nodes[[1]],
     list(name = "A", id = "a", color = "red", value = 5, level = 1L)
   )
-  expect_null(data_to_hierarchical(data, group, size, colors = NULL)[[1]]$color)
+  expect_null(data_to_hierarchical(data, group, size)[[1]]$color)
+  plot_options <- highchart()$x$hc_opts$plotOptions
+  for (type in c("treemap", "sunburst")) {
+    expect_identical(
+      plot_options[[type]]$levels,
+      list(list(level = 1L, colorByPoint = TRUE))
+    )
+  }
   expect_identical(data_to_hierarchical(data[0, ], group, size), list())
 })
