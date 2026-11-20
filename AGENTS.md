@@ -10,7 +10,7 @@ examples or the website. It describes each `dev/` directory and the build steps.
 - Keep code readable. Explain changes to the maintenance workflow in the developer README and user-visible package behavior in NEWS. Keep website layouts, gallery edits and documentation build details out of NEWS.
 - Format R code with Air using the root `air.toml`. Run `air format .` and `air format --check .`; preserve the exclusions for generated files and local artifacts. See the [formatting guide](dev/readme.md#format-r-code).
 - Format R code in vignettes with `Rscript dev/format-vignettes.R` and verify it with `Rscript dev/format-vignettes.R --check`.
-- Use the base R pipe `|>` in website examples, including the canonical scripts in `dev/examples-charts/` and `dev/examples-helpers/`.
+- Use the base R pipe `|>` in website examples, including article code in `vignettes/` and runnable apps in `pkgdown/shiny/`.
 - Prefer `hchart(data, type = ..., mapping = ...)` for data-frame examples when
   possible. Use explicit chart construction when the example teaches that API
   or needs series-specific setup.

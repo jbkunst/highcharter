@@ -100,6 +100,8 @@ hchart(
   )
 ```
 
+For a geographic example, [click Chile to explore its regions](maps.html#drill-down-from-south-america-to-chile).
+
 ## Pokémon types
 
 Click a primary type to explore its secondary types. Area shows the number of Pokémon.

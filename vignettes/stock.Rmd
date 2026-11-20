@@ -85,9 +85,12 @@ highchart(type = "stock") |>
 
 ## Update a series and its visible range in Shiny
 
-Run the app below, then press **Update**. The stock widget stays mounted while
-the proxy changes the selected series and the x-axis range. Redraw the updated
-series before setting the range so the Stock navigator has its new data limits.
+The app opens with the last trading close of each week from the local 2025 SPY
+snapshot. Press **Explore April**, choose **1m** or drag the navigator to a
+window of six weeks or less. The x-axis sends its new limits to Shiny, and
+the proxy replaces the visible series with daily closes for that interval.
+Choose **All** to return to weekly closes. The navigator keeps its original
+weekly overview as the main series changes. [Run the Stock app](../live/stock/index.html).
 
 ```{r stock-proxy, eval=FALSE, code=readLines("../pkgdown/shiny/stock/app.R")}
 ```

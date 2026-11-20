@@ -3,6 +3,7 @@ title: Showcase
 output: rmarkdown::html_vignette
 resource_files:
   - data/stars.csv
+  - data/southern-andes.geojson
   - data/measles-coverage.csv
 description: >
   In this vignette we'll review some examples to show what highcharts and
@@ -245,6 +246,90 @@ Select a Pokémon type to explore its secondary types.
 
 </details>
 
+## A reading survey on a Likert scale
+
+Where do readers agree, and where are they divided? Each row in this
+illustrative survey adds to 100%. The midpoint of the neutral response sits
+at zero. Click **Neutral** in the legend to toggle both halves together.
+
+```{r reading-survey, echo=FALSE}
+survey <- data.frame(
+  item = c("I read for pleasure", "I discuss books", "I prefer print"),
+  strongly_disagree = c(5, 12, 15),
+  disagree = c(10, 28, 20),
+  neutral = c(15, 20, 30),
+  agree = c(40, 30, 20),
+  strongly_agree = c(30, 10, 15)
+)
+
+highchart() |>
+  hc_chart(type = "bar") |>
+  hc_title(text = "How do you feel about reading?") |>
+  hc_xAxis(categories = survey$item) |>
+  hc_yAxis(
+    min = -100,
+    max = 100,
+    title = list(text = "Share of responses"),
+    labels = list(
+      formatter = JS("function () { return Math.abs(this.value) + '%'; }")
+    )
+  ) |>
+  hc_plotOptions(series = list(stacking = "normal", borderWidth = 0)) |>
+  hc_add_series(
+    name = "Strongly disagree",
+    data = -survey$strongly_disagree,
+    color = "#96422f",
+    legendIndex = 0
+  ) |>
+  hc_add_series(
+    name = "Disagree",
+    data = -survey$disagree,
+    color = "#dc9b82",
+    legendIndex = 1
+  ) |>
+  hc_add_series(
+    name = "Strongly agree",
+    data = survey$strongly_agree,
+    color = "#22685d",
+    legendIndex = 4
+  ) |>
+  hc_add_series(
+    name = "Agree",
+    data = survey$agree,
+    color = "#76b5a4",
+    legendIndex = 3
+  ) |>
+  hc_add_series(
+    name = "Neutral",
+    id = "neutral",
+    data = survey$neutral / 2,
+    color = "#c8c8c8",
+    legendIndex = 2
+  ) |>
+  hc_add_series(
+    name = "Neutral",
+    linkedTo = "neutral",
+    data = -survey$neutral / 2,
+    color = "#c8c8c8"
+  ) |>
+  hc_tooltip(
+    formatter = JS(
+      "function () {
+    const share = Math.abs(this.y) * (this.series.name === 'Neutral' ? 2 : 1);
+    return this.category + '<br>' + this.series.name + ': ' + share + '%';
+  }"
+    )
+  )
+```
+
+<details>
+<summary>Show R code</summary>
+
+```{r reading-survey-source, ref.label="reading-survey", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
 ## Daily temperature range
 
 Inspired by [Weather Radials](http://weather-radials.com/), each spoke shows one day in Santiago in 2025. Its ends mark the minimum and
@@ -439,6 +524,59 @@ Follow a release from data import to publication. Arrows connect prerequisites a
 <summary>Show R code</summary>
 
 ```{r gantt-schedules-source, ref.label="gantt-schedules", eval=FALSE, echo=TRUE}
+```
+
+</details>
+
+## Volcanoes along the southern Andes
+
+Eight volcanoes form a chain inland from the offshore boundary of the Nazca
+and South American plates. Hover over a triangle to identify a volcano. The
+GeoJSON contains the boundary as a line and the volcanoes as points, so the
+two layers get separate legend entries. [Download the map layers](data/southern-andes.geojson).
+
+```{r andes-volcanoes, echo=FALSE}
+andes <- geojsonio::geojson_list(geojsonio::as.json(
+  "data/southern-andes.geojson"
+))
+
+hcmap(
+  "cl",
+  name = "Chile",
+  nullColor = "#e5eceb",
+  enableMouseTracking = FALSE,
+  showInLegend = FALSE
+) |>
+  hc_add_series(data = andes, name = c("Plate boundary", "Volcanoes")) |>
+  hc_mapView(
+    fitToGeometry = list(
+      type = "MultiPoint",
+      coordinates = list(c(-76, -42.5), c(-70.4, -35.7))
+    )
+  ) |>
+  hc_plotOptions(
+    mapline = list(color = "#265675", lineWidth = 3),
+    mappoint = list(
+      color = "#b34e30",
+      marker = list(symbol = "triangle", radius = 5),
+      dataLabels = list(
+        filter = list(property = "name", operator = "==", value = "Villarrica")
+      )
+    )
+  ) |>
+  hc_legend(enabled = TRUE) |>
+  hc_title(text = "Volcanoes along the southern Andes") |>
+  hc_tooltip(headerFormat = "", pointFormat = "{point.name}")
+```
+
+Volcano locations come from the [Smithsonian Global Volcanism Program](https://volcano.si.edu/).
+The boundary comes from Peter Bird’s [PB2002 model](https://doi.org/10.1029/2001GC000252),
+converted to GeoJSON by [Hugo Ahlenius, Nordpil and contributors](https://github.com/fraxen/tectonicplates).
+
+<details>
+<summary>Show R code</summary>
+
+```{r andes-volcanoes-source, ref.label="andes-volcanoes", eval=FALSE, echo=TRUE}
 ```
 
 </details>

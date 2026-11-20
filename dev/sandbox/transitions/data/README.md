@@ -35,10 +35,8 @@ The source's own update date is recorded per indicator in
 | `trade_balance` | `100 * (exports - imports) / (exports + imports)` | Signed goods balance as percent of total goods trade |
 | `gdp` | Derived as `income * population` | GDP, PPP, constant 2021 international dollars |
 
-Continents and map joins use Highcharts/Natural Earth mapdata 2.3.3, downloaded
-by the article. The gallery's local
-[`custom-world.topo.json`](../../../examples-charts/data/maps/custom-world.topo.json)
-uses the same version.
+The article reads the [packaged world TopoJSON](../../../../inst/maps/custom/world.topo.rds)
+from Highcharts/Natural Earth mapdata 2.3.3 for continent and map joins.
 Maldives is assigned to Asia, and Mauritius and Seychelles to Africa: the map's
 "Seven seas (open ocean)" category would otherwise omit them from regional
 charts. All six regions together therefore contain the complete 179-economy

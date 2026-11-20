@@ -282,6 +282,56 @@ highchart() |>
   hc_size(height = 460)
 ```
 
+### A month-by-month temperature heatmap
+
+Move the slider from January to July to compare summer and winter across the
+four cities. Each cell follows the same city and day of the month through
+2025. Use the first 28 days so every month has the same grid. Each step
+updates the cell's `value` while the color scale stays fixed in degrees Celsius.
+
+```{r motion-heatmap}
+library(dplyr)
+cities <- sort(unique(city_weather$city))
+cells <- city_weather |>
+  arrange(date) |>
+  mutate(
+    x = as.integer(format(date, "%d")) - 1L,
+    y = match(city, cities) - 1L
+  ) |>
+  filter(x < 28) |>
+  group_by(x, y) |>
+  summarise(
+    value = first(temp_mean),
+    sequence = list(lapply(temp_mean, function(t) list(value = t))),
+    .groups = "drop"
+  )
+
+highchart() |>
+  hc_chart(spacingBottom = 85) |>
+  hc_title(text = "Daily mean temperatures, 2025") |>
+  hc_xAxis(
+    categories = as.character(1:28),
+    title = list(text = "Day of month")
+  ) |>
+  hc_yAxis(categories = cities, title = list(text = NULL)) |>
+  hc_colorAxis(
+    min = floor(min(city_weather$temp_mean)),
+    max = ceiling(max(city_weather$temp_mean)),
+    minColor = "#e6f1f5",
+    maxColor = "#883429"
+  ) |>
+  hc_add_series(
+    type = "heatmap",
+    name = "Daily mean",
+    data = list_parse(cells)
+  ) |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "{series.yAxis.categories.(point.y)}, day {series.xAxis.categories.(point.x)}<br>{point.value:.1f} °C"
+  ) |>
+  hc_motion(labels = month.name, startIndex = 0, magnet = list(step = 1))
+```
+
 ## Chart language
 
 Open the export menu on each chart to compare the same controls in Chilean

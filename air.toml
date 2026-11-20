@@ -9,5 +9,4 @@ exclude = [
   "/docs/",
   "/dev/highcharts-bundle/node_modules/",
   "/dev/highcharts-bundle/preview/",
-  "/dev/sandbox/highmaps6_hcmap2.R", # Unfinished, syntactically invalid prototype.
 ]

@@ -60,7 +60,7 @@ tags$div(
   card(
     "stock",
     "Stock prices",
-    "Update a price series and zoom to a new date range in one click."
+    "Zoom from weekly SPY closes to daily prices for the selected dates."
   )
 )
 ```

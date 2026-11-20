@@ -12,15 +12,10 @@ in `tests/`, and website articles in `vignettes/`.
 | --- | --- |
 | `R/` | The bundle gallery builder, `test-highcharts-bundle.R`, shared by the website build and local browser review. |
 | `examples-api/` | One runnable example per Highcharts option. roxygen reads these for help pages, and the API generator validates them. |
-| `examples-charts/` | Examples of individual chart types, for development; `modules/` holds specialized series examples. |
-| `examples-helpers/` | Worked examples of R helpers, currently stacked panels with `create_axis()`. |
-| `examples-modules-plugins/` | Additional module and interaction examples, currently draggable points. |
 | `highcharts-bundle/` | The pinned npm manifests, module selection, build and update scripts. See its [bundle guide](highcharts-bundle/README.md). `preview/` and `node_modules/` are generated locally and ignored by Git. |
-| `issues/` | Reproducible examples for individual GitHub issues. Some older examples require optional packages or network access. |
-| `sandbox/` | Exploratory scripts, not an automated test suite. `transitions/` contains the offline animated chart prototypes and their data; see its [README](sandbox/transitions/README.md). |
-| `stackoverflow/` | Examples associated with Stack Overflow questions, named by question ID. |
+| `sandbox/` | The serializer benchmark and the [offline chart transitions](sandbox/transitions/README.md), including their source and data. |
 
-Article scripts are installed from `inst/examples/`. The site-only Shiny apps live in `pkgdown/shiny/`. Installed example inputs live in `inst/extdata/`. Article-only CSVs and their sources live in `vignettes/data/`.
+Article scripts are installed from `inst/examples/`. The site-only Shiny apps live in `pkgdown/shiny/`. Installed example inputs live in `inst/extdata/`. Article-only datasets and their sources live in `vignettes/data/`.
 `data-raw/maps.R` refreshes the country and custom RDS files in `inst/maps/`.
 The refresh uses pinned upstream sources and mapshaper for the Chilean regions.
 `data-raw/world_income.R` and `data-raw/city_weather.R` refresh the offline data from the World Bank and Open-Meteo.
@@ -46,8 +41,8 @@ Rscript dev/format-vignettes.R --check
 
 The configuration uses two spaces, an 80-column limit and persistent line
 breaks. Keep an explicit line break after `|>` when laying out chart pipelines.
-Use the base R pipe `|>` throughout website examples, including the canonical
-chart and helper scripts that supply code to articles and reference pages.
+Use the base R pipe `|>` throughout website examples, including the articles in
+`vignettes/` and the help examples in `dev/examples-api/`.
 Prefer `hchart()` for data-frame examples. The Gantt recipe uses
 `hchart(df, type = "gantt")`, which selects the native Gantt constructor and
 retains its task rows and date axes.
@@ -65,8 +60,6 @@ open a new terminal, or install the CLI following the
 
 Do not format `R/highcharts-api.R` directly: the API generator owns it.
 Generated website output, npm dependencies and `preview/` artifacts are excluded.
-The unfinished `dev/sandbox/highmaps6_hcmap2.R` prototype is also excluded because
-its existing syntax is invalid. Revisit that exclusion if the experiment is repaired.
 After formatting canonical examples in `dev/examples-api/`, regenerate the
 package documentation so the help pages display the formatted examples.
 

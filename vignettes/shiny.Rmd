@@ -64,8 +64,7 @@ still there. Both controls target the series ID `traffic` through
 demo("proxy", "the passenger chart")
 ```
 
-For an example that replaces a whole Stock series and sets the visible date
-range, [run the Stock proxy app](../live/stock/index.html) or
+To switch from weekly to daily Stock prices when the visible date range narrows, [run the Stock proxy app](../live/stock/index.html) or
 [read the Stock walkthrough](stock.html#update-a-series-and-its-visible-range-in-shiny).
 
 ## Events

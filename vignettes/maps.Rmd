@@ -78,6 +78,43 @@ Additional boundaries can be selected by path from the
 outside the package, the default downloads the geometry in R. With
 `download_map_data = FALSE` the browser loads the map from the CDN instead.
 
+## Drill down from South America to Chile
+
+Click Chile to see its 16 regions. Use the breadcrumb to return to South
+America. The `drilldown` value on the country matches the regional series
+ID. Both geometries ship with highcharter.
+
+```{r chile-drilldown}
+chile <- readRDS(system.file("maps/cl.rds", package = "highcharter"))
+country <- data.frame(code = "cl", value = 1, drilldown = "regions")
+
+hcmap(
+  "custom/south-america",
+  data = country,
+  value = "value",
+  joinBy = c("hc-key", "code"),
+  name = "South America",
+  nullColor = "#e3e8ec"
+) |>
+  hc_colorAxis(visible = FALSE, minColor = "#167875", maxColor = "#167875") |>
+  hc_drilldown(
+    series = list(list(
+      id = "regions",
+      type = "map",
+      name = "Regions of Chile",
+      mapData = chile,
+      nullInteraction = TRUE,
+      nullColor = "#88c4b7"
+    ))
+  ) |>
+  hc_title(text = "From South America to Chile") |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "{point.name}",
+    nullFormat = "{point.name}"
+  )
+```
+
 ## Income around the world
 
 The offline `world_income` table contains World Bank Atlas-method income per person and population for 2024 and 2025. The 2024 map has broader income coverage. Join its

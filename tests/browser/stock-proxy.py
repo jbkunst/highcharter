@@ -40,14 +40,26 @@ def test_stock_proxy():
                 page.goto(url)
                 page.wait_for_function("window.HighcharterWidget?.getChart('prices')?.hasRendered")
                 page.evaluate("window.initialChart = HighcharterWidget.getChart('prices')")
-                assert page.evaluate("initialChart.get('closing').getColumn('y')[0]") == 20
-                page.get_by_role("button", name="Update").click()
+                assert page.evaluate("initialChart.get('closing').name") == "Weekly close"
+                overview = page.evaluate("initialChart.get('closing').getColumn('y')")
+                assert len(overview) == 53
+
+                page.get_by_role("button", name="Explore April").click()
                 page.wait_for_function("""() => {
                     const chart = HighcharterWidget.getChart('prices');
                     const axis = chart.get('days').getExtremes();
-                    return chart === window.initialChart && chart.get('closing').getColumn('y')[0] === 25
-                        && axis.min === Date.UTC(2025, 0, 3) && axis.max === Date.UTC(2025, 0, 8);
+                    const series = chart.get('closing');
+                    const days = series.getColumn('x');
+                    return chart === window.initialChart && series.name === 'Daily close'
+                        && days.length === 21 && days[0] === Date.UTC(2025, 3, 1)
+                        && days.at(-1) === Date.UTC(2025, 3, 30)
+                        && axis.min === days[0] && axis.max === days.at(-1);
                 }""")
+                assert page.evaluate("initialChart.navigator.series[0].getColumn('y')") == overview
+
+                page.get_by_text("All", exact=True).first.click()
+                page.wait_for_function("initialChart.get('closing').name === 'Weekly close'")
+                assert page.evaluate("initialChart.get('closing').getColumn('y')") == overview
                 browser.close()
         finally:
             proc.terminate()
