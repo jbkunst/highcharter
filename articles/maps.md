@@ -288,6 +288,77 @@ districts as well. Set a center and zoom with
 [`hc_mapView()`](https://jkunst.com/highcharter/reference/hc_mapView.md)
 to frame a specific area.
 
+## Manchester Airport
+
+Manchester Airport is a single GeoJSON FeatureCollection. Its 26
+polygons outline terminals and aprons, 254 lines trace runways and
+taxiways, and 136 points mark gates and other airfield features. Pass
+the collection to
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) to draw
+the three layers. Hover over a gate to see its reference, such as **Gate
+21**.
+
+``` r
+
+library(geojsonio)
+
+path <- system.file(
+  "extdata",
+  "manchester-airport.geojson",
+  package = "highcharter"
+)
+airport <- geojson_list(as.json(path))
+
+airport_map <- hchart(airport, name = c("Areas", "Lines", "Points")) |>
+  hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
+```
+
+The example below adds a local MapLibre basemap for context. Toggle a
+layer in the legend or use the zoom buttons to explore. The GeoJSON
+preserves named features and labels the others with their airfield
+category and reference where available. [Airport data from POSCON
+UK](https://github.com/POSCON-United-Kingdom/UK-Radar-Data/blob/6a020b03fbfeffe9f7eb53e4b4559de48134e351/AirfieldGeoJson/EGCC.geojson)
+· [Basemap example
+code](https://github.com/jbkunst/highcharter/blob/main/vignettes/_manchester.Rmd).
+
+## Laguna Seca
+
+The circuit uses the same three geometry types. The polygon follows the
+width of the racing surface, a line marks the pit lane and 12 points
+mark corner apexes. Use
+[`hc_plotOptions()`](https://jkunst.com/highcharter/reference/hc_plotOptions.md)
+to style each layer independently.
+
+``` r
+
+path <- system.file("extdata", "laguna-seca.geojson", package = "highcharter")
+circuit <- geojsonio::geojson_list(geojsonio::as.json(path))
+
+hchart(circuit, name = c("Track surface", "Pit lane", "Apexes")) |>
+  hc_title(text = "Laguna Seca") |>
+  hc_plotOptions(
+    map = list(nullColor = "#CCD5DA", borderColor = "#536671"),
+    mapline = list(color = "#006F79", lineWidth = 3),
+    mappoint = list(
+      color = "#B44626",
+      marker = list(symbol = "circle", radius = 4)
+    ),
+    series = list(dataLabels = list(enabled = FALSE))
+  ) |>
+  hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE) |>
+  hc_legend(enabled = TRUE) |>
+  hc_caption(
+    text = "Highcharts · Track Atlas · <a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors (ODbL)</a>"
+  )
+```
+
+Toggle **Apexes** in the legend to see the track outline on its own with
+the pit lane. The [Track Atlas surface
+file](https://github.com/tobi/track-atlas/blob/8c12ac414ea74ffe4a3ef74b294a2eafab7ee60d/tracks/laguna-seca/raw/layers/gp.surface.geojson)
+also includes the racing line and sector boundaries.
+
 ## European time zones
 
 Categorical maps use named data classes rather than a continuous scale.

@@ -280,20 +280,38 @@ hchart(cor(mtcars))
 
 ## GeoJSON
 
-[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) reads
-the geometry from a `geo_list` or `geo_json` FeatureCollection from
-**geojsonio**. Here the local file contains two district polygons.
+Manchester Airport is a single GeoJSON FeatureCollection. Its 26
+polygons outline terminals and aprons, 254 lines trace runways and
+taxiways, and 136 points mark gates and other airfield features. Pass
+the collection to
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) to draw
+the three layers. Hover over a gate to see its reference, such as **Gate
+21**.
 
 ``` r
 
 library(geojsonio)
 
-path <- system.file("extdata", "districts.geojson", package = "highcharter")
-districts <- geojson_list(as.json(path))
-hchart(districts)
+path <- system.file(
+  "extdata",
+  "manchester-airport.geojson",
+  package = "highcharter"
+)
+airport <- geojson_list(as.json(path))
+
+airport_map <- hchart(airport, name = c("Areas", "Lines", "Points")) |>
+  hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 ```
 
-With a mixed collection, the same call draws polygons, then lines, then
-points. The [Maps
-vignette](https://jkunst.com/highcharter/articles/maps.html#overlay-geojson-points)
-shows a clinic network with all three.
+The example below adds a local MapLibre basemap for context. Toggle a
+layer in the legend or use the zoom buttons to explore. The GeoJSON
+preserves named features and labels the others with their airfield
+category and reference where available. [Airport data from POSCON
+UK](https://github.com/POSCON-United-Kingdom/UK-Radar-Data/blob/6a020b03fbfeffe9f7eb53e4b4559de48134e351/AirfieldGeoJson/EGCC.geojson)
+· [Basemap example
+code](https://github.com/jbkunst/highcharter/blob/main/vignettes/_manchester.Rmd).
+
+The [Maps
+vignette](https://jkunst.com/highcharter/articles/maps.html#laguna-seca)
+shows how to style these geometry types separately on a racing circuit.
