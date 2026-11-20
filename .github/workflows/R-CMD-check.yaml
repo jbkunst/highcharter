@@ -28,7 +28,10 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          # ggplot2 uses S7. The 0.2 series supports this R 4.1 check.
+          extra-packages: |
+            any::rcmdcheck
+            S7@0.2.2
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
