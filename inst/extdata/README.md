@@ -47,3 +47,16 @@ rows = field.to_dataframe().reset_index().rename(columns={
 rows["lon"] -= 360
 rows[["lon", "lat", "u", "v"]].round(2).to_csv("catarina-wind.csv", index=False)
 ```
+
+`manchester-airport.geojson` retains all 416 geometries from the [POSCON UK
+EGCC snapshot](https://github.com/POSCON-United-Kingdom/UK-Radar-Data/blob/6a020b03fbfeffe9f7eb53e4b4559de48134e351/AirfieldGeoJson/EGCC.geojson).
+The example keeps `aeroway`, `ref` and `name`. Where the source has no name,
+the label uses the feature category and any available reference.
+
+`laguna-seca.geojson` keeps the `surface`, `pit_lane` and `apex` features from
+[Track Atlas](https://github.com/tobi/track-atlas/blob/8c12ac414ea74ffe4a3ef74b294a2eafab7ee60d/tracks/laguna-seca/raw/layers/gp.surface.geojson).
+Each feature retains its geometry and role and has a label for the tooltip.
+[Track Atlas sources and attribution](https://github.com/tobi/track-atlas/blob/8c12ac414ea74ffe4a3ef74b294a2eafab7ee60d/ATTRIBUTION.md).
+
+Both extracts contain data © OpenStreetMap contributors and are distributed
+under the [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/).

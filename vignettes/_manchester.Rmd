@@ -1,0 +1,62 @@
+Manchester Airport is a single GeoJSON FeatureCollection. Its 26 polygons outline
+terminals and aprons, 254 lines trace runways and taxiways, and 136 points mark
+gates and other airfield features. Pass the collection to `hchart()` to draw the
+three layers. Hover over a gate to see its reference, such as **Gate 21**.
+
+```{r manchester-airport}
+library(geojsonio)
+
+path <- system.file(
+  "extdata",
+  "manchester-airport.geojson",
+  package = "highcharter"
+)
+airport <- geojson_list(as.json(path))
+
+airport_map <- hchart(airport, name = c("Areas", "Lines", "Points")) |>
+  hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
+```
+
+The example below adds a local MapLibre basemap for context. Toggle a layer in
+the legend or use the zoom buttons to explore. The GeoJSON preserves named features
+and labels the others with their airfield category and reference where available.
+[Airport data from POSCON UK](https://github.com/POSCON-United-Kingdom/UK-Radar-Data/blob/6a020b03fbfeffe9f7eb53e4b4559de48134e351/AirfieldGeoJson/EGCC.geojson) ·
+[Basemap example code](https://github.com/jbkunst/highcharter/blob/main/vignettes/_manchester.Rmd).
+
+```{r manchester-basemap, echo=FALSE}
+airport_map <- airport_map |>
+  hc_title(text = "Manchester Airport") |>
+  hc_chart(
+    backgroundColor = "transparent",
+    plotBackgroundColor = "transparent"
+  ) |>
+  hc_mapView(projection = list(name = "WebMercator")) |>
+  hc_plotOptions(
+    map = list(nullColor = "rgba(92,158,151,0.33)", borderColor = "#517973"),
+    mapline = list(color = "#245A72", lineWidth = 1.5),
+    mappoint = list(
+      color = "#B85A20",
+      marker = list(symbol = "circle", radius = 2.6)
+    ),
+    series = list(dataLabels = list(enabled = FALSE))
+  ) |>
+  hc_legend(enabled = TRUE) |>
+  hc_caption(
+    text = paste(
+      "Highcharts · Airport: POSCON UK · Basemap: OpenFreeMap / OpenMapTiles ·",
+      "<a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors (ODbL)</a>"
+    )
+  )
+
+deps <- htmlwidgets::getDependency("maplibregl", "mapgl")
+maplibre <- Filter(function(dep) identical(dep$name, "maplibre-gl"), deps)
+stopifnot(length(maplibre) == 1L)
+airport_map$dependencies <- c(airport_map$dependencies, maplibre)
+background <- jsonlite::read_json("data/manchester-basemap.geojson.gz")
+airport_map |>
+  htmlwidgets::onRender(
+    paste(readLines("manchester-basemap.js"), collapse = "\n"),
+    data = background
+  )
+```

@@ -253,6 +253,44 @@ To draw just the clinics from that collection, use
 districts as well. Set a center and zoom with `hc_mapView()` to frame a
 specific area.
 
+## Manchester Airport
+
+```{r, child="_manchester.Rmd"}
+```
+
+## Laguna Seca
+
+The circuit uses the same three geometry types. The polygon follows the width
+of the racing surface, a line marks the pit lane and 12 points mark corner
+apexes. Use `hc_plotOptions()` to style each layer independently.
+
+```{r laguna-seca}
+path <- system.file("extdata", "laguna-seca.geojson", package = "highcharter")
+circuit <- geojsonio::geojson_list(geojsonio::as.json(path))
+
+hchart(circuit, name = c("Track surface", "Pit lane", "Apexes")) |>
+  hc_title(text = "Laguna Seca") |>
+  hc_plotOptions(
+    map = list(nullColor = "#CCD5DA", borderColor = "#536671"),
+    mapline = list(color = "#006F79", lineWidth = 3),
+    mappoint = list(
+      color = "#B44626",
+      marker = list(symbol = "circle", radius = 4)
+    ),
+    series = list(dataLabels = list(enabled = FALSE))
+  ) |>
+  hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE) |>
+  hc_legend(enabled = TRUE) |>
+  hc_caption(
+    text = "Highcharts · Track Atlas · <a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors (ODbL)</a>"
+  )
+```
+
+Toggle **Apexes** in the legend to see the track outline on its own with the
+pit lane. The [Track Atlas surface file](https://github.com/tobi/track-atlas/blob/8c12ac414ea74ffe4a3ef74b294a2eafab7ee60d/tracks/laguna-seca/raw/layers/gp.surface.geojson)
+also includes the racing line and sector boundaries.
+
 ## European time zones
 
 Categorical maps use named data classes rather than a continuous scale.

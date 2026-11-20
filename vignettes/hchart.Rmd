@@ -261,16 +261,8 @@ hchart(cor(mtcars))
 
 ## GeoJSON
 
-`hchart()` reads the geometry from a `geo_list` or `geo_json` FeatureCollection
-from **geojsonio**. Here the local file contains two district polygons.
-
-```{r hchart-geojson}
-library(geojsonio)
-
-path <- system.file("extdata", "districts.geojson", package = "highcharter")
-districts <- geojson_list(as.json(path))
-hchart(districts)
+```{r, child="_manchester.Rmd"}
 ```
 
-With a mixed collection, the same call draws polygons, then lines, then points.
-The [Maps vignette](maps.html#overlay-geojson-points) shows a clinic network with all three.
+The [Maps vignette](maps.html#laguna-seca) shows how to style these geometry
+types separately on a racing circuit.

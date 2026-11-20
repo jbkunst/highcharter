@@ -160,6 +160,10 @@ The Explore charts section uses the titles Chart types, Maps, Stock charts and
 Stock Tools, and Showcase. The chart-types article lives in
 `vignettes/chart-types.Rmd`; the former `series-gallery.html` URLs redirect to it.
 Keep Showcase's established examples first and append new examples at the end.
+The hchart and Maps articles share the airport example in
+`vignettes/_manchester.Rmd`. Its local background uses the MapLibre GL assets
+from the website dependency mapgl. The foreground GeoJSON files and their
+sources are in `inst/extdata/`; the background extract is in `vignettes/data/`.
 The Extensions and examples section includes `vignettes/multiple-axes.Rmd`,
 which plots a sample of diamonds across nine panels with paired axes.
 Showcase includes the Font Awesome marker and pictogram examples with folded R code.

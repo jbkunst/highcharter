@@ -70,5 +70,5 @@ Suggests:
     spelling,
 LazyData: true
 Language: en-US
-Config/Needs/website: pkgdown, shinylive, nanonext
+Config/Needs/website: pkgdown, shinylive, nanonext, mapgl
 Config/roxygen2/version: 8.1.1
