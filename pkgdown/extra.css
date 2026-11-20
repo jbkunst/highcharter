@@ -1,183 +1,208 @@
 @font-face {
-  font-family: 'Datalegreya-Gradient';
-  /* src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Gradient.otf'); */
-  src: local('Datalegreya'), url('https://fonts.cdnfonts.com/s/19716/Datalegreya-Gradient.woff') format('woff');
-  font-weight: normal;
+  font-family: "Datalegreya-Thin";
+  src: url("fonts/Datalegreya-Thin.otf") format("opentype");
+  font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-	font-family: 'Datalegreya-Thin';
-	/* src: url('https://cdn.rawgit.com/figs-lab/datalegreya/master/font-files/Datalegreya-Thin.otf'); */
-	src: local('Datalegreya'), url('https://fonts.cdnfonts.com/s/19716/Datalegreya-Thin.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
+  font-family: "Datalegreya-Gradient";
+  src: url("fonts/Datalegreya-Gradient.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-  -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
-  -moz-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
-  -webkit-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
-  -ms-font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
-  font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
-  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
-}
-
-body {
+  font-weight: 300;
+  line-height: 1.75;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#highcharter {
-  font-family: 'Datalegreya-Gradient', sans-serif;
-  font-size: 5em;
+/* Match the blog's light IBM Plex Sans prose while retaining the site's titles. */
+main p, main ul, main ol { margin-bottom: 1.35rem; }
+main h1, main h2 {
+  font-family: "Alegreya Sans SC", sans-serif;
+  font-weight: 400;
+  line-height: 1.25;
 }
-
-.contents p, 
-.contents li,
-.contents dd
-{
-  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 16px auto;
-  font-size: 17px;
-  line-height: 30px;
-  margin-bottom: 1em;
+main h2 { margin-top: 2.8rem; margin-bottom: 1.2rem; }
+main h3, main h4, main h5 { font-weight: 400; }
+.navbar-brand,
+.template-home #highcharter {
+  font-family: "Datalegreya-Gradient", "Alegreya Sans SC", sans-serif;
+  font-weight: 400;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "dlig" 1;
+  letter-spacing: normal;
 }
-
-.highchart {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-/*
-h1, h2, h3, h4, h5, h6,
-#toc > h2,
+.highcharter-wordmark { white-space: nowrap; }
 .navbar-brand {
-  font-family: 'Alegreya Sans SC', sans-serif;
+  font-family: "Datalegreya-Thin", "Alegreya Sans SC", sans-serif;
+  font-size: 1.7rem;
+}
+.template-home .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(.75rem, 2vw, 1.5rem);
+  border-bottom: 0;
+}
+
+.template-home #highcharter {
+  margin: 0;
+  font-size: clamp(1.75rem, 7vw, 5rem);
+}
+
+.template-home .page-header .logo {
+  content: url("home-hex.svg");
+  order: 1;
+  position: static;
+  margin: 0;
+  width: clamp(3rem, 9vw, 6rem);
+  height: auto;
+  aspect-ratio: 166 / 192;
+}
+.template-article-index h3,
+.template-article-index .h3,
+.template-article-index a { font-weight: 400; }
+
+/* Let the article menu use the viewport instead of pkgdown's 280px cap. */
+#navbar .dropdown-menu { max-height: calc(100dvh - 5rem); }
+@media (min-width: 992px) {
+  #navbar .dropdown-menu { min-width: 23rem; }
+}
+
+.template-article .nav-tabs { flex-wrap: wrap; }
+.container:not(.template-home) .page-header .logo { display: none; }
+.template-article .page-header .author,
+.template-article .page-header .date {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: .9rem;
   font-weight: 300;
+  color: #64717d;
+  margin: .35rem 0;
 }
-
-h2 > code {
-    font-size: 1.5rem;
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.6rem 0 2.4rem;
 }
+.chart-grid > div { min-width: 0; }
+@media (max-width: 991.98px) { .chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 575.98px) { .chart-grid { grid-template-columns: 1fr; } }
 
-.contents p, 
-.contents li,
-.contents dd
-{
-  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 16px auto;
-  font-size: 17px;
-  line-height: 30px;
-  margin-bottom: 1em;
-}
-
-.highchart {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-pre code, code {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
-}
-
-/* make space between nav items */
-/*
-.navbar-nav .nav-item>.nav-link {
-  font-family: 'Alegreya Sans SC', sans-serif;
-  padding-left: 1rem;
-}
-
-dt {
-  font-weight: 300;
-}
-
-form[role=search]{
-  visibility: hidden;
-}
-*/
-
-/* make space after navbar 
-.page-header, #toc, .links {
-  margin-top: 3rem;
-}
-
-/* make space after navbar 
-.page-header {
-  margin-bottom: 2rem;
+/* Size the mobile sidebar to its row, accounting for a visible scrollbar. */
+@media (max-width: 767.98px) {
+  .row > aside { width: calc(100% - 1rem); }
 }
 
 
-/*
-.navbar {
-  border-color: #A3EDBA;
-  border-bottom-width: 1px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.05), 0 10px 10px rgba(0,0,0,0.15);
+.home-gallery { display: block; width: 100%; height: 660px; margin: 2rem 0; border: 0; }
+/* pkgdown removes the sidebar contents but retains Bootstrap's 9/3 columns. */
+.template-home #main { width: 100%; max-width: 100%; flex: 0 0 100%; }
+.template-home #main + aside { display: none; }
+.template-home .home-copy { max-width: 52rem; margin-inline: auto; }
+@media (max-width: 520px) { .home-gallery { height: 720px; } }
+
+/* Playback controls below each chart in From data to charts. */
+.transition-grid-page .grid-controls {
+  --control-ink: var(--bs-body-color, #38384b);
+  --control-surface: var(--bs-body-bg, #fff);
+  --control-border: color-mix(in srgb, var(--control-ink) 32%, var(--control-surface));
+  --control-hover: color-mix(in srgb, var(--control-ink) 7%, var(--control-surface));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin: .75rem 0 1.5rem;
 }
 
-body> .container .row {
-  margin-top: 1.5em;
+.grid-controls :is(button, select) {
+  min-height: 44px;
+  max-width: 100%;
+  padding: .5rem .875rem;
+  border: 1px solid var(--control-border);
+  border-radius: .65rem;
+  background-color: var(--control-surface);
+  color: var(--control-ink);
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
 }
 
-#navbarbrand {
-  font-size: 1.75em;
-  font-family: 'Datalegreya-Thin', sans-serif;
+.grid-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
 }
 
-.navbar-default {
-  background-color: #47475C;
-  border-color: #A3EDBA;
-  border-bottom-width: 1px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.22);
-  
+.grid-controls .grid-play {
+  min-width: 6rem;
+  border-color: transparent;
+  background-color: #47475c;
+  color: white;
 }
 
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-  color: #ffffff;
-  background-color: #A3EDBA;
+.grid-controls button::before {
+  content: "";
+  width: .85em;
+  height: .85em;
+  background-color: currentColor;
 }
 
-.navbar-default .navbar-nav>.open>a,
-.navbar-default .navbar-nav>.open>a:hover,
-.navbar-default .navbar-nav>.open>a:focus {
-  color: #ffffff;
-  background-color: #A3EDBA;
+.grid-play::before {
+  clip-path: polygon(14% 0, 95% 50%, 14% 100%);
 }
 
-.navbar-default .navbar-nav>.active>a,
-.navbar-default .navbar-nav>.active>a:hover,
-.navbar-default .navbar-nav>.active>a:focus {
-  color: #ffffff;
-  background-color: #A3EDBA;
+[data-playing="true"] .grid-play::before {
+  clip-path: polygon(8% 0, 38% 0, 38% 100%, 62% 100%, 62% 0, 92% 0, 92% 100%, 8% 100%);
 }
 
-.nav li>a:focus, .nav li>a:hover {
-  color: #ffffff;
-  background-color: #A3EDBA;
+.grid-reset::before {
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3v4h4M2.5 7a5.5 5.5 0 1 1 .7 4.3'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-.nav-pills>li.active>a, 
-.nav-pills>li.active>a:hover,
-.nav-pills>li.active>a:focus {
-  color: #ffffff;
-  background-color: #A3EDBA;
+.grid-controls select {
+  appearance: none;
+  padding-inline-end: 2.4rem;
+  background-image: var(--bs-form-select-bg-img, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%236d7383' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2 4 4 4 4-4'/%3E%3C/svg%3E"));
+  background-repeat: no-repeat;
+  background-position: right .85rem center;
+  background-size: .8rem;
 }
 
-.dropdown-menu>.active>a,
-.dropdown-menu>.active>a:hover, 
-.dropdown-menu>.active>a:focus {
-    color: #ffffff;
-    text-decoration: none;
-    outline: 0;
-    background-color: #A3EDBA;
+.grid-controls :is(button, select):hover:enabled {
+  background-color: var(--control-hover);
+  border-color: var(--control-ink);
 }
 
-dt {
-  font-weight: normal;
-  font-size: 1.25em;
+.grid-controls .grid-play:hover:enabled { background-color: #353548; }
+
+.grid-controls :is(button, select):focus-visible {
+  outline: 3px solid var(--bs-emphasis-color, #47475c);
+  outline-offset: 2px;
 }
 
-*/
+.grid-controls select:disabled { opacity: .6; cursor: wait; }
+
+@media (forced-colors: active) {
+  .grid-controls select { appearance: auto; background-image: none; }
+}
+
+.shiny-gallery .card-img-top {
+  aspect-ratio: 2 / 1;
+  object-fit: contain;
+  background: white;
+}
+
+.shiny-gallery a:hover, .shiny-gallery a:focus-visible {
+  border-color: var(--bs-link-color);
+}

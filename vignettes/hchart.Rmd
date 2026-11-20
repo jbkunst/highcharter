@@ -1,7 +1,5 @@
 ---
 title: hchart Function
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   This a generic function, this means you can chart various R like numeric, 
@@ -16,19 +14,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}   
 ---
 
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "magic"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
-
 ```{r, include=FALSE}
 library(highcharter)
-options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 options(download.file.method = "libcurl")
 ```
 
@@ -49,7 +37,11 @@ library(dplyr)
 data(penguins, package = "palmerpenguins")
 data(diamonds, economics_long, package = "ggplot2")
 
-hchart(penguins, "scatter", hcaes(x = body_mass_g, y = flipper_length_mm , group = species))
+hchart(
+  penguins,
+  "scatter",
+  hcaes(x = body_mass_g, y = flipper_length_mm, group = species)
+)
 
 penguins2 <- penguins |>
   count(species, island) |>
@@ -67,6 +59,22 @@ economics_long2 <- economics_long |>
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ```
 
+## GeoJSON
+
+`hchart()` reads the geometry from a `geo_list` or `geo_json` FeatureCollection
+from **geojsonio**. Here the local file contains two district polygons.
+
+```{r hchart-geojson}
+library(geojsonio)
+
+path <- system.file("extdata", "districts.geojson", package = "highcharter")
+districts <- geojson_list(as.json(path))
+hchart(districts)
+```
+
+With a mixed collection, the same call draws polygons, then lines, then points.
+The [Maps vignette](maps.html#overlay-geojson-points) shows a clinic network with all three.
+
 ## Numeric & Histograms
 
 ```{r}
@@ -80,6 +88,15 @@ hchart(x)
 hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
 ```
 
+## Precomputed histograms
+
+Pass a histogram object when you want R to choose the breaks before charting.
+The bin boundaries and counts are preserved.
+
+```{r precomputed-histogram}
+hchart(hist(diamonds$price, breaks = 30, plot = FALSE), name = "Diamond prices")
+```
+
 ## Character & Factor
 
 ```{r}
@@ -90,24 +107,75 @@ hchart(x, type = "column")
 ## Time Series
 
 ```{r}
-hchart(LakeHuron, name = "Level") |> 
+hchart(LakeHuron, name = "Level") |>
   hc_title(text = "Level of Lake Huron 1875–1972")
 ```
 
-## Seasonal Decomposition of Time Series by Loess
+### Seasonal Decomposition of Time Series by Loess
 
 ```{r}
 x <- stl(log(AirPassengers), "per")
 hchart(x)
 ```
 
-## Forecast package
+### Forecast package
+
+The legend distinguishes the observed series from the forecast. Prediction
+intervals are linked to the forecast series. Supply `name` to label the subject;
+the chart adds the observed/forecast suffixes.
 
 ```{r}
 library(forecast)
 
 x <- forecast(ets(USAccDeaths), h = 48, level = 95)
 hchart(x)
+```
+
+### Exponential-smoothing components
+
+An `ets` model shows its observed values and fitted level, slope or seasonal
+states in aligned panels. To show future values instead, pass the model to
+`forecast()` and chart the resulting forecast object.
+
+```{r ets-components}
+hchart(forecast::ets(AirPassengers))
+```
+
+### Multivariate Time series
+
+```{r}
+x <- cbind(mdeaths, fdeaths)
+hchart(x)
+```
+
+### Seasonal decomposition
+
+The four panels share a time axis and show the observed series, seasonality,
+trend and remainder. Gaps at the ends of the trend are part of the fitted
+decomposition.
+
+```{r hchart-decompose}
+hchart(stats::decompose(AirPassengers, type = "multiplicative"))
+```
+
+### Seasonal adjustment with X-13
+
+With the optional `seasonal` package installed, compare the original monthly
+series with the X-13-adjusted series on the same scale. Labels mark the outliers
+reported by the model at the adjusted value, as in `plot(fit)` (e.g., AO for
+an additive outlier or LS for a level shift).
+
+```{r x13, eval=requireNamespace("seasonal", quietly=TRUE)}
+fit <- seasonal::seas(AirPassengers)
+hchart(fit)
+```
+
+### Autocovariance & Autocorrelation
+
+```{r}
+changes <- diff(AirPassengers)
+hchart(acf(changes, plot = FALSE))
+hchart(pacf(changes, plot = FALSE))
 ```
 
 ## Igraph package
@@ -155,29 +223,23 @@ quantmod package.
 ```{r}
 library(quantmod)
 
-x <- getSymbols("GOOG", auto.assign = FALSE)
+data(sample_matrix, package = "xts")
+x <- xts::as.xts(sample_matrix)
 
-hchart(x)
-```
-
-## Multivariate Time series
-
-```{r}
-x <- cbind(mdeaths, fdeaths)
-hchart(x)
-```
-
-## Autocovariance & Autocorrelation
-
-```{r}
-x <- acf(diff(AirPassengers), plot = FALSE)
 hchart(x)
 ```
 
 ## Principal Components
 
-```{r}
-hchart(princomp(USArrests, cor = TRUE))
+Each point represents one state. Axis titles give the share of variance
+explained by each component. Hover over a point to see the state's name.
+
+Use `loadings = TRUE` to show how the variables relate to the chosen
+components. Use `scale = 0` for the raw observation scores.
+
+```{r hchart-pca-loadings}
+fit <- prcomp(USArrests, scale. = TRUE)
+hchart(fit, choices = c(1, 3), loadings = TRUE)
 ```
 
 ## Matrix
@@ -187,8 +249,16 @@ data(volcano)
 
 hchart(volcano) |> # changing default color
   hc_colorAxis(
-    stops = color_stops(colors = c("#000004FF", "#56106EFF", "#BB3754FF", "#F98C0AFF", "#FCFFA4FF"))
+    stops = color_stops(
+      colors = c(
+        "#000004FF",
+        "#56106EFF",
+        "#BB3754FF",
+        "#F98C0AFF",
+        "#FCFFA4FF"
+      )
     )
+  )
 ```
 
 ## Distance matrix 

@@ -4,7 +4,7 @@
 \alias{hc_add_series.data.frame}
 \title{hc_add_series for data frames objects}
 \usage{
-\method{hc_add_series}{data.frame}(hc, data, type = NULL, mapping = hcaes(), fast = FALSE, ...)
+\method{hc_add_series}{data.frame}(hc, data, type = NULL, mapping = hcaes(), ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
@@ -15,11 +15,18 @@
 
 \item{mapping}{The mapping, same idea as \code{ggplot2}.}
 
-\item{fast}{convert to json during the composition of a highchart object}
-
 \item{...}{Arguments defined in
 \url{https://api.highcharts.com/highcharts/chart}.}
 }
 \description{
 hc_add_series for data frames objects
+}
+\examples{
+# Add a band using point options specific to range charts.
+intervals <- data.frame(day = as.Date("2025-01-01") + 0:2,
+                        estimate = c(10, 12, 11), se = c(1, 2, 1))
+highchart() |>
+  hc_add_series(intervals, "arearange",
+    hcaes(day, low = estimate - se, high = estimate + se), name = "Range") |>
+  hc_add_series(intervals, "line", hcaes(day, estimate), name = "Estimate")
 }

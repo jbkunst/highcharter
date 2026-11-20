@@ -9,18 +9,17 @@ hc_navigator(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highstock/navigator}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highstock/navigator}.}
 }
 \description{
-The navigator is a small series below the main series, displaying
-a view of the entire data set. It provides tools to zoom in and
-out on parts of the data as well as panning across the dataset.
+The navigator is a small series below the main series,
+displaying a view of the entire data set. It provides tools to zoom in
+and out on parts of the data as well as panning across the dataset.
 }
 \examples{
-
-highchart(type = "stock") |> 
-  hc_add_series(AirPassengers) |> 
-  hc_rangeSelector(selected = 4) |> 
+highchart(type = "stock") |>
+  hc_add_series(AirPassengers) |>
+  hc_rangeSelector(selected = 4) |>
   hc_navigator(
     outlineColor = "gray",
     outlineWidth = 2,
@@ -35,5 +34,4 @@ highchart(type = "stock") |>
       borderColor = "red"
     )
   )
-
 }

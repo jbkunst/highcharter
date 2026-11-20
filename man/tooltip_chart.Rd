@@ -12,23 +12,23 @@ tooltip_chart(accesor = NULL, hc_opts = NULL, width = 250, height = 150)
 \item{hc_opts}{A list of options using the  \url{https://api.highcharts.com/highcharts/}
 syntax.}
 
-\item{width}{A numeric input in pixels indicating the with of the tooltip.}
+\item{width}{Width of the tooltip chart in pixels.}
 
-\item{height}{A numeric input in pixels indicating the height of the tooltip.}
+\item{height}{Height of the tooltip chart in pixels.}
 }
 \description{
 Helper to create charts in tooltips.
 }
 \details{
-This function needs to be used in the \code{pointFormatter} argument
-inside of \code{hc_tooltip} function an \code{useHTML = TRUE} option.
+Use the result as \code{pointFormatter} in \code{hc_tooltip(useHTML = TRUE, ...)}.
+In \code{hc_opts}, use \code{"point.name"} to read a field from the hovered point
+and \code{JS()} to supply a JavaScript callback.
 }
 \examples{
 
 require(dplyr)
 require(purrr)
-require(tidyr)
-require(gapminder)
+if (requireNamespace("gapminder", quietly = TRUE)) {
 data(gapminder, package = "gapminder")
 
 gp <- gapminder |>
@@ -36,7 +36,7 @@ gp <- gapminder |>
   distinct(country, .keep_all = TRUE)
 
 gp2 <- gapminder |>
-  nest(-country) |>
+  group_nest(country) |>
   mutate(
     data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
     data = map(data, list_parse)
@@ -94,4 +94,5 @@ hc |>
   )
 
 
+}
 }

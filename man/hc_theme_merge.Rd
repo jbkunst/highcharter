@@ -2,31 +2,19 @@
 % Please edit documentation in R/theme.R
 \name{hc_theme_merge}
 \alias{hc_theme_merge}
-\title{Merge themes}
+\title{Merge chart themes}
 \usage{
 hc_theme_merge(...)
 }
 \arguments{
-\item{...}{\code{hc_theme} objects.}
+\item{...}{Themes built with \code{\link[=hc_theme]{hc_theme()}}. Later arguments take precedence.}
+}
+\value{
+An \code{hc_theme} object.
 }
 \description{
-Function to combine hc_theme objects.
+Merge chart themes
 }
 \examples{
-
-thm <- hc_theme_merge(
-  hc_theme_darkunica(),
-  hc_theme(
-    chart = list(
-      backgroundColor = "transparent",
-      divBackgroundImage = "http://cdn.wall-pix.net/albums/art-3Dview/00025095.jpg"
-    ),
-    title = list(
-      style = list(
-        color = "white",
-        fontFamily = "Erica One"
-      )
-    )
-  )
-)
+hc_theme_merge(hc_theme("ft"), hc_theme(chart = list(backgroundColor = "white")))
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/highcharter.R
 \name{highchartOutput}
 \alias{highchartOutput}
-\alias{highchartOutputZ}
+\alias{highchartStockOutput}
 \title{Widget output function for use in Shiny}
 \usage{
 highchartOutput(outputId, width = "100\%", height = "400px")
 
-highchartOutputZ(outputId, width = "100\%", height = "400px")
+highchartStockOutput(outputId, width = "100\%", height = "400px")
 }
 \arguments{
 \item{outputId}{The name of the input.}

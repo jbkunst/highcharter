@@ -1,0 +1,13 @@
+{
+  "name": "highcharter-bundle",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "update": "node update.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "highcharts": "12.6.2"
+  }
+}

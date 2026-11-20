@@ -1,0 +1,37 @@
+extends: flat
+# The parent's fifth color equals this preset's background.
+colors: ['#f1c40f', '#2ecc71', '#9b59b6', '#e74c3c', '#95A5A6', '#3498db', '#1abc9c', '#f39c12', '#d35400']
+chart:
+  backgroundColor: '#34495e'
+xAxis:
+  labels:
+    style:
+      color: '#C0C0C0'
+  gridLineColor: '#46627f'
+  lineColor: '#46627f'
+  tickColor: '#46627f'
+  title:
+    style:
+      color: '#FFFFFF'
+yAxis:
+  labels:
+    style:
+      color: '#C0C0C0'
+  gridLineColor: '#46627f'
+  tickColor: '#46627f'
+  title:
+    style:
+      color: '#FFFFFF'
+title:
+  style:
+    color: '#FFFFFF'
+subtitle:
+  style:
+    color: '#C0C0C0'
+legend:
+  itemStyle:
+    color: '#C0C0C0'
+  itemHoverStyle:
+    color: '#C0C0C0'
+  itemHiddenStyle:
+    color: '#444444'

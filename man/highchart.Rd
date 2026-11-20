@@ -10,8 +10,7 @@ highchart(
   type = "chart",
   width = NULL,
   height = NULL,
-  elementId = NULL,
-  google_fonts = getOption("highcharter.google_fonts")
+  elementId = NULL
 )
 }
 \arguments{
@@ -23,20 +22,32 @@ highchart(
 \item{type}{A character value to set if use Highchart, Highstock or
 Highmap. Options are \code{"chart"}, \code{"stock"} and \code{"map"}.}
 
-\item{width}{A numeric input in pixels.}
+\item{width}{A numeric width in pixels, or a CSS width such as \code{"100\%"}.}
 
 \item{height}{A numeric input in pixels.}
 
 \item{elementId}{Use an explicit element ID for the widget.}
-
-\item{google_fonts}{A boolean value. If TRUE (default), adds a reference to the
-Google Fonts API to the HTML head, downloading CSS for the font families
-defined in the Highcharts theme from https://fonts.googleapis.com. Set to
-FALSE if you load your own fonts using CSS. This option as default is
-controlled by \code{"highcharter.google_fonts"} option.}
 }
 \description{
 This function creates a Highchart chart using \pkg{htmlwidgets}. The
 widget can be rendered on HTML pages generated from R Markdown, Shiny, or
 other applications.
+}
+\examples{
+tokyo <- subset(city_weather, city == "Tokyo")
+highchart(width = "100\%") |>
+  hc_add_series(tokyo, "line", hcaes(date, temp_mean), name = "Tokyo") |>
+  hc_xAxis(type = "datetime") |>
+  hc_title(text = "Daily mean temperature in Tokyo, 2025")
+
+# Stock navigation is available in the shared bundle.
+prices <- data.frame(
+  day = base::as.Date("2025-01-01") + 0:9,
+  close = c(100, 102, 101, 104, 103, 106, 108, 107, 109, 112)
+)
+highchart(type = "stock", width = "100\%") |>
+  hc_add_series(prices, "line", hcaes(x = day, y = close), name = "Close")
+}
+\seealso{
+\code{\link[=hchart]{hchart()}}, \code{\link[=hcmap]{hcmap()}}, \code{\link[=highchartstock]{highchartstock()}}
 }

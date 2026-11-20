@@ -1,6 +1,6 @@
 ^pkgdown$
 ^docs$
-^vignettes/.*$
+^vignettes/(?!themes\.Rmd$).*$
 ^_pkgdown\.yml$
 ^CRAN-RELEASE$
 # old versions
@@ -10,7 +10,7 @@ highcharter-logo.png
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^cran-comments\.md$
-^tests$
+^tests/browser$
 ^dev$
 ^\.travis\.yml$
 .lintr
@@ -32,3 +32,6 @@ index.Rmd
 ^\.github$
 ^CRAN-SUBMISSION$
 ^.*\.qmd$
+^AGENTS\.md$
+^plan\.md$
+^air\.toml$

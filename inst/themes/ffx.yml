@@ -1,0 +1,30 @@
+# Historical highcharter adaptation of Firefox: https://acorn.firefox.com/latest/foundations/styles/color-MZHBVuZc
+colors: ['#00AACC', '#FF4E00', '#B90000', '#5F9B0A', '#CD6723']
+chart:
+  backgroundColor:
+    linearGradient: [0, 0, 0, 150]
+    stops:
+    - [0, '#CAE1F4']
+    - [1, '#EEEEEE']
+  style:
+    fontFamily: Open Sans
+title:
+  align: left
+subtitle:
+  align: left
+legend:
+  align: right
+  verticalAlign: bottom
+xAxis:
+  gridLineWidth: 1
+  gridLineColor: '#F3F3F3'
+  lineColor: '#F3F3F3'
+  minorGridLineColor: '#F3F3F3'
+  tickColor: '#F3F3F3'
+  tickWidth: 1
+yAxis:
+  gridLineColor: '#F3F3F3'
+  lineColor: '#F3F3F3'
+  minorGridLineColor: '#F3F3F3'
+  tickColor: '#F3F3F3'
+  tickWidth: 1

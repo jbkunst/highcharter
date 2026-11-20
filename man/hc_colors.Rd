@@ -9,23 +9,25 @@ hc_colors(hc, colors)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{colors}{A vector of colors.}
+\item{colors}{A vector of series colors.}
 }
 \description{
-An array containing the default colors for the chart's series. When all
-colors are used, new colors are pulled from the start again.
+An array containing the default
+colors for the chart's series. When all colors are used, new colors are
+pulled from the start again.
+}
+\details{
+Default colors can also be set on a series or series.type basis, see
+column.colors, pie.colors.
+
+In styled mode, the colors option doesn't exist. Instead, colors are
+defined in CSS and applied either through series or point class names, or
+through the chart.colorCount option.
 }
 \examples{
-
-library(viridisLite)
-
-cols <- viridis(3)
-cols <- substr(cols, 0, 7)
-
-highchart() |> 
-  hc_add_series(data = sample(1:12)) |> 
-  hc_add_series(data = sample(1:12) + 10) |> 
-  hc_add_series(data = sample(1:12) + 20) |> 
-  hc_colors(cols)
-
+highcharts_demo() |>
+  hc_colors(c("#440154", "#21918C", "#FDE725"))
+}
+\seealso{
+\url{https://api.highcharts.com/highcharts/colors}
 }

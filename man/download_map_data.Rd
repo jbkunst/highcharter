@@ -8,7 +8,7 @@ download_map_data(
   url = "custom/world.js",
   showinfo = FALSE,
   quiet = FALSE,
-  method = "curl"
+  method = getOption("download.file.method", "auto")
 )
 }
 \arguments{
@@ -20,7 +20,7 @@ are the keys to add data in \code{hcmap}.}
 \item{quiet}{Boolean parameter to turn off download messages (on by default).}
 
 \item{method}{A string value for the download method used by
-\code{\link[utils]{download.file}}.}
+\code{\link[utils]{download.file}}. Defaults to R's configured method.}
 }
 \description{
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.

@@ -5,11 +5,18 @@
 #' charting library. Highcharts provide a various type of charts, from
 #' scatters to heatmaps or treemaps.
 #'
+#' @section Licensing:
+#' The R wrapper in `highcharter` is licensed under MIT. Every chart created with
+#' `highcharter` uses the bundled Highcharts JavaScript library. Your use of
+#' Highcharts must be covered by the applicable Highsoft terms for
+#' [commercial use](https://shop.highcharts.com/license) or
+#' [personal and educational use](https://shop.highcharts.com/license-eula).
+#'
 #' @name highcharter
 #' @docType package
 #' @author Joshua Kunst (@@jbkunst)
 #' @importFrom utils data
-#' @importFrom stringr str_c str_detect str_extract str_replace str_replace_all
+#' @importFrom stringr str_detect str_replace str_replace_all
 #'      str_trim str_to_lower str_to_title
 #' @importFrom htmlwidgets JS
 "_PACKAGE"
@@ -34,5 +41,3 @@ NULL
 #' @export
 #' @rdname highcharter-exports
 NULL
-
-if (getRversion() >= "2.15.1") utils::globalVariables(c(".", "colorValue", "level", "name", "parent"))

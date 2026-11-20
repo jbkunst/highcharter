@@ -10,27 +10,17 @@
 #'   hc_add_series(data = purrr::map(0:4, function(x) list(x, x)), type = "scatter", color = "orange")
 #' @export
 hc_add_series <- function(hc, data = NULL, ...) {
-
-  # assertthat::assert_that(is.highchart(hc))
-
   UseMethod("hc_add_series", data)
 }
 
 
 #' @export
-hc_add_series.default <- function(hc, ...) {
-
-  # assertthat::assert_that(is.highchart(hc))
-
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.default")
+hc_add_series.default <- function(hc, data = NULL, ...) {
+  options <- validate_args("hc_add_series", list(...))
+  if (!missing(data)) {
+    options <- c(list(data = data), options)
   }
-
-  validate_args("add_series", eval(substitute(alist(...))))
-
-  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, list(list(...)))
-
-  hc
+  hc_add_series_list(hc, list(options))
 }
 
 
@@ -39,16 +29,23 @@ hc_add_series.default <- function(hc, ...) {
 #' @param data A numeric object
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
-hc_add_series.numeric <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.numeric")
+hc_add_series.numeric <- hc_add_series.default
+
+
+ts_axis_type <- function(x) {
+  if (stats::is.ts(x) && stats::frequency(x) %in% c(1, 4, 12)) {
+    "datetime"
+  } else {
+    "linear"
   }
-
-  data <- fix_1_length_data(data)
-
-  hc_add_series.default(hc, data = data, ...)
 }
 
+ts_x_values <- function(data) {
+  if (ts_axis_type(data) == "datetime") {
+    return(datetime_to_timestamp(zoo::as.Date(data)))
+  }
+  as.numeric(time(data))
+}
 
 #' hc_add_series for time series objects
 #' @param hc A `highchart` `htmlwidget` object.
@@ -58,74 +55,121 @@ hc_add_series.numeric <- function(hc, data, ...) {
 #' @importFrom stats time
 #' @export
 hc_add_series.ts <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.ts")
-  }
-
-  # http://stackoverflow.com/questions/29202021/
-  timestamps <- data |>
-    stats::time() |>
-    zoo::as.Date() |>
-    datetime_to_timestamp()
-
-  series <- list_parse2(data.frame(timestamps, as.vector(data)))
+  series <- list_parse2(data.frame(ts_x_values(data), as.vector(data)))
 
   hc_add_series(hc, data = series, ...)
 }
 
 
-#' hc_add_series for xts objects
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param data A `xts` object.
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
-#' @importFrom xts is.xts
+#' Add xts series to a chart
+#'
+#' A single instrument with Open, High, Low and Close columns produces a
+#' candlestick series. Additional columns such as Volume are ignored. With
+#' incomplete or ordinary data, each column produces its own line. Select one
+#' instrument before passing a data set with ambiguous OHLC columns.
+#' @param hc A `highchart` widget.
+#' @param data An `xts` object.
+#' @param name Optional series name, or one name per column for multiple lines.
+#' @param ... Highcharts series options. To set `id` for multiple lines, supply
+#'   a different ID for each column. Other options apply to every line.
 #' @examples
-#' 
-#' if(require("quantmod")){
-#'   x <- getSymbols("GOOG", auto.assign = FALSE)
-#'   hchart(x) 
+#' if (requireNamespace("xts", quietly = TRUE)) {
+#'   dates <- as.Date("2025-01-01") + 0:2
+#'   quotes <- xts::xts(cbind(A = c(42, 45, 44), B = c(30, NA, 32)), dates)
+#'   hchart(quotes, id = c("a", "b"))
+#'
+#'   if (requireNamespace("quantmod", quietly = TRUE)) {
+#'     prices <- xts::xts(cbind(Open = 4:6, High = 6:8, Low = 3:5, Close = 5:7), dates)
+#'     highchart(type = "stock") |> hc_add_series(prices, name = "Price")
+#'   }
 #' }
-#' 
 #' @export
-hc_add_series.xts <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.xts")
+hc_add_series.xts <- function(hc, data, ..., name = NULL) {
+  rlang::check_installed("xts", reason = "to chart an xts object.")
+
+  # quantmod also recognises columns marked with Op, Hi, Lo and Cl attributes.
+  fields <- c(Op = "Open", Hi = "High", Lo = "Low", Cl = "Close")
+  has_field <- function(tag) {
+    !is.null(attr(data, tag, exact = TRUE)) ||
+      any(grepl(
+        paste0("\\b", fields[[tag]], "\\b"),
+        colnames(data),
+        ignore.case = TRUE
+      ))
   }
-
-  requireNamespace("quantmod")
-
-  if (quantmod::is.OHLC(data)) {
-    return(hc_add_series.ohlc(hc, data, ...))
+  if (all(vapply(names(fields), has_field, logical(1)))) {
+    return(hc_add_series.ohlc(hc, data, ..., name = name))
   }
 
   timestamps <- datetime_to_timestamp(time(data))
+  n <- NCOL(data)
+  opts <- validate_args("hc_add_series", list(...))
+  if (is.null(name)) {
+    name <- colnames(data)
+  }
+  if (!is.null(name) && length(name) != n) {
+    stop("Supply one name per xts column.", call. = FALSE)
+  }
+  id <- opts$id
+  if (!is.null(id) && (length(id) != n || anyNA(id) || anyDuplicated(id))) {
+    stop("Supply one distinct series ID per xts column.", call. = FALSE)
+  }
+  if (is.null(opts$type)) {
+    opts$type <- "line"
+  }
 
-  series <- list_parse2(data.frame(timestamps, as.vector(data)))
-
-  hc_add_series(hc, data = series, ...)
+  series <- lapply(seq_len(n), function(i) {
+    opts$name <- name[i]
+    opts$id <- id[i]
+    opts$data <- list_parse2(data.frame(
+      timestamps,
+      value = as.vector(data[, i])
+    ))
+    opts
+  })
+  hc_add_series_list(hc, series)
 }
 
 
 #' @rdname hc_add_series.xts
-#' @param type The way to show the `xts` object. Can be 'candlestick' or 'ohlc'.
+#' @param type Financial series type, usually `"candlestick"` or `"ohlc"`.
 #' @export
-hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.xts.ohlc")
+hc_add_series.ohlc <- function(
+  hc,
+  data,
+  type = "candlestick",
+  ...,
+  name = NULL
+) {
+  rlang::check_installed("quantmod", reason = "to chart OHLC prices.")
+  columns <- quantmod::has.OHLC(data, which = TRUE)
+  select_one <- "Select the OHLC columns for one instrument before adding the series."
+  if (
+    length(columns) != 4L ||
+      anyNA(columns) ||
+      anyDuplicated(columns) ||
+      !all(columns %in% seq_len(NCOL(data)))
+  ) {
+    stop(select_one, call. = FALSE)
+  }
+  price_names <- colnames(data)[columns]
+  field <- "^(.*)\\b(Open|High|Low|Close)\\b(.*)$"
+  labeled <- grep(field, price_names, ignore.case = TRUE, value = TRUE)
+  symbols <- sub(field, "\\1\\3", labeled, ignore.case = TRUE)
+  symbols <- unique(gsub("^[. -]+|[. -]+$", "", symbols))
+  if (length(symbols) > 1L) {
+    stop(select_one, call. = FALSE)
+  }
+  if (is.null(name)) {
+    name <- if (length(symbols) && nzchar(symbols)) symbols else "OHLC"
   }
 
-  time <- datetime_to_timestamp(time(data))
-  xdf <- cbind(time, as.data.frame(
-    quantmod::OHLC(data)
+  timestamps <- datetime_to_timestamp(time(data))
+  points <- list_parse2(data.frame(
+    timestamps,
+    as.matrix(data[, columns, drop = FALSE])
   ))
-  xds <- list_parse2(xdf)
-
-  nm <- ifelse(!is.null(list(...)[["name"]]),
-    list(...)[["name"]],
-    str_extract(names(data)[1], "^[A-Za-z]+")
-  )
-
-  hc_add_series(hc, data = xds, name = nm, type = type, ...)
+  hc_add_series(hc, data = points, name = name, type = type, ...)
 }
 
 
@@ -139,27 +183,47 @@ hc_add_series.ohlc <- function(hc, data, type = "candlestick", ...) {
 #' @param ... Arguments defined in
 #'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @export
-hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
-                                   addLevels = TRUE, fillOpacity = 0.1, name = NULL, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.forecast")
-  }
-
-  rid <- random_id()
+hc_add_series.forecast <- function(
+  hc,
+  data,
+  addOriginal = FALSE,
+  addLevels = TRUE,
+  fillOpacity = 0.1,
+  name = NULL,
+  ...
+) {
+  rid <- basename(tempfile("hc-"))
   method <- data$method
+  forecast_name <- if (is.null(name)) {
+    paste("Forecast:", method)
+  } else {
+    paste(name, "forecast")
+  }
 
   if (addOriginal) {
-    hc <- hc_add_series(hc, data$x, name = ifelse(is.null(name), method, name), zIndex = 3, ...)
+    observed_name <- if (is.null(name)) "Observed" else paste(name, "observed")
+    hc <- hc_add_series(hc, data$x, name = observed_name, zIndex = 3, ...)
   }
 
-
-  hc <- hc_add_series(hc, data$mean, name = ifelse(is.null(name), method, name), zIndex = 2, id = rid, ...)
+  # Regression forecasts can have ordinary numeric responses with no ts index.
+  tmf <- if (stats::is.ts(data$mean)) {
+    ts_x_values(data$mean)
+  } else {
+    NROW(data$x) + seq_along(data$mean) - 1
+  }
+  hc <- hc_add_series(
+    hc,
+    data = list_parse2(data.frame(t = tmf, y = as.numeric(data$mean))),
+    name = forecast_name,
+    zIndex = 2,
+    id = rid,
+    ...
+  )
 
   if (addLevels) {
-    tmf <- datetime_to_timestamp(zoo::as.Date(time(data$mean)))
-    nmf <- paste(ifelse(is.null(name), method, name), "level", data$level)
+    nmf <- paste(forecast_name, paste0(data$level, "% interval"))
 
-    for (m in seq(ncol(data$upper))) {
+    for (m in seq_along(data$level)) {
       dfbands <- tibble(
         t = tmf,
         l = as.vector(data$lower[, m]),
@@ -180,7 +244,6 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
     }
   }
 
-
   hc
 }
 
@@ -191,11 +254,7 @@ hc_add_series.forecast <- function(hc, data, addOriginal = FALSE,
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.density <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.density")
-  }
-
-  data <- list_parse(data.frame(cbind(x = data$x, y = data$y)))
+  data <- list_parse(data.frame(x = data$x, y = data$y))
 
   hc_add_series(hc, data = data, ...)
 }
@@ -207,10 +266,6 @@ hc_add_series.density <- function(hc, data, ...) {
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #' @export
 hc_add_series.character <- function(hc, data, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.character")
-  }
-
   series <- data |>
     table() |>
     as.data.frame(stringsAsFactors = FALSE) |>
@@ -225,33 +280,129 @@ hc_add_series.character <- function(hc, data, ...) {
 #' @export
 hc_add_series.factor <- hc_add_series.character
 
+# Highcharts draws Point features individually and expects a single geometry per feature.
+geojson_feature_parts <- function(feature, geometry = feature$geometry) {
+  switch(
+    geometry$type,
+    GeometryCollection = unlist(
+      lapply(geometry$geometries, function(part) {
+        geojson_feature_parts(feature, part)
+      }),
+      recursive = FALSE,
+      use.names = FALSE
+    ),
+    MultiPoint = lapply(geometry$coordinates, function(xy) {
+      feature$geometry <- list(type = "Point", coordinates = xy)
+      feature
+    }),
+    {
+      feature$geometry <- geometry
+      list(feature)
+    }
+  )
+}
+
 #' hc_add_series for geo_json & geo_list objects
 #' @param hc A `highchart` `htmlwidget` object.
-#' @param data A \code{geo_json} or \code{geo_list} object.
-#' @param type Type of series. Can be 'mapline', 'mapoint'.
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
+#' @param data A GeoJSON FeatureCollection of class `geo_json` or `geo_list`.
+#' @param type By default, draw a series for every geometry family present, in
+#'   polygon, line, point order. Supply `"map"`, `"mapline"` or `"mappoint"` to
+#'   select one family.
+#' @param ... Highcharts series options. For multiple layers, supply one name
+#'   per layer or a shared name prefix. If supplying IDs, give one distinct
+#'   ID per layer, in the same order.
 #' @export
 hc_add_series.geo_json <- function(hc, data, type = NULL, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.geo_json")
+  stopifnot(hc$x$type == "map")
+
+  geo <- if (is.character(data)) {
+    jsonlite::fromJSON(data, simplifyVector = FALSE)
+  } else {
+    data
+  }
+  geometry <- purrr::map_chr(
+    geo$features,
+    c("geometry", "type"),
+    .default = NA_character_
+  )
+  if (any(geometry %in% c("GeometryCollection", "MultiPoint"))) {
+    features <- geo$features[!is.na(geometry)]
+    geo$features <- as.list(unlist(
+      lapply(features, geojson_feature_parts),
+      recursive = FALSE,
+      use.names = FALSE
+    ))
+    data <- geo
+    geometry <- purrr::map_chr(geo$features, c("geometry", "type"))
+  }
+  labels <- c(map = "Polygons", mapline = "Lines", mappoint = "Points")
+  if (is.null(type)) {
+    stopifnot(identical(geo$type, "FeatureCollection"))
+    series_types <- c(
+      Polygon = "map",
+      MultiPolygon = "map",
+      LineString = "mapline",
+      MultiLineString = "mapline",
+      Point = "mappoint"
+    )
+    unknown <- setdiff(geometry[!is.na(geometry)], names(series_types))
+    if (length(unknown)) {
+      stop(
+        "Unsupported GeoJSON geometry: ",
+        paste(unknown, collapse = ", "),
+        call. = FALSE
+      )
+    }
+
+    families <- unname(series_types[geometry])
+    types <- intersect(names(labels), families)
+    if (length(types) <= 1L) {
+      type <- if (length(types)) types else "map"
+    }
+  }
+  if (!is.null(type)) {
+    return(hc_add_series.default(
+      hc,
+      data = data,
+      geojson = TRUE,
+      type = type,
+      ...
+    ))
   }
 
-  stopifnot(hc$x$type == "map", !is.null(type))
-
-  hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
+  opts <- validate_args("hc_add_series", list(...))
+  layer_names <- unname(labels[types])
+  if (length(opts$name) == 1L) {
+    layer_names <- paste(opts$name, layer_names)
+  }
+  if (length(opts$name) > 1L) {
+    layer_names <- opts$name
+  }
+  if (length(layer_names) != length(types)) {
+    stop("Supply one name per GeoJSON layer or a shared prefix.", call. = FALSE)
+  }
+  ids <- opts$id
+  if (
+    !is.null(ids) &&
+      (length(ids) != length(types) || anyNA(ids) || anyDuplicated(ids))
+  ) {
+    stop("Supply one distinct series ID per GeoJSON layer.", call. = FALSE)
+  }
+  series <- lapply(seq_along(types), function(i) {
+    geo$features <- unname(geo$features[which(families == types[i])])
+    opts$data <- geo
+    opts$geojson <- TRUE
+    opts$type <- types[i]
+    opts$name <- layer_names[i]
+    opts$id <- ids[i]
+    opts
+  })
+  hc_add_series_list(hc, series)
 }
 
 #' @rdname hc_add_series.geo_json
 #' @export
-hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.geo_list")
-  }
-
-  stopifnot(hc$x$type == "map", !is.null(type))
-
-  hc_add_series.default(hc, data = data, geojson = TRUE, type = type, ...)
-}
+hc_add_series.geo_list <- hc_add_series.geo_json
 
 #' hc_add_series for lm and loess objects
 #' @param hc A `highchart` `htmlwidget` object.
@@ -261,38 +412,70 @@ hc_add_series.geo_list <- function(hc, data, type = NULL, ...) {
 #' @param fillOpacity fillOpacity to the confidence interval.
 #' @param ... Arguments defined in
 #'   \url{https://api.highcharts.com/highcharts/chart}.
-#' @importFrom broom augment
 #' @importFrom rlang .data
 #' @export
-hc_add_series.lm <- function(hc, data, type = "line", color = "#5F83EE", fillOpacity = 0.1, ...) {
-  if (getOption("highcharter.verbose")) {
-    message(sprintf("hc_add_series.%s", class(data)))
+hc_add_series.lm <- function(
+  hc,
+  data,
+  type = "line",
+  color = "#5F83EE",
+  fillOpacity = 0.1,
+  ...
+) {
+  if (inherits(data, "loess")) {
+    x <- data$x[, 1L]
+    prediction <- stats::predict(data, se = TRUE)
+  } else {
+    frame <- stats::model.frame(data)
+    if (!length(attr(stats::terms(data), "term.labels"))) {
+      stop("A model with a predictor is required.", call. = FALSE)
+    }
+    x <- frame[[2L]]
+    prediction <- stats::predict(data, se.fit = TRUE)
+    # predict.lm restores excluded rows, while the model frame omits them.
+    if (
+      inherits(data$na.action, "exclude") && NROW(prediction$fit) != NROW(x)
+    ) {
+      prediction$fit <- prediction$fit[-data$na.action]
+      prediction$se.fit <- prediction$se.fit[-data$na.action]
+    }
   }
+  if (NCOL(x) > 1L || NCOL(prediction$fit) > 1L) {
+    stop(
+      "The fitted series requires one response and a one-dimensional x axis.",
+      call. = FALSE
+    )
+  }
+  points <- data.frame(
+    x = drop(x),
+    fit = as.vector(prediction$fit),
+    se = as.vector(prediction$se.fit)
+  )
+  points <- points[order(points$x), , drop = FALSE]
 
-  data2 <- data |>
-    augment() |>
-    as.matrix.data.frame() |>
-    as.data.frame() |>
-    tibble::as_tibble()
-  data2 <- arrange_(data2, .dots = names(data2)[2])
-  data2 <- mutate(data2, x = names(data2)[2])
-  data2 <- select(data2, !!!c(names(data2)[1]), .data$x, .data$.fitted, .data$.se.fit)
-
-  rid <- random_id()
+  rid <- basename(tempfile("hc-"))
 
   hc |>
-    hc_add_series(data2,
-      type = type, hcaes_("x", ".fitted"),
-      id = rid, color = color, ...
+    hc_add_series(
+      points,
+      type = type,
+      hcaes(x = x, y = .data$fit),
+      id = rid,
+      color = color,
+      ...
     ) |>
-    hc_add_series(data2,
+    hc_add_series(
+      points,
       type = "arearange",
-      hcaes_("x",
-        low = ".fitted - 2 * .se.fit",
-        high = ".fitted + 2 * .se.fit"
+      hcaes(
+        x = x,
+        low = .data$fit - 2 * .data$se,
+        high = .data$fit + 2 * .data$se
       ),
       color = hex_to_rgba(color, fillOpacity),
-      linkedTo = rid, zIndex = -2, ...
+      linkedTo = rid,
+      zIndex = -2,
+      ...
     )
 }
 
@@ -305,19 +488,33 @@ hc_add_series.loess <- hc_add_series.lm
 #' @param data A `data.frame` object.
 #' @param type The type of the series: line, bar, etc.
 #' @param mapping The mapping, same idea as \code{ggplot2}.
-#' @param fast convert to json during the composition of a highchart object
 #' @param ... Arguments defined in
 #'   \url{https://api.highcharts.com/highcharts/chart}.
+#' @examples
+#' # Add a band using point options specific to range charts.
+#' intervals <- data.frame(day = as.Date("2025-01-01") + 0:2,
+#'                         estimate = c(10, 12, 11), se = c(1, 2, 1))
+#' highchart() |>
+#'   hc_add_series(intervals, "arearange",
+#'     hcaes(day, low = estimate - se, high = estimate + se), name = "Range") |>
+#'   hc_add_series(intervals, "line", hcaes(day, estimate), name = "Estimate")
 #' @importFrom rlang .data
 #' @export
-hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), fast = FALSE, ...) {
-  if (getOption("highcharter.verbose")) {
-    message("hc_add_series.data.frame")
-  }
-
+hc_add_series.data.frame <- function(
+  hc,
+  data,
+  type = NULL,
+  mapping = hcaes(),
+  ...
+) {
+  check_removed_fast(...)
   if (length(mapping) == 0) {
     if (has_name(data, "series")) {
-      data <- rename(data, seriess = .data$series)
+      data <- rename(data, seriess = "series")
+    }
+
+    if (identical(type, "xrange")) {
+      data <- convert_date_coordinates(data, c("x", "x2"))
     }
 
     return(hc_add_series(hc, data = list_parse(data), type = type, ...))
@@ -325,276 +522,286 @@ hc_add_series.data.frame <- function(hc, data, type = NULL, mapping = hcaes(), f
 
   data <- mutate_mapping(data, mapping)
 
-  series <- data_to_series(data, mapping, type = type, fast = fast, ...)
+  series <- data_to_series(data, mapping, type = type, ...)
 
   hc_add_series_list(hc, series)
 }
 
-#' Define aesthetic mappings.
-#' Similar in spirit to \code{ggplot2::aes}
-#' @param x,y,... List of name value pairs giving aesthetics to map to
-#'   variables. The names for x and y aesthetics are typically omitted because
-#'   they are so common; all other aesthetics must be named.
-#' @importFrom rlang enexprs is_missing
-#' @examples
-#'
-#' hcaes(x = xval, color = colorvar, group = grvar)
-#' @export
-hcaes <- function(x, y, ...) {
-  # taken from https://github.com/tidyverse/ggplot2/commit/d69762269787ed0799ab4fb1f35638cc46b5b7e6
-  exprs <- rlang::enexprs(x = x, y = y, ...)
-
-  is_missing <- vapply(exprs, rlang::is_missing, logical(1))
-
-  mapping <- structure(exprs[!is_missing], class = "uneval")
-
-  class(mapping) <- c("hcaes", class(mapping))
-
-  mapping
+# Series options pass through `...` to Highcharts, where `fast` would be ignored.
+check_removed_fast <- function(...) {
+  if ("fast" %in% ...names()) {
+    stop(
+      "The `fast` argument was removed. Omit it when charting a data frame.",
+      call. = FALSE
+    )
+  }
 }
 
-#' Define aesthetic mappings using strings.
-#' Similar in spirit to \code{ggplot2::aes_string}
-#' @param x,y,... List of name value pairs giving aesthetics to map to
-#'   variables. The names for x and y aesthetics are typically omitted because
-#'   they are so common; all other aesthetics must be named.
-#' @examples
-#' hchart(mtcars, "point", hcaes_string("hp", "mpg", group = "cyl"))
+#' Map data-frame columns to Highcharts point options
 #'
-#' hcaes_string(x = "xval", color = "colorvar", group = "grvar")
+#' Expressions are evaluated in the data frame and can use variables from the
+#' function that created the mapping. `group` creates one series per distinct
+#' value. Other named mappings become point options.
+#'
+#' @param x,y,... Columns or expressions to map. Only `x` and `y` can be
+#'   supplied by position. A quoted column name or expression is also accepted.
+#' @seealso [hcaes_string()], [mutate_mapping()]
+#' @examples
+#' # Split points into series and assign colors from a numeric column.
+#' hchart(iris, "scatter",
+#'   hcaes(Sepal.Length, Petal.Length, group = Species, color = Petal.Width))
+#'
+#' # Keep supplied hex colors and map size to the bubble radius scale.
+#' cars <- head(mtcars)
+#' cars$paint <- ifelse(cars$am == 1, "#0072B2", "#D55E00")
+#' hchart(cars, "scatter", hcaes(wt, mpg, size = hp, color = paint))
+#'
+#' # Use a date axis, a local multiplier and a gap in the line.
+#' readings <- data.frame(day = as.Date("2025-01-01") + 0:3,
+#'                        rate = c(0.02, 0.04, NA, 0.03))
+#' plot_rates <- function(data, multiplier) {
+#'   hchart(data, "line", hcaes(day, rate * multiplier))
+#' }
+#' plot_rates(readings, 100)
+#'
+#' # Heatmaps use a value and two category axes.
+#' cells <- data.frame(day = c("Mon", "Tue", "Mon", "Tue"),
+#'                     shift = rep(c("AM", "PM"), each = 2), n = c(3, 7, 5, 2))
+#' hchart(cells, "heatmap", hcaes(day, shift, value = n))
+#'
+#' # Task intervals
+#' tasks <- data.frame(
+#'   start = as.Date(c("2025-01-06", "2025-01-08")),
+#'   finish = as.Date(c("2025-01-09", "2025-01-13")),
+#'   lane = 0:1
+#' )
+#' hchart(tasks, "xrange", hcaes(x = start, x2 = finish, y = lane)) |>
+#'   hc_yAxis(categories = c("Design", "Review"))
+#'
+#' # Five-number summaries
+#' waits <- data.frame(
+#'   clinic = c("North", "South"), lower = c(4, 6), p25 = c(6, 8),
+#'   p50 = c(10, 12), p75 = c(14, 15), upper = c(19, 22)
+#' )
+#' hchart(waits, "boxplot",
+#'   hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper))
+#'
+#' # Flows between nodes
+#' trips <- data.frame(
+#'   origin = c("North", "North", "South"), destination = c("Bus", "Rail", "Rail"),
+#'   passengers = c(30, 20, 15)
+#' )
+#' hchart(trips, "sankey", hcaes(from = origin, to = destination, weight = passengers))
+#' @export
+hcaes <- function(x, y, ...) {
+  mapping <- rlang::enquos(x = x, y = y, ..., .ignore_empty = "all")
+  as_hcaes(mapping, rlang::caller_env())
+}
+
+#' Map point options using strings
+#'
+#' Use this form when the column names come from variables, such as Shiny
+#' inputs. Strings may also contain a single R expression.
+#' @param x,y,... Column names or expressions as strings. Only `x` and `y`
+#'   can be supplied by position.
+#' @seealso [hcaes()]
+#' @examples
+#' x_col <- "Sepal.Length"
+#' y_col <- "Petal.Length"
+#' hchart(iris, "scatter", hcaes_string(x_col, y_col, group = "Species"))
+#'
+#' # Backticks quote a column name containing spaces.
+#' sales <- data.frame(store = c("North", "South"))
+#' sales[["net sales"]] <- c(150, 200)
+#' highchart() |>
+#'   hc_add_series(sales, "column", hcaes_string("store", "`net sales` / 1000"),
+#'                 name = "Sales (thousands)")
 #' @export
 hcaes_string <- function(x, y, ...) {
   mapping <- list(...)
-
   if (!missing(x)) {
     mapping["x"] <- list(x)
   }
-
   if (!missing(y)) {
     mapping["y"] <- list(y)
   }
-
-  mapping <- lapply(mapping, function(x) {
-    if (is.character(x)) {
-      parse(text = x)[[1]]
-    }
-    else {
-      x
-    }
-  })
-
-  mapping <- structure(mapping, class = "uneval")
-
-  mapping <- mapping[names(mapping) != ""]
-
-  class(mapping) <- c("hcaes", class(mapping))
-
-  mapping
+  as_hcaes(mapping, rlang::caller_env())
 }
 
-#' @rdname hcaes_string
-#' @export
-hcaes_ <- hcaes_string
+as_hcaes <- function(mapping, env) {
+  if (length(mapping) && !rlang::is_named(mapping)) {
+    stop(
+      "Name each mapping after x and y, for example `group = Species`.",
+      call. = FALSE
+    )
+  }
+  mapping <- lapply(mapping, function(value) {
+    expr <- rlang::get_expr(value)
+    if (is.character(expr)) {
+      rlang::parse_quo(expr, env)
+    } else {
+      rlang::as_quosure(value, env)
+    }
+  })
+  structure(mapping, class = c("hcaes", "uneval"))
+}
 
-
-#' Modify data frame according to mapping
-#' @param data A data frame object.
-#' @param mapping A mapping from \code{hcaes} function.
-#' @param drop A logical argument to you drop variables or not. Default is
-#' \code{FALSE}
-#' @importFrom lubridate is.Date
-#' @importFrom rlang "!!!" "!!" ":=" parse_quo syms .data
-#' @examples
+#' Apply point mappings to a data frame
 #'
-#' df <- head(mtcars)
-#' mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
-#' mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt), drop = TRUE)
+#' @param data A data frame.
+#' @param mapping A mapping from [hcaes()] or [hcaes_string()].
+#' @param drop If `TRUE`, keep only the mapped columns, in mapping order.
+#' @importFrom rlang "!!!" ":=" .data
+#' @examples
+#' cars <- head(mtcars, 3)
+#' mapping <- hcaes(wt, mpg, group = factor(cyl), name = rownames(cars))
+#' mutate_mapping(cars, mapping)
+#' mutate_mapping(cars, mapping, drop = TRUE)
 #' @export
 mutate_mapping <- function(data, mapping, drop = FALSE) {
-  stopifnot(is.data.frame(data), inherits(mapping, "hcaes"), inherits(drop, "logical"))
-
-  # https://stackoverflow.com/questions/45359917/dplyr-0-7-equivalent-for-deprecated-mutate
-  # https://www.johnmackintosh.com/2018-02-19-theory-free-tidyeval/
-
-  tran <- as.character(mapping)
-  newv <- names(mapping)
-  list_names <- setNames(tran, newv) |> lapply(rlang::parse_quo, env = globalenv())
-
-  data <- dplyr::mutate(data, !!!list_names)
-  # Reserverd  highcharts names (#241)
-  if (has_name(data, "series")) {
-    data <- dplyr::rename(data, seriess = .data$series)
+  stopifnot(is.data.frame(data), inherits(mapping, "hcaes"), is.logical(drop))
+  # Mappings saved by older releases contain bare expressions and strings.
+  if (!all(vapply(mapping, rlang::is_quosure, logical(1)))) {
+    mapping <- as_hcaes(mapping, globalenv())
   }
-
+  data <- dplyr::mutate(data, !!!mapping)
   if (drop) {
-    newv <- rlang::syms(newv)
-    data <- dplyr::select(data, !!!newv)
+    data <- dplyr::select(data, all_of(names(mapping)))
   }
-
+  # Highcharts reserves point.series (#241).
+  if (has_name(data, "series")) {
+    data <- dplyr::rename(data, seriess = "series")
+  }
   data
 }
 
-add_arg_to_df <- function(data, ...) {
-  datal <- as.list(data)
-
-  l <- map_if(list(...), function(x) is.list(x), list)
-
-  datal <- append(datal, l)
-
-  as_tibble(datal)
+convert_date_coordinates <- function(data, keys) {
+  for (key in keys) {
+    if (inherits(data[[key]], c("Date", "POSIXt"))) {
+      data[[key]] <- datetime_to_timestamp(data[[key]])
+    }
+  }
+  data
 }
 
-#' @importFrom dplyr mutate do arrange_
-#' @importFrom tibble tibble tibble_
-data_to_series <- function(data, mapping, type, fast = FALSE, ...) {
+#' @importFrom dplyr mutate
+#' @importFrom tibble tibble has_name
+data_to_series <- function(data, mapping, type, ...) {
+  if (identical(type, "point")) {
+    type <- "scatter"
+  }
+  if (identical(type, "scatter") && any(c("size", "z") %in% names(mapping))) {
+    type <- "bubble"
+  }
 
-  # check type and fix
-  type <- ifelse(type == "point", "scatter", type)
-  type <- ifelse((has_name(mapping, "size") | has_name(mapping, "z")) & type == "scatter",
-    "bubble", type
-  )
-
-  # heatmap
-  if (type == "heatmap") {
-    if (!is.numeric(data[["x"]])) {
-      data[["xf"]] <- as.factor(data[["x"]])
-      data[["x"]] <- as.numeric(as.factor(data[["x"]])) - 1
-    }
-    if (!is.numeric(data[["y"]])) {
-      data[["yf"]] <- as.factor(data[["y"]])
-      data[["y"]] <- as.numeric(as.factor(data[["y"]])) - 1
+  cell_sizes <- list()
+  if (identical(type, "heatmap")) {
+    for (axis in intersect(c("x", "y"), names(data))) {
+      values <- data[[axis]]
+      if (is.numeric(values)) {
+        next
+      }
+      labels <- as.factor(values)
+      data[[paste0(axis, "f")]] <- labels
+      if (inherits(values, c("Date", "POSIXt"))) {
+        times <- datetime_to_timestamp(values)
+        data[[axis]] <- times
+        size <- if (axis == "x") "colsize" else "rowsize"
+        step <- if (inherits(values, "Date")) {
+          86400000
+        } else {
+          diff(sort(unique(times)))
+        }
+        cell_sizes[[size]] <- if (length(step)) min(step) else 1000
+      } else {
+        data[[axis]] <- as.integer(labels) - 1
+      }
     }
   }
 
-  # x
-  if (has_name(mapping, "x")) {
-    if (is.Date(data[["x"]])) {
-      data[["x"]] <- datetime_to_timestamp(data[["x"]])
-    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-      data[["name"]] <- data[["x"]]
-      data[["x"]] <- NULL
-    }
+  coordinates <- intersect(names(mapping), c("x", "x2"))
+  if (identical(type, "xrange")) {
+    coordinates <- c("x", "x2")
+  }
+  data <- convert_date_coordinates(data, c(coordinates, "y"))
+  if (
+    has_name(mapping, "x") &&
+      (is.character(data[["x"]]) || is.factor(data[["x"]]))
+  ) {
+    data[["name"]] <- data[["x"]]
+    data[["x"]] <- NULL
   }
 
   # color
   if (has_name(mapping, "color")) {
-    if (type == "treemap") {
-      data <- rename(data, colorValue = .data$color)
-    } else if (!all(is.hexcolor(data[["color"]]))) {
-      data <- mutate(data, colorv = .data$color, color = highcharter::colorize(.data$color))
+    if (identical(type, "treemap")) {
+      data <- rename(data, colorValue = "color")
+    } else if (!all(is.hexcolor(data[["color"]]), na.rm = TRUE)) {
+      data <- mutate(
+        data,
+        colorv = .data$color,
+        color = highcharter::colorize(.data$color)
+      )
     }
   } else if (has_name(data, "color")) {
-    data <- rename(data, colorv = .data$color)
+    data <- rename(data, colorv = "color")
   }
 
-  # size
-  if (type %in% c("bubble", "scatter")) {
-    if (has_name(mapping, "size")) {
-      data <- mutate(data, z = .data$size)
-    }
+  if (identical(type, "bubble") && has_name(mapping, "size")) {
+    data[["z"]] <- data[["size"]]
   }
 
-  # group
   if (!has_name(mapping, "group")) {
-    data[["group"]] <- "group"
+    data[["group"]] <- rep("group", nrow(data))
   }
+  groups <- dplyr::group_data(group_by(data, .data$group))
+  data <- dplyr::ungroup(data)
+  data[["group"]] <- NULL
+  points <- lapply(groups$.rows, function(i) {
+    list_parse(data[i, , drop = FALSE])
+  })
+  series <- tibble(group = groups$group, data = points)
+  series$type <- type
 
-  if (isTRUE(fast)) {
-    # pre-convert data to json
-    data <- data |>
-      group_by(.data$group) |>
-      do(data = jsonlite::toJSON(select(., -.data$group),
-        dataframe = "rows",
-        verbatim = TRUE
-      )) |>
-      ungroup()
-  } else {
-    data <- data |>
-      group_by(.data$group) |>
-      do(data = list_parse(select(., -.data$group))) |>
-      ungroup()
+  if (...length()) {
+    options <- validate_args("hc_add_series", list(...))
+    series <- as_tibble(c(as.list(series), map_if(options, is.list, list)))
   }
-
-  data$type <- type
-
-  if (length(list(...)) > 0) {
-    data <- add_arg_to_df(data, ...)
+  for (size in setdiff(names(cell_sizes), names(series))) {
+    series[[size]] <- cell_sizes[[size]]
   }
-
-  if (has_name(mapping, "group") & !has_name(list(...), "name")) {
-    data <- rename(data, name = .data$group)
+  if (has_name(mapping, "group") && !("name" %in% ...names())) {
+    series <- rename(series, name = "group")
   }
-
-  series <- list_parse(data)
-
-  series
+  list_parse(series)
 }
 
-data_to_options <- function(data, type) {
-  opts <- list()
+data_to_options <- function(data, type, mapping) {
+  heatmap <- identical(type, "heatmap")
+  opts <- list(
+    series_plotOptions_showInLegend = has_name(mapping, "group"),
+    add_colorAxis = heatmap ||
+      (identical(type, "treemap") && has_name(data, "color"))
+  )
 
-  # x
-  if (has_name(data, "x")) {
-    if (is.Date(data[["x"]])) {
-      opts$xAxis_type <- "datetime"
-    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-      opts$xAxis_type <- "category"
+  for (axis in intersect(c("x", "y"), names(data))) {
+    values <- data[[axis]]
+    axis_type <- if (inherits(values, c("Date", "POSIXt"))) {
+      "datetime"
+    } else if (heatmap && !is.numeric(values)) {
+      opts[[paste0(axis, "Axis_categories")]] <- levels(as.factor(values))
+      "category"
+    } else if (is.character(values) || is.factor(values)) {
+      "category"
     } else {
-      opts$xAxis_type <- "linear"
+      "linear"
     }
-  }
-
-  # y
-  if (has_name(data, "x")) {
-    if (is.Date(data[["y"]])) {
-      opts$yAxis_type <- "datetime"
-    } else if (is.character(data[["y"]]) | is.factor(data[["y"]])) {
-      opts$yAxis_type <- "category"
-    } else {
-      opts$yAxis_type <- "linear"
-    }
-  }
-
-  # showInLegend
-  opts$series_plotOptions_showInLegend <- "group" %in% names(data)
-
-  # colorAxis
-  opts$add_colorAxis <-
-    (type == "treemap" & "color" %in% names(data)) | (type == "heatmap")
-
-  # heatmap
-  if (type == "heatmap") {
-    if (!is.numeric(data[["x"]])) {
-      opts$xAxis_categories <- levels(as.factor(data[["x"]]))
-    }
-    if (!is.numeric(data[["y"]])) {
-      opts$yAxis_categories <- levels(as.factor(data[["y"]]))
-    }
+    opts[[paste0(axis, "Axis_type")]] <- axis_type
   }
 
   opts
 }
 
-
-#' Removing series to highchart objects
-#'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param names The series's names to delete.
-#'
-#' @export
-hc_rm_series <- function(hc, names = NULL) {
-  stopifnot(!is.null(names))
-
-  positions <- hc$x$hc_opts$series |>
-    map("name") |>
-    unlist()
-
-  position <- which(positions %in% names)
-
-  hc$x$hc_opts$series[position] <- NULL
-
-  hc
-}
 
 #' Shortcut for data series from a list of data series
 #'
@@ -612,175 +819,141 @@ hc_rm_series <- function(hc, names = NULL) {
 #'   hc_add_series_list(ds)
 #' @export
 hc_add_series_list <- function(hc, x) {
-  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  stopifnot(is.highchart(hc), (is.list(x) | is.data.frame(x)))
 
   if (is.data.frame(x)) {
     x <- list_parse(x)
   }
 
-  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)
+  # Highcharts expects an array even for a single numeric point.
+  for (i in seq_along(x)) {
+    points <- x[[i]][["data"]]
+    if (is.numeric(points) && length(points) == 1L && is.null(dim(points))) {
+      x[[i]]$data <- list(unname(points))
+    }
+  }
 
-  hc
+  start <- length(hc$x$hc_opts$series)
+  hc$x$hc_opts$series <- append(hc$x$hc_opts$series, x)
+  .hc_apply_fonts(hc, "hc_opts", "series", append_from = start)
 }
 
-#' Helpers to use highcharter as input in shiny apps
+#' Use chart events as Shiny inputs
 #'
-#' When you use highcharter in a shiny app, for example
-#' \code{renderHighcharter('my_chart')}, you can access to the actions of the
-#' user using and then use the \code{hc_add_event_point} via the
-#' \code{my_chart} input (\code{input$my_chart}). That's a way you can
-#' use a chart as an input.
+#' For an output named `sales`, Shiny receives point clicks automatically at
+#' `input$sales_point_click`. Register other Highcharts events with these
+#' helpers. For example, `hc_add_event_point(event = "drop")` sends the
+#' released point to `input$sales_point_drop`, and
+#' `hc_add_event_series(event = "mouseOver")` sends the hovered series to
+#' `input$sales_series_mouseOver`.
 #'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param series The name of type of series to apply the event.
-#' @param event The name of event: click, mouseOut,  mouseOver. See
-#'   \url{https://api.highcharts.com/highcharts/plotOptions.areasplinerange.point.events.select}
-#'   for more details.
+#' Point events include `series`, `seriesid`, `pointid`, `name`, `x`, `y` and
+#' `category` when available. During a drag or drop, the coordinates reflect
+#' the proposed position. Series events include `name` and `seriesid`.
 #'
-#' @note Event details are accessible from hc_name_EventType, i.e. if a highchart is rendered against output$my_hc and
-#'     and we wanted the coordinates of the user-clicked point we would use input$my_hc_click
-#'
+#' @param hc A `highchart` htmlwidget.
+#' @param series Highcharts series type to listen to, such as `"column"`.
+#'   The default `"series"` applies to all types.
+#' @param event Case-sensitive Highcharts event name, such as `"mouseOver"`.
+#'   See the [point events](https://api.highcharts.com/highcharts/plotOptions.series.point.events)
+#'   and [series events](https://api.highcharts.com/highcharts/plotOptions.series.events).
+#' @return The chart with the requested event configured.
 #' @export
 hc_add_event_point <- function(hc, series = "series", event = "click") {
-  fun <- paste0("function(){
-  var pointinfo = {series: this.series.name, seriesid: this.series.id,
-  name: this.name, x: this.x, y: this.y, category: this.category.name}
-  window.x = this;
-  console.log(pointinfo);
-
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.series.chart.renderTo.id + '_' + '", event, "', pointinfo); }
-}")
-
-  fun <- JS(fun)
-
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(structure(
-          list(fun),
-          .Names = event
-        )),
-        .Names = "events"
-      )),
-      .Names = "point"
-    )),
-    .Names = series
-  )
-
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-
+  if (!identical(event, "click")) {
+    hc$x$hc_opts$plotOptions[[series]]$point$events[[event]] <- JS(
+      "function(e) { HighcharterWidget.sendEvent(this, 'point', e); }"
+    )
+  }
   hc
 }
 
 #' @rdname hc_add_event_point
 #' @export
 hc_add_event_series <- function(hc, series = "series", event = "click") {
-  fun <- paste0("function(){
-  var seriesinfo = {name: this.name }
-  console.log(seriesinfo);
-  window.x = this;
-  if (typeof Shiny != 'undefined') { Shiny.onInputChange(this.chart.renderTo.id + '_' + '", event, "', seriesinfo); }
-
-}")
-  fun <- JS(fun)
-
-  eventobj <- structure(
-    list(structure(
-      list(structure(
-        list(fun),
-        .Names = event
-      )),
-      .Names = "events"
-    )),
-    .Names = series
+  hc$x$hc_opts$plotOptions[[series]]$events[[event]] <- JS(
+    "function(e) { HighcharterWidget.sendEvent(this, 'series', e); }"
   )
-
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
-    hc$x$hc_opts$plotOptions,
-    eventobj
-  )
-
   hc
 }
 
-#' Helper to add annotations from data frame or list
+#' Add annotations to a chart
 #'
-#' @param hc A `highchart` `htmlwidget` object.
-#' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/annotations}.
-#'
+#' @param hc A `highchart` widget.
+#' @param ... Named options for one Highcharts annotation, including `labels`
+#'   and `shapes`. See [data_to_annotation_labels()] to create labels from rows.
 #' @export
 hc_add_annotation <- function(hc, ...) {
-  assertthat::assert_that(is.highchart(hc))
-
-  hc$x$hc_opts[["annotations"]] <- append(
-    hc$x$hc_opts[["annotations"]],
-    list(list(...))
-  )
-
-  hc
+  hc_add_annotations(hc, list(validate_args("hc_add_annotation", list(...))))
 }
 
 #' @rdname hc_add_annotation
-#' @param x A \code{list} or a \code{data.frame} of annotations.
-#' @details The \code{x} elements must have \code{xValue} and \code{yValue}
-#'   elements
+#' @param x A list of annotations or a data frame with one annotation per row.
 #' @export
 hc_add_annotations <- function(hc, x) {
-  assertthat::assert_that(is.highchart(hc), (is.list(x) | is.data.frame(x)))
+  stopifnot(is.highchart(hc), (is.list(x) | is.data.frame(x)))
 
   if (is.data.frame(x)) {
     x <- list_parse(x)
   }
 
-  hc$x$hc_opts[["annotations"]] <- append(hc$x$hc_opts[["annotations"]], x)
-
-  hc
+  start <- length(hc$x$hc_opts$annotations)
+  hc$x$hc_opts$annotations <- append(hc$x$hc_opts$annotations, x)
+  .hc_apply_fonts(hc, "hc_opts", "annotations", append_from = start)
 }
 
-#' Add modules or plugin dependencies to highcharts objects
+#' Add a bundled community plugin to a chart
 #'
 #' @param hc A `highchart` `htmlwidget` object.
-#' @param name The partial path to the plugin or module,
-#'   example: `"plugins/annotations.js"`
+#' @param name The path to a packaged plugin, such as
+#'   `"plugins/highcharts-regression.js"`
 #' @examples
 #'
-#' data(mpg, package = "ggplot2")
-#'
-#' hchart(mpg, "point", hcaes(displ, hwy),
+#' hchart(mtcars, "scatter", hcaes(wt, mpg),
 #'   regression = TRUE,
-#'   regressionSettings = list(type = "polynomial", order = 5, hideInLegend = TRUE)
+#'   regressionSettings = list(type = "polynomial", order = 2, hideInLegend = TRUE)
 #' ) |>
 #'   hc_add_dependency("plugins/highcharts-regression.js")
 #'
-#' hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) |>
+#' hchart(mtcars, "scatter", hcaes(wt, mpg, group = factor(cyl)), regression = TRUE) |>
 #'   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
 #'   hc_add_dependency("plugins/highcharts-regression.js")
-#' @details See `vignette("modules")`
-#' @importFrom purrr map_chr
+#' @details Use [highchart()] for built-in modules and [highchartstock()]
+#'   for Stock Tools and technical indicators.
 #' @importFrom htmltools htmlDependency
-#' @importFrom yaml yaml.load_file
 #' @export
-hc_add_dependency <- function(hc, name = "plugins/annotations.js") {
-  stopifnot(!is.null(name))
+hc_add_dependency <- function(hc, name) {
+  if (!is.character(name) || length(name) != 1L || is.na(name)) {
+    stop("Supply one plugin path.", call. = FALSE)
+  }
+  if (startsWith(name, "modules/")) {
+    stop(
+      "Remove hc_add_dependency() for built-in modules. ",
+      "Use highchartstock() for Stock Tools and technical indicators. ",
+      "This function accepts packaged community plugins only.",
+      call. = FALSE
+    )
+  }
 
-  yml <- system.file("htmlwidgets/highchart.yaml", package = "highcharter")
-  yml <- yaml.load_file(yml)[[1]]
-
-  hc_ver <- map_chr(yml, c("version"))[map_chr(yml, c("name")) == "highcharts"]
-
+  directory <- system.file(
+    "htmlwidgets/lib/highcharts/plugins",
+    package = "highcharter"
+  )
+  plugins <- file.path("plugins", list.files(directory, pattern = "\\.js$"))
+  if (!name %in% plugins) {
+    stop(
+      "Choose a packaged plugin: ",
+      paste(plugins, collapse = ", "),
+      call. = FALSE
+    )
+  }
   dep <- htmlDependency(
     name = basename(name),
-    version = hc_ver,
-    src = c(file = system.file(
-      sprintf("htmlwidgets/lib/highcharts/%s", dirname(name)),
-      package = "highcharter"
-    )),
-    script = basename(name)
+    version = as.character(utils::packageVersion("highcharter")),
+    src = c(file = directory),
+    script = basename(name),
+    all_files = FALSE
   )
-
   hc$dependencies <- c(hc$dependencies, list(dep))
 
   hc

@@ -1,0 +1,51 @@
+# Bootstrap 5.3 variables are resolved in the chart's surrounding page.
+colors: ['var(--bs-primary, #0d6efd)', '#009E73', '#D55E00', '#CC79A7', '#E69F00', '#56B4E9']
+chart:
+  backgroundColor: transparent
+  style:
+    fontFamily: var(--bs-body-font-family, system-ui)
+title:
+  align: left
+  style:
+    color: 'var(--bs-body-color, #212529)'
+    fontWeight: bold
+subtitle:
+  align: left
+  style:
+    color: 'var(--bs-body-color, #212529)'
+xAxis:
+  lineColor: 'var(--bs-border-color, #dee2e6)'
+  tickLength: 0
+  labels:
+    style:
+      color: 'var(--bs-body-color, #212529)'
+  title:
+    style:
+      color: 'var(--bs-body-color, #212529)'
+yAxis:
+  gridLineColor: 'var(--bs-border-color, #dee2e6)'
+  labels:
+    style:
+      color: 'var(--bs-body-color, #212529)'
+  title:
+    style:
+      color: 'var(--bs-body-color, #212529)'
+legend:
+  align: left
+  itemStyle:
+    color: 'var(--bs-body-color, #212529)'
+  itemHoverStyle:
+    color: 'var(--bs-emphasis-color, #000000)'
+  itemHiddenStyle:
+    color: 'var(--bs-secondary-color, #666666)'
+tooltip:
+  backgroundColor: 'var(--bs-body-bg, #ffffff)'
+  borderColor: 'var(--bs-border-color, #dee2e6)'
+  style:
+    color: 'var(--bs-body-color, #212529)'
+plotOptions:
+  series:
+    dataLabels:
+      style:
+        color: 'var(--bs-body-color, #212529)'
+        textOutline: none

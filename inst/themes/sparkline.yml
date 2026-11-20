@@ -1,0 +1,67 @@
+# https://www.highcharts.com/demo/sparkline
+# https://jkunst.com/blog/posts/2020-06-26-valuebox-and-sparklines/
+chart:
+  backgroundColor: null
+  borderWidth: 0
+  margin: [2, 0, 2, 0]
+  style:
+    overflow: visible
+  skipClone: true
+title:
+  text: ''
+legend:
+  enabled: false
+xAxis:
+  labels:
+    enabled: false
+  title:
+    text: null
+  startOnTick: false
+  endOnTick: false
+  tickPositions: []
+yAxis:
+  endOnTick: false
+  startOnTick: false
+  labels:
+    enabled: false
+  title:
+    text: null
+  tickPositions: []
+tooltip:
+  backgroundColor: transparent
+  borderWidth: 0
+  shadow: false
+  headerFormat: ''
+  pointFormat: '{point.y}'
+  hideDelay: 0
+  padding: 0
+  shared: false
+  useHTML: false
+  style:
+    color: '#263746'
+    textOutline: 2px white
+  positioner: !js |-
+    function (width, height, point) {
+      const chart = this.chart;
+      const x = chart.plotLeft + point.plotX;
+      const y = chart.plotTop + point.plotY;
+      const top = y >= height + 3 ? y - height - 3 : y + 3;
+      return {
+        x: Math.max(0, Math.min(x - width / 2, chart.chartWidth - width)),
+        y: Math.max(0, Math.min(top, chart.chartHeight - height))
+      };
+    }
+plotOptions:
+  series:
+    animation: false
+    lineWidth: 1
+    shadow: false
+    states:
+      hover:
+        lineWidth: 1
+    marker:
+      radius: 1
+      states:
+        hover:
+          radius: 2
+    fillOpacity: 0.25

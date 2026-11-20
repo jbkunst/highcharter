@@ -3,14 +3,18 @@
 \docType{data}
 \name{pokemon}
 \alias{pokemon}
-\title{pokemon}
+\title{Pokémon types and base stats}
 \format{
-A \code{data frame} with 898 observations and 24 variables.
+A data frame with 898 rows and 24 columns.
+}
+\source{
+\href{https://pokeapi.co/}{PokéAPI} and Bulbapedia.
 }
 \usage{
 pokemon
 }
 \description{
-Information about 898 pokemon.
+A fixed collection of 898 Pokémon (IDs 1 to 898). Height is in decimetres
+and weight is in hectograms. Includes types, stats, colors and artwork links.
 }
 \keyword{datasets}

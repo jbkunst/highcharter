@@ -1,199 +1,64 @@
-library(tidyverse)
-library(htmltools)
-library(highcharter)
-library(viridisLite)
-
-color_stops_index <- color_stops(colors = inferno(10, begin = 0.1))
-
-hc_theme_highcharts_small <- 
-  hc_theme_hcrt(
-    chart = list(backgroundColor = "transparent"),
-    plotOptions = list(
-      series = list(showInLegend = FALSE, marker = list(radius = 2)),
-      line = list(lineWidth = 1.2)
-      ),
-    xAxis = list(
-      showLastLabel = FALSE,
-      showFirstLabel = FALSE,
-      endOnTick = FALSE,
-      startOnTick = FALSE
-      ),
-    yAxis = list(
-      showLastLabel = FALSE,
-      showFirstLabel = FALSE,
-      endOnTick = FALSE,
-      startOnTick = FALSE
-      ),
-    tooltip = list(valueDecimals = 2)
+build_home_gallery <- function(output_dir) {
+  article_code <- tempfile("home-vignette-", fileext = ".R")
+  knitr::purl(
+    "vignettes/from-data-to-charts.Rmd",
+    output = article_code,
+    documentation = 0L,
+    quiet = TRUE
+  )
+  tryCatch(
+    sys.source(article_code, envir = environment()),
+    finally = unlink(article_code)
   )
 
-options(highcharter.theme = hc_theme_highcharts_small)
-
-
-# example 1: scatter ------------------------------------------------------
-mpg <- ggplot2::mpg %>%
-  mutate(name = str_c(manufacturer, " ", model)) %>% 
-  select(x = displ, y = hwy) %>% 
-  mutate_all(round, 2)
-
-p1 <- hchart(mpg, "point", hcaes(x, y), name = "Cars") %>% 
-  hc_colorAxis(stops = color_stops_index, legend = FALSE, visible = FALSE) %>% 
-  hc_xAxis(title = list(text = "displ")) %>% 
-  hc_xAxis(title = list(text = "hwy")) 
-
-p1
-
-# example 2: lines/forecast -----------------------------------------------
-library(forecast)
-p2 <- hchart(
-  forecast(ets(AirPassengers), level = 90, h = 12 * 2),
-  fillOpacity = 0.1,
-  name = "Air Passengers data"
-  ) %>%
-  hc_xAxis(min = datetime_to_timestamp(as.Date("1955-01-01"))) %>%
-  hc_tooltip(shared = TRUE, valueDecimals = 0)
-
-p2
-
-# example 3: maps ---------------------------------------------------------
-data(GNI2014, package = "treemap")
-GNI2014 <- select(GNI2014, -population, -continent)
-p3 <- hcmap(
-  "custom/world-robinson-lowres",
-  data = GNI2014,
-  name = "Gross national income per capita",
-  value = "GNI",
-  borderWidth = 0,
-  joinBy = c("iso-a3", "iso3"),
-  nullColor = "#932667"
-  ) %>%
-  hc_colorAxis(stops = color_stops_index, type = "logarithmic") %>%
-  hc_legend(enabled = FALSE) %>%
-  hc_mapNavigation(enabled = FALSE) %>% 
-  hc_credits(enabled = FALSE)
-
-
-p3
-
-
-# example 4: boxplots -----------------------------------------------------
-p4 <- highchart() %>%
-  hc_chart(type = "bar") %>% 
-  hc_xAxis(type = "category") %>%
-  hc_xAxis(showLastLabel = TRUE, showFirstLabel = TRUE) %>% 
-  hc_add_series_list(
-    data_to_boxplot(
-      iris, Sepal.Length, Species, add_outliers = TRUE,
-      color = "red", showInLegend = FALSE, name = "Sepal length"
-      )
+  executor <- paste(
+    readLines(
+      system.file("examples", "grid-sequence.js", package = "highcharter"),
+      encoding = "UTF-8"
+    ),
+    collapse = "\n"
+  )
+  # A wide grid and common playback controls
+  css <- "
+body { margin: 0; background: white; }
+.transition-grid-page { max-width: 1200px; margin: auto; padding: 12px;
+  font: 300 14px/1.6 'IBM Plex Sans', sans-serif; color: #666; }
+.transition-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 24px; }
+.transition-panel { min-width: 0; }
+.grid-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-top: 24px; }
+.grid-controls button,.grid-controls select { padding: 7px 18px; font: inherit; cursor: pointer;
+  border: 1px solid #ddd; border-radius: 22px; background: #fff; color: #47475c; }
+.grid-controls select { appearance: none; padding-right: 38px;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M3 6l5 5 5-5%27 fill=%27none%27 stroke=%27%2347475c%27 stroke-width=%271.8%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E');
+  background-repeat: no-repeat; background-position: right 12px center;
+  background-size: 12px 12px; }
+.grid-controls .grid-play { background: #47475c; color: #fff; }
+@media(max-width:720px) { .transition-grid { grid-template-columns:1fr; } }
+"
+  grid <- htmltools::browsable(htmltools::tagList(
+    htmltools::tags$head(htmltools::tags$title(
+      "Highcharter: a world of contrasts"
+    )),
+    htmltools::tags$style(htmltools::HTML(css)),
+    chart_player(
+      countries = country_widgets,
+      history = trade_widgets,
+      map = map_widgets,
+      pie = share_widgets,
+      autoplay = TRUE
     )
-
-p4
-
-
-# example 5: graph --------------------------------------------------------
-library(igraph)
-
-set.seed(12313)
-N <- 24
-net <- sample_pa(N)
-wc <- cluster_walktrap(net)
-V(net)$label <- 1:N
-V(net)$name <- 1:N
-V(net)$page_rank <- round(page_rank(net)$vector, 2)
-V(net)$betweenness <- round(betweenness(net), 2)
-V(net)$degree <- degree(net)
-V(net)$size <- V(net)$degree + 1
-V(net)$comm <- as.vector(membership(wc))
-V(net)$color <- colorize(membership(wc), viridisLite::magma(length(wc)))
-p5 <- hchart(net, layout = layout_with_fr, maxSize = 13)
-
-p5
-  
-
-# example 6: density ------------------------------------------------------
-p6 <- highchart() %>%
-  hc_chart(type = "area") %>% 
-  hc_add_series(density(rnorm(10000000)), name = "Normal(0, 1) Distribution") %>%
-  hc_add_series(density(rgamma(100000000, 5, 0.8)), name = "Gamma(5. 0.8) Distribution") %>%
-  hc_plotOptions(series = list(fillOpacity = 0.5)) %>%
-  hc_xAxis(min = -5, max = 12)
-
-p6
-
-
-# example 6: raster -------------------------------------------------------
-brks <- seq(-2.5, 2.5, length.out = 30)
-grid <- expand.grid(brks, brks)
-m <- as.data.frame(grid) %>% 
-  mutate(
-    value =
-      mvtnorm::dmvnorm(grid, mean = c(1, 1), sigma = matrix(c(1, .2, .2, 1), nrow = 2)) +
-      mvtnorm::dmvnorm(grid, mean = c(-1, -1), sigma = matrix(c(1, -.8, -.8, 1), nrow = 2)) +
-      mvtnorm::dmvnorm(grid, mean = c(0, 0), sigma = matrix(c(1.5, 0, 0, 1.5), nrow = 2))) %>% 
-  spread(Var2, value) %>% 
-  select(-Var1) %>% 
-  as.matrix() 
-
-colnames(m) <- rownames(m) <-  NULL
-
-ncols <- 10
-cols <- c(rep("white", 2), rev(inferno(ncols - 2, begin = 0)))
-cols <- hex_to_rgba(cols, alpha = 1:ncols/ncols)
-colssotps <- list_parse2(
-  data.frame(
-    q = seq(0, ncols - 1) / (ncols - 1),
-    c = cols
+  ))
+  dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+  htmltools::save_html(
+    grid,
+    file.path(output_dir, "home-gallery.html"),
+    libdir = "home-gallery-lib"
   )
-)
-
-p7 <- hchart(m) %>% 
-  hc_add_theme(hc_theme_null()) %>% 
-  hc_legend(enabled = FALSE) %>% 
-  hc_colorAxis(stops = colssotps)
-
-p7
-
-
-# exmple 8: histogram -----------------------------------------------------
-p8 <- hchart(rgamma(5000, shape = 3, scale = 0.8)) %>% 
-  hc_xAxis(max = 8)
-
-p8
-
-
-# join --------------------------------------------------------------------
-plots <- list(
-  p1, p2, 
-  p3, p4, 
-  p5, p6, 
-  p7, p8
+  utils::write.csv(
+    countries,
+    file.path(output_dir, "home-data.csv"),
+    row.names = FALSE,
+    fileEncoding = "UTF-8"
   )
-
-plots <- map(plots, hc_size, height = 250)
-
-# hw_grid(plots)
-
-divplots <- map(plots, tags$div, class = "col-sm-6")
-
-divplots <- htmltools::tagList(
-  tags$div(
-    class = "row", 
-    # style = "padding-right: 10px",
-    divplots
-    )
-  )
-
-page <- bslib::page(divplots)
-
-htmltools::save_html(
-  html   = page, 
-  file   = "pkgdown/assets/index-examples.html"
-  )
-
-# try(dir.create("pkgdown/assets/"))
-# 
-# htmltools::save_html(
-#   html   = g, 
-#   file   = "pkgdown/assets/index-examples.html"
-#   )
+}

@@ -2,29 +2,46 @@
 % Please edit documentation in R/highcharts-api.R
 \name{hc_xAxis}
 \alias{hc_xAxis}
-\title{Xaxis options for highcharter objects}
+\title{xAxis options for highcharter objects}
 \usage{
 hc_xAxis(hc, ...)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/xAxis}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/xAxis}.}
 }
 \description{
-The X axis or category axis. Normally this is the horizontal axis,
-though if the chart is inverted this is the vertical axis. In case of
-multiple axes, the xAxis node is an array of configuration objects.
-See the Axis class for programmatic
-access to the axis.
+The X axis or category axis.
+Normally this is the horizontal axis, though if the chart is inverted
+this is the vertical axis. In case of multiple axes, the xAxis node is an
+array of configuration objects.
+}
+\details{
+See the Axis class for programmatic access to the axis.
+
+Named options update the first axis. Supply unnamed axis lists,
+individually or in one list, to replace the collection. Series can select an axis by ID.
 }
 \examples{
-
 highchart() |>
   hc_add_series(
-    data = c(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
+    data = c(
+      7.0,
+      6.9,
+      9.5,
+      14.5,
+      18.2,
+      21.5,
+      25.2,
+      26.5,
+      23.3,
+      18.3,
+      13.9,
+      9.6
+    ),
     type = "spline"
-    ) |> 
+  ) |>
   hc_xAxis(
     title = list(text = "x Axis at top"),
     alternateGridColor = "#FDFFD5",
@@ -35,8 +52,26 @@ highchart() |>
         color = "#FF0000",
         width = 2,
         value = 5.5
-        )
       )
     )
+  )
 
+# Give each series its own horizontal scale.
+highchart() |>
+  hc_xAxis(
+    list(id = "month", title = list(text = "Month")),
+    list(id = "week", title = list(text = "Week"), opposite = TRUE)
+  ) |>
+  hc_add_series(
+    data = c(7, 5, 8),
+    pointStart = 1,
+    name = "Monthly",
+    xAxis = "month"
+  ) |>
+  hc_add_series(
+    data = c(3, 6, 4, 5),
+    pointStart = 1,
+    name = "Weekly",
+    xAxis = "week"
+  )
 }

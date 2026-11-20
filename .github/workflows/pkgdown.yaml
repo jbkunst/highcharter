@@ -1,9 +1,9 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
   release:
     types: [published]
   workflow_dispatch:
@@ -18,7 +18,31 @@ permissions:
   contents: write
 
 jobs:
+  dev-wasm:
+    runs-on: ubuntu-latest
+    container: ghcr.io/r-wasm/webr:v0.6.0
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Disable the unused rig APT repository
+        run: rm -f /etc/apt/sources.list.d/rig.list
+
+      - name: Build highcharter for webR
+        run: |
+          Rscript -e 'rwasm::build("local::.", out_dir = Sys.getenv("RUNNER_TEMP"))'
+          mv "$RUNNER_TEMP"/highcharter_*.tgz "$RUNNER_TEMP/highcharter.tgz"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: highcharter-webR
+          path: ${{ runner.temp }}/highcharter.tgz
+          if-no-files-found: error
+          compression-level: 0
+
   pkgdown:
+    needs: dev-wasm
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ github.token }}
@@ -38,13 +62,22 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: highcharter-webR
+          path: ${{ runner.temp }}/highcharter-webr
+
       - name: Build site
+        env:
+          HIGHCHARTER_WASM_PACKAGE: ${{ runner.temp }}/highcharter-webr/highcharter.tgz
         shell: Rscript {0}
-        run: pkgdown::build_site()
+        run: source("dev/build-site.R")
 
       - name: Deploy site
-        if: github.event_name != 'pull_request'
-        run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
+        if: >-
+          github.event_name == 'release' ||
+          (github.event_name != 'pull_request' && github.ref == 'refs/heads/main')
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: docs

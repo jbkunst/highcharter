@@ -16,6 +16,27 @@ test_that("hchart returns a valid scatter plot after valid data input", {
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
+test_that("Gantt data frames preserve tasks and use the Gantt constructor", {
+  tasks <- data.frame(
+    start = c(1000, 3000),
+    end = c(3000, 7000),
+    name = c("Design", "Build"),
+    id = c("design", "build")
+  )
+  tasks$dependency <- list(NA, "design")
+  for (data in list(tasks, tibble::as_tibble(tasks))) {
+    chart <- hchart(data, type = "gantt", name = "Program")
+    series <- chart$x$hc_opts$series[[1]]
+    expect_identical(chart$x$type, "gantt")
+    expect_identical(series$type, "gantt")
+    expect_identical(series$name, "Program")
+    expect_equal(vapply(series$data, `[[`, numeric(1), "start"), tasks$start)
+    expect_equal(vapply(series$data, `[[`, numeric(1), "end"), tasks$end)
+    expect_identical(series$data[[2]]$id, "build")
+    expect_identical(series$data[[2]]$dependency, "design")
+  }
+})
+
 test_that("hchart returns a valid area plot after valid data input", {
   data(mpg, package = "ggplot2")
   x <- mpg$hwy
@@ -35,6 +56,27 @@ test_that("hchart returns a valid time series plot after valid data input", {
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
+test_that("histogram columns follow the computed bin boundaries", {
+  values <- c(0, 0.8, 2, 2.7, 5, 6)
+  h <- hist(values, breaks = c(0, 1, 3, 6), plot = FALSE)
+  series <- hchart(h)$x$hc_opts$series[[1]]
+  expect_identical(series$type, "variwide")
+  expect_identical(
+    vapply(series$data, `[[`, "", "name"),
+    c("0 \u2013 1", "1 \u2013 3", "3 \u2013 6")
+  )
+  expect_equal(vapply(series$data, `[[`, numeric(1), "x"), c(0, 1, 3))
+  expect_equal(vapply(series$data, `[[`, numeric(1), "z"), c(1, 2, 3))
+  expect_equal(vapply(series$data, `[[`, numeric(1), "y"), h$counts)
+  expect_identical(
+    hchart(values, breaks = h$breaks, type = "column")$x$hc_opts$series[[1]],
+    series
+  )
+  equal <- hchart(values, breaks = seq(0, 6, 2))$x$hc_opts$series[[1]]
+  expect_identical(equal$type, "column")
+  expect_equal(equal$pointRange, 2)
+})
+
 test_that("hchart returns a valid time series decomposition plot after valid data input", {
   x <- stl(log(AirPassengers), "per")
   h <- hchart(x)
@@ -42,6 +84,8 @@ test_that("hchart returns a valid time series decomposition plot after valid dat
 })
 
 test_that("hchart returns a valid graph after valid data input", {
+  old_theme <- hc_set_theme("hcrt")
+  on.exit(options(old_theme))
   require(igraph)
   N <- 40
 
@@ -59,13 +103,17 @@ test_that("hchart returns a valid graph after valid data input", {
 
   h <- hchart(net, layout = layout_with_fr)
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+  expect_identical(h$x$theme$chart$style$fontFamily, "IBM Plex Sans")
+  expect_false(h$x$theme$xAxis$visible)
 })
 
 test_that("hchart returns a valid model plot after valid data input", {
   library(survival)
 
-  data(lung)
-  lung <- dplyr::mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+  lung <- dplyr::mutate(
+    survival::lung,
+    sex = ifelse(sex == 1, "Male", "Female")
+  )
   fit <- survfit(Surv(time, status) ~ sex, data = lung)
 
   h <- hchart(fit, ranges = TRUE)
@@ -73,21 +121,87 @@ test_that("hchart returns a valid model plot after valid data input", {
 })
 
 test_that("hchart returns a valid stocks plot after valid data input", {
-  x <- quantmod::getFX("USD/JPY", auto.assign = FALSE)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+  skip_if_not_installed("xts")
+  dates <- as.Date("2025-01-01") + 0:2
+  x <- xts::xts(c(42, NA, 44), dates)
+  h <- hchart(x, name = "Price")
+  series <- h$x$hc_opts$series[[1L]]
+  expect_identical(h$x$type, "stock")
+  expect_identical(series$name, "Price")
+  expect_equal(
+    series$data,
+    Map(list, datetime_to_timestamp(dates), c(42, NA, 44))
+  )
 })
 
-test_that("hchart returns a valid multivariate time series plot after valid data input", {
+test_that("multivariate layouts preserve series identities and shared HTML tooltips", {
   x <- cbind(mdeaths, fdeaths)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+  for (separate in c(TRUE, FALSE)) {
+    opts <- hchart(
+      x,
+      separate = separate,
+      heights = c(2, 1),
+      sep = 0.02
+    )$x$hc_opts
+    expect_identical(vapply(opts$series, `[[`, "", "id"), colnames(x))
+    if (separate) {
+      expect_equal(vapply(opts$series, `[[`, numeric(1), "yAxis"), c(0, 1))
+      axes <- create_axis(2, heights = c(2, 1), sep = 0.02)
+      expect_identical(
+        lapply(opts$yAxis, `[[`, "height"),
+        lapply(axes, `[[`, "height")
+      )
+    } else {
+      expect_null(opts$series[[1]]$yAxis)
+      expect_null(opts$series[[2]]$yAxis)
+    }
+    tooltip <- opts$tooltip
+    expect_true(tooltip$shared)
+    expect_true(tooltip$useHTML)
+  }
 })
 
-test_that("hchart returns a valid autocovariance plot after valid data input", {
-  x <- acf(diff(AirPassengers), plot = FALSE)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+test_that("ACF and PACF lollipops use the reported lags and correlations", {
+  changes <- diff(AirPassengers)
+  for (x in list(acf(changes, plot = FALSE), pacf(changes, plot = FALSE))) {
+    series <- hchart(x)$x$hc_opts$series[[1]]
+    expect_identical(series$type, "lollipop")
+    expect_equal(vapply(series$data, `[[`, numeric(1), "x"), as.vector(x$lag))
+    expect_equal(vapply(series$data, `[[`, numeric(1), "y"), as.vector(x$acf))
+  }
+})
+
+test_that("seasonal charts label the fitted outliers at adjusted values", {
+  skip_if_not_installed("seasonal")
+  skip_if_not_installed("x13binary")
+  fit <- seasonal::seas(AirPassengers, regression.variables = "ls1956.Jan")
+  opts <- hchart(fit)$x$hc_opts
+  adjusted <- seasonal::final(fit)
+  outliers <- seasonal::outlier(fit)
+  i <- which(!is.na(outliers))
+  expect_equal(
+    opts$series[[1]]$data,
+    hchart(seasonal::original(fit))$x$hc_opts$series[[1]]$data
+  )
+  expect_equal(
+    opts$series[[2]]$data,
+    hchart(adjusted)$x$hc_opts$series[[1]]$data
+  )
+  labels <- opts$annotations[[1]]$labels
+  expect_equal(
+    vapply(labels, `[[`, character(1), "text"),
+    as.character(outliers[i])
+  )
+  expect_equal(
+    vapply(labels, function(l) l$point$x, numeric(1)),
+    ts_x_values(adjusted)[i]
+  )
+  expect_equal(
+    vapply(labels, function(l) l$point$y, numeric(1)),
+    as.numeric(adjusted[i])
+  )
+  fit <- seasonal::seas(AirPassengers, outlier = NULL)
+  expect_null(hchart(fit)$x$hc_opts$annotations)
 })
 
 test_that("hchart returns a valid pca plot after valid data input", {
@@ -101,11 +215,15 @@ test_that("hchart returns a valid matrix plot after valid data input", {
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
-test_that("hchart returns a valid distance matrix plot after valid data input", {
-  mtcars2 <- mtcars[1:20, ]
-  x <- dist(mtcars2)
-  h <- hchart(x)
-  expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
+test_that("distance heatmaps accept matrix display options", {
+  d <- stats::dist(head(mtcars, 3))
+  opts <- hchart(d, label = TRUE, showInLegend = TRUE)$x$hc_opts
+  expect_identical(
+    opts,
+    hchart(as.matrix(d), label = TRUE, showInLegend = TRUE)$x$hc_opts
+  )
+  expect_true(opts$plotOptions$series$dataLabels$enabled)
+  expect_true(opts$plotOptions$series$showInLegend)
 })
 
 test_that("hchart returns a valid correlation matrix plot after valid data input", {
@@ -127,4 +245,89 @@ test_that("hchart fails after mispelled hcaes", {
 test_that("hchart fails after mispelled chart type", {
   # sactter = scatter mispelled
   expect_error(hchart(mgp, "sactter", hcaes(x = displ, y = hwy, group = class)))
+})
+
+test_that("model series keep fitted values and standard errors aligned with x", {
+  observations <- cars[50:1, ]
+  observations$speed[2] <- NA
+  for (model in list(
+    lm(dist ~ speed, observations, na.action = na.exclude),
+    loess(dist ~ speed, observations, na.action = na.exclude)
+  )) {
+    if (inherits(model, "loess")) {
+      prediction <- predict(model, se = TRUE)
+    } else {
+      prediction <- predict(model, se.fit = TRUE)
+      prediction$fit <- prediction$fit[-2]
+      prediction$se.fit <- prediction$se.fit[-2]
+    }
+    seed <- .GlobalEnv$.Random.seed
+    series <- hc_add_series(highchart(), model)$x$hc_opts$series
+    expect_identical(.GlobalEnv$.Random.seed, seed)
+    order_x <- order(observations$speed[-2])
+    fit <- unname(prediction$fit[order_x])
+    se <- unname(prediction$se.fit[order_x])
+    expect_equal(
+      vapply(series[[1]]$data, "[[", numeric(1), "x"),
+      sort(observations$speed[-2])
+    )
+    expect_equal(vapply(series[[1]]$data, "[[", numeric(1), "y"), fit)
+    expect_equal(
+      vapply(series[[2]]$data, "[[", numeric(1), "low"),
+      fit - 2 * se
+    )
+    expect_equal(
+      vapply(series[[2]]$data, "[[", numeric(1), "high"),
+      fit + 2 * se
+    )
+    expect_identical(series[[2]]$linkedTo, series[[1]]$id)
+  }
+})
+
+test_that("matrix heatmaps use positions even when labels repeat", {
+  m <- matrix(
+    c(-0.5, NA_real_, 0, 0.5, 1, 0.25),
+    nrow = 2,
+    dimnames = list(c("north", "north"), c("V", "V", "x"))
+  )
+  opts <- hchart(m, label = TRUE)$x$hc_opts
+  points <- opts$series[[1]]$data
+  expect_identical(vapply(points, "[[", integer(1), "x"), rep(0:2, each = 2))
+  expect_identical(vapply(points, "[[", integer(1), "y"), rep(0:1, 3))
+  expect_equal(vapply(points, "[[", numeric(1), "value"), as.vector(m))
+  expect_identical(points[[3]]$name, "V ~ north")
+  expect_identical(opts$xAxis$categories, colnames(m))
+  expect_identical(opts$yAxis$categories, rownames(m))
+  expect_true(opts$yAxis$reversed)
+  expect_true(opts$plotOptions$series$dataLabels$enabled)
+  expect_equal(c(opts$colorAxis$min, opts$colorAxis$max), c(-1, 1))
+
+  plain <- hchart(unname(m))$x$hc_opts
+  expect_true(plain$colorAxis$visible)
+  expect_false(plain$xAxis$visible)
+  expect_identical(plain$series[[1]]$data[[1]]$x, 1L)
+  expect_identical(plain$series[[1]]$data[[1]]$y, 1L)
+  expect_null(hchart(matrix(NA_real_))$x$hc_opts$colorAxis$min)
+  expect_length(hchart(matrix(numeric(), 0, 2))$x$hc_opts$series[[1]]$data, 0)
+})
+
+test_that("data-frame charts reject the removed fast option", {
+  points <- data.frame(x = 1:2, y = c(3, NA_real_))
+  mapping <- hcaes(x, y)
+  expect_error(hchart(points, "line", mapping, fast = TRUE), "fast.*removed")
+  expect_error(
+    hc_add_series(highchart(), points, "line", mapping, fast = FALSE),
+    "fast.*removed"
+  )
+  expect_error(hc_add_series(highchart(), points, fast = TRUE), "fast.*removed")
+
+  expected <- list(list(x = 1L, y = 3), list(x = 2L, y = NA_real_))
+  expect_identical(
+    hchart(points, "line", mapping)$x$hc_opts$series[[1]]$data,
+    expected
+  )
+  expect_identical(
+    hc_add_series(highchart(), points)$x$hc_opts$series[[1]]$data,
+    expected
+  )
 })

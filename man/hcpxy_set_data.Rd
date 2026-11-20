@@ -11,7 +11,8 @@ hcpxy_set_data(
   mapping = hcaes(),
   redraw = FALSE,
   animation = NULL,
-  updatePoints = TRUE
+  updatePoints = TRUE,
+  id = NULL
 )
 }
 \arguments{
@@ -32,6 +33,9 @@ and animation visualizes how the points are changed. Set false to disable animat
 \item{updatePoints}{boolean When this is TRUE, points will be updated instead of replaced whenever possible.
 This occurs a) when the updated data is the same length as the existing data, b) when points are matched by their id's, or c) when points can be matched by X values.
 This allows updating with animation and performs better. In this case, the original array is not passed by reference. Set FALSE to prevent.}
+
+\item{id}{Optional character vector with the target series ID. This is safer
+than a numeric position when indicators or other dynamic series are present.}
 }
 \description{
 Update data for a higchartProxy object

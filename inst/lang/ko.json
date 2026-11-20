@@ -1,0 +1,64 @@
+{
+  "numericSymbols": ["만", "억", "조", "경", "해", "자"],
+  "numericSymbolMagnitude": 10000,
+  "chartTitle": "차트",
+  "seriesName": "시리즈 {add index 1}",
+  "yAxisTitle": "값",
+  "pieSliceName": "항목",
+  "loading": "불러오는 중...",
+  "noData": "표시할 데이터가 없습니다",
+  "contextButtonTitle": "차트 메뉴",
+  "printChart": "차트 인쇄",
+  "viewFullscreen": "전체 화면 보기",
+  "exitFullscreen": "전체 화면 종료",
+  "viewData": "데이터 표 보기",
+  "hideData": "데이터 표 숨기기",
+  "exportInProgress": "내보내는 중...",
+  "exportData": {
+    "annotationHeader": "주석",
+    "categoryHeader": "범주",
+    "categoryDatetimeHeader": "날짜 및 시간"
+  },
+  "resetZoom": "확대/축소 초기화",
+  "resetZoomTitle": "확대/축소 수준 초기화",
+  "zoomIn": "확대",
+  "zoomOut": "축소",
+  "mainBreadcrumb": "처음",
+  "drillUpText": "{series.name}(으)로 돌아가기",
+  "rangeSelectorZoom": "기간",
+  "rangeSelectorFrom": "시작",
+  "rangeSelectorTo": "종료",
+  "rangeSelector": {
+    "allText": "전체",
+    "allTitle": "전체 기간 보기",
+    "monthText": "{count}개월",
+    "monthTitle": "{count}개월 보기",
+    "yearText": "{count}년",
+    "yearTitle": "{count}년 보기",
+    "ytdText": "올해",
+    "ytdTitle": "연초부터 보기"
+  },
+  "stockOpen": "시가",
+  "stockHigh": "고가",
+  "stockLow": "저가",
+  "stockClose": "종가",
+  "downloadCSV": "CSV 다운로드",
+  "downloadXLS": "XLS 다운로드",
+  "downloadPNG": "PNG 이미지 다운로드",
+  "downloadJPEG": "JPEG 이미지 다운로드",
+  "downloadPDF": "PDF 다운로드",
+  "downloadSVG": "SVG 이미지 다운로드",
+  "accessibility": {
+    "defaultChartTitle": "차트",
+    "chartContainerLabel": "{title}. 상호 작용 가능한 차트.",
+    "svgContainerLabel": "상호 작용 가능한 차트",
+    "exporting": {
+      "chartMenuLabel": "차트 메뉴",
+      "menuButtonLabel": "{chartTitle}의 메뉴 열기"
+    },
+    "table": {
+      "viewAsDataTableButtonText": "{chartTitle} 데이터 표 보기",
+      "tableSummary": "차트 데이터 표."
+    }
+  }
+}

@@ -9,33 +9,17 @@ hc_caption(hc, ...)
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{...}{Arguments defined in \url{https://api.highcharts.com/highcharts/caption}.}
+\item{...}{Options defined in \url{https://api.highcharts.com/highcharts/caption}.}
 }
 \description{
-The chart's caption, which will render below the chart and will be part
-of exported charts. The caption can be updated after chart initialization
-through the Chart.update or Chart.caption.update methods.
+The chart's caption, which will
+render below the chart and will be part of exported charts. The caption
+can be updated after chart initialization through the \code{Chart.update} or
+\code{Chart.caption.update} methods.
 }
 \examples{
-
-highchart() |> 
-  hc_title(text= "Chart with a caption") |> 
-  hc_subtitle(text= "This is the subtitle") |> 
-  hc_xAxis(categories = c("Apples", "Pears", "Banana", "Orange")) |> 
-  hc_add_series(
-    data = c(1, 4, 3, 5),
-    type = "column",
-    name = "Fruits"
-  ) |> 
+highcharts_demo() |>
   hc_caption(
-    text = "<b>The caption renders in the bottom, and is part of the exported
-    chart.</b><br><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-    laborum.</em>'"
+    text = "Compare July in Tokyo and Santiago to see the seasons reverse."
   )
-
 }

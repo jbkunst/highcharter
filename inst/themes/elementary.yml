@@ -1,0 +1,30 @@
+# Historical highcharter adaptation of elementary OS: https://elementary.io/brand
+colors: ['#41B5E9', '#FA8832', '#34393C', '#E46151']
+chart:
+  style:
+    color: '#333'
+    fontFamily: Open Sans
+title:
+  style:
+    fontFamily: Raleway
+    fontWeight: '100'
+subtitle:
+  style:
+    fontFamily: Raleway
+    fontWeight: '100'
+legend:
+  align: right
+  verticalAlign: bottom
+xAxis:
+  gridLineWidth: 1
+  gridLineColor: '#F3F3F3'
+  lineColor: '#F3F3F3'
+  minorGridLineColor: '#F3F3F3'
+  tickColor: '#F3F3F3'
+  tickWidth: 1
+yAxis:
+  gridLineColor: '#F3F3F3'
+  lineColor: '#F3F3F3'
+  minorGridLineColor: '#F3F3F3'
+  tickColor: '#F3F3F3'
+  tickWidth: 1

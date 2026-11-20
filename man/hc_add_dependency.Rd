@@ -2,33 +2,32 @@
 % Please edit documentation in R/highcharts-api-add.R
 \name{hc_add_dependency}
 \alias{hc_add_dependency}
-\title{Add modules or plugin dependencies to highcharts objects}
+\title{Add a bundled community plugin to a chart}
 \usage{
-hc_add_dependency(hc, name = "plugins/annotations.js")
+hc_add_dependency(hc, name)
 }
 \arguments{
 \item{hc}{A \code{highchart} \code{htmlwidget} object.}
 
-\item{name}{The partial path to the plugin or module,
-example: \code{"plugins/annotations.js"}}
+\item{name}{The path to a packaged plugin, such as
+\code{"plugins/highcharts-regression.js"}}
 }
 \description{
-Add modules or plugin dependencies to highcharts objects
+Add a bundled community plugin to a chart
 }
 \details{
-See \code{vignette("modules")}
+Use \code{\link[=highchart]{highchart()}} for built-in modules and \code{\link[=highchartstock]{highchartstock()}}
+for Stock Tools and technical indicators.
 }
 \examples{
 
-data(mpg, package = "ggplot2")
-
-hchart(mpg, "point", hcaes(displ, hwy),
+hchart(mtcars, "scatter", hcaes(wt, mpg),
   regression = TRUE,
-  regressionSettings = list(type = "polynomial", order = 5, hideInLegend = TRUE)
+  regressionSettings = list(type = "polynomial", order = 2, hideInLegend = TRUE)
 ) |>
   hc_add_dependency("plugins/highcharts-regression.js")
 
-hchart(mpg, "point", hcaes(displ, hwy, group = drv), regression = TRUE) |>
+hchart(mtcars, "scatter", hcaes(wt, mpg, group = factor(cyl)), regression = TRUE) |>
   hc_colors(c("#d35400", "#2980b9", "#2ecc71")) |>
   hc_add_dependency("plugins/highcharts-regression.js")
 }

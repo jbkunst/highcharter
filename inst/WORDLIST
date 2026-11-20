@@ -116,6 +116,7 @@ rangeSelector
 rgba
 rstudio
 rjson
+yyjsonr
 Rangeselector
 toJSON 
 sankey

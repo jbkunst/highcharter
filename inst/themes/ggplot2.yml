@@ -1,0 +1,47 @@
+# https://ggplot2.tidyverse.org/
+chart:
+  plotBackgroundColor: '#EBEBEB'
+  style:
+    color: '#000000'
+    fontFamily: Arial, sans-serif
+colors: ['#595959', '#F8766D', '#A3A500', '#00BF7D', '#00B0F6', '#E76BF3']
+xAxis:
+  labels:
+    style:
+      color: '#666666'
+  title:
+    style:
+      color: '#000000'
+  startOnTick: false
+  endOnTick: false
+  gridLineColor: '#FFFFFF'
+  gridLineWidth: 1.5
+  tickWidth: 1.5
+  tickLength: 5
+  tickColor: '#666666'
+  minorTickInterval: 0
+  minorGridLineColor: '#FFFFFF'
+  minorGridLineWidth: 0.5
+yAxis:
+  labels:
+    style:
+      color: '#666666'
+  title:
+    style:
+      color: '#000000'
+  startOnTick: false
+  endOnTick: false
+  gridLineColor: '#FFFFFF'
+  gridLineWidth: 1.5
+  tickWidth: 1.5
+  tickLength: 5
+  tickColor: '#666666'
+  minorTickInterval: 0
+  minorGridLineColor: '#FFFFFF'
+  minorGridLineWidth: 0.5
+legendBackgroundColor: rgba(0, 0, 0, 0.5)
+background2: '#505053'
+dataLabelsColor: '#B0B0B3'
+textColor: '#C0C0C0'
+contrastTextColor: '#F0F0F3'
+maskColor: rgba(255,255,255,0.3)

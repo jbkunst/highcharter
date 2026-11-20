@@ -2,14 +2,14 @@
 % Please edit documentation in R/helpers.R
 \name{highcharts_demo}
 \alias{highcharts_demo}
-\title{Chart a demo for testing themes}
+\title{Monthly temperatures in four cities}
 \usage{
 highcharts_demo()
 }
 \description{
-Chart a demo for testing themes
+Use this line chart to try themes and chart options. Each point is the
+mean of the daily temperatures in \link{city_weather} for one city and month.
 }
 \examples{
-
 highcharts_demo()
 }

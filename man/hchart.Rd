@@ -2,15 +2,32 @@
 % Please edit documentation in R/hchart.R
 \name{hchart}
 \alias{hchart}
+\alias{hchart.decomposed.ts}
+\alias{hchart.prcomp}
+\alias{hchart.princomp}
 \title{Create a highchart object from a particular data type}
 \usage{
 hchart(object, ...)
+
+\method{hchart}{decomposed.ts}(object, ...)
+
+\method{hchart}{prcomp}(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE)
+
+\method{hchart}{princomp}(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE)
 }
 \arguments{
 \item{object}{A R object.}
 
 \item{...}{Additional arguments for the data series
 (\url{https://api.highcharts.com/highcharts/series}).}
+
+\item{choices}{Two component numbers to plot on the x and y axes.}
+
+\item{scale}{PCA score scaling exponent between 0 and 1. Zero plots raw scores.}
+
+\item{loadings}{Draw and name the variable loading vectors on the PCA plot.}
+
+\item{label}{Display observation names on PCA points.}
 }
 \description{
 \code{hchart} uses \code{highchart} to draw a particular plot for an
@@ -19,4 +36,19 @@ generic that other classes and packages can extend.
 }
 \details{
 Run \code{methods(hchart)} to see what objects are supported.
+For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
+family gets its own layer. Supply \code{type} to select one layer explicitly.
+}
+\examples{
+methods(hchart)
+
+# Principal component analysis
+fit <- stats::prcomp(USArrests, scale. = TRUE)
+hchart(fit)
+
+# An igraph network
+if (requireNamespace("igraph", quietly = TRUE)) {
+  net <- igraph::make_graph("Zachary")
+  hchart(net, layout = igraph::layout_with_kk)
+}
 }

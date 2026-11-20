@@ -2,21 +2,66 @@
 % Please edit documentation in R/highcharts-api-add.R
 \name{hcaes}
 \alias{hcaes}
-\title{Define aesthetic mappings.
-Similar in spirit to \code{ggplot2::aes}}
+\title{Map data-frame columns to Highcharts point options}
 \usage{
 hcaes(x, y, ...)
 }
 \arguments{
-\item{x, y, ...}{List of name value pairs giving aesthetics to map to
-variables. The names for x and y aesthetics are typically omitted because
-they are so common; all other aesthetics must be named.}
+\item{x, y, ...}{Columns or expressions to map. Only \code{x} and \code{y} can be
+supplied by position. A quoted column name or expression is also accepted.}
 }
 \description{
-Define aesthetic mappings.
-Similar in spirit to \code{ggplot2::aes}
+Expressions are evaluated in the data frame and can use variables from the
+function that created the mapping. \code{group} creates one series per distinct
+value. Other named mappings become point options.
 }
 \examples{
+# Split points into series and assign colors from a numeric column.
+hchart(iris, "scatter",
+  hcaes(Sepal.Length, Petal.Length, group = Species, color = Petal.Width))
 
-hcaes(x = xval, color = colorvar, group = grvar)
+# Keep supplied hex colors and map size to the bubble radius scale.
+cars <- head(mtcars)
+cars$paint <- ifelse(cars$am == 1, "#0072B2", "#D55E00")
+hchart(cars, "scatter", hcaes(wt, mpg, size = hp, color = paint))
+
+# Use a date axis, a local multiplier and a gap in the line.
+readings <- data.frame(day = as.Date("2025-01-01") + 0:3,
+                       rate = c(0.02, 0.04, NA, 0.03))
+plot_rates <- function(data, multiplier) {
+  hchart(data, "line", hcaes(day, rate * multiplier))
+}
+plot_rates(readings, 100)
+
+# Heatmaps use a value and two category axes.
+cells <- data.frame(day = c("Mon", "Tue", "Mon", "Tue"),
+                    shift = rep(c("AM", "PM"), each = 2), n = c(3, 7, 5, 2))
+hchart(cells, "heatmap", hcaes(day, shift, value = n))
+
+# Task intervals
+tasks <- data.frame(
+  start = as.Date(c("2025-01-06", "2025-01-08")),
+  finish = as.Date(c("2025-01-09", "2025-01-13")),
+  lane = 0:1
+)
+hchart(tasks, "xrange", hcaes(x = start, x2 = finish, y = lane)) |>
+  hc_yAxis(categories = c("Design", "Review"))
+
+# Five-number summaries
+waits <- data.frame(
+  clinic = c("North", "South"), lower = c(4, 6), p25 = c(6, 8),
+  p50 = c(10, 12), p75 = c(14, 15), upper = c(19, 22)
+)
+hchart(waits, "boxplot",
+  hcaes(x = clinic, low = lower, q1 = p25, median = p50, q3 = p75, high = upper))
+
+# Flows between nodes
+trips <- data.frame(
+  origin = c("North", "North", "South"), destination = c("Bus", "Rail", "Rail"),
+  passengers = c(30, 20, 15)
+)
+hchart(trips, "sankey", hcaes(from = origin, to = destination, weight = passengers))
+}
+\seealso{
+\code{\link[=hcaes_string]{hcaes_string()}}, \code{\link[=mutate_mapping]{mutate_mapping()}}
 }

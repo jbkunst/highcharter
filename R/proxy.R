@@ -4,6 +4,14 @@ checkProxy <- function(proxy) {
   }
 }
 
+send_proxy_message <- function(proxy, type, ...) {
+  proxy$session$sendCustomMessage(
+    type = type,
+    message = list(id = proxy$id, ...)
+  )
+  proxy
+}
+
 #' Send commands to a Highcharts instance in a Shiny app
 #'
 #' @param shinyId Single-element character vector indicating the output ID of
@@ -11,7 +19,10 @@ checkProxy <- function(proxy) {
 #' @param session The Shiny session object to which the map belongs; usually
 #' the default value will suffice.
 #' @export
-highchartProxy <- function(shinyId, session = shiny::getDefaultReactiveDomain()) {
+highchartProxy <- function(
+  shinyId,
+  session = shiny::getDefaultReactiveDomain()
+) {
   proxy <- list(id = shinyId, session = session)
   class(proxy) <- c("higchartProxy")
 
@@ -34,18 +45,8 @@ hcpxy_add_series <- function(proxy, data = NULL, ...) {
 
   series <- hcaux[["x"]][["hc_opts"]][["series"]]
 
-  for (i in 1:length(series)) {
-    if (getOption("highcharter.verbose")) {
-      message("hcpxy_add_series")
-    }
-
-    proxy$session$sendCustomMessage(
-      type = "addSeries",
-      message = list(
-        id = proxy$id,
-        series = series[[i]]
-      )
-    )
+  for (i in seq_along(series)) {
+    send_proxy_message(proxy, "addSeries", series = series[[i]])
   }
 
   proxy
@@ -68,29 +69,11 @@ hcpxy_remove_series <- function(proxy, id = NULL, all = FALSE) {
   #   )
 
   if (all) {
-    proxy$session$sendCustomMessage(
-      type = "removeAllSeries",
-      message = list(
-        id = proxy$id
-      )
-    )
-
-    return(proxy)
+    return(send_proxy_message(proxy, "removeAllSeries"))
   }
 
-
-  for (i in 1:length(id)) {
-    if (getOption("highcharter.verbose")) {
-      message("hcpxy_remove_series")
-    }
-
-    proxy$session$sendCustomMessage(
-      type = "removeSeries",
-      message = list(
-        id = proxy$id,
-        idSeries = id[[i]]
-      )
-    )
+  for (i in seq_along(id)) {
+    send_proxy_message(proxy, "removeSeries", idSeries = id[[i]])
   }
 
   proxy
@@ -112,15 +95,7 @@ hcpxy_loading <- function(proxy, action = "show") {
 
   value <- action == "show"
 
-  proxy$session$sendCustomMessage(
-    type = "showLoading",
-    message = list(
-      id = proxy$id,
-      showLoading = value
-    )
-  )
-
-  proxy
+  send_proxy_message(proxy, "showLoading", showLoading = value)
 }
 
 #' Update options for a higchartProxy object
@@ -131,15 +106,11 @@ hcpxy_loading <- function(proxy, action = "show") {
 hcpxy_update <- function(proxy, ...) {
   checkProxy(proxy)
 
-  proxy$session$sendCustomMessage(
-    type = "updateChart",
-    message = list(
-      id = proxy$id,
-      options = list(...)
-    )
+  send_proxy_message(
+    proxy,
+    "updateChart",
+    options = validate_args("hcpxy_update", list(...))
   )
-
-  proxy
 }
 
 #' Update options series in a higchartProxy object
@@ -153,19 +124,14 @@ hcpxy_update <- function(proxy, ...) {
 #' @export
 hcpxy_update_series <- function(proxy, id = NULL, ...) {
   checkProxy(proxy)
+  options <- validate_args("hcpxy_update_series", list(...))
 
-  for (i in 1:length(id)) {
-    if (getOption("highcharter.verbose")) {
-      message("hcpxy_update_series")
-    }
-
-    proxy$session$sendCustomMessage(
-      type = "updateSeries",
-      message = list(
-        id = proxy$id,
-        idSeries = id[[i]],
-        options = list(...)
-      )
+  for (i in seq_along(id)) {
+    send_proxy_message(
+      proxy,
+      "updateSeries",
+      idSeries = id[[i]],
+      options = options
     )
   }
 
@@ -184,20 +150,15 @@ hcpxy_update_series <- function(proxy, id = NULL, ...) {
 #' @export
 hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...) {
   checkProxy(proxy)
+  options <- validate_args("hcpxy_update_point", list(...))
 
-  for (i in 1:length(id_point)) {
-    if (getOption("highcharter.verbose")) {
-      message("hcpxy_update_point")
-    }
-
-    proxy$session$sendCustomMessage(
-      type = "updatePoint",
-      message = list(
-        id = proxy$id,
-        idSeries = id,
-        idPoint = id_point[[i]],
-        options = list(...)
-      )
+  for (i in seq_along(id_point)) {
+    send_proxy_message(
+      proxy,
+      "updatePoint",
+      idSeries = id,
+      idPoint = id_point[[i]],
+      options = options
     )
   }
 
@@ -222,22 +183,25 @@ hcpxy_update_point <- function(proxy, id = NULL, id_point = NULL, ...) {
 #'   one is appended to the end.
 #' @param animation Whether to apply animation, and optionally animation configuration.
 #' @export
-hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALSE, animation = TRUE) {
+hcpxy_add_point <- function(
+  proxy,
+  id = NULL,
+  point,
+  redraw = TRUE,
+  shift = FALSE,
+  animation = TRUE
+) {
   checkProxy(proxy)
 
-  proxy$session$sendCustomMessage(
-    type = "addPoint",
-    message = list(
-      id = proxy$id,
-      idSeries = id,
-      point = point,
-      redraw = redraw,
-      shift = shift,
-      animation = animation
-    )
+  send_proxy_message(
+    proxy,
+    "addPoint",
+    idSeries = id,
+    point = point,
+    redraw = redraw,
+    shift = shift,
+    animation = animation
   )
-
-  proxy
 }
 
 #' Remove point to a series of a higchartProxy object
@@ -254,17 +218,13 @@ hcpxy_add_point <- function(proxy, id = NULL, point, redraw = TRUE, shift = FALS
 hcpxy_remove_point <- function(proxy, id = NULL, i = NULL, redraw = TRUE) {
   checkProxy(proxy)
 
-  proxy$session$sendCustomMessage(
-    type = "removePoint",
-    message = list(
-      id = proxy$id,
-      idSeries = id,
-      i = i,
-      redraw = redraw
-    )
+  send_proxy_message(
+    proxy,
+    "removePoint",
+    idSeries = id,
+    i = i,
+    redraw = redraw
   )
-
-  proxy
 }
 
 #' Update data for a higchartProxy object
@@ -280,30 +240,97 @@ hcpxy_remove_point <- function(proxy, id = NULL, i = NULL, redraw = TRUE) {
 #' @param updatePoints boolean When this is TRUE, points will be updated instead of replaced whenever possible.
 #'   This occurs a) when the updated data is the same length as the existing data, b) when points are matched by their id's, or c) when points can be matched by X values.
 #'   This allows updating with animation and performs better. In this case, the original array is not passed by reference. Set FALSE to prevent.
+#' @param id Optional character vector with the target series ID. This is safer
+#'   than a numeric position when indicators or other dynamic series are present.
 #'
 #' @export
-hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE, animation = NULL, updatePoints = TRUE) {
+hcpxy_set_data <- function(
+  proxy,
+  type,
+  data,
+  mapping = hcaes(),
+  redraw = FALSE,
+  animation = NULL,
+  updatePoints = TRUE,
+  id = NULL
+) {
   checkProxy(proxy)
 
   data <- mutate_mapping(data, mapping)
 
   series <- data_to_series(data, mapping, type = type)
+  if (!is.null(id)) {
+    stopifnot(is.character(id), length(id) == length(series))
+  }
 
-  for (i in 1:length(series)) {
-    proxy$session$sendCustomMessage(
-      type = "setData",
-      message = list(
-        id = proxy$id,
-        serie = i - 1,
-        data = series[[i]]$data,
-        redraw = redraw,
-        animation = animation,
-        updatePoints = updatePoints
-      )
+  for (i in seq_along(series)) {
+    send_proxy_message(
+      proxy,
+      "setData",
+      serie = i - 1,
+      idSeries = if (is.null(id)) NULL else id[[i]],
+      data = series[[i]]$data,
+      redraw = redraw,
+      animation = animation,
+      updatePoints = updatePoints
     )
   }
 
   proxy
+}
+
+#' Set axis extremes for a higchartProxy object
+#'
+#' This controls the visible range without rebuilding the chart. It is useful
+#' for Stock charts and their navigator, and also works with regular charts.
+#'
+#' @param proxy A `higchartProxy` object.
+#' @param min,max Minimum and maximum axis values. Dates and date-times are
+#'   converted to Highcharts timestamps. Use `NULL` for both to reset the range.
+#' @param axis Zero-based x-axis index or a character axis ID.
+#' @param redraw Whether to redraw the chart after changing the range.
+#' @param animation Whether to animate the range change, or an animation options
+#'   list.
+#'
+#' @export
+hcpxy_set_extremes <- function(
+  proxy,
+  min = NULL,
+  max = NULL,
+  axis = 0,
+  redraw = TRUE,
+  animation = TRUE
+) {
+  checkProxy(proxy)
+
+  valid_axis <- (is.numeric(axis) &&
+    length(axis) == 1 &&
+    is.finite(axis) &&
+    axis >= 0 &&
+    axis == floor(axis)) ||
+    (is.character(axis) && length(axis) == 1 && nzchar(axis))
+  stopifnot(valid_axis)
+
+  normalize_extreme <- function(value) {
+    if (is.null(value)) {
+      return(NULL)
+    }
+    if (inherits(value, "Date") || inherits(value, "POSIXt")) {
+      value <- datetime_to_timestamp(value)
+    }
+    stopifnot(is.numeric(value), length(value) == 1, is.finite(value))
+    as.numeric(value)
+  }
+
+  send_proxy_message(
+    proxy,
+    "setExtremes",
+    axis = axis,
+    min = normalize_extreme(min),
+    max = normalize_extreme(max),
+    redraw = redraw,
+    animation = animation
+  )
 }
 
 #' Redraw a higchartProxy object
@@ -314,10 +341,5 @@ hcpxy_set_data <- function(proxy, type, data, mapping = hcaes(), redraw = FALSE,
 hcpxy_redraw <- function(proxy) {
   checkProxy(proxy)
 
-  proxy$session$sendCustomMessage(
-    type = "redraw",
-    message = list(id = proxy$id)
-  )
-
-  proxy
+  send_proxy_message(proxy, "redraw")
 }

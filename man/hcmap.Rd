@@ -2,12 +2,11 @@
 % Please edit documentation in R/highmaps.R
 \name{hcmap}
 \alias{hcmap}
-\title{Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
-collection.}
+\title{Create a map chart}
 \usage{
 hcmap(
   map = "custom/world",
-  download_map_data = getOption("highcharter.download_map_data"),
+  download_map_data = TRUE,
   data = NULL,
   value = NULL,
   joinBy = NULL,
@@ -15,12 +14,13 @@ hcmap(
 )
 }
 \arguments{
-\item{map}{String indicating what map to chart, a list from
-\url{https://code.highcharts.com/mapdata/}. See examples.}
+\item{map}{A two-letter country code (case-insensitive), a collection path
+such as \code{"countries/jp/jp-all"} or \code{"custom/world"}, or a loaded map list.
+See \code{\link[=hc_maps]{hc_maps()}} for installed identifiers. Country codes and their matching
+collection paths use the same local file.}
 
-\item{download_map_data}{A logical value whether to download
-(add as a dependency) the map. Default \code{TRUE} via
-\code{getOption("highcharter.download_map_data")}.}
+\item{download_map_data}{For maps outside the package, download the map in R
+(\code{TRUE}, the default) or attach the CDN script to the widget (\code{FALSE}).}
 
 \item{data}{Optional data to make a choropleth, in case of use
 the joinBy and value are needed.}
@@ -33,29 +33,21 @@ the joinBy and value are needed.}
 (\url{https://api.highcharts.com/highcharts/series}).}
 }
 \description{
-Shortcut for create map from \url{https://code.highcharts.com/mapdata/}
-collection.
+Draw a packaged country map offline, load another map by its
+\href{https://code.highcharts.com/mapdata/}{Highcharts collection} path, or supply
+a GeoJSON or TopoJSON list.
 }
 \examples{
 
-options(highcharter.download_map_data = TRUE)
+hcmap("jp")
+hcmap("custom/south-america", showInLegend = FALSE)
+hcmap("custom/world-robinson-lowres", data = subset(world_income, year == 2024),
+  value = "gni_per_capita",
+  joinBy = c("iso-a3", "iso3")
+)
 
-# hcmap(nullColor = "#DADADA")
-# hcmap(nullColor = "#DADADA", download_map_data = FALSE)
-
-require(dplyr)
-data("USArrests", package = "datasets")
-USArrests <- mutate(USArrests, "woe-name" = rownames(USArrests))
-
-# hcmap(
-#   map = "countries/us/us-all", data = USArrests,
-#   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population"
-# )
-
-# download_map_data = FALSE
-# hcmap(
-#    map = "countries/us/us-all", data = USArrests,
-#   joinBy = "woe-name", value = "UrbanPop", name = "Urban Population",
-#   download_map_data = FALSE
-# )
+# Read a local GeoJSON or TopoJSON file and plot its boundaries.
+path <- system.file("extdata", "districts.topo.json", package = "highcharter")
+map <- jsonlite::read_json(path, simplifyVector = FALSE)
+hcmap(map, showInLegend = FALSE)
 }

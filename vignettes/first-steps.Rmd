@@ -1,38 +1,26 @@
 ---
 title: First steps on highcharter package
-author: Joshua Kunst
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
-  Start here if this is your first time with highcharter. You'll learn the main   
+  Start here if this is your first time with highcharter. You'll learn the main
   functions to get a chart from a data frame and some basic examples.
-editor_options: 
+editor_options:
   chunk_output_type: console
 vignette: >
   %\VignetteIndexEntry{First steps on highcharter package}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}   
+  %\VignetteEncoding{UTF-8}
 ---
-
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "rocket"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
 
 ```{r, include=FALSE}
 library(highcharter)
-options(highcharter.theme = hc_theme_hcrt(tooltip = list(valueDecimals = 2)))
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 ```
 
 ## Introduction
 
 We chart data, and data can come in different ways: numeric or character vectors,
-as time series objects, etc. but the most common object with data is a data 
+as time series objects, etc. but the most common object with data is a data
 frame. So, we'll show how  chart this type of object in __highcharter__.
 
 Highcharter have two main functions to create a chart from data and another
@@ -43,7 +31,7 @@ data frames, likert object, etc) and return a `highchart` object (chart)
 2. `hc_add_series()`: A generic function which add data to a existing
 `highchart` object depending the type (class) of the data.
 
-There are a last function will be useful to chart data from data frame. The 
+There are a last function will be useful to chart data from data frame. The
 functions is `hcaes` which will define the aesthetic mappings. This 3 functions
 are inspired in __ggplot2__ package. So:
 
@@ -52,7 +40,7 @@ are inspired in __ggplot2__ package. So:
 - `hcaes()` works like ggplot2's `aes`.
 
 The main differences with ggplot2 are here we need the data and the aesthetics
-explicit in every highcharts functions. 
+explicit in every highcharts functions.
 
 First, show some data to work with.
 
@@ -68,7 +56,7 @@ hchart(<data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)
 ```
 
 - `<data.frame>` will be the data to chart.
-- `<type_of_chart>` is a string to specify the type of chart. This value can 
+- `<type_of_chart>` is a string to specify the type of chart. This value can
 be: line, spline, area, heatmap, treemap, etc.
 - `<aesthetics>` is the mapping to use for plot.
 - `...` are other parameters to configure the chart.
@@ -76,17 +64,22 @@ be: line, spline, area, heatmap, treemap, etc.
 So, a basic example would be:
 
 ```{r}
-hchart(mpg, "point", hcaes(x = displ, y = cty, group = year))
+hchart(mpg, "scatter", hcaes(x = displ, y = cty, group = year))
 ```
 
-## Exercising the basics
+## Map positions and values
 
-Let's try other charts to get familiar with the syntax.
+Lines and scatter plots place each observation at `x` and `y`. Add `group` to
+split observations into series, `size` to give scatter points a bubble size,
+or `color` to color individual points. A heatmap uses `value` to color a cell.
 
 ```{r}
 data(economics_long, package = "ggplot2")
 
-economics_long2 <- dplyr::filter(economics_long, variable %in% c("pop", "uempmed", "unemploy"))
+economics_long2 <- dplyr::filter(
+  economics_long,
+  variable %in% c("pop", "uempmed", "unemploy")
+)
 
 head(economics_long2)
 
@@ -98,16 +91,25 @@ Now, a heatmap and a treemap.
 ```{r}
 library(dplyr)
 
-dfdiam <- diamonds |> 
+dfdiam <- diamonds |>
   group_by(cut, clarity) |>
   summarize(price = median(price))
 
-hchart(dfdiam, "heatmap", hcaes(x = cut, y = clarity, value = price), name = "Median Price") 
+hchart(
+  dfdiam,
+  "heatmap",
+  hcaes(x = cut, y = clarity, value = price),
+  name = "Median price"
+) |>
+  hc_colorAxis(
+    stops = color_stops(
+      colors = c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
+    )
+  )
 
-mpgman <- mpg |> 
-  group_by(manufacturer) |> 
-  summarise(n = n(),
-            unique = length(unique(model))) |> 
+mpgman <- mpg |>
+  group_by(manufacturer) |>
+  summarise(n = n(), unique = length(unique(model))) |>
   arrange(-n, -unique)
 
 hchart(mpgman, "treemap", hcaes(x = manufacturer, value = n, color = unique))
@@ -123,30 +125,28 @@ as well the tooltip. You can modify the colors and a lot of properties.
 mpgman2 <- count(mpg, manufacturer, year)
 
 hchart(
-  mpgman2, 
+  mpgman2,
   "bar",
   hcaes(x = manufacturer, y = n, group = year),
   color = c("#7CB5EC", "#F7A35C"),
   name = c("Year 1999", "Year 2008"),
   showInLegend = c(TRUE, FALSE) # only show the first one in the legend
-  )
+)
 ```
 
-Highcharts has a very complete API with a lot of options. You can 
+Highcharts has a very complete API with a lot of options. You can
 see every option in action in https://api.highcharts.com/highcharts/plotOptions.series.
 
 ## A more advanced example
 
-Using the `broom` package is really nice due the you can transform 
-models to tidy data:
+Fit a local regression and compute its predictions and standard errors:
 
 ```{r, message=FALSE}
-library(broom)
-
 modlss <- loess(dist ~ speed, data = cars)
 
-fit <- arrange(augment(modlss), speed) |> 
-  mutate(.se = predict(modlss, se = TRUE)$se.fit)
+prediction <- predict(modlss, se = TRUE)
+fit <- mutate(cars, .fitted = prediction$fit, .se = prediction$se.fit) |>
+  arrange(speed)
 
 head(fit)
 ```
@@ -161,7 +161,7 @@ hc <- hchart(
   hcaes(x = speed, y = dist),
   name = "Speed and Stopping Distances of Cars",
   showInLegend = TRUE
-  )
+)
 
 hc
 ```
@@ -171,7 +171,7 @@ function `hc_add_series`. The parameters in this functions are similar to
 the `hchart`:
 
 
-```r
+```text
 hc_add_series(<highcarter_object>, <data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)
 
 # or with the pipe:
@@ -180,11 +180,11 @@ hc_add_series(<highcarter_object>, <data.frame>, <type_of_chart>, hcaes(<aesthet
 
 ```
 
-In this case we will add 2 groups of series. The 1st to add will be the 
+In this case we will add 2 groups of series. The 1st to add will be the
 spline then the arearange. So we'll use `hc_add_series` 2 times.
 
 ```{r}
-qtint <- qt(0.975, predict(modlss, se = TRUE)$df)
+qtint <- qt(0.975, prediction$df)
 
 hc |>
   hc_add_series(
@@ -195,17 +195,17 @@ hc |>
     id = "fit", # this is for link the arearange series to this one and have one legend
     lineWidth = 1,
     showInLegend = TRUE
-    ) |> 
+  ) |>
   hc_add_series(
     fit,
     type = "arearange",
     name = "SE",
-    hcaes(x = speed, low = .fitted - qtint*.se, high = .fitted + qtint*.se),
+    hcaes(x = speed, low = .fitted - qtint * .se, high = .fitted + qtint * .se),
     linkedTo = "fit", # here we link the legends in one.
     showInLegend = FALSE,
-    color = hex_to_rgba("gray", 0.2),  # put a semi transparent color
+    color = hex_to_rgba("gray", 0.2), # put a semi transparent color
     zIndex = -3 # this is for put the series in a back so the points are showed first
-    )
+  )
 ```
 
 Example of data from https://stackoverflow.com/questions/22717930/how-to-get-the-confidence-intervals-for-lowess-fit-using-r.
@@ -214,7 +214,7 @@ Example of data from https://stackoverflow.com/questions/22717930/how-to-get-the
 
 Since you know the basics now it could be interesting:
 
-- Go motivate yourself with the `vignette("showcase")` and observe everything that can be 
+- Go motivate yourself with the `vignette("showcase")` and observe everything that can be
 done with the highcharter package.
 - Learn to configure graphics using the implemented API in `vignette("highcharts-api")`.
-- See all chart you can make in `vignette("highcharts")`.
+- Explore [chart types](chart-types.html) and their R examples.

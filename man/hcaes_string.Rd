@@ -2,25 +2,30 @@
 % Please edit documentation in R/highcharts-api-add.R
 \name{hcaes_string}
 \alias{hcaes_string}
-\alias{hcaes_}
-\title{Define aesthetic mappings using strings.
-Similar in spirit to \code{ggplot2::aes_string}}
+\title{Map point options using strings}
 \usage{
 hcaes_string(x, y, ...)
-
-hcaes_(x, y, ...)
 }
 \arguments{
-\item{x, y, ...}{List of name value pairs giving aesthetics to map to
-variables. The names for x and y aesthetics are typically omitted because
-they are so common; all other aesthetics must be named.}
+\item{x, y, ...}{Column names or expressions as strings. Only \code{x} and \code{y}
+can be supplied by position.}
 }
 \description{
-Define aesthetic mappings using strings.
-Similar in spirit to \code{ggplot2::aes_string}
+Use this form when the column names come from variables, such as Shiny
+inputs. Strings may also contain a single R expression.
 }
 \examples{
-hchart(mtcars, "point", hcaes_string("hp", "mpg", group = "cyl"))
+x_col <- "Sepal.Length"
+y_col <- "Petal.Length"
+hchart(iris, "scatter", hcaes_string(x_col, y_col, group = "Species"))
 
-hcaes_string(x = "xval", color = "colorvar", group = "grvar")
+# Backticks quote a column name containing spaces.
+sales <- data.frame(store = c("North", "South"))
+sales[["net sales"]] <- c(150, 200)
+highchart() |>
+  hc_add_series(sales, "column", hcaes_string("store", "`net sales` / 1000"),
+                name = "Sales (thousands)")
+}
+\seealso{
+\code{\link[=hcaes]{hcaes()}}
 }

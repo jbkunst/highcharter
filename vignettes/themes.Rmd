@@ -1,166 +1,347 @@
 ---
-title: Themes
-author: Joshua Kunst
-date: "`r Sys.Date()`"
+title: "Chart themes"
 output: rmarkdown::html_vignette
-description: >
-  Highcharts is very flexible for create or themes.
-  In Highcarter there are some predefined themes and some 
-  functions to create your own or merge themes.
-editor_options: 
-  chunk_output_type: console
+description: >-
+  Use a preset, build a theme in R, or inherit the typography and colors of a Bootstrap page.
 vignette: >
-  %\VignetteIndexEntry{Themes}
+  %\VignetteIndexEntry{Chart themes}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}   
+  %\VignetteEncoding{UTF-8}
 ---
 
-<script>
-$(document).ready(function(){ 
-  el = $(".page-header > h1")
-  icon = "paint-brush"
-  text = el.text()
-  text_new = "<span class=\"fa fa-" + icon  + "\"></span> " + text
-  el.html(text_new) 
-}) ;
-</script>
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(error = FALSE)
+old_options <- options("highcharter.theme")
+old_bootstrap_theme <- shiny::getShinyOption("bootstrapTheme")
+shiny::shinyOptions(bootstrapTheme = bslib::bs_theme(version = 5))
+```
 
-```{r, include=FALSE}
+## Start from a clean R session
+
+Run each example separately in a fresh R session. They all plot stopping
+distance against speed using `datasets::cars`, which ships with R.
+
+**Default.** Omitting the theme uses the package default in a fresh session.
+
+```r
 library(highcharter)
-library(dplyr)
-library(purrr)
-library(stringr)
-library(htmltools)
-library(ggplot2)
+
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 ```
 
-Highcharts is very flexible for create or themes.
-In Highcarter there are some predefined themes and some 
-functions to create your own or merge themes.
+**Preset for one chart.** Carbon supplies its colors, grid and IBM Plex Sans.
 
-Let's start with a simple bar chart and see the default theme:
-
-```{r}
+```r
 library(highcharter)
-library(dplyr)
 
-data(diamonds, package = "ggplot2")
-
-data <- count(diamonds, cut, color)
-
-hc <- hchart(data, "column", hcaes(x = color, y = n, group = cut)) |>
-  hc_yAxis(title = list(text = "Cases")) |>
-  hc_title(text = "Diamonds Are Forever") |>
-  hc_subtitle(text = "Source: Diamonds data set") |>
-  hc_credits(enabled = TRUE, text = "http://jkunst.com/highcharter/") |>
-  hc_tooltip(sort = TRUE, table = TRUE) |> 
-  hc_caption(text = "This is a caption text to show the style of this type of text")
-
-hc
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(hc_theme("carbon"))
 ```
 
+**Preset for subsequent charts.** Set the theme before creating the first
+widget. A later call to `hc_set_theme()` affects charts created after it.
 
-## Themes
+```r
+library(highcharter)
 
-Here you'll find the themes to change the look of your charts.
-
-```{r, echo=FALSE, results='asis'}
-themes <- help.search("theme", package = "highcharter")$matches
-themes <- themes |> 
-  tibble::as_tibble() |>
-  janitor::clean_names() |>
-  select(name, title) |>
-  distinct() |>
-  filter(str_detect(name, "hc_theme_*")) |>
-  filter(!name %in% c("hc_theme_merge", "hc_theme")) |>
-  mutate(title = str_replace(title, " theme for highcharts", "")) |>
-  arrange(name) |> 
-  pull(name)
-
-themes <- str_subset(themes, "spark", negate = TRUE)
-
-themes <- unique(c("hc_theme_smpl", "hc_theme_db", themes))
-# thms <- sample(thms, 5)
-
-# generate tabs
-themes |>
-  map(function(t) { # t <- sample(themes, 1)
-    
-    thm <- get(t)()
-
-    content <- list(hc) |>
-      map(hc_add_theme, thm) |> 
-      dplyr::first()
-
-    tagList(
-      tags$h3(stringr::str_remove(t, "hc_theme_")),
-      content
-    )
-    
-  }) |> 
-  htmltools::as.tags()
+hc_set_theme("carbon")
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 ```
 
-## Creating themes
+**Custom theme with a bundled font.** Select IBM Plex Sans by name even
+when starting from an empty theme.
 
-You can create your own themes!
+```r
+library(highcharter)
 
-```{r}
-my_own_theme <- hc_theme(
-  colors = c("red", "green", "blue"),
+team <- hc_theme(
+  colors = c("#005F73", "#CA6702"),
+  chart = list(style = list(fontFamily = "IBM Plex Sans, sans-serif"))
+)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+**System font.** Keep Carbon's colors and let the operating system choose
+the typeface. Each viewer sees their own system font.
+
+```r
+library(highcharter)
+
+team <- hc_theme("carbon", chart = list(style = list(fontFamily = "system-ui")))
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+### Use an external font
+
+Set `fontFamily` to a CSS family name to use a font supplied by the page or
+device. To bring a font with the theme, use `sass::font_google()`.
+The same theme works with `hc_add_theme()` and `hc_set_theme()`.
+
+**Use a font supplied by the viewer or page.** With a plain family name,
+the browser uses Noto Sans where available and `sans-serif` elsewhere.
+
+```r
+library(highcharter)
+
+team <- hc_theme(
+  chart = list(style = list(fontFamily = "Noto Sans, sans-serif"))
+)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
+```
+
+**Include Noto Sans with the chart.** With the default `local = TRUE`, preparing the
+font requires an internet connection on the first download. The exported
+chart can then use the included files offline.
+
+```r
+library(highcharter)
+
+team <- hc_theme(
   chart = list(
-    backgroundColor = NULL,
-    divBackgroundImage = "http://media3.giphy.com/media/FzxkWdiYp5YFW/giphy.gif"
-  ),
-  title = list(
-    style = list(
-      color = "#333333",
-      fontFamily = "Lato"
-    )
-  ),
-  subtitle = list(
-    style = list(
-      color = "#666666",
-      fontFamily = "Shadows Into Light"
-    )
-  ),
-  legend = list(
-    itemStyle = list(
-      fontFamily = "Tangerine",
-      color = "black"
-    ),
-    itemHoverStyle = list(
-      color = "gray"
-    )
+    style = list(fontFamily = sass::font_google("Noto Sans"))
   )
 )
-
-hc |>
-  hc_add_theme(my_own_theme)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
+  hc_add_theme(team)
 ```
 
-## Merge Themes
+**Load Noto Sans from Google when the chart opens.** With `local = FALSE`,
+the viewer needs a connection to Google Fonts. This example sets the custom
+theme for subsequent charts.
 
-You can merge themes too.
+```r
+library(highcharter)
 
-```{r}
-thm <- hc_theme_merge(
-  hc_theme_darkunica(),
-  hc_theme(
-    chart = list(
-      backgroundColor = "transparent",
-      divBackgroundImage = "http://www.wired.com/images_blogs/underwire/2013/02/xwing-bg.gif"
-    ),
-    title = list(
-      style = list(
-        color = "white",
-        fontFamily = "Griffy",
-        fontSize = "25px"
-      )
-    )
+team <- hc_theme(
+  chart = list(
+    style = list(fontFamily = sass::font_google("Noto Sans", local = FALSE))
   )
 )
+hc_set_theme(team)
+hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
+```
 
-hc |>
-  hc_add_theme(thm)
+## Choose a theme
+
+The following gallery uses monthly sales for two regions. Set a default
+at the top of the script. Each widget captures it when you create the chart.
+
+```{r}
+library(highcharter)
+
+hc_set_theme("ft")
+
+sales_chart <- function(...) {
+  highchart(height = 260, ...) |>
+    hc_title(text = "Monthly sales") |>
+    hc_xAxis(categories = c("Jan", "Feb", "Mar", "Apr", "May", "Jun")) |>
+    hc_yAxis(title = list(text = "Units")) |>
+    hc_add_series(name = "North", data = c(14, 17, 15, 21, 23, 24)) |>
+    hc_add_series(name = "South", data = c(12, 14, 16, 17, 17, 20))
+}
+
+sales_chart()
+```
+
+To change a single chart, pass a theme to `highchart(theme = ...)` when
+constructing it, or apply one to an existing widget.
+
+```{r}
+sales_chart() |> hc_add_theme(hc_theme("economist"))
+```
+
+## Create a theme in R
+
+A theme accepts the same option names as Highcharts. Start from scratch or
+override specific fields of a preset. For example, changing the colors below
+preserves Carbon's typography, background and gridlines.
+
+```{r}
+team <- hc_theme(
+  colors = c("#005F73", "#CA6702"),
+  title = list(align = "left"),
+  chart = list(backgroundColor = "transparent")
+)
+
+team_carbon <- hc_theme("carbon", colors = team$colors)
+hc_set_theme(team_carbon)
+sales_chart()
+```
+
+Use `hc_theme_merge(hc_theme("carbon"), team)` to reuse all of the options in
+`team`. Nested fields merge by name. A supplied array replaces the previous
+array, so a two-color palette stays two colors long.
+
+## Use system fonts with a preset
+
+To keep Carbon's palette and gridlines while using the device's interface
+font, override `chart.style.fontFamily`. A system font needs no web font files.
+
+```{r carbon-system-font}
+carbon_system <- hc_theme(
+  "carbon",
+  chart = list(style = list(fontFamily = "system-ui, sans-serif"))
+)
+
+sales_chart(theme = carbon_system)
+```
+
+Carbon's title, axis labels and legend inherit this font. Other presets can
+set fonts on individual elements. For example, to change the title in `hcrt`,
+also set `title = list(style = list(fontFamily = "system-ui, sans-serif"))`.
+The bundled theme fonts include the Latin subset, including Spanish accents.
+For other scripts the browser can use an installed font, or you can request
+a family explicitly with `sass::font_google("Noto Sans KR")`.
+
+## Inherit a Shiny app's theme
+
+Use `hc_set_theme("bslib")` once at app startup. In this standalone example
+the app supplies Noto Sans and every chart using the preset inherits it.
+With Bootstrap 5.3, the browser resolves the primary series color, base
+font, text, gridlines and tooltip against the CSS around each chart.
+The transparent background lets
+the card or page show through. Text and gridlines follow the page's color
+mode. Other series use a categorical palette that you can replace with
+`hc_colors()`. Chart titles use the base font.
+
+```{r shiny, eval=FALSE}
+library(shiny)
+library(bslib)
+library(highcharter)
+
+hc_set_theme("bslib")
+
+ui <- page_fluid(
+  theme = bs_theme(version = 5, base_font = font_google("Noto Sans")),
+  input_dark_mode(),
+  highchartOutput("stopping")
+)
+
+server <- function(input, output, session) {
+  output$stopping <- renderHighchart(
+    hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
+  )
+}
+
+shinyApp(ui, server)
+```
+
+If the project uses a `_brand.yml`, put the same choices there and use
+`theme = bs_theme(version = 5, brand = TRUE)`. The chart takes the values that
+bslib applies to the page. A standalone HTML widget uses the preset's
+fallback colors and system font.
+
+```yaml
+color:
+  primary: "#783356"
+typography:
+  base: Georgia
+```
+
+In a multi-user Shiny app, apply per-user choices with
+`hc_add_theme(hc_theme(input$preset))` inside `renderHighchart()`.
+The setter changes an R process option shared by its sessions.
+
+## The collection
+
+Choose a preset below; every theme uses the same sales data. The chart is
+resized when its panel becomes visible.
+
+```{r gallery, echo=FALSE}
+panels <- lapply(hc_themes(), function(name) {
+  chart <- if (name %in% c("sparkline", "sparkline_vb")) {
+    highchart(height = 85) |>
+      hc_add_series(
+        type = if (name == "sparkline_vb") "area" else "line",
+        name = "Sales",
+        data = c(14, 17, 15, 21, 23, 24)
+      )
+  } else {
+    sales_chart()
+  }
+  chart <- hc_add_theme(chart, hc_theme(name))
+  if (name == "sparkline_vb") {
+    chart <- htmltools::div(style = "background-color: #166B70", chart)
+  }
+  bslib::nav_panel(name, chart)
+})
+do.call(bslib::navset_pill, panels)
+```
+
+Use `hc_themes()` to list the available preset names.
+
+The FT adaptation uses its web paper color and categorical line palette.
+Its separate bar palette applies to bars and columns with `colorByPoint = TRUE`.
+For several bar series, pass `hc_theme("ft")$plotOptions$bar$colors` to
+`hc_colors()`. The Economist adaptation uses dark and light blue as its first two series.
+Carbon uses IBM's categorical sequence and blue sequential scale for maps
+and heatmaps. The editorial presets are highcharter adaptations.
+[FT chart colors](https://ft-interactive.github.io/g-chartcolour/) ·
+[The Economist on chart colors](https://education.economist.com/blog/interviews/tips-for-visualising-data-like-the-economist) ·
+[IBM Carbon palettes](https://carbondesignsystem.com/data-visualization/color-palettes/).
+
+For a Carbon map of changes around zero, use a symmetric range and set the
+neutral color at the midpoint. Reversing the signs would reverse the
+interpretation of the two ends of this scale.
+
+```{r}
+change_theme <- hc_theme(
+  "carbon",
+  colorAxis = list(
+    min = -10,
+    max = 10,
+    stops = list(list(0, "#491D8B"), list(0.5, "#FFFFFF"), list(1, "#004144"))
+  )
+)
+```
+
+Use `hc_set_theme("cloudscape")` for the light AWS Cloudscape chart palette.
+The ten series colors follow the order in its Highcharts components. The
+preset also uses Open Sans, a transparent background and rounded columns.
+Like the Carbon preset, this adaptation draws gridlines on both axes and
+uses circles wherever a series displays point markers.
+[Cloudscape chart colors](https://cloudscape.design/foundation/visual-foundation/data-vis-colors/) ·
+[Cloudscape chart styles](https://github.com/cloudscape-design/chart-components/blob/31ed24741b10928d1638245c725c1a0d155b29a4/src/internal/chart-styles.ts).
+
+The `538` and `bloom` presets preserve highcharter's historical FiveThirtyEight
+and Bloomberg Graphics palettes. The `darkunica`, `gridlight` and
+`sandsignika` presets follow the themes shipped with Highcharts 12.6.0.
+
+Tufte uses a gray palette, the Cardo font and small y-axis ticks, leaving
+the plotting area open.
+
+The remaining presets use the same sales data, except for the compact
+single-series sparkline examples. The white area in `sparkline_vb` is shown
+on a teal value-box background. The chalkboard, paper and sand textures
+are embedded in the widgets and work offline.
+
+## Migrate an existing script
+
+Replace `hc_theme_ft()` with `hc_theme("ft")`. A previous call to
+`options(highcharter.theme = hc_theme_ft())` becomes `hc_set_theme("ft")`.
+The collection contains 28 presets, including `db` (Dotabuff), `ffx`
+(Firefox), `elementary` (elementary OS) and `google` (Google Books Ngram
+Viewer). To reproduce the former `tufte2` style on a column chart, add an
+x-axis baseline and draw white gridlines over the columns.
+
+```{r}
+bars <- hc_theme(
+  "tufte",
+  xAxis = list(lineWidth = 1, lineColor = "#737373", tickWidth = 0),
+  yAxis = list(
+    lineWidth = 1,
+    tickWidth = 0,
+    gridLineColor = "white",
+    gridZIndex = 4
+  )
+)
+sales_chart() |> hc_chart(type = "column") |> hc_add_theme(bars)
+```
+
+```{r restore, include=FALSE}
+options(old_options)
+shiny::shinyOptions(bootstrapTheme = old_bootstrap_theme)
 ```

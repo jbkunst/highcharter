@@ -6,28 +6,18 @@ Description: A wrapper for the 'Highcharts' library including
     shortcut functions to plot R objects. 'Highcharts'
     <https://www.highcharts.com/> is a charting library offering
     numerous chart types with a simple configuration syntax.
+    The R wrapper is licensed under MIT. The bundled 'Highcharts' JavaScript
+    library is subject to separate license terms from 'Highsoft'.
 Authors@R: c(
-  person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
-  person("Nuno", "Agostinho", role = c("ctb"), comment  = "hchart.survfit, densities and hc_add_series_scatter"),
-  person("Danton", "Noriega", role = c("ctb"), comment  = "hcaes_"),
-  person("Charlie Joey", "Hadley", role = c("ctb"), comment  = "hc_add_event_point improvement"),
-  person("Eduardo", "Flores", role = c("ctb"), comment  = "First version hc_add_series_df_tidy"),
-  person("Dean", "Kilfoyle", role = c("ctb"), comment  = "First version hc_add_series_boxplot"),
-  person("Adline", "Dsilva", role = c("ctb"), comment  = "First version Matrix heatmap"),
-  person("Kamil", "Slowikowski", role = c("ctb"), comment = c(ORCID = "0000-0002-2843-6370")),
-  person("Christian", "Minich", role = c("ctb"), comment  = "hcaes mutate_mapping improvement"),
-  person("Jonathan", "Armond", role = c("ctb"), comment = "mutate_mapping bugfix"),
-  person("David", "Breuer", role = c("ctb"), comment = "download_map_data quiet parameter"),
-  person("Mauricio", "Vargas", role = c("ctb"), comment = "tests and gh-actions"),
-  person("Michael", "Yan", role = c("ctb"), comment = "Motivational example for treemap/sunburst data helper"),
-  person("Bart", "Oortwijn", role = c("ctb"), comment = "rjson option, hc_add_yAxis, and GH issues collaborator"),
-  person("Paul", "Campbell", role = c("ctb"), comment = "additional proxy methods"),
-  person("Marc", "Kupietz", role = c("ctb"), comment = "contributed fixes for checks related to deprecated package usage")
-  )
+    person("Joshua", "Kunst", role = c("aut", "cre"), email = "jbkunst@gmail.com"),
+    person("Nuno", "Agostinho", role = "ctb"),
+    person("Mauricio", "Vargas", role = "ctb"),
+    person("Charlie Joey", "Hadley", role = "ctb"),
+    person("Marc", "Kupietz", role = "ctb")
+    )
 URL: https://jkunst.com/highcharter/, https://github.com/jbkunst/highcharter
 BugReports: https://github.com/jbkunst/highcharter/issues
 License: MIT + file LICENSE
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Depends:
@@ -35,27 +25,27 @@ Depends:
 Imports:
     htmlwidgets,
     purrr,
-    rlist,
-    assertthat,
     zoo,
     dplyr (>= 1.0.0),
     tibble (>= 1.1),
     stringr (>= 1.3.0),
-    broom,
-    xts,
-    tidyr,
+    vctrs (>= 0.3.7),
     htmltools,
     jsonlite,
-    lubridate,
+    yyjsonr (>= 0.1.22),
     yaml,
-    rlang (>= 0.1.1),
-    rjson,
-    methods
+    rlang (>= 0.4.10)
+VignetteBuilder: knitr
 Suggests:
+    seasonal,
+    bslib,
+    sass,
     knitr,
     rmarkdown,
-    survival,
+    fontawesome,
+    survival (>= 3.6-5),
     quantmod,
+    xts,
     igraph,
     ggplot2,
     httr,
@@ -65,22 +55,20 @@ Suggests:
     forecast,
     geojsonio,
     testthat,
-    idbr,
     webshot2,
     covr,
     palmerpenguins,
     treemap,
     gapminder,
     forcats,
-    rsvg,
-    fontawesome,
     readr,
     here,
     rvest,
-    tidytext,
     igraphdata,
     ggplot2movies,
     janitor,
     spelling,
 LazyData: true
 Language: en-US
+Config/Needs/website: pkgdown, shinylive, nanonext
+Config/roxygen2/version: 8.1.1

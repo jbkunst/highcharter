@@ -1,0 +1,97 @@
+---
+title: Multiple axes
+output: rmarkdown::html_vignette
+description: >
+  Arrange nine scatter plots in one chart using separate pairs of axes.
+vignette: >
+  %\VignetteIndexEntry{Multiple axes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(highcharter)
+hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+```
+
+## Price and carat across nine panels
+
+Compare price (US dollars) against weight (carats) for three cuts and three
+colors in `ggplot2::diamonds`. Each panel shows a reproducible sample of 100
+diamonds. All panels share the same axis limits.
+
+```{r diamonds-panels}
+library(dplyr)
+library(purrr)
+
+set.seed(42)
+groups <- ggplot2::diamonds |>
+  filter(
+    cut %in% c("Very Good", "Premium", "Ideal"),
+    color %in% c("D", "E", "F")
+  ) |>
+  group_by(color, cut) |>
+  slice_sample(n = 100)
+
+keys <- group_keys(groups)
+panels <- map(seq_len(nrow(keys)), function(i) {
+  list(
+    left = paste0(35 * ((i - 1) %% 3), "%"),
+    top = paste0(35 * ((i - 1) %/% 3), "%"),
+    width = "27%",
+    height = "22%",
+    offset = 0,
+    startOnTick = FALSE,
+    endOnTick = FALSE
+  )
+})
+x_axes <- map2(panels, seq_along(panels), function(panel, i) {
+  c(
+    panel,
+    list(
+      min = 0,
+      max = ceiling(max(groups$carat)),
+      title = list(text = paste(keys$cut[i], "·", keys$color[i]))
+    )
+  )
+})
+y_axes <- map(panels, function(panel) {
+  c(
+    panel,
+    list(
+      min = 0,
+      max = 20000,
+      tickPositions = c(0, 10000, 20000),
+      title = list(text = NULL)
+    )
+  )
+})
+
+chart <- highchart(height = 780) |>
+  hc_title(text = "Diamond price by carat") |>
+  hc_subtitle(
+    text = "Columns show cut. Rows show color. Prices in US dollars."
+  ) |>
+  hc_chart(alignTicks = FALSE) |>
+  hc_xAxis(x_axes) |>
+  hc_yAxis(y_axes) |>
+  hc_legend(enabled = FALSE)
+
+reduce2(
+  group_split(groups),
+  seq_along(panels),
+  function(hc, rows, i) {
+    hc_add_series(
+      hc,
+      rows,
+      "scatter",
+      hcaes(x = carat, y = price),
+      name = paste(keys$cut[i], keys$color[i]),
+      xAxis = i - 1L,
+      yAxis = i - 1L,
+      marker = list(radius = 2)
+    )
+  },
+  .init = chart
+)
+```

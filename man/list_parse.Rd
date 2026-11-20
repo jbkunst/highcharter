@@ -13,8 +13,8 @@ list_parse2(df)
 \item{df}{A data frame to parse to list}
 }
 \description{
-This functions are similar to \code{rlist::list.parse} but this removes
-names. \code{NA}s are removed for compatibility with rjson::toJSON.
+Each row becomes one list of values. \code{list_parse()} keeps column names and
+\code{list_parse2()} drops them. Both keep rows with missing values.
 }
 \examples{
 

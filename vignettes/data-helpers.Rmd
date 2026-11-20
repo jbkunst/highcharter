@@ -1,0 +1,142 @@
+---
+title: "Prepare chart data with data helpers"
+description: >
+  Turn observations into series, links, hierarchy nodes or annotation labels.
+output: rmarkdown::html_vignette
+resource_files:
+  - data/tour-2017-stage-8.csv
+vignette: >
+  %\VignetteIndexEntry{Prepare chart data with data helpers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+When each row already describes a point, pass the table straight to `hchart()`.
+Use a `data_to_*` helper when you need to calculate boxplot statistics, count
+transitions or reorganize rows into the structure a chart expects.
+
+| What you have | Helper | What to do with the result |
+| --- | --- | --- |
+| Several measurements per observation | `data_to_parallel_coordinates()` | Add one line per row with `hc_add_series_list()`. |
+| A numeric measurement and optional groups | `data_to_boxplot()` | Add the boxes and optional outlier series with `hc_add_series_list()`. |
+| One column per stage in a journey | `data_to_sankey()` | Pass the weighted links to `hchart(links, type = "sankey")`. |
+| Nested groups and a numeric size | `data_to_hierarchical()` | Pass the nodes to `hchart(nodes, type = "treemap")` or `hchart(nodes, type = "sunburst")`. |
+| Coordinates and text for labels | `data_to_annotation_labels()` | Pass the labels to `hc_add_annotation()` on an existing chart. |
+
+```{r setup, message=FALSE}
+library(highcharter)
+```
+
+## Parallel coordinates
+
+Each flower in `iris` becomes a line crossing four measurement axes.
+Select the numeric columns in display order. Use the species to name and
+color the lines. This replaces the former `hcparcords(iris, ...)` call.
+
+```{r parallel-coordinates}
+measurements <- iris[1:4]
+series <- data_to_parallel_coordinates(
+  measurements,
+  name = as.character(iris$Species),
+  color = colorize(iris$Species)
+)
+
+highchart() |>
+  hc_chart(type = "line", parallelCoordinates = TRUE) |>
+  hc_xAxis(categories = names(measurements)) |>
+  hc_add_series_list(series)
+```
+
+Hover over a point to read its measurement in centimeters. Highcharts scales
+each axis independently. A constant column keeps its value, and a missing
+measurement leaves a gap in that flower's line.
+
+## Boxplots
+
+To compare petal lengths across species, let the helper calculate one box
+per group. With `add_outliers = TRUE`, it also returns the scatter series
+for the observations beyond the whiskers.
+
+```{r boxplots}
+boxes <- data_to_boxplot(iris, Petal.Length, Species, add_outliers = TRUE)
+
+highchart() |>
+  hc_xAxis(categories = levels(iris$Species)) |>
+  hc_yAxis(title = list(text = "Petal length (cm)")) |>
+  hc_add_series_list(boxes)
+```
+
+## Sankey links
+
+Each row below is one visit. Column order defines the stages, and repeated
+transitions increase the link weight. For example, three visits went from
+Home to Search.
+
+```{r sankey-links}
+visits <- data.frame(
+  landing = c("Home", "Home", "Home", "Offer"),
+  next_page = c("Search", "Search", "Search", "Product"),
+  outcome = c("Order", "Exit", "Order", "Order")
+)
+
+links <- data_to_sankey(visits)
+hchart(links, type = "sankey", name = "Visits")
+```
+
+## Hierarchy nodes
+
+The built-in `Titanic` table already contains counts. Sum `Freq` within
+passenger class and survival status to size each leaf. The same nodes can
+also be used in a sunburst. Each passenger class takes a color from the chart
+theme, which its survival groups inherit. To keep fixed colors across themes,
+pass a palette to `colors` in `data_to_hierarchical()`.
+
+```{r hierarchy-nodes}
+passengers <- as.data.frame(Titanic)
+nodes <- data_to_hierarchical(passengers, c(Class, Survived), Freq)
+hchart(nodes, type = "treemap")
+```
+
+## Annotation labels
+
+Start with a chart and give each label an `x`, a `y` and its `text`. The
+axis positions for this numeric series start at zero, so `x = 2` labels its
+third point.
+
+```{r annotation-labels}
+notes <- data.frame(x = 2, y = 8, text = "Peak")
+highchart() |>
+  hc_add_series(data = c(3, 5, 8, 6)) |>
+  hc_add_annotation(labels = data_to_annotation_labels(notes))
+```
+
+The same helper can label summits on an elevation profile. Stage 8 of the 2017
+Tour de France ran from Dole to Station des Rousses. The profile and the
+published summit positions come from [the original annotated example](https://jkunst.com/blog/posts/2020-06-02-30diasdegraficos-parte-3/).
+[Download the elevation profile (CSV)](data/tour-2017-stage-8.csv).
+
+```{r tour-elevation}
+stage <- read.csv("data/tour-2017-stage-8.csv")
+summits <- data.frame(
+  x = c(101.44, 138.5, 176.4),
+  y = c(1026, 748, 1202),
+  text = c(
+    "Col de la Joux",
+    "Côte de Viry",
+    "Montée de la Combe de Laisia Les Molunes"
+  )
+)
+
+hchart(
+  stage,
+  "area",
+  hcaes(distance, elevation),
+  name = "Elevation",
+  fillOpacity = 0.25
+) |>
+  hc_title(text = "Tour de France 2017 · Stage 8") |>
+  hc_xAxis(title = list(text = "Distance (km)")) |>
+  hc_yAxis(title = list(text = "Elevation (m)")) |>
+  hc_tooltip(valueSuffix = " m") |>
+  hc_add_annotation(labels = data_to_annotation_labels(summits))
+```

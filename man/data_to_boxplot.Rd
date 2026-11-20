@@ -40,7 +40,7 @@ highchart() |>
   hc_xAxis(type = "category") |>
   hc_add_series_list(dat)
 
-dat <- data_to_boxplot(pokemon, height, type_1, name = "height in meters")
+dat <- data_to_boxplot(pokemon, height / 10, type_1, name = "Height (m)")
 
 highchart() |>
   hc_xAxis(type = "category") |>

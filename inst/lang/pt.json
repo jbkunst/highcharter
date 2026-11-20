@@ -1,0 +1,87 @@
+{
+  "chartTitle": "Gráfico",
+  "seriesName": "Série {add index 1}",
+  "yAxisTitle": "Valores",
+  "pieSliceName": "Fatia",
+  "loading": "Carregando...",
+  "noData": "Não há dados para exibir",
+  "contextButtonTitle": "Menu do gráfico",
+  "printChart": "Imprimir gráfico",
+  "viewFullscreen": "Ver em tela cheia",
+  "exitFullscreen": "Sair da tela cheia",
+  "viewData": "Ver tabela de dados",
+  "hideData": "Ocultar tabela de dados",
+  "exportInProgress": "Exportando...",
+  "exportData": {
+    "annotationHeader": "Anotações",
+    "categoryHeader": "Categoria",
+    "categoryDatetimeHeader": "Data e hora"
+  },
+  "resetZoom": "Redefinir zoom",
+  "resetZoomTitle": "Redefinir o nível de zoom",
+  "zoomIn": "Ampliar",
+  "zoomOut": "Reduzir",
+  "mainBreadcrumb": "Início",
+  "drillUpText": "Voltar para {series.name}",
+  "rangeSelectorZoom": "Período",
+  "rangeSelectorFrom": "De",
+  "rangeSelectorTo": "Até",
+  "rangeSelector": {
+    "allText": "Tudo",
+    "allTitle": "Ver tudo",
+    "monthText": "{count}m",
+    "monthTitle": "Ver {count} {#eq count 1}mês{else}meses{/eq}",
+    "yearText": "{count}a",
+    "yearTitle": "Ver {count} {#eq count 1}ano{else}anos{/eq}",
+    "ytdText": "Ano",
+    "ytdTitle": "Ver desde o início do ano"
+  },
+  "stockOpen": "Abertura",
+  "stockHigh": "Máxima",
+  "stockLow": "Mínima",
+  "stockClose": "Fechamento",
+  "numericSymbols": [
+    "mil",
+    "M",
+    "G",
+    "T",
+    "P",
+    "E"
+  ],
+  "accessibility": {
+    "defaultChartTitle": "Gráfico",
+    "chartContainerLabel": "{title}. Gráfico interativo.",
+    "svgContainerLabel": "Gráfico interativo",
+    "screenReaderSection": {
+      "endOfChartMarker": "Fim do gráfico interativo."
+    },
+    "exporting": {
+      "chartMenuLabel": "Menu do gráfico",
+      "menuButtonLabel": "Abrir o menu do gráfico, {chartTitle}"
+    },
+    "legend": {
+      "legendLabelNoTitle": "Alterar as séries visíveis, {chartTitle}",
+      "legendLabel": "Legenda do gráfico: {legendTitle}",
+      "legendItem": "Mostrar ou ocultar {itemName}"
+    },
+    "zoom": {
+      "mapZoomIn": "Ampliar o mapa",
+      "mapZoomOut": "Reduzir o mapa",
+      "resetZoomButton": "Redefinir zoom"
+    },
+    "rangeSelector": {
+      "minInputLabel": "Selecionar a data inicial.",
+      "maxInputLabel": "Selecionar a data final."
+    },
+    "table": {
+      "viewAsDataTableButtonText": "Ver como tabela de dados, {chartTitle}",
+      "tableSummary": "Dados do gráfico em formato de tabela."
+    }
+  },
+  "downloadCSV": "Baixar CSV",
+  "downloadJPEG": "Baixar JPEG",
+  "downloadPDF": "Baixar PDF",
+  "downloadPNG": "Baixar PNG",
+  "downloadSVG": "Baixar SVG",
+  "downloadXLS": "Baixar XLS"
+}

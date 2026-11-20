@@ -1,12 +1,7 @@
-get_box_values <- function(x) {
-  boxplot.stats(x)$stats |>
-    t() |>
-    as.data.frame() |>
-    setNames(c("low", "q1", "median", "q3", "high"))
-}
-
-get_outliers_values <- function(x) {
-  boxplot.stats(x)$out
+get_box_values <- function(x, add_outliers) {
+  result <- grDevices::boxplot.stats(x, do.conf = FALSE, do.out = add_outliers)
+  box <- as.list(setNames(result$stats, c("low", "q1", "median", "q3", "high")))
+  tibble(!!!box, out = list(result$out))
 }
 
 #' Helper to transform data frame for boxplot highcharts format
@@ -29,7 +24,7 @@ get_outliers_values <- function(x) {
 #'   hc_xAxis(type = "category") |>
 #'   hc_add_series_list(dat)
 #'
-#' dat <- data_to_boxplot(pokemon, height, type_1, name = "height in meters")
+#' dat <- data_to_boxplot(pokemon, height / 10, type_1, name = "Height (m)")
 #'
 #' highchart() |>
 #'   hc_xAxis(type = "category") |>
@@ -39,67 +34,66 @@ get_outliers_values <- function(x) {
 #' }
 #'
 #' @importFrom dplyr transmute group_nest rename group_by bind_rows summarise
-#' @importFrom tidyr unnest
-#' @importFrom purrr map_if
-#' @importFrom grDevices boxplot.stats
+#' @importFrom purrr map map_if
 #' @export
-data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL, add_outliers = FALSE, ...) {
-  stopifnot(
-    is.data.frame(data),
-    !missing(variable)
-  )
+data_to_boxplot <- function(
+  data,
+  variable,
+  group_var = NULL,
+  group_var2 = NULL,
+  add_outliers = FALSE,
+  ...
+) {
+  stopifnot(is.data.frame(data), !missing(variable))
+  options <- validate_args("data_to_boxplot", rlang::enquos(...))
 
-  dx <- data |>
-    transmute(x := {{ variable }})
-
-  if (!missing(group_var)) {
-    dg <- data |>
-      select({{ group_var }})
+  values <- tibble::as_tibble(transmute(data, value = {{ variable }}))
+  values$name <- if (missing(group_var)) {
+    0
   } else {
-    dg <- data.frame(rep(0, nrow(dx)))
+    dplyr::pull(data, {{ group_var }})
+  }
+  values$series <- if (missing(group_var2)) {
+    NA
+  } else {
+    dplyr::pull(data, {{ group_var2 }})
   }
 
-  if (!missing(group_var2)) {
-    dg2 <- data |>
-      select({{ group_var2 }})
-  } else {
-    dg2 <- data.frame(rep(NA, nrow(dx)))
+  groups <- values |>
+    group_by(.data$series, .data$name) |>
+    summarise(get_box_values(.data$value, add_outliers), .groups = "drop") |>
+    mutate(x = match(.data$name, unique(.data$name)) - 1L)
+
+  boxes <- groups |>
+    select(-"out") |>
+    group_nest(.data$series) |>
+    transmute(
+      name = .data$series,
+      data = map(.data$data, list_parse),
+      id = .data$series,
+      type = "boxplot",
+      !!!options
+    )
+
+  if (!add_outliers) {
+    return(boxes)
   }
 
-  dg <- dg |> setNames("name")
-  dg2 <- dg2 |> setNames("series")
+  counts <- lengths(groups$out)
+  points <- tibble(
+    linkedTo = rep(groups$series, counts),
+    x = rep(groups$x, counts),
+    y = unlist(groups$out, use.names = FALSE)
+  ) |>
+    group_nest(.data$linkedTo) |>
+    mutate(
+      data = map(.data$data, list_parse),
+      type = "scatter",
+      showInLegend = FALSE,
+      !!!options
+    )
 
-  dat <- bind_cols(dx, dg, dg2)
-
-  dat1 <- dat |>
-    group_by(series, name) |>
-    summarise(data = list(get_box_values(x)), .groups = "drop") |>
-    unnest(cols = data) |>
-    group_nest(series) |>
-    mutate(data = map(data, list_parse)) |>
-    rename(name = series) |>
-    mutate(id = name) |>
-    mutate(type = "boxplot", ...)
-  # list_parse()
-
-  if (add_outliers) {
-    dat2 <- dat |>
-      mutate(name = as.numeric(factor(name)) - 1) |>
-      group_by(series, name) |>
-      summarise(y = list(get_outliers_values(x)), .groups = "drop") |>
-      unnest(cols = y) |>
-      rename(x = name) |>
-      group_nest(series) |>
-      mutate(data = map(data, list_parse)) |>
-      rename(linkedTo = series) |>
-      mutate(type = "scatter", showInLegend = FALSE, ...)
-
-    dout <- bind_rows(dat1, dat2)
-  } else {
-    dout <- dat1
-  }
-
-  dout
+  bind_rows(boxes, points)
 }
 
 #' Helper to transform data frame for treemap/sunburst highcharts format
@@ -108,7 +102,8 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 #'   the treemap.
 #' @param group_vars Variables to generate treemap levels.
 #' @param size_var Variable to aggregate.
-#' @param colors Color to chart every item in the first level.
+#' @param colors Optional vector of colors for first-level groups, recycled as
+#'   needed. With the default `NULL`, nodes inherit colors from the chart theme.
 #'
 #' @examples
 #' \dontrun{
@@ -127,76 +122,59 @@ data_to_boxplot <- function(data, variable, group_var = NULL, group_var2 = NULL,
 #' hchart(dout, type = "treemap")
 #' }
 #'
-#' @importFrom dplyr group_by_at arrange desc distinct rename_all everything
-#' @importFrom tidyr unite
-#' @importFrom purrr reduce
+#' @importFrom dplyr arrange desc
 #' @export
-data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption("highcharter.color_palette")) {
+data_to_hierarchical <- function(data, group_vars, size_var, colors = NULL) {
   dat <- data |>
     select({{ group_vars }}, {{ size_var }})
 
-  ngvars <- ncol(dat) - 1
-
-  names(dat) <- c(str_c("group_var_", seq(1, ngvars)), "value")
-
-  gvars <- names(dat)[seq(1, ngvars)]
-
-  # group to calculate the sum if there are duplicated combinations
+  if (ncol(dat) < 2L) {
+    stop("Select at least one group column and a size column.", call. = FALSE)
+  }
+  if (!nrow(dat)) {
+    return(list())
+  }
+  groups <- paste0("group_", seq_len(ncol(dat) - 1L))
+  names(dat) <- c(groups, "value")
   dat <- dat |>
-    group_by_at(all_of(gvars)) |>
-    summarise(value = sum(value, na.rm = TRUE), .groups = "drop") |>
-    ungroup() |>
-    mutate_if(is.factor, as.character) |>
-    arrange(desc(value))
+    group_by(dplyr::across(all_of(groups))) |>
+    summarise(value = sum(.data$value, na.rm = TRUE), .groups = "drop") |>
+    arrange(desc(.data$value))
 
-  dout <- map(seq_along(gvars), function(depth = 1) {
-    datg <- dat |>
-      select(1:depth) |>
-      distinct()
-
-    datg_name <- datg |>
-      select(depth) |>
-      rename_all(~"name")
-
-    datg_id <- datg |>
-      unite("id", everything(), sep = "_") |>
-      mutate(id = str_to_id_vec(id))
-
-    datg_parent <- datg |>
-      select(1:(depth - 1)) |>
-      unite("parent", everything(), sep = "_") |>
-      mutate(parent = str_to_id(parent))
-
-    dd <- list(datg_name, datg_id)
-
-    # depth != 1 add parents
-    if (depth != 1) dd <- dd |> append(list(datg_parent))
-
-    # depth == 1 add colors
-    if (depth == 1 & !is.null(colors)) {
-      dd <- dd |> append(list(tibble(color = rep(colors, length.out = nrow(datg)))))
-    }
-
-    # depth == lastdepth add value
-    if (depth == ngvars) dd <- dd |> append(list(dat |> select(value)))
-
-    dd <- dd |>
-      bind_cols() |>
-      mutate(level = depth)
-
-    dd
-
-    list_parse(dd)
+  paths <- lapply(seq_along(groups), function(i) unique(dat[seq_len(i)]))
+  keys <- lapply(paths, function(path) {
+    do.call(paste, c(as.list(path), sep = "_"))
   })
+  ids <- str_to_id(unlist(keys, use.names = FALSE))
+  ids[ids == ""] <- "node"
+  ids <- utils::relist(make.unique(ids, sep = "_"), keys)
 
-  dout <- reduce(dout, c)
-
-  dout
+  levels <- lapply(seq_along(paths), function(i) {
+    path <- paths[[i]]
+    nodes <- tibble(name = path[[i]], id = ids[[i]])
+    if (i > 1L) {
+      parent <- vctrs::vec_match(path[-i], paths[[i - 1L]])
+      nodes$parent <- ids[[i - 1L]][parent]
+    } else if (!is.null(colors)) {
+      nodes$color <- rep(colors, length.out = nrow(path))
+    }
+    if (i == length(paths)) {
+      nodes$value <- dat$value
+    }
+    nodes$level <- i
+    list_parse(nodes)
+  })
+  unlist(levels, recursive = FALSE, use.names = FALSE)
 }
 
-#' Helper to transform data frame for sankey highcharts format
+#' Count links between consecutive columns for a Sankey chart
 #'
-#' @param data A data frame
+#' @param data A data frame with one column per stage, in traversal order.
+#'   Numeric columns with more than ten distinct finite values are grouped by
+#'   quintiles. Tied cut points produce fewer groups.
+#' @return A tibble with `from`, `to`, `weight` (number of transitions) and a
+#'   unique link `id`. Links with a missing endpoint are omitted. Fewer than
+#'   two columns produce an empty tibble with the same columns.
 #'
 #' @examples
 #' \dontrun{
@@ -210,120 +188,137 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = getOption(
 #' hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
 #' }
 #'
-#' @importFrom dplyr all_of count group_by_all vars mutate_at
-#' @importFrom stats complete.cases
+#' @importFrom dplyr all_of count
 #' @export
 data_to_sankey <- function(data = NULL) {
+  if (length(data) < 2L) {
+    return(tibble(
+      from = character(),
+      to = character(),
+      weight = integer(),
+      id = character()
+    ))
+  }
+  columns <- as.list(data)
+  bin <- vapply(
+    columns,
+    function(x) {
+      is.numeric(x) && length(unique(x[is.finite(x)])) > 10L
+    },
+    logical(1)
+  )
 
-  # numeric to categories
-  if (any(unlist(purrr::map(data, class)) %in% c("integer", "numeric"))) {
-    warning("numeric variables were treated with cut() function")
-    data <- dplyr::mutate_if(data, function(x) is.numeric(x) && length(unique(x)) > 10, ~ cut(.x, breaks = c(-Inf, quantile(.x, c(2, 4, 6, 8) / 10), Inf)))
+  if (any(bin)) {
+    warning(
+      "Numeric columns grouped by quantiles: ",
+      paste(names(columns)[bin], collapse = ", ")
+    )
+    columns[bin] <- lapply(columns[bin], function(x) {
+      cuts <- stats::quantile(x[is.finite(x)], (1:4) / 5, names = FALSE)
+      cut(x, unique(c(-Inf, cuts, Inf)), include.lowest = -Inf %in% x)
+    })
   }
 
-  # combintaion data
-  dcmb <- tibble::tibble(
-    var1 = names(data),
-    var2 = dplyr::lead(var1)
-  ) |>
-    dplyr::filter(complete.cases(.))
+  links <- Map(
+    function(from, to) {
+      tibble(from, to) |>
+        dplyr::filter(!is.na(.data$from), !is.na(.data$to)) |>
+        count(.data$from, .data$to, name = "weight") |>
+        mutate(dplyr::across(c("from", "to"), as.character))
+    },
+    head(columns, -1L),
+    tail(columns, -1L)
+  )
 
-  # sankey data
-  dsnky <- purrr::pmap_df(dcmb, function(var1 = "cut", var2 = "color") {
-    data |>
-      select(all_of(var1), all_of(var2)) |>
-      group_by_all() |>
-      count() |>
-      ungroup() |>
-      setNames(c("from", "to", "weight")) |>
-      mutate_if(is.factor, as.character) |>
-      mutate_at(vars(1, 2), as.character) |>
-      mutate(id := paste0(from, to))
-  })
-
-  dsnky
+  bind_rows(unname(links)) |>
+    mutate(id = make.unique(paste0(.data$from, .data$to)))
 }
 
-#' Shortcut to create parallel coordinates
-#' @param df A data frame object.
-#' @param ... Additional shared arguments for the data series
-#'   (\url{https://api.highcharts.com/highcharts/series}) for the
-#'   \code{hchar.data.frame} function.
+#' Convert data to annotation labels
+#'
+#' @param data A data frame with columns `x`, `y` and `text`. Each row defines
+#'   one label. Additional columns supply label options such as `backgroundColor`.
+#' @param xAxis,yAxis Axis index (starting at zero) or axis ID for the points.
+#' @return A list for the `labels` option of [hc_add_annotation()].
 #' @examples
-#' require(viridisLite)
-#'
-#' n <- 15
-#'
-#' hcparcords(head(mtcars, n), color = hex_to_rgba(magma(n), 0.5))
-#'
-#' require(dplyr)
-#' data(iris)
-#' set.seed(123)
-#'
-#' iris <- sample_n(iris, 60)
-#'
-#' hcparcords(iris, color = colorize(iris$Species))
-#' @importFrom dplyr mutate_if
+#' peaks <- data.frame(x = c(0, 2), y = c(5, 6), text = c("Start", "Peak"))
+#' highchart() |>
+#'   hc_add_series(data = c(5, 3, 6)) |>
+#'   hc_add_annotation(labels = data_to_annotation_labels(peaks))
 #' @export
-hcparcords <- function(df, ...) {
-  stopifnot(is.data.frame(df))
+data_to_annotation_labels <- function(data, xAxis = 0, yAxis = 0) {
+  stopifnot(
+    is.data.frame(data),
+    all(c("x", "y", "text") %in% names(data)),
+    length(xAxis) == 1L,
+    length(yAxis) == 1L
+  )
+  data$point <- Map(
+    function(x, y) list(x = x, y = y, xAxis = xAxis, yAxis = yAxis),
+    data$x,
+    data$y
+  )
+  data[c("x", "y")] <- NULL
+  list_parse(data)
+}
 
-  rescale01 <- function(x) {
-    rng <- range(x, na.rm = TRUE)
-    (x - rng[1]) / (rng[2] - rng[1])
+
+#' Prepare series for a parallel coordinates chart
+#'
+#' @param data A data frame of numeric measurements. Each row is an observation
+#'   and each column is an axis, in display order.
+#' @param ... Named series options such as `name` or `color`. Supply one value
+#'   for all observations or one value per row.
+#' @return A tibble for [hc_add_series_list()] with one series per row.
+#'   Its `data` column holds the measurements in their original units.
+#'   Missing measurements leave gaps on their axes.
+#' @examples
+#' measurements <- iris[1:4]
+#' series <- data_to_parallel_coordinates(measurements, color = colorize(iris$Species))
+#'
+#' highchart() |>
+#'   hc_chart(type = "line", parallelCoordinates = TRUE) |>
+#'   hc_xAxis(categories = names(measurements)) |>
+#'   hc_add_series_list(series)
+#' @export
+data_to_parallel_coordinates <- function(data, ...) {
+  stopifnot(is.data.frame(data), ncol(data) > 0L)
+  if (
+    !all(vapply(data, function(x) is.numeric(x) && is.null(dim(x)), logical(1)))
+  ) {
+    stop("Select one numeric column per axis.", call. = FALSE)
   }
-
-  df <- df[map_lgl(df, is.numeric)]
-
-  # Add row identifier
-  df <- rownames_to_column(df, ".row")
-
-  df <- dplyr::mutate_if(df, is.numeric, rescale01)
-
-  df <- tidyr::gather(df, "var", "val", setdiff(names(df), ".row"))
-
-  hchart(df, "line", hcaes_(x = "var", y = "val", group = ".row")) |>
-    hc_plotOptions(series = list(showInLegend = FALSE)) |>
-    hc_yAxis(min = 0, max = 1) |>
-    hc_tooltip(sort = TRUE, table = TRUE, valueDecimals = 2)
+  options <- validate_args("data_to_parallel_coordinates", list(...))
+  rows <- purrr::pmap(unname(as.list(data)), function(...) {
+    values <- list(...)
+    replace(values, is.na(values), list(NULL))
+  })
+  tibble(data = rows, !!!options, .rows = nrow(data))
 }
 
 #' Convert an object to list with identical structure
 #'
-#' This functions are similar to \code{rlist::list.parse} but this removes
-#' names. \code{NA}s are removed for compatibility with rjson::toJSON.
+#' Each row becomes one list of values. `list_parse()` keeps column names and
+#' `list_parse2()` drops them. Both keep rows with missing values.
 #'
+#' @importFrom tibble as_tibble
 #' @param df A data frame to parse to list
 #' @examples
 #'
 #' x <- data.frame(a = 1:3, type = c("A", "C", "B"), stringsAsFactors = FALSE)
 #' list_parse(x)
 #' list_parse2(x)
-#' @importFrom purrr transpose
 #' @export
 list_parse <- function(df) {
-  assertthat::assert_that(is.data.frame(df))
+  stopifnot(is.data.frame(df))
 
-  if (getOption("highcharter.rjson")) {
-    rows <- nrow(df)
-    df <- tidyr::drop_na(df)
-    if (getOption("highcharter.verbose") && (rows > nrow(df))) {
-      warning("Removed ", (rows - nrow(df)), " rows with NA's.")
-    }
-  }
-
-  purrr::map_if(df, is.factor, as.character) |>
-    as_tibble() |>
-    list.parse() |>
-    setNames(NULL)
+  columns <- as_tibble(purrr::map_if(df, is.factor, as.character))
+  .mapply(list, columns, NULL)
 }
 
-#' @importFrom rlist list.parse
 #' @rdname list_parse
 #' @export
 list_parse2 <- function(df) {
-  assertthat::assert_that(is.data.frame(df))
-
   list_parse(df) |>
     map(setNames, NULL)
 }
@@ -339,7 +334,7 @@ list_parse2 <- function(df) {
 #' str_to_id(" A string _ with sd / sdg    Underscores \   ")
 #' @export
 str_to_id <- function(x) {
-  assertthat::assert_that(is.character(x) | is.factor(x))
+  stopifnot(is.character(x) | is.factor(x))
 
   x |>
     as.character() |>
@@ -350,24 +345,6 @@ str_to_id <- function(x) {
     stringr::str_replace_all("\\[|\\]", "_") |>
     stringr::str_replace_all("_+", "_") |>
     stringr::str_replace_all("_$|^_", "")
-}
-
-#' @rdname str_to_id
-#' @importFrom dplyr pull
-str_to_id_vec <- function(x) {
-
-  # x <- c("A_ aa", "A_  Aa", "a_   aa"
-
-  tibble(
-    var = x,
-    id = str_to_id(x),
-    un = cumsum(duplicated(id))
-  ) |>
-    mutate(
-      un = ifelse(un == 0, "", str_c("_", un)),
-      id2 = str_c(id, un)
-    ) |>
-    pull("id2")
 }
 
 #' Date to timestamps
@@ -385,15 +362,8 @@ str_to_id_vec <- function(x) {
 #' )
 #' @export
 datetime_to_timestamp <- function(dt) {
-
-  # http://stackoverflow.com/questions/10160822/
-  assertthat::assert_that(assertthat::is.date(dt) | assertthat::is.time(dt))
-
-  tmstmp <- as.numeric(as.POSIXct(dt))
-
-  tmstmp <- 1000 * tmstmp
-
-  tmstmp
+  stopifnot(inherits(dt, c("Date", "POSIXt")))
+  1000 * as.numeric(as.POSIXct(dt))
 }
 
 #' Transform colors from hexadecimal format to rgba hc notation
@@ -405,66 +375,38 @@ datetime_to_timestamp <- function(dt) {
 #'
 #' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725", "red"))
 #' @importFrom grDevices col2rgb
-#' @importFrom tidyr unite_
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
-  rgb <- x |>
-    col2rgb() |>
-    # t() |>
-    as.data.frame() |>
-    map_chr(str_c, collapse = ",")
-  
-  rgba <- sprintf("rgba(%s,%s)", rgb, alpha)
-  rgba
+  rgb <- col2rgb(x)
+  sprintf("rgba(%d,%d,%d,%s)", rgb[1L, ], rgb[2L, ], rgb[3L, ], alpha)
 }
 
-#' Chart a demo for testing themes
+#' Monthly temperatures in four cities
 #'
-#' Chart a demo for testing themes
-#'
+#' Use this line chart to try themes and chart options. Each point is the
+#' mean of the daily temperatures in [city_weather] for one city and month.
 #' @examples
-#'
 #' highcharts_demo()
 #' @export
 highcharts_demo <- function() {
-  dtemp <- structure(
-    list(
-      month = c(
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-      ),
-      tokyo = c(
-        7, 6.9, 9.5, 14.5, 18.2, 21.5,
-        25.2, 26.5, 23.3, 18.3, 13.9, 9.6
-      ),
-      new_york = c(
-        -0.2, 0.8, 5.7, 11.3, 17, 22,
-        24.8, 24.1, 20.1, 14.1, 8.6, 2.5
-      ),
-      berlin = c(
-        -0.9, 0.6, 3.5, 8.4, 13.5, 17,
-        18.6, 17.9, 14.3, 9, 3.9, 1
-      ),
-      london = c(
-        3.9, 4.2, 5.7, 8.5, 11.9, 15.2,
-        17, 16.6, 14.2, 10.3, 6.6, 4.8
-      )
-    ),
-    .Names = c("month", "tokyo", "new_york", "berlin", "london"),
-    row.names = c(NA, 12L), class = c("tbl_df", "tbl", "data.frame")
+  daily <- highcharter::city_weather
+  monthly <- stats::aggregate(
+    list(temperature = daily$temp_mean),
+    list(month = as.integer(format(daily$date, "%m")), city = daily$city),
+    mean
   )
-
-  highchart() |>
-    hc_title(text = "Monthly Average Temperature") |>
-    hc_subtitle(text = "Source: WorldClimate.com") |>
-    hc_caption(text = "This is a caption text to show the style of this type of text") |>
-    hc_credits(text = "Made with highcharter", href = "http://jkunst.com/highcharter/", enabled = TRUE) |>
-    hc_yAxis(title = list(text = "Temperature")) |>
-    hc_xAxis(title = list(text = "Months")) |>
-    hc_xAxis(categories = dtemp$month) |>
-    hc_add_series(name = "Tokyo", data = dtemp$tokyo) |>
-    hc_add_series(name = "London", data = dtemp$london) |>
-    hc_add_series(name = "Berlin", data = dtemp$berlin)
+  monthly$month <- monthly$month - 1L
+  hchart(
+    monthly,
+    "line",
+    hcaes(x = .data$month, y = .data$temperature, group = .data$city)
+  ) |>
+    hc_title(text = "Monthly mean temperatures in 2025") |>
+    hc_subtitle(text = "ERA5 reanalysis via Open-Meteo") |>
+    hc_caption(text = "July was warmer in Tokyo than in Santiago.") |>
+    hc_xAxis(categories = month.abb, title = list(text = NULL)) |>
+    hc_yAxis(title = list(text = "Temperature (\u00b0C)")) |>
+    hc_tooltip(shared = TRUE, valueDecimals = 1, valueSuffix = " \u00b0C")
 }
 
 #' Create vector of color from vector
@@ -485,7 +427,7 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   palcols <- grDevices::colorRampPalette(colors)(nuniques)
 
   if (!is.numeric(x) | nuniques < 10) {
-    y <- as.numeric(as.factor(x))
+    y <- as.numeric(factor(x))
     xcols <- palcols[y]
   } else {
     ecum <- ecdf(x)
@@ -495,26 +437,21 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
   xcols
 }
 
-#' Function to create \code{stops} argument in \code{hc_colorAxis}
+#' Create color stops for \code{hc_colorAxis}
 #'
-#' @param n A numeric indicating how much quantiles generate.
-#' @param colors A character string of colors (ordered)
+#' @param n Positive integer number of evenly spaced stops. A single stop is
+#'   placed at zero.
+#' @param colors Character vector of colors in gradient order.
 #'
 #' @examples
 #'
 #' color_stops(5)
-#' 
-#' @importFrom purrr map
+#'
 #' @export
 color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
-  palcols <- grDevices::colorRampPalette(colors)(n)
-
-  list_parse2(
-    data.frame(
-      q = seq(0, n - 1) / (n - 1),
-      c = palcols
-    )
-  )
+  stopifnot(is.numeric(n), length(n) == 1L, is.finite(n), n >= 1, n == floor(n))
+  positions <- (seq_len(n) - 1L) / max(1, n - 1L)
+  Map(list, positions, grDevices::colorRampPalette(colors)(n))
 }
 
 #' Function to create \code{dataClasses} argument in \code{hc_colorAxis}
@@ -526,8 +463,10 @@ color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
 #'
 #' color_classes(c(0, 10, 20, 50))
 #' @export
-color_classes <- function(breaks = NULL,
-                          colors = c("#440154", "#21908C", "#FDE725")) {
+color_classes <- function(
+  breaks = NULL,
+  colors = c("#440154", "#21908C", "#FDE725")
+) {
   lbrks <- length(breaks)
 
   list_parse(
@@ -538,96 +477,6 @@ color_classes <- function(breaks = NULL,
       stringsAsFactors = FALSE
     )
   )
-}
-
-#' Auxiliar function to get series and options from tidy frame for hchart.data.frame
-#'
-#' This function is used in \code{hchart.data.frame}.
-#'
-#' @param data A `data.frame` object.
-#' @param type The type of chart. Possible values are line, scatter, point, column.
-#' @param ... Aesthetic mappings as \code{x y group color low high}.
-#'
-#' @examples
-#'
-#' highcharter:::get_hc_series_from_df(iris, type = "point", x = Sepal.Width)
-#' 
-#' @importFrom tibble has_name
-#' @importFrom dplyr ungroup
-#' @importFrom rlang .data
-get_hc_series_from_df <- function(data, type = NULL, ...) {
-  assertthat::assert_that(is.data.frame(data))
-  stopifnot(!is.null(type))
-
-  pars <- eval(substitute(alist(...)))
-  parsc <- map(pars, as.character)
-
-  data <- mutate(data, ...)
-  data <- ungroup(data)
-
-  # check type
-  type <- ifelse(type == "point", "scatter", type)
-  type <- ifelse("size" %in% names(data) & type == "scatter", "bubble", type)
-
-  # heatmap
-  if (type == "heatmap") {
-    if (!is.numeric(data[["x"]])) {
-      data[["xf"]] <- as.factor(data[["x"]])
-      data[["x"]] <- as.numeric(as.factor(data[["x"]])) - 1
-    }
-    if (!is.numeric(data[["y"]])) {
-      data[["yf"]] <- as.factor(data[["y"]])
-      data[["y"]] <- as.numeric(as.factor(data[["y"]])) - 1
-    }
-  }
-
-  # x
-  if (has_name(parsc, "x")) {
-    if (is.Date(data[["x"]])) {
-      data[["x"]] <- datetime_to_timestamp(data[["x"]])
-    } else if (is.character(data[["x"]]) | is.factor(data[["x"]])) {
-      data[["name"]] <- data[["x"]]
-      data[["x"]] <- NULL
-    }
-  }
-
-  # color
-  if (has_name(parsc, "color")) {
-    if (type == "treemap") {
-      data <- rename(data, colorValue = .data$color)
-    } else {
-      data <- mutate(data,
-        colorv = .data$color,
-        color = highcharter::colorize(.data$color)
-      )
-    }
-  }
-
-  # size
-  if (has_name(parsc, "size") & type %in% c("bubble", "scatter")) {
-    data <- mutate(data, z = .data$size)
-  }
-
-  # group
-  if (!has_name(parsc, "group")) {
-    data[["group"]] <- "Series"
-  }
-
-  data[["charttpye"]] <- type
-
-  dfs <- data |>
-    group_by(.data$group, .data$charttpye) |>
-    do(data = list_parse(select(., -.data$group, -.data$charttpye))) |>
-    ungroup() |>
-    rename(name = .data$group, type = .data$charttpye)
-
-  if (!has_name(parsc, "group")) {
-    dfs[["name"]] <- NULL
-  }
-
-  series <- list_parse(dfs)
-
-  series
 }
 
 #' Check if a string vector is in hexadecimal color format
@@ -644,57 +493,4 @@ is.hexcolor <- function(x) {
   pattern <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8})$"
 
   str_detect(x, pattern)
-}
-
-#' Function to generate iids
-#' @param n Number of ids
-#' @param length Length of ids
-random_id <- function(n = 1, length = 10) {
-  source <- c(seq(0, 9), letters)
-
-  replicate(n, paste0(sample(x = source, size = length, replace = TRUE), collapse = ""))
-}
-
-#' Function to avoid the jsonlite::auto_unbox default
-#' @param x And element, numeric or character
-#' @examples
-#'
-#' hchart("A")
-#'
-#' highchart() |>
-#'   hc_add_series(data = 1)
-#' @noRd
-fix_1_length_data <- function(x) {
-  if (getOption("highcharter.verbose")) {
-    message("fix_1_length")
-  }
-
-  if (!is.list(x) && length(x) == 1) {
-    x <- list(x)
-  }
-  x
-}
-
-#' Function to create annotations arguments from a data frame
-#' @param df A data frame with `x`, `y` and `text` columns names.
-#' @param xAxis Index (js 0-based) of the x axis to put the annotations.
-#' @param yAxis Index (js 0-based) of the y axis to put the annotations.
-#' @examples
-#'
-#' df <- data.frame(text = c("hi", "bye"), x = c(0, 1), y = c(1, 0))
-#'
-#' df_to_annotations_labels(df)
-#' @importFrom utils hasName
-#' @importFrom dplyr rowwise
-#' @export
-df_to_annotations_labels <- function(df, xAxis = 0, yAxis = 0) {
-  stopifnot(hasName(df, "x"))
-  stopifnot(hasName(df, "y"))
-  stopifnot(hasName(df, "text"))
-
-  df |>
-    rowwise() |>
-    mutate(point = list(list(x = x, y = y, xAxis = 0, yAxis = 0))) |>
-    select(-x, -y) |>
-    list_parse()
 }

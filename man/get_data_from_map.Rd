@@ -2,24 +2,25 @@
 % Please edit documentation in R/highmaps.R
 \name{get_data_from_map}
 \alias{get_data_from_map}
-\title{Helper function to get the data inside the map data
-The urls are listed in \url{https://code.highcharts.com/mapdata/}.}
+\title{Helper function to get the data inside the map data}
 \usage{
 get_data_from_map(mapdata)
 }
 \arguments{
-\item{mapdata}{A list obtained from \code{\link{download_map_data}}.}
+\item{mapdata}{A GeoJSON FeatureCollection or a TopoJSON Topology read as
+an R list. For TopoJSON, the first object's geometry collection supplies
+the properties, matching the layer drawn by \code{\link[=hcmap]{hcmap()}}.}
+}
+\value{
+A tibble of feature properties, including any keys used by \code{joinBy}.
 }
 \description{
 Helper function to get the data inside the map data
-The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 }
 \examples{
-\dontrun{
-dta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
-get_data_from_map(dta)
-}
+path <- system.file("maps/custom/world-robinson-lowres.rds", package = "highcharter")
+head(get_data_from_map(readRDS(path)))
 }
 \seealso{
-\code{\link{download_map_data}}
+\code{\link[=hcmap]{hcmap()}}, \code{\link[=download_map_data]{download_map_data()}}
 }

@@ -2,24 +2,23 @@
 % Please edit documentation in R/highcharts-api-add.R
 \name{mutate_mapping}
 \alias{mutate_mapping}
-\title{Modify data frame according to mapping}
+\title{Apply point mappings to a data frame}
 \usage{
 mutate_mapping(data, mapping, drop = FALSE)
 }
 \arguments{
-\item{data}{A data frame object.}
+\item{data}{A data frame.}
 
-\item{mapping}{A mapping from \code{hcaes} function.}
+\item{mapping}{A mapping from \code{\link[=hcaes]{hcaes()}} or \code{\link[=hcaes_string]{hcaes_string()}}.}
 
-\item{drop}{A logical argument to you drop variables or not. Default is
-\code{FALSE}}
+\item{drop}{If \code{TRUE}, keep only the mapped columns, in mapping order.}
 }
 \description{
-Modify data frame according to mapping
+Apply point mappings to a data frame
 }
 \examples{
-
-df <- head(mtcars)
-mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt + cyl, group = gear))
-mutate_mapping(data = df, mapping = hcaes(x = cyl, y = wt), drop = TRUE)
+cars <- head(mtcars, 3)
+mapping <- hcaes(wt, mpg, group = factor(cyl), name = rownames(cars))
+mutate_mapping(cars, mapping)
+mutate_mapping(cars, mapping, drop = TRUE)
 }
