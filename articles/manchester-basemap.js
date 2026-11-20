@@ -3,6 +3,7 @@ function (el, x, geography) {
   const layer = document.createElement("div");
   layer.setAttribute("aria-hidden", "true");
   Object.assign(layer.style, { position: "absolute", overflow: "hidden", pointerEvents: "none" });
+  if (getComputedStyle(el).position === "static") el.style.position = "relative";
   el.insertBefore(layer, chart.container);
 
   // Both renderers use Web Mercator. One pixel of longitude gives the GL zoom

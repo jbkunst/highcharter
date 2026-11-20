@@ -1,5 +1,7 @@
 # Accessible charts
 
+## Navigate a line chart with the keyboard
+
 Highcharter includes the Highcharts accessibility module in the shared
 bundle. Give the chart a title and identify the units on its axes. Use
 the caption for the takeaway and the point description for details when

@@ -62,18 +62,20 @@ highchart() |>
       colorByPoint = TRUE
     ),
     pie = list(
-      center = c('30%', '10%'),
-      size = 120,
+      center = c("83%", "46%"),
+      size = "62%",
       dataLabels = list(enabled = FALSE)
     )
   ) |>
   # Axis
   hc_yAxis(
+    width = "64%",
     title = list(text = "percentage of tastiness"),
     labels = list(format = "{value}%"),
     max = 100
   ) |>
   hc_xAxis(
+    width = "64%",
     categories = favorite_pies$pie
   ) |>
   # Titles, subtitle, caption and credits
@@ -92,9 +94,6 @@ highchart() |>
     text = "Source: HIMYM",
     href = "https://www.youtube.com/watch?v=f_J8QU1m0Ng",
     style = list(fontSize = "12px")
-  ) |>
-  hc_size(
-    height = 600
   )
 ```
 
@@ -136,7 +135,16 @@ hchart(
   hc_tooltip(
     useHTML = TRUE,
     headerFormat = "<b>{point.key}</b>",
-    pointFormatter = tooltip_chart(accesor = "ttdata")
+    pointFormatter = tooltip_chart(
+      accesor = "ttdata",
+      hc_opts = list(
+        series = list(list(name = "point.name")),
+        tooltip = list(
+          headerFormat = "{point.x}<br>",
+          pointFormat = "{series.name}: {point.y:,.0f}"
+        )
+      )
+    )
   )
 ```
 
@@ -163,7 +171,7 @@ donutdata <- gp |>
   summarise(pop = sum(as.double(pop)), .groups = "drop")
 
 donutdata2 <- gp |>
-  select(continent, x = lifeExp, y = gdpPercap) |>
+  select(continent, name = country, x = lifeExp, y = gdpPercap) |>
   group_nest(continent, .key = "ttdata") |>
   mutate(ttdata = map(ttdata, list_parse)) |>
   left_join(donutdata, by = "continent")
@@ -172,6 +180,7 @@ hchart(
   donutdata2,
   "pie",
   hcaes(name = continent, y = pop),
+  name = "Population share",
   innerSize = "78%"
 ) |>
   hc_tooltip(
@@ -181,6 +190,11 @@ hchart(
       accesor = "ttdata",
       hc_opts = list(
         chart = list(type = "scatter"),
+        series = list(list(name = "point.name")),
+        tooltip = list(
+          headerFormat = "<b>{point.name}</b><br>",
+          pointFormat = "Life expectancy: {point.x:.1f} years<br>GDP per capita: ${point.y:,.0f}"
+        ),
         credits = list(enabled = FALSE),
         plotOptions = list(scatter = list(marker = list(radius = 2)))
       ),
@@ -214,6 +228,17 @@ Show R code
 library(highcharter)
 library(dplyr)
 
+pixel_font <- htmltools::attachDependencies(
+  "Fusion Poke Pixel",
+  htmltools::htmlDependency(
+    name = "fusion-poke-pixel",
+    version = "2026.11.10",
+    package = "highcharter",
+    src = "examples/pokemon-font",
+    stylesheet = "font.css"
+  )
+)
+
 counts <- pokemon |>
   count(type_1, type_2, type_1_color, name = "n") |>
   mutate(type_2 = coalesce(type_2, paste("Only", type_1)))
@@ -224,18 +249,29 @@ nodes <- lapply(nodes, function(node) {
   if (node$level == 1L) {
     node$color <- unname(palette[node$name])
   }
+  node$name <- tools::toTitleCase(node$name)
   node
 })
 
 hchart(
   nodes,
   type = "treemap",
+  name = "All Pokémon",
   allowTraversingTree = TRUE,
+  dataLabels = list(
+    style = list(
+      fontFamily = pixel_font,
+      fontWeight = "normal",
+      fontSize = "13px",
+      color = "contrast",
+      textOutline = "none"
+    )
+  ),
   layoutAlgorithm = "squarified",
   levelIsConstant = FALSE,
   levels = list(list(level = 1, dataLabels = list(enabled = TRUE)))
 ) |>
-  hc_title(text = "Pokémon by type") |>
+  hc_title(text = "Pokémon by type", style = list(fontFamily = pixel_font)) |>
   hc_size(height = 480)
 ```
 
@@ -446,39 +482,6 @@ Background photograph: [ESO/Digitized Sky Survey 2, around the Hubble
 Ultra Deep Field](https://www.eso.org/public/images/eso1832b/). The dark
 overlay keeps both axes legible over the stars.
 
-## Measles vaccination coverage
-
-How has first-dose coverage changed across countries? Each cell shows
-the estimated percentage of the target population receiving the first
-dose of a measles-containing vaccine (MCV1). The nine countries share a
-0–100% scale. Estimates come from the [2025 WHO/UNICEF
-revision](https://data.unicef.org/resources/dataset/immunization/).
-[Download the coverage estimates
-(CSV)](https://jkunst.com/highcharter/articles/data/measles-coverage.csv).
-
-Show R code
-
-``` r
-
-coverage <- read.csv("data/measles-coverage.csv")
-
-hchart(coverage, "heatmap", hcaes(x = year, y = country, value = coverage)) |>
-  hc_title(text = "First-dose measles vaccination coverage") |>
-  hc_subtitle(text = "Nine countries, 2000–2025 · WHO/UNICEF estimates") |>
-  hc_xAxis(title = list(text = NULL), tickInterval = 5) |>
-  hc_yAxis(title = list(text = NULL), reversed = TRUE) |>
-  hc_colorAxis(
-    min = 0,
-    max = 100,
-    stops = color_stops(colors = c("#f7fbff", "#6baed6", "#08306b")),
-    labels = list(format = "{value}%")
-  ) |>
-  hc_tooltip(
-    headerFormat = "",
-    pointFormat = "{point.country}, {point.x}: <b>{point.value}%</b>"
-  )
-```
-
 ## Word cloud
 
 The 160 most frequent terms in R’s graphics manual fill the cloud. Word
@@ -533,15 +536,18 @@ hchart(
   "wordcloud",
   name = "Mentions",
   placementStrategy = "center",
-  spiral = "archimedean",
-  rotation = list(from = 0, to = 90, orientations = 2),
+  spiral = "rectangular",
+  rotation = list(from = -45, to = 45, orientations = 5),
   minFontSize = 8,
   maxFontSize = 42,
   style = list(fontFamily = "Georgia, serif", fontWeight = "bold")
 ) |>
   hc_colors(c("#143f50", "#276774", "#347c74", "#9a5435", "#614876")) |>
   hc_title(text = "The language of R graphics") |>
-  hc_tooltip(pointFormat = "{point.weight} mentions in the graphics manual") |>
+  hc_tooltip(
+    valueDecimals = 0,
+    pointFormat = "{point.weight:,.0f} mentions in the graphics manual"
+  ) |>
   hc_size(height = 420)
 ```
 
@@ -654,6 +660,67 @@ hcmap(
   hc_title(text = "Volcanoes along the southern Andes") |>
   hc_tooltip(headerFormat = "", pointFormat = "{point.name}")
 ```
+
+### Explore the global distribution
+
+Switch from the regional view to the full Holocene catalogue. Each
+triangle marks a volcano, including submarine features. Hover for its
+name, country, landform and elevation. Toggle the plate boundaries in
+the legend to compare the volcanic arcs around the Pacific with
+volcanoes in plate interiors.
+
+Show R code
+
+``` r
+
+volcanoes <- read.csv("data/holocene-volcanoes.csv.gz")
+plates <- jsonlite::read_json("data/plate-boundaries.geojson.gz")
+
+hcmap(
+  "custom/world.topo.json",
+  name = "Land",
+  showInLegend = FALSE,
+  nullColor = "rgba(92,126,118,0.20)",
+  borderWidth = 0.3,
+  enableMouseTracking = FALSE
+) |>
+  hc_add_series(
+    type = "mapline",
+    name = "Plate boundaries",
+    data = lapply(plates$features, function(f) list(geometry = f$geometry)),
+    color = "#547682",
+    lineWidth = 1.2,
+    enableMouseTracking = FALSE
+  ) |>
+  hc_add_series(
+    volcanoes,
+    "mappoint",
+    hcaes(name = name, lon = lon, lat = lat),
+    name = "Holocene volcanoes",
+    color = "rgba(175,68,40,0.76)",
+    marker = list(symbol = "triangle", radius = 3),
+    dataLabels = list(enabled = FALSE),
+    turboThreshold = 0
+  ) |>
+  hc_title(text = "Volcanoes and plate boundaries") |>
+  hc_subtitle(
+    text = "1,215 Holocene volcanoes · Smithsonian Global Volcanism Program"
+  ) |>
+  hc_legend(enabled = TRUE) |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE) |>
+  hc_tooltip(
+    headerFormat = "",
+    pointFormat = "<b>{point.name}</b> · {point.country}<br>{point.landform}<br>Elevation: {point.elevation:,.0f} m"
+  ) |>
+  hc_caption(
+    text = "Volcanoes: Smithsonian GVP · Boundaries: Peter Bird (PB2002), via Nordpil."
+  )
+```
+
+[Download the volcano catalogue
+extract](https://jkunst.com/highcharter/articles/data/holocene-volcanoes.csv.gz)
+· [Download the simplified plate
+boundaries](https://jkunst.com/highcharter/articles/data/plate-boundaries.geojson.gz).
 
 ## South Atlantic wind field
 

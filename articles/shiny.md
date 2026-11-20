@@ -14,10 +14,6 @@ coordinates. Put `highchartOutput("flowers")` in the UI and read
 [`renderHighchart()`](https://jkunst.com/highcharter/reference/renderHighchart.md)
 to rebuild the plot when the measurement changes.
 
-Run the iris explorer
-
-R source
-
 
     library(shiny)
     library(highcharter)
@@ -58,10 +54,6 @@ appends one observation with
 Switch back to **Line** and your added months are still there. Both
 controls target the series ID `traffic` through
 `highchartProxy("passengers", session)`.
-
-Run the passenger chart
-
-R source
 
 
     library(shiny)
@@ -126,10 +118,6 @@ Click a band in the equalizer. Shiny receives its ID at
 `input$eq_point_click$pointid` automatically. Drag the band and release
 it. The app uses only `hc_add_event_point(event = "drop")` to send the
 final gain in decibels to `input$eq_point_drop$y`.
-
-Run the equalizer
-
-R source
 
 
     library(shiny)
@@ -200,10 +188,6 @@ Click a species in the overview to see the individual flowers in the
 detail chart. The server reads `input$overview_point_click$pointid` and
 uses a proxy to replace the detail series and its title. This combines
 the two preceding patterns and keeps both charts mounted.
-
-Run the linked charts
-
-R source
 
 
     library(shiny)

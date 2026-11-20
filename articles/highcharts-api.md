@@ -7,18 +7,19 @@ and nested R lists, see [JavaScript API
 Basics](https://jkunst.com/highcharter/articles/highchartsjs-api-basics.md).
 
 Tom Bishop’s legend example shows how to read the Highcharts API from R.
-Start with the monthly temperatures of three cities.
+Start with monthly temperatures. Hover over a month to compare the
+cities in a table.
 
 ``` r
 
 library(highcharter)
 
-hc <- highcharts_demo()
+hc <- highcharts_demo() |> hc_tooltip(table = TRUE)
 hc
 ```
 
-The JavaScript legend below places the entries inside the chart and
-underlines the title. In R, the top-level option becomes
+The JavaScript legend below places the entries in the upper right and
+underlines the legend title. In R, the top-level option becomes
 [`hc_legend()`](https://jkunst.com/highcharter/reference/hc_legend.md)
 and each nested object becomes a named list. Keep the option names in
 camel case. [Highcharts legend
@@ -26,8 +27,7 @@ options](https://api.highcharts.com/highcharts/legend).
 
 ``` js
 legend: {
-  layout: 'vertical', align: 'left', verticalAlign: 'top', floating: true,
-  x: 70, y: 30,
+  layout: 'vertical', align: 'right', verticalAlign: 'top',
   title: { text: 'Cities', style: { textDecoration: 'underline' } }
 }
 ```
@@ -37,11 +37,8 @@ legend: {
 hc |>
   hc_legend(
     layout = "vertical",
-    align = "left",
+    align = "right",
     verticalAlign = "top",
-    floating = TRUE,
-    x = 70,
-    y = 30,
     title = list(text = "Cities", style = list(textDecoration = "underline"))
   )
 ```

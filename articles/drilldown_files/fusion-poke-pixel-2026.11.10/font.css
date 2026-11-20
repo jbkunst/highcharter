@@ -1,0 +1,9 @@
+/* Latin subset of Fusion Poke Pixel, release 2026.11.10.
+   https://github.com/pixel-font-studio/fusion-poke-pixel-font */
+@font-face {
+  font-family: 'Fusion Poke Pixel';
+  src: url('latin.woff') format('woff');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

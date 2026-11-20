@@ -113,9 +113,9 @@ flowers move to their new coordinates. Put
 <code>highchartOutput("flowers")</code> in the UI and read
 <code>input$measure</code> inside <code><a href="../reference/renderHighchart.html">renderHighchart()</a></code> to
 rebuild the plot when the measurement changes.</p>
-<details ontoggle="if (this.open) { const f = this.querySelector('iframe'); if (!f.hasAttribute('src')) f.src = f.dataset.src; }"><summary>Run the iris explorer</summary><iframe title="the iris explorer" data-src="../live/basic/index.html" width="100%" height="450" style="border:0"></iframe>
-</details><details><summary>R source</summary><pre>
-<code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<iframe title="the iris explorer" src="../live/basic/index.html" loading="lazy" width="100%" height="450" style="border:0"></iframe>
+<pre>
+<code class="language-r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jkunst.com/highcharter/">highcharter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
@@ -141,7 +141,7 @@ rebuild the plot when the measurement changes.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code>
 </pre>
-</details><p>
+<p>
 <a href="../live/basic/index.html" target="_blank" rel="noopener">Open the app in its own tab</a>
 </p>
 </div>
@@ -155,9 +155,9 @@ series type with <code><a href="../reference/hcpxy_update_series.html">hcpxy_upd
 <strong>Line</strong> and your added months are still there. Both
 controls target the series ID <code>traffic</code> through
 <code>highchartProxy("passengers", session)</code>.</p>
-<details ontoggle="if (this.open) { const f = this.querySelector('iframe'); if (!f.hasAttribute('src')) f.src = f.dataset.src; }"><summary>Run the passenger chart</summary><iframe title="the passenger chart" data-src="../live/proxy/index.html" width="100%" height="450" style="border:0"></iframe>
-</details><details><summary>R source</summary><pre>
-<code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<iframe title="the passenger chart" src="../live/proxy/index.html" loading="lazy" width="100%" height="450" style="border:0"></iframe>
+<pre>
+<code class="language-r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jkunst.com/highcharter/">highcharter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
@@ -204,7 +204,7 @@ controls target the series ID <code>traffic</code> through
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code>
 </pre>
-</details><p>
+<p>
 <a href="../live/proxy/index.html" target="_blank" rel="noopener">Open the app in its own tab</a>
 </p>
 <p>To switch from weekly to daily Stock prices when the visible date
@@ -220,9 +220,9 @@ the Stock walkthrough</a>.</p>
 and release it. The app uses only
 <code>hc_add_event_point(event = "drop")</code> to send the final gain
 in decibels to <code>input$eq_point_drop$y</code>.</p>
-<details ontoggle="if (this.open) { const f = this.querySelector('iframe'); if (!f.hasAttribute('src')) f.src = f.dataset.src; }"><summary>Run the equalizer</summary><iframe title="the equalizer" data-src="../live/events/index.html" width="100%" height="490" style="border:0"></iframe>
-</details><details><summary>R source</summary><pre>
-<code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<iframe title="the equalizer" src="../live/events/index.html" loading="lazy" width="100%" height="490" style="border:0"></iframe>
+<pre>
+<code class="language-r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jkunst.com/highcharter/">highcharter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -277,7 +277,7 @@ in decibels to <code>input$eq_point_drop$y</code>.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code>
 </pre>
-</details><p>
+<p>
 <a href="../live/events/index.html" target="_blank" rel="noopener">Open the app in its own tab</a>
 </p>
 <p>The output ID, scope and case-sensitive Highcharts event name
@@ -293,9 +293,9 @@ detail chart. The server reads
 <code>input$overview_point_click$pointid</code> and uses a proxy to
 replace the detail series and its title. This combines the two preceding
 patterns and keeps both charts mounted.</p>
-<details ontoggle="if (this.open) { const f = this.querySelector('iframe'); if (!f.hasAttribute('src')) f.src = f.dataset.src; }"><summary>Run the linked charts</summary><iframe title="the linked charts" data-src="../live/linked/index.html" width="100%" height="430" style="border:0"></iframe>
-</details><details><summary>R source</summary><pre>
-<code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<iframe title="the linked charts" src="../live/linked/index.html" loading="lazy" width="100%" height="430" style="border:0"></iframe>
+<pre>
+<code class="language-r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jkunst.com/highcharter/">highcharter</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Species</span>, <span class="va">iris</span>, <span class="va">mean</span><span class="op">)</span></span>
@@ -346,7 +346,7 @@ patterns and keeps both charts mounted.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code>
 </pre>
-</details><p>
+<p>
 <a href="../live/linked/index.html" target="_blank" rel="noopener">Open the app in its own tab</a>
 </p>
 <p>To run an example from a local checkout, load the package and open
