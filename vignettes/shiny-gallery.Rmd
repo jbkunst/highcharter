@@ -41,8 +41,8 @@ tags$div(
   class = "shiny-gallery row row-cols-1 row-cols-md-2 g-3",
   card(
     "basic",
-    "Iris explorer",
-    "Switch between sepal and petal measurements for 150 flowers."
+    "Old Faithful",
+    "Choose an eruption duration to see how long visitors waited for the next eruption."
   ),
   card(
     "proxy",

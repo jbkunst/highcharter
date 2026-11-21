@@ -227,7 +227,8 @@ Bundled Highcharts JS: 12.6.2.
   This method requires survival 3.6-5 or later.
 
 * Boxplots from `data_to_boxplot()` place outliers at the same x coordinate as
-  their box when categories differ between series.
+  their box when categories differ between series. Hiding a single boxplot
+  series in the legend now also hides its outliers.
 
 * Treemap and sunburst nodes from `data_to_hierarchical()` now keep the
   correct parent when labels on different paths produce the same ID.

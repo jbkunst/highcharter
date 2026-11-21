@@ -80,8 +80,13 @@ data_to_boxplot <- function(
   }
 
   counts <- lengths(groups$out)
+  parents <- if (missing(group_var2)) {
+    rep(":previous", nrow(groups))
+  } else {
+    groups$series
+  }
   points <- tibble(
-    linkedTo = rep(groups$series, counts),
+    linkedTo = rep(parents, counts),
     x = rep(groups$x, counts),
     y = unlist(groups$out, use.names = FALSE)
   ) |>

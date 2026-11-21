@@ -1,6 +1,8 @@
 library(shiny)
 library(highcharter)
 
+hc_set_theme("monokai")
+
 bands <- data.frame(
   band = c("60 Hz", "250 Hz", "1 kHz", "4 kHz", "16 kHz"),
   gain = c(0, 5, -4, 8, 2)
@@ -8,7 +10,12 @@ bands <- data.frame(
 events <- c("click", "drag", "mouseOver", "drop")
 
 ui <- fluidPage(
-  theme = bslib::bs_theme(version = 5),
+  theme = bslib::bs_theme(
+    version = 5,
+    bg = "#272822",
+    fg = "#F8F8F2",
+    primary = "#66D9EF"
+  ),
   style = "max-width: 48rem;",
   tags$head(tags$style(
     "
@@ -46,7 +53,7 @@ server <- function(input, output, session) {
       "column",
       hcaes(x = band, y = gain, id = band),
       name = "Gain",
-      color = "#39d9f5",
+      color = "#66D9EF",
       zIndex = 1,
       cursor = "pointer",
       dragDrop = list(
@@ -57,7 +64,7 @@ server <- function(input, output, session) {
         dragHandle = list(
           cursor = "ns-resize",
           color = "#ffffff",
-          lineColor = "#101a29",
+          lineColor = "#272822",
           pathFormatter = htmlwidgets::JS(
             "function (point) {
             const x = point.shapeArgs.width / 2;
@@ -76,7 +83,7 @@ server <- function(input, output, session) {
         type = "column",
         name = "Band range",
         data = rep(12, nrow(bands)),
-        color = "#203245",
+        color = "#44453D",
         enableMouseTracking = FALSE,
         accessibility = list(enabled = FALSE),
         zIndex = 0
@@ -91,7 +98,7 @@ server <- function(input, output, session) {
           minPointLength = 4
         )
       ) |>
-      hc_chart(backgroundColor = "#101a29", spacingTop = 40) |>
+      hc_chart(spacingTop = 40) |>
       hc_legend(enabled = FALSE) |>
       hc_xAxis(
         title = list(text = NULL),
@@ -104,7 +111,8 @@ server <- function(input, output, session) {
         tickInterval = 1,
         labels = list(step = 6, style = list(color = "#e4ecf4")),
         title = list(text = "Gain (dB)", style = list(color = "#e4ecf4")),
-        gridLineColor = "#101a29",
+        gridLineDashStyle = "Solid",
+        gridLineColor = "#272822",
         gridLineWidth = 2,
         gridZIndex = 4
       ) |>

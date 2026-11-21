@@ -49,12 +49,13 @@ demo <- function(slug, title, height = 450) {
 
 ## Basics
 
-Select **Sepal** or **Petal**. The same 150 flowers move to their new coordinates.
-Put `highchartOutput("flowers")` in the UI and read `input$measure` inside
-`renderHighchart()` to rebuild the plot when the measurement changes.
+Move the slider to choose an eruption duration for Old Faithful. The chart
+highlights eruptions within half a minute of that duration and reports their
+median wait until the next eruption. The UI contains `highchartOutput("eruptions")`
+and `renderHighchart()` reads `input$duration` to update the chart.
 
 ```{r basic, echo=FALSE}
-demo("basic", "the iris explorer")
+demo("basic", "the Old Faithful explorer")
 ```
 
 ## Proxies

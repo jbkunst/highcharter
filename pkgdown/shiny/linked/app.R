@@ -1,10 +1,11 @@
 library(shiny)
 library(highcharter)
 
+hc_set_theme("carbon")
 species <- aggregate(Petal.Length ~ Species, iris, mean)
 species$mean_mm <- round(10 * species$Petal.Length)
 colors <- setNames(
-  hc_theme("hcrt")$colors[seq_len(nrow(species))],
+  hc_theme("carbon")$colors[seq_len(nrow(species))],
   species$Species
 )
 flower_points <- hcaes(
@@ -14,7 +15,12 @@ flower_points <- hcaes(
 )
 
 ui <- fluidPage(
-  theme = bslib::bs_theme(version = 5),
+  theme = bslib::bs_theme(
+    version = 5,
+    bg = "#FFFFFF",
+    fg = "#161616",
+    primary = "#6929C4"
+  ),
   style = "max-width: 60rem;",
   tags$main(
     p(

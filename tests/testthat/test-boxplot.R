@@ -18,3 +18,10 @@ test_that("outliers share their category position with the corresponding box", {
     rep("boxplot", 2)
   )
 })
+
+test_that("a single boxplot series controls its outliers from the legend", {
+  series <- data_to_boxplot(iris, Petal.Length, Species, add_outliers = TRUE)
+  expect_identical(series$type, c("boxplot", "scatter"))
+  expect_identical(series$linkedTo[[2]], ":previous")
+  expect_false(series$showInLegend[[2]])
+})
