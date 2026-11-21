@@ -7,15 +7,19 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Browse the [Shiny gallery](shiny-gallery.html){target="_blank" rel="noopener"} in a new tab, or
-run the examples here alongside their R source. The first launch downloads R
-and its dependencies. The apps use the highcharter version documented here.
+Run the examples below or browse the [Shiny gallery](shiny-gallery.html){target="_blank" rel="noopener"}.
+Each app has its own folder under [`pkgdown/shiny/` on GitHub](https://github.com/jbkunst/highcharter/tree/main/pkgdown/shiny).
+The first launch downloads R and its dependencies. The apps use the highcharter version documented here.
 
 ```{r setup, include=FALSE}
 library(htmltools)
 demo <- function(slug, title, height = 450) {
-  src <- file.path("..", "pkgdown", "shiny", slug, "app.R")
   url <- paste0("../live/", slug, "/index.html")
+  source_url <- paste0(
+    "https://github.com/jbkunst/highcharter/blob/main/pkgdown/shiny/",
+    slug,
+    "/app.R"
+  )
   tagList(
     tags$div(
       class = "shiny-app-frame",
@@ -29,16 +33,16 @@ demo <- function(slug, title, height = 450) {
         style = "border:0"
       )
     ),
-    tags$pre(tags$code(
-      class = "language-r",
-      paste(readLines(src), collapse = "\n")
-    )),
-    tags$p(tags$a(
-      href = url,
-      "Open the app in its own tab",
-      target = "_blank",
-      rel = "noopener"
-    ))
+    tags$p(
+      tags$a(
+        href = url,
+        "Open the app in its own tab",
+        target = "_blank",
+        rel = "noopener"
+      ),
+      " · ",
+      tags$a(href = source_url, "View app.R on GitHub")
+    )
   )
 }
 ```
@@ -78,8 +82,8 @@ To switch from weekly to daily Stock prices when the visible date range narrows,
 
 ## Events
 
-Each lit segment adds 1 dB to the band's gain, starting at −12 dB.
-Hover over a band, click it, then drag its top and release it. Each event has
+Gain ranges from −12 dB (cut) to +12 dB (boost), with 0 dB neutral.
+Hover over a band, click it, then drag the arrow at its top and release it. Each event has
 its own readout. The `drag` and `mouseOver` values refresh at most once every
 150 ms. The `drop` value shows the final gain as soon as you release the band.
 
@@ -98,8 +102,8 @@ The dotplot shows mean petal length by species, rounded to the nearest
 millimeter. With `colorByPoint = TRUE`, each species gets its own color.
 Pause over a species for 200 ms or click it for an immediate selection. The
 detail shows petal length and width for its 50 flowers in the same color.
-A Shiny proxy updates the detail points, series
-color and title while keeping the axes fixed for comparison.
+A Shiny proxy animates the 50 dots to the new species' measurements and
+updates the color and title. The axes stay fixed for comparison.
 
 ```{r linked, echo=FALSE}
 demo("linked", "the linked charts", height = 400)

@@ -7,6 +7,11 @@ colors <- setNames(
   hc_theme("hcrt")$colors[seq_len(nrow(species))],
   species$Species
 )
+flower_points <- hcaes(
+  x = Petal.Length,
+  y = Petal.Width,
+  id = paste0("flower-", seq_along(Petal.Length))
+)
 
 ui <- fluidPage(
   theme = bslib::bs_theme(version = 5),
@@ -46,7 +51,7 @@ server <- function(input, output, session) {
       hc_colors(unname(colors)) |>
       hc_xAxis(title = list(text = NULL)) |>
       hc_yAxis(min = 0, title = list(text = "Mean petal length (mm)")) |>
-      hc_tooltip(valueDecimals = 0, valueSuffix = " mm") |>
+      hc_tooltip(distance = 28, valueDecimals = 0, valueSuffix = " mm") |>
       hc_add_event_point(event = "mouseOver")
   })
 
@@ -69,7 +74,7 @@ server <- function(input, output, session) {
     hchart(
       subset(iris, Species == initial),
       "scatter",
-      hcaes(x = Petal.Length, y = Petal.Width),
+      flower_points,
       id = "flowers",
       name = initial,
       color = colors[[initial]]
@@ -83,12 +88,6 @@ server <- function(input, output, session) {
     {
       group <- selected()
       highchartProxy("detail", session) |>
-        hcpxy_set_data(
-          "scatter",
-          subset(iris, Species == group),
-          hcaes(x = Petal.Length, y = Petal.Width),
-          id = "flowers"
-        ) |>
         hcpxy_update(
           title = list(text = group),
           series = list(list(
@@ -96,6 +95,14 @@ server <- function(input, output, session) {
             name = group,
             color = colors[[group]]
           ))
+        ) |>
+        hcpxy_set_data(
+          "scatter",
+          subset(iris, Species == group),
+          flower_points,
+          id = "flowers",
+          redraw = TRUE,
+          animation = list(duration = 450)
         )
     },
     ignoreInit = TRUE

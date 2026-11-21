@@ -19,7 +19,10 @@ ui <- fluidPage(
   )),
   tags$main(
     h2("Equalizer"),
-    p("Hover or click a band. Drag its top to change the gain."),
+    p(
+      "Drag the arrow at the top of a band to change its gain.",
+      "Negative dB cut the band, 0 dB leaves it unchanged, and positive dB boost it."
+    ),
     highchartOutput("eq", height = "320px"),
     h3("Latest event by type"),
     tags$dl(
@@ -45,12 +48,28 @@ server <- function(input, output, session) {
       name = "Gain",
       color = "#39d9f5",
       zIndex = 1,
-      cursor = "ns-resize",
+      cursor = "pointer",
       dragDrop = list(
         draggableY = TRUE,
         dragMinY = -12,
         dragMaxY = 12,
-        dragPrecisionY = 1
+        dragPrecisionY = 1,
+        dragHandle = list(
+          cursor = "ns-resize",
+          color = "#ffffff",
+          lineColor = "#101a29",
+          pathFormatter = htmlwidgets::JS(
+            "function (point) {
+            const x = point.shapeArgs.width / 2;
+            return [
+              ['M', x, -8], ['L', x + 6, -2], ['L', x + 2, -2],
+              ['L', x + 2, 2], ['L', x + 6, 2], ['L', x, 8],
+              ['L', x - 6, 2], ['L', x - 2, 2], ['L', x - 2, -2],
+              ['L', x - 6, -2], ['Z']
+            ];
+          }"
+          )
+        )
       )
     ) |>
       hc_add_series(
@@ -72,7 +91,7 @@ server <- function(input, output, session) {
           minPointLength = 4
         )
       ) |>
-      hc_chart(backgroundColor = "#101a29") |>
+      hc_chart(backgroundColor = "#101a29", spacingTop = 40) |>
       hc_legend(enabled = FALSE) |>
       hc_xAxis(
         title = list(text = NULL),
@@ -89,7 +108,18 @@ server <- function(input, output, session) {
         gridLineWidth = 2,
         gridZIndex = 4
       ) |>
-      hc_tooltip(valueSuffix = " dB", valueDecimals = 0) |>
+      hc_tooltip(
+        fixed = TRUE,
+        shape = "rect",
+        position = list(
+          relativeTo = "chart",
+          align = "right",
+          verticalAlign = "top",
+          y = 2
+        ),
+        headerFormat = "",
+        pointFormat = "{point.name}: <b>{point.y} dB</b>"
+      ) |>
       hc_add_event_point(event = "mouseOver") |>
       hc_add_event_point(event = "drag") |>
       hc_add_event_point(event = "drop")

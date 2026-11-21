@@ -13,7 +13,7 @@ path <- system.file(
 )
 airport <- geojson_list(as.json(path))
 
-airport_map <- hchart(airport, name = c("Areas", "Lines", "Points")) |>
+hchart(airport, name = c("Areas", "Lines", "Points")) |>
   hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
   hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 ```
@@ -25,7 +25,14 @@ and labels the others with their airfield category and reference where available
 [Basemap example code](https://github.com/jbkunst/highcharter/blob/main/vignettes/_manchester.Rmd).
 
 ```{r manchester-basemap, echo=FALSE}
-airport_map <- airport_map |>
+deps <- htmlwidgets::getDependency("maplibregl", "mapgl")
+maplibre <- Filter(function(dep) identical(dep$name, "maplibre-gl"), deps)
+stopifnot(length(maplibre) == 1L)
+background <- jsonlite::read_json("data/manchester-basemap.geojson.gz")
+
+hchart(airport, name = c("Areas", "Lines", "Points")) |>
+  hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
+  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE) |>
   hc_title(text = "Manchester Airport") |>
   hc_chart(
     backgroundColor = "transparent",
@@ -47,14 +54,8 @@ airport_map <- airport_map |>
       "Highcharts · Airport: POSCON UK · Basemap: OpenFreeMap / OpenMapTiles ·",
       "<a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors (ODbL)</a>"
     )
-  )
-
-deps <- htmlwidgets::getDependency("maplibregl", "mapgl")
-maplibre <- Filter(function(dep) identical(dep$name, "maplibre-gl"), deps)
-stopifnot(length(maplibre) == 1L)
-airport_map$dependencies <- c(airport_map$dependencies, maplibre)
-background <- jsonlite::read_json("data/manchester-basemap.geojson.gz")
-airport_map |>
+  ) |>
+  htmlwidgets::prependContent(maplibre) |>
   htmlwidgets::onRender(
     paste(readLines("manchester-basemap.js"), collapse = "\n"),
     data = background
