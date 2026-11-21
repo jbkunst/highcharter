@@ -27,28 +27,25 @@ boostThreshold that defines when the boost should kick in.
 Requires the \code{modules/boost.js} module.
 }
 \examples{
-# Send only y values. Highcharts generates the evenly spaced x coordinates.
-sample_index <- seq_len(1e6) - 1L
-signal <- sin(sample_index / 50000) +
-  0.2 * sin(sample_index / 2400) +
-  0.04 * sin(sample_index / 40)
+# Each row becomes a compact [x, y] pair.
+set.seed(42)
+xy <- round(cbind(runif(10000), runif(10000)), 3)
 
 highchart() |>
-  hc_title(text = "One million samples") |>
-  hc_subtitle(
-    text = "Drag across the signal to zoom in on its smaller oscillations."
-  ) |>
-  hc_chart(zooming = list(type = "x")) |>
-  hc_xAxis(title = list(text = "Sample index")) |>
-  hc_yAxis(title = list(text = "Amplitude")) |>
+  hc_title(text = "A cloud of 10,000 points") |>
+  hc_subtitle(text = "Drag a rectangle to zoom in on the point cloud.") |>
+  hc_chart(zooming = list(type = "xy")) |>
+  hc_xAxis(min = 0, max = 1, title = list(text = "x")) |>
+  hc_yAxis(min = 0, max = 1, title = list(text = "y")) |>
   hc_add_series(
-    data = round(signal, 2),
-    type = "line",
-    name = "Signal",
-    lineWidth = 1,
+    data = xy,
+    type = "scatter",
+    name = "Samples",
+    marker = list(symbol = "circle", radius = 1),
+    color = "rgba(48, 103, 162, 0.65)",
     boostThreshold = 1000,
     showInLegend = FALSE
   ) |>
-  hc_tooltip(valueDecimals = 2) |>
+  hc_tooltip(pointFormat = "x = {point.x:.3f}<br/>y = {point.y:.3f}") |>
   hc_boost(enabled = TRUE)
 }
