@@ -63,8 +63,9 @@ flower’s line.
 ## Boxplots
 
 To compare petal lengths across species, let the helper calculate one
-box per group. With `add_outliers = TRUE`, it also returns the scatter
-series for the observations beyond the whiskers.
+box per group. With `add_outliers = TRUE`, it also returns a scatter
+series for the observations beyond the whiskers. Pass one color to use
+it for both series.
 
 ``` r
 
@@ -73,12 +74,15 @@ boxes <- data_to_boxplot(
   Petal.Length,
   Species,
   add_outliers = TRUE,
-  name = "Petal length"
+  name = "Petal length",
+  color = hc_theme("smpl")$colors[[1]]
 )
 
 highchart() |>
+  hc_chart(style = list(fontFamily = "IBM Plex Sans", fontWeight = "300")) |>
   hc_xAxis(categories = levels(iris$Species)) |>
   hc_yAxis(title = list(text = "Petal length (cm)")) |>
+  hc_legend(itemStyle = list(fontWeight = "300")) |>
   hc_add_series_list(boxes)
 ```
 

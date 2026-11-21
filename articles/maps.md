@@ -408,7 +408,7 @@ path <- system.file(
 )
 airport <- geojson_list(as.json(path))
 
-airport_map <- hchart(airport, name = c("Areas", "Lines", "Points")) |>
+hchart(airport, name = c("Areas", "Lines", "Points")) |>
   hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
   hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 ```

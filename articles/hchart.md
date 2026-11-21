@@ -248,34 +248,23 @@ hchart(fit, choices = c(1, 3), loadings = TRUE)
 
 data(volcano)
 
-hchart(volcano) |> # changing default color
-  hc_colorAxis(
-    stops = color_stops(
-      colors = c(
-        "#000004FF",
-        "#56106EFF",
-        "#BB3754FF",
-        "#F98C0AFF",
-        "#FCFFA4FF"
-      )
-    )
-  )
+# fmt: skip
+volcano_colors <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
+
+hchart(volcano) |>
+  hc_colorAxis(stops = color_stops(colors = volcano_colors))
 ```
 
-Matrices use a heatmap by default. With the same matrix, choose
-`"tilemap"` for hexagonal tiles or `"contour"` for lines of equal
-elevation. The [contour
+The elevations in `volcano` are whole metres. Place contour lines half a
+metre above each multiple of ten so that flat areas keep their band
+color. The [contour
 plot](https://www.highcharts.com/docs/chart-and-series-types/contour)
 requires WebGPU in the browser.
 
 ``` r
 
-hchart(volcano, type = "tilemap")
-```
-
-``` r
-
-hchart(volcano, type = "contour")
+hchart(volcano, type = "contour") |>
+  hc_plotOptions(contour = list(contourInterval = 10, contourOffset = 0.5))
 ```
 
 ## Distance matrix
@@ -315,7 +304,7 @@ path <- system.file(
 )
 airport <- geojson_list(as.json(path))
 
-airport_map <- hchart(airport, name = c("Areas", "Lines", "Points")) |>
+hchart(airport, name = c("Areas", "Lines", "Points")) |>
   hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
   hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 ```
