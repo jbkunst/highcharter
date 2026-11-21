@@ -48,9 +48,12 @@ hchart(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE)
 
 ## Details
 
-Run `methods(hchart)` to see what objects are supported. For a GeoJSON
-FeatureCollection from geojsonio, each geometry family gets its own
-layer. Supply `type` to select one layer explicitly.
+Run `methods(hchart)` to see what objects are supported. Numeric
+matrices use a heatmap by default. Set `type = "tilemap"` for hexagonal
+tiles or `type = "contour"` for contour lines.
+
+For a GeoJSON FeatureCollection from geojsonio, each geometry family
+gets its own layer. Supply `type` to select one layer explicitly.
 
 ## Examples
 

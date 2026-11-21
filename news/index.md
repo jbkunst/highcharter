@@ -156,6 +156,10 @@ Bundled Highcharts JS: 12.6.2.
 
 ### New features
 
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) now
+  accepts `type = "tilemap"` and `type = "contour"` for numeric
+  matrices. The default is `"heatmap"`.
+
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) and
   [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
   draw each geometry family in a mixed `geojsonio` FeatureCollection,
