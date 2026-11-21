@@ -12,6 +12,6 @@ highcharts_demo() |>
         y = unname(monthly[peak])
       ),
       format = "Warmest month in Tokyo: {y:.1f} \u00b0C",
-      y = 24
+      y = -14
     ))
   ))
