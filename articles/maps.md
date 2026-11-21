@@ -407,16 +407,20 @@ path <- system.file(
   package = "highcharter"
 )
 airport <- geojson_list(as.json(path))
+```
+
+``` r
 
 hchart(airport, name = c("Areas", "Lines", "Points")) |>
   hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
   hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 ```
 
-The example below adds a local MapLibre basemap for context. Toggle a
-layer in the legend or use the zoom buttons to explore. The GeoJSON
-preserves named features and labels the others with their airfield
-category and reference where available. [Airport data from POSCON
+The map shows the three geometry layers over a local MapLibre basemap.
+Toggle a layer in the legend or use the zoom buttons to explore. The
+GeoJSON preserves named features and labels the others with their
+airfield category and reference where available. [Airport data from
+POSCON
 UK](https://github.com/POSCON-United-Kingdom/UK-Radar-Data/blob/6a020b03fbfeffe9f7eb53e4b4559de48134e351/AirfieldGeoJson/EGCC.geojson)
 · [Basemap example
 code](https://github.com/jbkunst/highcharter/blob/main/vignettes/_manchester.Rmd).

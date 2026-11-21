@@ -317,7 +317,8 @@ Bundled Highcharts JS: 12.6.2.
 - Boxplots from
   [`data_to_boxplot()`](https://jkunst.com/highcharter/reference/data_to_boxplot.md)
   place outliers at the same x coordinate as their box when categories
-  differ between series.
+  differ between series. Hiding a single boxplot series in the legend
+  now also hides its outliers.
 
 - Treemap and sunburst nodes from
   [`data_to_hierarchical()`](https://jkunst.com/highcharter/reference/data_to_hierarchical.md)

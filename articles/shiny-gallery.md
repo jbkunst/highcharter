@@ -7,9 +7,10 @@ the code behind the examples.
 
 [![](../shiny-gallery/basic.webp)](https://jkunst.com/highcharter/live/basic/index.md)
 
-## Iris explorer
+## Old Faithful
 
-Switch between sepal and petal measurements for 150 flowers.
+Choose an eruption duration to see how long visitors waited for the next
+eruption.
 
 [![](../shiny-gallery/proxy.webp)](https://jkunst.com/highcharter/live/proxy/index.md)
 

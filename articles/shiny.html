@@ -107,13 +107,14 @@ apps use the highcharter version documented here.</p>
 <div class="section level2">
 <h2 id="basics">Basics<a class="anchor" aria-label="anchor" href="#basics"></a>
 </h2>
-<p>Select <strong>Sepal</strong> or <strong>Petal</strong>. The same 150
-flowers move to their new coordinates. Put
-<code>highchartOutput("flowers")</code> in the UI and read
-<code>input$measure</code> inside <code><a href="../reference/renderHighchart.html">renderHighchart()</a></code> to
-rebuild the plot when the measurement changes.</p>
+<p>Move the slider to choose an eruption duration for Old Faithful. The
+chart highlights eruptions within half a minute of that duration and
+reports their median wait until the next eruption. The UI contains
+<code>highchartOutput("eruptions")</code> and
+<code><a href="../reference/renderHighchart.html">renderHighchart()</a></code> reads <code>input$duration</code> to
+update the chart.</p>
 <div class="shiny-app-frame">
-<iframe title="the iris explorer" src="../live/basic/index.html" class="shiny-app-basic" loading="lazy" width="100%" height="450" style="border:0"></iframe>
+<iframe title="the Old Faithful explorer" src="../live/basic/index.html" class="shiny-app-basic" loading="lazy" width="100%" height="450" style="border:0"></iframe>
 </div>
 <p>
 <a href="../live/basic/index.html" target="_blank" rel="noopener">Open the app in its own tab</a>

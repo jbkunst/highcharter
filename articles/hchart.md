@@ -244,27 +244,71 @@ hchart(fit, choices = c(1, 3), loadings = TRUE)
 
 ## Matrix
 
+The `volcano` matrix has 87 rows and 61 columns. Both views use the same
+distance for one step across a column or down a row.
+
 ``` r
 
 data(volcano)
+
+volcano_axes <- function(chart) {
+  chart |>
+    hc_chart(margin = c(0, 0, 52, 0)) |>
+    hc_xAxis(
+      min = 1,
+      max = ncol(volcano),
+      startOnTick = FALSE,
+      endOnTick = FALSE
+    ) |>
+    hc_yAxis(
+      min = 1,
+      max = nrow(volcano),
+      startOnTick = FALSE,
+      endOnTick = FALSE
+    )
+}
+```
+
+``` r
 
 # fmt: skip
 volcano_colors <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
 
 hchart(volcano) |>
+  volcano_axes() |>
   hc_colorAxis(stops = color_stops(colors = volcano_colors))
 ```
 
 The elevations in `volcano` are whole metres. Place contour lines half a
 metre above each multiple of ten so that flat areas keep their band
-color. The [contour
-plot](https://www.highcharts.com/docs/chart-and-series-types/contour)
-requires WebGPU in the browser.
+color. Blue, yellow and coral mark increasing elevation, as in the
+[Highcharts contour
+demo](https://www.highcharts.com/docs/chart-and-series-types/contour).
+This view requires WebGPU in the browser.
 
 ``` r
 
 hchart(volcano, type = "contour") |>
-  hc_plotOptions(contour = list(contourInterval = 10, contourOffset = 0.5))
+  volcano_axes() |>
+  hc_colorAxis(
+    min = min(volcano),
+    max = max(volcano),
+    startOnTick = FALSE,
+    endOnTick = FALSE,
+    stops = list(
+      list(0, "#447CFF"),
+      list(0.5, "#F5FF66"),
+      list(0.9, "#FF5E4F")
+    ),
+    labels = list(format = "{value} m")
+  ) |>
+  hc_plotOptions(
+    contour = list(
+      contourInterval = 10,
+      contourOffset = 0.5,
+      lineColor = "#888888"
+    )
+  )
 ```
 
 ## Distance matrix
@@ -303,16 +347,20 @@ path <- system.file(
   package = "highcharter"
 )
 airport <- geojson_list(as.json(path))
+```
+
+``` r
 
 hchart(airport, name = c("Areas", "Lines", "Points")) |>
   hc_tooltip(headerFormat = "", pointFormat = "<b>{point.name}</b>") |>
   hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
 ```
 
-The example below adds a local MapLibre basemap for context. Toggle a
-layer in the legend or use the zoom buttons to explore. The GeoJSON
-preserves named features and labels the others with their airfield
-category and reference where available. [Airport data from POSCON
+The map shows the three geometry layers over a local MapLibre basemap.
+Toggle a layer in the legend or use the zoom buttons to explore. The
+GeoJSON preserves named features and labels the others with their
+airfield category and reference where available. [Airport data from
+POSCON
 UK](https://github.com/POSCON-United-Kingdom/UK-Radar-Data/blob/6a020b03fbfeffe9f7eb53e4b4559de48134e351/AirfieldGeoJson/EGCC.geojson)
 · [Basemap example
 code](https://github.com/jbkunst/highcharter/blob/main/vignettes/_manchester.Rmd).

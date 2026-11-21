@@ -9,11 +9,12 @@ highcharter version documented here.
 
 ## Basics
 
-Select **Sepal** or **Petal**. The same 150 flowers move to their new
-coordinates. Put `highchartOutput("flowers")` in the UI and read
-`input$measure` inside
+Move the slider to choose an eruption duration for Old Faithful. The
+chart highlights eruptions within half a minute of that duration and
+reports their median wait until the next eruption. The UI contains
+`highchartOutput("eruptions")` and
 [`renderHighchart()`](https://jkunst.com/highcharter/reference/renderHighchart.md)
-to rebuild the plot when the measurement changes.
+reads `input$duration` to update the chart.
 
 [Open the app in its own
 tab](https://jkunst.com/highcharter/live/basic/index.md) · [View app.R
