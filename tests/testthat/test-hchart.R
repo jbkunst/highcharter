@@ -226,6 +226,19 @@ test_that("distance heatmaps accept matrix display options", {
   expect_true(opts$plotOptions$series$showInLegend)
 })
 
+test_that("matrix chart types share the same grid", {
+  m <- matrix(1:6, 2, 3, dimnames = list(c("A", "B"), letters[1:3]))
+  heat <- hchart(m, TRUE, TRUE)$x$hc_opts
+  expect_identical(heat$series[[1]]$type, "heatmap")
+  for (type in c("heatmap", "tilemap", "contour")) {
+    opts <- hchart(m, label = TRUE, showInLegend = TRUE, type = type)$x$hc_opts
+    expect_identical(opts$series[[1]]$type, type)
+    expect_identical(opts$series[[1]]$data, heat$series[[1]]$data)
+    expect_identical(opts$yAxis, heat$yAxis)
+  }
+  expect_error(hchart(m, type = "scatter"), "heatmap")
+})
+
 test_that("hchart returns a valid correlation matrix plot after valid data input", {
   h <- hchart(cor(mtcars))
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))

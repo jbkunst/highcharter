@@ -245,23 +245,14 @@ hchart(volcano) |> # changing default color
   )
 ```
 
-For a tile map or a contour plot, supply the grid as a table with numeric
-`x`, `y` and `value` columns. R stores each matrix column contiguously, so
-expand the row index first. Reverse the y axis to keep row 1 at the top, as in the
-heatmap. Both series can use the same color scale. The
-[contour series](https://www.highcharts.com/docs/chart-and-series-types/contour)
-requires a browser with WebGPU.
+Matrices use a heatmap by default. With the same matrix, choose `"tilemap"`
+for hexagonal tiles or `"contour"` for lines of equal elevation. The
+[contour plot](https://www.highcharts.com/docs/chart-and-series-types/contour)
+requires WebGPU in the browser.
 
-```{r matrix-grid-types, eval=FALSE}
-grid <- expand.grid(y = seq_len(nrow(volcano)), x = seq_len(ncol(volcano)))
-grid$value <- as.vector(volcano)
-
-hchart(grid, "tilemap", hcaes(x, y, value = value)) |>
-  hc_yAxis(reversed = TRUE) |>
-  hc_colorAxis(min = min(grid$value), max = max(grid$value))
-hchart(grid, "contour", hcaes(x, y, value = value)) |>
-  hc_yAxis(reversed = TRUE) |>
-  hc_colorAxis(min = min(grid$value), max = max(grid$value))
+```{r matrix-grid-types}
+hchart(volcano, type = "tilemap")
+hchart(volcano, type = "contour")
 ```
 
 ## Distance matrix 

@@ -5,6 +5,9 @@
 #' generic that other classes and packages can extend.
 #'
 #' Run \code{methods(hchart)} to see what objects are supported.
+#' Numeric matrices use a heatmap by default. Set `type = "tilemap"` for
+#' hexagonal tiles or `type = "contour"` for contour lines.
+#'
 #' For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
 #' family gets its own layer. Supply `type` to select one layer explicitly.
 #'
@@ -437,7 +440,14 @@ hchart.ets <- function(object, ...) {
 
 #' @importFrom rlang .data
 #' @export
-hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
+hchart.matrix <- function(
+  object,
+  label = FALSE,
+  showInLegend = FALSE,
+  ...,
+  type = c("heatmap", "tilemap", "contour")
+) {
+  type <- match.arg(type)
   validate_args("hchart", rlang::enquos(...))
   stopifnot(is.numeric(object))
 
@@ -471,7 +481,7 @@ hchart.matrix <- function(object, label = FALSE, showInLegend = FALSE, ...) {
   )
 
   hc <- highchart() |>
-    hc_add_series(data = list_parse(points), type = "heatmap") |>
+    hc_add_series(data = list_parse(points), type = type) |>
     hc_plotOptions(
       series = list(
         showInLegend = showInLegend,
