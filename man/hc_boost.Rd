@@ -27,22 +27,29 @@ boostThreshold that defines when the boost should kick in.
 Requires the \code{modules/boost.js} module.
 }
 \examples{
-# Each row becomes a compact [x, y] pair.
+# One point per unit cell. A jitter of at most 0.3 leaves a gap of at least 0.4.
+cells <- expand.grid(x = seq_len(800) - 0.5, y = seq_len(625) - 0.5)
 set.seed(42)
-xy <- round(cbind(runif(10000), runif(10000)), 3)
+xy <- round(
+  cbind(
+    cells$x + runif(nrow(cells), -0.3, 0.3),
+    cells$y + runif(nrow(cells), -0.3, 0.3)
+  ),
+  3
+)
 
 highchart() |>
-  hc_title(text = "A cloud of 10,000 points") |>
-  hc_subtitle(text = "Drag a rectangle to zoom in on the point cloud.") |>
+  hc_title(text = "A cloud of 500,000 points") |>
+  hc_subtitle(text = "Drag to zoom in and see the spacing between samples.") |>
   hc_chart(zooming = list(type = "xy")) |>
-  hc_xAxis(min = 0, max = 1, title = list(text = "x")) |>
-  hc_yAxis(min = 0, max = 1, title = list(text = "y")) |>
+  hc_xAxis(min = 0, max = 800, title = list(text = "x")) |>
+  hc_yAxis(min = 0, max = 625, endOnTick = FALSE, title = list(text = "y")) |>
   hc_add_series(
     data = xy,
     type = "scatter",
     name = "Samples",
-    marker = list(symbol = "circle", radius = 1),
-    color = "rgba(48, 103, 162, 0.65)",
+    marker = list(symbol = "circle", radius = 0.5),
+    color = "rgba(48, 103, 162, 0.22)",
     boostThreshold = 1000,
     showInLegend = FALSE
   ) |>
