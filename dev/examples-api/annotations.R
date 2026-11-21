@@ -1,6 +1,6 @@
 tokyo <- subset(city_weather, city == "Tokyo")
 monthly <- tapply(tokyo$temp_mean, format(tokyo$date, "%m"), mean)
-peak <- which.max(monthly)
+peak <- unname(which.max(monthly))
 
 highcharts_demo() |>
   hc_annotations(list(
