@@ -13,9 +13,10 @@ Switch between sepal and petal measurements for 150 flowers.
 
 [![](../shiny-gallery/proxy.webp)](https://jkunst.com/highcharter/live/proxy/index.md)
 
-## Air passengers
+## Proxy playground
 
-Add a month and switch between a line and columns using a Shiny proxy.
+Compare cities, extend a passenger forecast, or rearrange an item chart
+using Shiny proxies.
 
 [![](../shiny-gallery/events.webp)](https://jkunst.com/highcharter/live/events/index.md)
 

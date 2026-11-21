@@ -150,59 +150,317 @@ rebuild the plot when the measurement changes.</p>
 <div class="section level2">
 <h2 id="proxies">Proxies<a class="anchor" aria-label="anchor" href="#proxies"></a>
 </h2>
-<p>Start with twelve months of air passenger counts. <strong>Add a
-month</strong> appends one observation with
-<code><a href="../reference/hcpxy_add_point.html">hcpxy_add_point()</a></code>. <strong>Columns</strong> changes the
-series type with <code><a href="../reference/hcpxy_update_series.html">hcpxy_update_series()</a></code>. Switch back to
-<strong>Line</strong> and your added months are still there. Both
-controls target the series ID <code>traffic</code> through
-<code>highchartProxy("passengers", session)</code>.</p>
+<p>The <a href="https://github.com/jbkunst/highcharter-shiny/tree/master/02-proxy-functions" class="external-link">original
+proxy playground</a> inspired these three examples. Each tab creates its
+chart once, then uses <code><a href="../reference/highchartProxy.html">highchartProxy()</a></code> to change the chart
+already on screen.</p>
+<ul>
+<li>
+<strong>Series.</strong> Compare monthly temperatures in Santiago
+and Tokyo. Toggle Tokyo to add or remove its series. Switch from daily
+means to daily highs to replace the data by series ID with
+<code><a href="../reference/hcpxy_set_data.html">hcpxy_set_data()</a></code>. A single <code><a href="../reference/hcpxy_redraw.html">hcpxy_redraw()</a></code>
+displays both changes. Try the same comparison on polar axes.</li>
+<li>
+<strong>Points.</strong> Add or remove a month of observed air
+traffic. Turn on the dashed forecast to repeat the last twelve
+observations one year ahead. The forecast moves with the observations,
+even when you switch to columns.</li>
+<li>
+<strong>Layout.</strong> Rearrange the same 592 students into a
+grid, semicircle or circle. <code><a href="../reference/hcpxy_update_series.html">hcpxy_update_series()</a></code> changes
+the item layout while preserving the counts.</li>
+</ul>
 <div class="shiny-app-frame">
-<iframe title="the passenger chart" src="../live/proxy/index.html" class="shiny-app-proxy" loading="lazy" width="100%" height="450" style="border:0"></iframe>
+<iframe title="the proxy playground" src="../live/proxy/index.html" class="shiny-app-proxy" loading="lazy" width="100%" height="510" style="border:0"></iframe>
 </div>
 <pre>
 <code class="language-r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/bslib/" class="external-link">bslib</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jkunst.com/highcharter/">highcharter</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span>  theme <span class="op">=</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html" class="external-link">bs_theme</a></span><span class="op">(</span>version <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
-<span>  style <span class="op">=</span> <span class="st">"max-width: 48rem;"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></span><span class="op">(</span><span class="st">"next_month"</span>, <span class="st">"Add a month"</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
-<span>    <span class="st">"type"</span>,</span>
-<span>    <span class="st">"Chart type"</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Line"</span> <span class="op">=</span> <span class="st">"line"</span>, <span class="st">"Columns"</span> <span class="op">=</span> <span class="st">"column"</span><span class="op">)</span>,</span>
-<span>    inline <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="fu"><a href="../reference/hc_theme.html">hc_set_theme</a></span><span class="op">(</span><span class="st">"hcrt"</span><span class="op">)</span></span>
+<span><span class="va">palette</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hc_theme.html">hc_theme</a></span><span class="op">(</span><span class="st">"hcrt"</span><span class="op">)</span><span class="op">$</span><span class="va">colors</span></span>
+<span></span>
+<span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">temp_mean</span>, <span class="va">temp_max</span><span class="op">)</span> <span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">month</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">city_weather</span>, month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">date</span>, <span class="st">"%m"</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span>,</span>
+<span>  <span class="va">mean</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">city_months</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">city</span>, <span class="va">measure</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">rows</span> <span class="op">&lt;-</span> <span class="va">weather</span><span class="op">[</span><span class="va">weather</span><span class="op">$</span><span class="va">city</span> <span class="op">==</span> <span class="va">city</span>, <span class="op">]</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">rows</span><span class="op">$</span><span class="va">month</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">rows</span><span class="op">[[</span><span class="va">measure</span><span class="op">]</span><span class="op">]</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">AirPassengers</span><span class="op">)</span></span>
+<span><span class="va">months</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1949-01-01"</span><span class="op">)</span>,</span>
+<span>  by <span class="op">=</span> <span class="st">"month"</span>,</span>
+<span>  length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span> <span class="op">+</span> <span class="fl">12L</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/datetime_to_timestamp.html">datetime_to_timestamp</a></span><span class="op">(</span><span class="va">months</span><span class="op">)</span></span>
+<span><span class="va">traffic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dates</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">counts</span><span class="op">)</span></span>
+<span><span class="va">initial</span> <span class="op">&lt;-</span> <span class="fl">24L</span></span>
+<span><span class="co"># A seasonal naive forecast repeats the last 12 observed months.</span></span>
+<span><span class="va">outlook</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dates</span><span class="op">[</span><span class="va">n</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">12L</span><span class="op">)</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">counts</span><span class="op">[</span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">11L</span><span class="op">)</span><span class="op">:</span><span class="va">n</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">eyes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">as.data.frame.table</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/marginSums.html" class="external-link">margin.table</a></span><span class="op">(</span><span class="va">HairEyeColor</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  responseName <span class="op">=</span> <span class="st">"students"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/bslib/reference/page.html" class="external-link">page_fluid</a></span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="st">"Proxy playground"</span>,</span>
+<span>  theme <span class="op">=</span> <span class="fu"><a href="https://rstudio.github.io/bslib/reference/bs_theme.html" class="external-link">bs_theme</a></span><span class="op">(</span></span>
+<span>    version <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    primary <span class="op">=</span> <span class="va">palette</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>    base_font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IBM Plex Sans"</span>, <span class="st">"sans-serif"</span><span class="op">)</span>,</span>
+<span>    heading_font <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alegreya Sans SC"</span>, <span class="st">"sans-serif"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/highchartOutput.html">highchartOutput</a></span><span class="op">(</span><span class="st">"passengers"</span>, height <span class="op">=</span> <span class="st">"300px"</span><span class="op">)</span></span>
+<span>  style <span class="op">=</span> <span class="st">"max-width: 48rem;"</span>,</span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">main</span><span class="op">(</span></span>
+<span>    class <span class="op">=</span> <span class="st">"py-2"</span>,</span>
+<span>    <span class="fu"><a href="https://rstudio.github.io/bslib/reference/navset.html" class="external-link">navset_underline</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Series"</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>          class <span class="op">=</span> <span class="st">"d-flex align-items-center flex-wrap gap-3 pt-3"</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html" class="external-link">selectInput</a></span><span class="op">(</span></span>
+<span>            <span class="st">"measure"</span>,</span>
+<span>            <span class="st">"Monthly average of"</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Daily mean"</span> <span class="op">=</span> <span class="st">"temp_mean"</span>, <span class="st">"Daily high"</span> <span class="op">=</span> <span class="st">"temp_max"</span><span class="op">)</span>,</span>
+<span>            width <span class="op">=</span> <span class="st">"11rem"</span></span>
+<span>          <span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxInput.html" class="external-link">checkboxInput</a></span><span class="op">(</span><span class="st">"tokyo"</span>, <span class="st">"Compare with Tokyo"</span>, <span class="cn">TRUE</span>, width <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxInput.html" class="external-link">checkboxInput</a></span><span class="op">(</span><span class="st">"polar"</span>, <span class="st">"Polar chart"</span>, width <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="../reference/highchartOutput.html">highchartOutput</a></span><span class="op">(</span><span class="st">"weather"</span>, height <span class="op">=</span> <span class="st">"320px"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Points"</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>          class <span class="op">=</span> <span class="st">"d-flex align-items-center flex-wrap gap-2 py-3"</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></span><span class="op">(</span><span class="st">"add"</span>, <span class="st">"Add a month"</span>, class <span class="op">=</span> <span class="st">"btn-primary"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></span><span class="op">(</span><span class="st">"remove"</span>, <span class="st">"Remove last month"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxInput.html" class="external-link">checkboxInput</a></span><span class="op">(</span><span class="st">"forecast"</span>, <span class="st">"Show seasonal forecast"</span>, width <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
+<span>          <span class="st">"type"</span>,</span>
+<span>          <span class="st">"Observed series"</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Line"</span> <span class="op">=</span> <span class="st">"line"</span>, <span class="st">"Columns"</span> <span class="op">=</span> <span class="st">"column"</span><span class="op">)</span>,</span>
+<span>          inline <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="../reference/highchartOutput.html">highchartOutput</a></span><span class="op">(</span><span class="st">"passengers"</span>, height <span class="op">=</span> <span class="st">"300px"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rstudio.github.io/bslib/reference/nav-items.html" class="external-link">nav_panel</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Layout"</span>,</span>
+<span>        <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>          class <span class="op">=</span> <span class="st">"pt-3"</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
+<span>            <span class="st">"shape"</span>,</span>
+<span>            <span class="st">"Arrange the dots"</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Grid"</span>, <span class="st">"Semicircle"</span>, <span class="st">"Circle"</span><span class="op">)</span>,</span>
+<span>            inline <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>          <span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="../reference/highchartOutput.html">highchartOutput</a></span><span class="op">(</span><span class="st">"students"</span>, height <span class="op">=</span> <span class="st">"320px"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">passengers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">AirPassengers</span><span class="op">)</span></span>
-<span>  <span class="va">initial</span> <span class="op">&lt;-</span> <span class="fl">12L</span></span>
-<span>  <span class="va">output</span><span class="op">$</span><span class="va">passengers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/renderHighchart.html">renderHighchart</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/renderHighchart.html">renderHighchart</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="fu"><a href="../reference/highchart.html">highchart</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu"><a href="../reference/hc_xAxis.html">hc_xAxis</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Month since January 1949"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu"><a href="../reference/hc_yAxis.html">hc_yAxis</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Passengers (thousands)"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_title.html">hc_title</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"City temperatures, 2025"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_xAxis.html">hc_xAxis</a></span><span class="op">(</span>categories <span class="op">=</span> <span class="va">month.abb</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_yAxis.html">hc_yAxis</a></span><span class="op">(</span></span>
+<span>        title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
+<span>        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"{value}°C"</span><span class="op">)</span>,</span>
+<span>        tickInterval <span class="op">=</span> <span class="fl">10</span></span>
+<span>      <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_tooltip.html">hc_tooltip</a></span><span class="op">(</span>shared <span class="op">=</span> <span class="cn">TRUE</span>, valueSuffix <span class="op">=</span> <span class="st">" °C"</span>, valueDecimals <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu"><a href="../reference/hc_add_series.html">hc_add_series</a></span><span class="op">(</span></span>
-<span>        type <span class="op">=</span> <span class="st">"line"</span>,</span>
-<span>        id <span class="op">=</span> <span class="st">"traffic"</span>,</span>
-<span>        name <span class="op">=</span> <span class="st">"Air passengers"</span>,</span>
-<span>        pointStart <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>        data <span class="op">=</span> <span class="va">passengers</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">initial</span><span class="op">)</span><span class="op">]</span></span>
+<span>        <span class="fu">city_months</span><span class="op">(</span><span class="st">"Santiago"</span>, <span class="st">"temp_mean"</span><span class="op">)</span>,</span>
+<span>        <span class="st">"line"</span>,</span>
+<span>        <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>        id <span class="op">=</span> <span class="st">"Santiago"</span>,</span>
+<span>        name <span class="op">=</span> <span class="st">"Santiago"</span>,</span>
+<span>        color <span class="op">=</span> <span class="va">palette</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>      <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_add_series.html">hc_add_series</a></span><span class="op">(</span></span>
+<span>        <span class="fu">city_months</span><span class="op">(</span><span class="st">"Tokyo"</span>, <span class="st">"temp_mean"</span><span class="op">)</span>,</span>
+<span>        <span class="st">"line"</span>,</span>
+<span>        <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>        id <span class="op">=</span> <span class="st">"Tokyo"</span>,</span>
+<span>        name <span class="op">=</span> <span class="st">"Tokyo"</span>,</span>
+<span>        color <span class="op">=</span> <span class="va">palette</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
 <span>      <span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span>  <span class="va">proxy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/highchartProxy.html">highchartProxy</a></span><span class="op">(</span><span class="st">"passengers"</span>, <span class="va">session</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">next_month</span>, <span class="op">{</span></span>
-<span>    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">initial</span> <span class="op">+</span> <span class="va">input</span><span class="op">$</span><span class="va">next_month</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html" class="external-link">req</a></span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">passengers</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="../reference/hcpxy_add_point.html">hcpxy_add_point</a></span><span class="op">(</span><span class="va">proxy</span>, id <span class="op">=</span> <span class="st">"traffic"</span>, point <span class="op">=</span> <span class="va">passengers</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">weather_proxy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/highchartProxy.html">highchartProxy</a></span><span class="op">(</span><span class="st">"weather"</span>, <span class="va">session</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">tokyo</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">tokyo</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_add_series.html">hcpxy_add_series</a></span><span class="op">(</span></span>
+<span>          <span class="va">weather_proxy</span>,</span>
+<span>          <span class="fu">city_months</span><span class="op">(</span><span class="st">"Tokyo"</span>, <span class="va">input</span><span class="op">$</span><span class="va">measure</span><span class="op">)</span>,</span>
+<span>          <span class="st">"line"</span>,</span>
+<span>          <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>          id <span class="op">=</span> <span class="st">"Tokyo"</span>,</span>
+<span>          name <span class="op">=</span> <span class="st">"Tokyo"</span>,</span>
+<span>          color <span class="op">=</span> <span class="va">palette</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_remove_series.html">hcpxy_remove_series</a></span><span class="op">(</span><span class="va">weather_proxy</span>, <span class="st">"Tokyo"</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">measure</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="va">cities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Santiago"</span>, <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">tokyo</span><span class="op">)</span> <span class="st">"Tokyo"</span><span class="op">)</span></span>
+<span>      <span class="kw">for</span> <span class="op">(</span><span class="va">city</span> <span class="kw">in</span> <span class="va">cities</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_set_data.html">hcpxy_set_data</a></span><span class="op">(</span></span>
+<span>          <span class="va">weather_proxy</span>,</span>
+<span>          <span class="st">"line"</span>,</span>
+<span>          <span class="fu">city_months</span><span class="op">(</span><span class="va">city</span>, <span class="va">input</span><span class="op">$</span><span class="va">measure</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>          id <span class="op">=</span> <span class="va">city</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>      <span class="fu"><a href="../reference/hcpxy_redraw.html">hcpxy_redraw</a></span><span class="op">(</span><span class="va">weather_proxy</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">polar</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="fu"><a href="../reference/hcpxy_update.html">hcpxy_update</a></span><span class="op">(</span><span class="va">weather_proxy</span>, chart <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>polar <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">polar</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">passengers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/renderHighchart.html">renderHighchart</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span></span>
+<span>      <span class="va">traffic</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">initial</span><span class="op">)</span>, <span class="op">]</span>,</span>
+<span>      <span class="st">"line"</span>,</span>
+<span>      <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="st">"traffic"</span>,</span>
+<span>      name <span class="op">=</span> <span class="st">"Observed"</span>,</span>
+<span>      showInLegend <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_title.html">hc_title</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"International air passengers"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_xAxis.html">hc_xAxis</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"datetime"</span>, title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_yAxis.html">hc_yAxis</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Passengers (thousands)"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_tooltip.html">hc_tooltip</a></span><span class="op">(</span>xDateFormat <span class="op">=</span> <span class="st">"%B %Y"</span>, valueDecimals <span class="op">=</span> <span class="fl">0</span>, valueSuffix <span class="op">=</span> <span class="st">"k"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">passengers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/highchartProxy.html">highchartProxy</a></span><span class="op">(</span><span class="st">"passengers"</span>, <span class="va">session</span><span class="op">)</span></span>
+<span>  <span class="va">last</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveVal.html" class="external-link">reactiveVal</a></span><span class="op">(</span><span class="va">initial</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">add</span>, <span class="op">{</span></span>
+<span>    <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1L</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html" class="external-link">req</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&lt;=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/hcpxy_add_point.html">hcpxy_add_point</a></span><span class="op">(</span></span>
+<span>      <span class="va">passengers</span>,</span>
+<span>      <span class="st">"traffic"</span>,</span>
+<span>      point <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dates</span><span class="op">[</span><span class="va">n</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">counts</span><span class="op">[</span><span class="va">n</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">remove</span>, <span class="op">{</span></span>
+<span>    <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/req.html" class="external-link">req</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">12L</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/hcpxy_remove_point.html">hcpxy_remove_point</a></span><span class="op">(</span><span class="va">passengers</span>, <span class="st">"traffic"</span>, i <span class="op">=</span> <span class="va">n</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
 <span>    <span class="va">input</span><span class="op">$</span><span class="va">type</span>,</span>
 <span>    <span class="op">{</span></span>
-<span>      <span class="fu"><a href="../reference/hcpxy_update_series.html">hcpxy_update_series</a></span><span class="op">(</span><span class="va">proxy</span>, id <span class="op">=</span> <span class="st">"traffic"</span>, type <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="../reference/hcpxy_update_series.html">hcpxy_update_series</a></span><span class="op">(</span><span class="va">passengers</span>, <span class="st">"traffic"</span>, type <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">type</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">forecast</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">forecast</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_add_series.html">hcpxy_add_series</a></span><span class="op">(</span></span>
+<span>          <span class="va">passengers</span>,</span>
+<span>          <span class="fu">outlook</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>          <span class="st">"line"</span>,</span>
+<span>          <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>          id <span class="op">=</span> <span class="st">"outlook"</span>,</span>
+<span>          name <span class="op">=</span> <span class="st">"Seasonal forecast"</span>,</span>
+<span>          linkedTo <span class="op">=</span> <span class="st">"traffic"</span>,</span>
+<span>          dashStyle <span class="op">=</span> <span class="st">"ShortDash"</span>,</span>
+<span>          color <span class="op">=</span> <span class="va">palette</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>          showInLegend <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_remove_series.html">hcpxy_remove_series</a></span><span class="op">(</span><span class="va">passengers</span>, <span class="st">"outlook"</span><span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateActionButton.html" class="external-link">updateActionButton</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"add"</span>, disabled <span class="op">=</span> <span class="va">n</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateActionButton.html" class="external-link">updateActionButton</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"remove"</span>, disabled <span class="op">=</span> <span class="va">n</span> <span class="op">==</span> <span class="fl">12L</span><span class="op">)</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">forecast</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_set_data.html">hcpxy_set_data</a></span><span class="op">(</span></span>
+<span>          <span class="va">passengers</span>,</span>
+<span>          <span class="st">"line"</span>,</span>
+<span>          <span class="fu">outlook</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>          id <span class="op">=</span> <span class="st">"outlook"</span>,</span>
+<span>          redraw <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">students</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/renderHighchart.html">renderHighchart</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span></span>
+<span>      <span class="va">eyes</span>,</span>
+<span>      <span class="st">"item"</span>,</span>
+<span>      <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">Eye</span>, y <span class="op">=</span> <span class="va">students</span><span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="st">"eyes"</span>,</span>
+<span>      name <span class="op">=</span> <span class="st">"Students"</span>,</span>
+<span>      showInLegend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>      dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>enabled <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_title.html">hc_title</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Eye color of 592 students"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_subtitle.html">hc_subtitle</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"Each dot represents one student."</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_colors.html">hc_colors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#80583B"</span>, <span class="st">"#508CC8"</span>, <span class="st">"#AE965E"</span>, <span class="st">"#57936A"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_legend.html">hc_legend</a></span><span class="op">(</span>labelFormat <span class="op">=</span> <span class="st">"{name} · {y}"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/hc_tooltip.html">hc_tooltip</a></span><span class="op">(</span>pointFormat <span class="op">=</span> <span class="st">"{point.y} students"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">shape</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="va">angles</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span></span>
+<span>        <span class="va">input</span><span class="op">$</span><span class="va">shape</span>,</span>
+<span>        Grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>        Semicircle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="fl">90</span><span class="op">)</span>,</span>
+<span>        Circle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>      <span class="va">semicircle</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">shape</span> <span class="op">==</span> <span class="st">"Semicircle"</span></span>
+<span>      <span class="fu"><a href="../reference/highchartProxy.html">highchartProxy</a></span><span class="op">(</span><span class="st">"students"</span>, <span class="va">session</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="../reference/hcpxy_update_series.html">hcpxy_update_series</a></span><span class="op">(</span></span>
+<span>          <span class="st">"eyes"</span>,</span>
+<span>          startAngle <span class="op">=</span> <span class="va">angles</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>          endAngle <span class="op">=</span> <span class="va">angles</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>          center <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"50%"</span>, <span class="kw">if</span> <span class="op">(</span><span class="va">semicircle</span><span class="op">)</span> <span class="st">"88%"</span> <span class="kw">else</span> <span class="st">"50%"</span><span class="op">)</span>,</span>
+<span>          size <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">semicircle</span><span class="op">)</span> <span class="st">"160%"</span> <span class="kw">else</span> <span class="st">"90%"</span></span>
+<span>        <span class="op">)</span></span>
 <span>    <span class="op">}</span>,</span>
 <span>    ignoreInit <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
@@ -486,8 +744,7 @@ the app directory:</p>
 <code class="sourceCode R"><span><span class="fu">pkgload</span><span class="fu">::</span><span class="fu"><a href="https://pkgload.r-lib.org/reference/load_all.html" class="external-link">load_all</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html" class="external-link">runApp</a></span><span class="op">(</span><span class="st">"pkgdown/shiny/events"</span><span class="op">)</span></span></code></pre></div>
 <p>The <a href="https://github.com/jbkunst/highcharter-shiny" class="external-link">original
-Shiny examples</a> include the full <a href="https://github.com/jbkunst/highcharter-shiny/tree/master/02-proxy-functions" class="external-link">proxy
-playground</a> and a <a href="https://github.com/jbkunst/highcharter-shiny/tree/master/08-idb-viz" class="external-link">population
+Shiny examples</a> also include a <a href="https://github.com/jbkunst/highcharter-shiny/tree/master/08-idb-viz" class="external-link">population
 explorer with linked views</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
