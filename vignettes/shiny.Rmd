@@ -55,14 +55,22 @@ demo("basic", "the iris explorer")
 
 ## Proxies
 
-Start with twelve months of air passenger counts. **Add a month** appends one
-observation with `hcpxy_add_point()`. **Columns** changes the series type with
-`hcpxy_update_series()`. Switch back to **Line** and your added months are
-still there. Both controls target the series ID `traffic` through
-`highchartProxy("passengers", session)`.
+The [original proxy playground](https://github.com/jbkunst/highcharter-shiny/tree/master/02-proxy-functions)
+inspired these three examples. Each tab creates its chart once, then uses
+`highchartProxy()` to change the chart already on screen.
+
+* **Series.** Compare monthly temperatures in Santiago and Tokyo. Toggle Tokyo
+  to add or remove its series. Switch from daily means to daily highs to
+  replace the data by series ID with `hcpxy_set_data()`. A single
+  `hcpxy_redraw()` displays both changes. Try the same comparison on polar axes.
+* **Points.** Add or remove a month of observed air traffic. Turn on the
+  dashed forecast to repeat the last twelve observations one year ahead.
+  The forecast moves with the observations, even when you switch to columns.
+* **Layout.** Rearrange the same 592 students into a grid, semicircle or circle.
+  `hcpxy_update_series()` changes the item layout while preserving the counts.
 
 ```{r proxy, echo=FALSE}
-demo("proxy", "the passenger chart")
+demo("proxy", "the proxy playground", height = 510)
 ```
 
 To switch from weekly to daily Stock prices when the visible date range narrows, [run the Stock proxy app](../live/stock/index.html) or
@@ -105,5 +113,4 @@ shiny::runApp("pkgdown/shiny/events")
 ```
 
 The [original Shiny examples](https://github.com/jbkunst/highcharter-shiny)
-include the full [proxy playground](https://github.com/jbkunst/highcharter-shiny/tree/master/02-proxy-functions)
-and a [population explorer with linked views](https://github.com/jbkunst/highcharter-shiny/tree/master/08-idb-viz).
+also include a [population explorer with linked views](https://github.com/jbkunst/highcharter-shiny/tree/master/08-idb-viz).

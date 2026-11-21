@@ -228,3 +228,7 @@ main h3, main h4, main h5 { font-weight: 400; }
 @container (max-width: 575.98px) {
   .shiny-app-linked { height: 720px; }
 }
+
+@container (max-width: 42rem) {
+  .shiny-app-proxy { height: 630px; }
+}

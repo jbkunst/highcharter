@@ -46,8 +46,8 @@ tags$div(
   ),
   card(
     "proxy",
-    "Air passengers",
-    "Add a month and switch between a line and columns using a Shiny proxy."
+    "Proxy playground",
+    "Compare cities, extend a passenger forecast, or rearrange an item chart using Shiny proxies."
   ),
   card(
     "events",
