@@ -26,6 +26,33 @@ test_that("empty series and point selections send no proxy messages", {
   expect_length(capture$messages(), 0)
 })
 
+test_that("prepared point colors survive chart creation and proxy updates", {
+  rows <- data.frame(
+    x = 1:2,
+    y = 3:4,
+    id = c("a", "b"),
+    color = c("#377EB8", "red")
+  )
+  rows$custom <- list(list(label = "First"), list(label = "Second"))
+  points <- list_parse(rows)
+  chart <- hchart(rows, "line")
+  added <- hc_add_series(highchart(), rows, "line")
+  expect_identical(chart$x$hc_opts$series[[1]]$data, points)
+  expect_identical(added$x$hc_opts$series[[1]]$data, points)
+
+  capture <- local_proxy_session()
+  highchartProxy("chart", capture$session) |>
+    hcpxy_add_series(rows, type = "line") |>
+    hcpxy_set_data(type = "line", data = rows)
+  messages <- capture$messages()
+  expect_identical(messages[[1]]$message$series$data, points)
+  expect_identical(messages[[2]]$message$data, points)
+
+  mapped <- hchart(rows, "line", hcaes(x, y))
+  names(rows)[names(rows) == "color"] <- "colorv"
+  expect_identical(mapped$x$hc_opts$series[[1]]$data, list_parse(rows))
+})
+
 test_that("hcpxy_set_data can target a series by ID", {
   capture <- local_proxy_session()
   proxy <- highchartProxy("stock", capture$session)

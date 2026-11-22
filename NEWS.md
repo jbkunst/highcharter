@@ -4,6 +4,12 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Breaking changes
 
+* With an empty mapping, `hchart()` and `hcpxy_set_data()` now pass a data
+  frame's `color` column directly to Highcharts as the point color, matching
+  `hc_add_series()`. In tooltips for these points, use `{point.color}` in
+  place of `{point.colorv}`. With a mapping such as `hcaes(x, y)`, an
+  unmapped `color` column remains available as `{point.colorv}`.
+
 * Treemaps and sunbursts use one color from the chart theme per first-level
   group. Children inherit their parent's color. `data_to_hierarchical()`
   now omits the node's `color` field by default. To fix colors explicitly,

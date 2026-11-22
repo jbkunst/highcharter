@@ -743,7 +743,7 @@ data_to_series <- function(data, mapping, type, ...) {
         color = highcharter::colorize(.data$color)
       )
     }
-  } else if (has_name(data, "color")) {
+  } else if (length(mapping) > 0L && has_name(data, "color")) {
     data <- rename(data, colorv = "color")
   }
 
