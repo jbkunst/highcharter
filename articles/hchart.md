@@ -19,11 +19,8 @@ penguin species.
 library(highcharter)
 library(dplyr)
 
-data(penguins, package = "palmerpenguins")
-data(diamonds, economics_long, package = "ggplot2")
-
 hchart(
-  penguins,
+  palmerpenguins::penguins,
   "scatter",
   hcaes(x = body_mass_g, y = flipper_length_mm, group = species)
 )
@@ -31,7 +28,7 @@ hchart(
 
 ``` r
 
-penguins2 <- penguins |>
+penguins2 <- palmerpenguins::penguins |>
   count(species, island) |>
   glimpse()
 ```
@@ -51,7 +48,7 @@ Check automatically if the x column is date class:
 
 ``` r
 
-economics_long2 <- economics_long |>
+economics_long2 <- ggplot2::economics_long |>
   filter(variable %in% c("pop", "uempmed", "unemploy"))
 
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
@@ -97,8 +94,7 @@ hchart(hist(x, breaks = 30, plot = FALSE), name = "Gamma sample")
 
 ``` r
 
-x <- diamonds$cut
-hchart(x, type = "column")
+hchart(ggplot2::diamonds$cut, type = "column")
 ```
 
 ### Frequency tables
@@ -119,8 +115,6 @@ The `volcano` matrix has 87 rows and 61 columns. Both views use the same
 distance for one step across a column or down a row.
 
 ``` r
-
-data(volcano)
 
 volcano_layout <- function(chart) {
   chart |>
@@ -397,11 +391,7 @@ Survival models can be charted.
 
 library(survival)
 
-data(cancer, package = "survival")
-
-lung <- dplyr::mutate(cancer, sex = ifelse(sex == 1, "Male", "Female"))
-
-fit <- survfit(Surv(time, status) ~ sex, data = cancer)
+fit <- survfit(Surv(time, status) ~ sex, data = survival::cancer)
 
 hchart(fit, ranges = TRUE)
 ```

@@ -19,8 +19,7 @@ dataset.
 
 ``` r
 
-library(palmerpenguins)
-
+penguins <- palmerpenguins::penguins
 head(penguins)
 ```
 

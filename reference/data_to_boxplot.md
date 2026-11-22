@@ -46,9 +46,6 @@ data_to_boxplot(
 ## Examples
 
 ``` r
-
-data(pokemon)
-
 dat <- data_to_boxplot(pokemon, height)
 
 highchart() |>

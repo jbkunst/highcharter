@@ -26,9 +26,7 @@ is selected, you can print the equation on the legend.
 
 library(highcharter)
 
-data(penguins, package = "palmerpenguins")
-
-penguins <- penguins[complete.cases(penguins), ]
+penguins <- na.omit(palmerpenguins::penguins)
 
 hchart(
   penguins,
@@ -79,9 +77,7 @@ Let’s try an example:
 library(purrr) # map function to make grouped categories argument
 library(dplyr) # for select function
 
-data(mpg, package = "ggplot2")
-
-mpgg <- mpg |>
+mpgg <- ggplot2::mpg |>
   filter(!manufacturer %in% c("volkswagen", "chevrolet")) |>
   filter(class %in% c("compact", "midsize", "subcompact")) |>
   count(class, manufacturer, name = "count") |>
@@ -241,9 +237,7 @@ Press Play or drag the year slider; the chart begins in 1952.
 
 library(dplyr)
 
-data(gapminder, package = "gapminder")
-
-history <- gapminder |>
+history <- gapminder::gapminder |>
   group_by(continent, year) |>
   summarise(lifeExp = weighted.mean(lifeExp, pop), .groups = "drop")
 

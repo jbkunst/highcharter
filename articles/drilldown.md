@@ -12,9 +12,7 @@ library(forcats)
 library(purrr)
 library(stringr)
 
-data(gapminder, package = "gapminder")
-
-gapminder2007 <- gapminder |>
+gapminder2007 <- gapminder::gapminder |>
   filter(year == max(year)) |>
   select(-year) |>
   mutate(pop = pop / 1e6) |>

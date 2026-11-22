@@ -16,8 +16,7 @@ frame.
 
 ``` r
 
-data("mpg", "diamonds", "economics_long", package = "ggplot2")
-head(mpg)
+head(ggplot2::mpg)
 ```
 
     ## # A tibble: 6 × 11
@@ -44,7 +43,7 @@ So, a basic example would be:
 
 ``` r
 
-hchart(mpg, "scatter", hcaes(x = displ, y = cty, group = year))
+hchart(ggplot2::mpg, "scatter", hcaes(x = displ, y = cty, group = year))
 ```
 
 ## Map positions and values
@@ -56,10 +55,8 @@ a bubble size, or `color` to color individual points. A heatmap uses
 
 ``` r
 
-data(economics_long, package = "ggplot2")
-
 economics_long2 <- dplyr::filter(
-  economics_long,
+  ggplot2::economics_long,
   variable %in% c("pop", "uempmed", "unemploy")
 )
 
@@ -95,7 +92,7 @@ Now, a heatmap and a treemap.
 
 library(dplyr)
 
-dfdiam <- diamonds |>
+dfdiam <- ggplot2::diamonds |>
   group_by(cut, clarity) |>
   summarize(price = median(price))
 
@@ -114,7 +111,7 @@ hchart(
 
 ``` r
 
-mpgman <- mpg |>
+mpgman <- ggplot2::mpg |>
   group_by(manufacturer) |>
   summarise(n = n(), unique = length(unique(model))) |>
   arrange(-n, -unique)
@@ -131,7 +128,7 @@ of properties.
 
 ``` r
 
-mpgman2 <- count(mpg, manufacturer, year)
+mpgman2 <- count(ggplot2::mpg, manufacturer, year)
 
 hchart(
   mpgman2,

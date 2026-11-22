@@ -8,11 +8,8 @@ let us start start with a simple example using `hchart` function.
 
 library(highcharter)
 
-# install.packages("palmerpenguins")
-data(penguins, package = "palmerpenguins")
-
 hchart(
-  penguins,
+  palmerpenguins::penguins,
   "scatter",
   hcaes(x = flipper_length_mm, y = bill_length_mm, group = species)
 )
