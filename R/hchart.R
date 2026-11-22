@@ -7,6 +7,7 @@
 #' Run \code{methods(hchart)} to see what objects are supported.
 #' Numeric matrices use a heatmap by default. Set `type = "tilemap"` for
 #' hexagonal tiles or `type = "contour"` for contour lines.
+#' Empirical distributions from [stats::ecdf()] use a step line.
 #' One-way tables use columns in category order. Two-way tables use the
 #' matrix heatmap. Use `margin.table()` to choose dimensions of a larger table.
 #'
@@ -108,6 +109,26 @@ hchart.numeric <- function(object, breaks = "FD", ...) {
   h <- hist(object, plot = FALSE, breaks = breaks)
 
   hchart.histogram(h, ...)
+}
+
+#' @export
+hchart.ecdf <- function(object, type = "line", ..., step = "left") {
+  x <- stats::knots(object)
+  x <- x[is.finite(x)]
+  if (!length(x)) {
+    stop(
+      "An empirical distribution needs a finite x value to plot.",
+      call. = FALSE
+    )
+  }
+  # Extend both tails so the first and last jumps are visible.
+  bounds <- range(x)
+  pad <- if (length(x) == 1L) max(1, abs(x)) / 20 else diff(bounds / 20)
+  x <- c(bounds[1L] - pad, x, bounds[2L] + pad)
+  x <- unique(x[is.finite(x)])
+
+  hchart(data.frame(x = x, y = object(x)), type, step = step, ...) |>
+    hc_yAxis(min = 0, max = 1, title = list(text = "F(x)"))
 }
 
 #' @export

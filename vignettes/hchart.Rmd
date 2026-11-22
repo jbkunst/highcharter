@@ -82,6 +82,15 @@ hchart(table(Cylinders = mtcars$cyl, Gears = mtcars$gear))
 hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
 ```
 
+## Empirical cumulative distributions
+
+At each speed, the step shows the fraction of cars traveling at or below it.
+Repeated speeds contribute to a single jump.
+
+```{r hchart-ecdf}
+hchart(ecdf(cars$speed), name = "Cars")
+```
+
 ## Precomputed histograms
 
 Pass a histogram object when you want R to choose the breaks before charting.

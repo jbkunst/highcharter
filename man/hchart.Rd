@@ -38,6 +38,7 @@ generic that other classes and packages can extend.
 Run \code{methods(hchart)} to see what objects are supported.
 Numeric matrices use a heatmap by default. Set \code{type = "tilemap"} for
 hexagonal tiles or \code{type = "contour"} for contour lines.
+Empirical distributions from \code{\link[stats:ecdf]{stats::ecdf()}} use a step line.
 One-way tables use columns in category order. Two-way tables use the
 matrix heatmap. Use \code{margin.table()} to choose dimensions of a larger table.
 

@@ -287,6 +287,31 @@ test_that("one-way tables keep their category order, zeros and supplied values",
   expect_equal(missing$series[[1]]$data, c(1, 1))
 })
 
+test_that("empirical distributions jump at the observed values", {
+  fn <- ecdf(c(4, 1, 2, NA, 2))
+  opts <- hchart(fn, color = "navy", name = "Sample", lineWidth = 3)$x$hc_opts
+  series <- opts$series[[1]]
+  expect_identical(series$type, "line")
+  expect_identical(series$step, "left")
+  expect_identical(series$name, "Sample")
+  expect_identical(series$color, "navy")
+  expect_equal(series$lineWidth, 3)
+  x <- vapply(series$data, "[[", numeric(1), "x")
+  y <- vapply(series$data, "[[", numeric(1), "y")
+  expect_equal(x[2:4], c(1, 2, 4))
+  expect_equal(y, c(0, 0.25, 0.75, 1, 1))
+  expect_equal(y, fn(x))
+
+  for (sample in list(c(0, 0), c(-Inf, 0, Inf))) {
+    fn <- ecdf(sample)
+    points <- hchart(fn)$x$hc_opts$series[[1]]$data
+    x <- vapply(points, "[[", numeric(1), "x")
+    expect_true(all(is.finite(x)) && x[1] < 0 && x[3] > 0)
+    expect_equal(vapply(points, "[[", numeric(1), "y"), fn(x))
+  }
+  expect_error(hchart(ecdf(Inf)), "finite x")
+})
+
 test_that("two-way tables use the matrix grid and larger tables require a margin", {
   tab <- xtabs(~ cyl + gear, data = mtcars)
   hc <- hchart(tab, type = "tilemap", name = "Cars")
