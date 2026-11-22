@@ -20,15 +20,11 @@ two columns produce an empty tibble with the same columns.
 Count links between consecutive columns for a Sankey chart
 }
 \examples{
-\dontrun{
-library(dplyr)
-data(diamonds, package = "ggplot2")
+\dontshow{if (requireNamespace("ggplot2", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+stages <- dplyr::select(ggplot2::diamonds, cut, color, clarity)
+links <- data_to_sankey(stages)
+head(links)
 
-diamonds2 <- select(diamonds, cut, color, clarity)
-
-data_to_sankey(diamonds2)
-
-hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
-}
-
+hchart(links, "sankey", name = "Diamonds")
+\dontshow{\}) # examplesIf}
 }

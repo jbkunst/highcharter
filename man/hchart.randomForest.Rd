@@ -20,9 +20,9 @@ Regression forests show mean squared error. If the fit stores test errors,
 dashed lines show the corresponding test series.
 }
 \examples{
-if (requireNamespace("randomForest", quietly = TRUE)) {
-  set.seed(42)
-  forest <- randomForest::randomForest(Species ~ ., iris, ntree = 150)
-  hchart(forest)
-}
+\dontshow{if (requireNamespace("randomForest", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+set.seed(42)
+forest <- randomForest::randomForest(Species ~ ., iris, ntree = 150)
+hchart(forest)
+\dontshow{\}) # examplesIf}
 }

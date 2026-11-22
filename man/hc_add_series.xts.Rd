@@ -28,14 +28,14 @@ incomplete or ordinary data, each column produces its own line. Select one
 instrument before passing a data set with ambiguous OHLC columns.
 }
 \examples{
-if (requireNamespace("xts", quietly = TRUE)) {
-  dates <- as.Date("2025-01-01") + 0:2
-  quotes <- xts::xts(cbind(A = c(42, 45, 44), B = c(30, NA, 32)), dates)
-  hchart(quotes, id = c("a", "b"))
-
-  if (requireNamespace("quantmod", quietly = TRUE)) {
-    prices <- xts::xts(cbind(Open = 4:6, High = 6:8, Low = 3:5, Close = 5:7), dates)
-    highchart(type = "stock") |> hc_add_series(prices, name = "Price")
-  }
-}
+\dontshow{if (requireNamespace("xts", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+dates <- as.Date("2025-01-01") + 0:2
+quotes <- xts::xts(cbind(A = c(42, 45, 44), B = c(30, NA, 32)), dates)
+hchart(quotes, id = c("a", "b"))
+\dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("xts", quietly = TRUE) && requireNamespace("quantmod", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+dates <- as.Date("2025-01-01") + 0:2
+prices <- xts::xts(cbind(Open = 4:6, High = 6:8, Low = 3:5, Close = 5:7), dates)
+highchart(type = "stock") |> hc_add_series(prices, name = "Price")
+\dontshow{\}) # examplesIf}
 }

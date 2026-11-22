@@ -31,8 +31,9 @@ edge counts as one step. The optional stem above the root is excluded.
 \examples{
 fit <- stats::hclust(stats::dist(scale(USArrests[1:10, ])))
 hchart(fit)
-if (requireNamespace("ape", quietly = TRUE)) {
-  tree <- ape::read.tree(text = "((A:1,B:2):1,(C:2,D:1):2);")
-  hchart(tree)
-}
+
+\dontshow{if (requireNamespace("ape", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+tree <- ape::read.tree(text = "((A:1,B:2):1,(C:2,D:1):2);")
+hchart(tree)
+\dontshow{\}) # examplesIf}
 }

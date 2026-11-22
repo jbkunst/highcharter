@@ -6,12 +6,10 @@
 #' @param object A supervised `randomForest` fit with an error history.
 #' @param ... Highcharts line series options.
 #' @return A highchart htmlwidget.
-#' @examples
-#' if (requireNamespace("randomForest", quietly = TRUE)) {
-#'   set.seed(42)
-#'   forest <- randomForest::randomForest(Species ~ ., iris, ntree = 150)
-#'   hchart(forest)
-#' }
+#' @examplesIf requireNamespace("randomForest", quietly = TRUE)
+#' set.seed(42)
+#' forest <- randomForest::randomForest(Species ~ ., iris, ntree = 150)
+#' hchart(forest)
 #' @export
 hchart.randomForest <- function(object, ...) {
   classification <- identical(object$type, "classification")
@@ -82,12 +80,10 @@ hchart.randomForest <- function(object, ...) {
 #' @param object A `cv.glmnet` fit.
 #' @param ... Highcharts scatter series options.
 #' @return A highchart htmlwidget.
-#' @examples
-#' if (requireNamespace("glmnet", quietly = TRUE)) {
-#'   x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
-#'   fit <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = rep_len(1:5, nrow(x)))
-#'   hchart(fit)
-#' }
+#' @examplesIf requireNamespace("glmnet", quietly = TRUE)
+#' x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
+#' fit <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = rep_len(1:5, nrow(x)))
+#' hchart(fit)
 #' @export
 hchart.cv.glmnet <- function(object, ...) {
   if (inherits(object, "cv.relaxed")) {
@@ -170,15 +166,13 @@ hchart.cv.glmnet <- function(object, ...) {
 #' @param tree A positive tree index, starting at one.
 #' @param ... Highcharts treegraph series options.
 #' @return A highchart htmlwidget.
-#' @examples
-#' if (requireNamespace("xgboost", quietly = TRUE)) {
-#'   d <- xgboost::xgb.DMatrix(as.matrix(iris[1:4]), label = iris$Petal.Width)
-#'   fit <- xgboost::xgb.train(
-#'     list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
-#'     d, nrounds = 3L, verbose = 0
-#'   )
-#'   hchart(fit, tree = 2)
-#' }
+#' @examplesIf rlang::is_installed("xgboost", version = "3.1.0")
+#' d <- xgboost::xgb.DMatrix(as.matrix(iris[1:4]), label = iris$Petal.Width)
+#' fit <- xgboost::xgb.train(
+#'   list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
+#'   d, nrounds = 3L, verbose = 0
+#' )
+#' hchart(fit, tree = 2)
 #' @export
 hchart.xgb.Booster <- function(object, ..., tree = 1L) {
   rlang::check_installed(

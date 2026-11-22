@@ -72,17 +72,16 @@ hc_add_series.ts <- function(hc, data, ...) {
 #' @param name Optional series name, or one name per column for multiple lines.
 #' @param ... Highcharts series options. To set `id` for multiple lines, supply
 #'   a different ID for each column. Other options apply to every line.
-#' @examples
-#' if (requireNamespace("xts", quietly = TRUE)) {
-#'   dates <- as.Date("2025-01-01") + 0:2
-#'   quotes <- xts::xts(cbind(A = c(42, 45, 44), B = c(30, NA, 32)), dates)
-#'   hchart(quotes, id = c("a", "b"))
+#' @examplesIf requireNamespace("xts", quietly = TRUE)
+#' dates <- as.Date("2025-01-01") + 0:2
+#' quotes <- xts::xts(cbind(A = c(42, 45, 44), B = c(30, NA, 32)), dates)
+#' hchart(quotes, id = c("a", "b"))
 #'
-#'   if (requireNamespace("quantmod", quietly = TRUE)) {
-#'     prices <- xts::xts(cbind(Open = 4:6, High = 6:8, Low = 3:5, Close = 5:7), dates)
-#'     highchart(type = "stock") |> hc_add_series(prices, name = "Price")
-#'   }
-#' }
+#' @examplesIf requireNamespace("xts", quietly = TRUE) && requireNamespace("quantmod", quietly = TRUE)
+#' dates <- as.Date("2025-01-01") + 0:2
+#' prices <- xts::xts(cbind(Open = 4:6, High = 6:8, Low = 3:5, Close = 5:7), dates)
+#' highchart(type = "stock") |> hc_add_series(prices, name = "Price")
+#'
 #' @export
 hc_add_series.xts <- function(hc, data, ..., name = NULL) {
   rlang::check_installed("xts", reason = "to chart an xts object.")

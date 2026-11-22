@@ -17,14 +17,16 @@
 #' @examples
 #' hc_themes()
 #' highchart(theme = hc_theme("ft")) |> hc_add_series(data = c(3, 1, 4))
-#' team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"))
-#' hc_theme(chart = list(style = list(fontFamily = "IBM Plex Sans")))
-#' \dontrun{
-#' hc_theme(chart = list(style = list(fontFamily = sass::font_google("Noto Sans"))))
-#' }
+#' team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"),
+#'   chart = list(style = list(fontFamily = "IBM Plex Sans")))
 #' old <- hc_set_theme(team)
 #' highchart() |> hc_add_series(data = c(3, 1, 4))
 #' options(old)
+#'
+#' @examplesIf requireNamespace("sass", quietly = TRUE)
+#' font <- sass::font_google("Noto Sans", local = FALSE)
+#' highcharts_demo() |>
+#'   hc_add_theme(hc_theme(chart = list(style = list(fontFamily = font))))
 #' @export
 hc_theme <- function(preset = NULL, ...) {
   base <- if (is.null(preset)) list() else .read_theme_preset(preset)
@@ -140,7 +142,8 @@ hc_add_theme <- function(hc, hc_thm) {
 #' @param ... Themes built with [hc_theme()]. Later arguments take precedence.
 #' @return An `hc_theme` object.
 #' @examples
-#' hc_theme_merge(hc_theme("ft"), hc_theme(chart = list(backgroundColor = "white")))
+#' theme <- hc_theme_merge(hc_theme("ft"), hc_theme(chart = list(backgroundColor = "white")))
+#' highcharts_demo() |> hc_add_theme(theme)
 #' @export
 hc_theme_merge <- function(...) {
   themes <- list(...)

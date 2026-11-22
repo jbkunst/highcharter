@@ -30,6 +30,7 @@ advanced annotations and technical indicators. Use \code{highchart(type = "stock
 for a Stock chart without these additional interface assets.
 }
 \examples{
+\dontshow{if (requireNamespace("xts", quietly = TRUE) && requireNamespace("quantmod", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 data(sample_matrix, package = "xts")
 prices <- xts::as.xts(sample_matrix)
 highchartstock(width = "100\%") |>
@@ -37,6 +38,7 @@ highchartstock(width = "100\%") |>
   hc_add_series(type = "sma", linkedTo = "price", name = "5-day mean",
                 params = list(period = 5)) |>
   hc_title(text = "Explore prices with Stock Tools")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=highchart]{highchart()}}

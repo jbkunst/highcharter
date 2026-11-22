@@ -11,10 +11,10 @@
 #' @examples
 #' fit <- stats::hclust(stats::dist(scale(USArrests[1:10, ])))
 #' hchart(fit)
-#' if (requireNamespace("ape", quietly = TRUE)) {
-#'   tree <- ape::read.tree(text = "((A:1,B:2):1,(C:2,D:1):2);")
-#'   hchart(tree)
-#' }
+#'
+#' @examplesIf requireNamespace("ape", quietly = TRUE)
+#' tree <- ape::read.tree(text = "((A:1,B:2):1,(C:2,D:1):2);")
+#' hchart(tree)
 #' @export
 hchart.hclust <- function(object, ...) {
   hchart(stats::as.dendrogram(object), ...)

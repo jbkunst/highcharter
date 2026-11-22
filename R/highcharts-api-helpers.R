@@ -165,12 +165,10 @@ validate_args <- function(name, options) {
 #' @param height Height of the tooltip chart in pixels.
 #'
 #' @importFrom htmlwidgets JS
-#' @examples
-#'
-#' require(dplyr)
-#' require(purrr)
-#' if (requireNamespace("gapminder", quietly = TRUE)) {
-#' data(gapminder, package = "gapminder")
+#' @examplesIf requireNamespace("gapminder", quietly = TRUE)
+#' library(dplyr)
+#' library(purrr)
+#' gapminder <- gapminder::gapminder
 #'
 #' gp <- gapminder |>
 #'   arrange(desc(year)) |>
@@ -184,7 +182,7 @@ validate_args <- function(name, options) {
 #'   ) |>
 #'   rename(ttdata = data)
 #'
-#' gptot <- left_join(gp, gp2)
+#' gptot <- left_join(gp, gp2, by = "country")
 #'
 #' hc <- hchart(
 #'   gptot,
@@ -233,9 +231,6 @@ validate_args <- function(name, options) {
 #'       )
 #'     )
 #'   )
-#'
-#'
-#' }
 #' @export
 tooltip_chart <- function(
   accesor = NULL,
@@ -316,13 +311,14 @@ tooltip_chart <- function(
 #'
 #' @examples
 #'
-#' x <- c("Income:", "Genre", "Runtime")
-#' y <- c(
-#'   "$ {point.y}", "{point.series.options.extra.genre}",
-#'   "{point.series.options.extra.runtime}"
-#' )
-#'
-#' tooltip_table(x, y)
+#' hchart(mtcars, "scatter", hcaes(wt, mpg, name = rownames(mtcars))) |>
+#'   hc_tooltip(
+#'     useHTML = TRUE,
+#'     pointFormat = tooltip_table(
+#'       c("Model", "Weight (1,000 lb)", "Miles per gallon"),
+#'       c("{point.name}", "{point.x:.2f}", "{point.y:.1f}")
+#'     )
+#'   )
 #' @importFrom purrr map2
 #' @importFrom htmltools tags tagList
 #' @export

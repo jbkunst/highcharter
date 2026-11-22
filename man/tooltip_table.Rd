@@ -24,11 +24,12 @@ parameter in \code{hc_tooltip}
 }
 \examples{
 
-x <- c("Income:", "Genre", "Runtime")
-y <- c(
-  "$ {point.y}", "{point.series.options.extra.genre}",
-  "{point.series.options.extra.runtime}"
-)
-
-tooltip_table(x, y)
+hchart(mtcars, "scatter", hcaes(wt, mpg, name = rownames(mtcars))) |>
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = tooltip_table(
+      c("Model", "Weight (1,000 lb)", "Miles per gallon"),
+      c("{point.name}", "{point.x:.2f}", "{point.y:.1f}")
+    )
+  )
 }

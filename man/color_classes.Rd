@@ -16,5 +16,6 @@ Function to create \code{dataClasses} argument in \code{hc_colorAxis}
 }
 \examples{
 
-color_classes(c(0, 10, 20, 50))
+classes <- color_classes(c(90, 120, 150, 180, 200))
+hchart(volcano) |> hc_colorAxis(dataClasses = classes)
 }

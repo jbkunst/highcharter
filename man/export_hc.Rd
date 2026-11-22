@@ -40,10 +40,10 @@ hc <- highcharts_demo() |>
       )
     )
   )
-\dontrun{
-export_hc(hc, filename = "~/hc_is.js", as = "is")
-export_hc(hc, filename = "~/hc_vr.js", as = "variable", name = "objectname")
-export_hc(hc, filename = "~/hc_ct.js", as = "container", name = "#selectorid")
-}
+hc
+
+export_hc(hc, tempfile(fileext = ".js"), as = "is")
+export_hc(hc, tempfile(fileext = ".js"), as = "variable", name = "chartOptions")
+export_hc(hc, tempfile(fileext = ".js"), as = "container", name = "#chart")
 
 }

@@ -22,9 +22,9 @@ lambda and the number of nonzero coefficients. Applies to standard
 cross-validation fits (\code{relax = FALSE}).
 }
 \examples{
-if (requireNamespace("glmnet", quietly = TRUE)) {
-  x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
-  fit <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = rep_len(1:5, nrow(x)))
-  hchart(fit)
-}
+\dontshow{if (requireNamespace("glmnet", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
+fit <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = rep_len(1:5, nrow(x)))
+hchart(fit)
+\dontshow{\}) # examplesIf}
 }

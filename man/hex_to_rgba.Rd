@@ -16,5 +16,8 @@ Transform colors from hexadecimal format to rgba hc notation
 }
 \examples{
 
-hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725", "red"))
+hex_to_rgba(c("#440154", "#21908C", "#FDE725", "red"))
+
+hchart(iris, "scatter", hcaes(Sepal.Length, Petal.Length),
+  color = hex_to_rgba("#0072B2", alpha = 0.4))
 }

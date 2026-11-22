@@ -26,13 +26,13 @@ are the keys to add data in \code{hcmap}.}
 The urls are listed in \url{https://code.highcharts.com/mapdata/}.
 }
 \examples{
-\dontrun{
-mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
-mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js",
-  quiet = TRUE
+# Use the packaged copy of the same map if the download is unavailable.
+map <- tryCatch(
+  download_map_data("custom/south-america"),
+  error = function(e) "custom/south-america"
 )
-str(mpdta, 1)
-}
+hcmap(map)
+
 }
 \seealso{
 \code{\link{hcmap}}

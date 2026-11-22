@@ -38,9 +38,9 @@ unweighted. Hover over a node for its summary and, when stored by the
 fit, the split variable's association p-value. Click a split to fold it.
 }
 \examples{
-if (requireNamespace("partykit", quietly = TRUE)) {
-  fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
-  hchart(fit, node_shape = "bar") |>
-    hc_colors(c("#087B71", "#AD591D", "#7655A0"))
-}
+\dontshow{if (requireNamespace("partykit", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+hchart(fit, node_shape = "bar") |>
+  hc_colors(c("#087B71", "#AD591D", "#7655A0"))
+\dontshow{\}) # examplesIf}
 }

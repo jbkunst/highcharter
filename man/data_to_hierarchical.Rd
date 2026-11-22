@@ -21,20 +21,13 @@ needed. With the default \code{NULL}, nodes inherit colors from the chart theme.
 Helper to transform data frame for treemap/sunburst highcharts format
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("gapminder", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+countries <- gapminder::gapminder |>
+  dplyr::filter(year == 2007) |>
+  dplyr::mutate(pop_mm = round(pop / 1e6))
+nodes <- data_to_hierarchical(countries, c(continent, country), pop_mm)
 
-library(dplyr)
-data(gapminder, package = "gapminder")
-
-gapminder_2007 <- gapminder::gapminder |>
-  filter(year == max(year)) |>
-  mutate(pop_mm = round(pop / 1e6))
-
-dout <- data_to_hierarchical(gapminder_2007, c(continent, country), pop_mm)
-
-hchart(dout, type = "sunburst")
-
-hchart(dout, type = "treemap")
-}
-
+hchart(nodes, type = "sunburst")
+hchart(nodes, type = "treemap")
+\dontshow{\}) # examplesIf}
 }

@@ -25,11 +25,10 @@ In \code{hc_opts}, use \code{"point.name"} to read a field from the hovered poin
 and \code{JS()} to supply a JavaScript callback.
 }
 \examples{
-
-require(dplyr)
-require(purrr)
-if (requireNamespace("gapminder", quietly = TRUE)) {
-data(gapminder, package = "gapminder")
+\dontshow{if (requireNamespace("gapminder", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+library(dplyr)
+library(purrr)
+gapminder <- gapminder::gapminder
 
 gp <- gapminder |>
   arrange(desc(year)) |>
@@ -43,7 +42,7 @@ gp2 <- gapminder |>
   ) |>
   rename(ttdata = data)
 
-gptot <- left_join(gp, gp2)
+gptot <- left_join(gp, gp2, by = "country")
 
 hc <- hchart(
   gptot,
@@ -92,7 +91,5 @@ hc |>
       )
     )
   )
-
-
-}
+\dontshow{\}) # examplesIf}
 }

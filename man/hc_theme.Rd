@@ -35,14 +35,17 @@ from a packaged preset or supply your own named Highcharts options.
 \examples{
 hc_themes()
 highchart(theme = hc_theme("ft")) |> hc_add_series(data = c(3, 1, 4))
-team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"))
-hc_theme(chart = list(style = list(fontFamily = "IBM Plex Sans")))
-\dontrun{
-hc_theme(chart = list(style = list(fontFamily = sass::font_google("Noto Sans"))))
-}
+team <- hc_theme("carbon", colors = c("#005F73", "#CA6702"),
+  chart = list(style = list(fontFamily = "IBM Plex Sans")))
 old <- hc_set_theme(team)
 highchart() |> hc_add_series(data = c(3, 1, 4))
 options(old)
+
+\dontshow{if (requireNamespace("sass", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+font <- sass::font_google("Noto Sans", local = FALSE)
+highcharts_demo() |>
+  hc_add_theme(hc_theme(chart = list(style = list(fontFamily = font))))
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=hc_add_theme]{hc_add_theme()}}, \code{\link[=hc_theme_merge]{hc_theme_merge()}}, \code{vignette("themes", package = "highcharter")}

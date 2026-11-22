@@ -16,12 +16,10 @@
 #' @param node_shape Classification marker, either `"donut"` or `"bar"`.
 #' @param node_size Root diameter in pixels, or the equivalent area for a bar.
 #' @return A highchart htmlwidget.
-#' @examples
-#' if (requireNamespace("partykit", quietly = TRUE)) {
-#'   fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
-#'   hchart(fit, node_shape = "bar") |>
-#'     hc_colors(c("#087B71", "#AD591D", "#7655A0"))
-#' }
+#' @examplesIf requireNamespace("partykit", quietly = TRUE)
+#' fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+#' hchart(fit, node_shape = "bar") |>
+#'   hc_colors(c("#087B71", "#AD591D", "#7655A0"))
 #' @export
 hchart.constparty <- function(
   object,

@@ -52,17 +52,16 @@ methods(hchart)
 fit <- stats::prcomp(USArrests, scale. = TRUE)
 hchart(fit)
 
+\dontshow{if (requireNamespace("partykit", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 # Classification tree: each donut shows the species proportions in a node
-if (requireNamespace("partykit", quietly = TRUE)) {
-  tree <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
-  hchart(tree)
-}
-
+tree <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+hchart(tree)
+\dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("igraph", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 # An igraph network
-if (requireNamespace("igraph", quietly = TRUE)) {
-  net <- igraph::make_graph("Zachary")
-  hchart(net, layout = igraph::layout_with_kk)
-}
+net <- igraph::make_graph("Zachary")
+hchart(net, layout = igraph::layout_with_kk)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=hchart.constparty]{hchart.constparty()}} and \code{\link[=hchart.xgb.Booster]{hchart.xgb.Booster()}} for decision trees,

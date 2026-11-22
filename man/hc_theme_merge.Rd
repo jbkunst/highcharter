@@ -16,5 +16,6 @@ An \code{hc_theme} object.
 Merge chart themes
 }
 \examples{
-hc_theme_merge(hc_theme("ft"), hc_theme(chart = list(backgroundColor = "white")))
+theme <- hc_theme_merge(hc_theme("ft"), hc_theme(chart = list(backgroundColor = "white")))
+highcharts_demo() |> hc_add_theme(theme)
 }

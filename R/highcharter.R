@@ -157,7 +157,7 @@ widget_json_value <- function(x) {
 #' for a Stock chart without these additional interface assets.
 #'
 #' @inheritParams highchart
-#' @examples
+#' @examplesIf requireNamespace("xts", quietly = TRUE) && requireNamespace("quantmod", quietly = TRUE)
 #' data(sample_matrix, package = "xts")
 #' prices <- xts::as.xts(sample_matrix)
 #' highchartstock(width = "100%") |>

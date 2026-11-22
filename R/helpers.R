@@ -29,9 +29,6 @@ get_box_values <- function(x, add_outliers) {
 #' highchart() |>
 #'   hc_xAxis(type = "category") |>
 #'   hc_add_series_list(dat)
-#' \dontrun{
-#'
-#' }
 #'
 #' @importFrom dplyr transmute group_nest rename group_by bind_rows summarise
 #' @importFrom purrr map map_if
@@ -110,22 +107,14 @@ data_to_boxplot <- function(
 #' @param colors Optional vector of colors for first-level groups, recycled as
 #'   needed. With the default `NULL`, nodes inherit colors from the chart theme.
 #'
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("gapminder", quietly = TRUE)
+#' countries <- gapminder::gapminder |>
+#'   dplyr::filter(year == 2007) |>
+#'   dplyr::mutate(pop_mm = round(pop / 1e6))
+#' nodes <- data_to_hierarchical(countries, c(continent, country), pop_mm)
 #'
-#' library(dplyr)
-#' data(gapminder, package = "gapminder")
-#'
-#' gapminder_2007 <- gapminder::gapminder |>
-#'   filter(year == max(year)) |>
-#'   mutate(pop_mm = round(pop / 1e6))
-#'
-#' dout <- data_to_hierarchical(gapminder_2007, c(continent, country), pop_mm)
-#'
-#' hchart(dout, type = "sunburst")
-#'
-#' hchart(dout, type = "treemap")
-#' }
+#' hchart(nodes, type = "sunburst")
+#' hchart(nodes, type = "treemap")
 #'
 #' @importFrom dplyr arrange desc
 #' @export
@@ -181,17 +170,12 @@ data_to_hierarchical <- function(data, group_vars, size_var, colors = NULL) {
 #'   unique link `id`. Links with a missing endpoint are omitted. Fewer than
 #'   two columns produce an empty tibble with the same columns.
 #'
-#' @examples
-#' \dontrun{
-#' library(dplyr)
-#' data(diamonds, package = "ggplot2")
+#' @examplesIf requireNamespace("ggplot2", quietly = TRUE)
+#' stages <- dplyr::select(ggplot2::diamonds, cut, color, clarity)
+#' links <- data_to_sankey(stages)
+#' head(links)
 #'
-#' diamonds2 <- select(diamonds, cut, color, clarity)
-#'
-#' data_to_sankey(diamonds2)
-#'
-#' hchart(data_to_sankey(diamonds2), "sankey", name = "diamonds")
-#' }
+#' hchart(links, "sankey", name = "Diamonds")
 #'
 #' @importFrom dplyr all_of count
 #' @export
@@ -378,7 +362,10 @@ datetime_to_timestamp <- function(dt) {
 #'
 #' @examples
 #'
-#' hex_to_rgba(x <- c("#440154", "#21908C", "#FDE725", "red"))
+#' hex_to_rgba(c("#440154", "#21908C", "#FDE725", "red"))
+#'
+#' hchart(iris, "scatter", hcaes(Sepal.Length, Petal.Length),
+#'   color = hex_to_rgba("#0072B2", alpha = 0.4))
 #' @importFrom grDevices col2rgb
 #' @export
 hex_to_rgba <- function(x, alpha = 1) {
@@ -422,7 +409,8 @@ highcharts_demo <- function() {
 #'
 #' colorize(runif(10))
 #'
-#' colorize(LETTERS[rbinom(20, 5, 0.5)], c("#FF0000", "#00FFFF"))
+#' hchart(iris, "scatter",
+#'   hcaes(Sepal.Length, Petal.Length, color = colorize(Species)))
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats ecdf
 #' @export
@@ -455,7 +443,8 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 #' @examples
 #'
 #' color_stops(5)
-#' color_stops(colors = c("navy", "gold", "red"), positions = c(0, 0.3, 1))
+#' stops <- color_stops(colors = c("navy", "gold", "red"), positions = c(0, 0.3, 1))
+#' hchart(volcano) |> hc_colorAxis(stops = stops)
 #'
 #' @export
 color_stops <- function(
@@ -493,7 +482,8 @@ color_stops <- function(
 #'
 #' @examples
 #'
-#' color_classes(c(0, 10, 20, 50))
+#' classes <- color_classes(c(90, 120, 150, 180, 200))
+#' hchart(volcano) |> hc_colorAxis(dataClasses = classes)
 #' @export
 color_classes <- function(
   breaks = NULL,

@@ -27,6 +27,7 @@ Create color stops for \code{hc_colorAxis}
 \examples{
 
 color_stops(5)
-color_stops(colors = c("navy", "gold", "red"), positions = c(0, 0.3, 1))
+stops <- color_stops(colors = c("navy", "gold", "red"), positions = c(0, 0.3, 1))
+hchart(volcano) |> hc_colorAxis(stops = stops)
 
 }

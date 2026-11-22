@@ -23,12 +23,12 @@ and the branch for missing values. Leaves report their contribution to
 the prediction margin. Supports tree boosters with numeric splits.
 }
 \examples{
-if (requireNamespace("xgboost", quietly = TRUE)) {
-  d <- xgboost::xgb.DMatrix(as.matrix(iris[1:4]), label = iris$Petal.Width)
-  fit <- xgboost::xgb.train(
-    list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
-    d, nrounds = 3L, verbose = 0
-  )
-  hchart(fit, tree = 2)
-}
+\dontshow{if (rlang::is_installed("xgboost", version = "3.1.0")) withAutoprint(\{ # examplesIf}
+d <- xgboost::xgb.DMatrix(as.matrix(iris[1:4]), label = iris$Petal.Width)
+fit <- xgboost::xgb.train(
+  list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
+  d, nrounds = 3L, verbose = 0
+)
+hchart(fit, tree = 2)
+\dontshow{\}) # examplesIf}
 }

@@ -180,13 +180,13 @@ hcmap <- function(
 #' @param method A string value for the download method used by
 #'   \code{\link[utils]{download.file}}. Defaults to R's configured method.
 #' @examples
-#' \dontrun{
-#' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js")
-#' mpdta <- download_map_data("https://code.highcharts.com/mapdata/countries/us/us-ca-all.js",
-#'   quiet = TRUE
+#' # Use the packaged copy of the same map if the download is unavailable.
+#' map <- tryCatch(
+#'   download_map_data("custom/south-america"),
+#'   error = function(e) "custom/south-america"
 #' )
-#' str(mpdta, 1)
-#' }
+#' hcmap(map)
+#'
 #' @seealso \code{\link{hcmap}}
 #' @importFrom dplyr glimpse
 #' @importFrom utils download.file

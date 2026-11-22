@@ -28,17 +28,15 @@
 #' fit <- stats::prcomp(USArrests, scale. = TRUE)
 #' hchart(fit)
 #'
+#' @examplesIf requireNamespace("partykit", quietly = TRUE)
 #' # Classification tree: each donut shows the species proportions in a node
-#' if (requireNamespace("partykit", quietly = TRUE)) {
-#'   tree <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
-#'   hchart(tree)
-#' }
+#' tree <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+#' hchart(tree)
 #'
+#' @examplesIf requireNamespace("igraph", quietly = TRUE)
 #' # An igraph network
-#' if (requireNamespace("igraph", quietly = TRUE)) {
-#'   net <- igraph::make_graph("Zachary")
-#'   hchart(net, layout = igraph::layout_with_kk)
-#' }
+#' net <- igraph::make_graph("Zachary")
+#' hchart(net, layout = igraph::layout_with_kk)
 #' @export
 hchart <- function(object, ...) {
   UseMethod("hchart")
@@ -642,10 +640,8 @@ hchart.dist <- function(object, ...) {
 #' @importFrom dplyr left_join select
 #' @importFrom stats setNames
 #' @importFrom rlang .data
-#' @examples
-#'
-#' if(require("igraph")) {
-#'
+#' @examplesIf requireNamespace("igraph", quietly = TRUE)
+#' library(igraph)
 #' N <- 40
 #' net <- sample_gnp(N, p = 2 / N)
 #' wc <- cluster_walktrap(net)
@@ -658,10 +654,6 @@ hchart.dist <- function(object, ...) {
 #' V(net)$comm <- as.vector(membership(wc))
 #' V(net)$color <- colorize(membership(wc))
 #' hchart(net, layout = layout_with_fr)
-#'
-#' }
-#'
-#'
 #' @export
 hchart.igraph <- function(object, ..., layout = NULL) {
   rlang::check_installed("igraph", reason = "to chart an igraph object.")
@@ -827,10 +819,10 @@ hchart.igraph <- function(object, ..., layout = NULL) {
 #'
 #' @return Highcharts object to plot survival curves
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("survival", version = "3.6-5")
+#' library(survival)
 #'
 #' # Plot Kaplan-Meier curves
-#' require("survival")
 #' leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 #' hchart(leukemia.surv)
 #'

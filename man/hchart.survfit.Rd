@@ -45,9 +45,10 @@ Highcharts object to plot survival curves
 Plot survival curves using Highcharts
 }
 \examples{
+\dontshow{if (rlang::is_installed("survival", version = "3.6-5")) withAutoprint(\{ # examplesIf}
+library(survival)
 
 # Plot Kaplan-Meier curves
-require("survival")
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 hchart(leukemia.surv)
 
@@ -60,4 +61,5 @@ fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
 profiles <- data.frame(age = c(50, 70), row.names = c("Age 50", "Age 70"))
 ovarian.surv <- survfit(fit, newdata = profiles)
 hchart(ovarian.surv, ranges = TRUE)
+\dontshow{\}) # examplesIf}
 }
