@@ -61,6 +61,41 @@ x <- diamonds$price
 hchart(x)
 ```
 
+## Densities
+
+``` r
+
+hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
+```
+
+## Empirical cumulative distributions
+
+At each price, the step shows the fraction of diamonds that cost that
+much or less. Diamonds with the same price contribute to a single jump.
+
+``` r
+
+hchart(ecdf(x), name = "Diamond prices")
+```
+
+## Precomputed histograms
+
+Pass a histogram object when you want R to choose the breaks before
+charting. The bin boundaries and counts are preserved.
+
+``` r
+
+hchart(hist(x, breaks = 30, plot = FALSE), name = "Diamond prices")
+```
+
+## Character & Factor
+
+``` r
+
+x <- diamonds$cut
+hchart(x, type = "column")
+```
+
 ## Frequency tables
 
 Each cell shows how many cars have that combination of cylinders and
@@ -71,41 +106,6 @@ order](https://jkunst.com/highcharter/articles/highcharts-api.html#category-orde
 ``` r
 
 hchart(table(Cylinders = mtcars$cyl, Gears = mtcars$gear))
-```
-
-## Densities
-
-``` r
-
-hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
-```
-
-## Empirical cumulative distributions
-
-At each speed, the step shows the fraction of cars traveling at or below
-it. Repeated speeds contribute to a single jump.
-
-``` r
-
-hchart(ecdf(cars$speed), name = "Cars")
-```
-
-## Precomputed histograms
-
-Pass a histogram object when you want R to choose the breaks before
-charting. The bin boundaries and counts are preserved.
-
-``` r
-
-hchart(hist(diamonds$price, breaks = 30, plot = FALSE), name = "Diamond prices")
-```
-
-## Character & Factor
-
-``` r
-
-x <- diamonds$cut
-hchart(x, type = "column")
 ```
 
 ## Time Series
@@ -336,11 +336,7 @@ hchart(
     max = max(volcano),
     startOnTick = FALSE,
     endOnTick = FALSE,
-    stops = list(
-      list(0, "#447CFF"),
-      list(0.5, "#F5FF66"),
-      list(0.9, "#FF5E4F")
-    ),
+    stops = Map(list, c(0, 0.5, 0.9), c("#447CFF", "#F5FF66", "#FF5E4F")),
     labels = list(format = "{value} m")
   )
 ```

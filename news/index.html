@@ -93,7 +93,7 @@
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p><code>hchart(ecdf(x))</code> draws an empirical cumulative distribution as a step line.</p></li>
-<li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws classification and regression trees from <code>partykit</code> and <code>rpart</code>, and single C5.0 classification trees. Node area shows the number of observations. Donuts or bars show class composition and a color axis shows the mean response for regression. Branch labels show the split condition in dark text with a white outline. Tree packages are optional.</p></li>
+<li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws classification and regression trees from <code>partykit</code> and <code>rpart</code>, and single C5.0 classification trees. Node area shows the number of observations. Donuts or bars show class composition and a color axis shows the mean response for regression. Light gray branches show the split condition in dark text with a white outline. Tree packages are optional.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws one-way tables as column charts and two-way tables as heatmaps, preserving category order, dimension labels and zero counts.</p></li>
 <li><p><code><a href="../reference/hc_gridAxis.html">hc_gridAxis()</a></code> arranges pairs of axes in a rectangular grid. <code><a href="../reference/hchart.html">hchart()</a></code> uses it to draw multivariate ACF, PACF and autocovariance objects with one panel per series pair and a common vertical scale.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> now accepts <code>type = "tilemap"</code> and <code>type = "contour"</code> for numeric matrices. The default is <code>"heatmap"</code>.</p></li>
@@ -111,7 +111,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="changes-development-version">Changes<a class="anchor" aria-label="anchor" href="#changes-development-version"></a></h3>
-<ul><li><p>For matrices without row or column names, <code><a href="../reference/hchart.html">hchart()</a></code> fits the axes to the grid in heatmap, tilemap and contour charts. The axes can still expand when adding another series.</p></li>
+<ul><li><p>Data-frame charts and empirical distributions use the Highcharts legend default. A single standalone line, column or scatter series now appears in the legend. Supply <code>name</code> to label it or <code>showInLegend = FALSE</code> to hide it.</p></li>
+<li><p>For matrices without row or column names, <code><a href="../reference/hchart.html">hchart()</a></code> fits the axes to the grid in heatmap, tilemap and contour charts. The axes can still expand when adding another series.</p></li>
 <li><p>Passing an <code>lm</code> or <code>loess</code> object to <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code> now warns and still draws the fitted curve and its band (plus or minus two standard errors). Both methods will remain available throughout the first release with this warning. To migrate, call <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> and pass a data frame to <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code>, as in the <a href="https://jkunst.com/highcharter/articles/first-steps.html#a-more-advanced-example">First steps example</a>.</p></li>
 <li><p>Widgets attach the Latin WOFF2 files for the bundled families selected by their theme and chart options. Charts using system fonts need no font files.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> shows ACF and PACF as lollipops at their reported lags. Multivariate time series and decompositions use shared table tooltips.</p></li>
@@ -132,7 +133,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/hcmap.html">hcmap()</a></code> and <code><a href="../reference/hc_add_series_map.html">hc_add_series_map()</a></code> use the column named by <code>value</code> even when the input already contains a different column called <code>value</code>.</p></li>
+<ul><li><p>Table tooltips show whole counts without decimal places. Matrix heatmaps, tilemaps and contours honor <code>hc_tooltip(valueDecimals = ...)</code>.</p></li>
+<li><p><code><a href="../reference/hcmap.html">hcmap()</a></code> and <code><a href="../reference/hc_add_series_map.html">hc_add_series_map()</a></code> use the column named by <code>value</code> even when the input already contains a different column called <code>value</code>.</p></li>
 <li><p>Joined maps use the data range for their color scale. Adding a map layer with <code><a href="../reference/hc_add_series_map.html">hc_add_series_map()</a></code> preserves any color axes already configured. Use <code>hc_colorAxis(min = 0)</code> for a scale that starts at zero.</p></li>
 <li><p><code><a href="../reference/hchart.survfit.html">hchart.survfit()</a></code> uses a logarithmic probability axis for <code>fun = "log"</code> and a logarithmic time axis for <code>fun = "cloglog"</code>. Curves and confidence bands have gaps where their values fall outside the scale’s domain.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> now passes series options to matrix, distance and ACF plots. ETS component charts also accept series options and layout arguments such as <code>separate = FALSE</code>.</p></li>

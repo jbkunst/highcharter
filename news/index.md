@@ -173,8 +173,8 @@ Bundled Highcharts JS: 12.6.2.
   classification and regression trees from `partykit` and `rpart`, and
   single C5.0 classification trees. Node area shows the number of
   observations. Donuts or bars show class composition and a color axis
-  shows the mean response for regression. Branch labels show the split
-  condition in dark text with a white outline. Tree packages are
+  shows the mean response for regression. Light gray branches show the
+  split condition in dark text with a white outline. Tree packages are
   optional.
 
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
@@ -256,6 +256,11 @@ Bundled Highcharts JS: 12.6.2.
 
 ### Changes
 
+- Data-frame charts and empirical distributions use the Highcharts
+  legend default. A single standalone line, column or scatter series now
+  appears in the legend. Supply `name` to label it or
+  `showInLegend = FALSE` to hide it.
+
 - For matrices without row or column names,
   [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) fits
   the axes to the grid in heatmap, tilemap and contour charts. The axes
@@ -336,6 +341,10 @@ Bundled Highcharts JS: 12.6.2.
   library.
 
 ### Bug fixes
+
+- Table tooltips show whole counts without decimal places. Matrix
+  heatmaps, tilemaps and contours honor
+  `hc_tooltip(valueDecimals = ...)`.
 
 - [`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md) and
   [`hc_add_series_map()`](https://jkunst.com/highcharter/reference/hc_add_series_map.md)
