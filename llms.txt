@@ -128,6 +128,8 @@ Map R columns to point fields with hcaes(), then add series to a chart.
   xAxis options for highcharter objects
 - [`hc_yAxis()`](https://jkunst.com/highcharter/reference/hc_yAxis.md) :
   yAxis options for highcharter objects
+- [`hc_gridAxis()`](https://jkunst.com/highcharter/reference/hc_gridAxis.md)
+  : Arrange pairs of axes in a grid
 - [`hc_zAxis()`](https://jkunst.com/highcharter/reference/hc_zAxis.md) :
   zAxis options for highcharter objects
 - [`hc_pane()`](https://jkunst.com/highcharter/reference/hc_pane.md) :

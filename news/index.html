@@ -92,7 +92,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/hchart.html">hchart()</a></code> now accepts <code>type = "tilemap"</code> and <code>type = "contour"</code> for numeric matrices. The default is <code>"heatmap"</code>.</p></li>
+<ul><li><p><code><a href="../reference/hc_gridAxis.html">hc_gridAxis()</a></code> arranges pairs of axes in a rectangular grid. <code><a href="../reference/hchart.html">hchart()</a></code> uses it to draw multivariate ACF, PACF and autocovariance objects with one panel per series pair and a common vertical scale.</p></li>
+<li><p><code><a href="../reference/hchart.html">hchart()</a></code> now accepts <code>type = "tilemap"</code> and <code>type = "contour"</code> for numeric matrices. The default is <code>"heatmap"</code>.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> and <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code> draw each geometry family in a mixed <code>geojsonio</code> FeatureCollection, with polygons below lines and points. Supply <code>type</code> to draw just one family. Both <code>geo_json</code> and <code>geo_list</code> are supported.</p></li>
 <li><p>Charts, Stock, Maps and Gantt share one JavaScript bundle. Accessibility is included by default, including keyboard navigation (<a href="https://github.com/jbkunst/highcharter/issues/755" class="external-link">#755</a>).</p></li>
 <li><p>The bundle now includes the official chart types and common feature modules. A new <code><a href="../reference/highchartstock.html">highchartstock()</a></code> widget adds Stock Tools, advanced annotations and technical indicators. Third-party Motion, Regression, Grouped Categories and Draggable Legend plugins remain optional.</p></li>

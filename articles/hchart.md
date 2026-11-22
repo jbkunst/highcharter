@@ -174,6 +174,16 @@ hchart(acf(changes, plot = FALSE))
 hchart(pacf(changes, plot = FALSE))
 ```
 
+With two monthly series, the diagonal panels show each series’
+autocorrelation. The other two panels show their cross-correlation at
+positive and negative lags. The horizontal axes use years, the time unit
+of these monthly series.
+
+``` r
+
+hchart(acf(cbind(mdeaths, fdeaths), lag.max = 12, plot = FALSE))
+```
+
 ## Igraph package
 
 ``` r

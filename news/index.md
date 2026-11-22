@@ -166,6 +166,12 @@ Bundled Highcharts JS: 12.6.2.
 
 ### New features
 
+- [`hc_gridAxis()`](https://jkunst.com/highcharter/reference/hc_gridAxis.md)
+  arranges pairs of axes in a rectangular grid.
+  [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) uses
+  it to draw multivariate ACF, PACF and autocovariance objects with one
+  panel per series pair and a common vertical scale.
+
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) now
   accepts `type = "tilemap"` and `type = "contour"` for numeric
   matrices. The default is `"heatmap"`.
