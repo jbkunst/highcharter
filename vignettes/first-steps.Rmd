@@ -19,30 +19,13 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 
 ## Introduction
 
-We chart data, and data can come in different ways: numeric or character vectors,
-as time series objects, etc. but the most common object with data is a data
-frame. So, we'll show how  chart this type of object in __highcharter__.
+`hchart()` chooses a chart based on the class of the R object you pass to it.
+For example, a numeric vector produces a histogram and a time series produces
+a line chart.
 
-Highcharter have two main functions to create a chart from data and another
-to add data to an existing `highchart` object.
-
-1. `hchart()`: A generic function which take an object (like vector, time series,
-data frames, likert object, etc) and return a `highchart` object (chart)
-2. `hc_add_series()`: A generic function which add data to a existing
-`highchart` object depending the type (class) of the data.
-
-There are a last function will be useful to chart data from data frame. The
-functions is `hcaes` which will define the aesthetic mappings. This 3 functions
-are inspired in __ggplot2__ package. So:
-
-- `hchart()` works like ggplot2's `qplot`.
-- `hc_add_series()` works like ggplot2's `geom_`s.
-- `hcaes()` works like ggplot2's `aes`.
-
-The main differences with ggplot2 are here we need the data and the aesthetics
-explicit in every highcharts functions.
-
-First, show some data to work with.
+With a data frame, choose a chart type and use `hcaes()` to map columns to
+positions or other properties. Use `hc_add_series()` to add data to an existing
+chart. The first example uses the `mpg` data frame.
 
 ```{r}
 data("mpg", "diamonds", "economics_long", package = "ggplot2")
@@ -174,9 +157,8 @@ hc <- hchart(
 hc
 ```
 
-We can add more series to chart (like the layers in ggplot world) using the
-function `hc_add_series`. The parameters in this functions are similar to
-the `hchart`:
+Use `hc_add_series()` to add the fitted line and its uncertainty band to the
+scatter plot. Each series has its own chart type and column mappings.
 
 
 ```text

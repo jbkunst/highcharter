@@ -407,7 +407,8 @@ hc_add_series.geo_list <- hc_add_series.geo_json
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A `data.frame` object.
 #' @param type The type of the series: line, bar, etc.
-#' @param mapping The mapping, same idea as \code{ggplot2}.
+#' @param mapping Column mappings created with [hcaes()]. Use `group` to
+#'   create a separate series for each distinct value.
 #' @param ... Arguments defined in
 #'   \url{https://api.highcharts.com/highcharts/chart}.
 #' @examples

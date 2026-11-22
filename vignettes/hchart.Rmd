@@ -25,8 +25,9 @@ type below, then use the `hc_*` functions to customize the resulting chart.
 
 ### Data frames
 
-This function works like `qplot`: You pass the data, choose the type
-of chart and then define the aesthetics for each variable.
+For a data frame, choose the chart type with `type` and map columns to
+`x` and `y` with `hcaes()`. In the scatter plot below, `group = species`
+creates a separate series for each penguin species.
 
 ```{r}
 library(highcharter)

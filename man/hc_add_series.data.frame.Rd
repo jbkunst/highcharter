@@ -13,7 +13,8 @@
 
 \item{type}{The type of the series: line, bar, etc.}
 
-\item{mapping}{The mapping, same idea as \code{ggplot2}.}
+\item{mapping}{Column mappings created with \code{\link[=hcaes]{hcaes()}}. Use \code{group} to
+create a separate series for each distinct value.}
 
 \item{...}{Arguments defined in
 \url{https://api.highcharts.com/highcharts/chart}.}
