@@ -320,20 +320,6 @@ forest <- randomForest::randomForest(Species ~ ., data = iris, ntree = 150)
 hchart(forest)
 ```
 
-For variable importance, chart the mean decrease in Gini impurity from the same fit.
-
-```{r forest-importance, eval=requireNamespace("randomForest", quietly=TRUE)}
-gini <- randomForest::importance(forest, type = 2)
-importance <- data.frame(feature = rownames(gini), decrease = as.numeric(gini))
-importance <- importance[order(importance$decrease, decreasing = TRUE), ]
-hchart(
-  importance,
-  "bar",
-  hcaes(x = feature, y = decrease),
-  name = "Mean decrease in Gini"
-)
-```
-
 ### Cross-validated regularization
 
 Each point shows mean cross-validated prediction error. Its whiskers extend
