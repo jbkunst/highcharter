@@ -31,11 +31,6 @@ hchart.randomForest <- function(object, ...) {
   hc <- highchart() |>
     hc_xAxis(title = list(text = "Number of trees"), allowDecimals = FALSE) |>
     hc_yAxis(title = list(text = metric), min = 0) |>
-    hc_tooltip(
-      shared = TRUE,
-      valueSuffix = if (classification) "%" else "",
-      valueDecimals = 2
-    ) |>
     hc_plotOptions(
       line = utils::modifyList(
         list(pointStart = 1, marker = list(enabled = FALSE)),
@@ -67,7 +62,13 @@ hchart.randomForest <- function(object, ...) {
       )
     }
   }
-  hc
+  hc_tooltip(
+    hc,
+    shared = TRUE,
+    table = length(hc$x$hc_opts$series) > 1L,
+    valueSuffix = if (classification) "%" else "",
+    valueDecimals = 2
+  )
 }
 
 #' Chart cross-validation for a regularization path
@@ -120,11 +121,18 @@ hchart.cv.glmnet <- function(object, ...) {
     )
   })
   highchart() |>
-    hc_xAxis(title = list(text = "-log(lambda)"), plotLines = lines) |>
-    hc_yAxis(title = list(text = metric)) |>
+    hc_xAxis(
+      title = list(text = "-log(lambda)"),
+      plotLines = lines,
+      crosshair = TRUE
+    ) |>
+    hc_yAxis(title = list(text = metric), crosshair = list(snap = FALSE)) |>
     hc_plotOptions(
       scatter = utils::modifyList(
-        list(marker = list(enabled = TRUE, radius = 3)),
+        list(
+          marker = list(enabled = TRUE, radius = 3),
+          findNearestPointBy = "x"
+        ),
         list(...)
       )
     ) |>

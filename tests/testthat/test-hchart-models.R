@@ -8,7 +8,12 @@ test_that("random forests use the recorded OOB and test histories", {
     ytest = iris$Species,
     ntree = 8
   )
-  series <- hchart(fit)$x$hc_opts$series
+  opts <- hchart(fit)$x$hc_opts
+  series <- opts$series
+  expect_true(opts$tooltip$shared)
+  expect_true(opts$tooltip$useHTML)
+  expect_match(opts$tooltip$pointFormat, "<tr>", fixed = TRUE)
+  expect_identical(opts$tooltip$valueSuffix, "%")
   expect_equal(series[[1]]$data, 100 * fit$err.rate[, 1], ignore_attr = TRUE)
   expect_equal(series[[4]]$name, "OOB \u00b7 virginica")
   expect_equal(
@@ -18,7 +23,9 @@ test_that("random forests use the recorded OOB and test histories", {
   )
   expect_equal(series[[5]]$dashStyle, "Dash")
   reg <- randomForest::randomForest(mpg ~ wt, data = mtcars, ntree = 8)
-  expect_equal(hchart(reg)$x$hc_opts$series[[1]]$data, reg$mse)
+  opts <- hchart(reg)$x$hc_opts
+  expect_equal(opts$series[[1]]$data, reg$mse)
+  expect_false(identical(opts$tooltip$footerFormat, "</table>"))
 })
 
 test_that("glmnet whiskers and lambda markers match the fit", {
@@ -26,6 +33,8 @@ test_that("glmnet whiskers and lambda markers match the fit", {
   x <- as.matrix(mtcars[c("hp", "wt", "qsec")])
   cv <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = rep_len(1:5, nrow(x)))
   opts <- hchart(cv)$x$hc_opts
+  expect_true(opts$xAxis$crosshair)
+  expect_false(opts$yAxis$crosshair$snap)
   expect_identical(opts$yAxis$title$text, as.character(cv$name))
   expect_equal(vapply(opts$series[[1]]$data, "[[", numeric(1), "y"), cv$cvm)
   expect_equal(

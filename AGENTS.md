@@ -6,6 +6,9 @@ Read the [development guide](dev/readme.md) when working on maintenance scripts,
 examples or the website. It describes each `dev/` directory and the build steps.
 
 - Start with the smallest end-to-end example. Reuse the R helpers, htmlwidgets and the bundled Highcharts modules before introducing another dependency.
+- When an `hchart()` method draws multiple lines that can be compared at the
+  same x value, use `hc_tooltip(shared = TRUE, table = TRUE)` so each series
+  gets a row. Count the data series being compared, not interval or annotation layers.
 - For questions and reviews, inspect the relevant code and recommend one concrete approach with its main trade-off. Implement when requested. Keep commits, pushes and releases within the scope the maintainer has authorized.
 - Keep code readable. Explain changes to the maintenance workflow in the developer README and user-visible package behavior in NEWS. Keep website layouts, gallery edits and documentation build details out of NEWS.
 - Format R code with Air using the root `air.toml`. Run `air format .` and `air format --check .`; preserve the exclusions for generated files and local artifacts. See the [formatting guide](dev/readme.md#format-r-code).

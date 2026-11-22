@@ -227,7 +227,8 @@ hchart(fit, node_shape = "bar") |>
 ## Random forests
 
 The overall out-of-bag error and the class-specific errors show how quickly
-the forest stabilizes. Hover at a tree count to compare the species.
+the forest stabilizes. Hover at a tree count to compare the overall and
+per-species errors in one table.
 
 ```{r forest-error, eval=requireNamespace("randomForest", quietly=TRUE)}
 set.seed(42)
@@ -254,6 +255,8 @@ hchart(
 Each point shows mean cross-validated prediction error. Its whiskers extend
 one standard error in either direction. The two vertical lines identify the
 best-scoring lambda and the more regularized one-standard-error choice.
+Move the horizontal crosshair to an interval endpoint to see which other
+intervals reach that value.
 
 ```{r glmnet-error, eval=requireNamespace("glmnet", quietly=TRUE)}
 x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
