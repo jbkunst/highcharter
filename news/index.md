@@ -306,6 +306,11 @@ Bundled Highcharts JS: 12.6.2.
 
 ### Bug fixes
 
+- [`hcmap()`](https://jkunst.com/highcharter/reference/hcmap.md) and
+  [`hc_add_series_map()`](https://jkunst.com/highcharter/reference/hc_add_series_map.md)
+  use the column named by `value` even when the input already contains a
+  different column called `value`.
+
 - Joined maps use the data range for their color scale. Adding a map
   layer with
   [`hc_add_series_map()`](https://jkunst.com/highcharter/reference/hc_add_series_map.md)
