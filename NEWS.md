@@ -119,6 +119,9 @@ Bundled Highcharts JS: 12.6.2.
 
 ## New features
 
+* `color_stops()` accepts optional `positions` to place each supplied color
+  at an exact point on the gradient.
+
 * `hchart(ecdf(x))` draws an empirical cumulative distribution as a step line.
 
 * `hchart()` draws classification and regression trees from `partykit` and

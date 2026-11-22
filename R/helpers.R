@@ -444,19 +444,46 @@ colorize <- function(x, colors = c("#440154", "#21908C", "#FDE725")) {
 
 #' Create color stops for \code{hc_colorAxis}
 #'
-#' @param n Positive integer number of evenly spaced stops. A single stop is
-#'   placed at zero.
+#' @param n Number of stops. Defaults to 10 for an evenly spaced gradient,
+#'   or to the length of `positions` when supplied.
 #' @param colors Character vector of colors in gradient order.
+#' @param positions Optional numeric vector of positions from 0 to 1 in
+#'   nondecreasing order, one per color. Each color is used as supplied.
+#'   By default, colors are interpolated at evenly spaced positions, with a
+#'   single stop placed at zero.
 #'
 #' @examples
 #'
 #' color_stops(5)
+#' color_stops(colors = c("navy", "gold", "red"), positions = c(0, 0.3, 1))
 #'
 #' @export
-color_stops <- function(n = 10, colors = c("#440154", "#21908C", "#FDE725")) {
+color_stops <- function(
+  n = 10,
+  colors = c("#440154", "#21908C", "#FDE725"),
+  positions = NULL
+) {
+  if (missing(n) && !is.null(positions)) {
+    n <- length(positions)
+  }
   stopifnot(is.numeric(n), length(n) == 1L, is.finite(n), n >= 1, n == floor(n))
-  positions <- (seq_len(n) - 1L) / max(1, n - 1L)
-  Map(list, positions, grDevices::colorRampPalette(colors)(n))
+  if (is.null(positions)) {
+    positions <- (seq_len(n) - 1L) / max(1, n - 1L)
+    colors <- grDevices::colorRampPalette(colors)(n)
+  } else {
+    stopifnot(
+      is.numeric(positions),
+      is.null(dim(positions)),
+      length(positions) == n,
+      all(positions >= 0 & positions <= 1),
+      !is.unsorted(positions),
+      is.character(colors),
+      is.null(dim(colors)),
+      length(colors) == n,
+      !anyNA(colors)
+    )
+  }
+  Map(list, unname(positions), unname(colors))
 }
 
 #' Function to create \code{dataClasses} argument in \code{hc_colorAxis}

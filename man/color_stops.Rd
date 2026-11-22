@@ -4,13 +4,22 @@
 \alias{color_stops}
 \title{Create color stops for \code{hc_colorAxis}}
 \usage{
-color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))
+color_stops(
+  n = 10,
+  colors = c("#440154", "#21908C", "#FDE725"),
+  positions = NULL
+)
 }
 \arguments{
-\item{n}{Positive integer number of evenly spaced stops. A single stop is
-placed at zero.}
+\item{n}{Number of stops. Defaults to 10 for an evenly spaced gradient,
+or to the length of \code{positions} when supplied.}
 
 \item{colors}{Character vector of colors in gradient order.}
+
+\item{positions}{Optional numeric vector of positions from 0 to 1 in
+nondecreasing order, one per color. Each color is used as supplied.
+By default, colors are interpolated at evenly spaced positions, with a
+single stop placed at zero.}
 }
 \description{
 Create color stops for \code{hc_colorAxis}
@@ -18,5 +27,6 @@ Create color stops for \code{hc_colorAxis}
 \examples{
 
 color_stops(5)
+color_stops(colors = c("navy", "gold", "red"), positions = c(0, 0.3, 1))
 
 }
