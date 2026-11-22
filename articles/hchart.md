@@ -80,6 +80,16 @@ hchart(table(Cylinders = mtcars$cyl, Gears = mtcars$gear))
 hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
 ```
 
+## Empirical cumulative distributions
+
+At each speed, the step shows the fraction of cars traveling at or below
+it. Repeated speeds contribute to a single jump.
+
+``` r
+
+hchart(ecdf(cars$speed), name = "Cars")
+```
+
 ## Precomputed histograms
 
 Pass a histogram object when you want R to choose the breaks before
@@ -287,22 +297,10 @@ distance for one step across a column or down a row.
 
 data(volcano)
 
-volcano_axes <- function(chart) {
+volcano_layout <- function(chart) {
   chart |>
     hc_chart(margin = c(0, 96, 0, 0)) |>
-    hc_legend(layout = "vertical", align = "right", verticalAlign = "middle") |>
-    hc_xAxis(
-      min = 1,
-      max = ncol(volcano),
-      startOnTick = FALSE,
-      endOnTick = FALSE
-    ) |>
-    hc_yAxis(
-      min = 1,
-      max = nrow(volcano),
-      startOnTick = FALSE,
-      endOnTick = FALSE
-    )
+    hc_legend(layout = "vertical", align = "right", verticalAlign = "middle")
 }
 ```
 
@@ -312,7 +310,7 @@ volcano_axes <- function(chart) {
 volcano_colors <- c("#000004", "#56106E", "#BB3754", "#F98C0A", "#FCFFA4")
 
 hchart(volcano) |>
-  volcano_axes() |>
+  volcano_layout() |>
   hc_colorAxis(stops = color_stops(colors = volcano_colors))
 ```
 
@@ -332,7 +330,7 @@ hchart(
   contourOffset = 0.5,
   lineColor = "#888888"
 ) |>
-  volcano_axes() |>
+  volcano_layout() |>
   hc_colorAxis(
     min = min(volcano),
     max = max(volcano),

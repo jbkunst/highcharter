@@ -166,11 +166,16 @@ Bundled Highcharts JS: 12.6.2.
 
 ### New features
 
+- `hchart(ecdf(x))` draws an empirical cumulative distribution as a step
+  line.
+
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
   classification and regression trees from `partykit` and `rpart`, and
   single C5.0 classification trees. Node area shows the number of
   observations. Donuts or bars show class composition and a color axis
-  shows the mean response for regression. Tree packages are optional.
+  shows the mean response for regression. Branch labels show the split
+  condition in dark text with a white outline. Tree packages are
+  optional.
 
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
   one-way tables as column charts and two-way tables as heatmaps,
@@ -250,6 +255,11 @@ Bundled Highcharts JS: 12.6.2.
   ends (`x` and `x2`).
 
 ### Changes
+
+- For matrices without row or column names,
+  [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) fits
+  the axes to the grid in heatmap, tilemap and contour charts. The axes
+  can still expand when adding another series.
 
 - Passing an `lm` or `loess` object to
   [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
