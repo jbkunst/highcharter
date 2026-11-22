@@ -312,46 +312,88 @@ hchart.acf <- function(object, ...) {
     correlation = "ACF"
   )
 
-  sv <- qnorm(1 - 0.05 / 2) / sqrt(object$n.used)
-
-  ds <- tibble(
-    x = as.vector(object$lag),
-    y = as.vector(object$acf)
-  )
-
-  defaults <- list(
-    type = "lollipop",
-    marker = list(enabled = TRUE),
-    pointRange = 0,
-    name = ytitle
-  )
-  options <- .merge_options(defaults, validate_args("hchart", list(...)))
-  hc <- rlang::exec(
-    hc_add_series,
-    highchart(),
-    data = list_parse(ds),
-    !!!options
-  )
-
-  if (object$type != "covariance") {
-    hc <- hc |>
-      hc_yAxis(
-        startOnTick = FALSE,
-        endOnTick = FALSE,
-        minPadding = 0.06,
-        maxPadding = 0.06,
-        tickPositioner = JS(
-          "function () {
-          return this.tickPositions.filter(function (tick) { return Math.abs(tick) <= 1; });
-        }"
-        ),
-        plotLines = list(
-          list(width = 1, value = sv, color = "gray"),
-          list(width = 1, value = -sv, color = "gray")
-        )
-      )
+  options <- validate_args("hchart", list(...))
+  add_acf <- function(hc, x, y, name, ...) {
+    defaults <- list(
+      type = "lollipop",
+      marker = list(enabled = TRUE),
+      pointRange = 0,
+      name = name,
+      ...
+    )
+    rlang::exec(
+      hc_add_series,
+      hc,
+      data = list_parse(tibble(x = x, y = y)),
+      !!!.merge_options(defaults, options)
+    )
   }
 
+  y_axis <- list()
+  if (object$type != "covariance") {
+    sv <- qnorm(1 - 0.05 / 2) / sqrt(object$n.used)
+    y_axis <- list(
+      startOnTick = FALSE,
+      endOnTick = FALSE,
+      minPadding = 0.06,
+      maxPadding = 0.06,
+      tickPositioner = JS(
+        "function () {
+          return this.tickPositions.filter(function (tick) { return Math.abs(tick) <= 1; });
+        }"
+      ),
+      plotLines = list(
+        list(width = 1, value = sv, color = "gray"),
+        list(width = 1, value = -sv, color = "gray")
+      )
+    )
+  }
+
+  n <- NCOL(object$acf)
+  if (n == 1L) {
+    hc <- rlang::exec(hc_yAxis, highchart(), !!!y_axis)
+    return(add_acf(hc, as.vector(object$lag), as.vector(object$acf), ytitle))
+  }
+
+  pairs <- expand.grid(column = seq_len(n), row = seq_len(n))
+  vars <- object$snames
+  if (length(vars) != n) {
+    vars <- paste("Series", seq_len(n))
+  }
+  labels <- ifelse(
+    pairs$row == pairs$column,
+    vars[pairs$row],
+    paste(vars[pairs$row], vars[pairs$column], sep = " / ")
+  )
+  limits <- if (object$type == "covariance") {
+    range(0, object$acf, finite = TRUE)
+  } else {
+    c(-1, 1)
+  }
+  limits <- grDevices::extendrange(limits, f = 0.03)
+  y_axis$min <- limits[1L]
+  y_axis$max <- limits[2L]
+  y_axis$title <- list(text = NULL)
+  x_axes <- lapply(labels, function(label) list(title = list(text = label)))
+  hc <- highchart() |>
+    hc_grid_axis(n, n, xAxis = x_axes, yAxis = y_axis) |>
+    hc_legend(enabled = FALSE)
+
+  for (k in seq_along(labels)) {
+    i <- pairs$row[k]
+    j <- pairs$column[k]
+    x <- object$lag[, i, j]
+    y <- object$acf[, i, j]
+    order_x <- order(x)
+    hc <- add_acf(
+      hc,
+      x[order_x],
+      y[order_x],
+      labels[k],
+      xAxis = k - 1L,
+      yAxis = k - 1L
+    )
+  }
   hc
 }
 

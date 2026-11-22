@@ -435,6 +435,31 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   hc
 }
 
+hc_grid_axis <- function(hc, nrow, ncol, xAxis = list(), yAxis = list()) {
+  width <- 100 / (ncol + 0.25 * (ncol - 1))
+  height <- 100 / (nrow + 0.5 * (nrow - 1))
+  panels <- lapply(seq_len(nrow * ncol) - 1L, function(k) {
+    list(
+      left = paste0((k %% ncol) * 1.25 * width, "%"),
+      top = paste0((k %/% ncol) * 1.5 * height, "%"),
+      width = paste0(width, "%"),
+      height = paste0(height, "%"),
+      offset = 0
+    )
+  })
+  axes <- function(options) {
+    if (!length(options) || !is.null(names(options))) {
+      options <- rep(list(options), length(panels))
+    }
+    stopifnot(length(options) == length(panels))
+    Map(.merge_options, panels, options, MoreArgs = list(keep_null = TRUE))
+  }
+  hc |>
+    hc_chart(alignTicks = FALSE) |>
+    hc_xAxis(axes(xAxis)) |>
+    hc_yAxis(axes(yAxis))
+}
+
 #' Arrange vertical axes in stacked panels
 #'
 #' @param naxis Number of axis an integer.

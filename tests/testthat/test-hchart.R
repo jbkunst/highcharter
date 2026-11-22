@@ -163,8 +163,14 @@ test_that("multivariate layouts preserve series identities and shared HTML toolt
 
 test_that("ACF and PACF lollipops use the reported lags and correlations", {
   changes <- diff(AirPassengers)
-  for (x in list(acf(changes, plot = FALSE), pacf(changes, plot = FALSE))) {
-    series <- hchart(x)$x$hc_opts$series[[1]]
+  for (x in list(
+    acf(changes, plot = FALSE),
+    pacf(changes, plot = FALSE),
+    ccf(mdeaths, fdeaths, plot = FALSE)
+  )) {
+    all_series <- hchart(x)$x$hc_opts$series
+    expect_length(all_series, 1L)
+    series <- all_series[[1]]
     expect_identical(series$type, "lollipop")
     expect_equal(vapply(series$data, `[[`, numeric(1), "x"), as.vector(x$lag))
     expect_equal(vapply(series$data, `[[`, numeric(1), "y"), as.vector(x$acf))
@@ -181,6 +187,43 @@ test_that("ACF and PACF lollipops use the reported lags and correlations", {
   expect_identical(series$name, "Changes")
   expect_identical(series$color, "steelblue")
   expect_identical(series$marker, list(enabled = TRUE, radius = 5))
+})
+
+test_that("multivariate ACF panels retain each pair's signed lags and scale", {
+  x <- cbind(mdeaths, fdeaths)
+  for (type in c("correlation", "partial", "covariance")) {
+    a <- acf(x, lag.max = 3L, type = type, plot = FALSE)
+    opts <- hchart(a, color = "steelblue")$x$hc_opts
+    expect_length(opts$series, 4L)
+    for (i in 1:2) {
+      for (j in 1:2) {
+        k <- (i - 1L) * 2L + j
+        series <- opts$series[[k]]
+        label <- if (i == j) {
+          colnames(x)[i]
+        } else {
+          paste(colnames(x)[c(i, j)], collapse = " / ")
+        }
+        expect_identical(opts$xAxis[[k]]$title$text, label)
+        expect_identical(series$name, label)
+        expect_identical(series$color, "steelblue")
+        expect_identical(series$xAxis, k - 1L)
+        expect_identical(series$yAxis, k - 1L)
+        ord <- order(a$lag[, i, j])
+        expect_equal(vapply(series$data, `[[`, 0, "x"), a$lag[ord, i, j])
+        expect_equal(
+          vapply(series$data, `[[`, 0, "y"),
+          unname(a$acf[ord, i, j])
+        )
+        axis <- opts$yAxis[[k]]
+        expect_identical(
+          axis[c("min", "max")],
+          opts$yAxis[[1]][c("min", "max")]
+        )
+        expect_length(axis$plotLines, if (type == "covariance") 0L else 2L)
+      }
+    }
+  }
 })
 
 test_that("seasonal charts label the fitted outliers at adjusted values", {
