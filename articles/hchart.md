@@ -289,7 +289,13 @@ This view requires WebGPU in the browser.
 
 ``` r
 
-hchart(volcano, type = "contour") |>
+hchart(
+  volcano,
+  type = "contour",
+  contourInterval = 10,
+  contourOffset = 0.5,
+  lineColor = "#888888"
+) |>
   volcano_axes() |>
   hc_colorAxis(
     min = min(volcano),
@@ -302,13 +308,6 @@ hchart(volcano, type = "contour") |>
       list(0.9, "#FF5E4F")
     ),
     labels = list(format = "{value} m")
-  ) |>
-  hc_plotOptions(
-    contour = list(
-      contourInterval = 10,
-      contourOffset = 0.5,
-      lineColor = "#888888"
-    )
   )
 ```
 

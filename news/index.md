@@ -300,6 +300,11 @@ Bundled Highcharts JS: 12.6.2.
 
 ### Bug fixes
 
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) now
+  passes series options to matrix, distance and ACF plots. ETS component
+  charts also accept series options and layout arguments such as
+  `separate = FALSE`.
+
 - Adding a forecast, linear model or loess fit preserves R’s
   random-number state when linking the fitted series to its intervals.
 
