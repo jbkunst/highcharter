@@ -124,8 +124,8 @@ Bundled Highcharts JS: 12.6.2.
 * `hchart()` draws classification and regression trees from `partykit` and
   `rpart`, and single C5.0 classification trees. Node area shows the number of
   observations. Donuts or bars show class composition and a color axis shows
-  the mean response for regression. Branch labels show the split condition
-  in dark text with a white outline. Tree packages are optional.
+  the mean response for regression. Light gray branches show the split
+  condition in dark text with a white outline. Tree packages are optional.
 
 * `hchart()` draws one-way tables as column charts and two-way tables as
   heatmaps, preserving category order, dimension labels and zero counts.

@@ -89,7 +89,7 @@ hchart.constparty <- function(
     clip = FALSE,
     fillSpace = FALSE,
     collapseButton = list(enabled = FALSE),
-    link = list(type = "straight", lineWidth = 1.5),
+    link = list(type = "straight", color = "#8C8C8C", lineWidth = 1.5),
     dataLabels = list(
       enabled = TRUE,
       pointFormat = "",
