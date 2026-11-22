@@ -243,6 +243,120 @@ hchart(fit, node_shape = "bar") |>
   hc_colors(c("#087B71", "#AD591D", "#7655A0"))
 ```
 
+## Random forests
+
+The overall out-of-bag error and the class-specific errors show how
+quickly the forest stabilizes. Hover at a tree count to compare the
+species.
+
+``` r
+
+set.seed(42)
+forest <- randomForest::randomForest(Species ~ ., data = iris, ntree = 150)
+hchart(forest)
+```
+
+For variable importance, chart the mean decrease in Gini impurity from
+the same fit.
+
+``` r
+
+gini <- randomForest::importance(forest, type = 2)
+importance <- data.frame(feature = rownames(gini), decrease = as.numeric(gini))
+importance <- importance[order(importance$decrease, decreasing = TRUE), ]
+hchart(
+  importance,
+  "bar",
+  hcaes(x = feature, y = decrease),
+  name = "Mean decrease in Gini"
+)
+```
+
+## Cross-validated regularization
+
+Each point shows mean cross-validated prediction error. Its whiskers
+extend one standard error in either direction. The two vertical lines
+identify the best-scoring lambda and the more regularized
+one-standard-error choice.
+
+``` r
+
+x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
+set.seed(42)
+folds <- sample(rep_len(1:5, nrow(x)))
+cv <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = folds)
+hchart(cv)
+```
+
+## Boosted trees
+
+Select a tree by its one-based index. Hover over a split for its gain
+and the direction taken by missing values, or over a leaf for its margin
+contribution. Marker size follows cover.
+
+``` r
+
+x <- as.matrix(iris[c("Sepal.Length", "Sepal.Width", "Petal.Length")])
+d <- xgboost::xgb.DMatrix(x, label = iris$Petal.Width)
+fit <- xgboost::xgb.train(
+  list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
+  d,
+  nrounds = 3L,
+  verbose = 0
+)
+hchart(fit, tree = 2)
+```
+
+## Cluster dendrograms
+
+The vertical position of each join gives the merge height. Hover over it
+for the number of observations. Both `hchart(fit)` and
+`hchart(as.dendrogram(fit))` use the same layout.
+
+``` r
+
+states <- scale(USArrests[
+  c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "California",
+    "Florida",
+    "Georgia",
+    "Illinois",
+    "Maine",
+    "Oregon",
+    "Vermont"
+  ),
+])
+fit <- hclust(dist(states), method = "average")
+hchart(fit)
+```
+
+## Phylogenies
+
+In the fan layout, radial distance measures branch length from the root.
+With no lengths, each edge counts as one step. Use
+`layout = "rectangular"` for a side-by-side reading of tip labels.
+
+``` r
+
+data("bird.families", package = "ape")
+families <- c(
+  "Rheidae",
+  "Casuariidae",
+  "Struthionidae",
+  "Phasianidae",
+  "Numididae",
+  "Odontophoridae",
+  "Anhimidae",
+  "Dendrocygnidae",
+  "Anatidae"
+)
+birds <- ape::keep.tip(bird.families, families)
+hchart(birds)
+```
+
 ## Survival Package
 
 Survival models can be charted.

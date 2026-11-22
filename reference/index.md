@@ -295,6 +295,20 @@ Map R columns to point fields with hcaes(), then add series to a chart.
 These methods are selected automatically by hchart() and
 hc_add_series().
 
+- [`hchart(`*`<randomForest>`*`)`](https://jkunst.com/highcharter/reference/hchart.randomForest.md)
+  : Chart the out-of-bag error of a random forest
+
+- [`hchart(`*`<cv.glmnet>`*`)`](https://jkunst.com/highcharter/reference/hchart.cv.glmnet.md)
+  : Chart cross-validation for a regularization path
+
+- [`hchart(`*`<xgb.Booster>`*`)`](https://jkunst.com/highcharter/reference/hchart.xgb.Booster.md)
+  : Explore one boosted tree
+
+- [`hchart(`*`<hclust>`*`)`](https://jkunst.com/highcharter/reference/hchart.hclust.md)
+  [`hchart(`*`<dendrogram>`*`)`](https://jkunst.com/highcharter/reference/hchart.hclust.md)
+  [`hchart(`*`<phylo>`*`)`](https://jkunst.com/highcharter/reference/hchart.hclust.md)
+  : Draw a cluster dendrogram or a phylogeny
+
 - [`hchart(`*`<constparty>`*`)`](https://jkunst.com/highcharter/reference/hchart.constparty.md)
   [`hchart(`*`<rpart>`*`)`](https://jkunst.com/highcharter/reference/hchart.constparty.md)
   [`hchart(`*`<C5.0>`*`)`](https://jkunst.com/highcharter/reference/hchart.constparty.md)

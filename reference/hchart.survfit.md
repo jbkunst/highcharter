@@ -65,10 +65,9 @@ Highcharts object to plot survival curves
 ## Examples
 
 ``` r
+library(survival)
 
 # Plot Kaplan-Meier curves
-require("survival")
-#> Loading required package: survival
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 hchart(leukemia.surv)
 
