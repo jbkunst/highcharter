@@ -42,9 +42,7 @@ the equation on the legend.
 ```{r}
 library(highcharter)
 
-data(penguins, package = "palmerpenguins")
-
-penguins <- penguins[complete.cases(penguins), ]
+penguins <- na.omit(palmerpenguins::penguins)
 
 hchart(
   penguins,
@@ -92,9 +90,7 @@ Let's try an example:
 library(purrr) # map function to make grouped categories argument
 library(dplyr) # for select function
 
-data(mpg, package = "ggplot2")
-
-mpgg <- mpg |>
+mpgg <- ggplot2::mpg |>
   filter(!manufacturer %in% c("volkswagen", "chevrolet")) |>
   filter(class %in% c("compact", "midsize", "subcompact")) |>
   count(class, manufacturer, name = "count") |>
@@ -241,9 +237,7 @@ year slider; the chart begins in 1952.
 ```{r motion-life-expectancy}
 library(dplyr)
 
-data(gapminder, package = "gapminder")
-
-history <- gapminder |>
+history <- gapminder::gapminder |>
   group_by(continent, year) |>
   summarise(lifeExp = weighted.mean(lifeExp, pop), .groups = "drop")
 

@@ -15,9 +15,6 @@ get_box_values <- function(x, add_outliers) {
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
 #'
 #' @examples
-#'
-#' data(pokemon)
-#'
 #' dat <- data_to_boxplot(pokemon, height)
 #'
 #' highchart() |>

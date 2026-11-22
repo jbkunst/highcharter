@@ -39,8 +39,7 @@ directly to help you build your `highcharts` charts in R.
 To explore this relationship, we'll be looking at the Palmer penguins dataset.
 
 ```{r warning=FALSE}
-library(palmerpenguins)
-
+penguins <- palmerpenguins::penguins
 head(penguins)
 ```
 

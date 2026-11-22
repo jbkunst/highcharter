@@ -28,8 +28,7 @@ positions or other properties. Use `hc_add_series()` to add data to an existing
 chart. The first example uses the `mpg` data frame.
 
 ```{r}
-data("mpg", "diamonds", "economics_long", package = "ggplot2")
-head(mpg)
+head(ggplot2::mpg)
 ```
 
 In general we'll use this structure to get a chart:
@@ -47,7 +46,7 @@ be: line, spline, area, heatmap, treemap, etc.
 So, a basic example would be:
 
 ```{r}
-hchart(mpg, "scatter", hcaes(x = displ, y = cty, group = year))
+hchart(ggplot2::mpg, "scatter", hcaes(x = displ, y = cty, group = year))
 ```
 
 ## Map positions and values
@@ -57,10 +56,8 @@ split observations into series, `size` to give scatter points a bubble size,
 or `color` to color individual points. A heatmap uses `value` to color a cell.
 
 ```{r}
-data(economics_long, package = "ggplot2")
-
 economics_long2 <- dplyr::filter(
-  economics_long,
+  ggplot2::economics_long,
   variable %in% c("pop", "uempmed", "unemploy")
 )
 
@@ -82,7 +79,7 @@ Now, a heatmap and a treemap.
 ```{r}
 library(dplyr)
 
-dfdiam <- diamonds |>
+dfdiam <- ggplot2::diamonds |>
   group_by(cut, clarity) |>
   summarize(price = median(price))
 
@@ -98,7 +95,7 @@ hchart(
     )
   )
 
-mpgman <- mpg |>
+mpgman <- ggplot2::mpg |>
   group_by(manufacturer) |>
   summarise(n = n(), unique = length(unique(model))) |>
   arrange(-n, -unique)
@@ -113,7 +110,7 @@ can modify the names of each series/group. These names are used in the legend
 as well the tooltip. You can modify the colors and a lot of properties.
 
 ```{r}
-mpgman2 <- count(mpg, manufacturer, year)
+mpgman2 <- count(ggplot2::mpg, manufacturer, year)
 
 hchart(
   mpgman2,

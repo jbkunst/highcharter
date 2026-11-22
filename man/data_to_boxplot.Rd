@@ -31,9 +31,6 @@ be calculated. Default to \code{FALSE}.}
 Helper to transform data frame for boxplot highcharts format
 }
 \examples{
-
-data(pokemon)
-
 dat <- data_to_boxplot(pokemon, height)
 
 highchart() |>
