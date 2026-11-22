@@ -403,7 +403,7 @@ lung <- dplyr::mutate(cancer, sex = ifelse(sex == 1, "Male", "Female"))
 
 fit <- survfit(Surv(time, status) ~ sex, data = cancer)
 
-hchart(fit, ranges = TRUE)
+hchart(fit, ranges = TRUE, markerColor = NULL)
 ```
 
 ## Decision trees
@@ -441,37 +441,8 @@ hchart(fit, tree = 2)
 
 ## Dendrograms and phylogenies
 
-### Cluster dendrograms
-
-The vertical position of each join gives the merge height. Hover over it
-for the number of observations. Both `hchart(fit)` and
-`hchart(as.dendrogram(fit))` use the same layout.
-
-``` r
-
-states <- scale(USArrests[
-  c(
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "California",
-    "Florida",
-    "Georgia",
-    "Illinois",
-    "Maine",
-    "Oregon",
-    "Vermont"
-  ),
-])
-fit <- hclust(dist(states), method = "average")
-hchart(fit)
-```
-
-### Phylogenies
-
-In the fan layout, radial distance measures branch length from the root.
-With no lengths, each edge counts as one step. Use
-`layout = "rectangular"` for a side-by-side reading of tip labels.
+Both examples show the same nine families from the bird phylogeny in
+**ape**.
 
 ``` r
 
@@ -488,6 +459,30 @@ families <- c(
   "Anatidae"
 )
 birds <- ape::keep.tip(bird.families, families)
+```
+
+### Cluster dendrograms
+
+The tree is ultrametric, so all tips are the same distance from the
+root. In its dendrogram, the height of each join gives the distance
+between tips on opposite branches of that join. Hover over a join to see
+how many families it contains. Both `hchart(fit)` and
+`hchart(as.dendrogram(fit))` use this layout.
+
+``` r
+
+fit <- as.hclust(birds)
+hchart(fit)
+```
+
+### Phylogenies
+
+In the fan layout, radial distance measures branch length from the root.
+With no lengths, each edge counts as one step. Use
+`layout = "rectangular"` for a side-by-side reading of tip labels.
+
+``` r
+
 hchart(birds)
 ```
 
