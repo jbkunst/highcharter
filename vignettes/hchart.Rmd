@@ -2,10 +2,8 @@
 title: hchart Function
 output: rmarkdown::html_vignette
 description: >
-  This a generic function, this means you can chart various R like numeric, 
-  histograms, character, factor, ts on the fly.
-  The resulting chart is a highchart object so you can keep 
-  modifying with the implemented API.
+  Use hchart() to plot R objects, from data frames and time series to fitted
+  models, trees and networks.
 editor_options: 
   chunk_output_type: console
 vignette: >
@@ -20,12 +18,12 @@ hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 options(download.file.method = "libcurl")
 ```
 
-This a generic function, this means you can chart various R like numeric, 
-histograms, character, factor, ts on the fly.
-The resulting chart is a highchart object so you can keep 
-modifying with the implemented API.
+`hchart()` chooses a chart based on the class of its input. Find your object
+type below, then use the `hc_*` functions to customize the resulting chart.
 
-## Data Frames
+## Data objects
+
+### Data frames
 
 This function works like `qplot`: You pass the data, choose the type
 of chart and then define the aesthetics for each variable.
@@ -59,7 +57,7 @@ economics_long2 <- economics_long |>
 hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 ```
 
-## Numeric & Histograms
+### Numeric & histograms
 
 ```{r}
 set.seed(123)
@@ -67,13 +65,13 @@ x <- rgamma(1000, shape = 2)
 hchart(x)
 ```
 
-## Densities
+### Densities
 
 ```{r}
 hchart(density(x), type = "area", color = "#B71C1C", name = "Gamma sample")
 ```
 
-## Empirical cumulative distributions
+### Empirical cumulative distributions
 
 The height at each x-value is the fraction of the sample at or below it.
 For example, `r sum(x <= 2)` of the 1,000 observations are at or below 2.
@@ -82,7 +80,7 @@ For example, `r sum(x <= 2)` of the 1,000 observations are at or below 2.
 hchart(ecdf(x), name = "Gamma sample")
 ```
 
-## Precomputed histograms
+### Precomputed histograms
 
 Pass a histogram object when you want R to choose the breaks before charting.
 The bin boundaries and counts are preserved.
@@ -91,14 +89,14 @@ The bin boundaries and counts are preserved.
 hchart(hist(x, breaks = 30, plot = FALSE), name = "Gamma sample")
 ```
 
-## Character & Factor
+### Character & factor
 
 ```{r}
 x <- diamonds$cut
 hchart(x, type = "column")
 ```
 
-## Frequency tables
+### Frequency tables
 
 Each cell shows how many cars have that combination of cylinders and gears.
 Zero counts remain visible in the heatmap. For a one-way table, see
@@ -108,274 +106,7 @@ Zero counts remain visible in the heatmap. For a one-way table, see
 hchart(table(Cylinders = mtcars$cyl, Gears = mtcars$gear))
 ```
 
-## Time Series
-
-```{r}
-hchart(LakeHuron, name = "Level") |>
-  hc_title(text = "Level of Lake Huron 1875–1972")
-```
-
-### Seasonal Decomposition of Time Series by Loess
-
-```{r}
-x <- stl(log(AirPassengers), "per")
-hchart(x)
-```
-
-### Forecast package
-
-The legend distinguishes the observed series from the forecast. Prediction
-intervals are linked to the forecast series. Supply `name` to label the subject;
-the chart adds the observed/forecast suffixes.
-
-```{r}
-library(forecast)
-
-x <- forecast(ets(USAccDeaths), h = 48, level = 95)
-hchart(x)
-```
-
-### Exponential-smoothing components
-
-An `ets` model shows its observed values and fitted level, slope or seasonal
-states in aligned panels. To show future values instead, pass the model to
-`forecast()` and chart the resulting forecast object.
-
-```{r ets-components}
-hchart(forecast::ets(AirPassengers))
-```
-
-### Multivariate Time series
-
-```{r}
-x <- cbind(mdeaths, fdeaths)
-hchart(x)
-```
-
-### Seasonal decomposition
-
-The four panels share a time axis and show the observed series, seasonality,
-trend and remainder. Gaps at the ends of the trend are part of the fitted
-decomposition.
-
-```{r hchart-decompose}
-hchart(stats::decompose(AirPassengers, type = "multiplicative"))
-```
-
-### Seasonal adjustment with X-13
-
-With the optional `seasonal` package installed, compare the original monthly
-series with the X-13-adjusted series on the same scale. Labels mark the outliers
-reported by the model at the adjusted value, as in `plot(fit)` (e.g., AO for
-an additive outlier or LS for a level shift).
-
-```{r x13, eval=requireNamespace("seasonal", quietly=TRUE)}
-fit <- seasonal::seas(AirPassengers)
-hchart(fit)
-```
-
-### Autocovariance & Autocorrelation
-
-```{r}
-changes <- diff(AirPassengers)
-hchart(acf(changes, plot = FALSE))
-hchart(pacf(changes, plot = FALSE))
-```
-
-With two monthly series, the diagonal panels show each series' autocorrelation.
-The other two panels show their cross-correlation at positive and negative
-lags. The horizontal axes use years, the time unit of these monthly series.
-
-```{r multivariate-acf}
-hchart(acf(cbind(mdeaths, fdeaths), lag.max = 12, plot = FALSE))
-```
-
-## Igraph package
-
-```{r}
-library(igraph)
-N <- 40
-
-net <- sample_gnp(N, p = 2 / N)
-wc <- cluster_walktrap(net)
-
-V(net)$label <- seq(N)
-V(net)$name <- paste("I'm #", seq(N))
-V(net)$page_rank <- round(page_rank(net)$vector, 2)
-V(net)$betweenness <- round(betweenness(net), 2)
-V(net)$degree <- degree(net)
-V(net)$size <- V(net)$degree
-V(net)$comm <- as.vector(membership(wc))
-V(net)$color <- colorize(membership(wc))
-
-hchart(net, layout = layout_with_fr)
-```
-
-## Decision trees
-
-Node area shows how many training observations reach each split or leaf.
-For classification, select a donut or a bar to see the class proportions.
-For regression, the node color follows the mean response. Hover over a node
-for its summary, or click a split to fold the subtree.
-
-```{r decision-tree, eval=requireNamespace("partykit", quietly=TRUE)}
-fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
-hchart(fit, node_shape = "bar") |>
-  hc_colors(c("#087B71", "#AD591D", "#7655A0"))
-```
-
-## Random forests
-
-The overall out-of-bag error and the class-specific errors show how quickly
-the forest stabilizes. Hover at a tree count to compare the overall and
-per-species errors in one table.
-
-```{r forest-error, eval=requireNamespace("randomForest", quietly=TRUE)}
-set.seed(42)
-forest <- randomForest::randomForest(Species ~ ., data = iris, ntree = 150)
-hchart(forest)
-```
-
-For variable importance, chart the mean decrease in Gini impurity from the same fit.
-
-```{r forest-importance, eval=requireNamespace("randomForest", quietly=TRUE)}
-gini <- randomForest::importance(forest, type = 2)
-importance <- data.frame(feature = rownames(gini), decrease = as.numeric(gini))
-importance <- importance[order(importance$decrease, decreasing = TRUE), ]
-hchart(
-  importance,
-  "bar",
-  hcaes(x = feature, y = decrease),
-  name = "Mean decrease in Gini"
-)
-```
-
-## Cross-validated regularization
-
-Each point shows mean cross-validated prediction error. Its whiskers extend
-one standard error in either direction. The two vertical lines identify the
-best-scoring lambda and the more regularized one-standard-error choice.
-Move the horizontal crosshair to an interval endpoint to see which other
-intervals reach that value.
-
-```{r glmnet-error, eval=requireNamespace("glmnet", quietly=TRUE)}
-x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
-set.seed(42)
-folds <- sample(rep_len(1:5, nrow(x)))
-cv <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = folds)
-hchart(cv)
-```
-
-## Boosted trees
-
-Select a tree by its one-based index. Hover over a split for its gain and the
-direction taken by missing values, or over a leaf for its margin contribution.
-Marker size follows cover.
-
-```{r xgb-tree, eval=requireNamespace("xgboost", quietly=TRUE) && packageVersion("xgboost") >= "3.1.0"}
-x <- as.matrix(iris[c("Sepal.Length", "Sepal.Width", "Petal.Length")])
-d <- xgboost::xgb.DMatrix(x, label = iris$Petal.Width)
-fit <- xgboost::xgb.train(
-  list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
-  d,
-  nrounds = 3L,
-  verbose = 0
-)
-hchart(fit, tree = 2)
-```
-
-## Cluster dendrograms
-
-The vertical position of each join gives the merge height. Hover over it for
-the number of observations. Both `hchart(fit)` and
-`hchart(as.dendrogram(fit))` use the same layout.
-
-```{r cluster-dendrogram}
-states <- scale(USArrests[
-  c(
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "California",
-    "Florida",
-    "Georgia",
-    "Illinois",
-    "Maine",
-    "Oregon",
-    "Vermont"
-  ),
-])
-fit <- hclust(dist(states), method = "average")
-hchart(fit)
-```
-
-## Phylogenies
-
-In the fan layout, radial distance measures branch length from the root.
-With no lengths, each edge counts as one step. Use `layout = "rectangular"`
-for a side-by-side reading of tip labels.
-
-```{r phylo-fan, eval=requireNamespace("ape", quietly=TRUE)}
-data("bird.families", package = "ape")
-families <- c(
-  "Rheidae",
-  "Casuariidae",
-  "Struthionidae",
-  "Phasianidae",
-  "Numididae",
-  "Odontophoridae",
-  "Anhimidae",
-  "Dendrocygnidae",
-  "Anatidae"
-)
-birds <- ape::keep.tip(bird.families, families)
-hchart(birds)
-```
-
-## Survival Package
-
-Survival models can be charted.
-
-```{r}
-library(survival)
-
-data(cancer, package = "survival")
-
-lung <- dplyr::mutate(cancer, sex = ifelse(sex == 1, "Male", "Female"))
-
-fit <- survfit(Surv(time, status) ~ sex, data = cancer)
-
-hchart(fit, ranges = TRUE)
-```
-
-## Quantmod package
-
-The highstock extension is used to chart `xts` and `xts ohlc` classes from the
-quantmod package. 
-
-```{r}
-library(quantmod)
-
-data(sample_matrix, package = "xts")
-x <- xts::as.xts(sample_matrix)
-
-hchart(x)
-```
-
-## Principal Components
-
-Each point represents one state. Axis titles give the share of variance
-explained by each component. Hover over a point to see the state's name.
-
-Use `loadings = TRUE` to show how the variables relate to the chosen
-components. Use `scale = 0` for the raw observation scores.
-
-```{r hchart-pca-loadings}
-fit <- prcomp(USArrests, scale. = TRUE)
-hchart(fit, choices = c(1, 3), loadings = TRUE)
-```
-
-## Matrix
+### Matrix
 
 ```{css, echo=FALSE}
 .volcano-grid { container-type: inline-size; }
@@ -443,7 +174,7 @@ hchart(
 
 :::
 
-## Distance matrix 
+### Distance matrix
 
 ```{r}
 mtcars2 <- mtcars[1:20, ]
@@ -451,16 +182,287 @@ x <- dist(mtcars2)
 hchart(x)
 ```
 
-## Correlation matrix
+### Correlation matrix
 
 ```{r}
 hchart(cor(mtcars))
 ```
 
-## GeoJSON
+### Principal components
+
+Each point represents one state. Axis titles give the share of variance
+explained by each component. Hover over a point to see the state's name.
+
+Use `loadings = TRUE` to show how the variables relate to the chosen
+components. Use `scale = 0` for the raw observation scores.
+
+```{r hchart-pca-loadings}
+fit <- prcomp(USArrests, scale. = TRUE)
+hchart(fit, choices = c(1, 3), loadings = TRUE)
+```
+
+### GeoJSON
 
 ```{r, child="_manchester.Rmd"}
 ```
 
 The [Maps vignette](maps.html#laguna-seca) shows how to style these geometry
 types separately on a racing circuit.
+
+## Time series
+
+```{r}
+hchart(LakeHuron, name = "Level") |>
+  hc_title(text = "Level of Lake Huron 1875–1972")
+```
+
+### Multivariate time series
+
+```{r}
+x <- cbind(mdeaths, fdeaths)
+hchart(x)
+```
+
+### Seasonal decomposition
+
+The four panels share a time axis and show the observed series, seasonality,
+trend and remainder. Gaps at the ends of the trend are part of the fitted
+decomposition.
+
+```{r hchart-decompose}
+hchart(stats::decompose(AirPassengers, type = "multiplicative"))
+```
+
+### Seasonal decomposition of time series by loess
+
+```{r}
+x <- stl(log(AirPassengers), "per")
+hchart(x)
+```
+
+### Seasonal adjustment with X-13
+
+With the optional `seasonal` package installed, compare the original monthly
+series with the X-13-adjusted series on the same scale. Labels mark the outliers
+reported by the model at the adjusted value, as in `plot(fit)` (e.g., AO for
+an additive outlier or LS for a level shift).
+
+```{r x13, eval=requireNamespace("seasonal", quietly=TRUE)}
+fit <- seasonal::seas(AirPassengers)
+hchart(fit)
+```
+
+### Forecast package
+
+The legend distinguishes the observed series from the forecast. Prediction
+intervals are linked to the forecast series. Supply `name` to label the subject;
+the chart adds the observed/forecast suffixes.
+
+```{r}
+library(forecast)
+
+x <- forecast(ets(USAccDeaths), h = 48, level = 95)
+hchart(x)
+```
+
+### Exponential-smoothing components
+
+An `ets` model shows its observed values and fitted level, slope or seasonal
+states in aligned panels. To show future values instead, pass the model to
+`forecast()` and chart the resulting forecast object.
+
+```{r ets-components}
+hchart(forecast::ets(AirPassengers))
+```
+
+### Autocovariance & autocorrelation
+
+```{r}
+changes <- diff(AirPassengers)
+hchart(acf(changes, plot = FALSE))
+hchart(pacf(changes, plot = FALSE))
+```
+
+With two monthly series, the diagonal panels show each series' autocorrelation.
+The other two panels show their cross-correlation at positive and negative
+lags. The horizontal axes use years, the time unit of these monthly series.
+
+```{r multivariate-acf}
+hchart(acf(cbind(mdeaths, fdeaths), lag.max = 12, plot = FALSE))
+```
+
+### Quantmod package
+
+The highstock extension is used to chart `xts` and `xts ohlc` classes from the
+quantmod package.
+
+```{r}
+library(quantmod)
+
+data(sample_matrix, package = "xts")
+x <- xts::as.xts(sample_matrix)
+
+hchart(x)
+```
+
+## Fitted models
+
+### Random forests
+
+The overall out-of-bag error and the class-specific errors show how quickly
+the forest stabilizes. Hover at a tree count to compare the overall and
+per-species errors in one table.
+
+```{r forest-error, eval=requireNamespace("randomForest", quietly=TRUE)}
+set.seed(42)
+forest <- randomForest::randomForest(Species ~ ., data = iris, ntree = 150)
+hchart(forest)
+```
+
+For variable importance, chart the mean decrease in Gini impurity from the same fit.
+
+```{r forest-importance, eval=requireNamespace("randomForest", quietly=TRUE)}
+gini <- randomForest::importance(forest, type = 2)
+importance <- data.frame(feature = rownames(gini), decrease = as.numeric(gini))
+importance <- importance[order(importance$decrease, decreasing = TRUE), ]
+hchart(
+  importance,
+  "bar",
+  hcaes(x = feature, y = decrease),
+  name = "Mean decrease in Gini"
+)
+```
+
+### Cross-validated regularization
+
+Each point shows mean cross-validated prediction error. Its whiskers extend
+one standard error in either direction. The two vertical lines identify the
+best-scoring lambda and the more regularized one-standard-error choice.
+Move the horizontal crosshair to an interval endpoint to see which other
+intervals reach that value.
+
+```{r glmnet-error, eval=requireNamespace("glmnet", quietly=TRUE)}
+x <- as.matrix(mtcars[c("disp", "hp", "wt", "qsec")])
+set.seed(42)
+folds <- sample(rep_len(1:5, nrow(x)))
+cv <- glmnet::cv.glmnet(x, mtcars$mpg, foldid = folds)
+hchart(cv)
+```
+
+### Survival package
+
+Survival models can be charted.
+
+```{r}
+library(survival)
+
+data(cancer, package = "survival")
+
+lung <- dplyr::mutate(cancer, sex = ifelse(sex == 1, "Male", "Female"))
+
+fit <- survfit(Surv(time, status) ~ sex, data = cancer)
+
+hchart(fit, ranges = TRUE)
+```
+
+## Decision trees
+
+Node area shows how many training observations reach each split or leaf.
+For classification, select a donut or a bar to see the class proportions.
+For regression, the node color follows the mean response. Hover over a node
+for its summary, or click a split to fold the subtree.
+
+```{r decision-tree, eval=requireNamespace("partykit", quietly=TRUE)}
+fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+hchart(fit, node_shape = "bar") |>
+  hc_colors(c("#087B71", "#AD591D", "#7655A0"))
+```
+
+### Boosted trees
+
+Select a tree by its one-based index. Hover over a split for its gain and the
+direction taken by missing values, or over a leaf for its margin contribution.
+Marker size follows cover.
+
+```{r xgb-tree, eval=requireNamespace("xgboost", quietly=TRUE) && packageVersion("xgboost") >= "3.1.0"}
+x <- as.matrix(iris[c("Sepal.Length", "Sepal.Width", "Petal.Length")])
+d <- xgboost::xgb.DMatrix(x, label = iris$Petal.Width)
+fit <- xgboost::xgb.train(
+  list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
+  d,
+  nrounds = 3L,
+  verbose = 0
+)
+hchart(fit, tree = 2)
+```
+
+## Dendrograms and phylogenies
+
+### Cluster dendrograms
+
+The vertical position of each join gives the merge height. Hover over it for
+the number of observations. Both `hchart(fit)` and
+`hchart(as.dendrogram(fit))` use the same layout.
+
+```{r cluster-dendrogram}
+states <- scale(USArrests[
+  c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "California",
+    "Florida",
+    "Georgia",
+    "Illinois",
+    "Maine",
+    "Oregon",
+    "Vermont"
+  ),
+])
+fit <- hclust(dist(states), method = "average")
+hchart(fit)
+```
+
+### Phylogenies
+
+In the fan layout, radial distance measures branch length from the root.
+With no lengths, each edge counts as one step. Use `layout = "rectangular"`
+for a side-by-side reading of tip labels.
+
+```{r phylo-fan, eval=requireNamespace("ape", quietly=TRUE)}
+data("bird.families", package = "ape")
+families <- c(
+  "Rheidae",
+  "Casuariidae",
+  "Struthionidae",
+  "Phasianidae",
+  "Numididae",
+  "Odontophoridae",
+  "Anhimidae",
+  "Dendrocygnidae",
+  "Anatidae"
+)
+birds <- ape::keep.tip(bird.families, families)
+hchart(birds)
+```
+
+## Networks {#igraph-package}
+
+```{r}
+library(igraph)
+N <- 40
+
+net <- sample_gnp(N, p = 2 / N)
+wc <- cluster_walktrap(net)
+
+V(net)$label <- seq(N)
+V(net)$name <- paste("I'm #", seq(N))
+V(net)$page_rank <- round(page_rank(net)$vector, 2)
+V(net)$betweenness <- round(betweenness(net), 2)
+V(net)$degree <- degree(net)
+V(net)$size <- V(net)$degree
+V(net)$comm <- as.vector(membership(wc))
+V(net)$color <- colorize(membership(wc))
+
+hchart(net, layout = layout_with_fr)
+```
