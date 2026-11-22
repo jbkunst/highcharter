@@ -7,7 +7,9 @@ and `y` is the mean temperature in °C. A range column extends from the
 day’s `low` to its `high`. With these names,
 `hchart(temperatures, "columnrange")` reads the columns directly. Use
 `hcaes(low = minimum, high = maximum)` if your columns have different
-names.
+names. With an empty mapping, a `color` column supplies each point’s
+Highcharts color directly. When mapping other columns explicitly, use
+`hcaes(x, y, color = color)` to map the point colors too.
 
 Show temperature data
 
@@ -532,7 +534,6 @@ events <- tibble::tibble(
 hchart(
   events,
   "timeline",
-  hcaes(color = color),
   name = "Albert Einstein",
   colorByPoint = TRUE,
   dataLabels = list(
@@ -643,7 +644,7 @@ schedule <- tasks |>
     completed = progress,
     dependency
   )
-hchart(schedule, "gantt", hcaes(color = color), name = "Tasks") |>
+hchart(schedule, "gantt", name = "Tasks") |>
   hc_yAxis(
     labels = list(
       levels = list(list(level = 1, style = list(fontWeight = "normal")))

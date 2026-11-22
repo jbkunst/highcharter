@@ -112,7 +112,10 @@ temperature in °C. A range column extends from the day’s
 <code>low</code> to its <code>high</code>. With these names,
 <code>hchart(temperatures, "columnrange")</code> reads the columns
 directly. Use <code>hcaes(low = minimum, high = maximum)</code> if your
-columns have different names.</p>
+columns have different names. With an empty mapping, a
+<code>color</code> column supplies each point’s Highcharts color
+directly. When mapping other columns explicitly, use
+<code>hcaes(x, y, color = color)</code> to map the point colors too.</p>
 <details><summary>
 Show temperature data
 </summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -672,7 +675,6 @@ Show R code
 <span><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span></span>
 <span>  <span class="va">events</span>,</span>
 <span>  <span class="st">"timeline"</span>,</span>
-<span>  <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">color</span><span class="op">)</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"Albert Einstein"</span>,</span>
 <span>  colorByPoint <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  dataLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -782,7 +784,7 @@ Show R code
 <span>    completed <span class="op">=</span> <span class="va">progress</span>,</span>
 <span>    <span class="va">dependency</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">schedule</span>, <span class="st">"gantt"</span>, <span class="fu"><a href="../reference/hcaes.html">hcaes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">color</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Tasks"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span><span class="va">schedule</span>, <span class="st">"gantt"</span>, name <span class="op">=</span> <span class="st">"Tasks"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/hc_yAxis.html">hc_yAxis</a></span><span class="op">(</span></span>
 <span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fl">1</span>, style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fontWeight <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
