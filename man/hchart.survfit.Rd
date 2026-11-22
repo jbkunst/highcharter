@@ -10,7 +10,7 @@
   fun = NULL,
   markTimes = TRUE,
   symbol = "plus",
-  markerColor = "black",
+  markerColor = NULL,
   ranges = FALSE,
   rangesOpacity = 0.3
 )
@@ -31,8 +31,8 @@ and \code{"cumhaz"} plots \code{-log(S)}.}
 
 \item{symbol}{Symbol to use as marker (plus sign by default)}
 
-\item{markerColor}{Color of the marker ("black" by default); use NULL to use
-the respective color of each series}
+\item{markerColor}{Color of the censoring markers. By default (\code{NULL}),
+each marker uses the color of its survival curve.}
 
 \item{ranges}{Plot interval ranges? FALSE by default}
 

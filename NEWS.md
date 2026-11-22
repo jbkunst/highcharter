@@ -288,6 +288,8 @@ Bundled Highcharts JS: 12.6.2.
 * `hchart.survfit()` draws a separate curve for each Cox prediction profile
   within each stratum. Confidence bands follow the corresponding curve, and
   censoring markers include times with multiple censored observations.
+  Censoring markers now use their curve's color by default. Use
+  `markerColor = "black"` to draw all markers in black.
   This method requires survival 3.6-5 or later.
 
 * Boxplots from `data_to_boxplot()` place outliers at the same x coordinate as

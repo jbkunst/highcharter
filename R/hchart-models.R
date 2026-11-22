@@ -176,8 +176,8 @@ hchart.cv.glmnet <- function(object, ...) {
 #' and \code{"cumhaz"} plots \code{-log(S)}.
 #' @param markTimes Label curves marked at each censoring time? TRUE by default
 #' @param symbol Symbol to use as marker (plus sign by default)
-#' @param markerColor Color of the marker ("black" by default); use NULL to use
-#' the respective color of each series
+#' @param markerColor Color of the censoring markers. By default (`NULL`),
+#' each marker uses the color of its survival curve.
 #' @param ranges Plot interval ranges? FALSE by default
 #' @param rangesOpacity Opacity of the interval ranges (0.3 by default)
 #'
@@ -206,7 +206,7 @@ hchart.survfit <- function(
   fun = NULL,
   markTimes = TRUE,
   symbol = "plus",
-  markerColor = "black",
+  markerColor = NULL,
   ranges = FALSE,
   rangesOpacity = 0.3
 ) {

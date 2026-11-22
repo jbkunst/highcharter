@@ -358,7 +358,7 @@ lung <- dplyr::mutate(cancer, sex = ifelse(sex == 1, "Male", "Female"))
 
 fit <- survfit(Surv(time, status) ~ sex, data = cancer)
 
-hchart(fit, ranges = TRUE, markerColor = NULL)
+hchart(fit, ranges = TRUE)
 ```
 
 ## Decision trees

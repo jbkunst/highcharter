@@ -80,6 +80,7 @@ test_that("log survival scales keep valid estimates when their bands have gaps",
     c(NA, log(-log(fit$surv[3:6])), NA)
   )
   expect_true(points[[4]]$marker$enabled)
+  expect_null(points[[4]]$marker$fillColor)
   band <- hc$series[[2]]$data
   expect_equal(vapply(band, "[[", numeric(1), 1L), 1:6)
   expect_equal(unlist(band[[2]]), c(2, NA, NA))
