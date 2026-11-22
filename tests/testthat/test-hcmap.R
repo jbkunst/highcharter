@@ -132,6 +132,41 @@ test_that("joined maps enable automatic color scales and preserve configured axe
   )
 })
 
+test_that("both map helpers use the requested column and retain the join key", {
+  map <- jsonlite::read_json(system.file(
+    "extdata",
+    "districts.geojson",
+    package = "highcharter"
+  ))
+  df <- data.frame(code = c("01", "02"), value = c(100, 200), change = c(-7, 4))
+  for (make_map in list(
+    function(df, value, join) {
+      hcmap(map, data = df, value = value, joinBy = join)
+    },
+    function(df, value, join) {
+      hc_add_series_map(highchart(), map, df, value, join)
+    }
+  )) {
+    for (value in c("change", "value")) {
+      series <- make_map(df, value, "code")$x$hc_opts$series[[1L]]
+      expect_equal(vapply(series$data, `[[`, 0, "value"), df[[value]])
+      expect_identical(vapply(series$data, `[[`, "", "code"), df$code)
+    }
+    keyed <- transform(df, value = code)
+    keyed[["hc-key"]] <- c("old1", "old2")
+    chart <- make_map(keyed, "change", c("code", "value"))
+    series <- chart$x$hc_opts$series[[1L]]
+    expect_false(grepl(".", series$joinBy[2L], fixed = TRUE))
+    expect_equal(vapply(series$data, `[[`, 0, "value"), df$change)
+    expect_identical(
+      vapply(series$data, `[[`, "", series$joinBy[2L]),
+      keyed$value
+    )
+    expect_identical(vapply(series$data, `[[`, "", "hc-key"), keyed[["hc-key"]])
+  }
+  expect_identical(df$value, c(100, 200))
+})
+
 test_that("country codes and canonical paths use the same installed boundaries", {
   map <- function(key, ...) hcmap(key, ...)$x$hc_opts$series[[1]]$mapData
   chile <- map("cl")

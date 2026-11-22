@@ -218,6 +218,9 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Bug fixes
 
+* `hcmap()` and `hc_add_series_map()` use the column named by `value`
+  even when the input already contains a different column called `value`.
+
 * Joined maps use the data range for their color scale. Adding a map layer
   with `hc_add_series_map()` preserves any color axes already configured.
   Use `hc_colorAxis(min = 0)` for a scale that starts at zero.

@@ -35,10 +35,24 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
   )
 
   hc$x$type <- "map"
-  add_joined_map(hc, map, rename(df, value := value), joinBy, ...)
+  add_joined_map(hc, map, df, value, joinBy, ...)
 }
 
-add_joined_map <- function(hc, map, data, joinBy, ...) {
+add_joined_map <- function(hc, map, data, value, joinBy, ...) {
+  if (!is.null(value)) {
+    key <- unname(tail(joinBy, 1L))
+    if (identical(key, "value") && key %in% names(data) && value != key) {
+      # Keep the region identifier before replacing the point's value.
+      key <- tail(make.unique(c(names(data), "hc-key"), sep = "_"), 1L)
+      data[[key]] <- data[["value"]]
+      joinBy <- c(joinBy[1L], key)
+    }
+    data <- mutate(
+      data,
+      value = .data[[value]],
+      .keep = if (identical(key, value)) "all" else "unused"
+    )
+  }
   if (is.null(hc$x$hc_opts$colorAxis)) {
     # An empty JSON object enables the scale with Highcharts' defaults.
     hc$x$hc_opts$colorAxis <- stats::setNames(list(), character())
@@ -149,8 +163,7 @@ hcmap <- function(
         ...
       )
   } else {
-    data <- rename(data, value := all_of(value))
-    hc <- add_joined_map(hc, mapdata, data, joinBy, ...)
+    hc <- add_joined_map(hc, mapdata, data, value, joinBy, ...)
   }
 
   hc |>
