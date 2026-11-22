@@ -98,6 +98,7 @@ hchart.constparty <- function(
       padding = 3,
       verticalAlign = "middle",
       style = list(
+        color = "#333333",
         fontWeight = "normal",
         textOutline = "3px #FFFFFF",
         whiteSpace = "nowrap"
