@@ -64,9 +64,8 @@ flower’s line.
 
 To compare petal lengths across species, let the helper calculate one
 box per group. With `add_outliers = TRUE`, it also returns a scatter
-series for the observations beyond the whiskers. Label the outliers with
-their petal length and click the legend to hide or show the boxes and
-outliers together.
+series for the observations beyond the whiskers. Click the legend to
+hide or show the boxes and their outliers together.
 
 ``` r
 
@@ -83,16 +82,6 @@ highchart() |>
   hc_chart(style = list(fontFamily = "IBM Plex Sans", fontWeight = "300")) |>
   hc_xAxis(categories = levels(iris$Species)) |>
   hc_yAxis(title = list(text = "Petal length (cm)")) |>
-  hc_plotOptions(
-    scatter = list(
-      dataLabels = list(
-        enabled = TRUE,
-        align = "left",
-        x = 6,
-        format = "{point.y:.1f} cm"
-      )
-    )
-  ) |>
   hc_legend(itemStyle = list(fontWeight = "300")) |>
   hc_add_series_list(boxes)
 ```

@@ -253,7 +253,8 @@ data(volcano)
 
 volcano_axes <- function(chart) {
   chart |>
-    hc_chart(margin = c(0, 0, 52, 0)) |>
+    hc_chart(margin = c(0, 96, 0, 0)) |>
+    hc_legend(layout = "vertical", align = "right", verticalAlign = "middle") |>
     hc_xAxis(
       min = 1,
       max = ncol(volcano),
