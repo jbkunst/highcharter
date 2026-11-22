@@ -597,9 +597,15 @@ hchart.matrix <- function(
     hc_colorAxis(visible = TRUE)
 
   if (!has_labels) {
-    hc <- hc |>
-      hc_xAxis(visible = FALSE) |>
-      hc_yAxis(visible = FALSE, reversed = TRUE)
+    axis <- list(
+      visible = FALSE,
+      minPadding = 0,
+      maxPadding = 0,
+      startOnTick = FALSE,
+      endOnTick = FALSE
+    )
+    hc <- rlang::exec(hc_xAxis, hc, !!!axis)
+    hc <- rlang::exec(hc_yAxis, hc, !!!axis, reversed = TRUE)
   } else {
     hc <- hc |>
       hc_xAxis(

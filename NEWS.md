@@ -180,6 +180,10 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Changes
 
+* For matrices without row or column names, `hchart()` fits the axes to the
+  grid in heatmap, tilemap and contour charts. The axes can still expand
+  when adding another series.
+
 * Passing an `lm` or `loess` object to `hc_add_series()` now warns and still
   draws the fitted curve and its band (plus or minus two standard errors).
   Both methods will remain available throughout the first release with this

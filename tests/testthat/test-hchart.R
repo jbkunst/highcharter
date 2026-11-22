@@ -351,6 +351,15 @@ test_that("matrix chart types share the same grid", {
     expect_identical(opts$series[[1]]$type, type)
     expect_identical(opts$series[[1]]$data, heat$series[[1]]$data)
     expect_identical(opts$yAxis, heat$yAxis)
+
+    plain <- hchart(unname(m), type = type)$x$hc_opts
+    for (axis in list(plain$xAxis, plain$yAxis)) {
+      expect_equal(axis$minPadding, 0)
+      expect_equal(axis$maxPadding, 0)
+      expect_false(axis$startOnTick)
+      expect_false(axis$endOnTick)
+      expect_false(any(c("min", "max") %in% names(axis)))
+    }
   }
   expect_error(hchart(m, type = "scatter"), "heatmap")
   contour <- hchart(
