@@ -167,6 +167,12 @@ Bundled Highcharts JS: 12.6.2.
 ### New features
 
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
+  classification and regression trees from `partykit` and `rpart`, and
+  single C5.0 classification trees. Node area shows the number of
+  observations. Donuts or bars show class composition and a color axis
+  shows the mean response for regression. Tree packages are optional.
+
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
   one-way tables as column charts and two-way tables as heatmaps,
   preserving category order, dimension labels and zero counts.
 
@@ -244,6 +250,17 @@ Bundled Highcharts JS: 12.6.2.
   ends (`x` and `x2`).
 
 ### Changes
+
+- Passing an `lm` or `loess` object to
+  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
+  now warns and still draws the fitted curve and its band (plus or minus
+  two standard errors). Both methods will remain available throughout
+  the first release with this warning. To migrate, call
+  [`predict()`](https://rdrr.io/r/stats/predict.html) and pass a data
+  frame to
+  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md),
+  as in the [First steps
+  example](https://jkunst.com/highcharter/articles/first-steps.html#a-more-advanced-example).
 
 - Widgets attach the Latin WOFF2 files for the bundled families selected
   by their theme and chart options. Charts using system fonts need no

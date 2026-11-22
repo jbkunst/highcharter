@@ -62,15 +62,16 @@ gets its own layer. Supply `type` to select one layer explicitly.
 
 ``` r
 methods(hchart)
-#>  [1] hchart.acf*           hchart.character*     hchart.data.frame*   
-#>  [4] hchart.decomposed.ts* hchart.default*       hchart.density*      
-#>  [7] hchart.dist*          hchart.ets*           hchart.factor*       
-#> [10] hchart.forecast*      hchart.geo_json*      hchart.geo_list*     
-#> [13] hchart.histogram*     hchart.igraph*        hchart.list*         
-#> [16] hchart.matrix*        hchart.mforecast*     hchart.mts*          
-#> [19] hchart.numeric*       hchart.prcomp*        hchart.princomp*     
-#> [22] hchart.seas*          hchart.stl*           hchart.survfit*      
-#> [25] hchart.table*         hchart.ts*            hchart.xts*          
+#>  [1] hchart.C5.0*          hchart.acf*           hchart.character*    
+#>  [4] hchart.constparty*    hchart.data.frame*    hchart.decomposed.ts*
+#>  [7] hchart.default*       hchart.density*       hchart.dist*         
+#> [10] hchart.ets*           hchart.factor*        hchart.forecast*     
+#> [13] hchart.geo_json*      hchart.geo_list*      hchart.histogram*    
+#> [16] hchart.igraph*        hchart.list*          hchart.matrix*       
+#> [19] hchart.mforecast*     hchart.mts*           hchart.numeric*      
+#> [22] hchart.prcomp*        hchart.princomp*      hchart.rpart*        
+#> [25] hchart.seas*          hchart.stl*           hchart.survfit*      
+#> [28] hchart.table*         hchart.ts*            hchart.xts*          
 #> see '?methods' for accessing help and source code
 
 # Principal component analysis

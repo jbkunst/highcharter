@@ -295,6 +295,11 @@ Map R columns to point fields with hcaes(), then add series to a chart.
 These methods are selected automatically by hchart() and
 hc_add_series().
 
+- [`hchart(`*`<constparty>`*`)`](https://jkunst.com/highcharter/reference/hchart.constparty.md)
+  [`hchart(`*`<rpart>`*`)`](https://jkunst.com/highcharter/reference/hchart.constparty.md)
+  [`hchart(`*`<C5.0>`*`)`](https://jkunst.com/highcharter/reference/hchart.constparty.md)
+  : Chart a fitted decision tree
+
 - [`hchart(`*`<igraph>`*`)`](https://jkunst.com/highcharter/reference/hchart.igraph.md)
   : Plot igraph objects using Highcharts
 
@@ -320,7 +325,7 @@ hc_add_series().
 
 - [`hc_add_series(`*`<lm>`*`)`](https://jkunst.com/highcharter/reference/hc_add_series.lm.md)
   [`hc_add_series(`*`<loess>`*`)`](https://jkunst.com/highcharter/reference/hc_add_series.lm.md)
-  : hc_add_series for lm and loess objects
+  : Add a fitted model series (deprecated)
 
 - [`hc_add_series(`*`<numeric>`*`)`](https://jkunst.com/highcharter/reference/hc_add_series.numeric.md)
   :

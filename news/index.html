@@ -92,7 +92,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws one-way tables as column charts and two-way tables as heatmaps, preserving category order, dimension labels and zero counts.</p></li>
+<ul><li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws classification and regression trees from <code>partykit</code> and <code>rpart</code>, and single C5.0 classification trees. Node area shows the number of observations. Donuts or bars show class composition and a color axis shows the mean response for regression. Tree packages are optional.</p></li>
+<li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws one-way tables as column charts and two-way tables as heatmaps, preserving category order, dimension labels and zero counts.</p></li>
 <li><p><code><a href="../reference/hc_gridAxis.html">hc_gridAxis()</a></code> arranges pairs of axes in a rectangular grid. <code><a href="../reference/hchart.html">hchart()</a></code> uses it to draw multivariate ACF, PACF and autocovariance objects with one panel per series pair and a common vertical scale.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> now accepts <code>type = "tilemap"</code> and <code>type = "contour"</code> for numeric matrices. The default is <code>"heatmap"</code>.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> and <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code> draw each geometry family in a mixed <code>geojsonio</code> FeatureCollection, with polygons below lines and points. Supply <code>type</code> to draw just one family. Both <code>geo_json</code> and <code>geo_list</code> are supported.</p></li>
@@ -109,7 +110,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="changes-development-version">Changes<a class="anchor" aria-label="anchor" href="#changes-development-version"></a></h3>
-<ul><li><p>Widgets attach the Latin WOFF2 files for the bundled families selected by their theme and chart options. Charts using system fonts need no font files.</p></li>
+<ul><li><p>Passing an <code>lm</code> or <code>loess</code> object to <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code> now warns and still draws the fitted curve and its band (plus or minus two standard errors). Both methods will remain available throughout the first release with this warning. To migrate, call <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> and pass a data frame to <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code>, as in the <a href="https://jkunst.com/highcharter/articles/first-steps.html#a-more-advanced-example">First steps example</a>.</p></li>
+<li><p>Widgets attach the Latin WOFF2 files for the bundled families selected by their theme and chart options. Charts using system fonts need no font files.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> shows ACF and PACF as lollipops at their reported lags. Multivariate time series and decompositions use shared table tooltips.</p></li>
 <li><p>Histograms created by <code><a href="../reference/hchart.html">hchart()</a></code> use square corners by default.</p></li>
 <li><p>The hcrt, carbon and smpl themes use regular-weight titles, labels and tooltip values.</p></li>

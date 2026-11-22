@@ -218,6 +218,20 @@ V(net)$color <- colorize(membership(wc))
 hchart(net, layout = layout_with_fr)
 ```
 
+## Decision trees
+
+Node area shows how many training observations reach each split or leaf.
+For classification, select a donut or a bar to see the class
+proportions. For regression, the node color follows the mean response.
+Hover over a node for its summary, or click a split to fold the subtree.
+
+``` r
+
+fit <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+hchart(fit, node_shape = "bar") |>
+  hc_colors(c("#087B71", "#AD591D", "#7655A0"))
+```
+
 ## Survival Package
 
 Survival models can be charted.
