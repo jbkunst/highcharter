@@ -13,10 +13,8 @@
 
 - [hchart Function](https://jkunst.com/highcharter/articles/hchart.md):
 
-  This a generic function, this means you can chart various R like
-  numeric, histograms, character, factor, ts on the fly. The resulting
-  chart is a highchart object so you can keep modifying with the
-  implemented API.
+  Use hchart() to plot R objects, from data frames and time series to
+  fitted models, trees and networks.
 
 - [Prepare chart data with data
   helpers](https://jkunst.com/highcharter/articles/data-helpers.md):

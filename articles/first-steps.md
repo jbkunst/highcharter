@@ -2,37 +2,17 @@
 
 ## Introduction
 
-We chart data, and data can come in different ways: numeric or character
-vectors, as time series objects, etc. but the most common object with
-data is a data frame. So, we’ll show how chart this type of object in
-**highcharter**.
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) chooses
+a chart based on the class of the R object you pass to it. For example,
+a numeric vector produces a histogram and a time series produces a line
+chart.
 
-Highcharter have two main functions to create a chart from data and
-another to add data to an existing `highchart` object.
-
-1.  [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md): A
-    generic function which take an object (like vector, time series,
-    data frames, likert object, etc) and return a `highchart` object
-    (chart)
-2.  [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md):
-    A generic function which add data to a existing `highchart` object
-    depending the type (class) of the data.
-
-There are a last function will be useful to chart data from data frame.
-The functions is `hcaes` which will define the aesthetic mappings. This
-3 functions are inspired in **ggplot2** package. So:
-
-- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) works
-  like ggplot2’s `qplot`.
-- [`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
-  works like ggplot2’s `geom_`s.
-- [`hcaes()`](https://jkunst.com/highcharter/reference/hcaes.md) works
-  like ggplot2’s `aes`.
-
-The main differences with ggplot2 are here we need the data and the
-aesthetics explicit in every highcharts functions.
-
-First, show some data to work with.
+With a data frame, choose a chart type and use
+[`hcaes()`](https://jkunst.com/highcharter/reference/hcaes.md) to map
+columns to positions or other properties. Use
+[`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
+to add data to an existing chart. The first example uses the `mpg` data
+frame.
 
 ``` r
 
@@ -206,9 +186,10 @@ hc <- hchart(
 hc
 ```
 
-We can add more series to chart (like the layers in ggplot world) using
-the function `hc_add_series`. The parameters in this functions are
-similar to the `hchart`:
+Use
+[`hc_add_series()`](https://jkunst.com/highcharter/reference/hc_add_series.md)
+to add the fitted line and its uncertainty band to the scatter plot.
+Each series has its own chart type and column mappings.
 
 ``` text
 hc_add_series(<highcarter_object>, <data.frame>, <type_of_chart>, hcaes(<aesthetics>), ...)

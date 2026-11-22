@@ -25,7 +25,9 @@ hc_add_series(hc, data, type = NULL, mapping = hcaes(), ...)
 
 - mapping:
 
-  The mapping, same idea as `ggplot2`.
+  Column mappings created with
+  [`hcaes()`](https://jkunst.com/highcharter/reference/hcaes.md). Use
+  `group` to create a separate series for each distinct value.
 
 - ...:
 
