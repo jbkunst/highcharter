@@ -177,7 +177,10 @@ Bundled Highcharts JS: 12.6.2.
   random forest error histories, cross-validation points and standard
   error bars for glmnet, and individual XGBoost trees. Cluster
   dendrograms preserve merge heights, and radial or rectangular
-  phylogenies preserve branch lengths. Model packages are optional.
+  phylogenies preserve branch lengths. Random forests compare multiple
+  error curves in a shared tooltip table. Crosshairs on glmnet charts
+  let you compare error bars at the same metric value. Model packages
+  are optional.
 
 - [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
   classification and regression trees from `partykit` and `rpart`, and

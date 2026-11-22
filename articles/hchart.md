@@ -247,7 +247,7 @@ hchart(fit, node_shape = "bar") |>
 
 The overall out-of-bag error and the class-specific errors show how
 quickly the forest stabilizes. Hover at a tree count to compare the
-species.
+overall and per-species errors in one table.
 
 ``` r
 
@@ -277,7 +277,8 @@ hchart(
 Each point shows mean cross-validated prediction error. Its whiskers
 extend one standard error in either direction. The two vertical lines
 identify the best-scoring lambda and the more regularized
-one-standard-error choice.
+one-standard-error choice. Move the horizontal crosshair to an interval
+endpoint to see which other intervals reach that value.
 
 ``` r
 
