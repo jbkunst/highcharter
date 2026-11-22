@@ -231,9 +231,10 @@ hchart(fit, choices = c(1, 3), loadings = TRUE)
 ```{css, echo=FALSE}
 .volcano-grid { container-type: inline-size; }
 .volcano-grid .highchart {
-  --grid-width: min(100cqi, 26rem);
-  width: var(--grid-width) !important;
-  height: calc(var(--grid-width) * var(--rows) / var(--cols) + 52px) !important;
+  --legend-width: 96px;
+  --grid-width: min(calc(100cqi - var(--legend-width)), 26rem);
+  width: calc(var(--grid-width) + var(--legend-width)) !important;
+  height: calc(var(--grid-width) * var(--rows) / var(--cols)) !important;
   margin-inline: auto;
 }
 ```
@@ -246,7 +247,8 @@ data(volcano)
 
 volcano_axes <- function(chart) {
   chart |>
-    hc_chart(margin = c(0, 0, 52, 0)) |>
+    hc_chart(margin = c(0, 96, 0, 0)) |>
+    hc_legend(layout = "vertical", align = "right", verticalAlign = "middle") |>
     hc_xAxis(
       min = 1,
       max = ncol(volcano),
