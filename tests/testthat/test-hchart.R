@@ -270,6 +270,42 @@ test_that("hchart returns a valid matrix plot after valid data input", {
   expect_true(all(class(h) %in% c("highchart", "htmlwidget")))
 })
 
+test_that("one-way tables keep their category order, zeros and supplied values", {
+  counts <- table(Cylinders = factor(c(8, 8, 4), levels = c(4, 6, 8)))
+  counts <- sort(counts, decreasing = TRUE)
+  opts <- hchart(counts, name = "Cars")$x$hc_opts
+  expect_identical(opts$xAxis$categories, c("8", "4", "6"))
+  expect_identical(opts$xAxis$title$text, "Cylinders")
+  expect_identical(opts$series[[1]]$type, "column")
+  expect_identical(opts$series[[1]]$name, "Cars")
+  expect_equal(opts$series[[1]]$data, c(2, 1, 0))
+  proportions <- hchart(prop.table(counts), "bar")$x$hc_opts$series[[1]]
+  expect_identical(proportions$type, "bar")
+  expect_equal(proportions$data, c(2 / 3, 1 / 3, 0))
+  missing <- hchart(table(c("A", NA), useNA = "ifany"))$x$hc_opts
+  expect_identical(missing$xAxis$categories, c("A", "(NA)"))
+  expect_equal(missing$series[[1]]$data, c(1, 1))
+})
+
+test_that("two-way tables use the matrix grid and larger tables require a margin", {
+  tab <- xtabs(~ cyl + gear, data = mtcars)
+  hc <- hchart(tab, type = "tilemap", name = "Cars")
+  opts <- hc$x$hc_opts
+  expect_identical(opts$xAxis$categories, colnames(tab))
+  expect_identical(opts$yAxis$categories, rownames(tab))
+  expect_identical(opts$xAxis$title$text, "gear")
+  expect_identical(opts$yAxis$title$text, "cyl")
+  expect_identical(
+    opts$series,
+    hchart(unclass(tab), type = "tilemap", name = "Cars")$x$hc_opts$series
+  )
+  expect_error(hchart(Titanic), "margin.table", fixed = TRUE)
+  expect_identical(
+    hchart(margin.table(Titanic, c(1, 4)))$x$hc_opts$series[[1]]$type,
+    "heatmap"
+  )
+})
+
 test_that("distance heatmaps accept matrix display options", {
   d <- stats::dist(head(mtcars, 3))
   opts <- hchart(d, label = TRUE, showInLegend = TRUE)$x$hc_opts

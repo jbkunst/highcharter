@@ -119,6 +119,9 @@ Bundled Highcharts JS: 12.6.2.
 
 ## New features
 
+* `hchart()` draws one-way tables as column charts and two-way tables as
+  heatmaps, preserving category order, dimension labels and zero counts.
+
 * `hc_gridAxis()` arranges pairs of axes in a rectangular grid.
   `hchart()` uses it to draw multivariate ACF, PACF and autocovariance
   objects with one panel per series pair and a common vertical scale.

@@ -38,6 +38,8 @@ generic that other classes and packages can extend.
 Run \code{methods(hchart)} to see what objects are supported.
 Numeric matrices use a heatmap by default. Set \code{type = "tilemap"} for
 hexagonal tiles or \code{type = "contour"} for contour lines.
+One-way tables use columns in category order. Two-way tables use the
+matrix heatmap. Use \code{margin.table()} to choose dimensions of a larger table.
 
 For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
 family gets its own layer. Supply \code{type} to select one layer explicitly.

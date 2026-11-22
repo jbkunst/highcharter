@@ -7,6 +7,8 @@
 #' Run \code{methods(hchart)} to see what objects are supported.
 #' Numeric matrices use a heatmap by default. Set `type = "tilemap"` for
 #' hexagonal tiles or `type = "contour"` for contour lines.
+#' One-way tables use columns in category order. Two-way tables use the
+#' matrix heatmap. Use `margin.table()` to choose dimensions of a larger table.
 #'
 #' For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
 #' family gets its own layer. Supply `type` to select one layer explicitly.
@@ -163,6 +165,37 @@ hchart.character <- function(object, type = "column", ...) {
 
 #' @export
 hchart.factor <- hchart.character
+
+#' @export
+hchart.table <- function(
+  object,
+  type = if (is.matrix(object)) "heatmap" else "column",
+  ...
+) {
+  if (length(dim(object)) > 2L) {
+    stop(
+      "Choose one or two dimensions with margin.table() before calling hchart().",
+      call. = FALSE
+    )
+  }
+  dimnames(object) <- lapply(dimnames(object), function(x) {
+    replace(x, is.na(x), "(NA)")
+  })
+  titles <- names(dimnames(object))
+  if (is.matrix(object)) {
+    return(
+      hchart.matrix(unclass(object), type = type, ...) |>
+        hc_xAxis(title = list(text = titles[2L])) |>
+        hc_yAxis(title = list(text = titles[1L]))
+    )
+  }
+  highchart() |>
+    hc_xAxis(
+      categories = dimnames(object)[[1L]],
+      title = list(text = titles[1L])
+    ) |>
+    hc_add_series(data = as.numeric(object), type = type, ...)
+}
 
 #' @export
 hchart.ts <- function(object, ...) {
