@@ -18,22 +18,18 @@ shiny::shinyOptions(bootstrapTheme = bslib::bs_theme(version = 5))
 
 ## Start from a clean R session
 
-Run each example separately in a fresh R session. They all plot stopping
-distance against speed using `datasets::cars`, which ships with R.
+Start each example in a fresh R session with `library(highcharter)`. They all
+plot stopping distance against speed using `datasets::cars`, which ships with R.
 
 **Default.** Omitting the theme uses the package default in a fresh session.
 
 ```r
-library(highcharter)
-
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 ```
 
 **Preset for one chart.** Carbon supplies its colors, grid and IBM Plex Sans.
 
 ```r
-library(highcharter)
-
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
   hc_add_theme(hc_theme("carbon"))
 ```
@@ -42,8 +38,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
 widget. A later call to `hc_set_theme()` affects charts created after it.
 
 ```r
-library(highcharter)
-
 hc_set_theme("carbon")
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 ```
@@ -52,8 +46,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 when starting from an empty theme.
 
 ```r
-library(highcharter)
-
 team <- hc_theme(
   colors = c("#005F73", "#CA6702"),
   chart = list(style = list(fontFamily = "IBM Plex Sans, sans-serif"))
@@ -66,8 +58,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
 the typeface. Each viewer sees their own system font.
 
 ```r
-library(highcharter)
-
 team <- hc_theme("carbon", chart = list(style = list(fontFamily = "system-ui")))
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
   hc_add_theme(team)
@@ -83,8 +73,6 @@ The same theme works with `hc_add_theme()` and `hc_set_theme()`.
 the browser uses Noto Sans where available and `sans-serif` elsewhere.
 
 ```r
-library(highcharter)
-
 team <- hc_theme(
   chart = list(style = list(fontFamily = "Noto Sans, sans-serif"))
 )
@@ -97,8 +85,6 @@ font requires an internet connection on the first download. The exported
 chart can then use the included files offline.
 
 ```r
-library(highcharter)
-
 team <- hc_theme(
   chart = list(
     style = list(fontFamily = sass::font_google("Noto Sans"))
@@ -113,8 +99,6 @@ the viewer needs a connection to Google Fonts. This example sets the custom
 theme for subsequent charts.
 
 ```r
-library(highcharter)
-
 team <- hc_theme(
   chart = list(
     style = list(fontFamily = sass::font_google("Noto Sans", local = FALSE))

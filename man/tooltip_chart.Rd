@@ -27,18 +27,16 @@ and \code{JS()} to supply a JavaScript callback.
 \examples{
 \dontshow{if (requireNamespace("gapminder", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(dplyr)
-library(purrr)
-gapminder <- gapminder::gapminder
 
-gp <- gapminder |>
+gp <- gapminder::gapminder |>
   arrange(desc(year)) |>
   distinct(country, .keep_all = TRUE)
 
-gp2 <- gapminder |>
+gp2 <- gapminder::gapminder |>
   group_nest(country) |>
   mutate(
-    data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
-    data = map(data, list_parse)
+    data = purrr::map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
+    data = purrr::map(data, list_parse)
   ) |>
   rename(ttdata = data)
 

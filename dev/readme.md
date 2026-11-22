@@ -43,6 +43,9 @@ The configuration uses two spaces, an 80-column limit and persistent line
 breaks. Keep an explicit line break after `|>` when laying out chart pipelines.
 Use the base R pipe `|>` throughout website examples, including the articles in
 `vignettes/` and the help examples in `dev/examples-api/`.
+Across Get started, articles and reference examples, use `package::dataset`
+when the package exports the data. Use `data(..., package = "...")` for
+non-exported datasets. Omit unused package attachments and one-use aliases.
 Prefer `hchart()` for data-frame examples. The Gantt recipe uses
 `hchart(df, type = "gantt")`, which selects the native Gantt constructor and
 retains its task rows and date axes.

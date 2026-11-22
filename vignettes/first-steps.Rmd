@@ -61,8 +61,6 @@ economics_long2 <- dplyr::filter(
   variable %in% c("pop", "uempmed", "unemploy")
 )
 
-head(economics_long2)
-
 hchart(
   economics_long2,
   "line",

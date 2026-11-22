@@ -16,8 +16,7 @@ vignette: >
 ---
 
 ```{r, include=FALSE}
-library(highcharter)
-hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
+highcharter::hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 options(download.file.method = "libcurl")
 ```
 
@@ -43,8 +42,7 @@ hchart(
 )
 
 penguins2 <- palmerpenguins::penguins |>
-  count(species, island) |>
-  glimpse()
+  count(species, island)
 
 hchart(penguins2, "column", hcaes(x = island, y = n, group = species))
 ```
@@ -175,9 +173,7 @@ hchart(
 ### Distance matrix
 
 ```{r}
-mtcars2 <- mtcars[1:20, ]
-x <- dist(mtcars2)
-hchart(x)
+hchart(dist(mtcars[1:20, ]))
 ```
 
 ### Correlation matrix
@@ -217,8 +213,7 @@ hchart(LakeHuron, name = "Level") |>
 ### Multivariate time series
 
 ```{r}
-x <- cbind(mdeaths, fdeaths)
-hchart(x)
+hchart(cbind(mdeaths, fdeaths))
 ```
 
 ### Seasonal decomposition
@@ -234,8 +229,7 @@ hchart(stats::decompose(AirPassengers, type = "multiplicative"))
 ### Seasonal decomposition of time series by loess
 
 ```{r}
-x <- stl(log(AirPassengers), "per")
-hchart(x)
+hchart(stl(log(AirPassengers), "per"))
 ```
 
 ### Seasonal adjustment with X-13
@@ -246,8 +240,7 @@ reported by the model at the adjusted value, as in `plot(fit)` (e.g., AO for
 an additive outlier or LS for a level shift).
 
 ```{r x13, eval=requireNamespace("seasonal", quietly=TRUE)}
-fit <- seasonal::seas(AirPassengers)
-hchart(fit)
+hchart(seasonal::seas(AirPassengers))
 ```
 
 ### Forecast package
@@ -257,10 +250,8 @@ intervals are linked to the forecast series. Supply `name` to label the subject;
 the chart adds the observed/forecast suffixes.
 
 ```{r}
-library(forecast)
-
-x <- forecast(ets(USAccDeaths), h = 48, level = 95)
-hchart(x)
+fit <- forecast::ets(USAccDeaths)
+hchart(forecast::forecast(fit, h = 48, level = 95))
 ```
 
 ### Exponential-smoothing components
@@ -289,18 +280,13 @@ lags. The horizontal axes use years, the time unit of these monthly series.
 hchart(acf(cbind(mdeaths, fdeaths), lag.max = 12, plot = FALSE))
 ```
 
-### Quantmod package
+### Stock prices {#quantmod-package}
 
-The highstock extension is used to chart `xts` and `xts ohlc` classes from the
-quantmod package.
+An `xts` series with open, high, low and close prices produces a Stock candlestick chart.
 
 ```{r}
-library(quantmod)
-
 data(sample_matrix, package = "xts")
-x <- xts::as.xts(sample_matrix)
-
-hchart(x)
+hchart(xts::as.xts(sample_matrix))
 ```
 
 ## Fitted models
@@ -410,8 +396,7 @@ on opposite branches of that join. Hover over a join to see how many families
 it contains. Both `hchart(fit)` and `hchart(as.dendrogram(fit))` use this layout.
 
 ```{r cluster-dendrogram, eval=requireNamespace("ape", quietly=TRUE)}
-fit <- as.hclust(birds)
-hchart(fit)
+hchart(as.hclust(birds))
 ```
 
 ### Phylogenies

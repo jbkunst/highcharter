@@ -41,7 +41,7 @@ by default. Use **Indicators** to add a moving average, or **Type change** to
 switch the price series between candlesticks and OHLC bars.
 
 ```{r}
-price_chart <- highchartstock() |>
+highchartstock() |>
   hc_add_series(prices, name = "Price", id = "price") |>
   hc_add_series(
     type = "sma",
@@ -61,8 +61,6 @@ price_chart <- highchartstock() |>
     )
   ) |>
   hc_navigator(enabled = TRUE)
-
-price_chart
 ```
 
 ## Two stacked panels
@@ -109,7 +107,7 @@ snapshot <- read.csv(system.file(
   "spy-2025.csv",
   package = "highcharter"
 ))
-SPY <- xts::xts(snapshot[-1], order.by = base::as.Date(snapshot$date))
+SPY <- xts::xts(snapshot[-1], order.by = as.Date(snapshot$date))
 SPY <- quantmod::adjustOHLC(SPY, use.Adjusted = TRUE)
 close <- quantmod::Cl(SPY)
 fast_mean <- TTR::SMA(close, n = 5)
