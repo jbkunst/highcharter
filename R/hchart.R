@@ -18,7 +18,9 @@
 #' @param ... Additional arguments for the data series
 #'    (\url{https://api.highcharts.com/highcharts/series}).
 #'
-#' @seealso [hchart.constparty()] for classification and regression trees.
+#' @seealso [hchart.constparty()] and [hchart.xgb.Booster()] for decision trees,
+#'   [hchart.randomForest()] and [hchart.cv.glmnet()] for model diagnostics,
+#'   and [hchart.hclust()] for dendrograms and phylogenies.
 #' @examples
 #' methods(hchart)
 #'

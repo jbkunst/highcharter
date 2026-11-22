@@ -154,6 +154,10 @@ reference:
 - title: Methods for R objects
   desc: These methods are selected automatically by hchart() and hc_add_series().
   contents:
+  - hchart.randomForest
+  - hchart.cv.glmnet
+  - hchart.xgb.Booster
+  - hchart.hclust
   - hchart.constparty
   - hchart.igraph
   - hchart.survfit

@@ -124,6 +124,11 @@ Bundled Highcharts JS: 12.6.2.
 
 * `hchart(ecdf(x))` draws an empirical cumulative distribution as a step line.
 
+* `hchart()` draws random forest error histories, cross-validation points
+  and standard error bars for glmnet, and individual XGBoost trees. Cluster
+  dendrograms preserve merge heights, and radial or rectangular phylogenies
+  preserve branch lengths. Model packages are optional.
+
 * `hchart()` draws classification and regression trees from `partykit` and
   `rpart`, and single C5.0 classification trees. Node area shows the number of
   observations. Donuts or bars show class composition and a color axis shows

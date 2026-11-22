@@ -65,5 +65,7 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link[=hchart.constparty]{hchart.constparty()}} for classification and regression trees.
+\code{\link[=hchart.constparty]{hchart.constparty()}} and \code{\link[=hchart.xgb.Booster]{hchart.xgb.Booster()}} for decision trees,
+\code{\link[=hchart.randomForest]{hchart.randomForest()}} and \code{\link[=hchart.cv.glmnet]{hchart.cv.glmnet()}} for model diagnostics,
+and \code{\link[=hchart.hclust]{hchart.hclust()}} for dendrograms and phylogenies.
 }
