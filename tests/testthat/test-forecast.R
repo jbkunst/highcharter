@@ -1,3 +1,14 @@
+test_that("ETS forwards panel and series options to its components", {
+  skip_if_not_installed("forecast")
+  fit <- forecast::ets(AirPassengers)
+  series <- hchart(fit, separate = FALSE, lineWidth = 5)$x$hc_opts$series
+  expect_gt(length(series), 1L)
+  for (component in series) {
+    expect_null(component$yAxis)
+    expect_equal(component$lineWidth, 5)
+  }
+})
+
 test_that("forecast charts distinguish observations, predictions and intervals", {
   skip_if_not_installed("forecast")
   model <- forecast::forecast(

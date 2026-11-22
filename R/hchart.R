@@ -305,7 +305,6 @@ hchart.mforecast <- function(
 #' @importFrom stats qnorm
 #' @export
 hchart.acf <- function(object, ...) {
-  validate_args("hchart", rlang::enquos(...))
   ytitle <- switch(
     object$type,
     partial = "Partial ACF",
@@ -320,14 +319,19 @@ hchart.acf <- function(object, ...) {
     y = as.vector(object$acf)
   )
 
-  hc <- highchart() |>
-    hc_add_series(
-      data = list_parse(ds),
-      type = "lollipop",
-      marker = list(enabled = TRUE),
-      pointRange = 0,
-      name = ytitle
-    )
+  defaults <- list(
+    type = "lollipop",
+    marker = list(enabled = TRUE),
+    pointRange = 0,
+    name = ytitle
+  )
+  options <- .merge_options(defaults, validate_args("hchart", list(...)))
+  hc <- rlang::exec(
+    hc_add_series,
+    highchart(),
+    data = list_parse(ds),
+    !!!options
+  )
 
   if (object$type != "covariance") {
     hc <- hc |>
@@ -422,7 +426,6 @@ hchart.decomposed.ts <- function(object, ...) {
 
 #' @export
 hchart.ets <- function(object, ...) {
-  validate_args("hchart", rlang::enquos(...))
   names <- c(y = "observed", l = "level", b = "slope", s1 = "season")
 
   data <- cbind(
@@ -434,7 +437,7 @@ hchart.ets <- function(object, ...) {
 
   colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
 
-  hchart(data) |>
+  hchart(data, ...) |>
     hc_title(text = paste("Decomposition by", object$method, "method"))
 }
 
@@ -448,7 +451,6 @@ hchart.matrix <- function(
   type = c("heatmap", "tilemap", "contour")
 ) {
   type <- match.arg(type)
-  validate_args("hchart", rlang::enquos(...))
   stopifnot(is.numeric(object))
 
   row_labels <- rownames(object)
@@ -481,7 +483,7 @@ hchart.matrix <- function(
   )
 
   hc <- highchart() |>
-    hc_add_series(data = list_parse(points), type = type) |>
+    hc_add_series(data = list_parse(points), type = type, ...) |>
     hc_plotOptions(
       series = list(
         showInLegend = showInLegend,

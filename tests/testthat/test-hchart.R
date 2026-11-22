@@ -169,6 +169,18 @@ test_that("ACF and PACF lollipops use the reported lags and correlations", {
     expect_equal(vapply(series$data, `[[`, numeric(1), "x"), as.vector(x$lag))
     expect_equal(vapply(series$data, `[[`, numeric(1), "y"), as.vector(x$acf))
   }
+
+  a <- acf(changes, plot = FALSE)
+  styled <- hchart(
+    a,
+    name = "Changes",
+    color = "steelblue",
+    marker = list(radius = 5)
+  )
+  series <- styled$x$hc_opts$series[[1]]
+  expect_identical(series$name, "Changes")
+  expect_identical(series$color, "steelblue")
+  expect_identical(series$marker, list(enabled = TRUE, radius = 5))
 })
 
 test_that("seasonal charts label the fitted outliers at adjusted values", {
@@ -237,6 +249,14 @@ test_that("matrix chart types share the same grid", {
     expect_identical(opts$yAxis, heat$yAxis)
   }
   expect_error(hchart(m, type = "scatter"), "heatmap")
+  contour <- hchart(
+    m,
+    type = "contour",
+    contourInterval = 10,
+    contourOffset = 0.5
+  )
+  expect_equal(contour$x$hc_opts$series[[1]]$contourInterval, 10)
+  expect_equal(contour$x$hc_opts$series[[1]]$contourOffset, 0.5)
 })
 
 test_that("hchart returns a valid correlation matrix plot after valid data input", {
