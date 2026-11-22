@@ -1,12 +1,12 @@
 library(shiny)
 library(highcharter)
 
-hc_set_theme("ft")
+hc_set_theme("ft", chart = list(backgroundColor = "#FFFFFF"))
 
 ui <- fluidPage(
   theme = bslib::bs_theme(
     version = 5,
-    bg = "#FFF1E5",
+    bg = "#FFFFFF",
     fg = "#33302E",
     primary = "#0F5499"
   ),
