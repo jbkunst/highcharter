@@ -20,11 +20,12 @@
 
 \item{...}{Extra parameters to pass to \code{hc_add_series} function}
 
-\item{fun}{Name of function or function used to transform the survival curve:
-\code{log} will put y axis on log scale, \code{event} plots cumulative events
-(f(y) = 1-y), \code{cumhaz} plots the cumulative hazard function (f(y) =
--log(y)), and \code{cloglog} creates a complimentary log-log survival plot
-(f(y) = log(-log(y)) along with log scale for the x-axis.}
+\item{fun}{A function or the name of a survival curve transformation.
+\code{"log"} shows survival probabilities on a logarithmic y-axis.
+\code{"cloglog"} plots \code{log(-log(S))} against positive time on a
+logarithmic x-axis. Both modes leave gaps where a curve or its confidence
+band falls outside the scale's domain. \code{"event"} plots \code{1 - S}
+and \code{"cumhaz"} plots \code{-log(S)}.}
 
 \item{markTimes}{Label curves marked at each censoring time? TRUE by default}
 

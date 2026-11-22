@@ -214,6 +214,10 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Bug fixes
 
+* `hchart.survfit()` uses a logarithmic probability axis for `fun = "log"`
+  and a logarithmic time axis for `fun = "cloglog"`. Curves and confidence
+  bands have gaps where their values fall outside the scale's domain.
+
 * `hchart()` now passes series options to matrix, distance and ACF plots.
   ETS component charts also accept series options and layout arguments such
   as `separate = FALSE`.

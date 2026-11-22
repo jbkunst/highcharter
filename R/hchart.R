@@ -709,11 +709,12 @@ hchart.igraph <- function(object, ..., layout = NULL) {
 #'
 #' @param object A survfit object as returned from the \code{survfit} function
 #' @param ... Extra parameters to pass to \code{hc_add_series} function
-#' @param fun Name of function or function used to transform the survival curve:
-#' \code{log} will put y axis on log scale, \code{event} plots cumulative events
-#' (f(y) = 1-y), \code{cumhaz} plots the cumulative hazard function (f(y) =
-#' -log(y)), and \code{cloglog} creates a complimentary log-log survival plot
-#' (f(y) = log(-log(y)) along with log scale for the x-axis.
+#' @param fun A function or the name of a survival curve transformation.
+#' \code{"log"} shows survival probabilities on a logarithmic y-axis.
+#' \code{"cloglog"} plots \code{log(-log(S))} against positive time on a
+#' logarithmic x-axis. Both modes leave gaps where a curve or its confidence
+#' band falls outside the scale's domain. \code{"event"} plots \code{1 - S}
+#' and \code{"cumhaz"} plots \code{-log(S)}.
 #' @param markTimes Label curves marked at each censoring time? TRUE by default
 #' @param symbol Symbol to use as marker (plus sign by default)
 #' @param markerColor Color of the marker ("black" by default); use NULL to use
@@ -763,9 +764,13 @@ hchart.survfit <- function(
   transform_y <- if (is.character(fun)) {
     switch(
       fun,
+      log = function(y) replace(y, y <= 0, NA_real_),
       event = function(y) 1 - y,
       cumhaz = function(y) -log(y),
-      cloglog = function(y) log(-log(y)),
+      cloglog = function(y) {
+        y[y <= 0 | y >= 1] <- NA_real_
+        log(-log(y))
+      },
       pct = ,
       logpct = function(y) 100 * y,
       identity
@@ -789,22 +794,31 @@ hchart.survfit <- function(
   if (is.matrix(object$surv)) {
     data$.profile <- rep(seq_len(ncol(object$surv)), each = length(object$time))
   }
-  if (is.null(object$strata)) data$strata <- NULL
+  if (is.null(object$strata)) {
+    data$strata <- NULL
+  }
   curves <- dplyr::group_split(
     data,
     dplyr::across(dplyr::any_of(c("strata", ".profile")))
   )
   profile_names <- colnames(object$surv)
   marker <- list(fillColor = markerColor, symbol = symbol, enabled = TRUE)
-  bounds <- if (ranges) c(data$lower, data$upper)
-  limits <- range(0, 1, first_y, data$surv, bounds, finite = TRUE)
+  log_time <- identical(fun, "cloglog")
   hc <- highchart() |>
     hc_tooltip(shared = TRUE) |>
-    hc_yAxis(min = limits[1L], max = limits[2L]) |>
     hc_plotOptions(
       line = list(marker = list(enabled = FALSE)),
       series = list(states = list(hover = list(enabled = FALSE)))
     )
+  if (log_time) {
+    hc <- hc_xAxis(hc, type = "logarithmic")
+  } else if (identical(fun, "log")) {
+    hc <- hc_yAxis(hc, type = "logarithmic", max = 1)
+  } else {
+    bounds <- if (ranges) c(data$lower, data$upper)
+    limits <- range(0, 1, first_y, data$surv, bounds, finite = TRUE)
+    hc <- hc_yAxis(hc, min = limits[1L], max = limits[2L])
+  }
 
   for (i in seq_along(curves)) {
     curve <- curves[[i]]
@@ -815,13 +829,20 @@ hchart.survfit <- function(
     label <- c(as.character(curve[["strata"]][1L]), profile)
     name <- if (length(label)) paste(label, collapse = " / ") else "Series 1"
 
-    df <- data.frame(x = curve$time, y = curve$surv, group = name)
+    if (log_time) {
+      curve <- curve[curve$time > 0, ]
+    }
+    df <- data.frame(
+      x = curve$time,
+      y = curve$surv,
+      group = rep(name, nrow(curve))
+    )
     df$low <- curve[["lower"]]
     df$up <- curve[["upper"]]
     points <- purrr::pmap(df, list)
     marked <- markTimes & curve$n.censor > 0
     points[marked] <- lapply(points[marked], c, list(marker = marker))
-    if (!0 %in% curve$time) {
+    if (!log_time && !0 %in% curve$time) {
       points <- c(list(list(x = 0, y = first_y)), points)
     }
     color <- JS(sprintf("Highcharts.getOptions().colors[%s]", i - 1L))

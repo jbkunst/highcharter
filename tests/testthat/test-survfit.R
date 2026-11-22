@@ -53,3 +53,42 @@ test_that("survival charts accept absent bands and decreasing transformations", 
     unname(cbind(fit$time, 1 - fit$upper, 1 - fit$lower))
   )
 })
+
+test_that("log survival scales keep valid estimates when their bands have gaps", {
+  skip_if_not_installed("survival", minimum_version = "3.6-5")
+  library(survival)
+  d <- data.frame(
+    time = c(0:4, 4, 5, 6),
+    status = c(0, 0, 1, 1, 1, 0, 1, 1)
+  )
+  fit <- survfit(Surv(time, status) ~ 1, d, conf.type = "plain", conf.int = 0.8)
+  hc <- hchart(fit, fun = "log", ranges = TRUE)$x$hc_opts
+  expect_identical(hc$yAxis$type, "logarithmic")
+  expect_null(hc$yAxis$min)
+  points <- hc$series[[1]]$data
+  expect_equal(vapply(points, "[[", numeric(1), "x"), fit$time)
+  expect_equal(vapply(points, "[[", numeric(1), "y"), c(head(fit$surv, -1), NA))
+  # At time 5, survival is 0.25 and the lower confidence limit is zero.
+  expect_equal(unlist(hc$series[[2]]$data[[6]]), c(5, NA, NA))
+
+  hc <- hchart(fit, fun = "cloglog", ranges = TRUE)$x$hc_opts
+  expect_identical(hc$xAxis$type, "logarithmic")
+  points <- hc$series[[1]]$data
+  expect_equal(vapply(points, "[[", numeric(1), "x"), 1:6)
+  expect_equal(
+    vapply(points, "[[", numeric(1), "y"),
+    c(NA, log(-log(fit$surv[3:6])), NA)
+  )
+  expect_true(points[[4]]$marker$enabled)
+  band <- hc$series[[2]]$data
+  expect_equal(vapply(band, "[[", numeric(1), 1L), 1:6)
+  expect_equal(unlist(band[[2]]), c(2, NA, NA))
+  expect_equal(
+    unlist(band[[3]]),
+    c(3, log(-log(fit$upper[4])), log(-log(fit$lower[4])))
+  )
+
+  fit <- survfit(Surv(time + 1, status) ~ 1, d)
+  series <- hchart(fit, fun = "cloglog")$x$hc_opts$series
+  expect_equal(vapply(series[[1]]$data, "[[", numeric(1), "x"), fit$time)
+})
