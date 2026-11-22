@@ -37,6 +37,9 @@ Imports:
     rlang (>= 0.4.10)
 VignetteBuilder: knitr
 Suggests:
+    partykit,
+    rpart,
+    C50,
     seasonal,
     bslib,
     sass,
