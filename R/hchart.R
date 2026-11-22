@@ -18,12 +18,19 @@
 #' @param ... Additional arguments for the data series
 #'    (\url{https://api.highcharts.com/highcharts/series}).
 #'
+#' @seealso [hchart.constparty()] for classification and regression trees.
 #' @examples
 #' methods(hchart)
 #'
 #' # Principal component analysis
 #' fit <- stats::prcomp(USArrests, scale. = TRUE)
 #' hchart(fit)
+#'
+#' # Classification tree: each donut shows the species proportions in a node
+#' if (requireNamespace("partykit", quietly = TRUE)) {
+#'   tree <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+#'   hchart(tree)
+#' }
 #'
 #' # An igraph network
 #' if (requireNamespace("igraph", quietly = TRUE)) {

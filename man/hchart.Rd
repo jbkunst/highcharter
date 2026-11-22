@@ -52,9 +52,18 @@ methods(hchart)
 fit <- stats::prcomp(USArrests, scale. = TRUE)
 hchart(fit)
 
+# Classification tree: each donut shows the species proportions in a node
+if (requireNamespace("partykit", quietly = TRUE)) {
+  tree <- partykit::ctree(Species ~ Petal.Length + Petal.Width, data = iris)
+  hchart(tree)
+}
+
 # An igraph network
 if (requireNamespace("igraph", quietly = TRUE)) {
   net <- igraph::make_graph("Zachary")
   hchart(net, layout = igraph::layout_with_kk)
 }
+}
+\seealso{
+\code{\link[=hchart.constparty]{hchart.constparty()}} for classification and regression trees.
 }
