@@ -1,6 +1,9 @@
 ---
 title: hchart Function
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
 description: >
   Use hchart() to plot R objects, from data frames and time series to fitted
   models, trees and networks.
