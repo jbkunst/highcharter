@@ -313,13 +313,19 @@ hchart(x)
 
 ### Random forests
 
-The overall out-of-bag error and the class-specific errors show how quickly
-the forest stabilizes. Hover at a tree count to compare the overall and
-per-species errors in one table.
+Can a car's length, height and curb weight distinguish two-door models from
+four-door models? Hover at a tree count to compare the overall out-of-bag
+error with the error for each class.
 
 ```{r forest-error, eval=requireNamespace("randomForest", quietly=TRUE)}
+data("imports85", package = "randomForest")
 set.seed(42)
-forest <- randomForest::randomForest(Species ~ ., data = iris, ntree = 150)
+forest <- randomForest::randomForest(
+  numOfDoors ~ length + height + curbWeight,
+  data = imports85,
+  na.action = na.omit,
+  ntree = 150
+)
 hchart(forest)
 ```
 
