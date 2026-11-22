@@ -306,6 +306,12 @@ Bundled Highcharts JS: 12.6.2.
 
 ### Bug fixes
 
+- Joined maps use the data range for their color scale. Adding a map
+  layer with
+  [`hc_add_series_map()`](https://jkunst.com/highcharter/reference/hc_add_series_map.md)
+  preserves any color axes already configured. Use
+  `hc_colorAxis(min = 0)` for a scale that starts at zero.
+
 - [`hchart.survfit()`](https://jkunst.com/highcharter/reference/hchart.survfit.md)
   uses a logarithmic probability axis for `fun = "log"` and a
   logarithmic time axis for `fun = "cloglog"`. Curves and confidence
