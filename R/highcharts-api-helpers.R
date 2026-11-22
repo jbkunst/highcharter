@@ -568,12 +568,3 @@ create_axis <- function(
     axis
   })
 }
-
-#' Compatibility alias for multiple y axes
-#'
-#' @inheritParams hc_yAxis
-#' @export
-hc_yAxis_multiples <- function(hc, ...) {
-  .Deprecated("hc_yAxis")
-  hc_yAxis(hc, ...)
-}

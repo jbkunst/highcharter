@@ -173,6 +173,13 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Changes
 
+* Passing an `lm` or `loess` object to `hc_add_series()` now warns and still
+  draws the fitted curve and its band (plus or minus two standard errors).
+  Both methods will remain available throughout the first release with this
+  warning. To migrate, call `predict()` and pass a data frame to
+  `hc_add_series()`, as in the
+  [First steps example](https://jkunst.com/highcharter/articles/first-steps.html#a-more-advanced-example).
+
 * Widgets attach the Latin WOFF2 files for the bundled families selected by
   their theme and chart options. Charts using system fonts need no font files.
 

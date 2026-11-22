@@ -374,7 +374,12 @@ test_that("model series keep fitted values and standard errors aligned with x", 
       prediction$se.fit <- prediction$se.fit[-2]
     }
     seed <- .GlobalEnv$.Random.seed
-    series <- hc_add_series(highchart(), model)$x$hc_opts$series
+    expect_warning(
+      chart <- hc_add_series(highchart(), model),
+      "Use predict",
+      class = "deprecatedWarning"
+    )
+    series <- chart$x$hc_opts$series
     expect_identical(.GlobalEnv$.Random.seed, seed)
     order_x <- order(observations$speed[-2])
     fit <- unname(prediction$fit[order_x])
