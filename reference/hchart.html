@@ -121,7 +121,9 @@ generic that other classes and packages can extend.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Run <code>methods(hchart)</code> to see what objects are supported.
 Numeric matrices use a heatmap by default. Set <code>type = "tilemap"</code> for
-hexagonal tiles or <code>type = "contour"</code> for contour lines.</p>
+hexagonal tiles or <code>type = "contour"</code> for contour lines.
+One-way tables use columns in category order. Two-way tables use the
+matrix heatmap. Use <code><a href="https://rdrr.io/r/base/marginSums.html" class="external-link">margin.table()</a></code> to choose dimensions of a larger table.</p>
 <p>For a GeoJSON FeatureCollection from <span class="pkg">geojsonio</span>, each geometry
 family gets its own layer. Supply <code>type</code> to select one layer explicitly.</p>
     </div>
@@ -137,7 +139,7 @@ family gets its own layer. Supply <code>type</code> to select one layer explicit
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] hchart.matrix*        hchart.mforecast*     hchart.mts*          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [19] hchart.numeric*       hchart.prcomp*        hchart.princomp*     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [22] hchart.seas*          hchart.stl*           hchart.survfit*      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] hchart.ts*            hchart.xts*          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] hchart.table*         hchart.ts*            hchart.xts*          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> see '?methods' for accessing help and source code</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Principal component analysis</span></span></span>

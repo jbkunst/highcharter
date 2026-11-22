@@ -50,7 +50,10 @@ hchart(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE)
 
 Run `methods(hchart)` to see what objects are supported. Numeric
 matrices use a heatmap by default. Set `type = "tilemap"` for hexagonal
-tiles or `type = "contour"` for contour lines.
+tiles or `type = "contour"` for contour lines. One-way tables use
+columns in category order. Two-way tables use the matrix heatmap. Use
+[`margin.table()`](https://rdrr.io/r/base/marginSums.html) to choose
+dimensions of a larger table.
 
 For a GeoJSON FeatureCollection from geojsonio, each geometry family
 gets its own layer. Supply `type` to select one layer explicitly.
@@ -67,7 +70,7 @@ methods(hchart)
 #> [16] hchart.matrix*        hchart.mforecast*     hchart.mts*          
 #> [19] hchart.numeric*       hchart.prcomp*        hchart.princomp*     
 #> [22] hchart.seas*          hchart.stl*           hchart.survfit*      
-#> [25] hchart.ts*            hchart.xts*          
+#> [25] hchart.table*         hchart.ts*            hchart.xts*          
 #> see '?methods' for accessing help and source code
 
 # Principal component analysis

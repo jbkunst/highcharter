@@ -166,6 +166,10 @@ Bundled Highcharts JS: 12.6.2.
 
 ### New features
 
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
+  one-way tables as column charts and two-way tables as heatmaps,
+  preserving category order, dimension labels and zero counts.
+
 - [`hc_gridAxis()`](https://jkunst.com/highcharter/reference/hc_gridAxis.md)
   arranges pairs of axes in a rectangular grid.
   [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) uses

@@ -61,6 +61,18 @@ x <- diamonds$price
 hchart(x)
 ```
 
+## Frequency tables
+
+Each cell shows how many cars have that combination of cylinders and
+gears. Zero counts remain visible in the heatmap. For a one-way table,
+see [Category
+order](https://jkunst.com/highcharter/articles/highcharts-api.html#category-order).
+
+``` r
+
+hchart(table(Cylinders = mtcars$cyl, Gears = mtcars$gear))
+```
+
 ## Densities
 
 ``` r

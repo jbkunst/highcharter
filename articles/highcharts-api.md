@@ -171,17 +171,14 @@ hc |>
 
 ## Category order
 
-Order the counts first, then pass their names and values in the same
-order. Here the categories run from the most to the least common
-cylinder count.
+Sort the frequency table to display the most common cylinder count
+first. [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md)
+keeps that order and uses the dimension name for the axis title.
 
 ``` r
 
-counts <- sort(table(mtcars$cyl), decreasing = TRUE)
-
-highchart() |>
-  hc_xAxis(categories = names(counts), title = list(text = "Cylinders")) |>
-  hc_add_series(type = "column", name = "Cars", data = as.numeric(counts))
+counts <- sort(table(Cylinders = mtcars$cyl), decreasing = TRUE)
+hchart(counts, name = "Cars")
 ```
 
 For another common adjustment, see [Keep other series visible on
