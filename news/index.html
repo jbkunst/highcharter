@@ -126,7 +126,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/hchart.html">hchart()</a></code> now passes series options to matrix, distance and ACF plots. ETS component charts also accept series options and layout arguments such as <code>separate = FALSE</code>.</p></li>
+<ul><li><p><code><a href="../reference/hchart.survfit.html">hchart.survfit()</a></code> uses a logarithmic probability axis for <code>fun = "log"</code> and a logarithmic time axis for <code>fun = "cloglog"</code>. Curves and confidence bands have gaps where their values fall outside the scale’s domain.</p></li>
+<li><p><code><a href="../reference/hchart.html">hchart()</a></code> now passes series options to matrix, distance and ACF plots. ETS component charts also accept series options and layout arguments such as <code>separate = FALSE</code>.</p></li>
 <li><p>Adding a forecast, linear model or loess fit preserves R’s random-number state when linking the fitted series to its intervals.</p></li>
 <li><p><code>color_stops(1)</code> places a single color at zero. Supply a positive integer for the number of stops.</p></li>
 <li><p><code><a href="../reference/export_hc.html">export_hc()</a></code> appends <code>.js</code> to filenames such as <code>salesjs</code> and preserves the JavaScript extensions <code>.js</code>, <code>.mjs</code> and <code>.cjs</code>.</p></li>

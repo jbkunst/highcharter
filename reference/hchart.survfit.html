@@ -96,11 +96,12 @@
 
 
 <dt id="arg-fun">fun<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
-<dd><p>Name of function or function used to transform the survival curve:
-<code>log</code> will put y axis on log scale, <code>event</code> plots cumulative events
-(f(y) = 1-y), <code>cumhaz</code> plots the cumulative hazard function (f(y) =
--log(y)), and <code>cloglog</code> creates a complimentary log-log survival plot
-(f(y) = log(-log(y)) along with log scale for the x-axis.</p></dd>
+<dd><p>A function or the name of a survival curve transformation.
+<code>"log"</code> shows survival probabilities on a logarithmic y-axis.
+<code>"cloglog"</code> plots <code>log(-log(S))</code> against positive time on a
+logarithmic x-axis. Both modes leave gaps where a curve or its confidence
+band falls outside the scale's domain. <code>"event"</code> plots <code>1 - S</code>
+and <code>"cumhaz"</code> plots <code>-log(S)</code>.</p></dd>
 
 
 <dt id="arg-marktimes">markTimes<a class="anchor" aria-label="anchor" href="#arg-marktimes"></a></dt>

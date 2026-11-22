@@ -30,11 +30,12 @@ hchart(
 
 - fun:
 
-  Name of function or function used to transform the survival curve:
-  `log` will put y axis on log scale, `event` plots cumulative events
-  (f(y) = 1-y), `cumhaz` plots the cumulative hazard function (f(y) =
-  -log(y)), and `cloglog` creates a complimentary log-log survival plot
-  (f(y) = log(-log(y)) along with log scale for the x-axis.
+  A function or the name of a survival curve transformation. `"log"`
+  shows survival probabilities on a logarithmic y-axis. `"cloglog"`
+  plots `log(-log(S))` against positive time on a logarithmic x-axis.
+  Both modes leave gaps where a curve or its confidence band falls
+  outside the scale's domain. `"event"` plots `1 - S` and `"cumhaz"`
+  plots `-log(S)`.
 
 - markTimes:
 
