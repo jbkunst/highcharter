@@ -29,11 +29,14 @@ layout maps that distance to radius. If branch lengths are absent each
 edge counts as one step. The optional stem above the root is excluded.
 }
 \examples{
-fit <- stats::hclust(stats::dist(scale(USArrests[1:10, ])))
-hchart(fit)
-
 \dontshow{if (requireNamespace("ape", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-tree <- ape::read.tree(text = "((A:1,B:2):1,(C:2,D:1):2);")
-hchart(tree)
+data("bird.families", package = "ape")
+families <- c(
+  "Rheidae", "Casuariidae", "Struthionidae", "Phasianidae", "Numididae",
+  "Odontophoridae", "Anhimidae", "Dendrocygnidae", "Anatidae"
+)
+birds <- ape::keep.tip(bird.families, families)
+hchart(stats::as.hclust(birds))
+hchart(birds)
 \dontshow{\}) # examplesIf}
 }

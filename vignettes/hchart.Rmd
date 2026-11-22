@@ -394,38 +394,9 @@ hchart(fit, tree = 2)
 
 ## Dendrograms and phylogenies
 
-### Cluster dendrograms
+Both examples show the same nine families from the bird phylogeny in **ape**.
 
-The vertical position of each join gives the merge height. Hover over it for
-the number of observations. Both `hchart(fit)` and
-`hchart(as.dendrogram(fit))` use the same layout.
-
-```{r cluster-dendrogram}
-states <- scale(USArrests[
-  c(
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "California",
-    "Florida",
-    "Georgia",
-    "Illinois",
-    "Maine",
-    "Oregon",
-    "Vermont"
-  ),
-])
-fit <- hclust(dist(states), method = "average")
-hchart(fit)
-```
-
-### Phylogenies
-
-In the fan layout, radial distance measures branch length from the root.
-With no lengths, each edge counts as one step. Use `layout = "rectangular"`
-for a side-by-side reading of tip labels.
-
-```{r phylo-fan, eval=requireNamespace("ape", quietly=TRUE)}
+```{r bird-families, eval=requireNamespace("ape", quietly=TRUE)}
 data("bird.families", package = "ape")
 families <- c(
   "Rheidae",
@@ -439,6 +410,27 @@ families <- c(
   "Anatidae"
 )
 birds <- ape::keep.tip(bird.families, families)
+```
+
+### Cluster dendrograms
+
+The tree is ultrametric, so all tips are the same distance from the root.
+In its dendrogram, the height of each join gives the distance between tips
+on opposite branches of that join. Hover over a join to see how many families
+it contains. Both `hchart(fit)` and `hchart(as.dendrogram(fit))` use this layout.
+
+```{r cluster-dendrogram, eval=requireNamespace("ape", quietly=TRUE)}
+fit <- as.hclust(birds)
+hchart(fit)
+```
+
+### Phylogenies
+
+In the fan layout, radial distance measures branch length from the root.
+With no lengths, each edge counts as one step. Use `layout = "rectangular"`
+for a side-by-side reading of tip labels.
+
+```{r phylo-fan, eval=requireNamespace("ape", quietly=TRUE)}
 hchart(birds)
 ```
 

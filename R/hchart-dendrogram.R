@@ -8,13 +8,15 @@
 #' @param layout For a phylogeny, `"fan"` (radial) or `"rectangular"`.
 #' @param ... Highcharts line series options for the branches.
 #' @return A highchart htmlwidget.
-#' @examples
-#' fit <- stats::hclust(stats::dist(scale(USArrests[1:10, ])))
-#' hchart(fit)
-#'
 #' @examplesIf requireNamespace("ape", quietly = TRUE)
-#' tree <- ape::read.tree(text = "((A:1,B:2):1,(C:2,D:1):2);")
-#' hchart(tree)
+#' data("bird.families", package = "ape")
+#' families <- c(
+#'   "Rheidae", "Casuariidae", "Struthionidae", "Phasianidae", "Numididae",
+#'   "Odontophoridae", "Anhimidae", "Dendrocygnidae", "Anatidae"
+#' )
+#' birds <- ape::keep.tip(bird.families, families)
+#' hchart(stats::as.hclust(birds))
+#' hchart(birds)
 #' @export
 hchart.hclust <- function(object, ...) {
   hchart(stats::as.dendrogram(object), ...)
