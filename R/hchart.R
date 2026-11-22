@@ -76,7 +76,7 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
 
   series <- data_to_series(data, mapping, type = type, ...)
 
-  opts <- data_to_options(data, type, mapping)
+  opts <- data_to_options(data, type)
 
   hc <- highchart(type = if (identical(type, "gantt")) "gantt" else "chart")
 
@@ -84,7 +84,7 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
     hc <- hc_colorAxis(hc, auxpar = NULL)
   }
 
-  hc <- hc |>
+  hc |>
     hc_add_series_list(series) |>
     hc_xAxis(
       type = opts$xAxis_type,
@@ -100,14 +100,7 @@ hchart.data.frame <- function(object, type = NULL, mapping = hcaes(), ...) {
       ),
       categories = opts$yAxis_categories
     ) |>
-    hc_plotOptions(
-      series = list(
-        showInLegend = opts$series_plotOptions_showInLegend
-      ),
-      scatter = list(marker = list(symbol = "circle"))
-    )
-
-  hc
+    hc_plotOptions(scatter = list(marker = list(symbol = "circle")))
 }
 
 #' @importFrom graphics hist

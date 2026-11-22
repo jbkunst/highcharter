@@ -55,12 +55,12 @@ test_that("group indices preserve group and point order, extras and missing valu
   expect_identical(xs, list(c(3L, 5L), c(1L, 4L), 2L))
   expect_identical(series[[2]]$data[[2]]$custom, list(id = 4L))
   expect_identical(series[[2]]$data[[2]]$y, NA_real_)
-  expect_true(hc$x$hc_opts$plotOptions$series$showInLegend)
+  expect_null(hc$x$hc_opts$plotOptions$series$showInLegend)
   expect_length(hchart(df[0, ], "line", mapping)$x$hc_opts$series, 0)
 
   df$group <- df$team
   ungrouped <- hchart(df, mapping = hcaes(y = rate))$x$hc_opts
-  expect_false(ungrouped$plotOptions$series$showInLegend)
+  expect_null(ungrouped$plotOptions$series$showInLegend)
   expect_null(ungrouped$series[[1]]$type)
   expect_length(ungrouped$series[[1]]$data, 5)
   expect_length(hchart(df[0, ], mapping = hcaes(y = rate))$x$hc_opts$series, 0)

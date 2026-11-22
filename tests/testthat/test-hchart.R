@@ -295,6 +295,7 @@ test_that("empirical distributions jump at the observed values", {
   expect_identical(series$type, "line")
   expect_identical(series$step, "left")
   expect_identical(series$name, "Sample")
+  expect_null(opts$plotOptions$series$showInLegend)
   expect_identical(series$color, "navy")
   expect_equal(series$lineWidth, 3)
   x <- vapply(series$data, "[[", numeric(1), "x")

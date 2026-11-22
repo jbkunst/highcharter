@@ -181,6 +181,10 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Changes
 
+* Data-frame charts and empirical distributions use the Highcharts legend
+  default. A single standalone line, column or scatter series now appears in
+  the legend. Supply `name` to label it or `showInLegend = FALSE` to hide it.
+
 * For matrices without row or column names, `hchart()` fits the axes to the
   grid in heatmap, tilemap and contour charts. The axes can still expand
   when adding another series.

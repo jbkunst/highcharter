@@ -697,10 +697,9 @@ data_to_series <- function(data, mapping, type, ...) {
   list_parse(series)
 }
 
-data_to_options <- function(data, type, mapping) {
+data_to_options <- function(data, type) {
   heatmap <- identical(type, "heatmap")
   opts <- list(
-    series_plotOptions_showInLegend = has_name(mapping, "group"),
     add_colorAxis = heatmap ||
       (identical(type, "treemap") && has_name(data, "color"))
   )
