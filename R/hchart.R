@@ -373,10 +373,9 @@ hchart.acf <- function(object, ...) {
   limits <- grDevices::extendrange(limits, f = 0.03)
   y_axis$min <- limits[1L]
   y_axis$max <- limits[2L]
-  y_axis$title <- list(text = NULL)
   x_axes <- lapply(labels, function(label) list(title = list(text = label)))
   hc <- highchart() |>
-    hc_grid_axis(n, n, xAxis = x_axes, yAxis = y_axis) |>
+    hc_gridAxis(n, n, xAxis = x_axes, yAxis = y_axis) |>
     hc_legend(enabled = FALSE)
 
   for (k in seq_along(labels)) {

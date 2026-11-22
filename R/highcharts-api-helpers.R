@@ -435,7 +435,34 @@ hc_motion <- function(hc, enabled = TRUE, startIndex = 0, ...) {
   hc
 }
 
-hc_grid_axis <- function(hc, nrow, ncol, xAxis = list(), yAxis = list()) {
+#' Arrange pairs of axes in a grid
+#'
+#' Each panel has its own x-axis and y-axis with the same index. Indices
+#' start at zero and run from left to right across each row. To add a series
+#' to a panel, pass its index to both axis arguments of [hc_add_series()].
+#' Several series can share a panel.
+#'
+#' @param hc A `highchart` widget.
+#' @param nrow,ncol Number of rows and columns in the grid.
+#' @param xAxis,yAxis A named list of Highcharts axis options for every
+#'   panel, or an unnamed list with one option list per panel in row order.
+#' @return The widget with its x-axis and y-axis collections set to the grid.
+#' @examples
+#' highchart() |>
+#'   hc_gridAxis(1, 2) |>
+#'   hc_add_series(data = c(1, 3, 2), name = "First", xAxis = 0, yAxis = 0) |>
+#'   hc_add_series(data = c(4, 2, 5), name = "Second", xAxis = 1, yAxis = 1)
+#' @export
+hc_gridAxis <- function(hc, nrow, ncol, xAxis = list(), yAxis = list()) {
+  dims <- c(nrow, ncol)
+  if (
+    length(nrow) != 1L ||
+      length(ncol) != 1L ||
+      !is.numeric(dims) ||
+      any(!is.finite(dims) | dims < 1 | dims != floor(dims))
+  ) {
+    stop("nrow and ncol must be positive whole numbers.", call. = FALSE)
+  }
   width <- 100 / (ncol + 0.25 * (ncol - 1))
   height <- 100 / (nrow + 0.5 * (nrow - 1))
   panels <- lapply(seq_len(nrow * ncol) - 1L, function(k) {
@@ -444,14 +471,27 @@ hc_grid_axis <- function(hc, nrow, ncol, xAxis = list(), yAxis = list()) {
       top = paste0((k %/% ncol) * 1.5 * height, "%"),
       width = paste0(width, "%"),
       height = paste0(height, "%"),
-      offset = 0
+      offset = 0,
+      title = list(text = NULL)
     )
   })
   axes <- function(options) {
-    if (!length(options) || !is.null(names(options))) {
-      options <- rep(list(options), length(panels))
+    named_options <- function(x) {
+      is.list(x) && (!length(x) || rlang::is_named(x))
     }
-    stopifnot(length(options) == length(panels))
+    if (named_options(options)) {
+      options <- rep(list(options), length(panels))
+    } else if (
+      !is.list(options) ||
+        !is.null(names(options)) ||
+        length(options) != length(panels) ||
+        !all(vapply(options, named_options, logical(1)))
+    ) {
+      stop(
+        "Supply named axis options or one option list per panel.",
+        call. = FALSE
+      )
+    }
     Map(.merge_options, panels, options, MoreArgs = list(keep_null = TRUE))
   }
   hc |>

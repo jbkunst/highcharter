@@ -64,6 +64,7 @@ reference:
   - hc_chart
   - hc_xAxis
   - hc_yAxis
+  - hc_gridAxis
   - hc_zAxis
   - hc_pane
   - hc_responsive

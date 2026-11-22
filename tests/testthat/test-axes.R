@@ -40,6 +40,32 @@ test_that("a single axis category stays an array when serialized", {
   expect_identical(chart$x$hc_opts$yAxis[[2]]$categories, list(2012))
 })
 
+test_that("grid axes assign rectangular panels in row order", {
+  titles <- lapply(letters[1:6], function(s) list(title = list(text = s)))
+  chart <- highchart() |>
+    hc_gridAxis(3, 2, xAxis = titles, yAxis = list(min = 0)) |>
+    hc_add_series(data = c(2, 3), xAxis = 5, yAxis = 5)
+  opts <- chart$x$hc_opts
+  x <- opts$xAxis
+  y <- opts$yAxis
+  expect_length(x, 6L)
+  expect_equal(lapply(x, `[[`, "title"), lapply(titles, `[[`, "title"))
+  expect_equal(vapply(y, `[[`, 0, "min"), rep(0, 6))
+  position <- c("left", "top", "width", "height")
+  expect_identical(lapply(x, `[`, position), lapply(y, `[`, position))
+  left <- vapply(x, `[[`, "", "left")
+  top <- vapply(y, `[[`, "", "top")
+  expect_identical(match(left, unique(left)), rep(1:2, 3))
+  expect_identical(match(top, unique(top)), rep(1:3, each = 2))
+  expect_equal(
+    opts$series[[1]][c("xAxis", "yAxis")],
+    list(xAxis = 5, yAxis = 5)
+  )
+  expect_error(hc_gridAxis(highchart(), 0, 2), "positive whole numbers")
+  expect_error(hc_gridAxis(highchart(), 2, 1.5), "positive whole numbers")
+  expect_error(hc_gridAxis(highchart(), 2, 2, xAxis = titles), "per panel")
+})
+
 test_that("annotation rows keep label options and anchor to the requested axes", {
   notes <- data.frame(x = c(2, 4), y = c(5, 8), text = c("A", "B"))
   notes$style <- list(list(color = "red"), list(color = "blue"))
