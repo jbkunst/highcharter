@@ -444,3 +444,123 @@ decision_tree_render <- function() {
   }"
   )
 }
+
+#' Explore one boosted tree
+#'
+#' Select one tree by its one-based index. Marker area represents cover,
+#' with a minimum radius for interaction. Internal nodes report split gain
+#' and the branch for missing values. Leaves report their contribution to
+#' the prediction margin. Supports tree boosters with numeric splits.
+#' @param object An `xgb.Booster` fit.
+#' @param tree A positive tree index, starting at one.
+#' @param ... Highcharts treegraph series options.
+#' @return A highchart htmlwidget.
+#' @examplesIf rlang::is_installed("xgboost", version = "3.1.0")
+#' d <- xgboost::xgb.DMatrix(as.matrix(iris[1:4]), label = iris$Petal.Width)
+#' fit <- xgboost::xgb.train(
+#'   list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
+#'   d, nrounds = 3L, verbose = 0
+#' )
+#' hchart(fit, tree = 2)
+#' @export
+hchart.xgb.Booster <- function(object, ..., tree = 1L) {
+  rlang::check_installed(
+    "xgboost",
+    version = "3.1.0",
+    reason = "to extract a tree."
+  )
+  if (
+    !is.numeric(tree) ||
+      length(tree) != 1L ||
+      !is.finite(tree) ||
+      tree < 1 ||
+      tree != trunc(tree)
+  ) {
+    stop("Choose one positive integer tree index.", call. = FALSE)
+  }
+  nodes <- xgboost::xgb.model.dt.tree(model = object, trees = tree)
+  if (!nrow(nodes)) {
+    stop("Tree index exceeds the number of fitted trees.", call. = FALSE)
+  }
+  yes <- match(nodes$ID, nodes$Yes)
+  no <- match(nodes$ID, nodes$No)
+  parent <- ifelse(is.na(yes), no, yes)
+  leaf <- is.na(nodes$Yes)
+  feature <- htmltools::htmlEscape(nodes$Feature)
+  threshold <- as.character(signif(nodes$Split[parent], 6))
+  rule <- ifelse(
+    is.na(parent),
+    "",
+    paste(ifelse(is.na(yes), "\u2265", "&lt;"), threshold)
+  )
+  score <- as.character(signif(nodes$Gain, 5))
+  info <- ifelse(
+    leaf,
+    paste("Leaf contribution:", score),
+    paste0(
+      feature,
+      " &lt; ",
+      signif(nodes$Split, 6),
+      "<br/>Gain: ",
+      score,
+      "<br/>Missing follows: ",
+      ifelse(nodes$Missing == nodes$Yes, "Yes", "No")
+    )
+  )
+  radius <- pmax(
+    4,
+    16 * sqrt(nodes$Cover / max(nodes$Cover, .Machine$double.eps))
+  )
+  data <- lapply(seq_len(nrow(nodes)), function(i) {
+    point <- list(
+      id = nodes$ID[i],
+      name = if (leaf[i]) score[i] else feature[i],
+      marker = list(radius = radius[i]),
+      custom = list(
+        label = if (leaf[i]) score[i] else "",
+        rule = rule[i],
+        cover = nodes$Cover[i],
+        detail = info[i]
+      )
+    )
+    if (!is.na(parent[i])) {
+      point$parent <- nodes$ID[parent[i]]
+    }
+    point
+  })
+  highchart() |>
+    hc_chart(inverted = TRUE, spacingLeft = 26, spacingRight = 26) |>
+    hc_plotOptions(
+      treegraph = utils::modifyList(
+        list(
+          link = list(type = "straight", color = "#8C8C8C"),
+          marker = list(
+            fillColor = "#D4E7E5",
+            lineColor = "#4E7778",
+            lineWidth = 1
+          ),
+          dataLabels = list(
+            enabled = TRUE,
+            allowOverlap = TRUE,
+            crop = FALSE,
+            overflow = "allow",
+            pointFormat = "{point.custom.label}",
+            linkFormat = "{point.fromNode.name}<br/>{point.toNode.custom.rule}",
+            linkTextPath = list(enabled = FALSE),
+            style = list(
+              color = "#333333",
+              fontWeight = "normal",
+              textOutline = "2px #FFFFFF"
+            )
+          ),
+          tooltip = list(
+            headerFormat = "",
+            pointFormat = "{point.custom.detail}<br/>Cover: {point.custom.cover:.2f}",
+            linkFormat = "{point.toNode.custom.detail}<br/>Cover: {point.toNode.custom.cover:.2f}"
+          )
+        ),
+        list(...)
+      )
+    ) |>
+    hc_add_series(type = "treegraph", name = paste("Tree", tree), data = data)
+}

@@ -164,122 +164,171 @@ hchart.cv.glmnet <- function(object, ...) {
     hc_legend(enabled = FALSE)
 }
 
-#' Explore one boosted tree
+#' Plot survival curves using Highcharts
 #'
-#' Select one tree by its one-based index. Marker area represents cover,
-#' with a minimum radius for interaction. Internal nodes report split gain
-#' and the branch for missing values. Leaves report their contribution to
-#' the prediction margin. Supports tree boosters with numeric splits.
-#' @param object An `xgb.Booster` fit.
-#' @param tree A positive tree index, starting at one.
-#' @param ... Highcharts treegraph series options.
-#' @return A highchart htmlwidget.
-#' @examplesIf rlang::is_installed("xgboost", version = "3.1.0")
-#' d <- xgboost::xgb.DMatrix(as.matrix(iris[1:4]), label = iris$Petal.Width)
-#' fit <- xgboost::xgb.train(
-#'   list(objective = "reg:squarederror", max_depth = 2L, nthread = 1L),
-#'   d, nrounds = 3L, verbose = 0
-#' )
-#' hchart(fit, tree = 2)
+#' @param object A survfit object as returned from the \code{survfit} function
+#' @param ... Extra parameters to pass to \code{hc_add_series} function
+#' @param fun A function or the name of a survival curve transformation.
+#' \code{"log"} shows survival probabilities on a logarithmic y-axis.
+#' \code{"cloglog"} plots \code{log(-log(S))} against positive time on a
+#' logarithmic x-axis. Both modes leave gaps where a curve or its confidence
+#' band falls outside the scale's domain. \code{"event"} plots \code{1 - S}
+#' and \code{"cumhaz"} plots \code{-log(S)}.
+#' @param markTimes Label curves marked at each censoring time? TRUE by default
+#' @param symbol Symbol to use as marker (plus sign by default)
+#' @param markerColor Color of the marker ("black" by default); use NULL to use
+#' the respective color of each series
+#' @param ranges Plot interval ranges? FALSE by default
+#' @param rangesOpacity Opacity of the interval ranges (0.3 by default)
+#'
+#' @return Highcharts object to plot survival curves
+#'
+#' @examplesIf rlang::is_installed("survival", version = "3.6-5")
+#' library(survival)
+#'
+#' # Plot Kaplan-Meier curves
+#' leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
+#' hchart(leukemia.surv)
+#'
+#' # Plot the cumulative hazard function
+#' lsurv2 <- survfit(Surv(time, status) ~ x, aml, type = "fleming")
+#' hchart(lsurv2, fun = "cumhaz")
+#'
+#' # Plot the fit of a Cox proportional hazards regression model
+#' fit <- coxph(Surv(futime, fustat) ~ age, data = ovarian)
+#' profiles <- data.frame(age = c(50, 70), row.names = c("Age 50", "Age 70"))
+#' ovarian.surv <- survfit(fit, newdata = profiles)
+#' hchart(ovarian.surv, ranges = TRUE)
 #' @export
-hchart.xgb.Booster <- function(object, ..., tree = 1L) {
+hchart.survfit <- function(
+  object,
+  ...,
+  fun = NULL,
+  markTimes = TRUE,
+  symbol = "plus",
+  markerColor = "black",
+  ranges = FALSE,
+  rangesOpacity = 0.3
+) {
   rlang::check_installed(
-    "xgboost",
-    version = "3.1.0",
-    reason = "to extract a tree."
+    "survival",
+    version = "3.6-5",
+    reason = "to chart survival curves."
   )
-  if (
-    !is.numeric(tree) ||
-      length(tree) != 1L ||
-      !is.finite(tree) ||
-      tree < 1 ||
-      tree != trunc(tree)
-  ) {
-    stop("Choose one positive integer tree index.", call. = FALSE)
+  data <- summary(object, censored = TRUE, data.frame = TRUE)
+  if (is.null(data$surv)) {
+    stop("The fit must contain survival probabilities.", call. = FALSE)
   }
-  nodes <- xgboost::xgb.model.dt.tree(model = object, trees = tree)
-  if (!nrow(nodes)) {
-    stop("Tree index exceeds the number of fitted trees.", call. = FALSE)
+
+  transform_y <- if (is.character(fun)) {
+    switch(
+      fun,
+      log = function(y) replace(y, y <= 0, NA_real_),
+      event = function(y) 1 - y,
+      cumhaz = function(y) -log(y),
+      cloglog = function(y) {
+        y[y <= 0 | y >= 1] <- NA_real_
+        log(-log(y))
+      },
+      pct = ,
+      logpct = function(y) 100 * y,
+      identity
+    )
+  } else if (is.function(fun)) {
+    fun
+  } else {
+    identity
   }
-  yes <- match(nodes$ID, nodes$Yes)
-  no <- match(nodes$ID, nodes$No)
-  parent <- ifelse(is.na(yes), no, yes)
-  leaf <- is.na(nodes$Yes)
-  feature <- htmltools::htmlEscape(nodes$Feature)
-  threshold <- as.character(signif(nodes$Split[parent], 6))
-  rule <- ifelse(
-    is.na(parent),
-    "",
-    paste(ifelse(is.na(yes), "\u2265", "&lt;"), threshold)
+
+  first_y <- transform_y(1)
+  data$surv <- transform_y(data$surv)
+  ranges <- ranges && !is.null(data$lower) && !is.null(data$upper)
+  if (ranges) {
+    lower <- transform_y(data$lower)
+    upper <- transform_y(data$upper)
+    data$lower <- pmin(lower, upper)
+    data$upper <- pmax(lower, upper)
+  }
+  # The summary stacks one block of times per column of the survival matrix.
+  if (is.matrix(object$surv)) {
+    data$.profile <- rep(seq_len(ncol(object$surv)), each = length(object$time))
+  }
+  if (is.null(object$strata)) {
+    data$strata <- NULL
+  }
+  curves <- dplyr::group_split(
+    data,
+    dplyr::across(dplyr::any_of(c("strata", ".profile")))
   )
-  score <- as.character(signif(nodes$Gain, 5))
-  info <- ifelse(
-    leaf,
-    paste("Leaf contribution:", score),
-    paste0(
-      feature,
-      " &lt; ",
-      signif(nodes$Split, 6),
-      "<br/>Gain: ",
-      score,
-      "<br/>Missing follows: ",
-      ifelse(nodes$Missing == nodes$Yes, "Yes", "No")
-    )
-  )
-  radius <- pmax(
-    4,
-    16 * sqrt(nodes$Cover / max(nodes$Cover, .Machine$double.eps))
-  )
-  data <- lapply(seq_len(nrow(nodes)), function(i) {
-    point <- list(
-      id = nodes$ID[i],
-      name = if (leaf[i]) score[i] else feature[i],
-      marker = list(radius = radius[i]),
-      custom = list(
-        label = if (leaf[i]) score[i] else "",
-        rule = rule[i],
-        cover = nodes$Cover[i],
-        detail = info[i]
-      )
-    )
-    if (!is.na(parent[i])) {
-      point$parent <- nodes$ID[parent[i]]
-    }
-    point
-  })
-  highchart() |>
-    hc_chart(inverted = TRUE, spacingLeft = 26, spacingRight = 26) |>
+  profile_names <- colnames(object$surv)
+  marker <- list(fillColor = markerColor, symbol = symbol, enabled = TRUE)
+  log_time <- identical(fun, "cloglog")
+  hc <- highchart() |>
+    hc_tooltip(shared = TRUE) |>
     hc_plotOptions(
-      treegraph = utils::modifyList(
-        list(
-          link = list(type = "straight", color = "#8C8C8C"),
-          marker = list(
-            fillColor = "#D4E7E5",
-            lineColor = "#4E7778",
-            lineWidth = 1
-          ),
-          dataLabels = list(
-            enabled = TRUE,
-            allowOverlap = TRUE,
-            crop = FALSE,
-            overflow = "allow",
-            pointFormat = "{point.custom.label}",
-            linkFormat = "{point.fromNode.name}<br/>{point.toNode.custom.rule}",
-            linkTextPath = list(enabled = FALSE),
-            style = list(
-              color = "#333333",
-              fontWeight = "normal",
-              textOutline = "2px #FFFFFF"
-            )
-          ),
-          tooltip = list(
-            headerFormat = "",
-            pointFormat = "{point.custom.detail}<br/>Cover: {point.custom.cover:.2f}",
-            linkFormat = "{point.toNode.custom.detail}<br/>Cover: {point.toNode.custom.cover:.2f}"
-          )
-        ),
-        list(...)
+      line = list(marker = list(enabled = FALSE)),
+      series = list(states = list(hover = list(enabled = FALSE)))
+    )
+  if (log_time) {
+    hc <- hc_xAxis(hc, type = "logarithmic")
+  } else if (identical(fun, "log")) {
+    hc <- hc_yAxis(hc, type = "logarithmic", max = 1)
+  } else {
+    bounds <- if (ranges) c(data$lower, data$upper)
+    limits <- range(0, 1, first_y, data$surv, bounds, finite = TRUE)
+    hc <- hc_yAxis(hc, min = limits[1L], max = limits[2L])
+  }
+
+  for (i in seq_along(curves)) {
+    curve <- curves[[i]]
+    profile <- curve[[".profile"]][1L]
+    if (!is.null(profile_names)) {
+      profile <- profile_names[profile]
+    }
+    label <- c(as.character(curve[["strata"]][1L]), profile)
+    name <- if (length(label)) paste(label, collapse = " / ") else "Series 1"
+
+    if (log_time) {
+      curve <- curve[curve$time > 0, ]
+    }
+    df <- data.frame(
+      x = curve$time,
+      y = curve$surv,
+      group = rep(name, nrow(curve))
+    )
+    df$low <- curve[["lower"]]
+    df$up <- curve[["upper"]]
+    points <- purrr::pmap(df, list)
+    marked <- markTimes & curve$n.censor > 0
+    points[marked] <- lapply(points[marked], c, list(marker = marker))
+    if (!log_time && !0 %in% curve$time) {
+      points <- c(list(list(x = 0, y = first_y)), points)
+    }
+    color <- JS(sprintf("Highcharts.getOptions().colors[%s]", i - 1L))
+    hc <- hc_add_series(
+      hc,
+      data = points,
+      step = "left",
+      name = name,
+      zIndex = 1,
+      color = color,
+      ...
+    )
+    if (ranges) {
+      hc <- hc_add_series(
+        hc,
+        data = Map(list, curve$time, curve$lower, curve$upper),
+        step = "left",
+        name = "Ranges",
+        type = "arearange",
+        zIndex = 0,
+        linkedTo = ":previous",
+        fillOpacity = rangesOpacity,
+        lineWidth = 0,
+        color = color,
+        ...
       )
-    ) |>
-    hc_add_series(type = "treegraph", name = paste("Tree", tree), data = data)
+    }
+  }
+  hc
 }
