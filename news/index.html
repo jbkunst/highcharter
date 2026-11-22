@@ -67,6 +67,15 @@
 <h2 class="pkg-version" data-toc-text="development version" id="highcharter-development-version">highcharter (development version)<a class="anchor" aria-label="anchor" href="#highcharter-development-version"></a></h2>
 <p>Bundled Highcharts JS: 12.6.2.</p>
 <div class="section level3">
+<h3 id="upgrading-from-cran-development-version">Upgrading from CRAN 0.9.5<a class="anchor" aria-label="anchor" href="#upgrading-from-cran-development-version"></a></h3>
+<ul><li>CRAN 0.9.5 shipped Highcharts JS 9.3.1. Development on GitHub moved to Highcharts JS 12.6.0 in highcharter 0.12.6.1 and now bundles 12.6.2.</li>
+<li>highcharter now requires R 4.1 or later. New code can use the base R pipe <code>|&gt;</code>. Packages that import <code>%&gt;%</code> from highcharter should import it from magrittr instead.</li>
+<li>Charts, Stock, Maps and Gantt share one JavaScript bundle with accessibility enabled. Use <code><a href="../reference/highchartstock.html">highchartstock()</a></code> for Stock Tools and technical indicators.</li>
+<li>
+<code><a href="../reference/hchart.html">hchart()</a></code> now draws fitted decision trees, random forest error curves, glmnet cross-validation intervals, cluster dendrograms and phylogenies.</li>
+<li>The <a href="#migrate-highcharter-calls">migration guide</a> covers retired chart shortcuts, widget constructors, Shiny bindings, theme presets and axis helpers.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
 <ul><li><p>With an empty mapping, <code><a href="../reference/hchart.html">hchart()</a></code> and <code><a href="../reference/hcpxy_set_data.html">hcpxy_set_data()</a></code> now pass a data frame’s <code>color</code> column directly to Highcharts as the point color, matching <code><a href="../reference/hc_add_series.html">hc_add_series()</a></code>. In tooltips for these points, use <code>{point.color}</code> in place of <code>{point.colorv}</code>. With a mapping such as <code>hcaes(x, y)</code>, an unmapped <code>color</code> column remains available as <code>{point.colorv}</code>.</p></li>
 <li><p>Treemaps and sunbursts use one color from the chart theme per first-level group. Children inherit their parent’s color. <code><a href="../reference/data_to_hierarchical.html">data_to_hierarchical()</a></code> now omits the node’s <code>color</code> field by default. To fix colors explicitly, pass a vector to its <code>colors</code> argument. This replaces the <code>highcharter.color_palette</code> option.</p></li>
@@ -169,9 +178,18 @@
 </ul></div>
 <div class="section level3">
 <h3 id="migration-guide-development-version">Migration guide<a class="anchor" aria-label="anchor" href="#migration-guide-development-version"></a></h3>
+<p><a id="migrate-highcharter-calls"></a></p>
+<p>The first column includes calls exported by CRAN 0.9.5. Some of these were already deprecated in that version.</p>
 <table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr><th>Previous call</th>
 <th>Current call</th>
-</tr></thead><tbody><tr><td><code>df_to_annotations_labels(df = notes)</code></td>
+</tr></thead><tbody><tr><td>
+<code>%&gt;%</code> from highcharter</td>
+<td>Use the base R pipe, or attach magrittr for existing scripts. In a package, add magrittr to <code>Imports</code> and change the namespace import to <code>importFrom(magrittr, "%&gt;%")</code>.</td>
+</tr><tr><td>
+<code>dt_tstp(x)</code>, <code>create_yaxis(...)</code>
+</td>
+<td>Use <code>datetime_to_timestamp(x)</code> and <code>create_axis(...)</code>, respectively.</td>
+</tr><tr><td><code>df_to_annotations_labels(df = notes)</code></td>
 <td><code>data_to_annotation_labels(data = notes)</code></td>
 </tr><tr><td>
 <code>hc_xAxis_multiples()</code>, <code><a href="../reference/hc_yAxis_multiples.html">hc_yAxis_multiples()</a></code>, <code>hc_zAxis_multiples()</code>
@@ -188,12 +206,47 @@
 </tr><tr><td><code>hcaes_()</code></td>
 <td>Use <code><a href="../reference/hcaes_string.html">hcaes_string()</a></code>.</td>
 </tr><tr><td>
-<code>highchartzero()</code> and its Shiny bindings</td>
-<td>Use <code><a href="../reference/highchart.html">highchart()</a></code>, <code><a href="../reference/highchartOutput.html">highchartOutput()</a></code> and <code><a href="../reference/renderHighchart.html">renderHighchart()</a></code>.</td>
+<code>highchart2()</code>, <code>highchartzero()</code>
+</td>
+<td>Use <code><a href="../reference/highchart.html">highchart()</a></code>.</td>
+</tr><tr><td>
+<code>highchartOutput2()</code>, <code>highchartOutputZ()</code>
+</td>
+<td>Use <code><a href="../reference/highchartOutput.html">highchartOutput()</a></code> in the Shiny UI.</td>
+</tr><tr><td>
+<code>renderHighchart2()</code>, <code>renderHighchartZ()</code>
+</td>
+<td>Use <code><a href="../reference/renderHighchart.html">renderHighchart()</a></code> on the Shiny server.</td>
+</tr><tr><td><code>hcboxplot()</code></td>
+<td>Create the series with <code><a href="../reference/data_to_boxplot.html">data_to_boxplot()</a></code> and add them with <code><a href="../reference/hc_add_series_list.html">hc_add_series_list()</a></code>. Set <code>add_outliers = TRUE</code> to preserve the old default. See the example below.</td>
+</tr><tr><td>
+<code>hctreemap()</code>, <code>hctreemap2()</code>
+</td>
+<td>Start from the original data frame, build nodes with <code><a href="../reference/data_to_hierarchical.html">data_to_hierarchical()</a></code>, then call <code>hchart(nodes, type = "treemap")</code>. <a href="https://jkunst.com/highcharter/articles/data-helpers.html#hierarchy-nodes">Hierarchy example</a>
+</td>
+</tr><tr><td><code>hcspark(x)</code></td>
+<td>Add <code>x</code> with <code>hc_add_series(data = x)</code> and apply <code>hc_add_theme(hc_theme("sparkline"))</code>.</td>
+</tr><tr><td><code>hciconarray()</code></td>
+<td>For counts drawn as pictograms, use an item series. <a href="https://jkunst.com/highcharter/articles/showcase.html#count-with-pictograms">Pictogram example</a>
+</td>
+</tr><tr><td>
+<code>hc_add_dependency_fa()</code>, <code>fa_icon()</code>, <code>fa_icon_mark()</code>
+</td>
+<td>Use <code><a href="https://rstudio.github.io/fontawesome/reference/fa.html" class="external-link">fontawesome::fa()</a></code> for SVG icons. For chart markers, pass the SVG as an image URL. <a href="https://jkunst.com/highcharter/articles/showcase.html#icons-as-markers">Marker example</a>
+</td>
+</tr><tr><td><code>hw_grid(chart1, chart2, ncol = 2)</code></td>
+<td>Place separate widgets side by side with <code>bslib::layout_column_wrap(chart1, chart2, width = 1/2)</code>. Use <code><a href="../reference/hc_gridAxis.html">hc_gridAxis()</a></code> for panels within a single chart.</td>
 </tr><tr><td>
 <code>fast = TRUE</code> in a data-frame chart</td>
 <td>Omit the argument. Point data are R lists.</td>
-</tr></tbody></table><p>The reverse-dependency review found calls to the removed theme constructors in highdir, RKorAPClient and UnalR. Their integrations need the replacements above. AovBay also references the previously removed <code>hcboxplot()</code> helper. Its <code><a href="../reference/hc_yAxis_multiples.html">hc_yAxis_multiples()</a></code> call is covered by the deprecated alias.</p>
+</tr></tbody></table><p>This example replaces <code>hcboxplot(iris$Petal.Length, iris$Species)</code> and keeps the outliers for each species.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">boxes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/data_to_boxplot.html">data_to_boxplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Petal.Length</span>, <span class="va">Species</span>, add_outliers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/highchart.html">highchart</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/hc_xAxis.html">hc_xAxis</a></span><span class="op">(</span>categories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/hc_add_series_list.html">hc_add_series_list</a></span><span class="op">(</span><span class="va">boxes</span><span class="op">)</span></span></code></pre></div>
+<p>The reverse-dependency review found calls to the removed theme constructors in highdir, RKorAPClient and UnalR. Their integrations need the replacements above. AovBay also references the previously removed <code>hcboxplot()</code> helper. Its <code><a href="../reference/hc_yAxis_multiples.html">hc_yAxis_multiples()</a></code> call is covered by the deprecated alias.</p>
 </div>
 <div class="section level3">
 <h3 id="contributor-acknowledgements-development-version">Contributor acknowledgements<a class="anchor" aria-label="anchor" href="#contributor-acknowledgements-development-version"></a></h3>
@@ -260,9 +313,10 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.12.6.1" id="highcharter-01261">highcharter 0.12.6.1<a class="anchor" aria-label="anchor" href="#highcharter-01261"></a></h2>
+<p>Bundled Highcharts JS: 12.6.0.</p>
 <div class="section level3">
 <h3 id="changes-0-12-6-1">Changes<a class="anchor" aria-label="anchor" href="#changes-0-12-6-1"></a></h3>
-<ul><li>Highcharter now uses HighchartsJS 12.6.0.</li>
+<ul><li>The GitHub development version updated the R option wrappers for Highcharts JS 12.6.0.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-12-6-1">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-12-6-1"></a></h3>
@@ -274,9 +328,23 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bugs-0-12-6-1">Bugs<a class="anchor" aria-label="anchor" href="#bugs-0-12-6-1"></a></h3>
-<ul><li>Fix <code>download_map_data</code> to prevent 403 Forbidden errors when fetching data.</li>
+<ul><li>This version incorporated the 0.9.5 CRAN fix for HTTP 403 errors in <code><a href="../reference/download_map_data.html">download_map_data()</a></code>.</li>
 <li>Wrapped examples making network calls in <code>\dontrun{}</code> (<code>get_data_from_map</code> and <code>hc_mapNavigation</code>) to fix CRAN Package Check 403 errors.</li>
+<li>This version also incorporated the 0.9.5 rename from <code>hchart.pca</code> to <code>hchart_pca</code>, which resolved the unregistered S3 method NOTE.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.9.5" id="highcharter-095">highcharter 0.9.5<a class="anchor" aria-label="anchor" href="#highcharter-095"></a></h2><p class="text-muted">CRAN release: 2026-04-22</p>
+<p>Bundled Highcharts JS: 9.3.1. Published on CRAN on April 22, 2026.</p>
+<div class="section level3">
+<h3 id="bugs-0-9-5">Bugs<a class="anchor" aria-label="anchor" href="#bugs-0-9-5"></a></h3>
+<ul><li>Fixed <code>download_map_data</code> to prevent 403 Forbidden errors when fetching data (fixes CRAN Package Checks and resolves <a href="https://github.com/jbkunst/highcharter/issues/842" class="external-link">#842</a>).</li>
 <li>Renamed internal helper function <code>hchart.pca</code> to <code>hchart_pca</code> to resolve an unregistered S3 method mismatch NOTE.</li>
+<li>Uses <code>page_rank</code> instead of deprecated <code>page.rank</code> function.</li>
+<li>Converts igraph membership to vector to avoid data frame coercion errors.</li>
+<li>Replace <code>class() ==</code> comparisons with <code><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits()</a></code> in <code>hc_yAxis_multiples</code>, <code>hc_xAxis_multiples</code>, and <code>hc_zAxis_multiples</code> to fix CRAN NOTE.</li>
+<li>Replace deprecated <code>@docType "package"</code> with <code>"_PACKAGE"</code> sentinel in <code>highcharter-package.R</code>.</li>
+<li>Fixed missing or moved URLs.</li>
 </ul></div>
 </div>
     <div class="section level2">

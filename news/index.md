@@ -4,6 +4,24 @@
 
 Bundled Highcharts JS: 12.6.2.
 
+### Upgrading from CRAN 0.9.5
+
+- CRAN 0.9.5 shipped Highcharts JS 9.3.1. Development on GitHub moved to
+  Highcharts JS 12.6.0 in highcharter 0.12.6.1 and now bundles 12.6.2.
+- highcharter now requires R 4.1 or later. New code can use the base R
+  pipe `|>`. Packages that import `%>%` from highcharter should import
+  it from magrittr instead.
+- Charts, Stock, Maps and Gantt share one JavaScript bundle with
+  accessibility enabled. Use
+  [`highchartstock()`](https://jkunst.com/highcharter/reference/highchartstock.md)
+  for Stock Tools and technical indicators.
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) now
+  draws fitted decision trees, random forest error curves, glmnet
+  cross-validation intervals, cluster dendrograms and phylogenies.
+- The [migration guide](#migrate-highcharter-calls) covers retired chart
+  shortcuts, widget constructors, Shiny bindings, theme presets and axis
+  helpers.
+
 ### Breaking changes
 
 - With an empty mapping,
@@ -501,16 +519,41 @@ Bundled Highcharts JS: 12.6.2.
 
 ### Migration guide
 
+The first column includes calls exported by CRAN 0.9.5. Some of these
+were already deprecated in that version.
+
 | Previous call | Current call |
 |----|----|
+| `%>%` from highcharter | Use the base R pipe, or attach magrittr for existing scripts. In a package, add magrittr to `Imports` and change the namespace import to `importFrom(magrittr, "%>%")`. |
+| `dt_tstp(x)`, `create_yaxis(...)` | Use `datetime_to_timestamp(x)` and `create_axis(...)`, respectively. |
 | `df_to_annotations_labels(df = notes)` | `data_to_annotation_labels(data = notes)` |
 | `hc_xAxis_multiples()`, [`hc_yAxis_multiples()`](https://jkunst.com/highcharter/reference/hc_yAxis_multiples.md), `hc_zAxis_multiples()` | Pass the same list of axes to [`hc_xAxis()`](https://jkunst.com/highcharter/reference/hc_xAxis.md), [`hc_yAxis()`](https://jkunst.com/highcharter/reference/hc_yAxis.md) or [`hc_zAxis()`](https://jkunst.com/highcharter/reference/hc_zAxis.md). The Y alias emits a deprecation warning. |
 | `hc_add_dependency("modules/...")` | Omit the call for built-in modules. Use [`highchartstock()`](https://jkunst.com/highcharter/reference/highchartstock.md) for Stock Tools and technical indicators. Pass an explicit `"plugins/..."` path for packaged community plugins. |
 | Repeated `hc_add_yAxis()` | Collect the axes in order, then call `hc_yAxis(axes)`. |
 | `hc_theme_google()` and other preset constructors | Use `hc_theme("google")`, or `hc_set_theme("google")` for a session default. |
 | `hcaes_()` | Use [`hcaes_string()`](https://jkunst.com/highcharter/reference/hcaes_string.md). |
-| `highchartzero()` and its Shiny bindings | Use [`highchart()`](https://jkunst.com/highcharter/reference/highchart.md), [`highchartOutput()`](https://jkunst.com/highcharter/reference/highchartOutput.md) and [`renderHighchart()`](https://jkunst.com/highcharter/reference/renderHighchart.md). |
+| `highchart2()`, `highchartzero()` | Use [`highchart()`](https://jkunst.com/highcharter/reference/highchart.md). |
+| `highchartOutput2()`, `highchartOutputZ()` | Use [`highchartOutput()`](https://jkunst.com/highcharter/reference/highchartOutput.md) in the Shiny UI. |
+| `renderHighchart2()`, `renderHighchartZ()` | Use [`renderHighchart()`](https://jkunst.com/highcharter/reference/renderHighchart.md) on the Shiny server. |
+| `hcboxplot()` | Create the series with [`data_to_boxplot()`](https://jkunst.com/highcharter/reference/data_to_boxplot.md) and add them with [`hc_add_series_list()`](https://jkunst.com/highcharter/reference/hc_add_series_list.md). Set `add_outliers = TRUE` to preserve the old default. See the example below. |
+| `hctreemap()`, `hctreemap2()` | Start from the original data frame, build nodes with [`data_to_hierarchical()`](https://jkunst.com/highcharter/reference/data_to_hierarchical.md), then call `hchart(nodes, type = "treemap")`. [Hierarchy example](https://jkunst.com/highcharter/articles/data-helpers.html#hierarchy-nodes) |
+| `hcspark(x)` | Add `x` with `hc_add_series(data = x)` and apply `hc_add_theme(hc_theme("sparkline"))`. |
+| `hciconarray()` | For counts drawn as pictograms, use an item series. [Pictogram example](https://jkunst.com/highcharter/articles/showcase.html#count-with-pictograms) |
+| `hc_add_dependency_fa()`, `fa_icon()`, `fa_icon_mark()` | Use [`fontawesome::fa()`](https://rstudio.github.io/fontawesome/reference/fa.html) for SVG icons. For chart markers, pass the SVG as an image URL. [Marker example](https://jkunst.com/highcharter/articles/showcase.html#icons-as-markers) |
+| `hw_grid(chart1, chart2, ncol = 2)` | Place separate widgets side by side with `bslib::layout_column_wrap(chart1, chart2, width = 1/2)`. Use [`hc_gridAxis()`](https://jkunst.com/highcharter/reference/hc_gridAxis.md) for panels within a single chart. |
 | `fast = TRUE` in a data-frame chart | Omit the argument. Point data are R lists. |
+
+This example replaces `hcboxplot(iris$Petal.Length, iris$Species)` and
+keeps the outliers for each species.
+
+``` r
+
+boxes <- data_to_boxplot(iris, Petal.Length, Species, add_outliers = TRUE)
+
+highchart() |>
+  hc_xAxis(categories = levels(iris$Species)) |>
+  hc_add_series_list(boxes)
+```
 
 The reverse-dependency review found calls to the removed theme
 constructors in highdir, RKorAPClient and UnalR. Their integrations need
@@ -554,9 +597,12 @@ Joshua Kunst
 
 ## highcharter 0.12.6.1
 
+Bundled Highcharts JS: 12.6.0.
+
 ### Changes
 
-- Highcharter now uses HighchartsJS 12.6.0.
+- The GitHub development version updated the R option wrappers for
+  Highcharts JS 12.6.0.
 
 ### Breaking changes
 
@@ -572,13 +618,37 @@ Joshua Kunst
 
 ### Bugs
 
-- Fix `download_map_data` to prevent 403 Forbidden errors when fetching
-  data.
+- This version incorporated the 0.9.5 CRAN fix for HTTP 403 errors in
+  [`download_map_data()`](https://jkunst.com/highcharter/reference/download_map_data.md).
 - Wrapped examples making network calls in `\dontrun{}`
   (`get_data_from_map` and `hc_mapNavigation`) to fix CRAN Package Check
   403 errors.
+- This version also incorporated the 0.9.5 rename from `hchart.pca` to
+  `hchart_pca`, which resolved the unregistered S3 method NOTE.
+
+## highcharter 0.9.5
+
+CRAN release: 2026-04-22
+
+Bundled Highcharts JS: 9.3.1. Published on CRAN on April 22, 2026.
+
+### Bugs
+
+- Fixed `download_map_data` to prevent 403 Forbidden errors when
+  fetching data (fixes CRAN Package Checks and resolves
+  [\#842](https://github.com/jbkunst/highcharter/issues/842)).
 - Renamed internal helper function `hchart.pca` to `hchart_pca` to
   resolve an unregistered S3 method mismatch NOTE.
+- Uses `page_rank` instead of deprecated `page.rank` function.
+- Converts igraph membership to vector to avoid data frame coercion
+  errors.
+- Replace `class() ==` comparisons with
+  [`inherits()`](https://rdrr.io/r/base/class.html) in
+  `hc_yAxis_multiples`, `hc_xAxis_multiples`, and `hc_zAxis_multiples`
+  to fix CRAN NOTE.
+- Replace deprecated `@docType "package"` with `"_PACKAGE"` sentinel in
+  `highcharter-package.R`.
+- Fixed missing or moved URLs.
 
 ## highcharter 0.9.4
 
