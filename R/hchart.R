@@ -210,19 +210,22 @@ hchart.table <- function(
     replace(x, is.na(x), "(NA)")
   })
   titles <- names(dimnames(object))
-  if (is.matrix(object)) {
-    return(
-      hchart.matrix(unclass(object), type = type, ...) |>
-        hc_xAxis(title = list(text = titles[2L])) |>
-        hc_yAxis(title = list(text = titles[1L]))
-    )
+  hc <- if (is.matrix(object)) {
+    hchart.matrix(unclass(object), type = type, ...) |>
+      hc_xAxis(title = list(text = titles[2L])) |>
+      hc_yAxis(title = list(text = titles[1L]))
+  } else {
+    highchart() |>
+      hc_xAxis(
+        categories = dimnames(object)[[1L]],
+        title = list(text = titles[1L])
+      ) |>
+      hc_add_series(data = as.numeric(object), type = type, ...)
   }
-  highchart() |>
-    hc_xAxis(
-      categories = dimnames(object)[[1L]],
-      title = list(text = titles[1L])
-    ) |>
-    hc_add_series(data = as.numeric(object), type = type, ...)
+  if (all(object == trunc(object), na.rm = TRUE)) {
+    hc <- hc_tooltip(hc, valueDecimals = 0)
+  }
+  hc
 }
 
 #' @export
@@ -577,13 +580,6 @@ hchart.matrix <- function(
     name = paste(col_labels[col_index], row_labels[row_index], sep = " ~ ")
   )
 
-  fntltp <- JS(
-    "function(){
-                 return this.point.name + ': ' +
-                   Highcharts.numberFormat(this.point.value, 2)
-               }"
-  )
-
   hc <- highchart() |>
     hc_add_series(data = list_parse(points), type = type, ...) |>
     hc_plotOptions(
@@ -592,7 +588,11 @@ hchart.matrix <- function(
         dataLabels = list(enabled = label)
       )
     ) |>
-    hc_tooltip(formatter = fntltp) |>
+    hc_tooltip(
+      headerFormat = "",
+      pointFormat = "{point.name}: {point.value}",
+      valueDecimals = 2
+    ) |>
     hc_legend(enabled = TRUE) |>
     hc_colorAxis(visible = TRUE)
 

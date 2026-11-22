@@ -240,6 +240,9 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Bug fixes
 
+* Table tooltips show whole counts without decimal places. Matrix heatmaps,
+  tilemaps and contours honor `hc_tooltip(valueDecimals = ...)`.
+
 * `hcmap()` and `hc_add_series_map()` use the column named by `value`
   even when the input already contains a different column called `value`.
 

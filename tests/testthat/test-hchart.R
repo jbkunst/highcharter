@@ -279,6 +279,7 @@ test_that("one-way tables keep their category order, zeros and supplied values",
   expect_identical(opts$series[[1]]$type, "column")
   expect_identical(opts$series[[1]]$name, "Cars")
   expect_equal(opts$series[[1]]$data, c(2, 1, 0))
+  expect_equal(opts$tooltip$valueDecimals, 0)
   proportions <- hchart(prop.table(counts), "bar")$x$hc_opts$series[[1]]
   expect_identical(proportions$type, "bar")
   expect_equal(proportions$data, c(2 / 3, 1 / 3, 0))
@@ -316,6 +317,9 @@ test_that("two-way tables use the matrix grid and larger tables require a margin
   tab <- xtabs(~ cyl + gear, data = mtcars)
   hc <- hchart(tab, type = "tilemap", name = "Cars")
   opts <- hc$x$hc_opts
+  expect_equal(opts$tooltip$valueDecimals, 0)
+  expect_equal(hchart(proportions(tab))$x$hc_opts$tooltip$valueDecimals, 2)
+  expect_null(opts$tooltip$formatter)
   expect_identical(opts$xAxis$categories, colnames(tab))
   expect_identical(opts$yAxis$categories, rownames(tab))
   expect_identical(opts$xAxis$title$text, "gear")
