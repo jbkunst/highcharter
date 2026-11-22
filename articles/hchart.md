@@ -29,17 +29,7 @@ hchart(
 ``` r
 
 penguins2 <- palmerpenguins::penguins |>
-  count(species, island) |>
-  glimpse()
-```
-
-    ## Rows: 5
-    ## Columns: 3
-    ## $ species <fct> Adelie, Adelie, Adelie, Chinstrap, Gentoo
-    ## $ island  <fct> Biscoe, Dream, Torgersen, Dream, Biscoe
-    ## $ n       <int> 44, 56, 52, 68, 124
-
-``` r
+  count(species, island)
 
 hchart(penguins2, "column", hcaes(x = island, y = n, group = species))
 ```
@@ -164,9 +154,7 @@ hchart(
 
 ``` r
 
-mtcars2 <- mtcars[1:20, ]
-x <- dist(mtcars2)
-hchart(x)
+hchart(dist(mtcars[1:20, ]))
 ```
 
 ### Correlation matrix
@@ -202,14 +190,12 @@ the three layers. Hover over a gate to see its reference, such as **Gate
 
 ``` r
 
-library(geojsonio)
-
 path <- system.file(
   "extdata",
   "manchester-airport.geojson",
   package = "highcharter"
 )
-airport <- geojson_list(as.json(path))
+airport <- geojsonio::geojson_list(geojsonio::as.json(path))
 ```
 
 ``` r
@@ -244,8 +230,7 @@ hchart(LakeHuron, name = "Level") |>
 
 ``` r
 
-x <- cbind(mdeaths, fdeaths)
-hchart(x)
+hchart(cbind(mdeaths, fdeaths))
 ```
 
 ### Seasonal decomposition
@@ -263,8 +248,7 @@ hchart(stats::decompose(AirPassengers, type = "multiplicative"))
 
 ``` r
 
-x <- stl(log(AirPassengers), "per")
-hchart(x)
+hchart(stl(log(AirPassengers), "per"))
 ```
 
 ### Seasonal adjustment with X-13
@@ -276,8 +260,7 @@ mark the outliers reported by the model at the adjusted value, as in
 
 ``` r
 
-fit <- seasonal::seas(AirPassengers)
-hchart(fit)
+hchart(seasonal::seas(AirPassengers))
 ```
 
 ### Forecast package
@@ -288,19 +271,15 @@ label the subject; the chart adds the observed/forecast suffixes.
 
 ``` r
 
-library(forecast)
-
-x <- forecast(ets(USAccDeaths), h = 48, level = 95)
-hchart(x)
+fit <- forecast::ets(USAccDeaths)
+hchart(forecast::forecast(fit, h = 48, level = 95))
 ```
 
 ### Exponential-smoothing components
 
 An `ets` model shows its observed values and fitted level, slope or
 seasonal states in aligned panels. To show future values instead, pass
-the model to
-[`forecast()`](https://generics.r-lib.org/reference/forecast.html) and
-chart the resulting forecast object.
+the model to `forecast()` and chart the resulting forecast object.
 
 ``` r
 
@@ -330,19 +309,15 @@ of these monthly series.
 hchart(acf(cbind(mdeaths, fdeaths), lag.max = 12, plot = FALSE))
 ```
 
-### Quantmod package
+### Stock prices
 
-The highstock extension is used to chart `xts` and `xts ohlc` classes
-from the quantmod package.
+An `xts` series with open, high, low and close prices produces a Stock
+candlestick chart.
 
 ``` r
 
-library(quantmod)
-
 data(sample_matrix, package = "xts")
-x <- xts::as.xts(sample_matrix)
-
-hchart(x)
+hchart(xts::as.xts(sample_matrix))
 ```
 
 ## Fitted models
@@ -461,8 +436,7 @@ how many families it contains. Both `hchart(fit)` and
 
 ``` r
 
-fit <- as.hclust(birds)
-hchart(fit)
+hchart(as.hclust(birds))
 ```
 
 ### Phylogenies

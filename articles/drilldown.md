@@ -8,9 +8,7 @@ through clicking on chart items like columns, points or pie slices.
 ``` r
 
 library(dplyr)
-library(forcats)
 library(purrr)
-library(stringr)
 
 gapminder2007 <- gapminder::gapminder |>
   filter(year == max(year)) |>
@@ -27,7 +25,7 @@ gapminder_column <- gapminder2007 |>
   ) |>
   mutate_if(is.numeric, round) |>
   arrange(desc(pop)) |>
-  mutate(continent = fct_inorder(continent))
+  mutate(continent = forcats::fct_inorder(continent))
 
 gapminder_column
 ```
@@ -74,8 +72,6 @@ have the sames values (pop, lifeExp, …) we can use the same
 x <- c("Population (MM)", "Life expectancy at birth", "GDP per capita (US$)")
 y <- c("{point.pop}", "{point.lifeExp}", "$ {point.gdpPercap}")
 
-tt <- tooltip_table(x, y)
-
 hchart(
   gapminder_column,
   "column",
@@ -88,7 +84,7 @@ hchart(
     series = list_parse(gapminder_drilldown)
   ) |>
   hc_tooltip(
-    pointFormat = tt, # "{point.name} {point.pop}"
+    pointFormat = tooltip_table(x, y),
     useHTML = TRUE,
     valueDecimals = 0
   ) |>

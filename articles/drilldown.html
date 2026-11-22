@@ -103,7 +103,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Drilldown</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/v0.12.6.1-dev.20261122/vignettes/drilldown.Rmd" class="external-link"><code>vignettes/drilldown.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jbkunst/highcharter/blob/main/vignettes/drilldown.Rmd" class="external-link"><code>vignettes/drilldown.Rmd</code></a></small>
       <div class="d-none name"><code>drilldown.Rmd</code></div>
     </div>
 
@@ -117,9 +117,7 @@ slices.</p>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gapminder2007</span> <span class="op">&lt;-</span> <span class="fu">gapminder</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/gapminder/reference/gapminder.html" class="external-link">gapminder</a></span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -136,7 +134,7 @@ slices.</p>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>continent <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html" class="external-link">fct_inorder</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>continent <span class="op">=</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html" class="external-link">fct_inorder</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gapminder_column</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
@@ -174,8 +172,6 @@ countries have the sames values (pop, lifeExp, …) we can use the same
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Population (MM)"</span>, <span class="st">"Life expectancy at birth"</span>, <span class="st">"GDP per capita (US$)"</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"{point.pop}"</span>, <span class="st">"{point.lifeExp}"</span>, <span class="st">"$ {point.gdpPercap}"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">tt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tooltip_table.html">tooltip_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu"><a href="../reference/hchart.html">hchart</a></span><span class="op">(</span></span>
 <span>  <span class="va">gapminder_column</span>,</span>
 <span>  <span class="st">"column"</span>,</span>
@@ -188,7 +184,7 @@ countries have the sames values (pop, lifeExp, …) we can use the same
 <span>    series <span class="op">=</span> <span class="fu"><a href="../reference/list_parse.html">list_parse</a></span><span class="op">(</span><span class="va">gapminder_drilldown</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/hc_tooltip.html">hc_tooltip</a></span><span class="op">(</span></span>
-<span>    pointFormat <span class="op">=</span> <span class="va">tt</span>, <span class="co"># "{point.name} {point.pop}"</span></span>
+<span>    pointFormat <span class="op">=</span> <span class="fu"><a href="../reference/tooltip_table.html">tooltip_table</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
 <span>    useHTML <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    valueDecimals <span class="op">=</span> <span class="fl">0</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>

@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/jbkunst/highcharter/blob/v0.12.6.1-dev.20261122/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/jbkunst/highcharter/blob/main/DESCRIPTION)
 
 Kunst J (2026). *highcharter: A Wrapper for the 'Highcharts' Library*. R
 package version 0.12.6.1, <https://jkunst.com/highcharter/>.

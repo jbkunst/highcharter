@@ -878,8 +878,6 @@ Show R code
 
 ``` r
 
-library(fontawesome)
-
 set.seed(123)
 df <- data.frame(
   a = round(rnorm(10), 2),
@@ -978,10 +976,7 @@ df2 <- tibble(
   amount = c(46, 54, 80),
   faico = c("apple", "bread-slice", "pizza-slice"),
   col = c("#d35400", "#907E4D", "#F89101")
-)
-
-
-df2 <- df2 |>
+) |>
   mutate(
     uri = map2_chr(faico, col, ~ fa_to_data_uri(.x, fill = .y)),
     marker = map(uri, ~ list(symbol = paste0("url(", .x, ")")))

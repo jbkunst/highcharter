@@ -2,7 +2,8 @@
 
 ## Highcharts
 
-let us start start with a simple example using `hchart` function.
+Use [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) to
+plot the Palmer penguins by species.
 
 ``` r
 
@@ -15,9 +16,8 @@ hchart(
 )
 ```
 
-Among its features {highcharter} can chart various objects depending of
-its class with the generic `hchart` function. In the next example `x` is
-numeric:
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws a
+histogram for a numeric vector.
 
 ``` r
 
@@ -26,16 +26,14 @@ x <- c(rnorm(10000), rnorm(1000, 4, 0.5))
 hchart(x, name = "data", color = "#17b8b6")
 ```
 
-One of the nicest class which `hchart` can plot is the `forecast` class
-from the {forecast} package.
+For a forecast object,
+[`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) adds
+the predicted values and prediction interval.
 
 ``` r
 
-library(forecast)
-
-airforecast <- forecast(auto.arima(AirPassengers), level = 95)
-
-hchart(airforecast)
+fit <- forecast::auto.arima(AirPassengers)
+hchart(forecast::forecast(fit, level = 95))
 ```
 
 See more examples of `hchart` in
@@ -43,26 +41,16 @@ See more examples of `hchart` in
 
 ## Highstock
 
-With {highcharter} you can use the highstock library which include
-sophisticated navigation options like:
+Highcharts Stock adds a navigator, preset date ranges and a date picker.
+Drag the navigator handles to change the visible period.
 
-- Small navigator series
-- Preset date ranges
-- Date picker
-- Scrolling and panning.
-
-It is easy make candlesticks or ohlc charts using time series data. For
-example, using data from [{quantmod}](http://www.quantmod.com/) package:
+An `xts` series with open, high, low and close prices produces a
+candlestick chart.
 
 ``` r
 
-library(quantmod)
-
 data(sample_matrix, package = "xts")
-x <- xts::as.xts(sample_matrix)
-
-highchart(type = "stock") |>
-  hc_add_series(x, name = "Sample prices")
+hchart(xts::as.xts(sample_matrix), name = "Sample prices")
 ```
 
 ## Highmaps

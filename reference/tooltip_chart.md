@@ -50,23 +50,16 @@ library(dplyr)
 #> The following objects are masked from ‘package:base’:
 #> 
 #>     intersect, setdiff, setequal, union
-library(purrr)
-#> 
-#> Attaching package: ‘purrr’
-#> The following objects are masked from ‘package:igraph’:
-#> 
-#>     compose, simplify
-gapminder <- gapminder::gapminder
 
-gp <- gapminder |>
+gp <- gapminder::gapminder |>
   arrange(desc(year)) |>
   distinct(country, .keep_all = TRUE)
 
-gp2 <- gapminder |>
+gp2 <- gapminder::gapminder |>
   group_nest(country) |>
   mutate(
-    data = map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
-    data = map(data, list_parse)
+    data = purrr::map(data, mutate_mapping, hcaes(x = lifeExp, y = gdpPercap), drop = TRUE),
+    data = purrr::map(data, list_parse)
   ) |>
   rename(ttdata = data)
 

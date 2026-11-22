@@ -2,8 +2,9 @@
 
 ## Start from a clean R session
 
-Run each example separately in a fresh R session. They all plot stopping
-distance against speed using
+Start each example in a fresh R session with
+[`library(highcharter)`](https://jkunst.com/highcharter/). They all plot
+stopping distance against speed using
 [`datasets::cars`](https://rdrr.io/r/datasets/cars.html), which ships
 with R.
 
@@ -12,8 +13,6 @@ session.
 
 ``` r
 
-library(highcharter)
-
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 ```
 
@@ -21,8 +20,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 Sans.
 
 ``` r
-
-library(highcharter)
 
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
   hc_add_theme(hc_theme("carbon"))
@@ -35,8 +32,6 @@ affects charts created after it.
 
 ``` r
 
-library(highcharter)
-
 hc_set_theme("carbon")
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 ```
@@ -45,8 +40,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist))
 when starting from an empty theme.
 
 ``` r
-
-library(highcharter)
 
 team <- hc_theme(
   colors = c("#005F73", "#CA6702"),
@@ -60,8 +53,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
 choose the typeface. Each viewer sees their own system font.
 
 ``` r
-
-library(highcharter)
 
 team <- hc_theme("carbon", chart = list(style = list(fontFamily = "system-ui")))
 hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
@@ -83,8 +74,6 @@ the browser uses Noto Sans where available and `sans-serif` elsewhere.
 
 ``` r
 
-library(highcharter)
-
 team <- hc_theme(
   chart = list(style = list(fontFamily = "Noto Sans, sans-serif"))
 )
@@ -97,8 +86,6 @@ preparing the font requires an internet connection on the first
 download. The exported chart can then use the included files offline.
 
 ``` r
-
-library(highcharter)
 
 team <- hc_theme(
   chart = list(
@@ -114,8 +101,6 @@ hchart(datasets::cars, "scatter", hcaes(x = speed, y = dist)) |>
 example sets the custom theme for subsequent charts.
 
 ``` r
-
-library(highcharter)
 
 team <- hc_theme(
   chart = list(
@@ -310,34 +295,34 @@ The setter changes an R process option shared by its sessions.
 Choose a preset below; every theme uses the same sales data. The chart
 is resized when its panel becomes visible.
 
-- [538](#tab-5216-1)
-- [alone](#tab-5216-2)
-- [bloom](#tab-5216-3)
-- [bslib](#tab-5216-4)
-- [carbon](#tab-5216-5)
-- [chalk](#tab-5216-6)
-- [cloudscape](#tab-5216-7)
-- [darkunica](#tab-5216-8)
-- [db](#tab-5216-9)
-- [economist](#tab-5216-10)
-- [elementary](#tab-5216-11)
-- [ffx](#tab-5216-12)
-- [flat](#tab-5216-13)
-- [flatdark](#tab-5216-14)
-- [ft](#tab-5216-15)
-- [ggplot2](#tab-5216-16)
-- [google](#tab-5216-17)
-- [gridlight](#tab-5216-18)
-- [handdrawn](#tab-5216-19)
-- [hcrt](#tab-5216-20)
-- [monokai](#tab-5216-21)
-- [null](#tab-5216-22)
-- [sandsignika](#tab-5216-23)
-- [smpl](#tab-5216-24)
-- [sparkline_vb](#tab-5216-25)
-- [sparkline](#tab-5216-26)
-- [superheroes](#tab-5216-27)
-- [tufte](#tab-5216-28)
+- [538](#tab-8661-1)
+- [alone](#tab-8661-2)
+- [bloom](#tab-8661-3)
+- [bslib](#tab-8661-4)
+- [carbon](#tab-8661-5)
+- [chalk](#tab-8661-6)
+- [cloudscape](#tab-8661-7)
+- [darkunica](#tab-8661-8)
+- [db](#tab-8661-9)
+- [economist](#tab-8661-10)
+- [elementary](#tab-8661-11)
+- [ffx](#tab-8661-12)
+- [flat](#tab-8661-13)
+- [flatdark](#tab-8661-14)
+- [ft](#tab-8661-15)
+- [ggplot2](#tab-8661-16)
+- [google](#tab-8661-17)
+- [gridlight](#tab-8661-18)
+- [handdrawn](#tab-8661-19)
+- [hcrt](#tab-8661-20)
+- [monokai](#tab-8661-21)
+- [null](#tab-8661-22)
+- [sandsignika](#tab-8661-23)
+- [smpl](#tab-8661-24)
+- [sparkline_vb](#tab-8661-25)
+- [sparkline](#tab-8661-26)
+- [superheroes](#tab-8661-27)
+- [tufte](#tab-8661-28)
 
 Use
 [`hc_themes()`](https://jkunst.com/highcharter/reference/hc_theme.md) to

@@ -40,7 +40,7 @@ candlesticks and OHLC bars.
 
 ``` r
 
-price_chart <- highchartstock() |>
+highchartstock() |>
   hc_add_series(prices, name = "Price", id = "price") |>
   hc_add_series(
     type = "sma",
@@ -60,8 +60,6 @@ price_chart <- highchartstock() |>
     )
   ) |>
   hc_navigator(enabled = TRUE)
-
-price_chart
 ```
 
 ## Two stacked panels
@@ -191,8 +189,7 @@ shinyApp(ui, server)
 The earlier advanced example combined SPY prices, two moving averages,
 trading volume and RSI, including its 30/70 guide levels. This version
 uses a local snapshot of 2025 daily prices from Yahoo Finance, so
-rendering does not depend on a live quote request.
-[`adjustOHLC()`](https://rdrr.io/pkg/quantmod/man/adjustOHLC.html)
+rendering does not depend on a live quote request. `adjustOHLC()`
 adjusts the price fields using the downloaded adjusted close; volume
 remains the reported daily volume.
 
@@ -203,7 +200,7 @@ snapshot <- read.csv(system.file(
   "spy-2025.csv",
   package = "highcharter"
 ))
-SPY <- xts::xts(snapshot[-1], order.by = base::as.Date(snapshot$date))
+SPY <- xts::xts(snapshot[-1], order.by = as.Date(snapshot$date))
 SPY <- quantmod::adjustOHLC(SPY, use.Adjusted = TRUE)
 close <- quantmod::Cl(SPY)
 fast_mean <- TTR::SMA(close, n = 5)

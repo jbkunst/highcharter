@@ -399,14 +399,12 @@ the three layers. Hover over a gate to see its reference, such as **Gate
 
 ``` r
 
-library(geojsonio)
-
 path <- system.file(
   "extdata",
   "manchester-airport.geojson",
   package = "highcharter"
 )
-airport <- geojson_list(as.json(path))
+airport <- geojsonio::geojson_list(geojsonio::as.json(path))
 ```
 
 ``` r

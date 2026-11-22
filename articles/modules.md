@@ -32,7 +32,6 @@ hchart(
   penguins,
   "scatter",
   name = "Penguins",
-  # opacity = 0.35,
   hcaes(x = flipper_length_mm, y = bill_length_mm),
   regression = TRUE,
   regressionSettings = list(
@@ -74,12 +73,13 @@ Let’s try an example:
 
 ``` r
 
-library(purrr) # map function to make grouped categories argument
-library(dplyr) # for select function
+library(dplyr)
 
 mpgg <- ggplot2::mpg |>
-  filter(!manufacturer %in% c("volkswagen", "chevrolet")) |>
-  filter(class %in% c("compact", "midsize", "subcompact")) |>
+  filter(
+    !manufacturer %in% c("volkswagen", "chevrolet"),
+    class %in% c("compact", "midsize", "subcompact")
+  ) |>
   count(class, manufacturer, name = "count") |>
   arrange(class, manufacturer) |>
   mutate(position = row_number() - 1L)
@@ -97,10 +97,8 @@ hchart(
   hcaes(x = position, y = count)
 ) |>
   hc_xAxis(
-    # specify the grouped categories
     categories = categories_grouped,
     title = list(text = NULL),
-    # styling a little bit
     labels = list(distance = 0, style = list(fontSize = "10px"))
   ) |>
   hc_add_dependency("plugins/grouped-categories.js")
@@ -126,7 +124,6 @@ hchart(
   df,
   "bubble",
   hcaes(x = x, y = y),
-  # showInLegend = TRUE,
   name = "You can move the points",
   cursor = "move",
   dragDrop = list(
@@ -235,8 +232,6 @@ Press Play or drag the year slider; the chart begins in 1952.
 
 ``` r
 
-library(dplyr)
-
 history <- gapminder::gapminder |>
   group_by(continent, year) |>
   summarise(lifeExp = weighted.mean(lifeExp, pop), .groups = "drop")
@@ -286,7 +281,6 @@ in degrees Celsius.
 
 ``` r
 
-library(dplyr)
 cities <- sort(unique(city_weather$city))
 cells <- city_weather |>
   arrange(date) |>

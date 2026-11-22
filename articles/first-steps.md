@@ -60,21 +60,6 @@ economics_long2 <- dplyr::filter(
   variable %in% c("pop", "uempmed", "unemploy")
 )
 
-head(economics_long2)
-```
-
-    ## # A tibble: 6 × 4
-    ##   date       variable  value value01
-    ##   <date>     <chr>     <dbl>   <dbl>
-    ## 1 1967-07-01 pop      198712 0      
-    ## 2 1967-08-01 pop      198911 0.00164
-    ## 3 1967-09-01 pop      199113 0.00330
-    ## 4 1967-10-01 pop      199311 0.00492
-    ## 5 1967-11-01 pop      199498 0.00646
-    ## 6 1967-12-01 pop      199657 0.00777
-
-``` r
-
 hchart(
   economics_long2,
   "line",

@@ -48,9 +48,8 @@ highchartstock(
 
 ``` r
 data(sample_matrix, package = "xts")
-prices <- xts::as.xts(sample_matrix)
 highchartstock(width = "100%") |>
-  hc_add_series(prices, name = "Price", id = "price") |>
+  hc_add_series(xts::as.xts(sample_matrix), name = "Price", id = "price") |>
   hc_add_series(type = "sma", linkedTo = "price", name = "5-day mean",
                 params = list(period = 5)) |>
   hc_title(text = "Explore prices with Stock Tools")
