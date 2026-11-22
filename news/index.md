@@ -402,7 +402,9 @@ Bundled Highcharts JS: 12.6.2.
   draws a separate curve for each Cox prediction profile within each
   stratum. Confidence bands follow the corresponding curve, and
   censoring markers include times with multiple censored observations.
-  This method requires survival 3.6-5 or later.
+  Censoring markers now use their curve’s color by default. Use
+  `markerColor = "black"` to draw all markers in black. This method
+  requires survival 3.6-5 or later.
 
 - Boxplots from
   [`data_to_boxplot()`](https://jkunst.com/highcharter/reference/data_to_boxplot.md)
