@@ -91,6 +91,47 @@ test_that("hcmap uses a loaded map without downloads or remote dependencies", {
   expect_identical(joined$x$hc_opts$series[[1]]$joinBy, "code")
 })
 
+test_that("joined maps enable automatic color scales and preserve configured axes", {
+  map <- jsonlite::read_json(system.file(
+    "extdata",
+    "districts.geojson",
+    package = "highcharter"
+  ))
+  df <- data.frame(id = c("01", "02"), value = c(-7, 4))
+  join <- c("code", "id")
+  layer <- function(hc, ...) hc_add_series_map(hc, map, df, "value", join, ...)
+
+  expect_null(hcmap(map)$x$hc_opts$colorAxis)
+  built <- hcmap(map, data = df, value = "value", joinBy = join)
+  added <- layer(highchart())
+  for (hc in list(built, added)) {
+    expect_identical(as.character(widget_json(hc$x$hc_opts$colorAxis)), "{}")
+    expect_equal(
+      vapply(hc$x$hc_opts$series[[1L]]$data, `[[`, 0, "value"),
+      df$value
+    )
+  }
+
+  custom <- hc_colorAxis(highchart(), min = -10, max = 10, visible = FALSE)
+  expect_identical(
+    layer(custom)$x$hc_opts$colorAxis,
+    custom$x$hc_opts$colorAxis
+  )
+  expect_equal(hc_colorAxis(added, min = 0)$x$hc_opts$colorAxis$min, 0)
+
+  axes <- hc_colorAxis(
+    highchart(),
+    list(id = "change", min = -10),
+    list(id = "total")
+  )
+  both <- layer(layer(axes, colorAxis = "change"), colorAxis = "total")
+  expect_identical(both$x$hc_opts$colorAxis, axes$x$hc_opts$colorAxis)
+  expect_identical(
+    vapply(both$x$hc_opts$series, `[[`, "", "colorAxis"),
+    c("change", "total")
+  )
+})
+
 test_that("country codes and canonical paths use the same installed boundaries", {
   map <- function(key, ...) hcmap(key, ...)$x$hc_opts$series[[1]]$mapData
   chile <- map("cl")

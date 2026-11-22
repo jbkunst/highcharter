@@ -34,19 +34,22 @@ hc_add_series_map <- function(hc, map, df, value, joinBy, ...) {
     tail(joinBy, 1) %in% names(df)
   )
 
-  ddta <- rename(df, value := value)
-  ddta <- list_parse(ddta)
-
   hc$x$type <- "map"
+  add_joined_map(hc, map, rename(df, value := value), joinBy, ...)
+}
 
-  hc |>
-    hc_add_series(
-      mapData = map,
-      data = ddta,
-      joinBy = joinBy,
-      ...
-    ) |>
-    hc_colorAxis(min = 0)
+add_joined_map <- function(hc, map, data, joinBy, ...) {
+  if (is.null(hc$x$hc_opts$colorAxis)) {
+    # An empty JSON object enables the scale with Highcharts' defaults.
+    hc$x$hc_opts$colorAxis <- stats::setNames(list(), character())
+  }
+  hc_add_series(
+    hc,
+    mapData = map,
+    data = list_parse(data),
+    joinBy = joinBy,
+    ...
+  )
 }
 
 #' List installed maps
@@ -147,15 +150,7 @@ hcmap <- function(
       )
   } else {
     data <- rename(data, value := all_of(value))
-
-    hc <- hc |>
-      hc_add_series.default(
-        mapData = mapdata,
-        data = list_parse(data),
-        joinBy = joinBy,
-        ...
-      ) |>
-      hc_colorAxis(auxpar = NULL)
+    hc <- add_joined_map(hc, mapdata, data, joinBy, ...)
   }
 
   hc |>
