@@ -57,7 +57,8 @@ hchart(economics_long2, "line", hcaes(x = date, y = value01, group = variable))
 
 ``` r
 
-x <- diamonds$price
+set.seed(123)
+x <- rgamma(1000, shape = 2)
 hchart(x)
 ```
 
@@ -65,17 +66,17 @@ hchart(x)
 
 ``` r
 
-hchart(density(x), type = "area", color = "#B71C1C", name = "Price")
+hchart(density(x), type = "area", color = "#B71C1C", name = "Gamma sample")
 ```
 
 ## Empirical cumulative distributions
 
-At each price, the step shows the fraction of diamonds that cost that
-much or less. Diamonds with the same price contribute to a single jump.
+The height at each x-value is the fraction of the sample at or below it.
+For example, 626 of the 1,000 observations are at or below 2.
 
 ``` r
 
-hchart(ecdf(x), name = "Diamond prices")
+hchart(ecdf(x), name = "Gamma sample")
 ```
 
 ## Precomputed histograms
@@ -85,7 +86,7 @@ charting. The bin boundaries and counts are preserved.
 
 ``` r
 
-hchart(hist(x, breaks = 30, plot = FALSE), name = "Diamond prices")
+hchart(hist(x, breaks = 30, plot = FALSE), name = "Gamma sample")
 ```
 
 ## Character & Factor
@@ -336,7 +337,7 @@ hchart(
     max = max(volcano),
     startOnTick = FALSE,
     endOnTick = FALSE,
-    stops = Map(list, c(0, 0.5, 0.9), c("#447CFF", "#F5FF66", "#FF5E4F")),
+    stops = color_stops(3, c("#447CFF", "#F5FF66", "#FF5E4F")),
     labels = list(format = "{value} m")
   )
 ```
