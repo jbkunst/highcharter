@@ -708,7 +708,9 @@ data_to_options <- function(data, type) {
     values <- data[[axis]]
     axis_type <- if (inherits(values, c("Date", "POSIXt"))) {
       "datetime"
-    } else if (heatmap && !is.numeric(values)) {
+    } else if (
+      (heatmap && !is.numeric(values)) || (axis == "x" && is.factor(values))
+    ) {
       opts[[paste0(axis, "Axis_categories")]] <- levels(as.factor(values))
       "category"
     } else if (is.character(values) || is.factor(values)) {

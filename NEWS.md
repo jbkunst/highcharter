@@ -272,6 +272,9 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Bug fixes
 
+* `hchart()` now uses the levels of a factor mapped to `x` to order the
+  x-axis categories, including when the data are split into series (#373).
+
 * Table tooltips show whole counts without decimal places. Matrix heatmaps,
   tilemaps and contours honor `hc_tooltip(valueDecimals = ...)`.
 

@@ -66,6 +66,24 @@ test_that("group indices preserve group and point order, extras and missing valu
   expect_length(hchart(df[0, ], mapping = hcaes(y = rate))$x$hc_opts$series, 0)
 })
 
+test_that("factor levels set x-axis category order across grouped series", {
+  df <- data.frame(
+    priority = factor(
+      c("Low", "High", "Medium"),
+      levels = c("High", "Medium", "Low")
+    ),
+    team = factor(c("A", "B", "A"), levels = c("B", "A")),
+    count = c(2, 8, 5)
+  )
+  mapping <- hcaes(priority, count, group = team)
+  opts <- hchart(df, "column", mapping)$x$hc_opts
+  expect_identical(opts$xAxis$categories, levels(df$priority))
+  expect_identical(vapply(opts$series, "[[", "", "name"), levels(df$team))
+
+  df$priority <- as.character(df$priority)
+  expect_null(hchart(df, "column", mapping)$x$hc_opts$xAxis$categories)
+})
+
 test_that("point colors, bubble sizes and date-time axes preserve their values", {
   df <- data.frame(
     tick = as.POSIXct("2025-01-01", tz = "UTC") + 0:2,
