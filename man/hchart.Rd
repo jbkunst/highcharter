@@ -2,12 +2,15 @@
 % Please edit documentation in R/hchart.R, R/hchart-ts.R
 \name{hchart}
 \alias{hchart}
+\alias{hchart.CausalImpact}
 \alias{hchart.decomposed.ts}
 \alias{hchart.prcomp}
 \alias{hchart.princomp}
 \title{Create a highchart object from a particular data type}
 \usage{
 hchart(object, ...)
+
+\method{hchart}{CausalImpact}(object, ...)
 
 \method{hchart}{decomposed.ts}(object, ...)
 
@@ -44,6 +47,11 @@ matrix heatmap. Use \code{margin.table()} to choose dimensions of a larger table
 
 For a GeoJSON FeatureCollection from \pkg{geojsonio}, each geometry
 family gets its own layer. Supply \code{type} to select one layer explicitly.
+
+A \code{CausalImpact} fit shows the observed response and counterfactual
+prediction, the pointwise effect and the cumulative effect. Shaded bands show
+the model's posterior intervals. A vertical line marks the start of the
+post-intervention period.
 }
 \examples{
 methods(hchart)

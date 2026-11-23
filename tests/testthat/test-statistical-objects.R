@@ -91,3 +91,41 @@ test_that("classical decomposition retains the time index and gaps in each panel
     as.numeric(time(cycle))
   )
 })
+
+test_that("causal impact keeps the model index and puts each interval on its effect axis", {
+  values <- cbind(
+    response = c(8, 12, 19),
+    point.pred = c(8, 11, 14),
+    point.effect = c(0, 1, 5),
+    cum.effect = c(NA, 1, 6)
+  )
+  estimates <- values[, -1, drop = FALSE]
+  bounds <- cbind(estimates - 1, estimates + 2)
+  colnames(bounds) <- c(
+    paste0(colnames(estimates), ".lower"),
+    paste0(colnames(estimates), ".upper")
+  )
+  for (index in list(c(1, 3, 7), as.Date("2025-01-01") + c(0, 2, 6))) {
+    fit <- structure(
+      list(
+        series = zoo::zoo(cbind(values, bounds), index),
+        model = list(post.period = index[2:3])
+      ),
+      class = "CausalImpact"
+    )
+    opts <- hchart(fit)$x$hc_opts
+    x <- if (inherits(index, "Date")) datetime_to_timestamp(index) else index
+    expect_equal(opts$xAxis$plotLines[[1]]$value, x[2])
+    expect_length(opts$yAxis, 3)
+    expect_length(opts$series, 7)
+    for (i in seq_len(ncol(estimates))) {
+      line <- opts$series[[2 * i]]
+      band <- opts$series[[2 * i + 1]]
+      expect_equal(line$yAxis, i - 1L)
+      expect_equal(band$yAxis, line$yAxis)
+      expect_identical(band$type, "arearange")
+      expect_equal(vapply(line$data, "[[", numeric(1), 2), estimates[, i])
+      expect_equal(band$data, list_parse2(data.frame(x, bounds[, c(i, i + 3)])))
+    }
+  }
+})

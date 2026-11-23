@@ -133,6 +133,10 @@ Bundled Highcharts JS: 12.6.2.
 
 ## New features
 
+* `hchart()` draws the counterfactual prediction, pointwise effect and
+  cumulative effect from a `CausalImpact` fit with posterior intervals
+  and a marker at the start of the intervention (#274).
+
 * `color_stops()` accepts optional `positions` to place each supplied color
   at an exact point on the gradient.
 

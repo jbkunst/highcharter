@@ -243,6 +243,27 @@ an additive outlier or LS for a level shift).
 hchart(seasonal::seas(AirPassengers))
 ```
 
+### Causal impact
+
+A simulated campaign lifts daily sales by 10 units from day 71 onward. An
+unaffected control series helps estimate what sales would have been without
+the campaign. The top panel compares observed sales with that counterfactual.
+The next two show the estimated daily lift and its running total. Shaded
+bands show the posterior intervals.
+
+```{r causal-impact, eval=requireNamespace("CausalImpact", quietly=TRUE)}
+set.seed(274)
+dates <- as.Date("2025-01-01") + 0:99
+control <- 50 + cumsum(rnorm(100))
+sales <- 2 * control + rnorm(100, sd = 2) + 10 * (dates >= dates[71])
+impact <- CausalImpact::CausalImpact(
+  zoo::zoo(cbind(sales, control), dates),
+  pre.period = dates[c(1, 70)],
+  post.period = dates[c(71, 100)]
+)
+hchart(impact)
+```
+
 ### Forecast package
 
 The legend distinguishes the observed series from the forecast. Prediction

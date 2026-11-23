@@ -33,6 +33,7 @@ jobs:
             any::rcmdcheck
             S7@0.2.2
             xgboost=?ignore-before-r=4.3.0
+            CausalImpact=?ignore-before-r=4.5.0
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
