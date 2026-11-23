@@ -5,6 +5,89 @@ hchart.ts <- function(object, ...) {
     hc_add_series(data = object, ...)
 }
 
+#' @rdname hchart
+#' @details A `CausalImpact` fit shows the observed response and counterfactual
+#' prediction, the pointwise effect and the cumulative effect. Shaded bands show
+#' the model's posterior intervals. A vertical line marks the start of the
+#' post-intervention period.
+#' @export
+hchart.CausalImpact <- function(object, ...) {
+  series <- as.data.frame(object$series)
+  if (all(is.na(series$point.pred))) {
+    stop("The CausalImpact fit has no posterior predictions.", call. = FALSE)
+  }
+  index <- zoo::index(object$series)
+  post <- match(object$model$post.period[1], index)
+  if (inherits(index, c("yearmon", "yearqtr"))) {
+    index <- as.Date(index)
+  }
+  dated <- inherits(index, c("Date", "POSIXt"))
+  x <- if (dated) datetime_to_timestamp(index) else as.numeric(index)
+
+  columns <- c("point.pred", "point.effect", "cum.effect")
+  labels <- c("Counterfactual", "Pointwise effect", "Cumulative effect")
+  axes <- create_axis(
+    3,
+    heights = c(1.4, 1, 1),
+    sep = 0.04,
+    turnopposite = FALSE
+  )
+  titles <- c("Response", "Effect", "Total effect")
+  hc <- highchart() |>
+    hc_chart(alignTicks = FALSE) |>
+    hc_xAxis(
+      type = if (dated) "datetime" else "linear",
+      plotLines = list(list(
+        value = x[post],
+        width = 1,
+        dashStyle = "Dash",
+        color = "#777777",
+        zIndex = 4,
+        label = list(text = "Intervention")
+      ))
+    ) |>
+    hc_tooltip(shared = TRUE, table = TRUE) |>
+    hc_plotOptions(
+      line = utils::modifyList(
+        list(zIndex = 1, marker = list(enabled = FALSE)),
+        list(...)
+      ),
+      arearange = list(
+        color = "#888888",
+        fillOpacity = 0.22,
+        lineWidth = 0,
+        marker = list(enabled = FALSE),
+        enableMouseTracking = FALSE
+      )
+    ) |>
+    hc_add_series(
+      data = list_parse2(data.frame(x, series$response)),
+      type = "line",
+      name = "Observed"
+    )
+
+  for (i in seq_along(columns)) {
+    axes[[i]]$title <- list(text = titles[i])
+    key <- columns[i]
+    interval <- series[paste0(key, c(".lower", ".upper"))]
+    hc <- hc |>
+      hc_add_series(
+        data = list_parse2(data.frame(x, series[[key]])),
+        type = "line",
+        name = labels[i],
+        yAxis = i - 1L
+      ) |>
+      hc_add_series(
+        data = list_parse2(data.frame(x, interval)),
+        type = "arearange",
+        name = paste(labels[i], "interval"),
+        linkedTo = ":previous",
+        yAxis = i - 1L
+      )
+  }
+  hc_yAxis(hc, axes)
+}
+
 #' @export
 hchart.seas <- function(object, ...) {
   observed <- seasonal::original(object)
