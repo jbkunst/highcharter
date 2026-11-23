@@ -184,6 +184,12 @@ Bundled Highcharts JS: 12.6.2.
 
 ### New features
 
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) draws
+  the counterfactual prediction, pointwise effect and cumulative effect
+  from a `CausalImpact` fit with posterior intervals and a marker at the
+  start of the intervention
+  ([\#274](https://github.com/jbkunst/highcharter/issues/274)).
+
 - [`color_stops()`](https://jkunst.com/highcharter/reference/color_stops.md)
   accepts optional `positions` to place each supplied color at an exact
   point on the gradient.
@@ -372,6 +378,11 @@ Bundled Highcharts JS: 12.6.2.
   library.
 
 ### Bug fixes
+
+- [`hchart()`](https://jkunst.com/highcharter/reference/hchart.md) now
+  uses the levels of a factor mapped to `x` to order the x-axis
+  categories, including when the data are split into series
+  ([\#373](https://github.com/jbkunst/highcharter/issues/373)).
 
 - Table tooltips show whole counts without decimal places. Matrix
   heatmaps, tilemaps and contours honor

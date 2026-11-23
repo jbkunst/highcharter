@@ -9,6 +9,9 @@ other classes and packages can extend.
 ``` r
 hchart(object, ...)
 
+# S3 method for class 'CausalImpact'
+hchart(object, ...)
+
 # S3 method for class 'decomposed.ts'
 hchart(object, ...)
 
@@ -60,6 +63,11 @@ dimensions of a larger table.
 For a GeoJSON FeatureCollection from geojsonio, each geometry family
 gets its own layer. Supply `type` to select one layer explicitly.
 
+A `CausalImpact` fit shows the observed response and counterfactual
+prediction, the pointwise effect and the cumulative effect. Shaded bands
+show the model's posterior intervals. A vertical line marks the start of
+the post-intervention period.
+
 ## See also
 
 [`hchart.constparty()`](https://jkunst.com/highcharter/reference/hchart.constparty.md)
@@ -77,19 +85,19 @@ for dendrograms and phylogenies.
 
 ``` r
 methods(hchart)
-#>  [1] hchart.C5.0*          hchart.acf*           hchart.character*    
-#>  [4] hchart.constparty*    hchart.cv.glmnet*     hchart.data.frame*   
-#>  [7] hchart.decomposed.ts* hchart.default*       hchart.dendrogram*   
-#> [10] hchart.density*       hchart.dist*          hchart.ecdf*         
-#> [13] hchart.ets*           hchart.factor*        hchart.forecast*     
-#> [16] hchart.geo_json*      hchart.geo_list*      hchart.hclust*       
-#> [19] hchart.histogram*     hchart.igraph*        hchart.list*         
-#> [22] hchart.matrix*        hchart.mforecast*     hchart.mts*          
-#> [25] hchart.numeric*       hchart.phylo*         hchart.prcomp*       
-#> [28] hchart.princomp*      hchart.randomForest*  hchart.rpart*        
-#> [31] hchart.seas*          hchart.stl*           hchart.survfit*      
-#> [34] hchart.table*         hchart.ts*            hchart.xgb.Booster*  
-#> [37] hchart.xts*          
+#>  [1] hchart.C5.0*          hchart.CausalImpact*  hchart.acf*          
+#>  [4] hchart.character*     hchart.constparty*    hchart.cv.glmnet*    
+#>  [7] hchart.data.frame*    hchart.decomposed.ts* hchart.default*      
+#> [10] hchart.dendrogram*    hchart.density*       hchart.dist*         
+#> [13] hchart.ecdf*          hchart.ets*           hchart.factor*       
+#> [16] hchart.forecast*      hchart.geo_json*      hchart.geo_list*     
+#> [19] hchart.hclust*        hchart.histogram*     hchart.igraph*       
+#> [22] hchart.list*          hchart.matrix*        hchart.mforecast*    
+#> [25] hchart.mts*           hchart.numeric*       hchart.phylo*        
+#> [28] hchart.prcomp*        hchart.princomp*      hchart.randomForest* 
+#> [31] hchart.rpart*         hchart.seas*          hchart.stl*          
+#> [34] hchart.survfit*       hchart.table*         hchart.ts*           
+#> [37] hchart.xgb.Booster*   hchart.xts*          
 #> see '?methods' for accessing help and source code
 
 # Principal component analysis

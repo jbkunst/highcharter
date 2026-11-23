@@ -78,6 +78,9 @@ generic that other classes and packages can extend.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hchart</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'CausalImpact'</span></span>
+<span><span class="fu">hchart</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'decomposed.ts'</span></span>
 <span><span class="fu">hchart</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -127,6 +130,10 @@ One-way tables use columns in category order. Two-way tables use the
 matrix heatmap. Use <code><a href="https://rdrr.io/r/base/marginSums.html" class="external-link">margin.table()</a></code> to choose dimensions of a larger table.</p>
 <p>For a GeoJSON FeatureCollection from <span class="pkg">geojsonio</span>, each geometry
 family gets its own layer. Supply <code>type</code> to select one layer explicitly.</p>
+<p>A <code>CausalImpact</code> fit shows the observed response and counterfactual
+prediction, the pointwise effect and the cumulative effect. Shaded bands show
+the model's posterior intervals. A vertical line marks the start of the
+post-intervention period.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -138,19 +145,19 @@ and <code><a href="hchart.hclust.html">hchart.hclust()</a></code> for dendrogram
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/methods.html" class="external-link">methods</a></span><span class="op">(</span><span class="va">hchart</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] hchart.C5.0*          hchart.acf*           hchart.character*    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] hchart.constparty*    hchart.cv.glmnet*     hchart.data.frame*   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] hchart.decomposed.ts* hchart.default*       hchart.dendrogram*   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] hchart.density*       hchart.dist*          hchart.ecdf*         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] hchart.ets*           hchart.factor*        hchart.forecast*     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] hchart.geo_json*      hchart.geo_list*      hchart.hclust*       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] hchart.histogram*     hchart.igraph*        hchart.list*         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] hchart.matrix*        hchart.mforecast*     hchart.mts*          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] hchart.numeric*       hchart.phylo*         hchart.prcomp*       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] hchart.princomp*      hchart.randomForest*  hchart.rpart*        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] hchart.seas*          hchart.stl*           hchart.survfit*      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] hchart.table*         hchart.ts*            hchart.xgb.Booster*  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] hchart.xts*          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] hchart.C5.0*          hchart.CausalImpact*  hchart.acf*          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] hchart.character*     hchart.constparty*    hchart.cv.glmnet*    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] hchart.data.frame*    hchart.decomposed.ts* hchart.default*      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] hchart.dendrogram*    hchart.density*       hchart.dist*         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] hchart.ecdf*          hchart.ets*           hchart.factor*       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] hchart.forecast*      hchart.geo_json*      hchart.geo_list*     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] hchart.hclust*        hchart.histogram*     hchart.igraph*       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] hchart.list*          hchart.matrix*        hchart.mforecast*    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] hchart.mts*           hchart.numeric*       hchart.phylo*        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] hchart.prcomp*        hchart.princomp*      hchart.randomForest* </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] hchart.rpart*         hchart.seas*          hchart.stl*          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] hchart.survfit*       hchart.table*         hchart.ts*           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] hchart.xgb.Booster*   hchart.xts*          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> see '?methods' for accessing help and source code</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Principal component analysis</span></span></span>

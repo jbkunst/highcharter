@@ -101,7 +101,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/color_stops.html">color_stops()</a></code> accepts optional <code>positions</code> to place each supplied color at an exact point on the gradient.</p></li>
+<ul><li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws the counterfactual prediction, pointwise effect and cumulative effect from a <code>CausalImpact</code> fit with posterior intervals and a marker at the start of the intervention (<a href="https://github.com/jbkunst/highcharter/issues/274" class="external-link">#274</a>).</p></li>
+<li><p><code><a href="../reference/color_stops.html">color_stops()</a></code> accepts optional <code>positions</code> to place each supplied color at an exact point on the gradient.</p></li>
 <li><p><code>hchart(ecdf(x))</code> draws an empirical cumulative distribution as a step line.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws random forest error histories, cross-validation points and standard error bars for glmnet, and individual XGBoost trees. Cluster dendrograms preserve merge heights, and radial or rectangular phylogenies preserve branch lengths. Random forests compare multiple error curves in a shared tooltip table. Crosshairs on glmnet charts let you compare error bars at the same metric value. Model packages are optional.</p></li>
 <li><p><code><a href="../reference/hchart.html">hchart()</a></code> draws classification and regression trees from <code>partykit</code> and <code>rpart</code>, and single C5.0 classification trees. Node area shows the number of observations. Donuts or bars show class composition and a color axis shows the mean response for regression. Light gray branches show the split condition in dark text with a white outline. Tree packages are optional.</p></li>
@@ -144,7 +145,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li><p>Table tooltips show whole counts without decimal places. Matrix heatmaps, tilemaps and contours honor <code>hc_tooltip(valueDecimals = ...)</code>.</p></li>
+<ul><li><p><code><a href="../reference/hchart.html">hchart()</a></code> now uses the levels of a factor mapped to <code>x</code> to order the x-axis categories, including when the data are split into series (<a href="https://github.com/jbkunst/highcharter/issues/373" class="external-link">#373</a>).</p></li>
+<li><p>Table tooltips show whole counts without decimal places. Matrix heatmaps, tilemaps and contours honor <code>hc_tooltip(valueDecimals = ...)</code>.</p></li>
 <li><p><code><a href="../reference/hcmap.html">hcmap()</a></code> and <code><a href="../reference/hc_add_series_map.html">hc_add_series_map()</a></code> use the column named by <code>value</code> even when the input already contains a different column called <code>value</code>.</p></li>
 <li><p>Joined maps use the data range for their color scale. Adding a map layer with <code><a href="../reference/hc_add_series_map.html">hc_add_series_map()</a></code> preserves any color axes already configured. Use <code>hc_colorAxis(min = 0)</code> for a scale that starts at zero.</p></li>
 <li><p><code><a href="../reference/hchart.survfit.html">hchart.survfit()</a></code> uses a logarithmic probability axis for <code>fun = "log"</code> and a logarithmic time axis for <code>fun = "cloglog"</code>. Curves and confidence bands have gaps where their values fall outside the scale’s domain.</p></li>
