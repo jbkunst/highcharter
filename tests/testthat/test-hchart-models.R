@@ -53,13 +53,20 @@ test_that("cluster charts preserve heights and the supplied leaf order", {
   dend <- stats::as.dendrogram(fit)
   opts <- hchart(fit)$x$hc_opts
   expect_equal(opts, hchart(dend)$x$hc_opts)
-  expect_equal(unlist(opts$xAxis$categories), labels(dend))
+  expect_identical(opts$series[[1]]$type, "treegraph")
+  nodes <- opts$series[[1]]$data
+  leaf_names <- function(nodes) {
+    tips <- Filter(function(node) node$custom$members == 1L, nodes)
+    vapply(tips, "[[", character(1), "name")
+  }
+  expect_equal(leaf_names(nodes), labels(dend))
   expect_equal(
-    unlist(hchart(rev(dend))$x$hc_opts$xAxis$categories),
+    leaf_names(hchart(rev(dend))$x$hc_opts$series[[1]]$data),
     rev(labels(dend))
   )
-  y <- vapply(opts$series[[2]]$data, "[[", numeric(1), "y")
-  expect_equal(sort(y[y > 0]), sort(fit$height))
+  joins <- Filter(function(node) node$custom$members > 1L, nodes)
+  heights <- vapply(joins, "[[", numeric(1), "x")
+  expect_equal(sort(heights), sort(fit$height))
 })
 
 test_that("phylogenies preserve unequal lengths, multifurcations and unit edges", {
