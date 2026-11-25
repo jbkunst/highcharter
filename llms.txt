@@ -154,6 +154,8 @@ Map R columns to point fields with hcaes(), then add series to a chart.
 
 ### Interaction and exporting
 
+- [`hc_connect()`](https://jkunst.com/highcharter/reference/hc_connect.md)
+  : Connect interactions between charts in an HTML document
 - [`hc_tooltip()`](https://jkunst.com/highcharter/reference/hc_tooltip.md)
   : Tooltip options for highcharter objects
 - [`hc_drilldown()`](https://jkunst.com/highcharter/reference/hc_drilldown.md)

@@ -33,6 +33,76 @@
     });
   }
 
+  function connectChart(chart, connection) {
+    chart.hcConnection = connection;
+    function peers(mode) {
+      return Highcharts.charts.filter(other => other && other !== chart &&
+        other.hcConnection?.group === connection.group &&
+        other.hcConnection.sync.includes(mode));
+    }
+
+    if (connection.sync.includes('hover')) {
+      let lastX;
+      function hover(x) {
+        if (x === lastX) return;
+        lastX = x;
+        for (const other of peers('hover')) {
+          const axis = other.xAxis[0];
+          if (!axis) continue;
+          const points = [];
+          if (x !== undefined) {
+            for (const s of axis.series) {
+              if (!s.visible || s.options.isInternal || s.options.enableMouseTracking === false) continue;
+              const p = s.points?.find(p => p && p.x === x && !p.isNull && p.visible !== false);
+              if (p) points.push(p);
+              if (points.length && !other.tooltip?.shared) break;
+            }
+          }
+          if (points.length) {
+            other.tooltip?.refresh(other.tooltip.shared ? points : points[0]);
+            axis.drawCrosshair(undefined, points[0]);
+          } else {
+            other.tooltip?.hide(0);
+            axis.hideCrosshair();
+          }
+        }
+      }
+      Highcharts.wrap(chart.pointer, 'runPointActions', function(proceed, ...args) {
+        proceed.apply(this, args);
+        hover(chart.hoverPoint?.x);
+      });
+      Highcharts.wrap(chart.pointer, 'reset', function(proceed, ...args) {
+        proceed.apply(this, args);
+        hover(chart.hoverPoint?.x);
+      });
+    }
+
+    if (connection.sync.includes('zoom') && chart.xAxis[0]) {
+      Highcharts.addEvent(chart.xAxis[0], 'afterSetExtremes', function(e) {
+        if (e.trigger === 'hc-connect') return;
+        const {userMin, userMax} = this.getExtremes();
+        const reset = userMin == null && userMax == null;
+        for (const other of peers('zoom')) {
+          const axis = other.xAxis[0];
+          if (!axis) continue;
+          axis.setExtremes(userMin, userMax, true, false, {trigger: 'hc-connect'});
+          if (!reset && !other.resetZoomButton) other.showResetZoom();
+          if (reset && other.resetZoomButton) other.resetZoomButton = other.resetZoomButton.destroy();
+        }
+      });
+    }
+
+    if (connection.sync.includes('legend')) {
+      Highcharts.addEvent(chart.legend, 'itemClick', function(e) {
+        const item = e.legendItem, id = item.options?.id;
+        if (!id || e.defaultPrevented) return;
+        for (const other of peers('legend')) {
+          other.get(id)?.setVisible?.(!item.visible);
+        }
+      });
+    }
+  }
+
   function prepareMapSeries(options) {
     if (!Array.isArray(options.series)) return;
     options.series = options.series.map(function(series) {
@@ -109,6 +179,16 @@
         options[key].map(positionAxis) : positionAxis(options[key]);
     });
 
+    if (x.connect) {
+      if (x.connect.sync.includes('hover')) {
+        const axes = Array.isArray(options.xAxis) ? options.xAxis.slice() : [options.xAxis];
+        axes[0] = Object.assign({crosshair: true}, axes[0]);
+        options.xAxis = axes;
+      }
+      if (x.connect.sync.includes('zoom')) {
+        options.chart = Highcharts.merge({zooming: {type: 'x'}}, options.chart);
+      }
+    }
     var chart;
     if (x.type === 'stock') {
       chart = Highcharts.stockChart(el, options);
@@ -136,6 +216,7 @@
         animation
       );
     });
+    if (x.connect) connectChart(chart, x.connect);
     chart.setSize(null, null, false);
   }
 

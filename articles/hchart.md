@@ -458,8 +458,23 @@ how many families it contains. Both `hchart(fit)` and
 
 ``` r
 
-hchart(as.hclust(birds))
+htmltools::tags$section(
+  htmltools::tags$button(
+    "Change branches",
+    type = "button",
+    onclick = "
+    const panel = this.closest('section');
+    const chart = Highcharts.charts.find(c => c && panel.contains(c.renderTo));
+    const series = chart.series[0], styles = ['orthogonal', 'curved', 'straight'];
+    const next = (styles.indexOf(series.options.link.type) + 1) % styles.length;
+    series.update({ link: { type: styles[next] } });
+  "
+  ),
+  hchart(as.hclust(birds))
+)
 ```
+
+Change branches
 
 ### Phylogenies
 

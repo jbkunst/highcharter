@@ -4,6 +4,14 @@
 
 Bundled Highcharts JS: 12.6.2.
 
+- [`hc_connect()`](https://jkunst.com/highcharter/reference/hc_connect.md)
+  links tooltips, crosshairs, X zoom and legend visibility across
+  widgets in HTML documents, including separate Quarto chunks.
+
+- Cluster dendrograms use a native treegraph with rectangular branches
+  at the observed merge heights. Set `link$type` to change the branch
+  shape.
+
 ### Upgrading from CRAN 0.9.5
 
 - CRAN 0.9.5 shipped Highcharts JS 9.3.1. Development on GitHub moved to

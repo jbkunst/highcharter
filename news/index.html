@@ -66,7 +66,9 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="highcharter-development-version">highcharter (development version)<a class="anchor" aria-label="anchor" href="#highcharter-development-version"></a></h2>
 <p>Bundled Highcharts JS: 12.6.2.</p>
-<div class="section level3">
+<ul><li><p><code><a href="../reference/hc_connect.html">hc_connect()</a></code> links tooltips, crosshairs, X zoom and legend visibility across widgets in HTML documents, including separate Quarto chunks.</p></li>
+<li><p>Cluster dendrograms use a native treegraph with rectangular branches at the observed merge heights. Set <code>link$type</code> to change the branch shape.</p></li>
+</ul><div class="section level3">
 <h3 id="upgrading-from-cran-development-version">Upgrading from CRAN 0.9.5<a class="anchor" aria-label="anchor" href="#upgrading-from-cran-development-version"></a></h3>
 <ul><li>CRAN 0.9.5 shipped Highcharts JS 9.3.1. Development on GitHub moved to Highcharts JS 12.6.0 in highcharter 0.12.6.1 and now bundles 12.6.2.</li>
 <li>highcharter now requires R 4.1 or later. New code can use the base R pipe <code>|&gt;</code>. Packages that import <code>%&gt;%</code> from highcharter should import it from magrittr instead.</li>

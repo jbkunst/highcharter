@@ -54,9 +54,15 @@ hchart(object, ..., choices = 1:2, scale = 1, loadings = FALSE, label = FALSE)
 Run `methods(hchart)` to see what objects are supported. Numeric
 matrices use a heatmap by default. Set `type = "tilemap"` for hexagonal
 tiles or `type = "contour"` for contour lines. Empirical distributions
-from [`stats::ecdf()`](https://rdrr.io/r/stats/ecdf.html) use a step
-line. One-way tables use columns in category order. Two-way tables use
-the matrix heatmap. Use
+from [`stats::ecdf()`](https://rdrr.io/r/stats/ecdf.html) use
+`step = "left"` to show jumps at observations. Pass `step = FALSE` to
+restore ordinary line interpolation. Matrix heatmaps put row one at the
+top. Use `hc_yAxis(reversed = FALSE)` to restore the usual axis
+direction. A matrix with negative values and all entries between -1 and
+1 gets a diverging color scale spanning that interval. Use
+[`hc_colorAxis()`](https://jkunst.com/highcharter/reference/hc_colorAxis.md)
+to supply different limits and color stops. One-way tables use columns
+in category order. Two-way tables use the matrix heatmap. Use
 [`margin.table()`](https://rdrr.io/r/base/marginSums.html) to choose
 dimensions of a larger table.
 
