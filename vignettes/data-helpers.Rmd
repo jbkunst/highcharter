@@ -31,29 +31,40 @@ hc_set_theme("hcrt", colors = hc_theme("smpl")$colors)
 
 ## Parallel coordinates
 
-Each flower in `iris` becomes a line crossing four measurement axes.
-Select the numeric columns in display order. Use translucent lines to reveal where flowers overlap. The row number identifies
-each specimen, and color distinguishes the three species.
+Each line represents one diamond in a reproducible sample of 1,200 from
+`ggplot2::diamonds`. Read across the axes to compare weight, depth, table width
+and price. Color follows the five ordered cut grades from Fair (purple) to
+Ideal (yellow). Depth and table width are percentages.
 
-```{r parallel-coordinates}
-measurements <- iris[1:4]
+```{r parallel-coordinates, eval=requireNamespace("ggplot2", quietly = TRUE)}
+set.seed(42)
+ids <- sample.int(nrow(ggplot2::diamonds), 1200)
+diamonds <- ggplot2::diamonds[ids, ]
 series <- data_to_parallel_coordinates(
-  measurements,
-  name = paste(iris$Species, seq_len(nrow(iris)), sep = " · "),
-  color = hex_to_rgba(colorize(iris$Species), alpha = 0.36)
+  diamonds[c("carat", "depth", "table", "price")],
+  name = paste0("Diamond #", ids, " · ", diamonds$cut),
+  color = hex_to_rgba(colorize(diamonds$cut), alpha = 0.18)
 )
 
 highchart() |>
   hc_chart(type = "line", parallelCoordinates = TRUE) |>
-  hc_xAxis(categories = names(measurements)) |>
+  hc_xAxis(
+    categories = c("Weight (ct)", "Depth (%)", "Table (%)", "Price (USD)")
+  ) |>
   hc_add_series_list(series) |>
+  hc_plotOptions(
+    series = list(
+      animation = FALSE,
+      marker = list(enabled = FALSE),
+      states = list(inactive = list(enabled = FALSE))
+    )
+  ) |>
   hc_tooltip(
     formatter = JS(
       "function () {
     const axes = this.series.xAxis.categories;
     const rows = this.series.points.map(p => {
-      const value = p.isNull ? '—' : Highcharts.numberFormat(p.y, 1) + ' cm';
-      const row = axes[p.x] + ': ' + value;
+      const row = axes[p.x] + ': ' + Highcharts.numberFormat(p.y, -1);
       return p.x === this.x ? '<b>' + row + '</b>' : row;
     });
     return ['<b>' + this.series.name + '</b>', ...rows].join('<br>');
@@ -62,11 +73,9 @@ highchart() |>
   )
 ```
 
-Hover over any axis to see the four measurements for that flower. The tooltip
-reads the points already stored in its series and emphasizes the current axis.
-Highcharts scales
-each axis independently. A constant column keeps its value, and a missing
-measurement leaves a gap in that flower's line.
+Hover over a line to see its cut grade and all four measurements. Each axis
+uses its own scale. Disabling the inactive state keeps the other diamonds at
+their original opacity as you move the pointer.
 
 ## Boxplots
 
