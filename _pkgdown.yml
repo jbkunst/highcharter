@@ -78,6 +78,7 @@ reference:
   - hc_connectors
 - subtitle: Interaction and exporting
   contents:
+  - hc_connect
   - hc_tooltip
   - hc_drilldown
   - hc_navigation

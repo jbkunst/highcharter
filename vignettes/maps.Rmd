@@ -137,7 +137,8 @@ An orthographic projection shows one hemisphere at a time. Drag the globe
 to rotate it. Join the 2024 World Bank income data to the country codes in
 the geographic world map. The fill uses a logarithmic scale in current US
 dollars per person. Gray indicates missing data. The graticule marks parallels
-and meridians across the oceans.
+and meridians. The ocean circle uses the radius of the orthographic projection
+and shares the graticule's transform during rotation and zoom.
 
 ```{r world-income}
 hcmap(
@@ -151,6 +152,7 @@ hcmap(
   zIndex = 1
 ) |>
   hc_add_series(
+    id = "graticule",
     data = geojsonio::geojson_list(sf::st_graticule()),
     type = "mapline",
     color = "rgba(86,121,130,0.35)",
@@ -158,6 +160,20 @@ hcmap(
     lineWidth = 0.6,
     enableMouseTracking = FALSE,
     showInLegend = FALSE
+  ) |>
+  hc_chart(
+    events = list(
+      render = JS(
+        "function () {
+    const group = this.get('graticule').transformGroups[0];
+    if (!group.ocean) {
+      const radius = this.mapView.projection.def.bounds.x2;
+      group.ocean = this.renderer.circle(0, 0, radius)
+        .attr({ fill: '#e4f3fa', zIndex: -1, 'pointer-events': 'none' }).add(group);
+    }
+  }"
+      )
+    )
   ) |>
   hc_mapView(projection = list(name = "Orthographic", rotation = c(60, 15))) |>
   hc_colorAxis(

@@ -7,7 +7,12 @@
 #' Run \code{methods(hchart)} to see what objects are supported.
 #' Numeric matrices use a heatmap by default. Set `type = "tilemap"` for
 #' hexagonal tiles or `type = "contour"` for contour lines.
-#' Empirical distributions from [stats::ecdf()] use a step line.
+#' Empirical distributions from [stats::ecdf()] use `step = "left"` to show jumps at observations.
+#' Pass `step = FALSE` to restore ordinary line interpolation.
+#' Matrix heatmaps put row one at the top. Use `hc_yAxis(reversed = FALSE)`
+#' to restore the usual axis direction. A matrix with negative values and all
+#' entries between -1 and 1 gets a diverging color scale spanning that interval.
+#' Use `hc_colorAxis()` to supply different limits and color stops.
 #' One-way tables use columns in category order. Two-way tables use the
 #' matrix heatmap. Use `margin.table()` to choose dimensions of a larger table.
 #'

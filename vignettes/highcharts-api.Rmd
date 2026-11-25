@@ -205,6 +205,73 @@ hc |>
 
 For a chart inside the tooltip, see [Charts inside tooltips](showcase.html#charts-inside-tooltips).
 
+### HTML table legend
+
+An external table can show summary statistics next to each series name.
+`hc_legend(enabled = FALSE)` hides the built-in legend. HTML supplies the
+table and buttons, CSS styles their visible state, and the click handler
+calls the native `series.setVisible()` toggle.
+
+```{r legend-table}
+values <- list(North = c(3, 1, 5), South = c(2, 4, 3))
+chart <- highchart() |> hc_legend(enabled = FALSE)
+for (city in names(values)) {
+  chart <- hc_add_series(chart, id = city, name = city, data = values[[city]])
+}
+
+tags <- htmltools::tags
+toggle <- "const panel = this.closest('section');
+  const chart = Highcharts.charts.find(c => c && panel.contains(c.renderTo));
+  const series = chart.get(this.dataset.series);
+  series.setVisible();
+  this.setAttribute('aria-pressed', String(series.visible));"
+
+tags$section(
+  chart,
+  tags$style(".city-legend button[aria-pressed=false] { opacity: 0.55; }"),
+  tags$table(
+    class = "city-legend",
+    tags$thead(tags$tr(lapply(c("City", "Last", "Min", "Max"), tags$th))),
+    tags$tbody(lapply(names(values), function(city) {
+      x <- values[[city]]
+      tags$tr(
+        tags$th(tags$button(
+          city,
+          type = "button",
+          `data-series` = city,
+          `aria-pressed` = "true",
+          onclick = toggle
+        )),
+        tags$td(tail(x, 1)),
+        tags$td(min(x)),
+        tags$td(max(x))
+      )
+    }))
+  )
+)
+```
+
+For a legend that controls multiple widgets, see the line and pie example in
+[`hc_connect()`](../reference/hc_connect.html) and [issue #183](https://github.com/jbkunst/highcharter/issues/183).
+
+## Connect charts across HTML chunks
+
+Give each chart the same group name to link its tooltip, crosshair and X zoom.
+These two chunks also work in a Quarto HTML document. Drag on either chart to
+zoom, then use either reset button to restore both X axes.
+
+```{r connect-passengers}
+hchart(AirPassengers) |> hc_connect("monthly")
+```
+
+```{r connect-change}
+hchart(diff(AirPassengers)) |> hc_connect("monthly")
+```
+
+The first month has no corresponding change, so hovering over it clears the
+second tooltip. To share a legend between a line and a pie, see the series
+and point IDs in the [`hc_connect()`](../reference/hc_connect.html) example.
+
 ## Keep other series visible on hover
 
 Move the pointer over a city to inspect it. An inactive opacity of one keeps

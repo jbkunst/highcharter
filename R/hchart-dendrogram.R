@@ -4,9 +4,14 @@
 #' Phylogenies use distance along the edges from the displayed root. The fan
 #' layout maps that distance to radius. If branch lengths are absent each
 #' edge counts as one step. The optional stem above the root is excluded.
+#' @details Cluster dendrograms use rectangular branches with square corners
+#' to show each join at its merge height. The treegraph defaults for these
+#' methods are `link = list(type = "orthogonal", bendAt = 0, radius = 0)`.
+#' Use `hchart(fit, link = list(type = "straight"))` for triangular branches
+#' or `type = "curved"` inside `link` to restore the native curved treegraph style.
 #' @param object An `hclust`, `dendrogram`, or `ape::phylo` object.
 #' @param layout For a phylogeny, `"fan"` (radial) or `"rectangular"`.
-#' @param ... Highcharts line series options for the branches.
+#' @param ... Highcharts treegraph series options for cluster trees, or line options for phylogeny branches.
 #' @return A highchart htmlwidget.
 #' @examplesIf requireNamespace("ape", quietly = TRUE)
 #' data("bird.families", package = "ape")
@@ -26,54 +31,98 @@ hchart.hclust <- function(object, ...) {
 #' @export
 hchart.dendrogram <- function(object, ...) {
   nodes <- list()
-  tip <- -1L
-  # Postorder puts every child in the table before its parent.
-  visit <- function(d) {
+  leaves <- integer()
+  max_depth <- 1L
+  visit <- function(d, parent = "", depth = 1L) {
+    i <- length(nodes) + 1L
     leaf <- stats::is.leaf(d)
-    kids <- if (!leaf) vapply(d, visit, integer(1))
-    label <- ""
-    if (leaf) {
-      tip <<- tip + 1L
-      label <- attr(d, "label")
-      if (is.null(label)) label <- tip + 1L
+    label <- attr(d, "label")
+    if (leaf && is.null(label)) {
+      label <- length(leaves) + 1L
     }
-    x <- if (leaf) {
-      tip
-    } else {
-      mean(vapply(nodes[kids[c(1, length(kids))]], "[[", numeric(1), "x"))
-    }
-    id <- length(nodes) + 1L
-    nodes[[id]] <<- list(
-      x = as.numeric(x),
-      y = attr(d, "height"),
-      kids = kids,
-      label = as.character(label),
-      members = attr(d, "members")
+    nodes[[i]] <<- list(
+      id = as.character(i),
+      parent = parent,
+      name = if (leaf) as.character(label) else "",
+      x = attr(d, "height"),
+      custom = list(members = attr(d, "members"))
     )
-    id
+    if (leaf) {
+      leaves <<- c(leaves, i)
+      max_depth <<- max(depth, max_depth)
+    } else {
+      for (child in d) {
+        visit(child, as.character(i), depth + 1L)
+      }
+    }
   }
   visit(object)
-  x <- vapply(nodes, "[[", numeric(1), "x")
-  y <- vapply(nodes, "[[", numeric(1), "y")
-  children <- lapply(nodes, "[[", "kids")
-  edges <- cbind(
-    rep(seq_along(nodes), lengths(children)),
-    as.integer(unlist(children))
+  # Align tips in traversal order while the numeric axis sets merge heights.
+  for (i in leaves) {
+    nodes[[i]]$level <- max_depth
+  }
+  nodes[[leaves[1L]]]$dataLabels <- list(align = "left")
+  nodes[[leaves[length(leaves)]]]$dataLabels <- list(align = "right")
+  heights <- vapply(nodes, "[[", numeric(1), "x")
+  options <- list(...)
+  link <- utils::modifyList(
+    list(
+      type = "orthogonal",
+      bendAt = 0,
+      radius = 0,
+      color = "#555555",
+      lineWidth = 1.5
+    ),
+    Filter(
+      Negate(is.null),
+      list(color = options$color, lineWidth = options$lineWidth)
+    )
   )
-  leaf <- !lengths(children)
-  labels <- vapply(nodes, "[[", character(1), "label")
-  members <- vapply(nodes, "[[", numeric(1), "members")
-  detail <- paste0("Height: ", signif(y, 5), "<br/>Members: ", members)
-  hc <- branch_chart(edges, x, y, labels, detail, polar = FALSE, ...)
-  hc |>
+  series <- utils::modifyList(
+    list(
+      type = "treegraph",
+      data = nodes,
+      reversed = FALSE,
+      link = link,
+      marker = list(
+        radius = 0.1,
+        lineWidth = 6,
+        lineColor = "transparent",
+        fillColor = "transparent"
+      ),
+      collapseButton = list(enabled = FALSE),
+      dataLabels = list(
+        enabled = TRUE,
+        format = "{point.name}",
+        linkFormat = "",
+        y = 20,
+        align = "center",
+        crop = FALSE,
+        overflow = "allow",
+        style = list(fontWeight = "normal", textOutline = "none")
+      ),
+      tooltip = list(
+        headerFormat = "",
+        pointFormat = "{point.name}<br/>Height: {point.x}<br/>Members: {point.custom.members}",
+        linkFormat = "{point.toNode.name}<br/>Height: {point.toNode.x}<br/>Members: {point.toNode.custom.members}"
+      )
+    ),
+    options
+  )
+  highchart() |>
+    hc_chart(inverted = TRUE, marginBottom = 35) |>
     hc_xAxis(
-      categories = as.list(labels[leaf]),
-      min = 0,
-      max = sum(leaf) - 1L,
-      title = list(text = NULL),
-      tickLength = 0
+      visible = TRUE,
+      reversed = FALSE,
+      min = min(heights),
+      max = max(heights),
+      offset = 20,
+      gridLineWidth = 0,
+      title = list(text = "Merge height")
     ) |>
-    hc_yAxis(title = list(text = "Merge height"))
+    hc_yAxis(visible = FALSE) |>
+    hc_legend(enabled = FALSE) |>
+    hc_add_series_list(list(series))
 }
 
 #' @rdname hchart.hclust

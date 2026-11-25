@@ -41,7 +41,12 @@ generic that other classes and packages can extend.
 Run \code{methods(hchart)} to see what objects are supported.
 Numeric matrices use a heatmap by default. Set \code{type = "tilemap"} for
 hexagonal tiles or \code{type = "contour"} for contour lines.
-Empirical distributions from \code{\link[stats:ecdf]{stats::ecdf()}} use a step line.
+Empirical distributions from \code{\link[stats:ecdf]{stats::ecdf()}} use \code{step = "left"} to show jumps at observations.
+Pass \code{step = FALSE} to restore ordinary line interpolation.
+Matrix heatmaps put row one at the top. Use \code{hc_yAxis(reversed = FALSE)}
+to restore the usual axis direction. A matrix with negative values and all
+entries between -1 and 1 gets a diverging color scale spanning that interval.
+Use \code{hc_colorAxis()} to supply different limits and color stops.
 One-way tables use columns in category order. Two-way tables use the
 matrix heatmap. Use \code{margin.table()} to choose dimensions of a larger table.
 

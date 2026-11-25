@@ -15,7 +15,7 @@
 \arguments{
 \item{object}{An \code{hclust}, \code{dendrogram}, or \code{ape::phylo} object.}
 
-\item{...}{Highcharts line series options for the branches.}
+\item{...}{Highcharts treegraph series options for cluster trees, or line options for phylogeny branches.}
 
 \item{layout}{For a phylogeny, \code{"fan"} (radial) or \code{"rectangular"}.}
 }
@@ -27,6 +27,13 @@ Cluster trees preserve the leaf order and merge heights in the object.
 Phylogenies use distance along the edges from the displayed root. The fan
 layout maps that distance to radius. If branch lengths are absent each
 edge counts as one step. The optional stem above the root is excluded.
+}
+\details{
+Cluster dendrograms use rectangular branches with square corners
+to show each join at its merge height. The treegraph defaults for these
+methods are \code{link = list(type = "orthogonal", bendAt = 0, radius = 0)}.
+Use \code{hchart(fit, link = list(type = "straight"))} for triangular branches
+or \code{type = "curved"} inside \code{link} to restore the native curved treegraph style.
 }
 \examples{
 \dontshow{if (requireNamespace("ape", quietly = TRUE)) withAutoprint(\{ # examplesIf}
