@@ -6,5 +6,8 @@ highchart() |>
     pointStart = datetime_to_timestamp(as.Date("2025-01-01")),
     pointInterval = 3600000
   ) |>
-  hc_xAxis(type = "datetime") |>
+  hc_title(text = "Hourly orders in Santiago") |>
+  hc_xAxis(type = "datetime", labels = list(format = "{value:%H:%M}")) |>
+  hc_yAxis(title = list(text = "Orders")) |>
+  hc_tooltip(xDateFormat = "%e %b %Y, %H:%M") |>
   hc_time(timezone = "America/Santiago")

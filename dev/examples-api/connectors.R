@@ -1,5 +1,6 @@
 day <- datetime_to_timestamp(as.Date("2025-01-01") + 0:3)
 highchart(type = "gantt") |>
+  hc_title(text = "Design must finish before building starts") |>
   hc_add_series(
     type = "gantt",
     data = list(
@@ -7,4 +8,9 @@ highchart(type = "gantt") |>
       list(name = "Build", start = day[2], end = day[4], dependency = "design")
     )
   ) |>
-  hc_connectors(type = "straight", lineColor = "#3066BE", lineWidth = 3)
+  hc_connectors(
+    type = "straight",
+    lineColor = "#3066BE",
+    lineWidth = 2,
+    endMarker = list(enabled = TRUE)
+  )

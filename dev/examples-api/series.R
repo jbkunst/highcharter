@@ -1,24 +1,19 @@
+# Fictional orders: distinguish a forecast with a shared color and a dashed line.
 highchart() |>
+  hc_title(text = "Cafe orders: observed and forecast") |>
+  hc_xAxis(categories = month.abb[1:6]) |>
+  hc_yAxis(title = list(text = "Orders")) |>
   hc_series(
     list(
-      name = "Tokyo",
-      data = c(
-        7.0,
-        6.9,
-        9.5,
-        14.5,
-        18.4,
-        21.5,
-        25.2,
-        26.5,
-        23.3,
-        18.3,
-        13.9,
-        9.6
-      )
+      name = "Observed",
+      color = "#0072B2",
+      data = c(120, 150, 180, 160)
     ),
     list(
-      name = "London",
-      data = c(3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8)
+      name = "Forecast",
+      color = "#0072B2",
+      dashStyle = "Dash",
+      pointStart = 3,
+      data = c(160, 190, 210)
     )
   )

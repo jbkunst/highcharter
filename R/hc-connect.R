@@ -13,17 +13,35 @@
 #'   pie points with the same explicit `id`. Enable an interaction on both widgets.
 #' @return The highchart widget.
 #' @examples
-#' north <- highchart() |>
-#'   hc_add_series(id = "north", name = "North", data = c(4, 2, 7)) |>
-#'   hc_connect("regions", sync = "legend")
-#' shares <- highchart() |>
-#'   hc_add_series(type = "pie", data = list(
-#'     list(id = "north", name = "North", y = 7),
-#'     list(id = "south", name = "South", y = 5)
+#' # Fictional monthly sales. Matching series IDs link the legends.
+#' cafes <- list(
+#'   list(id = "harbor", name = "Harbor", data = c(12, 15, 18, 16, 22, 25)),
+#'   list(id = "garden", name = "Garden", data = c(18, 16, 14, 19, 21, 23)),
+#'   list(id = "station", name = "Station", data = c(9, 12, 16, 21, 18, 24))
+#' )
+#' base <- highchart() |>
+#'   hc_add_series_list(cafes) |>
+#'   hc_xAxis(categories = month.abb[1:6], crosshair = TRUE) |>
+#'   hc_yAxis(title = list(text = "Sales (thousands of dollars)")) |>
+#'   hc_tooltip(shared = TRUE, table = TRUE, valueDecimals = 0,
+#'              valuePrefix = "$", valueSuffix = "k") |>
+#'   hc_connect("cafes", sync = c("hover", "zoom", "legend")) |>
+#'   hc_size(height = 320)
+#'
+#' # Hover a month, click a legend item, or drag to zoom in either chart.
+#' trends <- base |>
+#'   hc_chart(type = "line") |>
+#'   hc_title(text = "Coffee around town") |>
+#'   hc_subtitle(text = "Hover, toggle a cafe, or drag to zoom")
+#' sales <- base |>
+#'   hc_chart(type = "column") |>
+#'   hc_title(text = "The same sales, another view") |>
+#'   hc_plotOptions(column = list(
+#'     borderRadius = 4,
+#'     dataLabels = list(enabled = TRUE)
 #'   )) |>
-#'   hc_legend(enabled = FALSE) |>
-#'   hc_connect("regions", sync = "legend")
-#' htmltools::browsable(htmltools::tagList(north, shares))
+#'   hc_caption(text = "Legends, tooltips and zoom are linked in both directions.")
+#' htmltools::browsable(htmltools::tagList(trends, sales))
 #' @export
 hc_connect <- function(hc, group, sync = c("hover", "zoom")) {
   stopifnot(is.highchart(hc))

@@ -510,6 +510,13 @@ return a widget that sets that option. Successful runs update
 To cover a new upstream option, add a small offline example under its exact
 Highcharts name. The command reports missing and obsolete example names on a
 version change. Review those names against the upstream changelog for renames.
+
+Use `highcharts_demo()` for general chart options and override defaults to make
+the chart easier to read, compare or explore. Keep each example focused on one
+useful improvement, with a short comment explaining its purpose. For specialized
+options, use appropriate offline data instead: bundled SPY prices for Stock,
+packaged maps for map controls, and explicit tasks for Gantt dependencies.
+
 Most wrappers call `.hc_opt()`. Colors and tooltips also preserve their R
 arguments. Use `hc_set_language()` for the session language and
 `options(highcharter.global = list(buttonTheme = list(...)))` for global

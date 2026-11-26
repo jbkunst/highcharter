@@ -1,8 +1,6 @@
-highchart() |>
-  hc_xAxis(categories = month.abb) |>
-  hc_add_series(name = "Tokyo", data = sample(1:12)) |>
+highcharts_demo() |>
   hc_credits(
     enabled = TRUE,
-    text = "htmlwidgets.org",
-    href = "http://www.htmlwidgets.org/"
+    text = "Weather data: Open-Meteo",
+    href = "https://open-meteo.com/"
   )

@@ -1,9 +1,8 @@
-highchart(type = "map") |>
-  hc_add_series(
-    type = "mappoint",
-    data = list(
-      list(name = "Tokyo", lon = 139.7, lat = 35.7),
-      list(name = "Osaka", lon = 135.5, lat = 34.7)
-    )
-  ) |>
-  hc_mapNavigation(enabled = TRUE, enableMouseWheelZoom = FALSE)
+# Explore a packaged map with buttons, without intercepting page scrolling.
+hcmap("jp", showInLegend = FALSE) |>
+  hc_title(text = "Explore Japan's prefectures") |>
+  hc_mapNavigation(
+    enabled = TRUE,
+    enableMouseWheelZoom = FALSE,
+    buttonOptions = list(verticalAlign = "bottom")
+  )
