@@ -34,7 +34,7 @@ See more in the general docs.
 ## Examples
 
 ``` r
-tokyo <- subset(city_weather, city == "Tokyo")
+tokyo <- subset(highcharter::city_weather, city == "Tokyo")
 monthly <- tapply(tokyo$temp_mean, format(tokyo$date, "%m"), mean)
 peak <- unname(which.max(monthly))
 
