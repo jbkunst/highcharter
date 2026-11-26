@@ -20,7 +20,7 @@ Options for the tooltip that
 appears when the user hovers over a series or point.
 }
 \examples{
-# Hover over July to see the four cities in descending order.
+# Compare all four cities at once, ranked from warmest to coolest.
 highcharts_demo() |>
   hc_tooltip(table = TRUE, sort = TRUE)
 }

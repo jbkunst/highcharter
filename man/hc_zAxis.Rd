@@ -21,37 +21,27 @@ Named options update the first axis. Supply unnamed axis lists,
 individually or in one list, to replace the collection. Series can select an axis by ID.
 }
 \examples{
-df <- data.frame(
-  x = sample(1:5),
-  y = sample(1:5),
-  z = sample(1:5)
-)
-
-highchart() |>
-  hc_add_series(data = df, "scatter3d", hcaes(x = x, y = y, z = z)) |>
+# Use actual flower measurements and label the third dimension with its units.
+hchart(
+  datasets::iris,
+  "scatter3d",
+  hcaes(x = Sepal.Length, y = Sepal.Width, z = Petal.Length, group = Species)
+) |>
+  hc_title(text = "Iris flowers in three dimensions") |>
   hc_chart(
-    type = "scatter3d",
-    options3d = list(
-      enabled = TRUE,
-      alpha = 20,
-      beta = 30,
-      depth = 200,
-      viewDistance = 5,
-      frame = list(
-        bottom = list(
-          size = 1,
-          color = "rgba(0,0,0,0.05)"
-        )
-      )
-    )
+    options3d = list(enabled = TRUE, alpha = 15, beta = 30, depth = 250)
   ) |>
+  hc_xAxis(title = list(text = "Sepal length (cm)")) |>
+  hc_yAxis(title = list(text = "Sepal width (cm)")) |>
   hc_zAxis(
-    title = list(text = "Z axis is here"),
-    startOnTick = FALSE,
-    tickInterval = 2,
-    tickLength = 4,
-    tickWidth = 1,
-    gridLineColor = "red",
-    gridLineDashStyle = "dot"
+    title = list(text = "Petal length (cm)"),
+    labels = list(format = "{value} cm"),
+    min = 0
+  ) |>
+  hc_tooltip(
+    pointFormat = paste(
+      "Sepal: {point.x:.1f} \u00d7 {point.y:.1f} cm<br/>",
+      "Petal length: {point.z:.1f} cm"
+    )
   )
 }

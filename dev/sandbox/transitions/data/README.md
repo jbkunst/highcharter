@@ -55,7 +55,7 @@ Run from the repository root:
 ```r
 # Download the original JSON responses and rebuild tables and charts.
 pkgload::load_all(".")
-source("pkgdown/index-examples.R")
+source("pkgdown/home-gallery.R")
 build_home_gallery("dev/highcharts-bundle/preview")
 ```
 

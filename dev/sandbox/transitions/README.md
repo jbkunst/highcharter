@@ -72,7 +72,7 @@ de la portada, que ahora usa el grid sincronizado descrito abajo.
 of truth for the homepage data and R charts. Make every homepage chart change
 there first, then regenerate and review both the article and homepage. The
 article's code rebuilds the tables directly from World Bank JSON responses.
-[The homepage adapter](../../../pkgdown/index-examples.R) extracts it with `knitr::purl()` and adds
+[The homepage adapter](../../../pkgdown/home-gallery.R) extracts it with `knitr::purl()` and adds
 the grid layout and animation runtime. It remains independent of the
 single-chart prototype above. All comments and visible analytical captions in
 the grid are in English.
@@ -135,7 +135,7 @@ From the repository root:
 
 ```r
 pkgload::load_all(".")
-source("pkgdown/index-examples.R")
+source("pkgdown/home-gallery.R")
 build_home_gallery("dev/highcharts-bundle/preview")
 utils::browseURL("dev/highcharts-bundle/preview/home-gallery.html")
 ```
@@ -158,6 +158,6 @@ disable autoplay and interpolation. Both automatic looping from the fourth
 state to the first and Restart use animated updates. Test intermediate
 geometry at that boundary, including both scatter coordinates.
 
-The homepage uses this same R object through `pkgdown/index-examples.R`,
+The homepage uses this same R object through `pkgdown/home-gallery.R`,
 which writes `home-gallery.html`, its dependencies and `home-data.csv` into
 the generated site.

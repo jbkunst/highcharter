@@ -18,7 +18,12 @@ be loaded in the page. The actual text to display is set in the
 lang.noData option.
 }
 \examples{
-# Style the empty-state message shown before observations arrive.
-highchart() |>
-  hc_noData(style = list(color = "#526472", fontWeight = "bold"))
+# Give the empty state a specific message instead of a generic "No data".
+highchart(
+  hc_opts = list(
+    lang = list(noData = "No orders recorded for this period.")
+  )
+) |>
+  hc_title(text = "Daily orders") |>
+  hc_noData(style = list(color = "#526472", fontSize = "16px"))
 }

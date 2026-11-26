@@ -18,17 +18,27 @@ ranges in the chart, like 1 day, 1 week, 1 month etc. It also provides
 input boxes where min and max dates can be manually input.
 }
 \examples{
-hc <- highchart(type = "stock") |>
-  hc_add_series(AirPassengers)
+# Daily SPY closing prices included with the package; no download needed.
+prices <- read.csv(system.file(
+  "extdata",
+  "spy-2025.csv",
+  package = "highcharter"
+))
+close <- xts::xts(prices$SPY.Close, order.by = as.Date(prices$date))
 
-hc
-
-hc |>
-  hc_rangeSelector(enabled = FALSE)
-
-hc |>
+highchart(type = "stock") |>
+  hc_add_series(close, name = "SPY") |>
+  hc_title(text = "SPY daily closing prices in 2025") |>
+  hc_yAxis(title = list(text = "Price (USD)")) |>
+  hc_tooltip(valueDecimals = 2, valuePrefix = "$") |>
   hc_rangeSelector(
     verticalAlign = "bottom",
-    selected = 4
+    selected = 3,
+    buttons = list(
+      list(type = "month", count = 1, text = "1m"),
+      list(type = "month", count = 3, text = "3m"),
+      list(type = "month", count = 6, text = "6m"),
+      list(type = "all", text = "All")
+    )
   )
 }

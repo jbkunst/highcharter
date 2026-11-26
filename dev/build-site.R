@@ -42,7 +42,7 @@ highcharter::hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 # download the original JSON responses and recompute the tables on every run.
 cli::cli_h2("4/7 Build the synchronized chart grid for the homepage")
 
-source("pkgdown/index-examples.R", local = TRUE)
+source("pkgdown/home-gallery.R", local = TRUE)
 build_home_gallery(site_dir)
 
 
@@ -51,7 +51,7 @@ build_home_gallery(site_dir)
 # Keeping the same site_dir places their shared assets beside the homepage demo.
 cli::cli_h2("5/7 Build the chart and Shiny galleries")
 
-source("dev/R/test-highcharts-bundle.R", local = TRUE)
+source("dev/R/build-bundle-gallery.R", local = TRUE)
 source("dev/build-shinylive.R", local = TRUE)
 
 

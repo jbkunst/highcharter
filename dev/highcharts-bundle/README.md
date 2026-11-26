@@ -19,11 +19,14 @@ advanced annotations and toolbar assets. Third-party plugins remain separate.
 For a Highcharts release upgrade, use the [maintainer command](../readme.md#update-highcharts)
 from the repository root. The build updates all widget YAML versions automatically.
 
-To exercise the installed R package, run `Rscript dev/R/test-highcharts-bundle.R` from
+To exercise the installed R package, run `Rscript dev/R/build-bundle-gallery.R` from
 the repository root and open `dev/highcharts-bundle/preview/bundle-gallery.html`.
 The gallery covers the shared data shapes,
 specialized series, Stock Tools and mixed widgets. Use Tab and the arrow keys on the first
 chart to check keyboard navigation.
+
+For a compact mixed-widget preview, run `Rscript preview-grid.R` from this
+directory and open `preview/index.html`.
 
 The Stock Tools bundle captures its own Highcharts defaults after its modules
 load. The Stock Tools widget restores those defaults before applying the theme

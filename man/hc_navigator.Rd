@@ -17,21 +17,33 @@ displaying a view of the entire data set. It provides tools to zoom in
 and out on parts of the data as well as panning across the dataset.
 }
 \examples{
+# Daily SPY closing prices included with the package; no download needed.
+prices <- read.csv(system.file(
+  "extdata",
+  "spy-2025.csv",
+  package = "highcharter"
+))
+close <- xts::xts(prices$SPY.Close, order.by = as.Date(prices$date))
+
 highchart(type = "stock") |>
-  hc_add_series(AirPassengers) |>
-  hc_rangeSelector(selected = 4) |>
+  hc_add_series(close, name = "SPY") |>
+  hc_title(text = "SPY daily closing prices in 2025") |>
+  hc_yAxis(title = list(text = "Price (USD)")) |>
+  hc_tooltip(valueDecimals = 2, valuePrefix = "$") |>
+  hc_rangeSelector(selected = 3) |>
   hc_navigator(
-    outlineColor = "gray",
-    outlineWidth = 2,
+    height = 60,
+    outlineColor = "#31688E",
     series = list(
-      color = "red",
-      lineWidth = 2,
-      type = "areaspline", # you can change the type
-      fillColor = "rgba(255, 0, 0, 0.2)"
+      color = "#31688E",
+      type = "areaspline",
+      fillOpacity = 0.15
     ),
     handles = list(
-      backgroundColor = "yellow",
-      borderColor = "red"
+      width = 10,
+      height = 20,
+      backgroundColor = "#E5F0F5",
+      borderColor = "#31688E"
     )
   )
 }

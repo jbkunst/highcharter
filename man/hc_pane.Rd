@@ -20,20 +20,26 @@ When used in \code{Highcharts.setOptions} for theming, the pane must be a
 single object, otherwise arrays are supported.
 }
 \examples{
-# The start and end angles give the speedometer a 300-degree sweep.
+# A half-circle leaves room below the dial for the value and units.
 highchart() |>
   hc_chart(type = "gauge") |>
-  hc_title(text = "Speedometer") |>
-  hc_pane(startAngle = -150, endAngle = 150) |>
+  hc_title(text = "Storage used") |>
+  hc_pane(
+    startAngle = -90,
+    endAngle = 90,
+    center = c("50\%", "75\%"),
+    size = "110\%"
+  ) |>
   hc_yAxis(
     min = 0,
-    max = 200,
-    tickInterval = 40,
-    title = list(text = "km/h")
+    max = 100,
+    tickInterval = 25,
+    title = list(text = "\% used"),
+    plotBands = list(
+      list(from = 0, to = 70, color = "#009E73"),
+      list(from = 70, to = 90, color = "#E69F00"),
+      list(from = 90, to = 100, color = "#D55E00")
+    )
   ) |>
-  hc_add_series(
-    name = "Speed",
-    data = 80,
-    tooltip = list(valueSuffix = " km/h")
-  )
+  hc_add_series(name = "Storage", data = 72, tooltip = list(valueSuffix = "\%"))
 }

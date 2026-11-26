@@ -25,8 +25,9 @@ defined in CSS and applied either through series or point class names, or
 through the chart.colorCount option.
 }
 \examples{
+# Four distinct hues from the Okabe-Ito palette, one per city.
 highcharts_demo() |>
-  hc_colors(c("#440154", "#21918C", "#FDE725"))
+  hc_colors(c("#0072B2", "#D55E00", "#009E73", "#CC79A7"))
 }
 \seealso{
 \url{https://api.highcharts.com/highcharts/colors}

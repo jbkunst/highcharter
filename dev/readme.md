@@ -10,7 +10,7 @@ in `tests/`, and website articles in `vignettes/`.
 
 | Directory | Purpose |
 | --- | --- |
-| `R/` | The bundle gallery builder, `test-highcharts-bundle.R`, shared by the website build and local browser review. |
+| `R/` | The bundle gallery builder, `build-bundle-gallery.R`, shared by the website build and local browser review. |
 | `examples-api/` | One runnable example per Highcharts option. roxygen reads these for help pages, and the API generator validates them. |
 | `highcharts-bundle/` | The pinned npm manifests, module selection, build and update scripts. See its [bundle guide](highcharts-bundle/README.md). `preview/` and `node_modules/` are generated locally and ignored by Git. |
 | `sandbox/` | The serializer benchmark and the [offline chart transitions](sandbox/transitions/README.md), including their source and data. |
@@ -184,7 +184,7 @@ server, regenerate redirects with `pkgdown::build_redirects(override =
 list(url = "http://127.0.0.1:8765"))`, substituting the active server address.
 The next normal website build restores the canonical destination for deployment.
 The bundle validation gallery checks the types registered in the bundled
-JavaScript. Its examples live in `dev/R/test-highcharts-bundle.R` and render to
+JavaScript. Its examples live in `dev/R/build-bundle-gallery.R` and render to
 `bundle-gallery.html`, separate from the public chart-types article. The public
 chart-types article renders its common-data charts and specialized recipes
 inline. Bars, columns and cylinders share the quantities-by-category data;
@@ -202,7 +202,7 @@ sync with changes to playback or layout. The article's folded sections contain
 the complete runnable R code, including World Bank downloads; it never reads
 prepared CSVs or sources scripts from `dev/`.
 
-`pkgdown/index-examples.R` defines `build_home_gallery(output_dir)`. It uses
+`pkgdown/home-gallery.R` defines `build_home_gallery(output_dir)`. It uses
 `knitr::purl()` to extract the article's R code. The article renders each sequence with its own
 controls. Article players start paused and pressing Play pauses the previous player.
 The homepage enables autoplay for its shared four-chart player, subject to the
