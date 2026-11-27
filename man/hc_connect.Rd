@@ -38,14 +38,14 @@ base <- highchart() |>
   hc_yAxis(title = list(text = "Sales (thousands of dollars)")) |>
   hc_tooltip(shared = TRUE, table = TRUE, valueDecimals = 0,
              valuePrefix = "$", valueSuffix = "k") |>
-  hc_connect("cafes", sync = c("hover", "zoom", "legend")) |>
+  hc_connect("cafes", sync = c("hover", "legend")) |>
   hc_size(height = 320)
 
-# Hover a month, click a legend item, or drag to zoom in either chart.
+# Hover a month or click a legend item in either chart.
 trends <- base |>
   hc_chart(type = "line") |>
   hc_title(text = "Coffee around town") |>
-  hc_subtitle(text = "Hover, toggle a cafe, or drag to zoom")
+  hc_subtitle(text = "Hover a month or toggle a cafe")
 sales <- base |>
   hc_chart(type = "column") |>
   hc_title(text = "The same sales, another view") |>
@@ -53,6 +53,10 @@ sales <- base |>
     borderRadius = 4,
     dataLabels = list(enabled = TRUE)
   )) |>
-  hc_caption(text = "Legends, tooltips and zoom are linked in both directions.")
+  hc_caption(text = "Legends and tooltips are linked in both directions.")
 htmltools::browsable(htmltools::tagList(trends, sales))
+}
+\seealso{
+\href{https://jkunst.com/highcharter/articles/connected-charts.html}{Connected charts}
+for linked time series, legends across chart types, and a four-chart layout.
 }

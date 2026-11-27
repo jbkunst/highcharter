@@ -193,6 +193,7 @@ articles:
   contents:
   - from-data-to-charts
   - multiple-axes
+  - connected-charts
   - drilldown
   - modules
 - title: Shiny applications

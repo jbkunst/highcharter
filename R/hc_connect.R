@@ -12,6 +12,8 @@
 #'   `"zoom"` links X ranges and reset buttons, and `"legend"` links series or
 #'   pie points with the same explicit `id`. Enable an interaction on both widgets.
 #' @return The highchart widget.
+#' @seealso [Connected charts](https://jkunst.com/highcharter/articles/connected-charts.html)
+#'   for linked time series, legends across chart types, and a four-chart layout.
 #' @examples
 #' # Fictional monthly sales. Matching series IDs link the legends.
 #' cafes <- list(
@@ -25,14 +27,14 @@
 #'   hc_yAxis(title = list(text = "Sales (thousands of dollars)")) |>
 #'   hc_tooltip(shared = TRUE, table = TRUE, valueDecimals = 0,
 #'              valuePrefix = "$", valueSuffix = "k") |>
-#'   hc_connect("cafes", sync = c("hover", "zoom", "legend")) |>
+#'   hc_connect("cafes", sync = c("hover", "legend")) |>
 #'   hc_size(height = 320)
 #'
-#' # Hover a month, click a legend item, or drag to zoom in either chart.
+#' # Hover a month or click a legend item in either chart.
 #' trends <- base |>
 #'   hc_chart(type = "line") |>
 #'   hc_title(text = "Coffee around town") |>
-#'   hc_subtitle(text = "Hover, toggle a cafe, or drag to zoom")
+#'   hc_subtitle(text = "Hover a month or toggle a cafe")
 #' sales <- base |>
 #'   hc_chart(type = "column") |>
 #'   hc_title(text = "The same sales, another view") |>
@@ -40,7 +42,7 @@
 #'     borderRadius = 4,
 #'     dataLabels = list(enabled = TRUE)
 #'   )) |>
-#'   hc_caption(text = "Legends, tooltips and zoom are linked in both directions.")
+#'   hc_caption(text = "Legends and tooltips are linked in both directions.")
 #' htmltools::browsable(htmltools::tagList(trends, sales))
 #' @export
 hc_connect <- function(hc, group, sync = c("hover", "zoom")) {
