@@ -93,3 +93,37 @@ test_that("log survival scales keep valid estimates when their bands have gaps",
   series <- hchart(fit, fun = "cloglog")$x$hc_opts$series
   expect_equal(vapply(series[[1]]$data, "[[", numeric(1), "x"), fit$time)
 })
+
+test_that("logpct survival scale uses a logarithmic percentage y-axis and masks non-positive values", {
+  skip_if_not_installed("survival", minimum_version = "3.6-5")
+  library(survival)
+  d <- data.frame(
+    time = c(0:4, 4, 5, 6),
+    status = c(0, 0, 1, 1, 1, 0, 1, 1)
+  )
+  fit <- survfit(Surv(time, status) ~ 1, d, conf.type = "plain", conf.int = 0.8)
+
+  hc <- hchart(fit, fun = "logpct", ranges = TRUE)$x$hc_opts
+  expect_identical(hc$yAxis$type, "logarithmic")
+  expect_null(hc$yAxis$min)
+  expect_equal(hc$yAxis$max, 100)
+  points <- hc$series[[1]]$data
+  expect_equal(vapply(points, "[[", numeric(1), "x"), fit$time)
+  expect_equal(
+    vapply(points, "[[", numeric(1), "y"),
+    c(100 * head(fit$surv, -1), NA)
+  )
+  expect_equal(unlist(hc$series[[2]]$data[[6]]), c(5, NA, NA))
+  expect_equal(
+    unlist(hc$series[[2]]$data[[3]]),
+    c(2, 100 * fit$lower[3], 100 * fit$upper[3])
+  )
+
+  pct <- hchart(fit, fun = "pct")$x$hc_opts
+  expect_null(pct$yAxis$type)
+  expect_equal(c(pct$yAxis$min, pct$yAxis$max), c(0, 100))
+  expect_equal(
+    vapply(pct$series[[1]]$data, "[[", numeric(1), "y"),
+    100 * fit$surv
+  )
+})

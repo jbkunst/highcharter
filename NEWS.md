@@ -278,6 +278,9 @@ Bundled Highcharts JS: 12.6.2.
 
 ## Bug fixes
 
+* `hchart.survfit()` with `fun = "logpct"` now uses a logarithmic y-axis capped
+  at 100 and maps non-positive survival values to `NA`, matching `fun = "log"`.
+
 * `hchart()` now uses the levels of a factor mapped to `x` to order the
   x-axis categories, including when the data are split into series (#373).
 
