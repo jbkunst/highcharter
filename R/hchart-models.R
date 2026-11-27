@@ -230,8 +230,8 @@ hchart.survfit <- function(
         y[y <= 0 | y >= 1] <- NA_real_
         log(-log(y))
       },
-      pct = ,
-      logpct = function(y) 100 * y,
+      pct = function(y) 100 * y,
+      logpct = function(y) 100 * replace(y, y <= 0, NA_real_),
       identity
     )
   } else if (is.function(fun)) {
@@ -273,6 +273,8 @@ hchart.survfit <- function(
     hc <- hc_xAxis(hc, type = "logarithmic")
   } else if (identical(fun, "log")) {
     hc <- hc_yAxis(hc, type = "logarithmic", max = 1)
+  } else if (identical(fun, "logpct")) {
+    hc <- hc_yAxis(hc, type = "logarithmic", max = 100)
   } else {
     bounds <- if (ranges) c(data$lower, data$upper)
     limits <- range(0, 1, first_y, data$surv, bounds, finite = TRUE)
