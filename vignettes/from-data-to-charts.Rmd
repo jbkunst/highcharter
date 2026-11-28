@@ -23,7 +23,7 @@ executor <- paste(
 
 The homepage connects four views of the same economies: income and longevity,
 regional exports, a world map and regional shares. This article contains the
-original R code for their data, colors, captions and four states. Press Play below a chart to explore its four stages, or select a stage directly.
+original R code for their data, colors, captions and four states. On the homepage, click a continent in the scatter legend to toggle its bubbles, export history and pie slice. Press Play below a chart to explore its four stages, or select a stage directly.
 Starting another chart pauses the previous one.
 
 ```{r home-libraries}
@@ -33,11 +33,10 @@ library(highcharter)
 ## Prepare the data
 
 The data come from the [World Bank's World Development Indicators](https://databank.worldbank.org/source/world-development-indicators).
-Run the following code to fetch the original JSON responses, join economy and
-map identifiers, choose a common year and calculate trade measures.
-Every run downloads the data again and requires internet.
-Downloads allow at least 180 seconds per attempt and make up to three attempts
-when the service is temporarily unavailable.
+The example reads the six series from a packaged extract of the
+[WDI bulk CSV](https://databank.worldbank.org/data/download/WDI_CSV.zip)
+dated 2026-11-16. It joins economies to the map, selects a common year and
+calculates the trade measures locally.
 
 The six indicators measure population, life expectancy, GDP per person at
 purchasing-power parity (constant 2021 international dollars), urban population,
@@ -48,63 +47,18 @@ The latest recent year with at least 150 complete economies is selected before
 checking history. Missing values are not imputed and years are not mixed.
 
 <details>
-<summary>Show data download and preparation</summary>
+<summary>Show data preparation</summary>
 
 ```{r home-data}
-fetch_wdi <- function(path) {
-  url <- paste0("https://api.worldbank.org/v2/", path)
-  temp <- tempfile(fileext = ".json")
-  on.exit(unlink(temp), add = TRUE)
-  previous_options <- options(timeout = max(180, getOption("timeout", 60)))
-  on.exit(options(previous_options), add = TRUE)
-  for (attempt in seq_len(3L)) {
-    downloaded <- tryCatch(
-      {
-        status <- utils::download.file(
-          url,
-          temp,
-          method = "libcurl",
-          mode = "wb",
-          quiet = TRUE,
-          headers = c("User-Agent" = "highcharter website data preparation")
-        )
-        if (status != 0L) {
-          stop("World Bank download failed: ", url)
-        }
-        TRUE
-      },
-      error = identity
-    )
-    if (isTRUE(downloaded)) {
-      break
-    }
-    if (attempt == 3L) {
-      stop(downloaded)
-    }
-    message(
-      "Retrying World Bank download (attempt ",
-      attempt + 1L,
-      "/3): ",
-      url
-    )
-    Sys.sleep(2^(attempt - 1L))
-  }
-  response <- jsonlite::read_json(temp)
-  if (
-    length(response) != 2L ||
-      is.null(response[[1]]$pages) ||
-      response[[1]]$pages != 1L
-  ) {
-    stop("Unexpected or paginated World Bank response: ", url)
-  }
-  response
-}
-
-prepare_home_data <- function(
-  world,
-  start_year = 2005L
-) {
-  current_year <- as.integer(format(Sys.Date(), "%Y"))
+prepare_home_data <- function(world) {
+  source_date <- as.Date("2026-11-16")
+  current_year <- as.integer(format(source_date, "%Y"))
+  raw <- utils::read.csv(system.file(
+    "extdata/wdi-home.csv.gz",
+    package = "highcharter",
+    mustWork = TRUE
+  ))
+  start_year <- min(raw$year)
   indicators <- c(
     population = "SP.POP.TOTL",
     life = "SP.DYN.LE00.IN",
@@ -113,15 +67,7 @@ prepare_home_data <- function(
     exports = "TX.VAL.MRCH.CD.WT",
     imports = "TM.VAL.MRCH.CD.WT"
   )
-  geography <- fetch_wdi("country/all?format=json&per_page=400")
-  economy_rows <- Filter(
-    function(x) x$region$value != "Aggregates",
-    geography[[2]]
-  )
-  economies <- data.frame(
-    iso3 = vapply(economy_rows, function(x) x$id, character(1)),
-    name = vapply(economy_rows, function(x) x$name, character(1))
-  )
+  economies <- unique(raw[raw$is_aggregate == 0L, c("iso3", "name")])
   features <- world$objects$default$geometries
   continents <- data.frame(
     iso3 = vapply(features, function(x) x$properties[["iso-a3"]], character(1)),
@@ -140,46 +86,15 @@ prepare_home_data <- function(
   }
   economies <- merge(economies, continents, by = "iso3")
 
-  panels <- list()
-  source_dates <- list()
-  for (variable in names(indicators)) {
-    indicator <- indicators[[variable]]
-    years <- if (variable == "exports") {
-      seq.int(start_year, current_year)
-    } else {
-      seq.int(current_year - 3L, current_year)
-    }
-    # Short ranges avoid slow, very large indicator responses from the API.
-    ranges <- split(years, ceiling(seq_along(years) / 5L))
-    responses <- lapply(ranges, function(range) {
-      period <- paste0(min(range), ":", max(range))
-      path <- paste0(
-        "country/all/indicator/",
-        indicator,
-        "?source=2&format=json&date=",
-        period,
-        "&per_page=20000"
-      )
-      fetch_wdi(path)
-    })
-    rows <- unlist(lapply(responses, `[[`, 2L), recursive = FALSE)
-    panel <- data.frame(
-      iso3 = vapply(rows, function(x) x$countryiso3code, character(1)),
-      year = as.integer(vapply(rows, function(x) x$date, character(1))),
-      value = vapply(
-        rows,
-        function(x) if (is.null(x$value)) NA_real_ else x$value,
-        numeric(1)
-      )
-    )
-    names(panel)[3] <- variable
-    panels[[variable]] <- panel
-    source_dates[[variable]] <- responses[[1]][[1]]$lastupdated
-  }
-  wide <- Reduce(
-    function(x, y) merge(x, y, by = c("iso3", "year"), all = TRUE),
-    panels
+  raw$variable <- names(indicators)[match(raw$indicator, indicators)]
+  wide <- stats::reshape(
+    raw[c("iso3", "year", "variable", "value")],
+    idvar = c("iso3", "year"),
+    timevar = "variable",
+    direction = "wide"
   )
+  names(wide) <- sub("^value[.]", "", names(wide))
+  wide <- wide[c("iso3", "year", names(indicators))]
   country_panel <- merge(wide, economies, by = "iso3")
   coverage <- lapply(
     sort(
@@ -244,9 +159,7 @@ prepare_home_data <- function(
     " economies; Russia included: ",
     "RUS" %in% snapshot$iso3
   )
-  world_population <- panels$population$population[
-    panels$population$iso3 == "WLD" & panels$population$year == year
-  ]
+  world_population <- wide$population[wide$iso3 == "WLD" & wide$year == year]
   metadata <- list(
     schema_version = 3L,
     year = year,
@@ -255,7 +168,7 @@ prepare_home_data <- function(
     prepared = as.character(Sys.Date()),
     source = "World Bank WDI, source 2",
     indicators = as.list(indicators),
-    source_updated = source_dates,
+    source_updated = source_date,
     coverage = coverage,
     world_population_coverage = sum(snapshot$population) / world_population,
     excluded = setdiff(economies$iso3, snapshot$iso3),
@@ -289,7 +202,7 @@ covering **`r round(100 * metadata$world_population_coverage, 1)`%** of world
 population. Each observation represents an economy, rather than a regional
 aggregate. The World Bank can revise historical observations;
 `metadata$indicators` and `metadata$source_updated` record
-the indicator codes and source update dates.
+the indicator codes and bulk release date.
 
 Trade per person divides each flow by population. The signed balance is
 `100 * (exports - imports) / (exports + imports)`; it can be negative, so its map
@@ -462,6 +375,9 @@ chart_player <- function(..., autoplay = FALSE) {
       )
     })
     first <- widgets[[1]] |> hc_size(width = "100%", height = chart_height)
+    if (length(charts) > 1L && family %in% c("countries", "history", "pie")) {
+      first <- hc_connect(first, "home-regions", sync = "legend")
+    }
     first$x$hc_opts$plotOptions$series$animation <- FALSE
     htmltools::tags$section(
       class = "transition-panel",
@@ -640,7 +556,7 @@ country_chart <- function(stage) {
     hc <- hc |>
       hc_add_series(
         type = "bubble",
-        id = paste0("countries-", region_id[[region]]),
+        id = region_id[[region]],
         name = region,
         color = unname(colors[[region]]),
         data = points,
@@ -798,7 +714,7 @@ trade_chart <- function(stage) {
     hc <- hc |>
       hc_add_series(
         type = "streamgraph",
-        id = paste0("trade-", region_id[[region]]),
+        id = region_id[[region]],
         name = region,
         color = unname(colors[[region]]),
         stacking = if (stage == 1L) {

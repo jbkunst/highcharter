@@ -39,7 +39,7 @@ highcharter::hc_set_theme("hcrt", tooltip = list(valueDecimals = 2))
 # This standalone iframe contains the international-data animation and its playback
 # controls. Its adapter extracts the canonical From data to charts article, then
 # writes HTML, dependencies and the CSV into site_dir. Both the homepage and article
-# download the original JSON responses and recompute the tables on every run.
+# prepare their tables from the packaged WDI extract.
 cli::cli_h2("4/7 Build the synchronized chart grid for the homepage")
 
 source("pkgdown/home-gallery.R", local = TRUE)

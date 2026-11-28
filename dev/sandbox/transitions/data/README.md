@@ -2,10 +2,8 @@
 
 The [From data to charts article](../../../../vignettes/from-data-to-charts.Rmd)
 is the canonical data recipe. Edit it first for every change to the homepage
-data or charts. Its folded preparation code downloads original World Bank WDI
-JSON responses and rebuilds `home_data$countries`, `home_data$history` and
-`home_data$metadata`. There are no prepared CSV inputs. This guide documents
-provenance; it does not provide another preparation script.
+data or charts. Its preparation code reads the packaged WDI extract and rebuilds
+the country snapshot, export history and coverage metadata.
 
 The older 132-country sample in `../datos-animacion.zip` is retained only for
 the separate single-chart experiment.
@@ -19,9 +17,14 @@ Grey map shapes represent places outside this complete-data cohort.
 
 ## Sources and units
 
-The API source is [World Bank WDI, source 2](https://databank.worldbank.org/source/world-development-indicators).
-The source's own update date is recorded per indicator in
-`home_data$metadata$source_updated`.
+The source is the [WDI bulk ZIP](https://databank.worldbank.org/data/download/WDI_CSV.zip).
+To refresh `inst/extdata/wdi-home.csv.gz`, extract the six series below from
+`WDICSV.csv`, retaining all economy codes and years from 2005 onward, including
+missing observations. Store one row per ISO3, year and indicator with columns
+`iso3,name,is_aggregate,year,indicator,value`. Set the aggregate flag for codes
+without a region in `WDICountry.csv`. Update the bulk release date in the
+article and compare the selected cohort, indicator values and regional export
+history against the previous build before publishing.
 
 | Field | Indicator | Unit |
 | --- | --- | --- |
@@ -53,18 +56,13 @@ nominal: their changes include price and exchange-rate effects.
 Run from the repository root:
 
 ```r
-# Download the original JSON responses and rebuild tables and charts.
+# Read the versioned WDI extract and rebuild tables and charts.
 pkgload::load_all(".")
 source("pkgdown/home-gallery.R")
 build_home_gallery("dev/highcharts-bundle/preview")
 ```
 
-The adapter extracts the article with `knitr::purl()`. Every run downloads the
-JSON responses again; temporary download files are deleted after parsing.
-There is no data cache or refresh option. The article also runs outside the
-checkout. The original common-year selection, export histories from 2005
-and mapdata 2.3.3 are retained. Review economies, coverage and source update dates when
-regenerating: the World Bank can revise historical observations.
+The adapter extracts the article with `knitr::purl()`.
 The adapter writes the downloadable `home-data.csv` alongside `home-gallery.html`.
 
 ## Shared analytical story

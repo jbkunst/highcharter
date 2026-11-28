@@ -199,8 +199,7 @@ canonical source for the homepage's data preparation, R chart definitions,
 theme, captions and four states. Start every homepage chart change there, then
 regenerate and review both the article and homepage. Keep its explanation in
 sync with changes to playback or layout. The article's folded sections contain
-the complete runnable R code, including World Bank downloads; it never reads
-prepared CSVs or sources scripts from `dev/`.
+the complete runnable R code, starting from the packaged WDI extract in `inst/extdata/wdi-home.csv.gz`.
 
 `pkgdown/home-gallery.R` defines `build_home_gallery(output_dir)`. It uses
 `knitr::purl()` to extract the article's R code. The article renders each sequence with its own
@@ -239,18 +238,9 @@ and COVID-19. The scatter shows country names in its tooltips. Map color bars oc
 formats. The regional camera fits the bounds of South American economies instead
 of relying on a fixed zoom that can crop the north or south.
 Sources, units and coverage are documented in the
-[data README](sandbox/transitions/data/README.md) and public article. Every run
-downloads the original JSON responses again and recomputes the tables. The
-original common-year selection and Highcharts mapdata 2.3.3 are retained.
-There is no persistent data cache, website refresh option or cache
-environment variable. Temporary download files are deleted after parsing.
-The article's `fetch_wdi()` allows at least 180 seconds per download and makes
-up to three attempts, waiting one and then two seconds between failures. It
-restores the caller's timeout on exit and still fails the build after the last
-unsuccessful attempt; JSON validation errors are not retried.
-The World Bank can revise historical observations; review source dates and
-coverage when regenerating the site. The former prepared CSV inputs and
-standalone preparation script are superseded by the article.
+[data README](sandbox/transitions/data/README.md) and public article. Both
+builds use the same versioned WDI extract. The scatter legend toggles the
+corresponding continent in the export history and pie through `hc_connect()`.
 The adapter writes `home-gallery.html` and `home-data.csv` directly to the chosen directory.
 Sources and coverage stay in the data README; the grid has no source footer.
 After serving the generated site, run
