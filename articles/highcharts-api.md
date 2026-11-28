@@ -262,33 +262,13 @@ tags$section(
 | North | 5    | 1   | 5   |
 | South | 3    | 2   | 4   |
 
-For a legend that controls multiple widgets, see the line and pie
-example in
+To link legends, tooltips or zoom across separate widgets, use
+highcharter’s
 [`hc_connect()`](https://jkunst.com/highcharter/reference/hc_connect.md)
-and [issue \#183](https://github.com/jbkunst/highcharter/issues/183).
-
-## Connect charts across HTML chunks
-
-Give each chart the same group name to link its tooltip, crosshair and X
-zoom. These two chunks also work in a Quarto HTML document. Drag on
-either chart to zoom, then use either reset button to restore both X
-axes.
-
-``` r
-
-hchart(AirPassengers) |> hc_connect("monthly")
-```
-
-``` r
-
-hchart(diff(AirPassengers)) |> hc_connect("monthly")
-```
-
-The first month has no corresponding change, so hovering over it clears
-the second tooltip. To share a legend between a line and a pie, see the
-series and point IDs in the
-[`hc_connect()`](https://jkunst.com/highcharter/reference/hc_connect.md)
-example.
+helper. The [Connected
+charts](https://jkunst.com/highcharter/articles/connected-charts.md)
+article shows how to combine time series, differences, a pie and columns
+in one layout.
 
 ## Keep other series visible on hover
 

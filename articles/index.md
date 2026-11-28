@@ -73,6 +73,12 @@
 
   Arrange nine scatter plots in one chart using separate pairs of axes.
 
+- [Connected
+  charts](https://jkunst.com/highcharter/articles/connected-charts.md):
+
+  Link tooltips, zoom and legends across separate highcharter widgets,
+  and arrange four connected charts on one page.
+
 - [Drilldown](https://jkunst.com/highcharter/articles/drilldown.md):
 
   Drilldown is the concept of inspecting increasingly high resolution
