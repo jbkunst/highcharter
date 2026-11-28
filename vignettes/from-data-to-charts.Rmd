@@ -36,6 +36,8 @@ The data come from the [World Bank's World Development Indicators](https://datab
 Run the following code to fetch the original JSON responses, join economy and
 map identifiers, choose a common year and calculate trade measures.
 Every run downloads the data again and requires internet.
+Downloads allow at least 180 seconds per attempt and make up to three attempts
+when the service is temporarily unavailable.
 
 The six indicators measure population, life expectancy, GDP per person at
 purchasing-power parity (constant 2021 international dollars), urban population,
@@ -53,14 +55,40 @@ fetch_wdi <- function(path) {
   url <- paste0("https://api.worldbank.org/v2/", path)
   temp <- tempfile(fileext = ".json")
   on.exit(unlink(temp), add = TRUE)
-  utils::download.file(
-    url,
-    temp,
-    method = "libcurl",
-    mode = "wb",
-    quiet = TRUE,
-    headers = c("User-Agent" = "highcharter website data preparation")
-  )
+  previous_options <- options(timeout = max(180, getOption("timeout", 60)))
+  on.exit(options(previous_options), add = TRUE)
+  for (attempt in seq_len(3L)) {
+    downloaded <- tryCatch(
+      {
+        status <- utils::download.file(
+          url,
+          temp,
+          method = "libcurl",
+          mode = "wb",
+          quiet = TRUE,
+          headers = c("User-Agent" = "highcharter website data preparation")
+        )
+        if (status != 0L) {
+          stop("World Bank download failed: ", url)
+        }
+        TRUE
+      },
+      error = identity
+    )
+    if (isTRUE(downloaded)) {
+      break
+    }
+    if (attempt == 3L) {
+      stop(downloaded)
+    }
+    message(
+      "Retrying World Bank download (attempt ",
+      attempt + 1L,
+      "/3): ",
+      url
+    )
+    Sys.sleep(2^(attempt - 1L))
+  }
   response <- jsonlite::read_json(temp)
   if (
     length(response) != 2L ||

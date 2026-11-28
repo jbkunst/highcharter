@@ -244,6 +244,10 @@ downloads the original JSON responses again and recomputes the tables. The
 original common-year selection and Highcharts mapdata 2.3.3 are retained.
 There is no persistent data cache, website refresh option or cache
 environment variable. Temporary download files are deleted after parsing.
+The article's `fetch_wdi()` allows at least 180 seconds per download and makes
+up to three attempts, waiting one and then two seconds between failures. It
+restores the caller's timeout on exit and still fails the build after the last
+unsuccessful attempt; JSON validation errors are not retried.
 The World Bank can revise historical observations; review source dates and
 coverage when regenerating the site. The former prepared CSV inputs and
 standalone preparation script are superseded by the article.
